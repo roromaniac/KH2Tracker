@@ -30,6 +30,7 @@ namespace KhTracker
         private int total;
         public static int PointTotal = 0;
         public int DeathCounter = 0;
+        private BroadcastWindow broadcast;
 
         public MainWindow()
         {
@@ -186,6 +187,8 @@ namespace KhTracker
                     }
                 }
             }
+
+            broadcast = new BroadcastWindow(data);
         }
 
         private void InitOptions()
@@ -559,6 +562,9 @@ namespace KhTracker
                 Save("KhTrackerAutoSaves\\" + "Tracker-Backup_" + DateTime.Now.ToString("yy-MM-dd_H-m") + ".tsv");
             }
             Properties.Settings.Default.Save();
+
+            broadcast.canClose = true;
+            broadcast.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -577,6 +583,9 @@ namespace KhTracker
         {
             Width = 570;
             Height = 880;
+
+            broadcast.Width = 500;
+            broadcast.Height = 680;
         }
 
         /// 

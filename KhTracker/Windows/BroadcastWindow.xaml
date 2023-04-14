@@ -1,0 +1,569 @@
+﻿<Window x:Class="KhTracker.BroadcastWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KhTracker"
+        mc:Ignorable="d"
+        ResizeMode="CanResize"
+        Title="Bingo Window"
+        Height="510" Width="500"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_SizeChanged"
+        Closing="BroadcastWindow_Closing"
+        MinHeight="325" MinWidth="300" Background="#303030">
+
+    <Window.Resources>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        
+        <Menu DockPanel.Dock="Top" Background="White">
+            
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            
+            <MenuItem Header="Options" Focusable="False">
+
+            </MenuItem>
+            
+            <MenuItem Header="Display Toggles" Focusable="False">
+
+            </MenuItem>
+ 
+            <MenuItem Header="Image Visuals" Focusable="False">
+
+            </MenuItem>
+
+        </Menu>
+
+        <Grid>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="SpacerBingoRow1" Height="1*"/>
+                    <RowDefinition Name="SpacerBingoRowBar1" Height="0.05*"/>
+                    <RowDefinition Name="SpacerBingoRow2" Height="1*"/>
+                    <RowDefinition Name="SpacerBingoRowBar2" Height="0.05*"/>
+                    <RowDefinition Name="SpacerBingoRow3" Height="1*"/>
+                    <RowDefinition Name="SpacerBingoRowBar3" Height="0.05*"/>
+                    <RowDefinition Name="SpacerBingoRow4" Height="1*"/>
+                    <RowDefinition Name="SpacerBingoRowBar4" Height="0.05*"/>
+                    <RowDefinition Name="SpacerBingoRow5" Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Name="SpacerBingoCol1" Width="1*"/>
+                    <ColumnDefinition Name="SpacerBingoColBar1" Width="0.05*"/>
+                    <ColumnDefinition Name="SpacerBingoCol2" Width="1*"/>
+                    <ColumnDefinition Name="SpacerBingoColBar2" Width="0.05*"/>
+                    <ColumnDefinition Name="SpacerBingoCol3" Width="1*"/>
+                    <ColumnDefinition Name="SpacerBingoColBar3" Width="0.05*"/>
+                    <ColumnDefinition Name="SpacerBingoCol4" Width="1*"/>
+                    <ColumnDefinition Name="SpacerBingoColBar4" Width="0.05*"/>
+                    <ColumnDefinition Name="SpacerBingoCol5" Width="1*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <!-- Grid Lines-->
+                <Rectangle Grid.Row="1" Grid.ColumnSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Row="3" Grid.ColumnSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Row="5" Grid.ColumnSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Row="7" Grid.ColumnSpan="9" Fill="#D81E1E1E"/>
+
+                <Rectangle Grid.Column="1" Grid.RowSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Column="3" Grid.RowSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Column="5" Grid.RowSpan="9" Fill="#D81E1E1E"/>
+                <Rectangle Grid.Column="7" Grid.RowSpan="9" Fill="#D81E1E1E"/>
+
+            </Grid>
+
+            <Grid Panel.ZIndex="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Name="BingoRow1" Height="1*"/>
+                    <RowDefinition Name="BingoRow2" Height="1*"/>
+                    <RowDefinition Name="BingoRow3" Height="1*"/>
+                    <RowDefinition Name="BingoRow4" Height="1*"/>
+                    <RowDefinition Name="BingoRow5" Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Name="BingoCol1" Width="1*"/>
+                    <ColumnDefinition Name="BingoCol2" Width="1*"/>
+                    <ColumnDefinition Name="BingoCol3" Width="1*"/>
+                    <ColumnDefinition Name="BingoCol4" Width="1*"/>
+                    <ColumnDefinition Name="BingoCol5" Width="1*"/>
+
+                </Grid.ColumnDefinitions>
+
+                
+                <Grid Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                
+                <Grid Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+
+                <Grid Grid.Row="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.Column="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+
+                <Grid Grid.Row="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="3" Grid.Column="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+
+                <Grid Grid.Row="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="3">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="4">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.075*"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="0.075*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.075*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.075*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+
+                    </Grid>
+                </Grid>
+
+            </Grid>
+
+
+
+
+        </Grid>
+    </DockPanel>
+    
+    
+
+
+</Window>

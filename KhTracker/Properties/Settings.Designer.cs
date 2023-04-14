@@ -838,5 +838,53 @@ namespace KhTracker.Properties {
                 this["Disconnect"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BroadcastWindowX {
+            get {
+                return ((double)(this["BroadcastWindowX"]));
+            }
+            set {
+                this["BroadcastWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BroadcastWindowY {
+            get {
+                return ((double)(this["BroadcastWindowY"]));
+            }
+            set {
+                this["BroadcastWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public double BroadcastWindowWidth {
+            get {
+                return ((double)(this["BroadcastWindowWidth"]));
+            }
+            set {
+                this["BroadcastWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("680")]
+        public double BroadcastWindowHeight {
+            get {
+                return ((double)(this["BroadcastWindowHeight"]));
+            }
+            set {
+                this["BroadcastWindowHeight"] = value;
+            }
+        }
     }
 }

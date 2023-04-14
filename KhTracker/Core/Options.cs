@@ -3061,5 +3061,13 @@ namespace KhTracker
                         return "NumPad0";
             }
         }
+
+        //new window testi
+        private void BroadcastWindow_Open(object sender, RoutedEventArgs e)
+        {
+            //ExtraItemToggleCheck();
+            broadcast.Show();
+        }
+
     }
 }
