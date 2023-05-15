@@ -98,6 +98,13 @@ namespace KhTracker
             Topmost = TopMostOption.IsChecked;
         }
 
+        private void GridTrackerStartupToggle(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.GridTrackerStartup = GridTrackerStartupOption.IsChecked;
+            if (GridTrackerStartupOption.IsChecked)
+                InitGridTracker(null, null);
+        }
+
         private void DragDropToggle(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.DragDrop = DragAndDropOption.IsChecked;

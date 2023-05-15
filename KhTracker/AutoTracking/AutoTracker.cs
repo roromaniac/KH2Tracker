@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System.Diagnostics;
 //using System.IO;
 
 namespace KhTracker
@@ -163,6 +164,16 @@ namespace KhTracker
         {
             pcsx2tracking = false;
             InitAutoTracker(false);
+        }
+
+        public void InitGridTracker(object sender, RoutedEventArgs e)
+        {
+            ProcessStartInfo myProcess = new ProcessStartInfo();
+            myProcess.UseShellExecute = false;
+            myProcess.WorkingDirectory = "C:\\Users\\roman\\source\\repos\\KH2Tracker\\battleship_rando";
+            myProcess.FileName = "C:\\Users\\roman\\source\\repos\\KH2Tracker\\battleship_rando\\rando_battleship.exe";
+            myProcess.CreateNoWindow = true;
+            Process.Start(myProcess);
         }
 
         //public void SetAutoDetectTimer()

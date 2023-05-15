@@ -44,6 +44,9 @@
                 <MenuItem Header="Start PCSX2 Tracking" 	    Click="InitPCSX2Tracker" x:Name="TrackPCSX2Toggle"/>
                 <MenuItem Header="Start PC Port Tracking" 	    Click="InitPCTracker"    x:Name="TrackPCToggle"/>
                 <Separator/>
+                <MenuItem Header="Grid Tracker" 	    Click="InitGridTracker" x:Name="GridTracker"/>
+                <MenuItem Header="Grid Tracker on Startup" 	    Click="GridTrackerStartupToggle" IsCheckable="True" IsChecked="False" x:Name="GridTrackerStartupOption"/>
+                <Separator/>
                 <MenuItem Header="Save Current Progress" Click="SaveProgress"/>
                 <MenuItem Header="Load Tracker Progress" Click="LoadProgress"/>
                 <MenuItem Header="Auto-Save Tracker Progress on Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True"/>
@@ -51,7 +54,7 @@
                 <MenuItem Header="Reset Tracker" 	 Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	 Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Drag and Drop" 	 Click="DragDropToggle" x:Name="DragAndDropOption" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Broadcast Window"  Click="BroadcastWindow_Open"/>
+                <!--<MenuItem Header="Broadcast Window"  Click="BroadcastWindow_Open"/>-->
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>

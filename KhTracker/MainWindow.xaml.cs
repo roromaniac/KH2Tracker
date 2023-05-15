@@ -239,6 +239,9 @@ namespace KhTracker
             FormsGrowthOption.IsChecked = Properties.Settings.Default.FormsGrowth;
             FormsGrowthToggle(null, null);
 
+            GridTrackerStartupOption.IsChecked = Properties.Settings.Default.GridTrackerStartup;
+            GridTrackerStartupToggle(null, null);
+
             //points related
             GhostItemOption.IsChecked = Properties.Settings.Default.GhostItem;
             GhostItemToggle(GhostItemOption.IsChecked);
