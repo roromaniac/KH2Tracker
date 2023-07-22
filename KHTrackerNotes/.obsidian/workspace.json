@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "194a7f41c6bf6d43",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "TO DO/TO DO.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "6ac9a9b3c40e4a30",
             "type": "leaf",
             "state": {
@@ -27,27 +15,14 @@
               "state": {
                 "file": "Example Design.canvas",
                 "viewState": {
-                  "x": 405,
-                  "y": -1090,
-                  "zoom": -0.23401150460328138
+                  "x": 527.9037538660261,
+                  "y": -568.5689270666937,
+                  "zoom": -0.04466661546980144
                 }
               }
             }
-          },
-          {
-            "id": "ff4c83ce730774c5",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2023-07-21.md",
-                "mode": "source",
-                "source": false
-              }
-            }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -113,7 +88,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Example Design.canvas",
+                "file": "TO DO/Assets.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -130,7 +105,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Example Design.canvas",
+                "file": "TO DO/Assets.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -153,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Example Design.canvas"
+                "file": "TO DO/Assets.md"
               }
             }
           }
@@ -175,13 +150,14 @@
   },
   "active": "6ac9a9b3c40e4a30",
   "lastOpenFiles": [
+    "TO DO/Options Window.md",
+    "Example Design.canvas",
     "TO DO/Logic.md",
+    "TO DO/Assets.md",
+    "TO DO/Grid Tracker.md",
+    "2023-07-22.md",
     "2023-07-21.md",
     "TO DO/TO DO.md",
-    "TO DO/Assets.md",
-    "Example Design.canvas",
-    "TO DO/Options Window.md",
-    "TO DO/Grid Tracker.md",
     "TO DO/KH2Tracker.md",
     "TO DO",
     "Potential Note 1.md",

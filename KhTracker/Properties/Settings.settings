@@ -212,16 +212,16 @@
     <Setting Name="AutoSaveProgress2" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="BroadcastWindowX" Type="System.Double" Scope="User">
+    <Setting Name="GridWindowX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="BroadcastWindowY" Type="System.Double" Scope="User">
+    <Setting Name="GridWindowY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="BroadcastWindowWidth" Type="System.Double" Scope="User">
+    <Setting Name="GridWindowWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">500</Value>
     </Setting>
-    <Setting Name="BroadcastWindowHeight" Type="System.Double" Scope="User">
+    <Setting Name="GridWindowHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">680</Value>
     </Setting>
   </Settings>

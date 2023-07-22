@@ -111,11 +111,12 @@
     <Compile Include="Core\Text.cs" />
     <Compile Include="Hotkeys\GlobalHotkey.cs" />
     <Compile Include="Hotkeys\HotkeysManager.cs" />
+    <Compile Include="Core\AssetCollector.cs" />
     <Compile Include="Item.xaml.cs">
       <DependentUpon>Item.xaml</DependentUpon>
     </Compile>
     <Compile Include="Core\Toggles.cs" />
-    <Compile Include="Windows\BroadcastWindow.xaml.cs" />
+    <Compile Include="Windows\GridWindow.xaml.cs" />
     <Compile Include="Windows\GridOptionsWindow.xaml.cs">
       <DependentUpon>GridOptionsWindow.xaml</DependentUpon>
     </Compile>
@@ -134,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\BroadcastWindow.xaml">
+    <Page Include="Windows\GridWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -1135,5 +1136,9 @@
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)AssetCollector\bin\$(ConfigurationName)\AssetCollector.exe "$(ProjectDir)Images"
+</PreBuildEvent>
   </PropertyGroup>
 </Project>

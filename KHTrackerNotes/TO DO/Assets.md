@@ -1,0 +1,4 @@
+- [ ] Create a json file of all trackable checks.
+- [ ] Create a script that populates this json file.
+	- [ ] MAYBE: Add a check type attribute to every object that gets tracked.
+- [ ] Create separate checks/images for AS, Org XIII, and Data Fights (for hitlist for example).

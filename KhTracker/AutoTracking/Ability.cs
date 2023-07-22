@@ -39,12 +39,12 @@ namespace KhTracker
 
         public override byte[] UpdateMemory()
         {
-            if(levelOffset == 0)
+            if (levelOffset == 0)
             {
                 byte[] abilityData = base.UpdateMemory();
                 for (int i = 0; i < abilityData.Length; i += 2)
                 {
-                    if (abilityData[i+1] == 1 && abilityData[i] == 159 && this.Name == "SecondChance")
+                    if (abilityData[i + 1] == 1 && abilityData[i] == 159 && this.Name == "SecondChance")
                     {
                         if (!this.Obtained) { this.Obtained = true; }
                     }

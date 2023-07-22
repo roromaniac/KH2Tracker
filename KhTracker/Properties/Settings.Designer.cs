@@ -866,48 +866,48 @@ namespace KhTracker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double BroadcastWindowX {
+        public double GridWindowX {
             get {
-                return ((double)(this["BroadcastWindowX"]));
+                return ((double)(this["GridWindowX"]));
             }
             set {
-                this["BroadcastWindowX"] = value;
+                this["GridWindowX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double BroadcastWindowY {
+        public double GridWindowY {
             get {
-                return ((double)(this["BroadcastWindowY"]));
+                return ((double)(this["GridWindowY"]));
             }
             set {
-                this["BroadcastWindowY"] = value;
+                this["GridWindowY"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public double BroadcastWindowWidth {
+        public double GridWindowWidth {
             get {
-                return ((double)(this["BroadcastWindowWidth"]));
+                return ((double)(this["GridWindowWidth"]));
             }
             set {
-                this["BroadcastWindowWidth"] = value;
+                this["GridWindowWidth"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("680")]
-        public double BroadcastWindowHeight {
+        public double GridWindowHeight {
             get {
-                return ((double)(this["BroadcastWindowHeight"]));
+                return ((double)(this["GridWindowHeight"]));
             }
             set {
-                this["BroadcastWindowHeight"] = value;
+                this["GridWindowHeight"] = value;
             }
         }
     }

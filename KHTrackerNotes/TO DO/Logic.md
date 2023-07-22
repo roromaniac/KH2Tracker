@@ -1,0 +1,7 @@
+- [ ] Port Battleship Function to GridTracker
+- [ ] Ensure the GridTracker has access to all found checks just like the KH2Tracker.
+	- [ ] Ensure the grid tracker has access to boss enemy replacements once seed is loaded in (should they exist).
+- [ ] Ensure hints get displayed on the grid tracker if they exist.
+- [x] Check if a bingo has been achieved. (NOT ONLY FOR SQUARE BOARDS)
+	- [ ] Include functionality for non-square boards.
+	- [ ] Undo a bingo if a button becomes unclicked. (either check at click time or store the bingo)

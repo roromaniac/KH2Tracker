@@ -19,7 +19,7 @@ namespace KhTracker
 
         public int ADDRESS_OFFSET;
         int Bt10;
-        
+
         MemoryReader memory;
 
         public Rewards(MemoryReader mem, int offset, int bt10)

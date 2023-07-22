@@ -29,11 +29,11 @@ namespace KhTracker
         public void InitImages()
         {
             //for autodetect (won't bother making this customizable for now)
-            data.AD_Connect =   new BitmapImage(new Uri("Images/System/config/searching.png", UriKind.Relative));
-            data.AD_PC =        new BitmapImage(new Uri("Images/System/config/pc_connected.png", UriKind.Relative));
-            data.AD_PCred =     new BitmapImage(new Uri("Images/System/config/pc_detected.png", UriKind.Relative));
-            data.AD_PS2 =       new BitmapImage(new Uri("Images/System/config/pcsx2.png", UriKind.Relative));
-            data.AD_Cross =     new BitmapImage(new Uri("Images/System/cross.png", UriKind.Relative));
+            data.AD_Connect = new BitmapImage(new Uri("Images/System/config/searching.png", UriKind.Relative));
+            data.AD_PC = new BitmapImage(new Uri("Images/System/config/pc_connected.png", UriKind.Relative));
+            data.AD_PCred = new BitmapImage(new Uri("Images/System/config/pc_detected.png", UriKind.Relative));
+            data.AD_PS2 = new BitmapImage(new Uri("Images/System/config/pcsx2.png", UriKind.Relative));
+            data.AD_Cross = new BitmapImage(new Uri("Images/System/cross.png", UriKind.Relative));
 
             //check for custom stat and weapon icons
             if (File.Exists("CustomImages/System/stats/sword.png"))
@@ -53,7 +53,7 @@ namespace KhTracker
 
             //check for custom progression icons. if these 4 are there then assume all progression icons are there
             //no reason for these 4 specific ones, i just picked 4 completely unrelated ones at random.
-            if (File.Exists("CustomImages/Progression/chest.png") && File.Exists("CustomImages/Progression/emblem.png") && 
+            if (File.Exists("CustomImages/Progression/chest.png") && File.Exists("CustomImages/Progression/emblem.png") &&
                 File.Exists("CustomImages/Progression/100_acre_wood/hunny_slider.png") && File.Exists("CustomImages/Progression/halloween_town/oogie_boogie.png"))
                 CustomProgFound = true;
 
@@ -176,7 +176,7 @@ namespace KhTracker
                 {Ghost_Final,           new Tuple<string, string>("CustomImages/GhostChecks/form_final.png", "Cus-G_Final")},
                 {Ghost_Lamp,            new Tuple<string, string>("CustomImages/GhostChecks/summon_genie.png", "Cus-G_Lamp")},
                 {Ghost_Ukulele,         new Tuple<string, string>("CustomImages/GhostChecks/summon_stitch.png", "Cus-G_Ukulele")},
-                {Ghost_Baseball,        new Tuple<string, string>("CustomImages/GhostChecks/summon_chicken_little.png", "Cus-G_Baseball"	)},
+                {Ghost_Baseball,        new Tuple<string, string>("CustomImages/GhostChecks/summon_chicken_little.png", "Cus-G_Baseball"    )},
                 {Ghost_Feather,         new Tuple<string, string>("CustomImages/GhostChecks/summon_peter_pan.png", "Cus-G_Feather")},
                 {Ghost_Nonexistence,    new Tuple<string, string>("CustomImages/GhostChecks/proof_nonexistence.png", "Cus-G_Nonexistence")},
                 {Ghost_Connection,      new Tuple<string, string>("CustomImages/GhostChecks/proof_connection.png", "Cus-G_Connection")},
@@ -415,7 +415,7 @@ namespace KhTracker
                 DefenseIcon.SetResourceReference(ContentProperty, "Cus-DefenseIcon");
 
             //visit locks
-            if(Directory.Exists("CustomImages/Worlds/Locks/"))
+            if (Directory.Exists("CustomImages/Worlds/Locks/"))
             {
                 if (File.Exists("CustomImages/Worlds/Locks/HB.png"))
                     HollowBastionLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/HB.png", UriKind.Absolute));
@@ -444,25 +444,25 @@ namespace KhTracker
             //world cross
             if (File.Exists("CustomImages/System/crossworld.png"))
             {
-                SorasHeartCross.Source =            new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                DriveFormsCross.Source =            new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                SorasHeartCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                DriveFormsCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
                 SimulatedTwilightTownCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                TwilightTownCross.Source =          new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                HollowBastionCross.Source =         new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                BeastsCastleCross.Source =          new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                OlympusColiseumCross.Source =       new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                AgrabahCross.Source =               new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                LandofDragonsCross.Source =         new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                HundredAcreWoodCross.Source =       new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                PrideLandsCross.Source =            new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                DisneyCastleCross.Source =          new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                HalloweenTownCross.Source =         new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                PortRoyalCross.Source =             new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                TWTNWCross.Source =                 new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                SpaceParanoidsCross.Source =        new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                AtlanticaCross.Source =             new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                PuzzSynthCross.Source =             new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
-                GoACross.Source =                   new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                TwilightTownCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                HollowBastionCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                BeastsCastleCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                OlympusColiseumCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                AgrabahCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                LandofDragonsCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                HundredAcreWoodCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                PrideLandsCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                DisneyCastleCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                HalloweenTownCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                PortRoyalCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                TWTNWCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                SpaceParanoidsCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                AtlanticaCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                PuzzSynthCross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
+                GoACross.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/System/crossworld.png", UriKind.Absolute));
             }
 
             //DeathCounter counter skull
@@ -628,7 +628,7 @@ namespace KhTracker
                 if (CusItemCheck[data.Items[item].Item1].Item3 != null)
                     CusItemCheck[data.Items[item].Item1].Item3.SetResourceReference(ContentProperty, type + item);
             }
-            
+
             // Ghost icons
             foreach (var item in data.GhostItems.Values)
             {
@@ -637,7 +637,7 @@ namespace KhTracker
                 else
                     item.SetResourceReference(ContentProperty, type + "Report");
             }
-            
+
             // stat/info icons
             ValorM.SetResourceReference(ContentProperty, "Valor");
             WisdomM.SetResourceReference(ContentProperty, "Wisdom");
@@ -646,7 +646,7 @@ namespace KhTracker
             FinalM.SetResourceReference(ContentProperty, "Final");
             HighJump.SetResourceReference(ContentProperty, "HighJump");
             QuickRun.SetResourceReference(ContentProperty, "QuickRun");
-            DodgeRoll.SetResourceReference(ContentProperty,  "DodgeRoll");
+            DodgeRoll.SetResourceReference(ContentProperty, "DodgeRoll");
             AerialDodge.SetResourceReference(ContentProperty, "AerialDodge");
             Glide.SetResourceReference(ContentProperty, "Glide");
 

@@ -46,5 +46,55 @@ namespace KhTracker
             this.DataContext = categories;
 
         }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "Enter text...";
+            }
+        }
+
+        private void SetNumRows(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Enter text...")
+            {
+                textBox.Text = "";
+            }
+            else
+            {
+                try
+                {
+                    GridWindow.numRows = Convert.ToInt32(textBox.Text);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("You need to input an integer value for the number of rows.");
+                }
+            }
+        }
+
+        private void SetNumColumns(object sender, RoutedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Text == "Enter text...")
+            {
+                textBox.Text = "";
+            }
+            else
+            {
+                try
+                {
+                    GridWindow.numColumns = Convert.ToInt32(textBox.Text);
+                    Console.WriteLine(GridWindow.numColumns);
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("You need to input an integer value for the number of columns.");
+                }
+            }
+        }
     }
 }

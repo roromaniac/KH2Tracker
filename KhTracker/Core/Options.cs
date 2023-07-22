@@ -144,13 +144,13 @@ namespace KhTracker
             #endregion
 
             #region Counters
-            var counterInfo = new int[8]{1,1,1,1,1,1,0,0};
+            var counterInfo = new int[8] { 1, 1, 1, 1, 1, 1, 0, 0 };
             counterInfo[0] = data.DriveLevels[0];
             counterInfo[1] = data.DriveLevels[1];
             counterInfo[2] = data.DriveLevels[2];
             counterInfo[3] = data.DriveLevels[3];
             counterInfo[4] = data.DriveLevels[4];
-            if(stats != null)
+            if (stats != null)
                 counterInfo[5] = stats.Level;
             counterInfo[6] = DeathCounter;
             counterInfo[7] = data.usedPages;
@@ -229,7 +229,7 @@ namespace KhTracker
                     string caption = "Save Version Mismatch";
                     MessageForm.MessageBoxButtons buttons = MessageForm.MessageBoxButtons.YesNo;
                     MessageForm.DialogResult result;
-            
+
                     result = MessageForm.MessageBox.Show(message, caption, buttons);
                     if (result == MessageForm.DialogResult.No)
                     {
@@ -345,7 +345,7 @@ namespace KhTracker
             }
 
             //use random seed from save
-            if(Savefile.ContainsKey("RandomSeed"))
+            if (Savefile.ContainsKey("RandomSeed"))
             {
                 if (Savefile["RandomSeed"] != null)
                 {
@@ -921,7 +921,7 @@ namespace KhTracker
                         //need to add sora levels one at a time to get points correctly
                         for (int l = 0; l < counters[i]; ++l)
                         {
-                            FakeLevelsProgressionBonus(l+1);
+                            FakeLevelsProgressionBonus(l + 1);
                         }
                     }
                 }
@@ -933,7 +933,7 @@ namespace KhTracker
             if (Savefile.ContainsKey("Attemps"))
             {
                 var attempts = JsonSerializer.Deserialize<int[]>(Savefile["Attemps"].ToString());
-                string[] failNames = new string[4]{ "Fail3", "Fail2", "Fail1", "Fail0"};
+                string[] failNames = new string[4] { "Fail3", "Fail2", "Fail1", "Fail0" };
 
                 for (int i = 0; i < 13; ++i)
                 {
@@ -2285,7 +2285,7 @@ namespace KhTracker
                 data.wasTracking = false;
 
             //chnage visuals based on if autotracking was done before
-            if (data.wasTracking) 
+            if (data.wasTracking)
             {
                 //connection trying visual
                 Connect.Visibility = Visibility.Visible;
@@ -2448,14 +2448,14 @@ namespace KhTracker
                     Item item = worldData.worldGrid.Children[j] as Item;
                     Grid pool;
 
-                    if(item.Name.StartsWith("Ghost_"))
+                    if (item.Name.StartsWith("Ghost_"))
                         pool = VisualTreeHelper.GetChild(ItemPool, 4) as Grid;
                     else
                         pool = data.Items[item.Name].Item2;
-            
+
                     worldData.worldGrid.Children.Remove(worldData.worldGrid.Children[j]);
                     pool.Children.Add(item);
-            
+
                     item.MouseDown -= item.Item_Return;
                     item.MouseEnter -= item.Report_Hover;
                     if (data.dragDrop)
@@ -2483,7 +2483,7 @@ namespace KhTracker
                 if (row.Height.Value != 0)
                     row.Height = new GridLength(1, GridUnitType.Star);
             }
-            
+
             // Reset 2nd column row heights
             RowDefinitionCollection rows2 = ((data.WorldsData["DriveForms"].worldGrid.Parent as Grid).Parent as Grid).RowDefinitions;
             foreach (RowDefinition row in rows2)
@@ -2723,12 +2723,12 @@ namespace KhTracker
             Setting_Cavern.Width = new GridLength(0, GridUnitType.Star);
             Setting_Transport.Width = new GridLength(0, GridUnitType.Star);
             Setting_Spacer.Width = new GridLength(10, GridUnitType.Star);
-            
+
             //reset pathhints edits
             foreach (string key in data.WorldsData.Keys.ToList())
             {
                 data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Star);
-            
+
                 Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
                 pathgrid.Visibility = Visibility.Hidden;
                 foreach (Image child in pathgrid.Children)
@@ -2778,7 +2778,7 @@ namespace KhTracker
 
             if (data.seedLoaded | data.saveFileLoaded)
             {
-                if(type == "tsv")
+                if (type == "tsv")
                 {
                     message = "Hints were already loaded into the tracker!" +
                         "\n Any progress made so far would be lost if you continue." +
@@ -3134,7 +3134,7 @@ namespace KhTracker
         }
 
         //new window testi
-        private void BroadcastWindow_Open(object sender, RoutedEventArgs e)
+        private void GridWindow_Open(object sender, RoutedEventArgs e)
         {
             //ExtraItemToggleCheck();
             broadcast.Show();

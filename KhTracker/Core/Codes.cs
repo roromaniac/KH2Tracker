@@ -90,7 +90,7 @@ namespace KhTracker
 
         public static string GetHintTextName(string worldName)
         {
-            switch(worldName)
+            switch (worldName)
             {
                 case "SimulatedTwilightTown":
                     return "Simulated Twilight Town";
@@ -122,7 +122,7 @@ namespace KhTracker
                     return "Sora's Heart";
                 case "PuzzSynth":
                     return "Creations";
-                default: 
+                default:
                     return worldName;
             }
         }
@@ -1274,7 +1274,7 @@ namespace KhTracker
         "11CE05D6",
 
         "11CE0AB6" }; //data demyx
-        
+
         string[] LandOfDragons = new string[] {
         "11CDF72A",
         "11CDF736",
@@ -1306,7 +1306,7 @@ namespace KhTracker
         "11CE06EA",
 
         "11CE0AE6" }; //data xigbar
-        
+
         string[] BeastsCastle = new string[] {
         "11CDFBF2",
         "11CDFBFE",
@@ -1482,7 +1482,7 @@ namespace KhTracker
         "11CE0792",
         "11CE079E",
         "11CE08B2",
-        
+
         "11CE0A4A", //AS lexaeus
         "11CE0A86"}; //data lexaeus
 

@@ -30,7 +30,7 @@ namespace KhTracker
         private int total;
         public static int PointTotal = 0;
         public int DeathCounter = 0;
-        private BroadcastWindow broadcast;
+        private GridWindow broadcast;
 
         public MainWindow()
         {
@@ -107,61 +107,61 @@ namespace KhTracker
             data.VisitLocks.Add(IceCream);
             data.VisitLocks.Add(Picture);
 
-            data.WorldsData.Add("SorasHeart",               new WorldData(SorasHeartTop, SorasHeart, null, SorasHeartHint, SorasHeartGrid, false, 0));
-            data.WorldsData.Add("DriveForms",               new WorldData(DriveFormsTop, DriveForms, null, DriveFormsHint, DriveFormsGrid, false, 0));
-            data.WorldsData.Add("SimulatedTwilightTown",    new WorldData(SimulatedTwilightTownTop, SimulatedTwilightTown, SimulatedTwilightTownProgression, SimulatedTwilightTownHint, SimulatedTwilightTownGrid, false, 0));
-            data.WorldsData.Add("TwilightTown",             new WorldData(TwilightTownTop, TwilightTown, TwilightTownProgression, TwilightTownHint, TwilightTownGrid, false, 0));
-            data.WorldsData.Add("HollowBastion",            new WorldData(HollowBastionTop, HollowBastion, HollowBastionProgression, HollowBastionHint, HollowBastionGrid, false, 0));
-            data.WorldsData.Add("BeastsCastle",             new WorldData(BeastsCastleTop, BeastsCastle, BeastsCastleProgression, BeastsCastleHint, BeastsCastleGrid, false, 0));
-            data.WorldsData.Add("OlympusColiseum",          new WorldData(OlympusColiseumTop, OlympusColiseum, OlympusColiseumProgression, OlympusColiseumHint, OlympusColiseumGrid, false, 0));
-            data.WorldsData.Add("Agrabah",                  new WorldData(AgrabahTop, Agrabah, AgrabahProgression, AgrabahHint, AgrabahGrid, false, 0));
-            data.WorldsData.Add("LandofDragons",            new WorldData(LandofDragonsTop, LandofDragons, LandofDragonsProgression, LandofDragonsHint, LandofDragonsGrid, false, 0));
-            data.WorldsData.Add("HundredAcreWood",          new WorldData(HundredAcreWoodTop, HundredAcreWood, HundredAcreWoodProgression, HundredAcreWoodHint, HundredAcreWoodGrid, false, 0));
-            data.WorldsData.Add("PrideLands",               new WorldData(PrideLandsTop, PrideLands, PrideLandsProgression, PrideLandsHint, PrideLandsGrid, false, 0));
-            data.WorldsData.Add("DisneyCastle",             new WorldData(DisneyCastleTop, DisneyCastle, DisneyCastleProgression, DisneyCastleHint, DisneyCastleGrid, false, 0));
-            data.WorldsData.Add("HalloweenTown",            new WorldData(HalloweenTownTop, HalloweenTown, HalloweenTownProgression, HalloweenTownHint, HalloweenTownGrid, false, 0));
-            data.WorldsData.Add("PortRoyal",                new WorldData(PortRoyalTop, PortRoyal, PortRoyalProgression, PortRoyalHint, PortRoyalGrid, false, 0));
-            data.WorldsData.Add("SpaceParanoids",           new WorldData(SpaceParanoidsTop, SpaceParanoids, SpaceParanoidsProgression, SpaceParanoidsHint, SpaceParanoidsGrid, false, 0));
-            data.WorldsData.Add("TWTNW",                    new WorldData(TWTNWTop, TWTNW, TWTNWProgression, TWTNWHint, TWTNWGrid, false, 0));
-            data.WorldsData.Add("GoA",                      new WorldData(GoATop, GoA, GoAProgression, GoAHint, GoAGrid, true, 0));
-            data.WorldsData.Add("Atlantica",                new WorldData(AtlanticaTop, Atlantica, AtlanticaProgression, AtlanticaHint, AtlanticaGrid, false, 0));
-            data.WorldsData.Add("PuzzSynth",                new WorldData(PuzzSynthTop, PuzzSynth, null, PuzzSynthHint, PuzzSynthGrid, false, 0));
+            data.WorldsData.Add("SorasHeart", new WorldData(SorasHeartTop, SorasHeart, null, SorasHeartHint, SorasHeartGrid, false, 0));
+            data.WorldsData.Add("DriveForms", new WorldData(DriveFormsTop, DriveForms, null, DriveFormsHint, DriveFormsGrid, false, 0));
+            data.WorldsData.Add("SimulatedTwilightTown", new WorldData(SimulatedTwilightTownTop, SimulatedTwilightTown, SimulatedTwilightTownProgression, SimulatedTwilightTownHint, SimulatedTwilightTownGrid, false, 0));
+            data.WorldsData.Add("TwilightTown", new WorldData(TwilightTownTop, TwilightTown, TwilightTownProgression, TwilightTownHint, TwilightTownGrid, false, 0));
+            data.WorldsData.Add("HollowBastion", new WorldData(HollowBastionTop, HollowBastion, HollowBastionProgression, HollowBastionHint, HollowBastionGrid, false, 0));
+            data.WorldsData.Add("BeastsCastle", new WorldData(BeastsCastleTop, BeastsCastle, BeastsCastleProgression, BeastsCastleHint, BeastsCastleGrid, false, 0));
+            data.WorldsData.Add("OlympusColiseum", new WorldData(OlympusColiseumTop, OlympusColiseum, OlympusColiseumProgression, OlympusColiseumHint, OlympusColiseumGrid, false, 0));
+            data.WorldsData.Add("Agrabah", new WorldData(AgrabahTop, Agrabah, AgrabahProgression, AgrabahHint, AgrabahGrid, false, 0));
+            data.WorldsData.Add("LandofDragons", new WorldData(LandofDragonsTop, LandofDragons, LandofDragonsProgression, LandofDragonsHint, LandofDragonsGrid, false, 0));
+            data.WorldsData.Add("HundredAcreWood", new WorldData(HundredAcreWoodTop, HundredAcreWood, HundredAcreWoodProgression, HundredAcreWoodHint, HundredAcreWoodGrid, false, 0));
+            data.WorldsData.Add("PrideLands", new WorldData(PrideLandsTop, PrideLands, PrideLandsProgression, PrideLandsHint, PrideLandsGrid, false, 0));
+            data.WorldsData.Add("DisneyCastle", new WorldData(DisneyCastleTop, DisneyCastle, DisneyCastleProgression, DisneyCastleHint, DisneyCastleGrid, false, 0));
+            data.WorldsData.Add("HalloweenTown", new WorldData(HalloweenTownTop, HalloweenTown, HalloweenTownProgression, HalloweenTownHint, HalloweenTownGrid, false, 0));
+            data.WorldsData.Add("PortRoyal", new WorldData(PortRoyalTop, PortRoyal, PortRoyalProgression, PortRoyalHint, PortRoyalGrid, false, 0));
+            data.WorldsData.Add("SpaceParanoids", new WorldData(SpaceParanoidsTop, SpaceParanoids, SpaceParanoidsProgression, SpaceParanoidsHint, SpaceParanoidsGrid, false, 0));
+            data.WorldsData.Add("TWTNW", new WorldData(TWTNWTop, TWTNW, TWTNWProgression, TWTNWHint, TWTNWGrid, false, 0));
+            data.WorldsData.Add("GoA", new WorldData(GoATop, GoA, GoAProgression, GoAHint, GoAGrid, true, 0));
+            data.WorldsData.Add("Atlantica", new WorldData(AtlanticaTop, Atlantica, AtlanticaProgression, AtlanticaHint, AtlanticaGrid, false, 0));
+            data.WorldsData.Add("PuzzSynth", new WorldData(PuzzSynthTop, PuzzSynth, null, PuzzSynthHint, PuzzSynthGrid, false, 0));
 
-            data.ProgressKeys.Add("SimulatedTwilightTown",  new List<string>() { "", "Chests", "Minigame", "TwilightThorn", "Axel1", "Struggle", "ComputerRoom", "Axel", "DataRoxas" });
-            data.ProgressKeys.Add("TwilightTown",           new List<string>() { "", "Chests", "Station", "MysteriousTower", "Sandlot", "Mansion", "BetwixtAndBetween", "DataAxel" });
-            data.ProgressKeys.Add("HollowBastion",          new List<string>() { "", "Chests", "Bailey", "AnsemStudy", "Corridor", "Dancers", "HBDemyx", "FinalFantasy", "1000Heartless", "Sephiroth", "DataDemyx", "SephiDemyx" });
-            data.ProgressKeys.Add("BeastsCastle",           new List<string>() { "", "Chests", "Thresholder", "Beast", "DarkThorn", "Dragoons", "Xaldin", "DataXaldin" });
-            data.ProgressKeys.Add("OlympusColiseum",        new List<string>() { "", "Chests", "Cerberus", "Urns", "OCDemyx", "OCPete", "Hydra", "AuronStatue", "Hades", "Zexion", "ZexionData" });
-            data.ProgressKeys.Add("Agrabah",                new List<string>() { "", "Chests", "Abu", "Chasm", "TreasureRoom", "Lords", "Carpet", "GenieJafar", "Lexaeus", "LexaeusData" });
-            data.ProgressKeys.Add("LandofDragons",          new List<string>() { "", "Chests", "Missions", "Mountain", "Cave", "Summit", "ShanYu", "ThroneRoom", "StormRider", "DataXigbar" });
-            data.ProgressKeys.Add("HundredAcreWood",        new List<string>() { "", "Chests", "Piglet", "Rabbit", "Kanga", "SpookyCave", "StarryHill" });
-            data.ProgressKeys.Add("PrideLands",             new List<string>() { "", "Chests", "Simba", "Hyenas1", "Scar", "Hyenas2", "GroundShaker", "DataSaix" });
-            data.ProgressKeys.Add("DisneyCastle",           new List<string>() { "", "Chests", "Minnie", "OldPete", "Windows", "BoatPete", "DCPete", "Marluxia", "MarluxiaData", "LingeringWill", "Marluxia_LingeringWill", "MarluxiaData_LingeringWill" });
-            data.ProgressKeys.Add("HalloweenTown",          new List<string>() { "", "Chests", "CandyCaneLane", "PrisonKeeper", "OogieBoogie", "Children", "Presents", "Experiment", "Vexen", "VexenData" });
-            data.ProgressKeys.Add("PortRoyal",              new List<string>() { "", "Chests", "Town", "1Minute", "Medallions", "Barrels", "Barbossa", "GrimReaper1", "Gambler", "GrimReaper", "DataLuxord" });
-            data.ProgressKeys.Add("SpaceParanoids",         new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "MCP", "Larxene", "LarxeneData" });
-            data.ProgressKeys.Add("TWTNW",                  new List<string>() { "", "Chests", "Roxas", "Xigbar", "Luxord", "Saix", "Xemnas1", "DataXemnas" });
-            data.ProgressKeys.Add("Atlantica",              new List<string>() { "", "Tutorial", "Ursula", "NewDay" });
-            data.ProgressKeys.Add("GoA",                    new List<string>() { "", "Chests", "Fight1", "Fight2", "Transport", "Valves" });
+            data.ProgressKeys.Add("SimulatedTwilightTown", new List<string>() { "", "Chests", "Minigame", "TwilightThorn", "Axel1", "Struggle", "ComputerRoom", "Axel", "DataRoxas" });
+            data.ProgressKeys.Add("TwilightTown", new List<string>() { "", "Chests", "Station", "MysteriousTower", "Sandlot", "Mansion", "BetwixtAndBetween", "DataAxel" });
+            data.ProgressKeys.Add("HollowBastion", new List<string>() { "", "Chests", "Bailey", "AnsemStudy", "Corridor", "Dancers", "HBDemyx", "FinalFantasy", "1000Heartless", "Sephiroth", "DataDemyx", "SephiDemyx" });
+            data.ProgressKeys.Add("BeastsCastle", new List<string>() { "", "Chests", "Thresholder", "Beast", "DarkThorn", "Dragoons", "Xaldin", "DataXaldin" });
+            data.ProgressKeys.Add("OlympusColiseum", new List<string>() { "", "Chests", "Cerberus", "Urns", "OCDemyx", "OCPete", "Hydra", "AuronStatue", "Hades", "Zexion", "ZexionData" });
+            data.ProgressKeys.Add("Agrabah", new List<string>() { "", "Chests", "Abu", "Chasm", "TreasureRoom", "Lords", "Carpet", "GenieJafar", "Lexaeus", "LexaeusData" });
+            data.ProgressKeys.Add("LandofDragons", new List<string>() { "", "Chests", "Missions", "Mountain", "Cave", "Summit", "ShanYu", "ThroneRoom", "StormRider", "DataXigbar" });
+            data.ProgressKeys.Add("HundredAcreWood", new List<string>() { "", "Chests", "Piglet", "Rabbit", "Kanga", "SpookyCave", "StarryHill" });
+            data.ProgressKeys.Add("PrideLands", new List<string>() { "", "Chests", "Simba", "Hyenas1", "Scar", "Hyenas2", "GroundShaker", "DataSaix" });
+            data.ProgressKeys.Add("DisneyCastle", new List<string>() { "", "Chests", "Minnie", "OldPete", "Windows", "BoatPete", "DCPete", "Marluxia", "MarluxiaData", "LingeringWill", "Marluxia_LingeringWill", "MarluxiaData_LingeringWill" });
+            data.ProgressKeys.Add("HalloweenTown", new List<string>() { "", "Chests", "CandyCaneLane", "PrisonKeeper", "OogieBoogie", "Children", "Presents", "Experiment", "Vexen", "VexenData" });
+            data.ProgressKeys.Add("PortRoyal", new List<string>() { "", "Chests", "Town", "1Minute", "Medallions", "Barrels", "Barbossa", "GrimReaper1", "Gambler", "GrimReaper", "DataLuxord" });
+            data.ProgressKeys.Add("SpaceParanoids", new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "MCP", "Larxene", "LarxeneData" });
+            data.ProgressKeys.Add("TWTNW", new List<string>() { "", "Chests", "Roxas", "Xigbar", "Luxord", "Saix", "Xemnas1", "DataXemnas" });
+            data.ProgressKeys.Add("Atlantica", new List<string>() { "", "Tutorial", "Ursula", "NewDay" });
+            data.ProgressKeys.Add("GoA", new List<string>() { "", "Chests", "Fight1", "Fight2", "Transport", "Valves" });
 
             //testing tooltip descriptions
             //(adding to existing list above cause it's easier) 
-            data.ProgressKeys.Add("SimulatedTwilightTownDesc",  new List<string>() { "", "Early Checks", "Part-Time Job", "Twilight Thorn (Boss)", "Axel 1 (Boss)", "Beat Setzer", "Mansion Computer Room", "Axel 2 (Boss)", "Roxas (Data)" });
-            data.ProgressKeys.Add("TwilightTownDesc",           new List<string>() { "", "Early Checks", "Train Station Fight", "Mysterious Tower", "Sandlot Fight", "Mansion Gate Fight", "Betwixt And Between", "Axel (Data)" });
-            data.ProgressKeys.Add("HollowBastionDesc",          new List<string>() { "", "Early Checks", "Bailey Gate Fight", "Ansem's Study", "Corridor Fight", "Restoration Site Fight", "Demyx (Boss)", "Final Fantasy Fights", "1000 Heartless", "Sephiroth (Boss)", "Demyx (Data)", "Sephiroth and Demyx" });
-            data.ProgressKeys.Add("BeastsCastleDesc",           new List<string>() { "", "Early Checks", "Thresholder (Boss)", "Beast Fight", "Dark Thorn (Boss)", "Dragoons Forced Fight", "Xaldin (Boss)", "Xaldin (Data)" });
-            data.ProgressKeys.Add("OlympusColiseumDesc",        new List<string>() { "", "Early Checks", "Cerberus (Boss)", "Phil's Training", "Demyx Fight", "Pete Fight", "Hydra (Boss)", "Hades' Chamber Fight", "Hades (Boss)", "Zexion (AS)", "Zexion (Data)" });
-            data.ProgressKeys.Add("AgrabahDesc",                new List<string>() { "", "Early Checks", "Abu Minigame", "Chasm of Challenges", "Treasure Room Fight", "Twin Lords (Boss)", "Carpet Magic Minigame", "Genie Jafar (Boss)", "Lexaeus (AS)", "Lexaeus (Data)" });
-            data.ProgressKeys.Add("LandofDragonsDesc",          new List<string>() { "", "Early Checks", "Mission 3 (The Search)", "Mountain Climb", "Town Cave Fight", "Summmit Fight", "Shan Yu (Boss)", "Throne Room", "Storm Rider (Boss)", "Xigbar (Data)" });
-            data.ProgressKeys.Add("HundredAcreWoodDesc",        new List<string>() { "", "Early Checks", "Entered Piglet's House", "Entered Rabbit's House", "Entered Kanga's House", "Entered Spooky Cave", "Entered Starry Hill" });
-            data.ProgressKeys.Add("PrideLandsDesc",             new List<string>() { "", "Early Checks", "Met Simba", "Hyenas Fight (1st Visit)", "Scar (Boss)", "Hyenas Fight (2nd Visit)", "Ground Shaker (Boss)", "Saix (Data)" });
-            data.ProgressKeys.Add("DisneyCastleDesc",           new List<string>() { "", "Early Checks", "Minnie Escort", "Past Pete Fight", "Windows of Time", "Steamboat Fight", "Pete (Boss)", "Marluxia (AS)", "Marluxia (Data)", "Lingering Will (Boss)", "Marluxia (AS) and Lingering Will", "Marluxia (Data) and Lingering Will" });
-            data.ProgressKeys.Add("HalloweenTownDesc",          new List<string>() { "", "Early Checks", "Candy Cane Lane Fight", "Prison Keeper (Boss)", "Oogie Boogie (Boss)", "Lock, Shock, and Barrel", "Made Decoy Presents", "The Experiment (Boss)", "Vexen (AS)", "Vexen (Data)" });
-            data.ProgressKeys.Add("PortRoyalDesc",              new List<string>() { "", "Early Checks", "Town Fight", "1 Minute Isle Fight", "Interceptor Medallion Fight", "Interceptor Barrels", "Barbossa (Boss)", "Grim Reaper 1 (Boss)", "1st Gambler Medallion", "Grim Reaper 2 (Boss)", "Luxord (Data)" });
-            data.ProgressKeys.Add("SpaceParanoidsDesc",         new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "MCP (Boss)", "Larxene (AS)", "Larxene (Data)" });
-            data.ProgressKeys.Add("TWTNWDesc",                  new List<string>() { "", "Early Checks", "Roxas (Boss)", "Xigbar (Boss)", "Luxord (Boss)", "Saix (Boss)", "Xemnas 1 (Boss)", "Xemnas (Data)" });
-            data.ProgressKeys.Add("AtlanticaDesc",              new List<string>() { "", "Music Tutorial", "Ursula's Revenge", "A New Day is Dawning" });
-            data.ProgressKeys.Add("GoADesc",                    new List<string>() { "", "Early Checks", "Forced Fight 1", "Forced Fight 2", "Transport to Rememberance", "Steam Valves (CoR Skip)" });
+            data.ProgressKeys.Add("SimulatedTwilightTownDesc", new List<string>() { "", "Early Checks", "Part-Time Job", "Twilight Thorn (Boss)", "Axel 1 (Boss)", "Beat Setzer", "Mansion Computer Room", "Axel 2 (Boss)", "Roxas (Data)" });
+            data.ProgressKeys.Add("TwilightTownDesc", new List<string>() { "", "Early Checks", "Train Station Fight", "Mysterious Tower", "Sandlot Fight", "Mansion Gate Fight", "Betwixt And Between", "Axel (Data)" });
+            data.ProgressKeys.Add("HollowBastionDesc", new List<string>() { "", "Early Checks", "Bailey Gate Fight", "Ansem's Study", "Corridor Fight", "Restoration Site Fight", "Demyx (Boss)", "Final Fantasy Fights", "1000 Heartless", "Sephiroth (Boss)", "Demyx (Data)", "Sephiroth and Demyx" });
+            data.ProgressKeys.Add("BeastsCastleDesc", new List<string>() { "", "Early Checks", "Thresholder (Boss)", "Beast Fight", "Dark Thorn (Boss)", "Dragoons Forced Fight", "Xaldin (Boss)", "Xaldin (Data)" });
+            data.ProgressKeys.Add("OlympusColiseumDesc", new List<string>() { "", "Early Checks", "Cerberus (Boss)", "Phil's Training", "Demyx Fight", "Pete Fight", "Hydra (Boss)", "Hades' Chamber Fight", "Hades (Boss)", "Zexion (AS)", "Zexion (Data)" });
+            data.ProgressKeys.Add("AgrabahDesc", new List<string>() { "", "Early Checks", "Abu Minigame", "Chasm of Challenges", "Treasure Room Fight", "Twin Lords (Boss)", "Carpet Magic Minigame", "Genie Jafar (Boss)", "Lexaeus (AS)", "Lexaeus (Data)" });
+            data.ProgressKeys.Add("LandofDragonsDesc", new List<string>() { "", "Early Checks", "Mission 3 (The Search)", "Mountain Climb", "Town Cave Fight", "Summmit Fight", "Shan Yu (Boss)", "Throne Room", "Storm Rider (Boss)", "Xigbar (Data)" });
+            data.ProgressKeys.Add("HundredAcreWoodDesc", new List<string>() { "", "Early Checks", "Entered Piglet's House", "Entered Rabbit's House", "Entered Kanga's House", "Entered Spooky Cave", "Entered Starry Hill" });
+            data.ProgressKeys.Add("PrideLandsDesc", new List<string>() { "", "Early Checks", "Met Simba", "Hyenas Fight (1st Visit)", "Scar (Boss)", "Hyenas Fight (2nd Visit)", "Ground Shaker (Boss)", "Saix (Data)" });
+            data.ProgressKeys.Add("DisneyCastleDesc", new List<string>() { "", "Early Checks", "Minnie Escort", "Past Pete Fight", "Windows of Time", "Steamboat Fight", "Pete (Boss)", "Marluxia (AS)", "Marluxia (Data)", "Lingering Will (Boss)", "Marluxia (AS) and Lingering Will", "Marluxia (Data) and Lingering Will" });
+            data.ProgressKeys.Add("HalloweenTownDesc", new List<string>() { "", "Early Checks", "Candy Cane Lane Fight", "Prison Keeper (Boss)", "Oogie Boogie (Boss)", "Lock, Shock, and Barrel", "Made Decoy Presents", "The Experiment (Boss)", "Vexen (AS)", "Vexen (Data)" });
+            data.ProgressKeys.Add("PortRoyalDesc", new List<string>() { "", "Early Checks", "Town Fight", "1 Minute Isle Fight", "Interceptor Medallion Fight", "Interceptor Barrels", "Barbossa (Boss)", "Grim Reaper 1 (Boss)", "1st Gambler Medallion", "Grim Reaper 2 (Boss)", "Luxord (Data)" });
+            data.ProgressKeys.Add("SpaceParanoidsDesc", new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "MCP (Boss)", "Larxene (AS)", "Larxene (Data)" });
+            data.ProgressKeys.Add("TWTNWDesc", new List<string>() { "", "Early Checks", "Roxas (Boss)", "Xigbar (Boss)", "Luxord (Boss)", "Saix (Boss)", "Xemnas 1 (Boss)", "Xemnas (Data)" });
+            data.ProgressKeys.Add("AtlanticaDesc", new List<string>() { "", "Music Tutorial", "Ursula's Revenge", "A New Day is Dawning" });
+            data.ProgressKeys.Add("GoADesc", new List<string>() { "", "Early Checks", "Forced Fight 1", "Forced Fight 2", "Transport to Rememberance", "Steam Valves (CoR Skip)" });
 
             foreach (Grid itemrow in ItemPool.Children)
             {
@@ -185,7 +185,7 @@ namespace KhTracker
                 }
             }
 
-            broadcast = new BroadcastWindow(data);
+            broadcast = new GridWindow(data);
         }
 
         private void InitOptions()
@@ -260,7 +260,7 @@ namespace KhTracker
             if (SoraLevel01Option.IsChecked)
                 SoraLevel01Toggle(null, null);
             if (SoraLevel50Option.IsChecked)
-                SoraLevel50Toggle(null, null);          
+                SoraLevel50Toggle(null, null);
             if (SoraLevel99Option.IsChecked)
                 SoraLevel99Toggle(null, null);
 
@@ -436,7 +436,7 @@ namespace KhTracker
                 case MouseButton.Left: //for changing world selection visuals
                     if (data.selected != null) //set previousl selected world to default colors
                     {
-                        preButton= data.selected;
+                        preButton = data.selected;
                         foreach (var Box in data.WorldsData[data.selected.Name].top.Children.OfType<Rectangle>())
                         {
                             if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
@@ -523,7 +523,7 @@ namespace KhTracker
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             Button button = sender as Button;
-            
+
             if (data.WorldsData.ContainsKey(button.Name) && data.WorldsData[button.Name].value != null)
             {
                 ManualWorldValue(data.WorldsData[button.Name].value, e.Delta);
@@ -602,7 +602,7 @@ namespace KhTracker
             //get current number
             if (Hint.Text == "?")
             {
-                if (delta > 0 && Hint.Name.Contains("GoA")) 
+                if (delta > 0 && Hint.Name.Contains("GoA"))
                     num = -1; // if adding then start at -1 so next number is 0
                 else
                     num = 0; //if subtracting start at 0 so next number is -1
@@ -665,8 +665,8 @@ namespace KhTracker
                 return;
             }
 
-            if (worldValue == null || (data.UsingProgressionHints 
-                && !data.WorldsData[worldValue.Name.Substring(0, worldValue.Name.Length - 4)].hintedProgression 
+            if (worldValue == null || (data.UsingProgressionHints
+                && !data.WorldsData[worldValue.Name.Substring(0, worldValue.Name.Length - 4)].hintedProgression
                 && data.progressionType == "Reports"))
             {
                 if (data.mode == Mode.PointsHints)
@@ -801,7 +801,7 @@ namespace KhTracker
             foreach (string World in data.WorldsData.Keys.ToList())
             {
                 //could probably be handled better. oh well
-                switch(World)
+                switch (World)
                 {
                     case "TwilightTown":
                         switch (data.WorldsData["TwilightTown"].visitLocks)

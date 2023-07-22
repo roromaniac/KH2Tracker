@@ -68,20 +68,20 @@ namespace KhTracker
         {
             Data data = MainWindow.data;
             int addRemove = 1;
-            
+
             if (add)
             {
                 //Default should be children count so that items are
                 //always added to the end if no ghosts are found
-                int firstGhost = Children.Count; 
+                int firstGhost = Children.Count;
 
                 //search for ghost items
-                foreach (Item child in Children) 
+                foreach (Item child in Children)
                 {
                     if (child.Name.StartsWith("Ghost_"))
                     {
                         //when one is found get the index of it
-                        firstGhost = Children.IndexOf(child); 
+                        firstGhost = Children.IndexOf(child);
                         break;
                     }
                 }
@@ -188,7 +188,7 @@ namespace KhTracker
                     window.SetWorldValue(data.WorldsData[worldName].value, realcount);
                 }
             }
-        
+
             if (data.ScoreMode)
             {
                 if (worldName != "GoA" && !button.Name.StartsWith("Ghost_"))
@@ -277,7 +277,7 @@ namespace KhTracker
             {
                 //yeah just gonna do things here..
                 //track collection for things that aren't multi's
-                switch(Codes.FindItemType(item.Name))
+                switch (Codes.FindItemType(item.Name))
                 {
                     case "proof":
                         Proof_Count += addRemove;
@@ -326,7 +326,7 @@ namespace KhTracker
                     }
                     return;
                 case "Blizzard":
-                    Real_Blizzard  += addRemove;
+                    Real_Blizzard += addRemove;
                     window.BlizzardCount.Text = (3 - Real_Blizzard).ToString();
                     if (Real_Blizzard == 3)
                     {
@@ -445,7 +445,7 @@ namespace KhTracker
             {
                 //index used to get correct report info.
                 //we just remove "Report" from the item name and parse the left over number as int -1 since lists are 0 based.
-                int index = int.Parse(item.Name.Remove(0,6)) - 1;
+                int index = int.Parse(item.Name.Remove(0, 6)) - 1;
 
                 // out of report attempts
                 if (data.reportAttempts[index] == 0)
@@ -453,8 +453,8 @@ namespace KhTracker
 
                 //check to see if report is in the itempool.
                 //if it's not then assume it's already tracked and do nothing else
-                Grid ItemRow = VisualTreeHelper.GetParent(item) as Grid;        
-                if(ItemRow == null || ItemRow.Parent != window.ItemPool)
+                Grid ItemRow = VisualTreeHelper.GetParent(item) as Grid;
+                if (ItemRow == null || ItemRow.Parent != window.ItemPool)
                     return true;
 
                 // check for correct report location then run report hint logic based on current hint mode
@@ -488,7 +488,7 @@ namespace KhTracker
                     switch (data.mode)
                     {
                         case Mode.JsmarteeHints:
-                        case Mode.OpenKHJsmarteeHints:                            
+                        case Mode.OpenKHJsmarteeHints:
                             Report_Jsmartee(index);
                             break;
                         case Mode.ShanHints:
@@ -1285,7 +1285,7 @@ namespace KhTracker
                     Item Check = tempRow.FindName(item) as Item;
 
                     //check to see if item is *in* the ItemPool
-                    if (Check != null && Check.Parent == tempRow)  
+                    if (Check != null && Check.Parent == tempRow)
                     {
                         Check.Opacity = universalOpacity; //change opacity
 

@@ -1,0 +1,9 @@
+- [x] Make buttons change color on click.
+	- [x] Ensure that buttons don't share a color flag.
+- [x] Create Options Window that has game settings, and selected checks based on groups (i.e. boss fight, magic, movement, etc.)
+- [x] Allow Grid Tracker to have a variable amount of rows and columns.
+- [ ] Save the current options upon close.
+- [ ] Create an OPTIONAL folder that can hold settings for the grid tracker.
+- [ ] Create a feature porting list that ports intricate features that were nice from the old tracker to the new one.
+- [ ] Create a pop out window that confirms that the win condition has been met.
+- [ ] Create a setting that allows user to either clear the card upon close, or keep the previous card intact (in the event of a crash of some sort).
