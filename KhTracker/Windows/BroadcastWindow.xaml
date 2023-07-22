@@ -17,6 +17,9 @@
         <Style TargetType="Image">
             <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
         </Style>
+        <Style x:Key="ColorToggleButton" TargetType="Button">
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
     </Window.Resources>
 
     <DockPanel>
@@ -38,6 +41,10 @@
             </MenuItem>
  
             <MenuItem Header="Image Visuals" Focusable="False">
+
+            </MenuItem>
+
+            <MenuItem Header="Options" Focusable="False" Click="Grid_Options">
 
             </MenuItem>
 
@@ -114,7 +121,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -132,7 +139,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -150,7 +157,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -168,7 +175,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -186,7 +193,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -205,7 +212,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -223,7 +230,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -241,7 +248,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -259,7 +266,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -277,7 +284,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -296,7 +303,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -314,7 +321,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -332,7 +339,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -350,7 +357,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -368,7 +375,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -387,7 +394,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -405,7 +412,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -423,7 +430,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -441,7 +448,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -459,7 +466,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -478,7 +485,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -496,7 +503,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -514,7 +521,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -532,7 +539,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>
@@ -550,7 +557,7 @@
                             <ColumnDefinition Width="0.075*"/>
                         </Grid.ColumnDefinitions>
 
-                        <ContentControl Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" />
+                        <Button Content="{DynamicResource Min-Axel1}" Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorToggleButton}" Click="Button_Click" />
 
                     </Grid>
                 </Grid>

@@ -114,9 +114,17 @@ namespace KhTracker
         {
             Data data = MainWindow.data;
 
-            if (data.UsingProgressionHints && data.mode != Mode.PointsHints)
+            if (data.mode == Mode.ShanHints || data.mode == Mode.OpenKHShanHints)
                 return;
 
+            if (data.UsingProgressionHints)
+            {
+                if(data.progressionType == "Reports" && data.mode != Mode.PointsHints)
+                {
+                    return;
+                }
+            }
+               
             int index = (int)GetValue(Grid.ColumnProperty);
             var repStr1 = data.reportInformation[index].Item1;
             var repStr2 = data.reportInformation[index].Item2;

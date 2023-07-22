@@ -36,7 +36,7 @@ namespace KhTracker
             data = dataIn;
 
 
-            Top = Properties.Settings.Default.BroadcastWindowY;
+        Top = Properties.Settings.Default.BroadcastWindowY;
             Left = Properties.Settings.Default.BroadcastWindowX;
 
             Width = Properties.Settings.Default.BroadcastWindowWidth;
@@ -64,5 +64,24 @@ namespace KhTracker
             }
         }
 
+        private void Grid_Options(object sender, RoutedEventArgs e)
+        {
+            GridOptionsWindow gridWindow = new GridOptionsWindow();
+            gridWindow.ShowDialog();
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            if ((Brush)button.Background == Brushes.LightGray)
+            {
+                button.Background = Brushes.Green;
+            }
+            else
+            {
+                button.Background = Brushes.LightGray;
+            }
+        }
     }
 }

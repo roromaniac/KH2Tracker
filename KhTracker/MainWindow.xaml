@@ -12,7 +12,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         AllowDrop="True" Drop="DropFile"
-        Title="KH2 Tracker 2.24" Height="880" Width="570" Background="#303030"
+        Title="KH2 Tracker 2.30" Height="880" Width="570" Background="#303030"
         MinHeight="440" MinWidth="300">
 
     <Window.Resources>
@@ -29,29 +29,27 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
-                <!--MenuItem Header="Auto Tracking...">
-                    <MenuItem Header="Use Auto-Detect Game Version" Click="AutoDetectToggle" x:Name="AutoDetectOption" IsCheckable="True" IsChecked="False"/>
-                    <MenuItem Header="Start PCSX2 Tracking" 	    Click="InitPCSX2Tracker" x:Name="TrackPCSX2Toggle"/>
-                    <MenuItem Header="Start PC Port Tracking" 	    Click="InitPCTracker"    x:Name="TrackPCToggle"/>
-                </MenuItem>
-                <Separator/-->
                 <MenuItem Header="Load Hints...">
                     <MenuItem Header="Load JSmartee Hints (*.hints)" 	Click="LoadHints"/>
                     <MenuItem Header="Load Shan Hints (*.pnach)" 		Click="ParseSeed"/>
                     <MenuItem Header="Load KH2Randomizer Seed (*.zip)" 	Click="OpenKHSeed"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Start PCSX2 Tracking" 	    Click="InitPCSX2Tracker" x:Name="TrackPCSX2Toggle"/>
-                <MenuItem Header="Start PC Port Tracking" 	    Click="InitPCTracker"    x:Name="TrackPCToggle"/>
+                <MenuItem Header="Start Auto-Tracking" Click="InitTracker" x:Name="TrackToggle"/>
+                <MenuItem Header="Enable Auto-Connect/Reconnect" Click="AutoConnectToggle" x:Name="AutoConnectOption" IsCheckable="True" IsChecked="False" 
+                          ToolTip="Automatically search and connect to the game on tracker start-up or if game closes."/>
+                <!--MenuItem Header="Start PCSX2 Tracking" 	    Click="InitPCSX2Tracker" x:Name="TrackPCSX2Toggle"/>
+                <MenuItem Header="Start PC Port Tracking" 	    Click="InitPCTracker"    x:Name="TrackPCToggle"/-->
                 <Separator/>
                 <MenuItem Header="Save Current Progress" Click="SaveProgress"/>
                 <MenuItem Header="Load Tracker Progress" Click="LoadProgress"/>
-                <MenuItem Header="Auto-Save Tracker Progress on Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True"/>
+                <MenuItem Header="Auto-Save Tracker Progress on Tracker Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Auto-Save Tracker Progress on Connection Loss" Click="AutoSaveProgress2Toggle" x:Name="AutoSaveProgress2Option" IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Reset Tracker" 	 Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	 Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Drag and Drop" 	 Click="DragDropToggle" x:Name="DragAndDropOption" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Broadcast Window"  Click="BroadcastWindow_Open"/>
+                <MenuItem Header="Grid Tracker"  Click="BroadcastWindow_Open"/>
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>
@@ -140,7 +138,7 @@
                 <!-- 6.6 -->
                 <RowDefinition x:Name="WorldRow" Height="6.6*"/>
                 <!-- 0.8 -->
-                <RowDefinition x:Name="InfoRow"  Height="0.8*"/>
+                <RowDefinition x:Name="InfoRow"  Height="1.2*"/>
                 <!-- 0.45 -->
                 <RowDefinition x:Name="FormRow"  Height="0.45*"/>
                 <!-- 2.2 -->
@@ -1654,7 +1652,7 @@
                     <!--padding-->
                     <RowDefinition Height="0.15*"/>
                     <!--hint text-->
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition x:Name="InfoTextRow" Height="2*"/>
                     <!--info/stats-->
                     <RowDefinition Height="1.115*"/>
                 </Grid.RowDefinitions>
@@ -1665,17 +1663,19 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Hint Text -->
-                <!--Rectangle Fill="#4C1E1E25" Grid.ColumnSpan="3" Panel.ZIndex="-1"/-->
                 <Grid Grid.Row="1"  Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="MainTextRow" Height="1*"/>
+                        <RowDefinition x:Name="TextRowSpacer" Height="0.05*"/>
+                        <RowDefinition x:Name="BossTextRow" Height="1*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <!-- 0.2 when in use -->
                         <ColumnDefinition x:Name="DeathCol" Width="0.2*"/>
                     </Grid.ColumnDefinitions>
-                    <Viewbox>
-                        <!--local:OutlinedTextBlock x:Name="HintText" FontFamily="{StaticResource Menu}" FontSize="20pt" FontWeight="DemiBold" 
-                                             TextWrapping="Wrap" StrokeThickness="4" Stroke="Black" Fill="White" TextAlignment="Center" Text="HAW is on the path to peace and Nonexistance."/-->
 
+                    <Viewbox Grid.Row="0" x:Name="MainTextVB" Grid.ColumnSpan="1">
                         <TextBlock FontFamily="{StaticResource Menu}" Foreground="White" FontSize="20pt">
                             <TextBlock.Effect>
                                 <DropShadowEffect ShadowDepth="3" BlurRadius="2" Direction="320"/>
@@ -1684,17 +1684,41 @@
                             <Run Name="HintTextMiddle" xml:space="preserve"/>
                             <Run Name="HintTextEnd" xml:space="preserve"/>
                         </TextBlock>
-
                     </Viewbox>
 
-                    <!--Viewbox>
-                        <TextBlock FontFamily="{StaticResource Menu}" FontWeight="DemiBold" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,-4,0" Foreground="White">
-                            <TextBlock Text="Heart" Foreground="Red"/> 5 <TextBlock Text="Checks " Foreground="Blue"/>
+                    <Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" >
+                        <Rectangle.Effect>
+                            <DropShadowEffect ShadowDepth="0" BlurRadius="2" Color="#FF5F5F5F"/>
+                        </Rectangle.Effect>
+                    </Rectangle>
+
+                    <Viewbox Grid.Row="2">
+                        <TextBlock FontFamily="{StaticResource Menu}" Foreground="#FFD0D0D0" FontSize="20pt">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="3" BlurRadius="2" Direction="320"/>
+                            </TextBlock.Effect>
+                            <Run Name="BossHintTextBegin"/>
+                            <Run Name="BossHintTextMiddle" xml:space="preserve"/>
+                            <Run Name="BossHintTextEnd" xml:space="preserve"/>
                         </TextBlock>
-                    </Viewbox-->
+                    </Viewbox>
+                </Grid>
+
+                <!-- New Death Counter -->
+                <Grid Grid.Row="1"  Grid.Column="1" x:Name="DeathCounterGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="DC_Row1" Height="1*"/>
+                        <RowDefinition x:Name="DC_Row2" Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <!-- 0.2 when in use -->
+                        <ColumnDefinition Width="0.2*"/>
+                    </Grid.ColumnDefinitions>
 
                     <!-- Death Counter-->
-                    <Grid x:Name="DeathCounterGrid" Grid.Column="1" >
+                    <Grid Grid.Column="1" Grid.Row="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="0.5*"/>
@@ -1712,9 +1736,7 @@
                             </local:OutlinedTextBlock>
                         </Viewbox>
                     </Grid>
-
-
-                    <Border Name="DeathCounterRec" Grid.Column="1" Panel.ZIndex="-1" Margin="4,-6,-20,-0.5">
+                    <Border Name="DeathCounterRec" Grid.Column="1" Panel.ZIndex="-1" Margin="4,-6,-20,-0.5"  Grid.Row="1">
                         <Border.OpacityMask>
                             <VisualBrush>
                                 <VisualBrush.Visual>
@@ -1727,7 +1749,11 @@
                 </Grid>
 
                 <!-- Hash Text -->
-                <Grid Grid.Row="1" Grid.Column="1" Visibility="Collapsed" x:Name="HashGrid">
+                <Grid Grid.Row="1" Grid.Column="1" Visibility="Visible" x:Name="HashGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition x:Name="HashBossSpacer" Height="0*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <!-- 0.75 | 0 w/deathcounter-->
                         <ColumnDefinition x:Name="HashSpacer1" Width="0.75*"/>
@@ -1894,7 +1920,7 @@
                                 </TransformGroup>
                             </Viewbox.RenderTransform>
                             <local:OutlinedTextBlock x:Name="CollectedValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
-                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="0">
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="00">
                                 <local:OutlinedTextBlock.Fill>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FFE47606" Offset="0.836"/>
@@ -1944,21 +1970,20 @@
                         </Viewbox>
                     </Grid>
                     <!-- Progression Points Count -->
-                    <Grid Grid.Column="11" x:Name="ProgressionCollectionGrid" Visibility="Hidden">
+                    <Grid Grid.Column="11" x:Name="ProgressionCollectionGrid" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
-                            <ColumnDefinition Width="1.15*"/>
-                            <ColumnDefinition Width="0.3*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Name="PPCount" Width="1.15*"/>
+                            <ColumnDefinition Name="PPSep" Width="0.3*"/>
+                            <ColumnDefinition Name="PPTotal" Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="0.15*"/>
                             <RowDefinition Height="1*"/>
                             <RowDefinition Height="0.05*"/>
                         </Grid.RowDefinitions>
-                        <!--ContentControl Content="{DynamicResource Min-Chest}" Name="ChestIcon"/-->
                         <!-- Collected -->
-                        <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,0,3">
+                        <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,0,3" >
                             <Viewbox.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>

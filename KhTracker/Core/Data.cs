@@ -21,7 +21,7 @@ namespace KhTracker
         public bool forcedFinal;
         public bool dataSplit = false;
         public string seedgenVersion = "";
-        public bool altFinalTracking = true;
+        public bool altFinalTracking = false;
         public int convertedSeedHash = 0;
         public string[] seedHashVisual = null;
         public bool ShouldResetHash = true;
@@ -35,6 +35,9 @@ namespace KhTracker
         public bool legacyShan = false;
         public string[] shanHintFileText = null;
         public bool saveFileLoaded = false;
+        public bool seedLoaded = false;
+        public int lastVersion = 0;
+        public bool wasTracking = false;
         public Codes codes = new Codes();
 
         //Report stuff      
@@ -112,6 +115,9 @@ namespace KhTracker
         public bool BossRandoFound = false;
         public Dictionary<string, string> BossList = new Dictionary<string, string>();
         public List<string> enabledWorlds = new List<string>();
+        //for boss rando progression
+        public string progressionType = "DummyText";
+        public List<Tuple<string, string, string>> progBossInformation = new List<Tuple<string, string, string>>();
 
         //Progression JsmarteeHints stuff
         public bool UsingProgressionHints = false;

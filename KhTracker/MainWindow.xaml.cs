@@ -47,17 +47,14 @@ namespace KhTracker
 
             OnReset(null, null);
 
-            //Init auto-detect
-            //AutoDetectOption.IsChecked = Properties.Settings.Default.AutoDetect;
-            //AutoDetectToggle(null, null);
-
             //hotkey stuff
             HotkeysManager.SetupSystemHook();
-
             LoadHotkeyBind();
 
-            //GlobalHotkey startAutoTracker1 = new GlobalHotkey(ModifierKeys.Control, Key.F7, StartHotkey);
-            //HotkeysManager.AddHotkey(startAutoTracker1);
+            //start auto-connect if enabled
+            AutoConnectOption.IsChecked = Properties.Settings.Default.AutoConnect;
+            if (AutoConnectOption.IsChecked)
+                InitTracker();
         }
 
         private void InitData()
@@ -134,15 +131,15 @@ namespace KhTracker
             data.ProgressKeys.Add("TwilightTown",           new List<string>() { "", "Chests", "Station", "MysteriousTower", "Sandlot", "Mansion", "BetwixtAndBetween", "DataAxel" });
             data.ProgressKeys.Add("HollowBastion",          new List<string>() { "", "Chests", "Bailey", "AnsemStudy", "Corridor", "Dancers", "HBDemyx", "FinalFantasy", "1000Heartless", "Sephiroth", "DataDemyx", "SephiDemyx" });
             data.ProgressKeys.Add("BeastsCastle",           new List<string>() { "", "Chests", "Thresholder", "Beast", "DarkThorn", "Dragoons", "Xaldin", "DataXaldin" });
-            data.ProgressKeys.Add("OlympusColiseum",        new List<string>() { "", "Chests", "Cerberus", "Urns", "OCDemyx", "OCPete", "Hydra", "AuronStatue", "Hades", "Zexion" });
-            data.ProgressKeys.Add("Agrabah",                new List<string>() { "", "Chests", "Abu", "Chasm", "TreasureRoom", "Lords", "Carpet", "GenieJafar", "Lexaeus" });
+            data.ProgressKeys.Add("OlympusColiseum",        new List<string>() { "", "Chests", "Cerberus", "Urns", "OCDemyx", "OCPete", "Hydra", "AuronStatue", "Hades", "Zexion", "ZexionData" });
+            data.ProgressKeys.Add("Agrabah",                new List<string>() { "", "Chests", "Abu", "Chasm", "TreasureRoom", "Lords", "Carpet", "GenieJafar", "Lexaeus", "LexaeusData" });
             data.ProgressKeys.Add("LandofDragons",          new List<string>() { "", "Chests", "Missions", "Mountain", "Cave", "Summit", "ShanYu", "ThroneRoom", "StormRider", "DataXigbar" });
             data.ProgressKeys.Add("HundredAcreWood",        new List<string>() { "", "Chests", "Piglet", "Rabbit", "Kanga", "SpookyCave", "StarryHill" });
             data.ProgressKeys.Add("PrideLands",             new List<string>() { "", "Chests", "Simba", "Hyenas1", "Scar", "Hyenas2", "GroundShaker", "DataSaix" });
-            data.ProgressKeys.Add("DisneyCastle",           new List<string>() { "", "Chests", "Minnie", "OldPete", "Windows", "BoatPete", "DCPete", "Marluxia", "LingeringWill", "Marluxia_LingeringWill" });
-            data.ProgressKeys.Add("HalloweenTown",          new List<string>() { "", "Chests", "CandyCaneLane", "PrisonKeeper", "OogieBoogie", "Children", "Presents", "Experiment", "Vexen" });
+            data.ProgressKeys.Add("DisneyCastle",           new List<string>() { "", "Chests", "Minnie", "OldPete", "Windows", "BoatPete", "DCPete", "Marluxia", "MarluxiaData", "LingeringWill", "Marluxia_LingeringWill", "MarluxiaData_LingeringWill" });
+            data.ProgressKeys.Add("HalloweenTown",          new List<string>() { "", "Chests", "CandyCaneLane", "PrisonKeeper", "OogieBoogie", "Children", "Presents", "Experiment", "Vexen", "VexenData" });
             data.ProgressKeys.Add("PortRoyal",              new List<string>() { "", "Chests", "Town", "1Minute", "Medallions", "Barrels", "Barbossa", "GrimReaper1", "Gambler", "GrimReaper", "DataLuxord" });
-            data.ProgressKeys.Add("SpaceParanoids",         new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "MCP", "Larxene" });
+            data.ProgressKeys.Add("SpaceParanoids",         new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "MCP", "Larxene", "LarxeneData" });
             data.ProgressKeys.Add("TWTNW",                  new List<string>() { "", "Chests", "Roxas", "Xigbar", "Luxord", "Saix", "Xemnas1", "DataXemnas" });
             data.ProgressKeys.Add("Atlantica",              new List<string>() { "", "Tutorial", "Ursula", "NewDay" });
             data.ProgressKeys.Add("GoA",                    new List<string>() { "", "Chests", "Fight1", "Fight2", "Transport", "Valves" });
@@ -153,15 +150,15 @@ namespace KhTracker
             data.ProgressKeys.Add("TwilightTownDesc",           new List<string>() { "", "Early Checks", "Train Station Fight", "Mysterious Tower", "Sandlot Fight", "Mansion Gate Fight", "Betwixt And Between", "Axel (Data)" });
             data.ProgressKeys.Add("HollowBastionDesc",          new List<string>() { "", "Early Checks", "Bailey Gate Fight", "Ansem's Study", "Corridor Fight", "Restoration Site Fight", "Demyx (Boss)", "Final Fantasy Fights", "1000 Heartless", "Sephiroth (Boss)", "Demyx (Data)", "Sephiroth and Demyx" });
             data.ProgressKeys.Add("BeastsCastleDesc",           new List<string>() { "", "Early Checks", "Thresholder (Boss)", "Beast Fight", "Dark Thorn (Boss)", "Dragoons Forced Fight", "Xaldin (Boss)", "Xaldin (Data)" });
-            data.ProgressKeys.Add("OlympusColiseumDesc",        new List<string>() { "", "Early Checks", "Cerberus (Boss)", "Phil's Training", "Demyx Fight", "Pete Fight", "Hydra (Boss)", "Hades' Chamber Fight", "Hades (Boss)", "Zexion (AS/Data)" });
-            data.ProgressKeys.Add("AgrabahDesc",                new List<string>() { "", "Early Checks", "Abu Minigame", "Chasm of Challenges", "Treasure Room Fight", "Twin Lords (Boss)", "Carpet Magic Minigame", "Genie Jafar (Boss)", "Lexaeus (AS/Data)" });
+            data.ProgressKeys.Add("OlympusColiseumDesc",        new List<string>() { "", "Early Checks", "Cerberus (Boss)", "Phil's Training", "Demyx Fight", "Pete Fight", "Hydra (Boss)", "Hades' Chamber Fight", "Hades (Boss)", "Zexion (AS)", "Zexion (Data)" });
+            data.ProgressKeys.Add("AgrabahDesc",                new List<string>() { "", "Early Checks", "Abu Minigame", "Chasm of Challenges", "Treasure Room Fight", "Twin Lords (Boss)", "Carpet Magic Minigame", "Genie Jafar (Boss)", "Lexaeus (AS)", "Lexaeus (Data)" });
             data.ProgressKeys.Add("LandofDragonsDesc",          new List<string>() { "", "Early Checks", "Mission 3 (The Search)", "Mountain Climb", "Town Cave Fight", "Summmit Fight", "Shan Yu (Boss)", "Throne Room", "Storm Rider (Boss)", "Xigbar (Data)" });
             data.ProgressKeys.Add("HundredAcreWoodDesc",        new List<string>() { "", "Early Checks", "Entered Piglet's House", "Entered Rabbit's House", "Entered Kanga's House", "Entered Spooky Cave", "Entered Starry Hill" });
             data.ProgressKeys.Add("PrideLandsDesc",             new List<string>() { "", "Early Checks", "Met Simba", "Hyenas Fight (1st Visit)", "Scar (Boss)", "Hyenas Fight (2nd Visit)", "Ground Shaker (Boss)", "Saix (Data)" });
-            data.ProgressKeys.Add("DisneyCastleDesc",           new List<string>() { "", "Early Checks", "Minnie Escort", "Past Pete Fight", "Windows of Time", "Steamboat Fight", "Pete (Boss)", "Marluxia (AS/Data)", "Lingering Will (Boss)", "Marluxia and Lingering Will" });
-            data.ProgressKeys.Add("HalloweenTownDesc",          new List<string>() { "", "Early Checks", "Candy Cane Lane Fight", "Prison Keeper (Boss)", "Oogie Boogie (Boss)", "Lock, Shock, and Barrel", "Made Decoy Presents", "The Experiment (Boss)", "Vexen (AS/Data)" });
+            data.ProgressKeys.Add("DisneyCastleDesc",           new List<string>() { "", "Early Checks", "Minnie Escort", "Past Pete Fight", "Windows of Time", "Steamboat Fight", "Pete (Boss)", "Marluxia (AS)", "Marluxia (Data)", "Lingering Will (Boss)", "Marluxia (AS) and Lingering Will", "Marluxia (Data) and Lingering Will" });
+            data.ProgressKeys.Add("HalloweenTownDesc",          new List<string>() { "", "Early Checks", "Candy Cane Lane Fight", "Prison Keeper (Boss)", "Oogie Boogie (Boss)", "Lock, Shock, and Barrel", "Made Decoy Presents", "The Experiment (Boss)", "Vexen (AS)", "Vexen (Data)" });
             data.ProgressKeys.Add("PortRoyalDesc",              new List<string>() { "", "Early Checks", "Town Fight", "1 Minute Isle Fight", "Interceptor Medallion Fight", "Interceptor Barrels", "Barbossa (Boss)", "Grim Reaper 1 (Boss)", "1st Gambler Medallion", "Grim Reaper 2 (Boss)", "Luxord (Data)" });
-            data.ProgressKeys.Add("SpaceParanoidsDesc",         new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "MCP (Boss)", "Larxene (AS/Data)" });
+            data.ProgressKeys.Add("SpaceParanoidsDesc",         new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "MCP (Boss)", "Larxene (AS)", "Larxene (Data)" });
             data.ProgressKeys.Add("TWTNWDesc",                  new List<string>() { "", "Early Checks", "Roxas (Boss)", "Xigbar (Boss)", "Luxord (Boss)", "Saix (Boss)", "Xemnas 1 (Boss)", "Xemnas (Data)" });
             data.ProgressKeys.Add("AtlanticaDesc",              new List<string>() { "", "Music Tutorial", "Ursula's Revenge", "A New Day is Dawning" });
             data.ProgressKeys.Add("GoADesc",                    new List<string>() { "", "Early Checks", "Forced Fight 1", "Forced Fight 2", "Transport to Rememberance", "Steam Valves (CoR Skip)" });
@@ -202,6 +199,7 @@ namespace KhTracker
             DragDropToggle(null, null);
 
             AutoSaveProgressOption.IsChecked = Properties.Settings.Default.AutoSaveProgress;
+            AutoSaveProgress2Option.IsChecked = Properties.Settings.Default.AutoSaveProgress;
 
             #endregion
 
@@ -635,7 +633,11 @@ namespace KhTracker
                 if (num > 0)
                 {
                     Tuple<string, string, string, bool, bool, bool> temp = data.HintRevealsStored[num - 1];
-                    SetHintText(temp.Item1, temp.Item2, temp.Item3, temp.Item4, temp.Item5, temp.Item6);
+
+                    if (data.progressionType == "Bosses")
+                        SetHintTextRow2(temp.Item1, temp.Item2, temp.Item3);
+                    else
+                        SetHintText(temp.Item1, temp.Item2, temp.Item3, temp.Item4, temp.Item5, temp.Item6);
                 }
             }
 
@@ -663,7 +665,9 @@ namespace KhTracker
                 return;
             }
 
-            if (worldValue == null || (data.UsingProgressionHints && !data.WorldsData[worldValue.Name.Substring(0, worldValue.Name.Length - 4)].hintedProgression))
+            if (worldValue == null || (data.UsingProgressionHints 
+                && !data.WorldsData[worldValue.Name.Substring(0, worldValue.Name.Length - 4)].hintedProgression 
+                && data.progressionType == "Reports"))
             {
                 if (data.mode == Mode.PointsHints)
                 {
@@ -759,6 +763,36 @@ namespace KhTracker
             HintTextBegin.Foreground = (SolidColorBrush)FindResource("DefWhite");
             HintTextMiddle.Foreground = (SolidColorBrush)FindResource("DefWhite");
             HintTextEnd.Foreground = (SolidColorBrush)FindResource("DefWhite");
+        }
+
+        //boss text
+        public void SetHintTextRow2(string boss1, string middle, string boss2)
+        {
+            if (data.SeedHashLoaded && HashGrid.Visibility == Visibility.Visible)
+            {
+                HashGrid.Visibility = Visibility.Collapsed;
+            }
+
+            string colorMain = "DefWhite";
+            string colorBoss1 = "DefWhite";
+            string colorBoss2 = "DefWhite";
+
+            if (ColorHintOption.IsChecked)
+            {
+                colorBoss1 = "LightBlue";
+                colorBoss2 = "Orange";
+            }
+
+
+            BossHintTextBegin.Text = boss1;
+            BossHintTextBegin.Foreground = (SolidColorBrush)FindResource(colorBoss1);
+
+            BossHintTextMiddle.Text = middle;
+            BossHintTextMiddle.Foreground = (SolidColorBrush)FindResource(colorMain);
+
+            BossHintTextEnd.Text = boss2;
+            BossHintTextEnd.Foreground = (SolidColorBrush)FindResource(colorBoss2);
+
         }
 
         public void VisitLockCheck()
