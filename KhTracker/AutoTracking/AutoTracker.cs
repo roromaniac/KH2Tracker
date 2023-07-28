@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -64,7 +65,8 @@ namespace KhTracker
         private ImportantCheck extraItem;
 
         private TornPage pages;
-
+        private GridWindow gridWindow;
+        public ToggleButton[,] buttons;
         private World world;
         private Stats stats;
         private Rewards rewards;
@@ -159,6 +161,12 @@ namespace KhTracker
             checkTimer.Tick += InitSearch;
             checkTimer.Interval = new TimeSpan(0, 0, 0, 2, 5);
             checkTimer.Start();
+
+            // start the grid tracking logic
+            Console.WriteLine("First time only.");
+            gridWindow = new GridWindow(data);
+            Grid grid = gridWindow.DynamicGrid;
+            buttons = gridWindow.buttons;
         }
 
         public void InitSearch(object sender, EventArgs e)
@@ -832,6 +840,30 @@ namespace KhTracker
                 {
                     world.Add_Item(item);
                     App.logger?.Record(item.Name + " tracked");
+
+                    // TO DO:
+                    // Check if the grid tracker is open.
+                    // If it is... Check if any of the buttons have the important check collected.
+                    for (int row = 0; row < GridWindow.numRows; row++)
+                    {
+                        for (int col = 0; col < GridWindow.numColumns; col++)
+                        {
+                            if (((string)buttons[row, col].Tag).Split('-')[1] == itemName)
+                            {
+                                // click the button if the check matches
+                                Console.WriteLine($"{itemName} Tracked");
+                                Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                    buttons[row, col].RaiseEvent(args);
+                                });
+                                Console.WriteLine("Item should be recorded????");
+                                Console.WriteLine(buttons[row, col].Background);
+                                Console.WriteLine(buttons[row - 1, col - 1].Background);
+                            }
+                        }
+                    }
+                    // Invoke the appropriate button.
                 }
             }
         }

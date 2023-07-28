@@ -16,7 +16,7 @@
                 "file": "Example Design.canvas",
                 "viewState": {
                   "x": 527.9037538660261,
-                  "y": -568.5689270666937,
+                  "y": -952.2663929661253,
                   "zoom": -0.04466661546980144
                 }
               }
@@ -72,7 +72,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "right": {
     "id": "4357b707354d693f",
@@ -88,8 +88,8 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO/Assets.md",
-                "collapseAll": false,
+                "file": "Example Design.canvas",
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -105,7 +105,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO/Assets.md",
+                "file": "Example Design.canvas",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -128,7 +128,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO/Assets.md"
+                "file": "Example Design.canvas"
               }
             }
           }
@@ -136,7 +136,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -150,6 +151,7 @@
   },
   "active": "6ac9a9b3c40e4a30",
   "lastOpenFiles": [
+    "Untitled",
     "TO DO/Options Window.md",
     "Example Design.canvas",
     "TO DO/Logic.md",

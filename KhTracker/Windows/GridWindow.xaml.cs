@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -32,8 +33,8 @@ namespace KhTracker
         public static int numRows = 5;
         public static int numColumns = 5;
 
-        private Grid grid;
-        private ToggleButton[,] buttons;
+        public Grid grid;
+        public ToggleButton[,] buttons;
 
 
         public GridWindow(Data dataIn)
@@ -79,8 +80,32 @@ namespace KhTracker
             gridWindow.ShowDialog();
         }
 
+        private List<string> Asset_Collection(string visual_type = "Min")
+        {
+            var xamlDict = new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/ItemDictionary.xaml")
+            };
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+            List<string> imageKeys = new List<string>();
+
+            foreach (DictionaryEntry entry in xamlDict)
+            {
+                if (entry.Value is Image)
+                {
+                    // the split here addresses the image type e.g. min-valor will give me min
+                    if (((string)entry.Key).Split('-')[0] == visual_type)
+                    {
+                        imageKeys.Add((string)entry.Key);
+                    }
+                }
+            }
+
+            return imageKeys;
+        }
+
+
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
             if (button.Background == Brushes.LightGray)
@@ -99,6 +124,8 @@ namespace KhTracker
         {
             grid = new Grid();
             buttons = new ToggleButton[numRows, numColumns];
+            List<string> assets = Asset_Collection();
+            Console.WriteLine(assets[0]);
 
             for (int i = 0; i < numRows; i++)
             {
@@ -117,7 +144,9 @@ namespace KhTracker
                 {
                     ToggleButton button = new ToggleButton();
                     button.Background = Brushes.LightGray;
-                    button.SetResourceReference(ContentProperty, "Min-Axel1");
+                    Console.WriteLine(assets[(i * numColumns) + j]);
+                    button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     button.Click += Button_Click;
                     Grid.SetRow(button, i);
@@ -145,6 +174,29 @@ namespace KhTracker
                 {
                     if (buttons[row, col].IsChecked == false)
                     {
+                        bool row_bingo_remove = false;
+                        if (col == columnCount - 1 && buttons[row, col - 1].Background == Brushes.Purple)
+                            row_bingo_remove = true;
+                        if (col != columnCount - 1 && buttons[row, col + 1].Background == Brushes.Purple)
+                            row_bingo_remove = true;
+                        if (row_bingo_remove)
+                        {
+                            for (col = 0; col < columnCount; col++)
+                            {
+                                // check that the cell we want to remove isn't a part of a vertical bingo
+                                for (int row_check = 0; row_check < rowCount; row_check++)
+                                {
+                                    if (buttons[row_check, col].IsChecked == false) {
+                                        if (buttons[row, col].IsChecked == false)
+                                            buttons[row, col].Background = Brushes.LightGray;
+                                        else
+                                            buttons[row, col].Background = Brushes.Green;
+                                    }
+                                }
+
+
+                            }
+                        }
                         break;
                     }
                     else
@@ -172,6 +224,28 @@ namespace KhTracker
                 {
                     if (buttons[row, col].IsChecked == false)
                     {
+                        bool col_bingo_remove = false;
+                        if (row == rowCount - 1 && buttons[row - 1, col].Background == Brushes.Purple)
+                            col_bingo_remove = true;
+                        if (row != rowCount - 1 && buttons[row + 1, col].Background == Brushes.Purple)
+                            col_bingo_remove = true;
+                        if (col_bingo_remove)
+                        {
+                            for (row = 0; row < rowCount; row++)
+                            {
+                                // check that the cell we want to remove isn't a part of a horizontal bingo
+                                for (int col_check = 0; col_check < columnCount; col_check++)
+                                {
+                                    if (buttons[row, col_check].IsChecked == false)
+                                    {
+                                        if (buttons[row, col].IsChecked == false)
+                                            buttons[row, col].Background = Brushes.LightGray;
+                                        else
+                                            buttons[row, col].Background = Brushes.Green;
+                                    }
+                                }
+                            }
+                        }
                         break;
                     }
                     else
@@ -198,6 +272,10 @@ namespace KhTracker
                 {
                     if (buttons[index, index].IsChecked == false)
                     {
+                        if (index == rowCount - 1 && buttons[index, index].IsChecked == false)
+                        {
+
+                        }
                         break;
                     }
                     else
