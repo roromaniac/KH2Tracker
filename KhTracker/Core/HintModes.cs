@@ -122,7 +122,7 @@ namespace KhTracker
                 //data.reportInformation.Add(new Tuple<string, string, int>(world.Key, null, 0));
             }
 
-            if (data.progressionType != "Reports")
+            if (data.progressionType == "Bosses")
             {
                 foreach (var key in data.WorldsData.Keys.ToList())
                 {
@@ -172,6 +172,8 @@ namespace KhTracker
             foreach (var report in reportKeys)
             {
                 var world = Codes.ConvertSeedGenName(reports[report.ToString()]["World"].ToString());
+                if (data.UsingProgressionHints && !data.puzzlesOn && world.ToString().Contains("PuzzSynth"))
+                    continue;
                 var count = reports[report.ToString()]["Count"].ToString();
                 var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
                 data.reportInformation.Add(new Tuple<string, string, int>(null, world, int.Parse(count)));
@@ -1186,6 +1188,8 @@ namespace KhTracker
                         worldstring = worldstring.Remove(0, 8);
                         dummyvalue = -1;
                     }
+                    if (worldstring.Contains("Creations") && !data.puzzlesOn)
+                        continue;
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
                     var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
