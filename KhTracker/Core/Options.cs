@@ -3133,11 +3133,11 @@ namespace KhTracker
             }
         }
 
-        //new window testi
+        //new window test
         private void GridWindow_Open(object sender, RoutedEventArgs e)
         {
             //ExtraItemToggleCheck();
-            broadcast.Show();
+            gridWindow.Show();
         }
 
     }

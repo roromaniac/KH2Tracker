@@ -15,9 +15,9 @@
               "state": {
                 "file": "Example Design.canvas",
                 "viewState": {
-                  "x": 527.9037538660261,
-                  "y": -952.2663929661253,
-                  "zoom": -0.04466661546980144
+                  "x": 532.0602119921791,
+                  "y": -97.00993132788935,
+                  "zoom": 0.2684888359259016
                 }
               }
             }
@@ -151,12 +151,13 @@
   },
   "active": "6ac9a9b3c40e4a30",
   "lastOpenFiles": [
+    "TO DO/Grid Tracker.md",
+    "TO DO/Assets.md",
+    "2023-07-29.md",
+    "Example Design.canvas",
     "Untitled",
     "TO DO/Options Window.md",
-    "Example Design.canvas",
     "TO DO/Logic.md",
-    "TO DO/Assets.md",
-    "TO DO/Grid Tracker.md",
     "2023-07-22.md",
     "2023-07-21.md",
     "TO DO/TO DO.md",

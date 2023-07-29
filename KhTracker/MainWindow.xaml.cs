@@ -30,7 +30,6 @@ namespace KhTracker
         private int total;
         public static int PointTotal = 0;
         public int DeathCounter = 0;
-        private GridWindow broadcast;
 
         public MainWindow()
         {
@@ -185,7 +184,11 @@ namespace KhTracker
                 }
             }
 
-            broadcast = new GridWindow(data);
+            // start the grid tracking logic
+            Console.WriteLine("First time only.");
+            gridWindow = new GridWindow(data);
+            Grid grid = gridWindow.DynamicGrid;
+            buttons = gridWindow.buttons;
         }
 
         private void InitOptions()
@@ -561,8 +564,8 @@ namespace KhTracker
             }
             Properties.Settings.Default.Save();
 
-            broadcast.canClose = true;
-            broadcast.Close();
+            gridWindow.canClose = true;
+            gridWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -582,8 +585,8 @@ namespace KhTracker
             Width = 570;
             Height = 880;
 
-            broadcast.Width = 500;
-            broadcast.Height = 680;
+            gridWindow.Width = 500;
+            gridWindow.Height = 680;
         }
 
         /// 

@@ -161,12 +161,6 @@ namespace KhTracker
             checkTimer.Tick += InitSearch;
             checkTimer.Interval = new TimeSpan(0, 0, 0, 2, 5);
             checkTimer.Start();
-
-            // start the grid tracking logic
-            Console.WriteLine("First time only.");
-            gridWindow = new GridWindow(data);
-            Grid grid = gridWindow.DynamicGrid;
-            buttons = gridWindow.buttons;
         }
 
         public void InitSearch(object sender, EventArgs e)
@@ -859,7 +853,6 @@ namespace KhTracker
                                 });
                                 Console.WriteLine("Item should be recorded????");
                                 Console.WriteLine(buttons[row, col].Background);
-                                Console.WriteLine(buttons[row - 1, col - 1].Background);
                             }
                         }
                     }

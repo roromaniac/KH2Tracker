@@ -7,4 +7,5 @@
 - [ ] Create a feature porting list that ports intricate features that were nice from the old tracker to the new one.
 - [ ] Create a pop out window that confirms that the win condition has been met.
 - [ ] Create a setting that allows user to either clear the card upon close, or keep the previous card intact (in the event of a crash of some sort).
-- [ ] Create a way to associate each button with a specific check. That way, when that check gets autotracker, we can invoke a button press during AutoTrack.cs.
+- [x] Create a way to associate each button with a specific check. That way, when that check gets autotracker, we can invoke a button press during AutoTrack.cs.
+- [x] Allow for anything that can be tracked to be on the card.

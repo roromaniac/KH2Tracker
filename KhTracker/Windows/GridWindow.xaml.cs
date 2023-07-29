@@ -80,23 +80,46 @@ namespace KhTracker
             gridWindow.ShowDialog();
         }
 
-        private List<string> Asset_Collection(string visual_type = "Min")
+        private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
         {
-            var xamlDict = new ResourceDictionary
+
+            List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary> ();
+
+            var trackableChecksDict = new ResourceDictionary
             {
                 Source = new Uri("pack://application:,,,/ItemDictionary.xaml")
             };
+            itemsDictionaries.Add(trackableChecksDict);
+
+            var trackableProgressionDict = new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
+            };
+            itemsDictionaries.Add(trackableProgressionDict);
+
+            var trackableItemsDict = new Dictionary<object, object>();
+            foreach (ResourceDictionary rd in itemsDictionaries)
+            {
+                foreach (DictionaryEntry entry in rd)
+                {
+                    trackableItemsDict[entry.Key] = entry.Value;
+                }
+            }
+            //trackableItemsDict.MergedDictionaries.Add(trackableChecksDict);
+
+            Random rng = new Random(seed);
+            var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
 
             List<string> imageKeys = new List<string>();
 
-            foreach (DictionaryEntry entry in xamlDict)
+            foreach (KeyValuePair<object, object> kvp in randomizedItemsDict)
             {
-                if (entry.Value is Image)
+                if (kvp.Value is Image)
                 {
                     // the split here addresses the image type e.g. min-valor will give me min
-                    if (((string)entry.Key).Split('-')[0] == visual_type)
+                    if (((string)kvp.Key).Split('-')[0] == visual_type)
                     {
-                        imageKeys.Add((string)entry.Key);
+                        imageKeys.Add((string)kvp.Key);
                     }
                 }
             }
@@ -124,8 +147,12 @@ namespace KhTracker
         {
             grid = new Grid();
             buttons = new ToggleButton[numRows, numColumns];
-            List<string> assets = Asset_Collection();
-            Console.WriteLine(assets[0]);
+            string seedString = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 8).Select(s => s[new Random().Next(s.Length)]).ToArray());
+            int seed = seedString.GetHashCode();
+            Random rand = new Random(seed);
+            List<string> assets = Asset_Collection("Min", seed);
+
+            //Console.WriteLine(assets[0]);
 
             for (int i = 0; i < numRows; i++)
             {
