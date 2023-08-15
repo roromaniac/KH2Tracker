@@ -185,7 +185,6 @@ namespace KhTracker
             }
 
             // start the grid tracking logic
-            Console.WriteLine("First time only.");
             gridWindow = new GridWindow(data);
             Grid grid = gridWindow.DynamicGrid;
             buttons = gridWindow.buttons;

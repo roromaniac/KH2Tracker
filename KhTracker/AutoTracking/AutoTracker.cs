@@ -842,13 +842,16 @@ namespace KhTracker
                     {
                         for (int col = 0; col < GridWindow.numColumns; col++)
                         {
-                            if (((string)buttons[row, col].Tag).Split('-')[1] == itemName)
+                            // check if the original OR grid adjusted check key name is on the grid
+                            string[] checkNames = { itemName, "Grid" + itemName };
+                            if (checkNames.Contains(((string)buttons[row, col].Tag).Split('-')[1]))
                             {
                                 // click the button if the check matches
                                 Console.WriteLine($"{itemName} Tracked");
                                 Application.Current.Dispatcher.Invoke(() =>
                                 {
                                     RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                    buttons[row, col].IsChecked = !buttons[row, col].IsChecked;
                                     buttons[row, col].RaiseEvent(args);
                                 });
                                 Console.WriteLine("Item should be recorded????");

@@ -1,6 +1,6 @@
 - [ ] Port Battleship Function to GridTracker
 - [ ] Ensure the grid tracker has access to boss enemy replacements once seed is loaded in (should they exist).
 - [ ] Ensure hints get displayed on the grid tracker if they exist.
-- [ ] Bingo Implementation
+- [x] Bingo Implementation
 	- [x] Include functionality for non-square boards.
-	- [ ] Undo a bingo if a button becomes unclicked. 
+	- [x] Undo a bingo if a button becomes unclicked. 

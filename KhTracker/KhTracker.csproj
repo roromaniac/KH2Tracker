@@ -14,6 +14,10 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,12 +30,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -120,6 +120,9 @@
     <Compile Include="Windows\GridOptionsWindow.xaml.cs">
       <DependentUpon>GridOptionsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\ColorPicker.xaml.cs">
+      <DependentUpon>ColorPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WorldGrid.xaml.cs">
       <DependentUpon>WorldGrid.xaml</DependentUpon>
     </Compile>
@@ -127,19 +130,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="ItemDictionary.xaml">
+    <Page Include="ItemDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="ProgressionDictionary.xaml">
+    </Page>
+    <Page Include="ProgressionDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Resource>
+    </Page>
     <Page Include="Windows\GridWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Windows\GridOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\ColorPicker.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -322,6 +329,7 @@
     <Content Include="CustomImages\Progression\agrabah\elemental_lords.png" />
     <Content Include="CustomImages\Progression\agrabah\jafar.png" />
     <Content Include="CustomImages\Progression\agrabah\lexaeus.png" />
+    <Resource Include="Images\Progression\Min\disney_castle\marluxiadata_and_lingering_will.png" />
     <Resource Include="Images\Progression\Min\absent.png" />
     <Content Include="CustomImages\Progression\agrabah\lexaeusdata.png" />
     <Content Include="CustomImages\Progression\agrabah\magic_switches.png" />
@@ -486,133 +494,133 @@
     <Content Include="CustomImages\Worlds\Synth.png" />
     <Content Include="CustomImages\Worlds\the_world_that_never_was.png" />
     <Content Include="CustomImages\Worlds\twilight_town.png" />
-    <Resource Include="Images\Bingo\simple\7drives.png" />
-    <Resource Include="Images\Bingo\simple\AerialDodge1.png" />
-    <Resource Include="Images\Bingo\simple\AerialDodge2.png" />
-    <Resource Include="Images\Bingo\simple\AerialDodge3.png" />
-    <Resource Include="Images\Bingo\simple\AerialDodge4.png" />
-    <Resource Include="Images\Bingo\simple\AladdinWep.png" />
-    <Resource Include="Images\Bingo\simple\ArmoredXemnas.png" />
-    <Resource Include="Images\Bingo\simple\AuronWep.png" />
-    <Resource Include="Images\Bingo\simple\Axel1.png" />
-    <Resource Include="Images\Bingo\simple\Axel2.png" />
-    <Resource Include="Images\Bingo\simple\Barbossa.png" />
-    <Resource Include="Images\Bingo\simple\Baseball.png" />
-    <Resource Include="Images\Bingo\simple\Beast.png" />
-    <Resource Include="Images\Bingo\simple\BeastWep.png" />
-    <Resource Include="Images\Bingo\simple\Blizzard1.png" />
-    <Resource Include="Images\Bingo\simple\Blizzard2.png" />
-    <Resource Include="Images\Bingo\simple\Blizzard3.png" />
-    <Resource Include="Images\Bingo\simple\BlizzardLord.png" />
-    <Resource Include="Images\Bingo\simple\Cerberus.png" />
-    <Resource Include="Images\Bingo\simple\Connection.png" />
-    <Resource Include="Images\Bingo\simple\Cure1.png" />
-    <Resource Include="Images\Bingo\simple\Cure2.png" />
-    <Resource Include="Images\Bingo\simple\Cure3.png" />
-    <Resource Include="Images\Bingo\simple\DarkThorn.png" />
-    <Resource Include="Images\Bingo\simple\Demyx.png" />
-    <Resource Include="Images\Bingo\simple\DodgeRoll1.png" />
-    <Resource Include="Images\Bingo\simple\DodgeRoll2.png" />
-    <Resource Include="Images\Bingo\simple\DodgeRoll3.png" />
-    <Resource Include="Images\Bingo\simple\DodgeRoll4.png" />
-    <Resource Include="Images\Bingo\simple\Experiment.png" />
-    <Resource Include="Images\Bingo\simple\Feather.png" />
-    <Resource Include="Images\Bingo\simple\Final.png" />
-    <Resource Include="Images\Bingo\simple\Fire1.png" />
-    <Resource Include="Images\Bingo\simple\Fire2.png" />
-    <Resource Include="Images\Bingo\simple\Fire3.png" />
-    <Resource Include="Images\Bingo\simple\Glide1.png" />
-    <Resource Include="Images\Bingo\simple\Glide2.png" />
-    <Resource Include="Images\Bingo\simple\Glide3.png" />
-    <Resource Include="Images\Bingo\simple\Glide4.png" />
-    <Resource Include="Images\Bingo\simple\GrimReaper1.png" />
-    <Resource Include="Images\Bingo\simple\GrimReaper2.png" />
-    <Resource Include="Images\Bingo\simple\Groundshaker.png" />
-    <Resource Include="Images\Bingo\simple\Hades.png" />
-    <Resource Include="Images\Bingo\simple\HighJump1.png" />
-    <Resource Include="Images\Bingo\simple\HighJump2.png" />
-    <Resource Include="Images\Bingo\simple\HighJump3.png" />
-    <Resource Include="Images\Bingo\simple\HighJump4.png" />
-    <Resource Include="Images\Bingo\simple\HostileProgram.png" />
-    <Resource Include="Images\Bingo\simple\Hydra.png" />
-    <Resource Include="Images\Bingo\simple\IceCream.png" />
-    <Resource Include="Images\Bingo\simple\JackWep.png" />
-    <Resource Include="Images\Bingo\simple\Jafar.png" />
-    <Resource Include="Images\Bingo\simple\Lamp.png" />
-    <Resource Include="Images\Bingo\simple\Larxene.png" />
-    <Resource Include="Images\Bingo\simple\Lexaeus.png" />
-    <Resource Include="Images\Bingo\simple\Limit.png" />
-    <Resource Include="Images\Bingo\simple\LingeringWill.png" />
-    <Resource Include="Images\Bingo\simple\Luxord.png" />
-    <Resource Include="Images\Bingo\simple\Magnet1.png" />
-    <Resource Include="Images\Bingo\simple\Magnet2.png" />
-    <Resource Include="Images\Bingo\simple\Magnet3.png" />
-    <Resource Include="Images\Bingo\simple\Marluxia.png" />
-    <Resource Include="Images\Bingo\simple\Master.png" />
-    <Resource Include="Images\Bingo\simple\MasterControlProgram.png" />
-    <Resource Include="Images\Bingo\simple\MembershipCard.png" />
-    <Resource Include="Images\Bingo\simple\MulanWep.png" />
-    <Resource Include="Images\Bingo\simple\Nonexistence.png" />
-    <Resource Include="Images\Bingo\simple\OldPete.png" />
-    <Resource Include="Images\Bingo\simple\OlympusStone.png" />
-    <Resource Include="Images\Bingo\simple\OnceMore.png" />
-    <Resource Include="Images\Bingo\simple\OogieBoogie.png" />
-    <Resource Include="Images\Bingo\simple\Peace.png" />
-    <Resource Include="Images\Bingo\simple\Pete.png" />
-    <Resource Include="Images\Bingo\simple\Picture.png" />
-    <Resource Include="Images\Bingo\simple\PrisonKeeper.png" />
-    <Resource Include="Images\Bingo\simple\PromiseCharm.png" />
-    <Resource Include="Images\Bingo\simple\QuickRun1.png" />
-    <Resource Include="Images\Bingo\simple\QuickRun2.png" />
-    <Resource Include="Images\Bingo\simple\QuickRun3.png" />
-    <Resource Include="Images\Bingo\simple\QuickRun4.png" />
-    <Resource Include="Images\Bingo\simple\Reflect1.png" />
-    <Resource Include="Images\Bingo\simple\Reflect2.png" />
-    <Resource Include="Images\Bingo\simple\Reflect3.png" />
-    <Resource Include="Images\Bingo\simple\Report1.png" />
-    <Resource Include="Images\Bingo\simple\Report10.png" />
-    <Resource Include="Images\Bingo\simple\Report11.png" />
-    <Resource Include="Images\Bingo\simple\Report12.png" />
-    <Resource Include="Images\Bingo\simple\Report13.png" />
-    <Resource Include="Images\Bingo\simple\Report2.png" />
-    <Resource Include="Images\Bingo\simple\Report3.png" />
-    <Resource Include="Images\Bingo\simple\Report4.png" />
-    <Resource Include="Images\Bingo\simple\Report5.png" />
-    <Resource Include="Images\Bingo\simple\Report6.png" />
-    <Resource Include="Images\Bingo\simple\Report7.png" />
-    <Resource Include="Images\Bingo\simple\Report8.png" />
-    <Resource Include="Images\Bingo\simple\Report9.png" />
-    <Resource Include="Images\Bingo\simple\Roxas.png" />
-    <Resource Include="Images\Bingo\simple\Saix.png" />
-    <Resource Include="Images\Bingo\simple\Sark.png" />
-    <Resource Include="Images\Bingo\simple\Scar.png" />
-    <Resource Include="Images\Bingo\simple\SecondChance.png" />
-    <Resource Include="Images\Bingo\simple\Sephiroth.png" />
-    <Resource Include="Images\Bingo\simple\ShanYu.png" />
-    <Resource Include="Images\Bingo\simple\SimbaWep.png" />
-    <Resource Include="Images\Bingo\simple\SparrowWep.png" />
-    <Resource Include="Images\Bingo\simple\StormRider.png" />
-    <Resource Include="Images\Bingo\simple\Thresholder.png" />
-    <Resource Include="Images\Bingo\simple\Thunder1.png" />
-    <Resource Include="Images\Bingo\simple\Thunder2.png" />
-    <Resource Include="Images\Bingo\simple\Thunder3.png" />
-    <Resource Include="Images\Bingo\simple\TornPage1.png" />
-    <Resource Include="Images\Bingo\simple\TornPage2.png" />
-    <Resource Include="Images\Bingo\simple\TornPage3.png" />
-    <Resource Include="Images\Bingo\simple\TornPage4.png" />
-    <Resource Include="Images\Bingo\simple\TornPage5.png" />
-    <Resource Include="Images\Bingo\simple\TronWep.png" />
-    <Resource Include="Images\Bingo\simple\TwilightThorn.png" />
-    <Resource Include="Images\Bingo\simple\Ukulele.png" />
-    <Resource Include="Images\Bingo\simple\Valor.png" />
-    <Resource Include="Images\Bingo\simple\Vexen.png" />
-    <Resource Include="Images\Bingo\simple\VolcanoLord.png" />
-    <Resource Include="Images\Bingo\simple\Wisdom.png" />
-    <Resource Include="Images\Bingo\simple\Xaldin.png" />
-    <Resource Include="Images\Bingo\simple\Xemnas.png" />
-    <Resource Include="Images\Bingo\simple\Xigbar.png" />
-    <Resource Include="Images\Bingo\simple\YTB.png" />
-    <Resource Include="Images\Bingo\simple\Zexion.png" />
+    <Resource Include="Images\Grid\simple\7drives.png" />
+    <Resource Include="Images\Grid\simple\AerialDodge1.png" />
+    <Resource Include="Images\Grid\simple\AerialDodge2.png" />
+    <Resource Include="Images\Grid\simple\AerialDodge3.png" />
+    <Resource Include="Images\Grid\simple\AerialDodge4.png" />
+    <Resource Include="Images\Grid\simple\AladdinWep.png" />
+    <Resource Include="Images\Grid\simple\ArmoredXemnas.png" />
+    <Resource Include="Images\Grid\simple\AuronWep.png" />
+    <Resource Include="Images\Grid\simple\Axel1.png" />
+    <Resource Include="Images\Grid\simple\Axel2.png" />
+    <Resource Include="Images\Grid\simple\Barbossa.png" />
+    <Resource Include="Images\Grid\simple\Baseball.png" />
+    <Resource Include="Images\Grid\simple\Beast.png" />
+    <Resource Include="Images\Grid\simple\BeastWep.png" />
+    <Resource Include="Images\Grid\simple\Blizzard1.png" />
+    <Resource Include="Images\Grid\simple\Blizzard2.png" />
+    <Resource Include="Images\Grid\simple\Blizzard3.png" />
+    <Resource Include="Images\Grid\simple\BlizzardLord.png" />
+    <Resource Include="Images\Grid\simple\Cerberus.png" />
+    <Resource Include="Images\Grid\simple\Connection.png" />
+    <Resource Include="Images\Grid\simple\Cure1.png" />
+    <Resource Include="Images\Grid\simple\Cure2.png" />
+    <Resource Include="Images\Grid\simple\Cure3.png" />
+    <Resource Include="Images\Grid\simple\DarkThorn.png" />
+    <Resource Include="Images\Grid\simple\Demyx.png" />
+    <Resource Include="Images\Grid\simple\DodgeRoll1.png" />
+    <Resource Include="Images\Grid\simple\DodgeRoll2.png" />
+    <Resource Include="Images\Grid\simple\DodgeRoll3.png" />
+    <Resource Include="Images\Grid\simple\DodgeRoll4.png" />
+    <Resource Include="Images\Grid\simple\Experiment.png" />
+    <Resource Include="Images\Grid\simple\Feather.png" />
+    <Resource Include="Images\Grid\simple\Final.png" />
+    <Resource Include="Images\Grid\simple\Fire1.png" />
+    <Resource Include="Images\Grid\simple\Fire2.png" />
+    <Resource Include="Images\Grid\simple\Fire3.png" />
+    <Resource Include="Images\Grid\simple\Glide1.png" />
+    <Resource Include="Images\Grid\simple\Glide2.png" />
+    <Resource Include="Images\Grid\simple\Glide3.png" />
+    <Resource Include="Images\Grid\simple\Glide4.png" />
+    <Resource Include="Images\Grid\simple\GrimReaper1.png" />
+    <Resource Include="Images\Grid\simple\GrimReaper2.png" />
+    <Resource Include="Images\Grid\simple\Groundshaker.png" />
+    <Resource Include="Images\Grid\simple\Hades.png" />
+    <Resource Include="Images\Grid\simple\HighJump1.png" />
+    <Resource Include="Images\Grid\simple\HighJump2.png" />
+    <Resource Include="Images\Grid\simple\HighJump3.png" />
+    <Resource Include="Images\Grid\simple\HighJump4.png" />
+    <Resource Include="Images\Grid\simple\HostileProgram.png" />
+    <Resource Include="Images\Grid\simple\Hydra.png" />
+    <Resource Include="Images\Grid\simple\IceCream.png" />
+    <Resource Include="Images\Grid\simple\JackWep.png" />
+    <Resource Include="Images\Grid\simple\Jafar.png" />
+    <Resource Include="Images\Grid\simple\Lamp.png" />
+    <Resource Include="Images\Grid\simple\Larxene.png" />
+    <Resource Include="Images\Grid\simple\Lexaeus.png" />
+    <Resource Include="Images\Grid\simple\Limit.png" />
+    <Resource Include="Images\Grid\simple\LingeringWill.png" />
+    <Resource Include="Images\Grid\simple\Luxord.png" />
+    <Resource Include="Images\Grid\simple\Magnet1.png" />
+    <Resource Include="Images\Grid\simple\Magnet2.png" />
+    <Resource Include="Images\Grid\simple\Magnet3.png" />
+    <Resource Include="Images\Grid\simple\Marluxia.png" />
+    <Resource Include="Images\Grid\simple\Master.png" />
+    <Resource Include="Images\Grid\simple\MasterControlProgram.png" />
+    <Resource Include="Images\Grid\simple\MembershipCard.png" />
+    <Resource Include="Images\Grid\simple\MulanWep.png" />
+    <Resource Include="Images\Grid\simple\Nonexistence.png" />
+    <Resource Include="Images\Grid\simple\OldPete.png" />
+    <Resource Include="Images\Grid\simple\OlympusStone.png" />
+    <Resource Include="Images\Grid\simple\OnceMore.png" />
+    <Resource Include="Images\Grid\simple\OogieBoogie.png" />
+    <Resource Include="Images\Grid\simple\Peace.png" />
+    <Resource Include="Images\Grid\simple\Pete.png" />
+    <Resource Include="Images\Grid\simple\Picture.png" />
+    <Resource Include="Images\Grid\simple\PrisonKeeper.png" />
+    <Resource Include="Images\Grid\simple\PromiseCharm.png" />
+    <Resource Include="Images\Grid\simple\QuickRun1.png" />
+    <Resource Include="Images\Grid\simple\QuickRun2.png" />
+    <Resource Include="Images\Grid\simple\QuickRun3.png" />
+    <Resource Include="Images\Grid\simple\QuickRun4.png" />
+    <Resource Include="Images\Grid\simple\Reflect1.png" />
+    <Resource Include="Images\Grid\simple\Reflect2.png" />
+    <Resource Include="Images\Grid\simple\Reflect3.png" />
+    <Resource Include="Images\Grid\simple\Report1.png" />
+    <Resource Include="Images\Grid\simple\Report10.png" />
+    <Resource Include="Images\Grid\simple\Report11.png" />
+    <Resource Include="Images\Grid\simple\Report12.png" />
+    <Resource Include="Images\Grid\simple\Report13.png" />
+    <Resource Include="Images\Grid\simple\Report2.png" />
+    <Resource Include="Images\Grid\simple\Report3.png" />
+    <Resource Include="Images\Grid\simple\Report4.png" />
+    <Resource Include="Images\Grid\simple\Report5.png" />
+    <Resource Include="Images\Grid\simple\Report6.png" />
+    <Resource Include="Images\Grid\simple\Report7.png" />
+    <Resource Include="Images\Grid\simple\Report8.png" />
+    <Resource Include="Images\Grid\simple\Report9.png" />
+    <Resource Include="Images\Grid\simple\Roxas.png" />
+    <Resource Include="Images\Grid\simple\Saix.png" />
+    <Resource Include="Images\Grid\simple\Sark.png" />
+    <Resource Include="Images\Grid\simple\Scar.png" />
+    <Resource Include="Images\Grid\simple\SecondChance.png" />
+    <Resource Include="Images\Grid\simple\Sephiroth.png" />
+    <Resource Include="Images\Grid\simple\ShanYu.png" />
+    <Resource Include="Images\Grid\simple\SimbaWep.png" />
+    <Resource Include="Images\Grid\simple\SparrowWep.png" />
+    <Resource Include="Images\Grid\simple\StormRider.png" />
+    <Resource Include="Images\Grid\simple\Thresholder.png" />
+    <Resource Include="Images\Grid\simple\Thunder1.png" />
+    <Resource Include="Images\Grid\simple\Thunder2.png" />
+    <Resource Include="Images\Grid\simple\Thunder3.png" />
+    <Resource Include="Images\Grid\simple\TornPage1.png" />
+    <Resource Include="Images\Grid\simple\TornPage2.png" />
+    <Resource Include="Images\Grid\simple\TornPage3.png" />
+    <Resource Include="Images\Grid\simple\TornPage4.png" />
+    <Resource Include="Images\Grid\simple\TornPage5.png" />
+    <Resource Include="Images\Grid\simple\TronWep.png" />
+    <Resource Include="Images\Grid\simple\TwilightThorn.png" />
+    <Resource Include="Images\Grid\simple\Ukulele.png" />
+    <Resource Include="Images\Grid\simple\Valor.png" />
+    <Resource Include="Images\Grid\simple\Vexen.png" />
+    <Resource Include="Images\Grid\simple\VolcanoLord.png" />
+    <Resource Include="Images\Grid\simple\Wisdom.png" />
+    <Resource Include="Images\Grid\simple\Xaldin.png" />
+    <Resource Include="Images\Grid\simple\Xemnas.png" />
+    <Resource Include="Images\Grid\simple\Xigbar.png" />
+    <Resource Include="Images\Grid\simple\YTB.png" />
+    <Resource Include="Images\Grid\simple\Zexion.png" />
     <Resource Include="Images\System\question.png" />
     <Resource Include="Images\System\stats\ProgPoints2.png" />
     <Resource Include="Images\System\stats\ProgPoints.png" />

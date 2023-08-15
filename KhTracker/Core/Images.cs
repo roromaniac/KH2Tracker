@@ -696,4 +696,17 @@ namespace KhTracker
             CustomWorldCheck();
         }
     }
+
+    public class GridLabelledImage : Image
+    {
+        public static readonly DependencyProperty GridAllowedProperty =
+            DependencyProperty.Register("GridAllowed", typeof(bool), typeof(GridLabelledImage), new PropertyMetadata(true));
+
+        public bool GridAllowed
+        {
+            get { return (bool)GetValue(GridAllowedProperty); }
+            set { SetValue(GridAllowedProperty, value); }
+        }
+    }
+
 }

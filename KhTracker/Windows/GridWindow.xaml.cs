@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace KhTracker
 {
@@ -35,16 +38,25 @@ namespace KhTracker
 
         public Grid grid;
         public ToggleButton[,] buttons;
+        public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
+        public Dictionary<string, Color> currentColors = new Dictionary<string, Color>
+        {
+            { "Unmarked Color", Colors.DimGray },
+            { "Marked Color", Colors.Green },
+            { "Annotated Color", Colors.Orange },
+            { "Bingo Color", Colors.Purple }
+        };
 
 
         public GridWindow(Data dataIn)
         {
             InitializeComponent();
+            
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
 
             data = dataIn;
-
+            Console.WriteLine(data.BossList);
 
             Top = Properties.Settings.Default.GridWindowY;
             Left = Properties.Settings.Default.GridWindowX;
@@ -91,21 +103,31 @@ namespace KhTracker
             };
             itemsDictionaries.Add(trackableChecksDict);
 
-            var trackableProgressionDict = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
-            };
-            itemsDictionaries.Add(trackableProgressionDict);
+            //var trackableProgressionDict = new ResourceDictionary
+            //{
+            //    Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
+            //};
+            //itemsDictionaries.Add(trackableProgressionDict);
 
             var trackableItemsDict = new Dictionary<object, object>();
             foreach (ResourceDictionary rd in itemsDictionaries)
             {
                 foreach (DictionaryEntry entry in rd)
                 {
-                    trackableItemsDict[entry.Key] = entry.Value;
+                    if (entry.Value is GridLabelledImage img && img.GridAllowed)
+                    {
+                        // the split here addresses the image type e.g. min-valor will give me min
+                        if (((string)entry.Key).Split('-')[0] == visual_type)
+                        {
+                            // add the item to the grid settings dictionary if it doesn't exist already
+                            gridSettings[(string)entry.Key] = img.GridAllowed;
+                            // gridSettings["Torn Page 1"] = true;
+                            trackableItemsDict[entry.Key] = entry.Value;
+                        }
+                    }
+
                 }
             }
-            //trackableItemsDict.MergedDictionaries.Add(trackableChecksDict);
 
             Random rng = new Random(seed);
             var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
@@ -114,42 +136,57 @@ namespace KhTracker
 
             foreach (KeyValuePair<object, object> kvp in randomizedItemsDict)
             {
-                if (kvp.Value is Image)
-                {
-                    // the split here addresses the image type e.g. min-valor will give me min
-                    if (((string)kvp.Key).Split('-')[0] == visual_type)
-                    {
-                        imageKeys.Add((string)kvp.Key);
-                    }
-                }
+                imageKeys.Add((string)kvp.Key);
             }
 
             return imageKeys;
         }
 
 
-        public void Button_Click(object sender, RoutedEventArgs e)
+        public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (button.Background == Brushes.LightGray)
+            if (((SolidColorBrush)button.Background).Color == currentColors["Unmarked Color"] || ((SolidColorBrush)button.Background).Color == currentColors["Annotated Color"])
             {
-                button.Background = Brushes.Green;
+                ((SolidColorBrush)button.Background).Color = currentColors["Marked Color"];
             }
             else
             {
-                button.Background = Brushes.LightGray;
+                ((SolidColorBrush)button.Background).Color = currentColors["Unmarked Color"];
             }
 
-            BingoCheck(grid);
+            BingoCheck(grid, i, j);
         }
 
+        public void Button_RightClick(object sender, RoutedEventArgs e)
+        {
+            var button = (ToggleButton)sender;
+            if (((SolidColorBrush)button.Background).Color == currentColors["Annotated Color"])
+            {
+                ((SolidColorBrush)button.Background).Color = currentColors["Original Color"];
+            }
+            else
+            {
+                currentColors["Original Color"] = ((SolidColorBrush)button.Background).Color;
+                ((SolidColorBrush)button.Background).Color = currentColors["Annotated Color"];
+            }
+        }
+
+        public void GenerateGrid(object sender, RoutedEventArgs e)
+        {
+            GenerateGrid(numRows, numColumns);
+        }
+            
         public void GenerateGrid(int numRows = 5, int numColumns = 5)
         {
             grid = new Grid();
             buttons = new ToggleButton[numRows, numColumns];
-            string seedString = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", 8).Select(s => s[new Random().Next(s.Length)]).ToArray());
+            var randValue = new Random();
+            string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            string seedString = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
             int seed = seedString.GetHashCode();
             Random rand = new Random(seed);
+            Seedname.Header = "Seed: " + seedString;
             List<string> assets = Asset_Collection("Min", seed);
 
             //Console.WriteLine(assets[0]);
@@ -170,12 +207,16 @@ namespace KhTracker
                 for (int j = 0; j < numColumns; j++)
                 {
                     ToggleButton button = new ToggleButton();
-                    button.Background = Brushes.LightGray;
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     Console.WriteLine(assets[(i * numColumns) + j]);
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
-                    button.Click += Button_Click;
+                    // keep i and j static for the button
+                    int current_i = i;
+                    int current_j = j;
+                    button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
+                    button.MouseRightButtonUp += Button_RightClick;
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
@@ -185,159 +226,318 @@ namespace KhTracker
             // Add grid to the window or other container
             DynamicGrid.Children.Add(grid);
         }
-        public void BingoCheck(Grid grid)
+        public void BingoCheck(Grid grid, int i, int j)
         {
 
             int rowCount = grid.RowDefinitions.Count;
             int columnCount = grid.ColumnDefinitions.Count;
 
-            // check for horizontal bingos
-            for (int row = 0; row < rowCount; row++)
+
+            // remove any bingos if we are unclicking
+            if (buttons[i, j].IsChecked == false)
             {
-                
-                int col;
-
-                for (col = 0; col < columnCount; col++)
+                // check if we can have diagonal bingos
+                if (rowCount == columnCount)
                 {
-                    if (buttons[row, col].IsChecked == false)
+                    // remove left diagonal
+                    if (i == j)
                     {
-                        bool row_bingo_remove = false;
-                        if (col == columnCount - 1 && buttons[row, col - 1].Background == Brushes.Purple)
-                            row_bingo_remove = true;
-                        if (col != columnCount - 1 && buttons[row, col + 1].Background == Brushes.Purple)
-                            row_bingo_remove = true;
-                        if (row_bingo_remove)
+                        for (int index = 0; index < rowCount; index++)
                         {
-                            for (col = 0; col < columnCount; col++)
+                            if (((SolidColorBrush)buttons[index, index].Background).Color.Equals(currentColors["Bingo Color"]))
                             {
-                                // check that the cell we want to remove isn't a part of a vertical bingo
-                                for (int row_check = 0; row_check < rowCount; row_check++)
+                                // check that the button in question is not a part of a row or column bingo before removing bingo background
+                                bool part_of_row_bingo = true;
+                                bool part_of_column_bingo = true;
+                                for (int check = 0; check < rowCount; check++)
                                 {
-                                    if (buttons[row_check, col].IsChecked == false) {
-                                        if (buttons[row, col].IsChecked == false)
-                                            buttons[row, col].Background = Brushes.LightGray;
-                                        else
-                                            buttons[row, col].Background = Brushes.Green;
-                                    }
-                                }
-
-
-                            }
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        if (col == columnCount - 1)
-                        {
-                            for (col = 0; col < columnCount; col++)
-                            {
-                                buttons[row, col].Background = Brushes.Purple;
-                            }
-                        }
-                    }
-
-                }
-
-            }
-
-            // check for vertical bingos
-            for (int col = 0; col < columnCount; col++)
-            {
-
-                int row;
-
-                for (row = 0; row < rowCount; row++)
-                {
-                    if (buttons[row, col].IsChecked == false)
-                    {
-                        bool col_bingo_remove = false;
-                        if (row == rowCount - 1 && buttons[row - 1, col].Background == Brushes.Purple)
-                            col_bingo_remove = true;
-                        if (row != rowCount - 1 && buttons[row + 1, col].Background == Brushes.Purple)
-                            col_bingo_remove = true;
-                        if (col_bingo_remove)
-                        {
-                            for (row = 0; row < rowCount; row++)
-                            {
-                                // check that the cell we want to remove isn't a part of a horizontal bingo
-                                for (int col_check = 0; col_check < columnCount; col_check++)
-                                {
-                                    if (buttons[row, col_check].IsChecked == false)
+                                    if (!((SolidColorBrush)buttons[index, check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                        part_of_row_bingo = false;
+                                    if (!((SolidColorBrush)buttons[check, index].Background).Color.Equals(currentColors["Bingo Color"]))
+                                        part_of_column_bingo = false;
+                                    if (!part_of_row_bingo && !part_of_column_bingo)
                                     {
-                                        if (buttons[row, col].IsChecked == false)
-                                            buttons[row, col].Background = Brushes.LightGray;
-                                        else
-                                            buttons[row, col].Background = Brushes.Green;
+                                        if (index != i)
+                                        {
+                                            // check that the middle button (if it exists) is not part of the other diagonal bingo
+                                            if (index * 2 == rowCount - 1)
+                                            {
+                                                for (int diag_check = 0; diag_check < rowCount; diag_check++)
+                                                {
+                                                    if (!((SolidColorBrush)buttons[diag_check, rowCount - 1 - diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                                    {
+                                                        buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                break;
+                                            }
+                                        } 
+                                    }
+                                }     
+                            }
+                        }
+                    }
+
+                    // remove right diagonal
+                    if (i == rowCount - 1 - j)
+                    {
+                        for (int index = 0; index < rowCount; index++)
+                        {
+                            if (((SolidColorBrush)buttons[index, rowCount - 1 - index].Background).Color.Equals(currentColors["Bingo Color"]))
+                            {
+                                // check that the button in question is not a part of a row or column bingo before removing bingo background
+                                bool part_of_row_bingo = true;
+                                bool part_of_column_bingo = true;
+                                for (int check = 0; check < rowCount; check++)
+                                {
+                                    if (!((SolidColorBrush)buttons[index, check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                        part_of_row_bingo = false;
+                                    if (!((SolidColorBrush)buttons[check, rowCount - 1 - index].Background).Color.Equals(currentColors["Bingo Color"]))
+                                        part_of_column_bingo = false;
+                                    if (!part_of_row_bingo && !part_of_column_bingo)
+                                    {
+                                        if (index != i)
+                                        {
+                                            // check that the middle button (if it exists) is not part of the other diagonal bingo
+                                            if (index * 2 == rowCount - 1)
+                                            {
+                                                for (int diag_check = 0; diag_check < rowCount; diag_check++)
+                                                {
+                                                    if (!((SolidColorBrush)buttons[diag_check, diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                                    {
+                                                        buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                buttons[index, rowCount - 1 - index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                Console.WriteLine($"{rowCount - 1 - index}, {check}");
+                                                Console.WriteLine($"{check}, {index}");
+                                                Console.WriteLine(part_of_row_bingo);
+                                                Console.WriteLine(part_of_column_bingo);
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
-                        break;
                     }
-                    else
+                }
+                // remove vertical bingo
+                for (int row = 0; row < rowCount; row++)
+                {
+                    bool part_of_row_bingo = true;
+                    bool part_of_left_diag_bingo = true;
+                    bool part_of_right_diag_bingo = true;
+                    
+                    if (((SolidColorBrush)buttons[row, j].Background).Color.Equals(currentColors["Bingo Color"]))
                     {
-                        if (row == rowCount - 1)
+                        // check that the button in question is not a part of a row bingo before removing bingo background 
+                        for (int col_check = 0; col_check < columnCount; col_check++)
                         {
-                            for (row = 0; row < rowCount; row++)
+                            if (row != i)
                             {
-                                buttons[row, col].Background = Brushes.Purple;
+                                if (!((SolidColorBrush)buttons[row, col_check].Background).Color.Equals(currentColors["Bingo Color"])) 
+                                {
+                                    part_of_row_bingo = false;
+                                    break;
+                                }
                             }
                         }
+                        if (rowCount == columnCount)
+                        {
+                            // check that the button in question is not a part of left diagonal bingo before removing bingo background 
+                            if (j == row)
+                            {
+                                for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
+                                {                                    
+                                    if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    {
+                                        part_of_left_diag_bingo = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                                part_of_left_diag_bingo = false;
+                            // check that the button in question is not a part of right diagonal bingo before removing bingo background
+                            if (j == rowCount - 1 - row)
+                            {
+                                for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
+                                {                                    
+                                    if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    {
+                                        part_of_right_diag_bingo = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                                part_of_right_diag_bingo = false;
+                        }
+                        if (!part_of_row_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
+                            buttons[row, j].Background = new SolidColorBrush(currentColors["Marked Color"]);
                     }
-
                 }
 
+                // remove horizontal bingo
+                for (int col = 0; col < rowCount; col++)
+                {
+                    bool part_of_column_bingo = true;
+                    bool part_of_left_diag_bingo = true;
+                    bool part_of_right_diag_bingo = true;
+                    
+                    if (((SolidColorBrush)buttons[i, col].Background).Color.Equals(currentColors["Bingo Color"]))
+                    {
+                        // check that the button in question is not a part of a col bingo before removing bingo background 
+                        for (int row_check = 0; row_check < columnCount; row_check++)
+                        {
+                            if (col != j)
+                            {                                
+                                if (!((SolidColorBrush)buttons[row_check, col].Background).Color.Equals(currentColors["Bingo Color"]))
+                                {
+                                    part_of_column_bingo = false;
+                                    break;
+                                }
+                            }
+                        }
+                        if (rowCount == columnCount)
+                        {
+                            // check that the button in question is not a part of left diagonal bingo before removing bingo background 
+                            if (i == col)
+                            {
+                                for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
+                                {                                    
+                                    if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    {
+                                        part_of_left_diag_bingo = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                                part_of_left_diag_bingo = false;
+                            // check that the button in question is not a part of right diagonal bingo before removing bingo background
+                            if (i == rowCount - 1 - col)
+                            {
+                                for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
+                                {                                    
+                                    if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    {
+                                        part_of_right_diag_bingo = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                                part_of_right_diag_bingo = false;
+                        }
+                        if (!part_of_column_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
+                            buttons[i, col].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                    }
+                }
             }
 
-            // check for diagonal bingos
-            if (rowCount == columnCount)
+            // add any bingos if we are clicking
+            else
             {
-
-                // left diagonal
-                for (int index = 0; index < rowCount; index++)
+                // check if we can have diagonal bingos
+                if (rowCount == columnCount)
                 {
-                    if (buttons[index, index].IsChecked == false)
+                    // add left diagonal
+                    if (i == j)
                     {
-                        if (index == rowCount - 1 && buttons[index, index].IsChecked == false)
+                        for (int index = 0; index < rowCount; index++)
                         {
-
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        if (index == rowCount - 1)
-                        {
-                            for (index = 0; index < rowCount; index++)
+                            if (buttons[index, index].IsChecked == false)
                             {
-                                buttons[index, index].Background = Brushes.Purple;
+                                break;
+                            }
+                            if (index == rowCount - 1)
+                            {
+                                for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
+                                    buttons[bingo_index, bingo_index].Background = new SolidColorBrush(currentColors["Bingo Color"]);
                             }
                         }
+
+                    }
+
+                    // add right diagonal
+                    if (i == rowCount - 1 - j)
+                    {
+                        for (int index = 0; index < rowCount; index++)
+                        {
+                            if (buttons[index, rowCount - 1 - index].IsChecked == false)
+                            {
+                                break;
+                            }
+                            if (index == rowCount - 1)
+                            {
+                                for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
+                                    buttons[bingo_index, rowCount - 1 - bingo_index].Background = new SolidColorBrush(currentColors["Bingo Color"]);
+                            }
+                        }
+
+                    }
+                }
+                // add vertical bingo
+                for (int row = 0; row < rowCount; row++)
+                {
+                    if (buttons[row, j].IsChecked == false)
+                    {
+                        break ;         
+                    }
+                    if (row == rowCount - 1)
+                    {
+                        for (int bingo_row = 0; bingo_row < rowCount; bingo_row++)
+                            buttons[bingo_row, j].Background = new SolidColorBrush(currentColors["Bingo Color"]);
                     }
                 }
 
-
-                // right diagonal
-                for (int index = 0; index < rowCount; index++)
+                // add horizontal bingo
+                for (int col = 0; col < columnCount; col++)
                 {
-                    if (buttons[index, rowCount - index - 1].IsChecked == false)
+                    if (buttons[i, col].IsChecked == false)
                     {
                         break;
                     }
-                    else
+                    if (col == columnCount - 1)
                     {
-                        if (index == rowCount - 1)
-                        {
-                            for (index = 0; index < rowCount; index++)
-                            {
-                                buttons[index, rowCount - index - 1].Background = Brushes.Purple;
-                            }
-                        }
+                        for (int bingo_col = 0; bingo_col < columnCount; bingo_col++)
+                            buttons[i, bingo_col].Background = new SolidColorBrush(currentColors["Bingo Color"]);
                     }
                 }
             }
-            
+        }
+        private void PickColor_Click(object sender, RoutedEventArgs e)
+        {
+            // prompt user for new colors
+            var colorPicker = new ColorPickerWindow(currentColors);
+            var oldAnnotatedColor = currentColors["Annotated Color"];
+            if (colorPicker.ShowDialog() == true)
+            {
+                currentColors = colorPicker.ButtonColors;
+            }
+            //update the new colors on the card
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    if (((SolidColorBrush)buttons[i, j].Background).Color.Equals(oldAnnotatedColor))
+                        buttons[i, j].Background = new SolidColorBrush(currentColors["Annotated Color"]);
+                    else
+                    buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
+                BingoCheck(grid, i, j); 
+                }
+            }
         }
     }
 }

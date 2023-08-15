@@ -15,14 +15,30 @@
               "state": {
                 "file": "Example Design.canvas",
                 "viewState": {
-                  "x": 532.0602119921791,
-                  "y": -97.00993132788935,
-                  "zoom": 0.2684888359259016
+                  "x": 314.67662048279817,
+                  "y": -777.8995352465802,
+                  "zoom": -0.0648444974074317
+                }
+              }
+            }
+          },
+          {
+            "id": "e9d136fd0432a6a1",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "Example Design.canvas",
+                "viewState": {
+                  "x": 725.0524554834631,
+                  "y": -1197.0155792797073,
+                  "zoom": 0.19048632392462844
                 }
               }
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -149,19 +165,22 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "6ac9a9b3c40e4a30",
+  "active": "e9d136fd0432a6a1",
   "lastOpenFiles": [
-    "TO DO/Grid Tracker.md",
-    "TO DO/Assets.md",
-    "2023-07-29.md",
-    "Example Design.canvas",
-    "Untitled",
     "TO DO/Options Window.md",
+    "2023-08-13.md",
+    "TO DO/KH2Tracker.md",
+    "TO DO/Assets.md",
+    "Example Design.canvas",
+    "2023-08-10.md",
     "TO DO/Logic.md",
+    "2023-07-31.md",
+    "2023-07-29.md",
     "2023-07-22.md",
     "2023-07-21.md",
+    "TO DO/Grid Tracker.md",
+    "Untitled",
     "TO DO/TO DO.md",
-    "TO DO/KH2Tracker.md",
     "TO DO",
     "Potential Note 1.md",
     "2023-07-16.md"
