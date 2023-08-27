@@ -1,7 +1,7 @@
 - [x] Make buttons change color on click.
 	- [x] Ensure that buttons don't share a color flag.
 - [x] Create Options Window that has game settings, and selected checks based on groups (i.e. boss fight, magic, movement, etc.)
-- [ ] Allow Grid Tracker to have a variable amount of rows and columns.
+- [x] Allow Grid Tracker to have a variable amount of rows and columns.
 - [ ] Save the current options upon close.
 - [ ] Create an OPTIONAL folder that can hold settings for the grid tracker.
 - [ ] Create a feature porting list that ports intricate features that were nice from the old tracker to the new one.
@@ -12,3 +12,5 @@
 - [x] Update Annotated colors in real time.
 - [ ] Clean up code conversion between "Color" type and "Brushes" type.
 	- [ ] Maybe create a helper function that returns the converted type instead of constantly creating a new SolidColorBrush every time.
+- [ ] Add ability to track drive levels.
+- [ ] Add non-progression bosses to the grid check pool (Riku, Sark, Vivi, Seifer, Hayner, Armored 1, Armored 2, Final Xem)

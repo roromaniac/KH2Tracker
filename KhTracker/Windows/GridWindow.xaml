@@ -11,7 +11,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         Closing="GridWindow_Closing"
-        MinHeight="325" MinWidth="300" Background="#303030">
+        MinHeight="100" MinWidth="100" Background="#303030">
 
     <Window.Resources>
         <Style x:Key="ColorToggleButton" TargetType="ToggleButton">

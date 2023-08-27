@@ -10,14 +10,14 @@
         <local:OptionTemplateSelector x:Key="OptionSelector">
             <local:OptionTemplateSelector.CheckBoxTemplate>
                 <DataTemplate>
-                    <CheckBox Content="{Binding Description}" IsChecked="{Binding DataContext.gridSettings[Description], RelativeSource={RelativeSource AncestorType=Window}, Mode=TwoWay}" />
+                    <CheckBox Content="{Binding Description}" IsChecked="{Binding DefaultValue}" />
                 </DataTemplate>
             </local:OptionTemplateSelector.CheckBoxTemplate>
 
             <local:OptionTemplateSelector.TextBoxTemplate>
                 <DataTemplate>
-                    <StackPanel>
-                        <Label Content="{Binding Description}"/>
+                    <StackPanel HorizontalAlignment="Center">
+                        <Label Content="{Binding Description}" />
                         <TextBox Text="{Binding DefaultValue}" Width="200"/>
                     </StackPanel>
                 </DataTemplate>
@@ -27,32 +27,33 @@
 
     <StackPanel>
         <!-- Wrapping StackPanel -->
-
         <ScrollViewer>
-            <StackPanel>
-                <ItemsControl ItemsSource="{Binding}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Expander Header="{Binding CategoryName}" Background="#D3D3D3">
-                                <!-- Submenu for each main category -->
-                                <ItemsControl ItemsSource="{Binding SubCategories}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Expander Header="{Binding SubCategoryName}" Padding="10,0,0,0">
-                                                <ItemsControl ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource OptionSelector}" />
-                                            </Expander>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </Expander>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+            <ItemsControl ItemsSource="{Binding}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding CategoryName}" Background="#D3D3D3" HorizontalAlignment="Stretch">
+                            <!-- Submenu for each main category -->
+                            <ItemsControl ItemsSource="{Binding SubCategories}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding SubCategoryName}" Padding="10,0,0,0" HorizontalAlignment="Stretch">
+                                            <ItemsControl ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource OptionSelector}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <UniformGrid Columns="4" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </ScrollViewer>
-
         <!-- Submit Button -->
         <Button Content="Submit" Margin="10" HorizontalAlignment="Right" Click="SubmitButton_Click"/>
-
     </StackPanel>
 </Window>

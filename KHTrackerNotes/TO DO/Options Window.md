@@ -1,4 +1,5 @@
 - [ ] Make the elements in the dropdown menu span the height of the options window.
 - [ ] Create option in drives to allow final form tracking as L&D.
 - [x] Create an option that saves numRows and numColumns and regenerates the card when updated.
-- [ ] Create a button that regenerates card with new settings.
+- [x] Create a button that regenerates card with new settings.
+- [ ] Update the tracker settings in its own method.

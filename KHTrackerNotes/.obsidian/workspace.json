@@ -30,9 +30,9 @@
               "state": {
                 "file": "Example Design.canvas",
                 "viewState": {
-                  "x": 725.0524554834631,
-                  "y": -1197.0155792797073,
-                  "zoom": 0.19048632392462844
+                  "x": 704.3844467465163,
+                  "y": -910.0006793888301,
+                  "zoom": 0.34548241599944934
                 }
               }
             }
@@ -167,11 +167,12 @@
   },
   "active": "e9d136fd0432a6a1",
   "lastOpenFiles": [
+    "2023-08-19.md",
+    "Example Design.canvas",
     "TO DO/Options Window.md",
     "2023-08-13.md",
     "TO DO/KH2Tracker.md",
     "TO DO/Assets.md",
-    "Example Design.canvas",
     "2023-08-10.md",
     "TO DO/Logic.md",
     "2023-07-31.md",

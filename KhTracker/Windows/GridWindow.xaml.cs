@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.Win32;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,8 +36,8 @@ namespace KhTracker
         Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         Data data;
 
-        public static int numRows = 5;
-        public static int numColumns = 5;
+        public int numRows = 1;
+        public int numColumns = 1;
 
         public Grid grid;
         public ToggleButton[,] buttons;
@@ -56,7 +59,6 @@ namespace KhTracker
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
 
             data = dataIn;
-            Console.WriteLine(data.BossList);
 
             Top = Properties.Settings.Default.GridWindowY;
             Left = Properties.Settings.Default.GridWindowX;
@@ -88,12 +90,14 @@ namespace KhTracker
 
         private void Grid_Options(object sender, RoutedEventArgs e)
         {
-            GridOptionsWindow gridWindow = new GridOptionsWindow();
-            gridWindow.ShowDialog();
+            GridOptionsWindow gridOptionsWindow = new GridOptionsWindow(this, data);
+            gridOptionsWindow.ShowDialog();
         }
 
         private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
         {
+
+            gridSettings = GetGridSettings();
 
             List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary> ();
 
@@ -103,13 +107,14 @@ namespace KhTracker
             };
             itemsDictionaries.Add(trackableChecksDict);
 
-            //var trackableProgressionDict = new ResourceDictionary
-            //{
-            //    Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
-            //};
-            //itemsDictionaries.Add(trackableProgressionDict);
+            var trackableProgressionDict = new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
+            };
+            itemsDictionaries.Add(trackableProgressionDict);
 
             var trackableItemsDict = new Dictionary<object, object>();
+
             foreach (ResourceDictionary rd in itemsDictionaries)
             {
                 foreach (DictionaryEntry entry in rd)
@@ -119,10 +124,11 @@ namespace KhTracker
                         // the split here addresses the image type e.g. min-valor will give me min
                         if (((string)entry.Key).Split('-')[0] == visual_type)
                         {
-                            // add the item to the grid settings dictionary if it doesn't exist already
-                            gridSettings[(string)entry.Key] = img.GridAllowed;
-                            // gridSettings["Torn Page 1"] = true;
-                            trackableItemsDict[entry.Key] = entry.Value;
+                            // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
+                            string checkName = ((string)entry.Key).Split('-')[1];
+                            gridSettings[checkName] = gridSettings.ContainsKey(checkName) ? gridSettings[checkName] : img.GridAllowed;
+                            if (gridSettings[checkName])
+                                trackableItemsDict[entry.Key] = entry.Value;
                         }
                     }
 
@@ -142,6 +148,22 @@ namespace KhTracker
             return imageKeys;
         }
 
+        private Dictionary<string, bool> GetGridSettings()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTracker");
+            if (key != null)
+            {
+                string serializedSettings = (string)key.GetValue("Settings");
+                key.Close();
+
+                if (!string.IsNullOrEmpty(serializedSettings))
+                {
+                    return JsonSerializer.Deserialize<Dictionary<string, bool>>(serializedSettings);
+                }
+            }
+
+            return new Dictionary<string, bool>(); // Return default or empty settings if not found
+        }
 
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
@@ -154,8 +176,8 @@ namespace KhTracker
             {
                 ((SolidColorBrush)button.Background).Color = currentColors["Unmarked Color"];
             }
-
-            BingoCheck(grid, i, j);
+            if (gridSettings.ContainsKey("BingoLogic") && gridSettings["BingoLogic"])
+                BingoCheck(grid, i, j);
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e)
@@ -208,7 +230,6 @@ namespace KhTracker
                 {
                     ToggleButton button = new ToggleButton();
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
-                    Console.WriteLine(assets[(i * numColumns) + j]);
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -318,10 +339,6 @@ namespace KhTracker
                                             else
                                             {
                                                 buttons[index, rowCount - 1 - index].Background = new SolidColorBrush(currentColors["Marked Color"]);
-                                                Console.WriteLine($"{rowCount - 1 - index}, {check}");
-                                                Console.WriteLine($"{check}, {index}");
-                                                Console.WriteLine(part_of_row_bingo);
-                                                Console.WriteLine(part_of_column_bingo);
                                                 break;
                                             }
                                         }
@@ -383,13 +400,18 @@ namespace KhTracker
                             else
                                 part_of_right_diag_bingo = false;
                         }
+                        else
+                        {
+                            part_of_left_diag_bingo = false;
+                            part_of_right_diag_bingo = false;
+                        }
                         if (!part_of_row_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
                             buttons[row, j].Background = new SolidColorBrush(currentColors["Marked Color"]);
                     }
                 }
 
                 // remove horizontal bingo
-                for (int col = 0; col < rowCount; col++)
+                for (int col = 0; col < columnCount; col++)
                 {
                     bool part_of_column_bingo = true;
                     bool part_of_left_diag_bingo = true;
@@ -398,7 +420,7 @@ namespace KhTracker
                     if (((SolidColorBrush)buttons[i, col].Background).Color.Equals(currentColors["Bingo Color"]))
                     {
                         // check that the button in question is not a part of a col bingo before removing bingo background 
-                        for (int row_check = 0; row_check < columnCount; row_check++)
+                        for (int row_check = 0; row_check < rowCount; row_check++)
                         {
                             if (col != j)
                             {                                
@@ -439,6 +461,11 @@ namespace KhTracker
                             }
                             else
                                 part_of_right_diag_bingo = false;
+                        }
+                        else
+                        {
+                            part_of_left_diag_bingo = false;
+                            part_of_right_diag_bingo = false;
                         }
                         if (!part_of_column_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
                             buttons[i, col].Background = new SolidColorBrush(currentColors["Marked Color"]);
@@ -534,8 +561,9 @@ namespace KhTracker
                     if (((SolidColorBrush)buttons[i, j].Background).Color.Equals(oldAnnotatedColor))
                         buttons[i, j].Background = new SolidColorBrush(currentColors["Annotated Color"]);
                     else
-                    buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
-                BingoCheck(grid, i, j); 
+                        buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
+                    if (gridSettings.ContainsKey("BingoLogic") && gridSettings["BingoLogic"])
+                        BingoCheck(grid, i, j); 
                 }
             }
         }

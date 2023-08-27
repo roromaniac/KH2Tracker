@@ -8,12 +8,12 @@
 
     <!--Report Fail Icons-->
     <local:GridLabelledImage x:Key="Fail0" x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Fail1" Source="Images\FailBar.png"           GridAllowed="True"            Margin="-25,-15,0,0" Height="15" x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Fail1" Source="Images\FailBar.png"           GridAllowed="False"            Margin="-25,-15,0,0" Height="15" x:Shared="false"/>
     <StackPanel x:Key="Fail2" VerticalAlignment="Center" x:Shared="false">
-        <local:GridLabelledImage Source="Images\FailBar.png"           GridAllowed="True"            Margin="-25,-15,0,0" Height="15"/>
-        <local:GridLabelledImage Source="Images\FailBar.png"           GridAllowed="True"            Margin="-15,-15,0,0" Height="15"/>
+        <local:GridLabelledImage Source="Images\FailBar.png"           GridAllowed="False"            Margin="-25,-15,0,0" Height="15"/>
+        <local:GridLabelledImage Source="Images\FailBar.png"           GridAllowed="False"            Margin="-15,-15,0,0" Height="15"/>
     </StackPanel>
-    <local:GridLabelledImage x:Key="Fail3" Source="Images\FailX.png"           GridAllowed="True"            Margin="-20,-15,0,0" Height="15" x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Fail3" Source="Images\FailX.png"           GridAllowed="False"            Margin="-20,-15,0,0" Height="15" x:Shared="false"/>
 
     <local:GridLabelledImage x:Key="Min-Cross" Source="Images\System\cross.png"           GridAllowed="False"            x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Cross" Source="Images\System\cross.png"           GridAllowed="False"            x:Shared="false"/>

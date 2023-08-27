@@ -138,7 +138,7 @@ namespace KhTracker
             data.ProgressKeys.Add("DisneyCastle", new List<string>() { "", "Chests", "Minnie", "OldPete", "Windows", "BoatPete", "DCPete", "Marluxia", "MarluxiaData", "LingeringWill", "Marluxia_LingeringWill", "MarluxiaData_LingeringWill" });
             data.ProgressKeys.Add("HalloweenTown", new List<string>() { "", "Chests", "CandyCaneLane", "PrisonKeeper", "OogieBoogie", "Children", "Presents", "Experiment", "Vexen", "VexenData" });
             data.ProgressKeys.Add("PortRoyal", new List<string>() { "", "Chests", "Town", "1Minute", "Medallions", "Barrels", "Barbossa", "GrimReaper1", "Gambler", "GrimReaper", "DataLuxord" });
-            data.ProgressKeys.Add("SpaceParanoids", new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "MCP", "Larxene", "LarxeneData" });
+            data.ProgressKeys.Add("SpaceParanoids", new List<string>() { "", "Chests", "Screens", "HostileProgram", "SolarSailer", "Sark", "MCP", "Larxene", "LarxeneData" });
             data.ProgressKeys.Add("TWTNW", new List<string>() { "", "Chests", "Roxas", "Xigbar", "Luxord", "Saix", "Xemnas1", "DataXemnas" });
             data.ProgressKeys.Add("Atlantica", new List<string>() { "", "Tutorial", "Ursula", "NewDay" });
             data.ProgressKeys.Add("GoA", new List<string>() { "", "Chests", "Fight1", "Fight2", "Transport", "Valves" });
@@ -157,7 +157,7 @@ namespace KhTracker
             data.ProgressKeys.Add("DisneyCastleDesc", new List<string>() { "", "Early Checks", "Minnie Escort", "Past Pete Fight", "Windows of Time", "Steamboat Fight", "Pete (Boss)", "Marluxia (AS)", "Marluxia (Data)", "Lingering Will (Boss)", "Marluxia (AS) and Lingering Will", "Marluxia (Data) and Lingering Will" });
             data.ProgressKeys.Add("HalloweenTownDesc", new List<string>() { "", "Early Checks", "Candy Cane Lane Fight", "Prison Keeper (Boss)", "Oogie Boogie (Boss)", "Lock, Shock, and Barrel", "Made Decoy Presents", "The Experiment (Boss)", "Vexen (AS)", "Vexen (Data)" });
             data.ProgressKeys.Add("PortRoyalDesc", new List<string>() { "", "Early Checks", "Town Fight", "1 Minute Isle Fight", "Interceptor Medallion Fight", "Interceptor Barrels", "Barbossa (Boss)", "Grim Reaper 1 (Boss)", "1st Gambler Medallion", "Grim Reaper 2 (Boss)", "Luxord (Data)" });
-            data.ProgressKeys.Add("SpaceParanoidsDesc", new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "MCP (Boss)", "Larxene (AS)", "Larxene (Data)" });
+            data.ProgressKeys.Add("SpaceParanoidsDesc", new List<string>() { "", "Early Checks", "Dataspace Fight", "Hostile Program (Boss)", "Solar Sailer", "Sark (Boss)", "MCP (Boss)", "Larxene (AS)", "Larxene (Data)" });
             data.ProgressKeys.Add("TWTNWDesc", new List<string>() { "", "Early Checks", "Roxas (Boss)", "Xigbar (Boss)", "Luxord (Boss)", "Saix (Boss)", "Xemnas 1 (Boss)", "Xemnas (Data)" });
             data.ProgressKeys.Add("AtlanticaDesc", new List<string>() { "", "Music Tutorial", "Ursula's Revenge", "A New Day is Dawning" });
             data.ProgressKeys.Add("GoADesc", new List<string>() { "", "Early Checks", "Forced Fight 1", "Forced Fight 2", "Transport to Rememberance", "Steam Valves (CoR Skip)" });
