@@ -122,7 +122,7 @@ namespace KhTracker
                 //data.reportInformation.Add(new Tuple<string, string, int>(world.Key, null, 0));
             }
 
-            if (data.progressionType == "Bosses")
+            if (data.progressionType != "Reports")
             {
                 foreach (var key in data.WorldsData.Keys.ToList())
                 {
@@ -132,13 +132,9 @@ namespace KhTracker
                     data.WorldsData[key].worldGrid.WorldComplete();
                     SetWorldValue(data.WorldsData[key].value, 0);
                 }
-
-                SetProgressionHints(data.UsingProgressionHints);
             }
-            else
-                SetProgressionHints(data.UsingProgressionHints);
 
-
+            SetProgressionHints(data.UsingProgressionHints);
         }
 
         private bool ShanReportLocationFix(SortedDictionary<int, string> TEMP, int number)
@@ -1183,16 +1179,24 @@ namespace KhTracker
                 {
                     string worldstring = reports[report.ToString()]["World"].ToString();
                     int dummyvalue = 0;
+                    string location;
                     if (worldstring.StartsWith("Nothing_"))
                     {
                         worldstring = worldstring.Remove(0, 8);
                         dummyvalue = -1;
                     }
                     if (worldstring.Contains("Creations") && !data.puzzlesOn)
+                    {
+                        //still need to get and add location for report to track to correct world
+                        //we can't just skip everything if creations was set to be hinted
+                        location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                        data.reportLocations.Add(location);
                         continue;
+                    }
+                        
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
-                    var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                    location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
 
 
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
@@ -1481,6 +1485,9 @@ namespace KhTracker
             if (data.WorldsEnabled == 0)
                 data.WorldsEnabled = data.HintRevealOrder.Count;
 
+            //reveal logic
+            List<string> worldsRevealed = new List<string>();
+
             #region Debug stuff
             //Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~");
             //Console.WriteLine("Current Hint Cost = " + data.HintCosts[data.ProgressionCurrentHint]);
@@ -1492,6 +1499,7 @@ namespace KhTracker
 
             data.ProgressionPoints += points;
             data.TotalProgressionPoints += points;
+            data.calulating = true;
 
             if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 ||
                 data.ProgressionCurrentHint == data.HintCosts.Count || data.ProgressionCurrentHint == data.WorldsEnabled)
@@ -1518,7 +1526,7 @@ namespace KhTracker
                 data.ProgressionCurrentHint++;
 
                 //reveal hints/world
-                ProgressionReveal(data.ProgressionCurrentHint - 1);
+                worldsRevealed.Add(ProgressionReveal(data.ProgressionCurrentHint - 1));
 
                 if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
                     data.ProgressionCurrentHint == data.WorldsEnabled) //revealed last hint
@@ -1543,21 +1551,25 @@ namespace KhTracker
                 ProgressionTotalValue.Text = data.HintCosts[data.ProgressionCurrentHint].ToString();
             }
             data.WorldsData["GoA"].value.Text = data.ProgressionCurrentHint.ToString();
+
+            if (worldsRevealed.Count > 0)
+                HighlightProgHintedWorlds(worldsRevealed);
+            data.calulating = false;
         }
 
-        public void ProgressionReveal(int hintNum)
+        public string ProgressionReveal(int hintNum)
         {
             string RealWorldName = "";
             //shouldn't ever get here but break in case
             if (!data.UsingProgressionHints || data.mode == Mode.JsmarteeHints || data.mode == Mode.ShanHints)
-                return;
+                return "";
 
             //fix later so if a specific variable/value from hint file was passed 
             if (data.progressionType == "Bosses")
             {
                 data.WorldsData["GoA"].worldGrid.ProgBossHint(hintNum);
 
-                return;
+                return "";
             }
 
             if (data.mode == Mode.OpenKHJsmarteeHints) //jsmartee
@@ -1626,12 +1638,23 @@ namespace KhTracker
                 SetHintText(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false);
             }
 
-            //TESTING THIS CODE IDK MAN
-            if (WorldHintHighlightOption.IsChecked)
+            return RealWorldName;
+        }
+
+        public void HighlightProgHintedWorlds(List<string> worlds)
+        {
+            if (!WorldHintHighlightOption.IsChecked)
+                return;
+
+            //unhighlight hinted worlds
+            if (data.previousWorldsHinted.Count >= 0)
             {
-                if (data.previousWorldHinted != "")
+                foreach (var world in data.previousWorldsHinted)
                 {
-                    foreach (var Box in data.WorldsData[data.previousWorldHinted].top.Children.OfType<Rectangle>())
+                    if (world == null || world == "")
+                        continue;
+
+                    foreach (var Box in data.WorldsData[world].top.Children.OfType<Rectangle>())
                     {
                         if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
                             Box.Fill = (SolidColorBrush)FindResource("DefaultRec");
@@ -1640,18 +1663,26 @@ namespace KhTracker
                             Box.Visibility = Visibility.Collapsed;
                     }
                 }
-                //data.selected = button;
-                foreach (var Box in data.WorldsData[RealWorldName].top.Children.OfType<Rectangle>()) //set currently selected world colors
+            }
+
+            //now higlight worlds
+            foreach (var world in worlds)
+            {
+                if (world == null || world == "")
+                    continue;
+
+                foreach (var Box in data.WorldsData[world].top.Children.OfType<Rectangle>()) //set currently selected world colors
                 {
-                    Console.WriteLine("asdfasdfasdf");
+                    //Console.WriteLine("asdfasdfasdf - " + world.ToString());
                     if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
                         Box.Fill = (SolidColorBrush)FindResource("ProgressionHinted");
 
                     if (Box.Name.EndsWith("SelWG") && !WorldHighlightOption.IsChecked)
                         Box.Visibility = Visibility.Visible;
                 }
-                data.previousWorldHinted = RealWorldName;
             }
+
+            data.previousWorldsHinted = worlds;
         }
 
         public int GetProgressionPointsReward(string worldName, int prog)
@@ -1840,9 +1871,15 @@ namespace KhTracker
                     {
                         tmp_origBoss = "Hades";
                     }
-                    if (tmp_origBoss == "Pete OC II")
+                    if (tmp_origBoss == "Pete TR" || tmp_origBoss == "Pete OC II")
                     {
-                        tmp_origBoss = "Pete OC";
+                        tmp_origBoss = "Pete";
+                    }
+
+                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") || 
+                        tmp_origBoss.EndsWith(" (3)") || tmp_origBoss.EndsWith(" (4)"))
+                    {
+                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length-4);
                     }
 
                     BossA = tmp_origBoss;
@@ -1857,18 +1894,30 @@ namespace KhTracker
                     {
                         tmp_origBoss = "Hades";
                     }
-                    if (tmp_origBoss == "Pete OC II")
+                    if (tmp_origBoss == "Pete TR")
                     {
-                        tmp_origBoss = "Pete OC";
+                        tmp_origBoss = "Pete";
                     }
 
                     if (tmp_replBoss == "Hades II (1)" || tmp_replBoss == "Hades II" || tmp_replBoss == "Hades I")
                     {
                         tmp_replBoss = "Hades";
                     }
-                    if (tmp_replBoss == "Pete OC II")
+                    if (tmp_replBoss == "Pete TR" || tmp_replBoss == "Pete OC II")
                     {
-                        tmp_replBoss = "Pete OC";
+                        tmp_replBoss = "Pete";
+                    }
+
+                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") ||
+                        tmp_origBoss.EndsWith(" (3)") || tmp_origBoss.EndsWith(" (4)"))
+                    {
+                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length - 4);
+                    }
+
+                    if (tmp_replBoss.EndsWith(" (1)") || tmp_replBoss.EndsWith(" (2)") ||
+                        tmp_replBoss.EndsWith(" (3)") || tmp_replBoss.EndsWith(" (4)"))
+                    {
+                        tmp_replBoss = tmp_replBoss.Substring(0, tmp_replBoss.Length - 4);
                     }
 
                     BossA = tmp_origBoss;

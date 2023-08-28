@@ -381,11 +381,11 @@ namespace KhTracker
                     //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
                     //}
 
-                    if (hintObject.ContainsKey("dummy_forms"))
-                    {
-                        if (hintObject["dummy_forms"].ToString() == "true")
-                            data.altFinalTracking = true;
-                    }
+                    //if (hintObject.ContainsKey("dummy_forms"))
+                    //{
+                    //    if (hintObject["dummy_forms"].ToString() == "true")
+                    //        data.altFinalTracking = true;
+                    //}
 
                     if (hintObject.ContainsKey("settings"))
                     {
@@ -657,6 +657,9 @@ namespace KhTracker
                                     data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
                                     data.WorldsData["GoA"].value.Text = "0";
                                     //Console.WriteLine("ENABLING PROGRESSION HINTS");
+                                    break;
+                                case "dummy_forms":
+                                    data.altFinalTracking = true;
                                     break;
                             }
                         }
@@ -1533,10 +1536,10 @@ namespace KhTracker
 
                         data.ShouldResetHash = false;
 
-                        if (hintObject.ContainsKey("generatorVersion"))
-                        {
-                            data.seedgenVersion = hintObject["generatorVersion"].ToString();
-                        }
+                        //if (hintObject.ContainsKey("generatorVersion"))
+                        //{
+                        //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
+                        //}
 
                         if (hintObject.ContainsKey("settings"))
                         {
@@ -1844,6 +1847,9 @@ namespace KhTracker
                                         data.WorldsData["GoA"].value.Text = "0";
                                         //Console.WriteLine("ENABLING PROGRESSION HINTS");
                                         break;
+                                    case "dummy_forms":
+                                        data.altFinalTracking = true;
+                                        break;
                                 }
                             }
 
@@ -1870,7 +1876,7 @@ namespace KhTracker
                         {
                             var progressionSettings = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["ProgressionSettings"].ToString());
 
-                            if (data.progressionType != "Bosses")
+                            if (data.progressionType == "Disabled")
                                 data.progressionType = "Reports";
 
                             foreach (var setting in progressionSettings)
@@ -2293,10 +2299,13 @@ namespace KhTracker
             }
             else
             {
-                Connect.Visibility = Visibility.Collapsed;
-                Connect2.Visibility = Visibility.Collapsed;
+                if (!AutoConnectOption.IsChecked)
+                {
+                    Connect.Visibility = Visibility.Collapsed;
+                    Connect2.Visibility = Visibility.Collapsed;
+                }
 
-                SettingRow.Height = new GridLength(0, GridUnitType.Star);
+                //SettingRow.Height = new GridLength(0, GridUnitType.Star);
                 FormRow.Height = new GridLength(0, GridUnitType.Star);
                 Level.Visibility = Visibility.Collapsed;
                 Strength.Visibility = Visibility.Collapsed;
@@ -2344,7 +2353,7 @@ namespace KhTracker
             BossHintTextBegin.Text = "";
             BossHintTextEnd.Text = "";
             data.progBossInformation.Clear();
-            data.progressionType = "DummyText";
+            data.progressionType = "Disabled";
             InfoRow.Height = new GridLength(0.8, GridUnitType.Star);
             InfoTextRow.Height = new GridLength(1, GridUnitType.Star);
             BossTextRow.Height = new GridLength(0, GridUnitType.Star);
@@ -2372,18 +2381,24 @@ namespace KhTracker
             data.HintRevealsStored.Clear();
             data.WorldsData["GoA"].value.Visibility = Visibility.Hidden;
             //clear last hinted green world
-            if (data.previousWorldHinted != "")
+            if (data.previousWorldsHinted.Count >= 0)
             {
-                foreach (var Box in data.WorldsData[data.previousWorldHinted].top.Children.OfType<Rectangle>())
+                foreach (var world in data.previousWorldsHinted)
                 {
-                    if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
-                        Box.Fill = (SolidColorBrush)FindResource("DefaultRec");
+                    if (world == null || world == "")
+                        continue;
 
-                    if (Box.Name.EndsWith("SelWG") && !WorldHighlightOption.IsChecked)
-                        Box.Visibility = Visibility.Collapsed;
+                    foreach (var Box in data.WorldsData[world].top.Children.OfType<Rectangle>())
+                    {
+                        if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
+                            Box.Fill = (SolidColorBrush)FindResource("DefaultRec");
+
+                        if (Box.Name.EndsWith("SelWG") && !WorldHighlightOption.IsChecked)
+                            Box.Visibility = Visibility.Collapsed;
+                    }
                 }
             }
-            data.previousWorldHinted = "";
+            data.previousWorldsHinted.Clear();
             data.StoredWorldCompleteBonus = new Dictionary<string, int>()
             {
                 { "SorasHeart", 0 },
@@ -2812,11 +2827,15 @@ namespace KhTracker
                 }
                 else
                 {
+                    OnReset(null, null);
                     return true;
                 }
             }
             else
+            {
+                OnReset(null, null);
                 return true;
+            }
         }
 
         private void ResetHints()

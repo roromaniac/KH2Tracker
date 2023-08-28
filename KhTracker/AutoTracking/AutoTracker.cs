@@ -51,6 +51,9 @@ namespace KhTracker
         private DriveForm final;
         private DriveForm anti;
 
+        private DriveForm finalReal;
+        private DriveForm valorReal;
+
         private Magic fire;
         private Magic blizzard;
         private Magic thunder;
@@ -116,22 +119,23 @@ namespace KhTracker
                 return;
 
             data.usedHotkey = true;
-            int vercheck = CheckVersion();
-            if (vercheck == 1)
-            {
-                InitAutoTracker(true);
-                return;
-            }
-            else if (vercheck == 2)
-            {
-                InitAutoTracker(false);
-                return;
-            }
-            else
-            {
-                MessageBox.Show("No game detected.\nPlease start KH2 before using Hotkey.");
-                data.usedHotkey = false;
-            }
+            InitTracker(null, null);
+            //int vercheck = CheckVersion();
+            //if (vercheck == 1)
+            //{             
+            //    InitAutoTracker(true);
+            //    return;
+            //}
+            //else if (vercheck == 2)
+            //{
+            //    InitAutoTracker(false);
+            //    return;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("No game detected.\nPlease start KH2 before using Hotkey.");
+            //    data.usedHotkey = false;
+            //}
         }
 
         //buttons merged so no need for both of these anymore
@@ -159,12 +163,16 @@ namespace KhTracker
 
         private void InitTracker()
         {
-            //reset timer if already running
-            aTimer?.Stop();
-
             //connection trying visual
             Connect.Visibility = Visibility.Visible;
             Connect2.Visibility = Visibility.Collapsed;
+
+            //check timer already running!
+            if (checkTimer != null && checkTimer.IsEnabled)
+                return;
+
+            //reset timer if already running
+            aTimer?.Stop();
 
             //start timer for checking game version
             checkTimer = new DispatcherTimer();
@@ -194,7 +202,13 @@ namespace KhTracker
                     checkTimer.Stop();
                     checkTimer = null;
                     memory = null;
-                    MessageBox.Show("Please start KH2 before starting the Auto Tracker.");
+                    if(data.usedHotkey)
+                    {
+                        MessageBox.Show("No game detected.\nPlease start KH2 before using Hotkey.");
+                        data.usedHotkey = false;
+                    }
+                    else
+                        MessageBox.Show("Please start KH2 before starting the Auto Tracker.");
                 }
             }
             else
@@ -298,26 +312,15 @@ namespace KhTracker
             // PC Address anchors
             int Now = 0x0714DB8;
             int Save = 0x09A70B0;
-            int Sys3 = 0x2A59DF0;
-            int Bt10 = 0x2A74880;
+            int Sys3 = 0x0; //old base address 0x2A59DF0;
+            int Bt10 = 0x0; //old base address 0x2A74880;
             int BtlEnd = 0x2A0D3E0;
             int Slot1 = 0x2A20C98;
             int NextSlot = 0x278;
 
             if (!PCSX2)
             {
-                //check for if the system files are loaded every 1/2 second.
-                //this helps ensure that ICs on levels/drives never mistrack
-                //(this was a rare instance that could happen on pc because
-                //the data takes a small bit of time to fully load.)
-                while (!pcFilesLoaded)
-                {
-                    pcFilesLoaded = CheckPCLoaded();
-                    await Task.Delay(500);
-                }
-
-                //the pc files are fully loaded so we can change the connect icon.
-                Connect2.Source = data.AD_PC;
+                Connect2.Source = data.AD_PCred;
 
                 try
                 {
@@ -336,6 +339,20 @@ namespace KhTracker
                     Connect2.Source = data.AD_Cross;
                     MessageBox.Show("Error connecting to KH2FM");
                     return;
+                }
+
+
+                //Connect2.Source = data.AD_PCred;
+                //Connect.Visibility = Visibility.Collapsed;
+                //Connect2.Visibility = Visibility.Visible;
+                //check for if the system files are loaded
+                //this helps ensure that ICs on levels/drives don't mistrack
+                while (!pcFilesLoaded)
+                {
+                    Sys3 = ReadPcPointer(0x2AE3550);
+                    Bt10 = ReadPcPointer(0x2AE3558);
+                    pcFilesLoaded = CheckPCLoaded(Sys3, Bt10);
+                    await Task.Delay(100);
                 }
 
                 FinishSetup(PCSX2, Now, Save, Sys3, Bt10, BtlEnd, Slot1, NextSlot);
@@ -364,8 +381,8 @@ namespace KhTracker
                 // PCSX2 anchors 
                 Now = 0x032BAE0;
                 Save = 0x032BB30;
-                Sys3 = 0x1CCB300;
-                Bt10 = 0x1CE5D80;
+                Sys3 = ReadMemInt(0x1C61AF8); //old base address 0x1CCB300;
+                Bt10 = ReadMemInt(0x1C61AFC); //old base address 0x1CE5D80;
                 BtlEnd = 0x1D490C0;
                 Slot1 = 0x1C6C750;
                 NextSlot = 0x268;
@@ -410,16 +427,19 @@ namespace KhTracker
             }
         }
 
-        private bool CheckPCLoaded()
+        private bool CheckPCLoaded(int system3, int battle0)
         {
-            ////checks if these files have been loaded into memeory
-            int Obj0 = 0x2A22BD0;
-            int Prg0 = Obj0 + ReadMemInt(Obj0 - 0x10) + 0x10;
-            int Sys3 = Prg0 + ReadMemInt(Prg0 - 0x10) + 0x10;
-            int Btl0 = ReadMemInt(Sys3 - 0x10);
-            if (Btl0 > 0x20)
+            //Testchecks if these files have been loaded into memeory
+            string testS = ReadMemString(system3, 3);
+            string testB = ReadMemString(battle0, 3);
+
+            //Console.WriteLine("sys: " + testS);
+            //Console.WriteLine("btl: " + testB);
+
+            if (testB == testS && testS == "BAR")
             {
                 //all important files loaded
+                Connect2.Source = data.AD_PC;
                 return true;
             }
 
@@ -454,10 +474,11 @@ namespace KhTracker
             {
                 importantChecks.Add(valor = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 7, Save + 0x32F6, "Valor"));
                 importantChecks.Add(final = new DriveForm(memory, Save + 0x36C2, ADDRESS_OFFSET, 1, Save + 0x33D6, "Final"));
+
+                importantChecks.Add(finalReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 4, Save + 0x33D6, "FinalReal"));
+                importantChecks.Add(valorReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 1, Save + 0x32F6, Save + 0x06B2, "ValorReal"));
             }
-
-
-
+               
             int fireCount = fire != null ? fire.Level : 0;
             int blizzardCount = blizzard != null ? blizzard.Level : 0;
             int thunderCount = thunder != null ? thunder.Level : 0;
@@ -521,6 +542,7 @@ namespace KhTracker
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x363C, ADDRESS_OFFSET, "MunnyPouch1"));
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x3695, ADDRESS_OFFSET, "MunnyPouch2"));
 
+            //change this for flag checking to determine amount of pages?
             int count = pages != null ? pages.Quantity : 0;
             importantChecks.Add(pages = new TornPage(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
@@ -2767,12 +2789,21 @@ namespace KhTracker
             BindAbility(DodgeRoll, "Obtained", dodgeRoll);
             BindAbility(AerialDodge, "Obtained", aerialDodge);
             BindAbility(Glide, "Obtained", glide);
-
-            BindForm(ValorM, "Obtained", valor);
+            
             BindForm(WisdomM, "Obtained", wisdom);
             BindForm(LimitM, "Obtained", limit);
             BindForm(MasterM, "Obtained", master);
-            BindForm(FinalM, "Obtained", final);
+            
+            if (data.altFinalTracking)
+            {
+                BindForm(ValorM, "Obtained", valorReal);
+                BindForm(FinalM, "Obtained", finalReal);
+            }
+            else
+            {
+                BindForm(ValorM, "Obtained", valor);
+                BindForm(FinalM, "Obtained", final);
+            }
         }
 
         private void BindForm(ContentControl img, string property, object source)
@@ -2813,13 +2844,37 @@ namespace KhTracker
             return world.worldName;
         }
 
-        public void UpdateUsedPages()
-        {
-            data.usedPages++;
-        }
+        //public void UpdateUsedPages()
+        //{
+        //
+        //
+        //    data.usedPages++;
+        //}
 
-        public int GetUsedPages()
+        public int GetUsedPages(int save)
         {
+            save = save - 0x3598;
+            int used = 0;
+            bool PigFlag = new BitArray(memory.ReadMemory(save + 0x1DB0, 1))[1];
+            bool Page1Flag = new BitArray(memory.ReadMemory(save + 0x1DB1, 1))[1];
+            bool Page2Flag = new BitArray(memory.ReadMemory(save + 0x1DB2, 1))[1];
+            bool Page3Flag = new BitArray(memory.ReadMemory(save + 0x1DB3, 1))[1];
+            bool Page4Flag = new BitArray(memory.ReadMemory(save + 0x1DB4, 1))[1];
+            bool Page5Flag = new BitArray(memory.ReadMemory(save + 0x1DB5, 1))[0];
+
+            if (PigFlag && Page5Flag)
+            {
+                data.usedPages = 5;
+                return data.usedPages;
+            }
+
+            if (Page1Flag) used++;
+            if (Page2Flag) used++;
+            if (Page3Flag) used++;
+            if (Page4Flag) used++;
+
+            data.usedPages = used;
+
             return data.usedPages;
         }
 
@@ -2898,7 +2953,23 @@ namespace KhTracker
 
         private int ReadMemInt(int address)
         {
+            address = address + ADDRESS_OFFSET;
             return BitConverter.ToInt32(memory.ReadMemory(address, 4), 0);
+        }
+
+        private string ReadMemString(int address, int length)
+        {
+            address = address + ADDRESS_OFFSET;
+            string result = Encoding.Default.GetString(memory.ReadMemory(address, length), 0, length);
+            return result.TrimEnd('\0');
+        }
+
+        private int ReadPcPointer(int address)
+        {
+            long origAddress = BitConverter.ToInt64(memory.ReadMemory(address, 8), 0);
+            long baseAddress = memory.GetBaseAddress();
+            long result = origAddress - baseAddress;
+            return (int)result;
         }
 
         //progression hints - compare last saved progression point

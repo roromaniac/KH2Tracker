@@ -116,7 +116,7 @@ namespace KhTracker
         public Dictionary<string, string> BossList = new Dictionary<string, string>();
         public List<string> enabledWorlds = new List<string>();
         //for boss rando progression
-        public string progressionType = "DummyText";
+        public string progressionType = "Disabled";
         public List<Tuple<string, string, string>> progBossInformation = new List<Tuple<string, string, string>>();
 
         //Progression JsmarteeHints stuff
@@ -134,7 +134,8 @@ namespace KhTracker
         public List<Tuple<string, string, string, bool, bool, bool>> HintRevealsStored = new List<Tuple<string, string, string, bool, bool, bool>>();
         public bool synthOn = false;
         public bool puzzlesOn = false;
-        public string previousWorldHinted = "";
+        public bool calulating = false;
+        public List<string> previousWorldsHinted = new List<string>();
         #endregion
 
         #region Bonuses and Sora/Drive Levels
