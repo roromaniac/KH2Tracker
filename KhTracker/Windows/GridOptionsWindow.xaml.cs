@@ -103,14 +103,14 @@ namespace KhTracker
                             SubCategoryName = "Bingo Logic",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BingoLogic") ? _gridWindow.gridSettings["BingoLogic"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GlobalBingoLogic") ? _gridWindow.gridSettings["GlobalBingoLogic"] : false).ToString() },
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Battleship Logic" ,
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipLogic") ? _gridWindow.gridSettings["BattleshipLogic"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GlobalBattleshipLogic") ? _gridWindow.gridSettings["GlobalBattleshipLogic"] : false).ToString() },
                             }
                         }
                     }
@@ -174,32 +174,32 @@ namespace KhTracker
                             SubCategoryName = "Superbosses",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Axel (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataAxel") ? _gridWindow.gridSettings["DataAxel"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Demyx (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataDemyx") ? _gridWindow.gridSettings["DataDemyx"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Larxene", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Larxene") ? _gridWindow.gridSettings["Larxene"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Larxene (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("LarxeneData") ? _gridWindow.gridSettings["LarxeneData"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Lexaeus", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Lexaeus") ? _gridWindow.gridSettings["Lexaeus"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Lexaeus (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("LexaeusData") ? _gridWindow.gridSettings["LexaeusData"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Lingering Will", DefaultValue = (_gridWindow.gridSettings.ContainsKey("LingeringWill") ? _gridWindow.gridSettings["LingeringWill"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Luxord (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataLuxord") ? _gridWindow.gridSettings["DataLuxord"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Marluxia", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Marluxia") ? _gridWindow.gridSettings["Marluxia"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Marluxia (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MarluxiaData") ? _gridWindow.gridSettings["MarluxiaData"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Roxas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataRoxas") ? _gridWindow.gridSettings["DataRoxas"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Sephiroth", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Sephiroth") ? _gridWindow.gridSettings["Sephiroth"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Vexen", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Vexen") ? _gridWindow.gridSettings["Vexen"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Vexen (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("VexenData") ? _gridWindow.gridSettings["VexenData"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Xaldin (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataXaldin") ? _gridWindow.gridSettings["DataXaldin"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Xemnas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataXemnas") ? _gridWindow.gridSettings["DataXemnas"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Xigbar (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DataXigbar") ? _gridWindow.gridSettings["DataXigbar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Zexion", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Zexion") ? _gridWindow.gridSettings["Zexion"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Zexion (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("ZexionData") ? _gridWindow.gridSettings["ZexionData"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Axel (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataAxel") ? _gridWindow.gridSettings["GridDataAxel"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Demyx (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataDemyx") ? _gridWindow.gridSettings["GridDataDemyx"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Larxene", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLarxene") ? _gridWindow.gridSettings["GridLarxene"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Larxene (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLarxeneData") ? _gridWindow.gridSettings["GridLarxeneData"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Lexaeus", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLexaeus") ? _gridWindow.gridSettings["GridLexaeus"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Lexaeus (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLexaeusData") ? _gridWindow.gridSettings["GridLexaeusData"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Lingering Will", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLingeringWill") ? _gridWindow.gridSettings["GridLingeringWill"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Luxord (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataLuxord") ? _gridWindow.gridSettings["GridDataLuxord"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Marluxia", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridMarluxia") ? _gridWindow.gridSettings["GridMarluxia"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Marluxia (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridMarluxiaData") ? _gridWindow.gridSettings["GridMarluxiaData"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Roxas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataRoxas") ? _gridWindow.gridSettings["GridDataRoxas"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Saix (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataSaix") ? _gridWindow.gridSettings["GridDataSaix"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Sephiroth", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridSephiroth") ? _gridWindow.gridSettings["GridSephiroth"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Vexen", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVexen") ? _gridWindow.gridSettings["GridVexen"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Vexen (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVexenData") ? _gridWindow.gridSettings["GridVexenData"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Xaldin (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataXaldin") ? _gridWindow.gridSettings["GridDataXaldin"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Xemnas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataXemnas") ? _gridWindow.gridSettings["GridDataXemnas"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Xigbar (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataXigbar") ? _gridWindow.gridSettings["GridDataXigbar"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Zexion", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridZexion") ? _gridWindow.gridSettings["GridZexion"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Zexion (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridZexionData") ? _gridWindow.gridSettings["GridZexionData"] : true).ToString() },
                             }
                         },
                         new SubCategory { 
                             SubCategoryName = "Progression",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Select All", DefaultValue = "True" },
                                 new Option { Type = OptionType.CheckBox, Description = "Agrabah", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Abu") ? _gridWindow.gridSettings["Abu"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Atlantica", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Ursula") ? _gridWindow.gridSettings["Ursula"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Beast's Castle", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Dragoons") ? _gridWindow.gridSettings["Dragoons"] : true).ToString() },
@@ -275,14 +275,14 @@ namespace KhTracker
                             SubCategoryName = "Reports",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Max Reports", DefaultValue = "13" },
+                                new Option { Type = OptionType.TextBox, Description = "Max Reports", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumReports") ? _gridWindow.gridNumericalSettings["NumReports"] : 11).ToString() },
                             }
                         },
                         new SubCategory { 
                             SubCategoryName = "Visit Unlocks",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = "11" },
+                                new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumUnlocks") ? _gridWindow.gridNumericalSettings["NumUnlocks"] : 13).ToString() },
                             }
                         },
                         new SubCategory { 
@@ -306,13 +306,15 @@ namespace KhTracker
             // update grid size
             newNumRows = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Rows")?.DefaultValue);
             newNumColumns = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Columns")?.DefaultValue);
+            _gridWindow.gridNumericalSettings["NumRows"] = newNumRows;
+            _gridWindow.gridNumericalSettings["NumColumns"] = newNumColumns;
             _gridWindow.numRows = newNumRows;
             _gridWindow.numColumns = newNumColumns;
             _gridWindow.grid.Children.Clear();
 
             // update bingo logic
-            bool includeBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
-            _gridWindow.gridSettings["BingoLogic"] = includeBingoLogic;
+            bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
+            _gridWindow.gridSettings["GlobalBingoLogic"] = includeGlobalBingoLogic;
                 
 
             // update progression
@@ -395,7 +397,7 @@ namespace KhTracker
             {
                 bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
                 if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[superboss.Description]))
-                    _gridWindow.gridSettings[data.codes.bossNameConversion[superboss.Description]] = includeBoss;
+                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
             }
 
             // update magics
@@ -452,6 +454,7 @@ namespace KhTracker
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 _gridWindow.gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
+            _gridWindow.gridNumericalSettings["NumReports"] = numReports;
 
             // update visit unlocks
             // randomize which visit unlocks get included
@@ -460,6 +463,7 @@ namespace KhTracker
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
+            _gridWindow.gridNumericalSettings["NumUnlocks"] = numUnlocks;
 
             // update miscellaneous
             bool includeHadesCup = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Hades Cup Trophy")?.DefaultValue);
@@ -474,6 +478,7 @@ namespace KhTracker
             _gridWindow.gridSettings["MunnyPouch2"] = includeMunnyPouch2;
 
             SaveSettings(_gridWindow.gridSettings);
+            SaveNumericalSettings(_gridWindow.gridNumericalSettings);
 
             // generate new grid
             _gridWindow.GenerateGrid(newNumRows, newNumColumns);
@@ -487,6 +492,16 @@ namespace KhTracker
             key.SetValue("Settings", serializedSettings);
             key.Close();
         }
+
+        private void SaveNumericalSettings(Dictionary<string, int> numericalSettings)
+        {
+            string serializedSettings = JsonSerializer.Serialize(numericalSettings);
+
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GridTrackerNumbers");
+            key.SetValue("Settings", serializedSettings);
+            key.Close();
+        }
+
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

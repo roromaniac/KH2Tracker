@@ -54,6 +54,14 @@
             </ItemsControl>
         </ScrollViewer>
         <!-- Submit Button -->
-        <Button Content="Submit" Margin="10" HorizontalAlignment="Right" Click="SubmitButton_Click"/>
+        <StackPanel>
+            <!-- DockPanel for buttons -->
+            <DockPanel LastChildFill="False" Margin="10">
+                <!-- Save These Settings Button -->
+                <Button Content="Save These Settings" HorizontalAlignment="Left" />
+                <!-- Submit Button -->
+                <Button Content="Submit" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
+            </DockPanel>
+        </StackPanel>
     </StackPanel>
 </Window>

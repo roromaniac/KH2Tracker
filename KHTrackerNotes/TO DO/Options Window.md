@@ -2,4 +2,4 @@
 - [ ] Create option in drives to allow final form tracking as L&D.
 - [x] Create an option that saves numRows and numColumns and regenerates the card when updated.
 - [x] Create a button that regenerates card with new settings.
-- [ ] Update the tracker settings in its own method.
+- [x] Update the tracker settings in its own method.

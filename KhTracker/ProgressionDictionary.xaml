@@ -23,8 +23,8 @@
     <local:GridLabelledImage x:Key="Min-Lords"        Source="Images\Progression\Min\agrabah\elemental_lords.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Carpet"       Source="Images\Progression\Min\agrabah\magic_switches.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GenieJafar"   Source="Images\Progression\Min\agrabah\jafar.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Lexaeus"      Source="Images\Progression\Min\absent.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-LexaeusData"  Source="Images\Progression\Min\agrabah\lexaeus.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Lexaeus"      Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-LexaeusData"  Source="Images\Progression\Min\agrabah\lexaeus.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Atlantica-->
     <local:GridLabelledImage x:Key="Min-Tutorial"     Source="Images\Progression\Min\atlantica\tutorial.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Ursula"       Source="Images\Progression\Min\atlantica\ursula.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -35,15 +35,15 @@
     <local:GridLabelledImage x:Key="Min-DarkThorn"    Source="Images\Progression\Min\beast's_castle\dark_thorn.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Dragoons"     Source="Images\Progression\Min\beast's_castle\dragoons.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Xaldin"       Source="Images\Progression\Min\beast's_castle\xaldin_story.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataXaldin"   Source="Images\Progression\Min\beast's_castle\xaldin.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataXaldin"   Source="Images\Progression\Min\beast's_castle\xaldin.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Disney Castle-->
     <local:GridLabelledImage x:Key="Min-Minnie"                   Source="Images\Progression\Min\disney_castle\minnie.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-OldPete"                  Source="Images\Progression\Min\disney_castle\old_pete.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Windows"                  Source="Images\Progression\Min\disney_castle\windows_of_time.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-BoatPete"                 Source="Images\Progression\Min\disney_castle\steamboat_pete.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-DCPete"                   Source="Images\Progression\Min\disney_castle\pete.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Marluxia"                 Source="Images\Progression\Min\absent.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-MarluxiaData"             Source="Images\Progression\Min\disney_castle\marluxia.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Marluxia"                 Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-MarluxiaData"             Source="Images\Progression\Min\disney_castle\marluxia.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-LingeringWill"            Source="Images\Progression\Min\disney_castle\lingering_will.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Marluxia_LingeringWill"   Source="Images\Progression\Min\disney_castle\marluxia_and_lingering_will.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MarluxiaData_LingeringWill"   Source="Images\Progression\Min\disney_castle\marluxiadata_and_lingering_will.png"           GridAllowed="False"                             x:Shared="False"/>
@@ -54,8 +54,8 @@
     <local:GridLabelledImage x:Key="Min-Children"         Source="Images\Progression\Min\halloween_town\children.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Presents"         Source="Images\Progression\Min\halloween_town\presents.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Experiment"       Source="Images\Progression\Min\halloween_town\experiment.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Vexen"            Source="Images\Progression\Min\absent.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-VexenData"        Source="Images\Progression\Min\halloween_town\vexen.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Vexen"            Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-VexenData"        Source="Images\Progression\Min\halloween_town\vexen.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Hollow Bastion-->
     <local:GridLabelledImage x:Key="Min-Bailey"           Source="Images\Progression\Min\hollow_bastion\bailey.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-AnsemStudy"       Source="Images\Progression\Min\hollow_bastion\ansem's_study.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -65,7 +65,7 @@
     <local:GridLabelledImage x:Key="Min-FinalFantasy"     Source="Images\Progression\Min\hollow_bastion\final_fantasy.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-1000Heartless"    Source="Images\Progression\Min\hollow_bastion\1000_heartless.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Sephiroth"        Source="Images\Progression\Min\hollow_bastion\sephiroth.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataDemyx"        Source="Images\Progression\Min\hollow_bastion\demyx.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataDemyx"        Source="Images\Progression\Min\hollow_bastion\demyx.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-SephiDemyx"       Source="Images\Progression\Min\hollow_bastion\demyx_and_sephiroth.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Cavern of Rememberance-->
     <local:GridLabelledImage x:Key="Min-Fight1"           Source="Images\Progression\Min\hollow_bastion\first_fight.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -80,7 +80,7 @@
     <local:GridLabelledImage x:Key="Min-ShanYu"       Source="Images\Progression\Min\land_of_dragons\shan_yu.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-ThroneRoom"   Source="Images\Progression\Min\land_of_dragons\snipers.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-StormRider"   Source="Images\Progression\Min\land_of_dragons\storm_rider.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataXigbar"   Source="Images\Progression\Min\land_of_dragons\xigbar.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataXigbar"   Source="Images\Progression\Min\land_of_dragons\xigbar.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Olympus Coliseum-->
     <local:GridLabelledImage x:Key="Min-Cerberus"     Source="Images\Progression\Min\olympus_coliseum\cerberus.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Urns"         Source="Images\Progression\Min\olympus_coliseum\urns.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -89,8 +89,8 @@
     <local:GridLabelledImage x:Key="Min-Hydra"        Source="Images\Progression\Min\olympus_coliseum\hydra.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-AuronStatue"  Source="Images\Progression\Min\olympus_coliseum\dusks.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Hades"        Source="Images\Progression\Min\olympus_coliseum\hades.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Zexion"       Source="Images\Progression\Min\absent.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-ZexionData"   Source="Images\Progression\Min\olympus_coliseum\zexion.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Zexion"       Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-ZexionData"   Source="Images\Progression\Min\olympus_coliseum\zexion.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Port Royal-->
     <local:GridLabelledImage x:Key="Min-Town"         Source="Images\Progression\Min\port_royal\town.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-1Minute"      Source="Images\Progression\Min\port_royal\isla_de_muerta.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -100,14 +100,14 @@
     <local:GridLabelledImage x:Key="Min-GrimReaper1"  Source="Images\Progression\Min\port_royal\grim_reaper.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Gambler"      Source="Images\Progression\Min\port_royal\gamblers.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GrimReaper"   Source="Images\Progression\Min\port_royal\cursed_reaper.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataLuxord"   Source="Images\Progression\Min\port_royal\luxord.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataLuxord"   Source="Images\Progression\Min\port_royal\luxord.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Pride Lands-->
     <local:GridLabelledImage x:Key="Min-Simba"        Source="Images\Progression\Min\pride_lands\oasis.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Hyenas1"      Source="Images\Progression\Min\pride_lands\timon_and_pumba.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Scar"         Source="Images\Progression\Min\pride_lands\scar.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Hyenas2"      Source="Images\Progression\Min\pride_lands\hyenas.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GroundShaker" Source="Images\Progression\Min\pride_lands\groundshaker.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataSaix"     Source="Images\Progression\Min\pride_lands\saix.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataSaix"     Source="Images\Progression\Min\pride_lands\saix.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Simulated Twilight Town-->
     <local:GridLabelledImage x:Key="Min-Minigame"         Source="Images\Progression\Min\simulated_twilight_town\munny_pouch.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-TwilightThorn"    Source="Images\Progression\Min\simulated_twilight_town\twilight_thorn.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -115,29 +115,29 @@
     <local:GridLabelledImage x:Key="Min-Struggle"         Source="Images\Progression\Min\simulated_twilight_town\struggle.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-ComputerRoom"     Source="Images\Progression\Min\simulated_twilight_town\computer_room.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Axel"             Source="Images\Progression\Min\simulated_twilight_town\pod_room.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataRoxas"        Source="Images\Progression\Min\simulated_twilight_town\roxas.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataRoxas"        Source="Images\Progression\Min\simulated_twilight_town\roxas.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Space Paranoids-->
     <local:GridLabelledImage x:Key="Min-Screens"          Source="Images\Progression\Min\space_paranoids\dataspace.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-HostileProgram"   Source="Images\Progression\Min\space_paranoids\hostile_program.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-SolarSailer"      Source="Images\Progression\Min\space_paranoids\solar_sailer.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Sark"             Source="Images\Progression\Min\space_paranoids\sark.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MCP"              Source="Images\Progression\Min\space_paranoids\master_control_program.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Larxene"          Source="Images\Progression\Min\absent.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-LarxeneData"      Source="Images\Progression\Min\space_paranoids\larxene.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Larxene"          Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-LarxeneData"      Source="Images\Progression\Min\space_paranoids\larxene.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--TWTNW-->
     <local:GridLabelledImage x:Key="Min-Roxas"            Source="Images\Progression\Min\the_world_that_never_was\roxas.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Xigbar"           Source="Images\Progression\Min\the_world_that_never_was\xigbar.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Luxord"           Source="Images\Progression\Min\the_world_that_never_was\luxord.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Saix"             Source="Images\Progression\Min\the_world_that_never_was\saix.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Xemnas1"          Source="Images\Progression\Min\the_world_that_never_was\kingdom_hearts.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Twilight Town-->
     <local:GridLabelledImage x:Key="Min-Station"           Source="Images\Progression\Min\twilight_town\dusks.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MysteriousTower"   Source="Images\Progression\Min\twilight_town\mysterious_tower.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Sandlot"           Source="Images\Progression\Min\twilight_town\berserkers.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Mansion"           Source="Images\Progression\Min\twilight_town\mickey.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-BetwixtAndBetween" Source="Images\Progression\Min\twilight_town\betwixt_and_between.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataAxel"          Source="Images\Progression\Min\twilight_town\axel.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataAxel"          Source="Images\Progression\Min\twilight_town\axel.png"           GridAllowed="False"                             x:Shared="False"/>
 
     <!--Drive Forms-->
     <local:GridLabelledImage x:Key="Min-Drive2"           Source="Images\Progression\Min\drive_forms\2.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -147,7 +147,27 @@
     <local:GridLabelledImage x:Key="Min-Drive6"           Source="Images\Progression\Min\drive_forms\6.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Drive7"           Source="Images\Progression\Min\drive_forms\7.png"           GridAllowed="True"                             x:Shared="False"/>
     
-    
+    <!--Grid Tracker-->
+    <local:GridLabelledImage x:Key="Min-GridDataAxel"          Source="Images\Progression\Min\twilight_town\axel_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataDemyx"        Source="Images\Progression\Min\hollow_bastion\demyx_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridLarxene"          Source="Images\Progression\Min\space_paranoids\larxene.png"          GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridLarxeneData"      Source="Images\Progression\Min\space_paranoids\larxene_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridLexaeus"      Source="Images\Progression\Min\agrabah\lexaeus.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridLexaeusData"  Source="Images\Progression\Min\agrabah\lexaeus_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataLuxord"   Source="Images\Progression\Min\port_royal\luxord_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridMarluxia"                 Source="Images\Progression\Min\disney_castle\marluxia.png"            GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridMarluxiaData"             Source="Images\Progression\Min\disney_castle\marluxia_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataRoxas"        Source="Images\Progression\Min\simulated_twilight_town\roxas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataSaix"     Source="Images\Progression\Min\pride_lands\saix_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataXaldin"   Source="Images\Progression\Min\beast's_castle\xaldin_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataXigbar"   Source="Images\Progression\Min\land_of_dragons\xigbar_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridVexen"            Source="Images\Progression\Min\halloween_town\vexen.png"          GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridVexenData"        Source="Images\Progression\Min\halloween_town\vexen_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridZexion"       Source="Images\Progression\Min\olympus_coliseum\zexion.png"         GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridZexionData"   Source="Images\Progression\Min\olympus_coliseum\zexion_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+
+
 
     <!--World Progression (Old)-->
     <!--100 Acre Wood-->

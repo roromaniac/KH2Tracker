@@ -1,2 +1,2 @@
 - [x] Create a json file of all trackable checks (ABANDONED).
-- [ ] Create separate checks/images for AS, Org XIII, and Data Fights (for hitlist for example).
+- [x] Create separate checks/images for AS, Org XIII, and Data Fights (for hitlist for example).

@@ -29,18 +29,20 @@ namespace KhTracker
     public partial class GridWindow : Window
     {
         public bool canClose = false;
-        Dictionary<string, int> worlds = new Dictionary<string, int>();
-        Dictionary<string, int> others = new Dictionary<string, int>();
-        Dictionary<string, int> totals = new Dictionary<string, int>();
-        Dictionary<string, int> important = new Dictionary<string, int>();
-        Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
+        //Dictionary<string, int> worlds = new Dictionary<string, int>();
+        //Dictionary<string, int> others = new Dictionary<string, int>();
+        //Dictionary<string, int> totals = new Dictionary<string, int>();
+        //Dictionary<string, int> important = new Dictionary<string, int>();
+        //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         Data data;
 
-        public int numRows = 1;
-        public int numColumns = 1;
+        public int numRows;
+        public int numColumns;
+        public string seedName;
 
         public Grid grid;
         public ToggleButton[,] buttons;
+        public Dictionary<string, int> gridNumericalSettings = new Dictionary<string, int>();
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>
         {
@@ -54,7 +56,13 @@ namespace KhTracker
         public GridWindow(Data dataIn)
         {
             InitializeComponent();
-            
+
+            gridSettings = GetGridSettings();
+            gridNumericalSettings = GetNumericalGridSettings();
+
+            numRows = gridNumericalSettings.ContainsKey("NumRows") ? gridNumericalSettings["NumRows"] : 5;
+            numColumns = gridNumericalSettings.ContainsKey("NumColumns") ? gridNumericalSettings["NumColumns"] : 5;
+
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
 
@@ -88,6 +96,16 @@ namespace KhTracker
             }
         }
 
+        private void DownloadCardSetting(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
+        private void UploadCardSetting(object sender, RoutedEventArgs e)
+        {
+            return;
+        }
+
         private void Grid_Options(object sender, RoutedEventArgs e)
         {
             GridOptionsWindow gridOptionsWindow = new GridOptionsWindow(this, data);
@@ -96,8 +114,6 @@ namespace KhTracker
 
         private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
         {
-
-            gridSettings = GetGridSettings();
 
             List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary> ();
 
@@ -135,6 +151,19 @@ namespace KhTracker
                 }
             }
 
+            // RErandomize which reports get included
+            var numReports = gridNumericalSettings.ContainsKey("NumReports") ? gridNumericalSettings["NumReports"] : 13;
+            var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
+            foreach (int reportNum in Enumerable.Range(1, 13).ToList())
+                gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
+
+            // RErandomize which visit unlocks get included
+            var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
+            int numUnlocks = gridNumericalSettings.ContainsKey("NumReports") ? gridNumericalSettings["NumReports"] : 11;
+            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
+            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
+                gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
+
             Random rng = new Random(seed);
             var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
 
@@ -146,6 +175,23 @@ namespace KhTracker
             }
 
             return imageKeys;
+        }
+
+        private Dictionary<string, int> GetNumericalGridSettings()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTrackerNumbers");
+            if (key != null)
+            {
+                string serializedSettings = (string)key.GetValue("Settings");
+                key.Close();
+
+                if (!string.IsNullOrEmpty(serializedSettings))
+                {
+                    return JsonSerializer.Deserialize<Dictionary<string, int>>(serializedSettings);
+                }
+            }
+
+            return new Dictionary<string, int>(); // Return default or empty settings if not found
         }
 
         private Dictionary<string, bool> GetGridSettings()
@@ -176,7 +222,7 @@ namespace KhTracker
             {
                 ((SolidColorBrush)button.Background).Color = currentColors["Unmarked Color"];
             }
-            if (gridSettings.ContainsKey("BingoLogic") && gridSettings["BingoLogic"])
+            if (gridSettings.ContainsKey("GlobalBingoLogic") && gridSettings["GlobalBingoLogic"])
                 BingoCheck(grid, i, j);
         }
 
@@ -199,17 +245,47 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns);
         }
             
-        public void GenerateGrid(int numRows = 5, int numColumns = 5)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
         {
             grid = new Grid();
-            buttons = new ToggleButton[numRows, numColumns];
+            buttons = new ToggleButton[rows, columns];
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            string seedString = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
-            int seed = seedString.GetHashCode();
+            seedName = seedString;
+            if (seedString == null)
+                seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
+            int seed = seedName.GetHashCode();
             Random rand = new Random(seed);
-            Seedname.Header = "Seed: " + seedString;
+            Seedname.Header = "Seed: " + seedName;
             List<string> assets = Asset_Collection("Min", seed);
+
+            if (rows * columns <= 0)
+            {
+                numRows = 5;
+                numColumns = 5;
+            }
+
+            // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
+            int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global")); ;
+            int numChecks = assets.Count - numGlobalSettings;
+            if (rows * columns > numChecks)
+            {
+                while (true)
+                {
+                    int currentMax = Math.Max(rows, columns);
+                    if (currentMax == rows)
+                        rows -= 1;
+                    else
+                        columns -= 1;
+                    if (!(rows * columns > numChecks))
+                    {
+                        numRows = rows;
+                        numColumns = columns;
+                        break;
+                    }
+                        
+                }
+            }
 
             //Console.WriteLine(assets[0]);
 
@@ -562,7 +638,7 @@ namespace KhTracker
                         buttons[i, j].Background = new SolidColorBrush(currentColors["Annotated Color"]);
                     else
                         buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
-                    if (gridSettings.ContainsKey("BingoLogic") && gridSettings["BingoLogic"])
+                    if (gridSettings.ContainsKey("GlobalBingoLogic") && gridSettings["GlobalBingoLogic"])
                         BingoCheck(grid, i, j); 
                 }
             }
