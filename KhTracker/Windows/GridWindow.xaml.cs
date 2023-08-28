@@ -44,13 +44,7 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Dictionary<string, int> gridNumericalSettings = new Dictionary<string, int>();
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
-        public Dictionary<string, Color> currentColors = new Dictionary<string, Color>
-        {
-            { "Unmarked Color", Colors.DimGray },
-            { "Marked Color", Colors.Green },
-            { "Annotated Color", Colors.Orange },
-            { "Bingo Color", Colors.Purple }
-        };
+        public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
 
 
         public GridWindow(Data dataIn)
@@ -59,6 +53,7 @@ namespace KhTracker
 
             gridSettings = GetGridSettings();
             gridNumericalSettings = GetNumericalGridSettings();
+            currentColors = GetColorSettings();
 
             numRows = gridNumericalSettings.ContainsKey("NumRows") ? gridNumericalSettings["NumRows"] : 5;
             numColumns = gridNumericalSettings.ContainsKey("NumColumns") ? gridNumericalSettings["NumColumns"] : 5;
@@ -175,6 +170,29 @@ namespace KhTracker
             }
 
             return imageKeys;
+        }
+
+        private Dictionary<string, Color> GetColorSettings()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTrackerColors");
+            if (key != null)
+            {
+                string serializedSettings = (string)key.GetValue("Settings");
+                key.Close();
+
+                if (!string.IsNullOrEmpty(serializedSettings))
+                {
+                    return JsonSerializer.Deserialize<Dictionary<string, Color>>(serializedSettings);
+                }
+            }
+
+            return new Dictionary<string, Color>()        
+            {
+                { "Unmarked Color", Colors.DimGray },
+                { "Marked Color", Colors.Green },
+                { "Annotated Color", Colors.Orange },
+                { "Bingo Color", Colors.Purple }
+            }; 
         }
 
         private Dictionary<string, int> GetNumericalGridSettings()

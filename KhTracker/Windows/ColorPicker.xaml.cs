@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -61,6 +64,7 @@ namespace KhTracker
             SelectedColor = Color.FromRgb((byte)RedSlider.Value, (byte)GreenSlider.Value, (byte)BlueSlider.Value);
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
             ButtonColors[(string)LastClickedButton.Content] = SelectedColor; // Update the dictionary
+            SaveColorSettings(ButtonColors);// Save the dictionary
         }
 
         private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -82,6 +86,15 @@ namespace KhTracker
             var rgbColor = Color.FromRgb(red, green, blue);
             PreviewBorder.Background = new SolidColorBrush(rgbColor);
             SelectedColor = rgbColor;
+        }
+
+        private void SaveColorSettings(Dictionary<string, Color> colorSettings)
+        {
+            string serializedSettings = JsonSerializer.Serialize(colorSettings);
+
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GridTrackerColors");
+            key.SetValue("Settings", serializedSettings);
+            key.Close();
         }
     }
 
