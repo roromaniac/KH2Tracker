@@ -99,6 +99,8 @@ namespace KhTracker
             {
                 var combinedSettings = new
                 {
+                    numRows = numRows,
+                    numColumns = numColumns,
                     seedName = seedName,
                     gridSettings = gridSettings
                 };
@@ -110,8 +112,6 @@ namespace KhTracker
 
         private void UploadCardSetting(object sender, RoutedEventArgs e)
         {
-            seedName = null;
-            gridSettings = null;
 
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "JSON Files (*.json)|*.json";
@@ -125,6 +125,8 @@ namespace KhTracker
                     using (JsonDocument doc = JsonDocument.Parse(jsonString))
                     {
                         var root = doc.RootElement;
+                        numRows = root.GetProperty("numRows").GetInt32();
+                        numColumns = root.GetProperty("numColumns").GetInt32();
                         seedName = root.GetProperty("seedName").GetString();
                         gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(root.GetProperty("gridSettings").GetRawText());
                     }
@@ -135,6 +137,7 @@ namespace KhTracker
                     return;
                 }
             }
+            grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
         }
 

@@ -4,3 +4,4 @@
 - [x] Create a button that regenerates card with new settings.
 - [x] Update the tracker settings in its own method.
 - [ ] Create a "Select All" toggle that selects everything within a subcategory.
+- [ ] Make popup windows for error/caught exception messages.
