@@ -58,7 +58,7 @@
             <!-- DockPanel for buttons -->
             <DockPanel LastChildFill="False" Margin="10">
                 <!-- Save These Settings Button -->
-                <Button Content="Save These Settings" HorizontalAlignment="Left" />
+                <Button Content="Save These Settings" HorizontalAlignment="Left" Click="SavePresetJson"/>
                 <!-- Submit Button -->
                 <Button Content="Submit" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
             </DockPanel>

@@ -26,14 +26,11 @@
             "id": "e9d136fd0432a6a1",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Example Design.canvas",
-                "viewState": {
-                  "x": 742.2773846762025,
-                  "y": -1279.487621997325,
-                  "zoom": 0.34548241599944934
-                }
+                "file": "TO DO/Options Window.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -104,7 +101,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Example Design.canvas",
+                "file": "TO DO/Options Window.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -121,7 +118,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Example Design.canvas",
+                "file": "TO DO/Options Window.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -144,7 +141,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Example Design.canvas"
+                "file": "TO DO/Options Window.md"
               }
             }
           }
@@ -167,9 +164,10 @@
   },
   "active": "e9d136fd0432a6a1",
   "lastOpenFiles": [
+    "2023-08-28.md",
+    "Example Design.canvas",
     "TO DO/Grid Tracker.md",
     "TO DO/Assets.md",
-    "Example Design.canvas",
     "2023-08-27.md",
     "2023-08-19.md",
     "2023-08-13.md",

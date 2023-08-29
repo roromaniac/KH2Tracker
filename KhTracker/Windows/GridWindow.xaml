@@ -38,7 +38,7 @@
                 <MenuItem Header="Grid Checks" Click="Grid_Options" />
                 <MenuItem Header="Pick Colors" Click="PickColor_Click" />
             </MenuItem>
-            <MenuItem Header="" Focusable="False">
+            <MenuItem Header="Seeds" Focusable="False">
                 <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
                 <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
             </MenuItem>

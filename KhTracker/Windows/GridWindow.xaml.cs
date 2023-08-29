@@ -14,7 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -93,12 +92,60 @@ namespace KhTracker
 
         private void DownloadCardSetting(object sender, RoutedEventArgs e)
         {
-            return;
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON Files (*.json)|*.json";
+            saveFileDialog.FileName = "settings.json";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var combinedSettings = new
+                {
+                    seedName = seedName,
+                    gridSettings = gridSettings
+                };
+
+                var jsonString = JsonSerializer.Serialize(combinedSettings);
+                System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
+            }
         }
 
         private void UploadCardSetting(object sender, RoutedEventArgs e)
         {
-            return;
+            seedName = null;
+            gridSettings = null;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "JSON Files (*.json)|*.json";
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    var jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+
+                    using (JsonDocument doc = JsonDocument.Parse(jsonString))
+                    {
+                        var root = doc.RootElement;
+                        seedName = root.GetProperty("seedName").GetString();
+                        gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(root.GetProperty("gridSettings").GetRawText());
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("FILE DID NOT READ CORRECTLY");
+                    return;
+                }
+            }
+            GenerateGrid(numRows, numColumns, seedName);
+        }
+
+        public void LoadSettingsFromFile(out string seedName, out Dictionary<string, bool> gridSettings)
+        {
+            var jsonString = System.IO.File.ReadAllText("settings.json");
+
+            var deserializedObj = JsonSerializer.Deserialize<dynamic>(jsonString);
+
+            seedName = deserializedObj.seedName;
+            gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(deserializedObj.gridSettings.ToString());
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)

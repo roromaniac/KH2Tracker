@@ -502,6 +502,17 @@ namespace KhTracker
             key.Close();
         }
 
+        private void SavePresetJson(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "JSON Files (*.json)|*.json";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                var jsonString = JsonSerializer.Serialize(_gridWindow.gridSettings);
+                System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
+            }
+        }
+
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
