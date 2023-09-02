@@ -699,6 +699,12 @@ namespace KhTracker
 
     public class GridLabelledImage : Image
     {
+        // fixes image quality for some reason
+        public GridLabelledImage()
+        {
+            RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
+        }
+
         public static readonly DependencyProperty GridAllowedProperty =
             DependencyProperty.Register("GridAllowed", typeof(bool), typeof(GridLabelledImage), new PropertyMetadata(true));
 

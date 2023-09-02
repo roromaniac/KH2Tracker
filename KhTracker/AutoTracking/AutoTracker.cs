@@ -157,7 +157,6 @@ namespace KhTracker
             {
                 return;
             }
-
             InitTracker();
         }
 

@@ -3,17 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace KhTracker
 {
@@ -142,7 +134,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Hostile Program", DefaultValue = (_gridWindow.gridSettings.ContainsKey("HostileProgram") ? _gridWindow.gridSettings["HostileProgram"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hydra", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Hydra") ? _gridWindow.gridSettings["Hydra"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Jafar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GenieJafar") ? _gridWindow.gridSettings["GenieJafar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Leon (NS)", DefaultValue = "false" },                                
+                                new Option { Type = OptionType.CheckBox, Description = "Leon (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Luxord", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Luxord") ? _gridWindow.gridSettings["Luxord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "MCP", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MCP") ? _gridWindow.gridSettings["MCP"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Past Pete", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OldPete") ? _gridWindow.gridSettings["OldPete"] : true).ToString() },
@@ -154,20 +146,20 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Saix", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Saix") ? _gridWindow.gridSettings["Saix"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Sark", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Sark") ? _gridWindow.gridSettings["Sark"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Scar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Scar") ? _gridWindow.gridSettings["Scar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Seifer (NS)", DefaultValue = "false" },                                
+                                new Option { Type = OptionType.CheckBox, Description = "Seifer (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Setzer (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Shadow Stalker (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Shan-Yu", DefaultValue = (_gridWindow.gridSettings.ContainsKey("ShanYu") ? _gridWindow.gridSettings["ShanYu"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Storm Rider", DefaultValue = (_gridWindow.gridSettings.ContainsKey("StormRider") ? _gridWindow.gridSettings["StormRider"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Thresholder", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Thresholder") ? _gridWindow.gridSettings["Thresholder"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Tifa (NS)", DefaultValue = "false" },
-                                new Option { Type = OptionType.CheckBox, Description = "Twilight Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("TwilightThorn") ? _gridWindow.gridSettings["TwilightThorn"] : true).ToString() },                                
+                                new Option { Type = OptionType.CheckBox, Description = "Twilight Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("TwilightThorn") ? _gridWindow.gridSettings["TwilightThorn"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Vivi (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Volcano Lord (NS)", DefaultValue = "false" },
                                 new Option { Type = OptionType.CheckBox, Description = "Xaldin", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xaldin") ? _gridWindow.gridSettings["Xaldin"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xemnas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xemnas1") ? _gridWindow.gridSettings["Xemnas1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xigbar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xigbar") ? _gridWindow.gridSettings["Xigbar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Yuffie (NS)", DefaultValue = "false" },                                
+                                new Option { Type = OptionType.CheckBox, Description = "Yuffie (NS)", DefaultValue = "false" },
                             }
                         },
                         new SubCategory {
@@ -196,7 +188,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Zexion (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridZexionData") ? _gridWindow.gridSettings["GridZexionData"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Progression",
                             Options = new List<Option>
                             {
@@ -216,10 +208,10 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Simulated Twilight Town", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Minigame") ? _gridWindow.gridSettings["Minigame"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Space Paranoids", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Screens") ? _gridWindow.gridSettings["Screens"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "The World That Never Was", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Roxas") ? _gridWindow.gridSettings["Roxas"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Twilight Town", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Station") ? _gridWindow.gridSettings["Station"] : true).ToString() },  
+                                new Option { Type = OptionType.CheckBox, Description = "Twilight Town", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Station") ? _gridWindow.gridSettings["Station"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Magics",
                             Options = new List<Option>
                             {
@@ -228,14 +220,14 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Level 3 Magics", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridFire3") ? _gridWindow.gridSettings["GridFire3"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Summons",
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Summons", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Lamp") ? _gridWindow.gridSettings["Lamp"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Drives",
                             Options = new List<Option>
                             {
@@ -243,7 +235,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = "true" },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Proofs",
                             Options = new List<Option>
                             {
@@ -253,14 +245,14 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Promise Charm", DefaultValue = (_gridWindow.gridSettings.ContainsKey("PromiseCharm") ? _gridWindow.gridSettings["PromiseCharm"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "SC/OM",
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "SC/OM", DefaultValue = (_gridWindow.gridSettings.ContainsKey("SecondChance") ? _gridWindow.gridSettings["SecondChance"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Torn Pages",
                             Options = new List<Option>
                             {
@@ -271,21 +263,21 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Torn Page 5", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridTornPage5") ? _gridWindow.gridSettings["GridTornPage5"] : true).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Reports",
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.TextBox, Description = "Max Reports", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumReports") ? _gridWindow.gridNumericalSettings["NumReports"] : 11).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Visit Unlocks",
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumUnlocks") ? _gridWindow.gridNumericalSettings["NumUnlocks"] : 13).ToString() },
                             }
                         },
-                        new SubCategory { 
+                        new SubCategory {
                             SubCategoryName = "Miscellaneous",
                             Options = new List<Option>
                             {
@@ -315,7 +307,7 @@ namespace KhTracker
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
             _gridWindow.gridSettings["GlobalBingoLogic"] = includeGlobalBingoLogic;
-                
+
 
             // update progression
             bool AGProg = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Progression")?.Options.FirstOrDefault(o => o.Description == "Agrabah")?.DefaultValue);
@@ -361,7 +353,7 @@ namespace KhTracker
             {
                 string world = prog.Key;
                 bool include = prog.Value;
-                
+
                 if (world != "DrivesLevels")
                 {
                     foreach (var progEvent in data.ProgressKeys[world])
@@ -396,7 +388,8 @@ namespace KhTracker
             foreach (var superboss in superbosses.Options)
             {
                 bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[superboss.Description]))
+                Console.WriteLine($"{superboss.Description} is {includeBoss}");
+                if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
                     _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
             }
 

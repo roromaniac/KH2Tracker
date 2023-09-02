@@ -44,7 +44,7 @@
     <local:GridLabelledImage x:Key="Min-DCPete"                   Source="Images\Progression\Min\disney_castle\pete.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Marluxia"                 Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MarluxiaData"             Source="Images\Progression\Min\disney_castle\marluxia.png"           GridAllowed="False"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-LingeringWill"            Source="Images\Progression\Min\disney_castle\lingering_will.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-LingeringWill"            Source="Images\Progression\Min\disney_castle\lingering_will.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Marluxia_LingeringWill"   Source="Images\Progression\Min\disney_castle\marluxia_and_lingering_will.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MarluxiaData_LingeringWill"   Source="Images\Progression\Min\disney_castle\marluxiadata_and_lingering_will.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Halloween Town-->
@@ -64,7 +64,7 @@
     <local:GridLabelledImage x:Key="Min-HBDemyx"          Source="Images\Progression\Min\hollow_bastion\demyx_story.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-FinalFantasy"     Source="Images\Progression\Min\hollow_bastion\final_fantasy.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-1000Heartless"    Source="Images\Progression\Min\hollow_bastion\1000_heartless.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Sephiroth"        Source="Images\Progression\Min\hollow_bastion\sephiroth.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Sephiroth"        Source="Images\Progression\Min\hollow_bastion\sephiroth.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-DataDemyx"        Source="Images\Progression\Min\hollow_bastion\demyx.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-SephiDemyx"       Source="Images\Progression\Min\hollow_bastion\demyx_and_sephiroth.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Cavern of Rememberance-->
@@ -154,11 +154,13 @@
     <local:GridLabelledImage x:Key="Min-GridLarxeneData"      Source="Images\Progression\Min\space_paranoids\larxene_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridLexaeus"      Source="Images\Progression\Min\agrabah\lexaeus.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridLexaeusData"  Source="Images\Progression\Min\agrabah\lexaeus_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridLingeringWill"            Source="Images\Progression\Min\disney_castle\lingering_will.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataLuxord"   Source="Images\Progression\Min\port_royal\luxord_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridMarluxia"                 Source="Images\Progression\Min\disney_castle\marluxia.png"            GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridMarluxiaData"             Source="Images\Progression\Min\disney_castle\marluxia_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataRoxas"        Source="Images\Progression\Min\simulated_twilight_town\roxas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataSaix"     Source="Images\Progression\Min\pride_lands\saix_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridSephiroth"        Source="Images\Progression\Min\hollow_bastion\sephiroth.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXaldin"   Source="Images\Progression\Min\beast's_castle\xaldin_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXigbar"   Source="Images\Progression\Min\land_of_dragons\xigbar_griddata.png"           GridAllowed="True"                             x:Shared="False"/>

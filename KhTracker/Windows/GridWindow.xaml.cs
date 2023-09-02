@@ -4,21 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
-
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace KhTracker
 {
@@ -141,16 +131,6 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns, seedName);
         }
 
-        public void LoadSettingsFromFile(out string seedName, out Dictionary<string, bool> gridSettings)
-        {
-            var jsonString = System.IO.File.ReadAllText("settings.json");
-
-            var deserializedObj = JsonSerializer.Deserialize<dynamic>(jsonString);
-
-            seedName = deserializedObj.seedName;
-            gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(deserializedObj.gridSettings.ToString());
-        }
-
         private void Grid_Options(object sender, RoutedEventArgs e)
         {
             GridOptionsWindow gridOptionsWindow = new GridOptionsWindow(this, data);
@@ -160,7 +140,7 @@ namespace KhTracker
         private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
         {
 
-            List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary> ();
+            List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary>();
 
             var trackableChecksDict = new ResourceDictionary
             {
@@ -236,13 +216,13 @@ namespace KhTracker
                 }
             }
 
-            return new Dictionary<string, Color>()        
+            return new Dictionary<string, Color>()
             {
                 { "Unmarked Color", Colors.DimGray },
                 { "Marked Color", Colors.Green },
                 { "Annotated Color", Colors.Orange },
                 { "Bingo Color", Colors.Purple }
-            }; 
+            };
         }
 
         private Dictionary<string, int> GetNumericalGridSettings()
@@ -312,7 +292,7 @@ namespace KhTracker
         {
             GenerateGrid(numRows, numColumns);
         }
-            
+
         public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
         {
             grid = new Grid();
@@ -334,7 +314,7 @@ namespace KhTracker
             }
 
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
-            int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global")); ;
+            int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global"));
             int numChecks = assets.Count - numGlobalSettings;
             if (rows * columns > numChecks)
             {
@@ -351,7 +331,7 @@ namespace KhTracker
                         numColumns = columns;
                         break;
                     }
-                        
+
                 }
             }
 
@@ -441,9 +421,9 @@ namespace KhTracker
                                                 buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
                                                 break;
                                             }
-                                        } 
+                                        }
                                     }
-                                }     
+                                }
                             }
                         }
                     }
@@ -498,7 +478,7 @@ namespace KhTracker
                     bool part_of_row_bingo = true;
                     bool part_of_left_diag_bingo = true;
                     bool part_of_right_diag_bingo = true;
-                    
+
                     if (((SolidColorBrush)buttons[row, j].Background).Color.Equals(currentColors["Bingo Color"]))
                     {
                         // check that the button in question is not a part of a row bingo before removing bingo background 
@@ -506,7 +486,7 @@ namespace KhTracker
                         {
                             if (row != i)
                             {
-                                if (!((SolidColorBrush)buttons[row, col_check].Background).Color.Equals(currentColors["Bingo Color"])) 
+                                if (!((SolidColorBrush)buttons[row, col_check].Background).Color.Equals(currentColors["Bingo Color"]))
                                 {
                                     part_of_row_bingo = false;
                                     break;
@@ -519,7 +499,7 @@ namespace KhTracker
                             if (j == row)
                             {
                                 for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
-                                {                                    
+                                {
                                     if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_left_diag_bingo = false;
@@ -533,7 +513,7 @@ namespace KhTracker
                             if (j == rowCount - 1 - row)
                             {
                                 for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
-                                {                                    
+                                {
                                     if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_right_diag_bingo = false;
@@ -560,14 +540,14 @@ namespace KhTracker
                     bool part_of_column_bingo = true;
                     bool part_of_left_diag_bingo = true;
                     bool part_of_right_diag_bingo = true;
-                    
+
                     if (((SolidColorBrush)buttons[i, col].Background).Color.Equals(currentColors["Bingo Color"]))
                     {
                         // check that the button in question is not a part of a col bingo before removing bingo background 
                         for (int row_check = 0; row_check < rowCount; row_check++)
                         {
                             if (col != j)
-                            {                                
+                            {
                                 if (!((SolidColorBrush)buttons[row_check, col].Background).Color.Equals(currentColors["Bingo Color"]))
                                 {
                                     part_of_column_bingo = false;
@@ -581,7 +561,7 @@ namespace KhTracker
                             if (i == col)
                             {
                                 for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
-                                {                                    
+                                {
                                     if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_left_diag_bingo = false;
@@ -595,7 +575,7 @@ namespace KhTracker
                             if (i == rowCount - 1 - col)
                             {
                                 for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
-                                {                                    
+                                {
                                     if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_right_diag_bingo = false;
@@ -664,7 +644,7 @@ namespace KhTracker
                 {
                     if (buttons[row, j].IsChecked == false)
                     {
-                        break ;         
+                        break;
                     }
                     if (row == rowCount - 1)
                     {
@@ -707,7 +687,7 @@ namespace KhTracker
                     else
                         buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
                     if (gridSettings.ContainsKey("GlobalBingoLogic") && gridSettings["GlobalBingoLogic"])
-                        BingoCheck(grid, i, j); 
+                        BingoCheck(grid, i, j);
                 }
             }
         }
