@@ -69,7 +69,6 @@ namespace KhTracker
 
         private TornPage pages;
         public GridWindow gridWindow;
-        public ToggleButton[,] buttons;
         private World world;
         private Stats stats;
         private Rewards rewards;
@@ -716,6 +715,30 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
+        private void UpdateGridTracker(string gridCheckName)
+        {
+            // TO DO: Check if the grid tracker is open.
+            // If it is... Check if any of the buttons have the collected grid check.
+            for (int row = 0; row < gridWindow.numRows; row++)
+            {
+                for (int col = 0; col < gridWindow.numColumns; col++)
+                {
+                    // check if the original OR grid adjusted check key name is on the grid
+                    string[] checkNames = { gridCheckName, "Grid" + gridCheckName };
+                    if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
+                    {
+                        // invoke the appropriate button if the check matches
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                            gridWindow.buttons[row, col].IsChecked = !gridWindow.buttons[row, col].IsChecked;
+                            gridWindow.buttons[row, col].RaiseEvent(args);
+                        });
+                    }
+                }
+            }
+        }
+
         private bool CheckSynthPuzzle()
         {
             if (pcsx2tracking)
@@ -865,27 +888,7 @@ namespace KhTracker
                 {
                     world.Add_Item(item);
                     App.logger?.Record(item.Name + " tracked");
-
-                    // TO DO: Check if the grid tracker is open.
-                    // If it is... Check if any of the buttons have the collected important check.
-                    for (int row = 0; row < gridWindow.numRows; row++)
-                    {
-                        for (int col = 0; col < gridWindow.numColumns; col++)
-                        {
-                            // check if the original OR grid adjusted check key name is on the grid
-                            string[] checkNames = { itemName, "Grid" + itemName };
-                            if (checkNames.Contains(((string)buttons[row, col].Tag).Split('-')[1]))
-                            {
-                                // invoke the appropriate button if the check matches
-                                Application.Current.Dispatcher.Invoke(() =>
-                                {
-                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                    buttons[row, col].IsChecked = !buttons[row, col].IsChecked;
-                                    buttons[row, col].RaiseEvent(args);
-                                });
-                            }
-                        }
-                    }
+                    UpdateGridTracker(item.Name);
                 }
             }
         }
@@ -1872,35 +1875,10 @@ namespace KhTracker
             }
 
             // mark progression icon on grid tracker if it exists
-            // TO DO: Check if the grid tracker is open.
-            // If it is... Check if any of the buttons have the completed progression event.
-            // check that the new progression value is actually valid
             if (newProg < 99)
             {
-                for (int row = 0; row < gridWindow.numRows; row++)
-                {
-                    for (int col = 0; col < gridWindow.numColumns; col++)
-                    {
-                        // check if the original OR grid adjusted progression key name is on the grid
-                        var progressCheck = data.ProgressKeys[wName][newProg];
-                        if (data.codes.bossNameConversion.ContainsValue(progressCheck))
-                        {
-                            var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == progressCheck).Key;
-                            progressCheck = data.BossList.ContainsKey(originalBoss) ? data.codes.bossNameConversion[data.BossList[originalBoss]] : progressCheck;
-                        }
-                        string[] checkNames = { progressCheck, "Grid" + progressCheck };
-                        if (checkNames.Contains(((string)buttons[row, col].Tag).Split('-')[1]))
-                        {
-                            // invoke the appropriate button if the progression event matches
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                buttons[row, col].IsChecked = !buttons[row, col].IsChecked;
-                                buttons[row, col].RaiseEvent(args);
-                            });
-                        }
-                    }
-                }
+                var progressCheck = data.ProgressKeys[wName][newProg];
+                UpdateGridTracker(progressCheck);
             }
 
             //progression wasn't updated
@@ -2925,24 +2903,7 @@ namespace KhTracker
 
             if (!maxDriveLevelFound[drives])
             {
-                for (int row = 0; row < gridWindow.numRows; row++)
-                {
-                    for (int col = 0; col < gridWindow.numColumns; col++)
-                    {
-                        // check if the original OR grid adjusted max drive level is on the grid
-                        string[] checkNames = { drives, "Grid" + drives };
-                        if (checkNames.Contains(((string)buttons[row, col].Tag).Split('-')[1]))
-                        {
-                            // invoke the appropriate button if the progression event matches
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                buttons[row, col].IsChecked = !buttons[row, col].IsChecked;
-                                buttons[row, col].RaiseEvent(args);
-                            });
-                        }
-                    }
-                }
+                UpdateGridTracker(drives);
                 maxDriveLevelFound[drives] = true;
             }
 

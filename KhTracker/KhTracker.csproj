@@ -28,7 +28,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -1168,12 +1168,14 @@
     <Content Include="CustomImages\GhostChecks\summon_stitch.png" />
     <Content Include="CustomImages\GhostChecks\torn_pages.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BuildEvents\" />
+  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>$(SolutionDir)AssetCollector\bin\$(ConfigurationName)\AssetCollector.exe "$(ProjectDir)Images"
-</PreBuildEvent>
+    <PreBuildEvent>:: "C:\Users\roman\Documents\Miscellaneous\SillyProjects\KH2Tracker\KhTracker\BuildEvents\PreBuild.bat"</PreBuildEvent>
   </PropertyGroup>
 </Project>

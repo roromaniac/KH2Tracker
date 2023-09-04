@@ -190,7 +190,6 @@ namespace KhTracker
             // start the grid tracking logic
             gridWindow = new GridWindow(data);
             Grid grid = gridWindow.DynamicGrid;
-            buttons = gridWindow.buttons;
         }
 
         private void InitOptions()

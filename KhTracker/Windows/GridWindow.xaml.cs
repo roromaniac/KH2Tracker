@@ -103,8 +103,13 @@ namespace KhTracker
         private void UploadCardSetting(object sender, RoutedEventArgs e)
         {
 
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "JSON Files (*.json)|*.json";
+            OpenFileDialog openFileDialog = new OpenFileDialog()
+            {
+                DefaultExt = ".json",
+                Filter = "JSON Files (*.json)|*.json",
+                Title = "Select Grid Settings File",
+            };
+
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -287,6 +292,7 @@ namespace KhTracker
                 ((SolidColorBrush)button.Background).Color = currentColors["Annotated Color"];
             }
         }
+
 
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {

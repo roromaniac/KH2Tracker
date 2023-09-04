@@ -971,7 +971,7 @@ namespace KhTracker
             {"Xaldin", "Xaldin"},
             {"Xaldin (Data)", "DataXaldin"},
             {"Xemnas", "Xemnas1"},
-            {"Xemnas (Data)", "Xemnas (Data)"},
+            {"Xemnas (Data)", "DataXemnas"},
             {"Xigbar", "Xigbar"},
             {"Xigbar (Data)", "DataXigbar"},
             {"Yuffie", "Yuffie"},

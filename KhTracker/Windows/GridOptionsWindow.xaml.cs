@@ -293,7 +293,7 @@ namespace KhTracker
             DataContext = categories;
         }
 
-        private void UpdateGridSettings(Data data)
+        private void UpdateGridSize()
         {
             // update grid size
             newNumRows = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Rows")?.DefaultValue);
@@ -302,13 +302,17 @@ namespace KhTracker
             _gridWindow.gridNumericalSettings["NumColumns"] = newNumColumns;
             _gridWindow.numRows = newNumRows;
             _gridWindow.numColumns = newNumColumns;
-            _gridWindow.grid.Children.Clear();
+        }
 
+        private void UpdateGlobalSettings()
+        {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
             _gridWindow.gridSettings["GlobalBingoLogic"] = includeGlobalBingoLogic;
+        }
 
-
+        private void UpdateProgression(Data data)
+        {
             // update progression
             bool AGProg = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Progression")?.Options.FirstOrDefault(o => o.Description == "Agrabah")?.DefaultValue);
             bool ATProg = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Progression")?.Options.FirstOrDefault(o => o.Description == "Atlantica")?.DefaultValue);
@@ -372,7 +376,10 @@ namespace KhTracker
                     }
                 }
             }
+        }
 
+        private void UpdateBosses(Data data)
+        {
             // update bosses (Note: This will overwrite the boss flags set in the progression code above)
             var bosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bosses");
             foreach (var boss in bosses.Options)
@@ -381,8 +388,10 @@ namespace KhTracker
                 if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description]))
                     _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
             }
+        }
 
-
+        private void UpdateSuperbosses(Data data)
+        {
             // update superbosses (Note: This will overwrite the boss flags set in the progression code above)
             var superbosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Superbosses");
             foreach (var superboss in superbosses.Options)
@@ -392,7 +401,10 @@ namespace KhTracker
                 if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
                     _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
             }
+        }
 
+        private void UpdateMagics()
+        {
             // update magics
             var spellNames = new[] { "Fire", "Blizzard", "Thunder", "Cure", "Magnet", "Reflect" };
             bool includeLevel1Magics = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Magics")?.Options.FirstOrDefault(o => o.Description == "Level 1 Magics")?.DefaultValue);
@@ -404,19 +416,28 @@ namespace KhTracker
                 _gridWindow.gridSettings[$"Grid{spell}2"] = includeLevel2Magics;
                 _gridWindow.gridSettings[$"Grid{spell}3"] = includeLevel3Magics;
             }
+        }
 
+        private void UpdateSummons()
+        {
             // update summons
             var summonNames = new[] { "Baseball", "Feather", "Lamp", "Ukulele" };
             bool includeSummons = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Summons")?.Options.FirstOrDefault(o => o.Description == "Summons")?.DefaultValue);
             foreach (var summon in summonNames)
                 _gridWindow.gridSettings[$"{summon}"] = includeSummons;
+        }
 
+        private void UpdateDrives()
+        {
             // update drives
             var driveNames = new[] { "Valor", "Wisdom", "Limit", "Master", "Final" };
             bool includeDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Drives")?.DefaultValue);
             foreach (var drive in driveNames)
                 _gridWindow.gridSettings[$"{drive}"] = includeDrives;
+        }
 
+        private void UpdateProofs()
+        {
             // update proofs
             var proofNames = new[] { "Peace", "Connection", "Nonexistence", "PromiseCharm" };
             bool includeConnection = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Proofs")?.Options.FirstOrDefault(o => o.Description == "Proof of Connection")?.DefaultValue);
@@ -427,20 +448,29 @@ namespace KhTracker
             _gridWindow.gridSettings["Nonexistence"] = includeNonexistence;
             _gridWindow.gridSettings["Peace"] = includePeace;
             _gridWindow.gridSettings["PromiseCharm"] = includePromiseCharm;
+        }
 
+        private void UpdateSCOM()
+        {
             // update SCOM
             var scomNames = new[] { "SecondChance", "OnceMore" };
             bool includeSCOM = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "SC/OM")?.Options.FirstOrDefault(o => o.Description == "SC/OM")?.DefaultValue);
             foreach (var scom in scomNames)
                 _gridWindow.gridSettings[$"{scom}"] = includeSCOM;
+        }
 
+        private void UpdateTornPages()
+        {
             // update torn pages
             for (int i = 1; i <= 5; i++)
             {
                 bool includeTP = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Torn Pages")?.Options.FirstOrDefault(o => o.Description == $"Torn Page {i}")?.DefaultValue);
                 _gridWindow.gridSettings[$"GridTornPage{i}"] = includeTP;
             }
+        }
 
+        private void UpdateReports()
+        {
             // update reports
             // randomize which reports get included
             int numReports = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Reports")?.Options.FirstOrDefault(o => o.Description == "Max Reports")?.DefaultValue);
@@ -448,7 +478,10 @@ namespace KhTracker
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 _gridWindow.gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
             _gridWindow.gridNumericalSettings["NumReports"] = numReports;
+        }
 
+        private void UpdateUnlocks()
+        {
             // update visit unlocks
             // randomize which visit unlocks get included
             var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
@@ -457,7 +490,10 @@ namespace KhTracker
             foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
             _gridWindow.gridNumericalSettings["NumUnlocks"] = numUnlocks;
+        }
 
+        private void UpdateMiscellaneous()
+        {
             // update miscellaneous
             bool includeHadesCup = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Hades Cup Trophy")?.DefaultValue);
             bool includeOlympusStone = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Olympus Stone")?.DefaultValue);
@@ -469,7 +505,28 @@ namespace KhTracker
             _gridWindow.gridSettings["UnknownDisk"] = includeUnknownDisk;
             _gridWindow.gridSettings["MunnyPouch1"] = includeMunnyPouch1;
             _gridWindow.gridSettings["MunnyPouch2"] = includeMunnyPouch2;
+        }
 
+        private void UpdateGridSettings(Data data)
+        {
+            _gridWindow.grid.Children.Clear();
+
+            UpdateGridSize();
+            UpdateGlobalSettings();
+            UpdateProgression(data);
+            UpdateBosses(data);
+            UpdateSuperbosses(data);
+            UpdateMagics();
+            UpdateSummons();
+            UpdateDrives();
+            UpdateProofs();
+            UpdateSCOM();
+            UpdateTornPages();
+            UpdateUnlocks();
+            UpdateReports();
+            UpdateMiscellaneous();
+
+            // write the updated settings
             SaveSettings(_gridWindow.gridSettings);
             SaveNumericalSettings(_gridWindow.gridNumericalSettings);
 
