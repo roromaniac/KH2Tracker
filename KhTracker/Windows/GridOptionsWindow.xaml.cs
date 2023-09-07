@@ -285,6 +285,8 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Olympus Stone", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OlympusStone") ? _gridWindow.gridSettings["OlympusStone"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Unknown Disk", DefaultValue = (_gridWindow.gridSettings.ContainsKey("UnknownDisk") ? _gridWindow.gridSettings["UnknownDisk"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Munny Pouches", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MunnyPouch1") ? _gridWindow.gridSettings["MunnyPouch1"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Yeet the Bear", DefaultValue = (_gridWindow.gridSettings.ContainsKey("StarryHill") ? _gridWindow.gridSettings["StarryHill"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "All 7 Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("7Drives") ? _gridWindow.gridSettings["7Drives"] : true).ToString() },
                             }
                         },
                     }
@@ -500,11 +502,15 @@ namespace KhTracker
             bool includeUnknownDisk = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Unknown Disk")?.DefaultValue);
             bool includeMunnyPouch1 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Munny Pouches")?.DefaultValue);
             bool includeMunnyPouch2 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Munny Pouches")?.DefaultValue);
+            bool includeYeetTheBear = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "Yeet the Bear")?.DefaultValue);
+            bool includeAllMaxDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Miscellaneous")?.Options.FirstOrDefault(o => o.Description == "All 7 Drives")?.DefaultValue);
             _gridWindow.gridSettings["HadesCup"] = includeHadesCup;
             _gridWindow.gridSettings["OlympusStone"] = includeOlympusStone;
             _gridWindow.gridSettings["UnknownDisk"] = includeUnknownDisk;
             _gridWindow.gridSettings["MunnyPouch1"] = includeMunnyPouch1;
             _gridWindow.gridSettings["MunnyPouch2"] = includeMunnyPouch2;
+            _gridWindow.gridSettings["StarryHill"] = includeYeetTheBear;
+            _gridWindow.gridSettings["7Drives"] = includeAllMaxDrives;
         }
 
         private void UpdateGridSettings(Data data)

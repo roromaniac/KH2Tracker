@@ -125,6 +125,25 @@ namespace KhTracker
                         seedName = root.GetProperty("seedName").GetString();
                         gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(root.GetProperty("gridSettings").GetRawText());
                     }
+
+                    // update number of reports
+                    int numReports = 0;
+                    for (int i = 1; i <= 13; i++)
+                    {
+                        if (gridSettings[$"Report{i}"])
+                            numReports++;
+                    }
+                    gridNumericalSettings["NumReports"] = numReports;
+
+                    // update number of unlocks
+                    var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
+                    int numUnlocks = 0;
+                    foreach (string unlock in unlockNames)
+                    {
+                        if (gridSettings[unlock])
+                            numUnlocks++;
+                    }
+                    gridNumericalSettings["NumUnlocks"] = numUnlocks;
                 }
                 catch
                 {

@@ -717,23 +717,43 @@ namespace KhTracker
 
         private void UpdateGridTracker(string gridCheckName)
         {
+
+            // deal with doubled up progression icons
+            string[] checks = { gridCheckName };
+            switch (gridCheckName)
+            {
+                case "SephiDemyx":
+                    checks = new string[] { "Sephiroth", "DataDemyx" };
+                    break;
+                case "Marluxia_LingeringWill":
+                    checks = new string[] { "Marluxia", "LingeringWill" };
+                    break;
+                case "MarluxiaData_LingeringWill":
+                    checks = new string[] { "MarluxiaData", "LingeringWill" };
+                    break;
+                default:
+                    break;
+            }
+
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
-            for (int row = 0; row < gridWindow.numRows; row++)
-            {
-                for (int col = 0; col < gridWindow.numColumns; col++)
+            foreach (string checkName in checks) {
+                for (int row = 0; row < gridWindow.numRows; row++)
                 {
-                    // check if the original OR grid adjusted check key name is on the grid
-                    string[] checkNames = { gridCheckName, "Grid" + gridCheckName };
-                    if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
+                    for (int col = 0; col < gridWindow.numColumns; col++)
                     {
-                        // invoke the appropriate button if the check matches
-                        Application.Current.Dispatcher.Invoke(() =>
+                        // check if the original OR grid adjusted check key name is on the grid
+                        string[] checkNames = { checkName, "Grid" + checkName };
+                        if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
                         {
-                            RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                            gridWindow.buttons[row, col].IsChecked = !gridWindow.buttons[row, col].IsChecked;
-                            gridWindow.buttons[row, col].RaiseEvent(args);
-                        });
+                            // invoke the appropriate button if the check matches
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                gridWindow.buttons[row, col].IsChecked = true;
+                                gridWindow.buttons[row, col].RaiseEvent(args);
+                            });
+                        }
                     }
                 }
             }
@@ -1794,6 +1814,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("SimulatedTwilightTown", 8);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataRoxas");
                                 return;
                             }
                             break;
@@ -1808,6 +1829,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("LandofDragons", 9);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataXigbar");
                                 return;
                             }
                             break;
@@ -1822,6 +1844,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PortRoyal", 10);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataLuxord");
                                 return;
                             }
                             break;
@@ -1836,6 +1859,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PrideLands", 7);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataSaix");
                                 return;
                             }
                             break;
@@ -1878,6 +1902,12 @@ namespace KhTracker
             if (newProg < 99)
             {
                 var progressCheck = data.ProgressKeys[wName][newProg];
+                // boss enemy check
+                if (data.codes.bossNameConversion.ContainsValue(progressCheck))
+                {
+                    var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == progressCheck).Key;
+                    progressCheck = data.BossList.ContainsKey(originalBoss) ? data.codes.bossNameConversion[data.BossList[originalBoss]] : progressCheck;
+                }
                 UpdateGridTracker(progressCheck);
             }
 
@@ -2030,6 +2060,8 @@ namespace KhTracker
                     }
                 }
             }
+            if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
+                UpdateGridTracker("7Drives");
             TrackQuantities();
         }
 
