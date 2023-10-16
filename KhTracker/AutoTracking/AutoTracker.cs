@@ -83,6 +83,7 @@ namespace KhTracker
         private int reflectLevel;
         private int magnetLevel;
         private int tornPageCount;
+        private int munnyPouchCount;
 
         private CheckEveryCheck checkEveryCheck;
 
@@ -616,8 +617,9 @@ namespace KhTracker
                 DeathCheck();
                 LevelsProgressionBonus();
                 DrivesProgressionBonus();
+                AddProgressionPoints(0);
 
-                if (data.mode == Mode.PointsHints || data.ScoreMode)
+                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossList.Count() > 0)
                 {
                     UpdatePointScore(0); //update score
                     GetBoss(world, false, null);
@@ -718,10 +720,15 @@ namespace KhTracker
         private void UpdateGridTracker(string gridCheckName)
         {
 
+            Console.WriteLine($"CURRENT CHECK FOUND: {gridCheckName}");
+
             // deal with doubled up progression icons
             string[] checks = { gridCheckName };
             switch (gridCheckName)
             {
+                case "Lords":
+                    checks = new string[] { "BlizzardLord", "VolcanoLord" };
+                    break;
                 case "SephiDemyx":
                     checks = new string[] { "Sephiroth", "DataDemyx" };
                     break;
@@ -735,9 +742,29 @@ namespace KhTracker
                     break;
             }
 
+            for (int i = 0; i < checks.Count(); i++)
+            {
+
+                // boss enemy check
+                if (data.codes.bossNameConversion.ContainsValue(checks[i]))
+                {
+                    var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
+                    Console.WriteLine(originalBoss);
+                    checks[i] = data.BossList.ContainsKey(originalBoss) ? data.codes.bossNameConversion[data.BossList[originalBoss]] : checks[i];
+                    Console.WriteLine(data.codes.bossNameConversion[data.BossList[originalBoss]]);
+                }
+                else if (data.codes.bossNameConversion.ContainsKey(checks[i]))
+                {
+                    Console.WriteLine(checks[i]);
+                    checks[i] = data.BossList.ContainsKey(checks[i]) ? data.codes.bossNameConversion[data.BossList[checks[i]]] : checks[i];
+                    Console.WriteLine(checks[i]);
+                }
+            }
+
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
             foreach (string checkName in checks) {
+
                 for (int row = 0; row < gridWindow.numRows; row++)
                 {
                     for (int col = 0; col < gridWindow.numColumns; col++)
@@ -749,9 +776,13 @@ namespace KhTracker
                             // invoke the appropriate button if the check matches
                             Application.Current.Dispatcher.Invoke(() =>
                             {
-                                RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                gridWindow.buttons[row, col].IsChecked = true;
-                                gridWindow.buttons[row, col].RaiseEvent(args);
+                                if (!(bool)gridWindow.buttons[row, col].IsChecked)
+                                {
+                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                    gridWindow.buttons[row, col].IsChecked = true;
+                                    gridWindow.buttons[row, col].RaiseEvent(args);
+                                }
+
                             });
                         }
                     }
@@ -1902,12 +1933,6 @@ namespace KhTracker
             if (newProg < 99)
             {
                 var progressCheck = data.ProgressKeys[wName][newProg];
-                // boss enemy check
-                if (data.codes.bossNameConversion.ContainsValue(progressCheck))
-                {
-                    var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == progressCheck).Key;
-                    progressCheck = data.BossList.ContainsKey(originalBoss) ? data.codes.bossNameConversion[data.BossList[originalBoss]] : progressCheck;
-                }
                 UpdateGridTracker(progressCheck);
             }
 
@@ -2053,6 +2078,13 @@ namespace KhTracker
                             newChecks.Add(check);
                         }
                     }
+                    else if (check.Name.StartsWith("MunnyPouch"))
+                    {
+                        munnyPouchCount++;
+                        check.Name = $"MunnyPouch{munnyPouchCount}";
+                        collectedChecks.Add(check);
+                        newChecks.Add(check);
+                    }
                     else
                     {
                         collectedChecks.Add(check);
@@ -2061,7 +2093,7 @@ namespace KhTracker
                 }
             }
             if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
-                UpdateGridTracker("7Drives");
+                UpdateGridTracker("Grid7Drives");
             TrackQuantities();
         }
 
@@ -2488,7 +2520,6 @@ namespace KhTracker
 
             //return if bo boss beaten found
 
-
             if (!usingSave)
             {
                 //if the boss was found and beaten then set flag
@@ -2509,6 +2540,9 @@ namespace KhTracker
 
             //add to log
             data.bossEventLog.Add(eventTuple);
+
+            //update grid tracker
+            UpdateGridTracker(boss);
 
         }
 

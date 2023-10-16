@@ -2588,6 +2588,7 @@ namespace KhTracker
             reflectLevel = 0;
             magnetLevel = 0;
             tornPageCount = 0;
+            munnyPouchCount = 0;
 
             if (fire != null)
                 fire.Level = 0;

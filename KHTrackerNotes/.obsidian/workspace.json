@@ -4,38 +4,22 @@
     "type": "split",
     "children": [
       {
-        "id": "4875d8f014992b5d",
+        "id": "5ed89b554efd1106",
         "type": "tabs",
         "children": [
           {
-            "id": "6ac9a9b3c40e4a30",
-            "type": "leaf",
-            "state": {
-              "type": "canvas",
-              "state": {
-                "file": "Example Design.canvas",
-                "viewState": {
-                  "x": 314.67662048279817,
-                  "y": -777.8995352465802,
-                  "zoom": -0.0648444974074317
-                }
-              }
-            }
-          },
-          {
-            "id": "e9d136fd0432a6a1",
+            "id": "c2f6b3eae09cec9c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "TO DO/Options Window.md",
+                "file": "TO DO/Logic.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -101,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "TO DO/Options Window.md",
+                "file": "TO DO/Logic.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "TO DO/Options Window.md",
+                "file": "TO DO/Logic.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -141,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "TO DO/Options Window.md"
+                "file": "TO DO/Logic.md"
               }
             }
           }
@@ -162,19 +146,26 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e9d136fd0432a6a1",
+  "active": "c2f6b3eae09cec9c",
   "lastOpenFiles": [
-    "2023-08-28.md",
-    "Example Design.canvas",
+    "TO DO/KH2Tracker.md",
+    "TO DO/Logic.md",
     "TO DO/Grid Tracker.md",
+    "TO DO/Options Window.md",
     "TO DO/Assets.md",
+    "2023-10-14.md",
+    "2023-10-12.md",
+    "2023-10-11.md",
+    "2023-10-07.md",
+    "Untitled.canvas",
+    "2023-08-28.md",
+    "2023-09-21.md",
+    "2023-09-15.md",
+    "Example Design.canvas",
     "2023-08-27.md",
     "2023-08-19.md",
     "2023-08-13.md",
-    "TO DO/Options Window.md",
-    "TO DO/KH2Tracker.md",
     "2023-08-10.md",
-    "TO DO/Logic.md",
     "2023-07-31.md",
     "2023-07-29.md",
     "2023-07-22.md",

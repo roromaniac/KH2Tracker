@@ -118,48 +118,47 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Axel I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Axel1") ? _gridWindow.gridSettings["Axel1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Axel II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Axel") ? _gridWindow.gridSettings["Axel"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Barbossa", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Barbossa") ? _gridWindow.gridSettings["Barbossa"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Blizzard Lord (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Blizzard Lord", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridBlizzardLord") ? _gridWindow.gridSettings["GridBlizzardLord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "The Beast", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Beast") ? _gridWindow.gridSettings["Beast"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Cerberus", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Cerberus") ? _gridWindow.gridSettings["Cerberus"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Cloud (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Cloud", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridCloud") ? _gridWindow.gridSettings["GridCloud"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Dark Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DarkThorn") ? _gridWindow.gridSettings["DarkThorn"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Demyx", DefaultValue = (_gridWindow.gridSettings.ContainsKey("HBDemyx") ? _gridWindow.gridSettings["HBDemyx"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "The Experiment", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Experiment") ? _gridWindow.gridSettings["Experiment"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper1") ? _gridWindow.gridSettings["GrimReaper1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper") ? _gridWindow.gridSettings["GrimReaper"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Groundshaker", DefaultValue = _gridWindow.gridSettings["GroundShaker"].ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Groundshaker", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Groundshaker") ? _gridWindow.gridSettings["Groundshaker"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hades", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Hades") ? _gridWindow.gridSettings["Hades"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Hayner (NS)", DefaultValue = "false" },
-                                new Option { Type = OptionType.CheckBox, Description = "Hercules (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Hayner", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridHayner") ? _gridWindow.gridSettings["GridHayner"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Hercules", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridHercules") ? _gridWindow.gridSettings["GridHercules"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hostile Program", DefaultValue = (_gridWindow.gridSettings.ContainsKey("HostileProgram") ? _gridWindow.gridSettings["HostileProgram"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hydra", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Hydra") ? _gridWindow.gridSettings["Hydra"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Jafar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GenieJafar") ? _gridWindow.gridSettings["GenieJafar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Leon (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Leon", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLeon") ? _gridWindow.gridSettings["GridLeon"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Luxord", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Luxord") ? _gridWindow.gridSettings["Luxord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "MCP", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MCP") ? _gridWindow.gridSettings["MCP"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Past Pete", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OldPete") ? _gridWindow.gridSettings["OldPete"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Oogie Boogie", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OogieBoogie") ? _gridWindow.gridSettings["OogieBoogie"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Pete TR", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DCPete") ? _gridWindow.gridSettings["DCPete"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Prison Keeper", DefaultValue = (_gridWindow.gridSettings.ContainsKey("PrisonKeeper") ? _gridWindow.gridSettings["PrisonKeeper"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Riku (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Riku", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Riku") ? _gridWindow.gridSettings["Riku"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Roxas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Roxas") ? _gridWindow.gridSettings["Roxas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Saix", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Saix") ? _gridWindow.gridSettings["Saix"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Sark", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Sark") ? _gridWindow.gridSettings["Sark"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Scar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Scar") ? _gridWindow.gridSettings["Scar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Seifer (NS)", DefaultValue = "false" },
-                                new Option { Type = OptionType.CheckBox, Description = "Setzer (NS)", DefaultValue = "false" },
-                                new Option { Type = OptionType.CheckBox, Description = "Shadow Stalker (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Seifer", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridSeifer") ? _gridWindow.gridSettings["GridSeifer"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Setzer", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridSetzer") ? _gridWindow.gridSettings["GridSetzer"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Shadow Stalker", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridShadowStalker") ? _gridWindow.gridSettings["GridShadowStalker"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Shan-Yu", DefaultValue = (_gridWindow.gridSettings.ContainsKey("ShanYu") ? _gridWindow.gridSettings["ShanYu"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Storm Rider", DefaultValue = (_gridWindow.gridSettings.ContainsKey("StormRider") ? _gridWindow.gridSettings["StormRider"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Thresholder", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Thresholder") ? _gridWindow.gridSettings["Thresholder"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Tifa (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Tifa", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridTifa") ? _gridWindow.gridSettings["GridTifa"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Twilight Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("TwilightThorn") ? _gridWindow.gridSettings["TwilightThorn"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Vivi (NS)", DefaultValue = "false" },
-                                new Option { Type = OptionType.CheckBox, Description = "Volcano Lord (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Vivi", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVivi") ? _gridWindow.gridSettings["GridVivi"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xaldin", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xaldin") ? _gridWindow.gridSettings["Xaldin"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xemnas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xemnas1") ? _gridWindow.gridSettings["Xemnas1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xigbar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xigbar") ? _gridWindow.gridSettings["Xigbar"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Yuffie (NS)", DefaultValue = "false" },
+                                new Option { Type = OptionType.CheckBox, Description = "Yuffie", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridYuffie") ? _gridWindow.gridSettings["GridYuffie"] : true).ToString() },
                             }
                         },
                         new SubCategory {
@@ -284,9 +283,9 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Hades Cup Trophy", DefaultValue = (_gridWindow.gridSettings.ContainsKey("HadesCup") ? _gridWindow.gridSettings["HadesCup"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Olympus Stone", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OlympusStone") ? _gridWindow.gridSettings["OlympusStone"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Unknown Disk", DefaultValue = (_gridWindow.gridSettings.ContainsKey("UnknownDisk") ? _gridWindow.gridSettings["UnknownDisk"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Munny Pouches", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MunnyPouch1") ? _gridWindow.gridSettings["MunnyPouch1"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Munny Pouches", DefaultValue = (_gridWindow.gridSettings.ContainsKey("MunnyPouch1") ? _gridWindow.gridSettings["GridMunnyPouch1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Yeet the Bear", DefaultValue = (_gridWindow.gridSettings.ContainsKey("StarryHill") ? _gridWindow.gridSettings["StarryHill"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "All 7 Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("7Drives") ? _gridWindow.gridSettings["7Drives"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "All 7 Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Grid7Drives") ? _gridWindow.gridSettings["Grid7Drives"] : true).ToString() },
                             }
                         },
                     }
@@ -507,14 +506,15 @@ namespace KhTracker
             _gridWindow.gridSettings["HadesCup"] = includeHadesCup;
             _gridWindow.gridSettings["OlympusStone"] = includeOlympusStone;
             _gridWindow.gridSettings["UnknownDisk"] = includeUnknownDisk;
-            _gridWindow.gridSettings["MunnyPouch1"] = includeMunnyPouch1;
-            _gridWindow.gridSettings["MunnyPouch2"] = includeMunnyPouch2;
+            _gridWindow.gridSettings["GridMunnyPouch1"] = includeMunnyPouch1;
+            _gridWindow.gridSettings["GridMunnyPouch2"] = includeMunnyPouch2;
             _gridWindow.gridSettings["StarryHill"] = includeYeetTheBear;
-            _gridWindow.gridSettings["7Drives"] = includeAllMaxDrives;
+            _gridWindow.gridSettings["Grid7Drives"] = includeAllMaxDrives;
         }
 
         private void UpdateGridSettings(Data data)
         {
+
             _gridWindow.grid.Children.Clear();
 
             UpdateGridSize();
@@ -537,6 +537,7 @@ namespace KhTracker
             SaveNumericalSettings(_gridWindow.gridNumericalSettings);
 
             // generate new grid
+            
             _gridWindow.GenerateGrid(newNumRows, newNumColumns);
         }
 

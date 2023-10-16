@@ -1006,6 +1006,7 @@ namespace KhTracker
                 if (key == "GoA")
                     continue;
 
+                Console.WriteLine(key);
                 data.WorldsData[key].worldGrid.WorldComplete();
                 SetWorldValue(data.WorldsData[key].value, 0);
             }

@@ -6,3 +6,4 @@
 	- [x] Include functionality for non-square boards.
 	- [x] Undo a bingo if a button becomes unclicked. 
 - [ ] Ensure that tracking still happens if the world is off in the main window.
+- [ ] Contact DA about how he stored global tracker settings.

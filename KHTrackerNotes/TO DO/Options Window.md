@@ -5,3 +5,4 @@
 - [x] Update the tracker settings in its own method.
 - [ ] Create a "Select All" toggle that selects everything within a subcategory.
 - [ ] Make popup windows for error/caught exception messages.
+- [ ] Create a ToolTip for each category by creating a new field for every Option called "ToolTip".

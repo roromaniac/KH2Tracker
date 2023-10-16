@@ -3,7 +3,7 @@
 - [x] Create Options Window that has game settings, and selected checks based on groups (i.e. boss fight, magic, movement, etc.)
 - [x] Allow Grid Tracker to have a variable amount of rows and columns.
 - [x] Save the current options upon close.
-- [ ] Create an OPTIONAL folder that can hold settings for the grid tracker.
+- [x] Create an OPTIONAL folder that can hold settings for the grid tracker.
 - [ ] Create a feature porting list that ports intricate features that were nice from the old tracker to the new one.
 - [ ] Create a pop out window that confirms that the win condition has been met.
 - [ ] Create a pop out window that talks about dimension changes if the user input is faulty.
@@ -15,3 +15,5 @@
 	- [ ] Maybe create a helper function that returns the converted type instead of constantly creating a new SolidColorBrush every time.
 - [x] Add ability to track drive levels.
 - [ ] Add non-progression bosses to the grid check pool (Riku, Sark, Vivi, Seifer, Hayner, Armored 1, Armored 2, Final Xem)
+- [ ] Find a way to track munny pouches as a quantity.
+- [ ] Make Armored Xemnas 1 and Armored Xemnas 2 assets from Televo set.
