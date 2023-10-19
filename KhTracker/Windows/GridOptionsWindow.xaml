@@ -113,7 +113,7 @@
                 <!-- Save These Settings Button -->
                 <Button Content="Save These Settings" HorizontalAlignment="Left" Click="SavePresetJson"/>
                 <!-- Submit Button -->
-                <Button Content="Submit" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
+                <Button Content="Generate Card with These Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
             </DockPanel>
         </StackPanel>
     </StackPanel>

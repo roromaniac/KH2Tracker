@@ -910,5 +910,180 @@ namespace KhTracker.Properties {
                 this["GridWindowHeight"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int GridWindowRows {
+            get {
+                return ((int)(this["GridWindowRows"]));
+            }
+            set {
+                this["GridWindowRows"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int GridWindowColumns {
+            get {
+                return ((int)(this["GridWindowColumns"]));
+            }
+            set {
+                this["GridWindowColumns"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"Picture\":true,\"Limit\":true,\"HadesCup\":true,\"GridCure1\":true,\"AladdinWep\":true,\"" +
+            "GridFire2\":true,\"GridThunder3\":true,\"MulanWep\":true,\"TronWep\":true,\"GridCure2\":t" +
+            "rue,\"GridCure3\":true,\"GridMagnet1\":true,\"GridMagnet2\":true,\"GridMagnet3\":true,\"G" +
+            "ridTornPage4\":true,\"Report9\":true,\"GridTornPage2\":true,\"GridTornPage3\":true,\"Gri" +
+            "dTornPage1\":true,\"Report1\":true,\"Report3\":true,\"Report2\":true,\"Report5\":true,\"Re" +
+            "port4\":false,\"Report7\":true,\"Report6\":true,\"MembershipCard\":true,\"Feather\":true," +
+            "\"IceCream\":true,\"GridTornPage5\":true,\"Report12\":true,\"OnceMore\":true,\"Report8\":t" +
+            "rue,\"GridReflect3\":true,\"GridMunnyPouch1\":true,\"OlympusStone\":true,\"GridMunnyPou" +
+            "ch2\":true,\"Final\":true,\"Report13\":false,\"GridBlizzard1\":true,\"GridBlizzard2\":tru" +
+            "e,\"GridBlizzard3\":true,\"Nonexistence\":true,\"Baseball\":true,\"PromiseCharm\":true,\"" +
+            "SimbaWep\":true,\"UnknownDisk\":true,\"BeastWep\":true,\"GridThunder1\":true,\"GridFire3" +
+            "\":true,\"GridFire1\":true,\"SecondChance\":true,\"Wisdom\":true,\"Report10\":true,\"Ukule" +
+            "le\":true,\"Valor\":true,\"SparrowWep\":true,\"AuronWep\":true,\"MunnyPouch1\":true,\"Mast" +
+            "er\":true,\"MunnyPouch2\":true,\"Connection\":true,\"Lamp\":true,\"Report11\":true,\"GridT" +
+            "hunder2\":true,\"JackWep\":true,\"Peace\":true,\"GridReflect1\":true,\"GridReflect2\":tru" +
+            "e,\"Kanga\":true,\"GridSephiroth\":true,\"Xigbar\":true,\"GridDataSaix\":true,\"OCPete\":t" +
+            "rue,\"Windows\":true,\"GridLingeringWill\":true,\"Presents\":true,\"GenieJafar\":true,\"A" +
+            "nsemStudy\":true,\"DarkThorn\":true,\"NewDay\":true,\"Hyenas2\":true,\"GridVolcanoLord\":" +
+            "true,\"Hydra\":true,\"Scar\":true,\"Roxas\":true,\"Gambler\":true,\"GridDataXaldin\":true," +
+            "\"Sandlot\":true,\"Mansion\":true,\"GridFinalXemnas\":true,\"GridLexaeus\":true,\"Abu\":tr" +
+            "ue,\"BetwixtAndBetween\":true,\"GroundShaker\":true,\"Struggle\":true,\"GridDataAxel\":t" +
+            "rue,\"Barbossa\":true,\"Axel\":true,\"TwilightThorn\":true,\"GridHercules\":true,\"Fight2" +
+            "\":true,\"OldPete\":true,\"Cerberus\":true,\"Drive6\":true,\"Fight1\":true,\"Carpet\":true," +
+            "\"SolarSailer\":true,\"GridArmoredXemnas1\":true,\"Barrels\":true,\"AuronStatue\":true,\"" +
+            "Hades\":true,\"Mountain\":true,\"Screens\":true,\"ThroneRoom\":true,\"OCDemyx\":true,\"Lux" +
+            "ord\":true,\"Drive2\":true,\"GridRiku\":true,\"Drive7\":true,\"Lords\":true,\"GridShadowSt" +
+            "alker\":true,\"HostileProgram\":true,\"PrisonKeeper\":true,\"BoatPete\":true,\"Dragoons\"" +
+            ":true,\"GridSeifer\":true,\"Town\":true,\"GridArmoredXemnas2\":true,\"Beast\":true,\"Grid" +
+            "DataLuxord\":true,\"MCP\":true,\"Cave\":true,\"GridMarluxiaData\":true,\"Axel1\":true,\"DC" +
+            "Pete\":true,\"StormRider\":true,\"Drive3\":true,\"CandyCaneLane\":true,\"Drive4\":true,\"X" +
+            "aldin\":true,\"GridDataRoxas\":true,\"GridLexaeusData\":true,\"StarryHill\":true,\"Stati" +
+            "on\":true,\"Grid7Drives\":true,\"GridVivi\":true,\"GridDataXemnas\":true,\"GridVexen\":tr" +
+            "ue,\"Saix\":true,\"Corridor\":true,\"Bailey\":true,\"Ursula\":true,\"Piglet\":true,\"GridZe" +
+            "xion\":true,\"GridLarxeneData\":true,\"Hyenas1\":true,\"GridSetzer\":true,\"GridCloud\":t" +
+            "rue,\"Missions\":true,\"GridDataXigbar\":true,\"MysteriousTower\":true,\"Sark\":true,\"Tr" +
+            "ansport\":true,\"GridTifa\":true,\"Simba\":true,\"Chasm\":true,\"Tutorial\":true,\"FinalFa" +
+            "ntasy\":true,\"Rabbit\":true,\"GridHayner\":true,\"ShanYu\":true,\"Experiment\":true,\"Gri" +
+            "mReaper\":true,\"SpookyCave\":true,\"OogieBoogie\":true,\"1Minute\":true,\"HBDemyx\":true" +
+            ",\"Urns\":true,\"ComputerRoom\":true,\"Summit\":true,\"Minnie\":true,\"GridDataDemyx\":tru" +
+            "e,\"Thresholder\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"GridYuff" +
+            "ie\":true,\"GrimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizzardL" +
+            "ord\":true,\"GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"GridZex" +
+            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"Glob" +
+            "alBingoLogic\":false}\r\n")]
+        public string GridSettings {
+            get {
+                return ((string)(this["GridSettings"]));
+            }
+            set {
+                this["GridSettings"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("13")]
+        public int GridWindowNumReports {
+            get {
+                return ((int)(this["GridWindowNumReports"]));
+            }
+            set {
+                this["GridWindowNumReports"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("11")]
+        public int GridWindowNumUnlocks {
+            get {
+                return ((int)(this["GridWindowNumUnlocks"]));
+            }
+            set {
+                this["GridWindowNumUnlocks"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF696969")]
+        public global::System.Windows.Media.Color UnmarkedColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["UnmarkedColor"]));
+            }
+            set {
+                this["UnmarkedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF008000")]
+        public global::System.Windows.Media.Color MarkedColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["MarkedColor"]));
+            }
+            set {
+                this["MarkedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFA500")]
+        public global::System.Windows.Media.Color AnnotatedColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AnnotatedColor"]));
+            }
+            set {
+                this["AnnotatedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF800080")]
+        public global::System.Windows.Media.Color BingoColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BingoColor"]));
+            }
+            set {
+                this["BingoColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GridWindowBingoLogic {
+            get {
+                return ((bool)(this["GridWindowBingoLogic"]));
+            }
+            set {
+                this["GridWindowBingoLogic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GridWindowBattleshipLogic {
+            get {
+                return ((bool)(this["GridWindowBattleshipLogic"]));
+            }
+            set {
+                this["GridWindowBattleshipLogic"] = value;
+            }
+        }
     }
 }

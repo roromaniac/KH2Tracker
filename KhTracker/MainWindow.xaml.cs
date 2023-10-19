@@ -10,7 +10,6 @@ using System.Windows.Shapes;
 using System.Linq;
 using System.IO;
 using Microsoft.Win32;
-using System.Drawing;
 using System.Windows.Documents;
 using System.Runtime.InteropServices;
 using System.ComponentModel;

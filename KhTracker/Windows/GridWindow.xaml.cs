@@ -31,7 +31,6 @@ namespace KhTracker
 
         public Grid grid;
         public ToggleButton[,] buttons;
-        public Dictionary<string, int> gridNumericalSettings = new Dictionary<string, int>();
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
 
@@ -40,12 +39,11 @@ namespace KhTracker
         {
             InitializeComponent();
 
-            gridSettings = GetGridSettings();
-            gridNumericalSettings = GetNumericalGridSettings();
+            gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
             currentColors = GetColorSettings();
 
-            numRows = gridNumericalSettings.ContainsKey("NumRows") ? gridNumericalSettings["NumRows"] : 5;
-            numColumns = gridNumericalSettings.ContainsKey("NumColumns") ? gridNumericalSettings["NumColumns"] : 5;
+            numRows = Properties.Settings.Default.GridWindowRows;
+            numColumns = Properties.Settings.Default.GridWindowColumns;
 
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
@@ -133,7 +131,7 @@ namespace KhTracker
                         if (gridSettings[$"Report{i}"])
                             numReports++;
                     }
-                    gridNumericalSettings["NumReports"] = numReports;
+                    Properties.Settings.Default.GridWindowNumReports = numReports;
 
                     // update number of unlocks
                     var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
@@ -143,7 +141,7 @@ namespace KhTracker
                         if (gridSettings[unlock])
                             numUnlocks++;
                     }
-                    gridNumericalSettings["NumUnlocks"] = numUnlocks;
+                    Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
                 }
                 catch
                 {
@@ -201,14 +199,14 @@ namespace KhTracker
             }
 
             // RErandomize which reports get included
-            var numReports = gridNumericalSettings.ContainsKey("NumReports") ? gridNumericalSettings["NumReports"] : 13;
+            var numReports = Properties.Settings.Default.GridWindowNumReports;
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
 
             // RErandomize which visit unlocks get included
             var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
-            int numUnlocks = gridNumericalSettings.ContainsKey("NumReports") ? gridNumericalSettings["NumReports"] : 11;
+            int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
                 gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
@@ -228,87 +226,48 @@ namespace KhTracker
 
         private Dictionary<string, Color> GetColorSettings()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTrackerColors");
-            if (key != null)
-            {
-                string serializedSettings = (string)key.GetValue("Settings");
-                key.Close();
 
-                if (!string.IsNullOrEmpty(serializedSettings))
-                {
-                    return JsonSerializer.Deserialize<Dictionary<string, Color>>(serializedSettings);
-                }
-            }
+            var unmarkedColor = Properties.Settings.Default.UnmarkedColor;
+            var markedColor = Properties.Settings.Default.MarkedColor;
+            var annotatedColor = Properties.Settings.Default.AnnotatedColor;
+            var bingoColor = Properties.Settings.Default.BingoColor;
 
             return new Dictionary<string, Color>()
             {
-                { "Unmarked Color", Colors.DimGray },
-                { "Marked Color", Colors.Green },
-                { "Annotated Color", Colors.Orange },
-                { "Bingo Color", Colors.Purple }
+                { "Unmarked Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
+                { "Marked Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
+                { "Annotated Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
+                { "Bingo Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) }
             };
         }
 
-        private Dictionary<string, int> GetNumericalGridSettings()
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTrackerNumbers");
-            if (key != null)
-            {
-                string serializedSettings = (string)key.GetValue("Settings");
-                key.Close();
-
-                if (!string.IsNullOrEmpty(serializedSettings))
-                {
-                    return JsonSerializer.Deserialize<Dictionary<string, int>>(serializedSettings);
-                }
-            }
-
-            return new Dictionary<string, int>(); // Return default or empty settings if not found
-        }
-
-        private Dictionary<string, bool> GetGridSettings()
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\GridTracker");
-            if (key != null)
-            {
-                string serializedSettings = (string)key.GetValue("Settings");
-                key.Close();
-
-                if (!string.IsNullOrEmpty(serializedSettings))
-                {
-                    return JsonSerializer.Deserialize<Dictionary<string, bool>>(serializedSettings);
-                }
-            }
-
-            return new Dictionary<string, bool>(); // Return default or empty settings if not found
-        }
 
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (((SolidColorBrush)button.Background).Color == currentColors["Unmarked Color"] || ((SolidColorBrush)button.Background).Color == currentColors["Annotated Color"])
+            if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
             {
-                ((SolidColorBrush)button.Background).Color = currentColors["Marked Color"];
+                SetColorForButton(button.Background, currentColors["Marked Color"]);
             }
             else
             {
-                ((SolidColorBrush)button.Background).Color = currentColors["Unmarked Color"];
+                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
             }
-            if (gridSettings.ContainsKey("GlobalBingoLogic") && gridSettings["GlobalBingoLogic"])
+            if (Properties.Settings.Default.GridWindowBingoLogic)
                 BingoCheck(grid, i, j);
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
-            if (((SolidColorBrush)button.Background).Color == currentColors["Annotated Color"])
+            if (GetColorFromButton(button.Background) == currentColors["Annotated Color"])
             {
-                ((SolidColorBrush)button.Background).Color = currentColors["Original Color"];
+                SetColorForButton(button.Background, currentColors["Original Color"]);
             }
             else
             {
-                currentColors["Original Color"] = ((SolidColorBrush)button.Background).Color;
-                ((SolidColorBrush)button.Background).Color = currentColors["Annotated Color"];
+                currentColors["Original Color"] = GetColorFromButton(button.Background);
+                SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
         }
 
@@ -378,8 +337,8 @@ namespace KhTracker
                 for (int j = 0; j < numColumns; j++)
                 {
                     ToggleButton button = new ToggleButton();
-                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -396,6 +355,17 @@ namespace KhTracker
             // Add grid to the window or other container
             DynamicGrid.Children.Add(grid);
         }
+
+        private void SetColorForButton(Brush buttonBackground, Color newColor)
+        {
+            ((SolidColorBrush)buttonBackground).Color = newColor;
+        }
+
+        private Color GetColorFromButton(Brush buttonBackground)
+        {
+            return ((SolidColorBrush)buttonBackground).Color;
+        }
+
         public void BingoCheck(Grid grid, int i, int j)
         {
 
@@ -414,16 +384,16 @@ namespace KhTracker
                     {
                         for (int index = 0; index < rowCount; index++)
                         {
-                            if (((SolidColorBrush)buttons[index, index].Background).Color.Equals(currentColors["Bingo Color"]))
+                            if (GetColorFromButton(buttons[index, index].Background).Equals(currentColors["Bingo Color"]))
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
                                 bool part_of_row_bingo = true;
                                 bool part_of_column_bingo = true;
                                 for (int check = 0; check < rowCount; check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[index, check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[index, check].Background).Equals(currentColors["Bingo Color"]))
                                         part_of_row_bingo = false;
-                                    if (!((SolidColorBrush)buttons[check, index].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[check, index].Background).Equals(currentColors["Bingo Color"]))
                                         part_of_column_bingo = false;
                                     if (!part_of_row_bingo && !part_of_column_bingo)
                                     {
@@ -434,16 +404,16 @@ namespace KhTracker
                                             {
                                                 for (int diag_check = 0; diag_check < rowCount; diag_check++)
                                                 {
-                                                    if (!((SolidColorBrush)buttons[diag_check, rowCount - 1 - diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                                    if (!GetColorFromButton(buttons[diag_check, rowCount - 1 - diag_check].Background).Equals(currentColors["Bingo Color"]))
                                                     {
-                                                        buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                        SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
                                                         break;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
                                                 break;
                                             }
                                         }
@@ -458,16 +428,17 @@ namespace KhTracker
                     {
                         for (int index = 0; index < rowCount; index++)
                         {
-                            if (((SolidColorBrush)buttons[index, rowCount - 1 - index].Background).Color.Equals(currentColors["Bingo Color"]))
+                            
+                            if (GetColorFromButton(buttons[index, rowCount - 1 - index].Background).Equals(currentColors["Bingo Color"]))
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
                                 bool part_of_row_bingo = true;
                                 bool part_of_column_bingo = true;
                                 for (int check = 0; check < rowCount; check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[index, check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[index, check].Background).Equals(currentColors["Bingo Color"]))
                                         part_of_row_bingo = false;
-                                    if (!((SolidColorBrush)buttons[check, rowCount - 1 - index].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[check, rowCount - 1 - index].Background).Equals(currentColors["Bingo Color"]))
                                         part_of_column_bingo = false;
                                     if (!part_of_row_bingo && !part_of_column_bingo)
                                     {
@@ -478,16 +449,16 @@ namespace KhTracker
                                             {
                                                 for (int diag_check = 0; diag_check < rowCount; diag_check++)
                                                 {
-                                                    if (!((SolidColorBrush)buttons[diag_check, diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                                    if (!GetColorFromButton(buttons[diag_check, diag_check].Background).Equals(currentColors["Bingo Color"]))
                                                     {
-                                                        buttons[index, index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                        SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
                                                         break;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                buttons[index, rowCount - 1 - index].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                                                SetColorForButton(buttons[index, rowCount - 1 - index].Background, currentColors["Marked Color"]);
                                                 break;
                                             }
                                         }
@@ -504,14 +475,15 @@ namespace KhTracker
                     bool part_of_left_diag_bingo = true;
                     bool part_of_right_diag_bingo = true;
 
-                    if (((SolidColorBrush)buttons[row, j].Background).Color.Equals(currentColors["Bingo Color"]))
+                    if (GetColorFromButton(buttons[row, j].Background).Equals(currentColors["Bingo Color"]))
                     {
                         // check that the button in question is not a part of a row bingo before removing bingo background 
                         for (int col_check = 0; col_check < columnCount; col_check++)
                         {
                             if (row != i)
                             {
-                                if (!((SolidColorBrush)buttons[row, col_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                
+                                if (!GetColorFromButton(buttons[row, col_check].Background).Equals(currentColors["Bingo Color"]))
                                 {
                                     part_of_row_bingo = false;
                                     break;
@@ -525,7 +497,7 @@ namespace KhTracker
                             {
                                 for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[left_diag_check, left_diag_check].Background).Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_left_diag_bingo = false;
                                         break;
@@ -539,7 +511,7 @@ namespace KhTracker
                             {
                                 for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_right_diag_bingo = false;
                                         break;
@@ -555,7 +527,7 @@ namespace KhTracker
                             part_of_right_diag_bingo = false;
                         }
                         if (!part_of_row_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
-                            buttons[row, j].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                            SetColorForButton(buttons[row, j].Background, currentColors["Marked Color"]);
                     }
                 }
 
@@ -565,15 +537,15 @@ namespace KhTracker
                     bool part_of_column_bingo = true;
                     bool part_of_left_diag_bingo = true;
                     bool part_of_right_diag_bingo = true;
-
-                    if (((SolidColorBrush)buttons[i, col].Background).Color.Equals(currentColors["Bingo Color"]))
+                    
+                    if (GetColorFromButton(buttons[i, col].Background).Equals(currentColors["Bingo Color"]))
                     {
                         // check that the button in question is not a part of a col bingo before removing bingo background 
                         for (int row_check = 0; row_check < rowCount; row_check++)
                         {
                             if (col != j)
-                            {
-                                if (!((SolidColorBrush)buttons[row_check, col].Background).Color.Equals(currentColors["Bingo Color"]))
+                            { 
+                                if (!GetColorFromButton(buttons[row_check, col].Background).Equals(currentColors["Bingo Color"]))
                                 {
                                     part_of_column_bingo = false;
                                     break;
@@ -587,7 +559,7 @@ namespace KhTracker
                             {
                                 for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[left_diag_check, left_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[left_diag_check, left_diag_check].Background).Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_left_diag_bingo = false;
                                         break;
@@ -601,7 +573,7 @@ namespace KhTracker
                             {
                                 for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
                                 {
-                                    if (!((SolidColorBrush)buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Color.Equals(currentColors["Bingo Color"]))
+                                    if (!GetColorFromButton(buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Equals(currentColors["Bingo Color"]))
                                     {
                                         part_of_right_diag_bingo = false;
                                         break;
@@ -617,7 +589,7 @@ namespace KhTracker
                             part_of_right_diag_bingo = false;
                         }
                         if (!part_of_column_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
-                            buttons[i, col].Background = new SolidColorBrush(currentColors["Marked Color"]);
+                            SetColorForButton(buttons[i, col].Background, currentColors["Marked Color"]);
                     }
                 }
             }
@@ -640,7 +612,7 @@ namespace KhTracker
                             if (index == rowCount - 1)
                             {
                                 for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
-                                    buttons[bingo_index, bingo_index].Background = new SolidColorBrush(currentColors["Bingo Color"]);
+                                    SetColorForButton(buttons[bingo_index, bingo_index].Background, currentColors["Bingo Color"]);
                             }
                         }
 
@@ -658,7 +630,7 @@ namespace KhTracker
                             if (index == rowCount - 1)
                             {
                                 for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
-                                    buttons[bingo_index, rowCount - 1 - bingo_index].Background = new SolidColorBrush(currentColors["Bingo Color"]);
+                                    SetColorForButton(buttons[bingo_index, rowCount - 1 - bingo_index].Background, currentColors["Bingo Color"]);
                             }
                         }
 
@@ -674,7 +646,7 @@ namespace KhTracker
                     if (row == rowCount - 1)
                     {
                         for (int bingo_row = 0; bingo_row < rowCount; bingo_row++)
-                            buttons[bingo_row, j].Background = new SolidColorBrush(currentColors["Bingo Color"]);
+                            SetColorForButton(buttons[bingo_row, j].Background, currentColors["Bingo Color"]);
                     }
                 }
 
@@ -688,7 +660,7 @@ namespace KhTracker
                     if (col == columnCount - 1)
                     {
                         for (int bingo_col = 0; bingo_col < columnCount; bingo_col++)
-                            buttons[i, bingo_col].Background = new SolidColorBrush(currentColors["Bingo Color"]);
+                            SetColorForButton(buttons[i, bingo_col].Background, currentColors["Bingo Color"]);
                     }
                 }
             }
@@ -707,11 +679,11 @@ namespace KhTracker
             {
                 for (int j = 0; j < numColumns; j++)
                 {
-                    if (((SolidColorBrush)buttons[i, j].Background).Color.Equals(oldAnnotatedColor))
-                        buttons[i, j].Background = new SolidColorBrush(currentColors["Annotated Color"]);
+                    if (GetColorFromButton(buttons[i, j].Background).Equals(oldAnnotatedColor))
+                        SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
                     else
-                        buttons[i, j].Background = (bool)buttons[i, j].IsChecked ? new SolidColorBrush(currentColors["Marked Color"]) : new SolidColorBrush(currentColors["Unmarked Color"]);
-                    if (gridSettings.ContainsKey("GlobalBingoLogic") && gridSettings["GlobalBingoLogic"])
+                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
+                    if (Properties.Settings.Default.GridWindowBingoLogic)
                         BingoCheck(grid, i, j);
                 }
             }

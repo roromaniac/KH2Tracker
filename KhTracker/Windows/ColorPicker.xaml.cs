@@ -64,7 +64,7 @@ namespace KhTracker
             SelectedColor = Color.FromRgb((byte)RedSlider.Value, (byte)GreenSlider.Value, (byte)BlueSlider.Value);
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
             ButtonColors[(string)LastClickedButton.Content] = SelectedColor; // Update the dictionary
-            SaveColorSettings(ButtonColors);// Save the dictionary
+            SaveColorSettings((string)LastClickedButton.Content, SelectedColor); // Save the dictionary
         }
 
         private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -88,13 +88,26 @@ namespace KhTracker
             SelectedColor = rgbColor;
         }
 
-        private void SaveColorSettings(Dictionary<string, Color> colorSettings)
+        private void SaveColorSettings(string colorType, Color newColor)
         {
-            string serializedSettings = JsonSerializer.Serialize(colorSettings);
-
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GridTrackerColors");
-            key.SetValue("Settings", serializedSettings);
-            key.Close();
+            switch (colorType)
+            {
+                case "Unmarked Color":
+                    Properties.Settings.Default.UnmarkedColor = newColor;
+                    break;
+                case "Marked Color":
+                    Properties.Settings.Default.MarkedColor = newColor;
+                    break;
+                case "Annotated Color":
+                    Properties.Settings.Default.AnnotatedColor = newColor;
+                    break;
+                case "Bingo Color":
+                    Properties.Settings.Default.BingoColor = newColor;
+                    break;
+                default:
+                    Console.WriteLine("Color type not implemented.");
+                    break;
+            }
         }
     }
 

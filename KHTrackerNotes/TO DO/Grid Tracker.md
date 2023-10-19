@@ -11,9 +11,9 @@
 - [x] Create a way to associate each button with a specific check. That way, when that check gets autotracker, we can invoke a button press during AutoTrack.cs.
 - [x] Allow for anything that can be tracked to be on the card
 - [x] Update Annotated colors in real time.
-- [ ] Clean up code conversion between "Color" type and "Brushes" type.
-	- [ ] Maybe create a helper function that returns the converted type instead of constantly creating a new SolidColorBrush every time.
+- [x] Clean up code conversion between "Color" type and "Brushes" type.
+	- [x] Maybe create a helper function that returns the converted type instead of constantly creating a new SolidColorBrush every time.
 - [x] Add ability to track drive levels.
-- [ ] Add non-progression bosses to the grid check pool (Riku, Sark, Vivi, Seifer, Hayner, Armored 1, Armored 2, Final Xem)
-- [ ] Find a way to track munny pouches as a quantity.
-- [ ] Make Armored Xemnas 1 and Armored Xemnas 2 assets from Televo set.
+- [x] Add non-progression bosses to the grid check pool (Riku, Sark, Vivi, Seifer, Hayner, Armored 1, Armored 2, Final Xem)
+- [x] Find a way to track munny pouches as a quantity.
+- [x] Make Armored Xemnas 1 and Armored Xemnas 2 assets from Televo set.

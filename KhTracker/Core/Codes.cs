@@ -954,6 +954,7 @@ namespace KhTracker
             {"Seifer (4)", "Seifer"},
             {"Sephiroth", "Sephiroth"},
             {"Setzer", "Setzer"},
+            {"Shadow Stalker", "ShadowStalker"},
             {"Shan-Yu", "ShanYu"},
             {"Storm Rider", "StormRider"},
             {"Terra", "LingeringWill"},

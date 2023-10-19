@@ -174,6 +174,7 @@
     <local:GridLabelledImage x:Key="Min-GridCloud"   Source="Images\Progression\Min\olympus_coliseum\Cloud.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridFinalXemnas"   Source="Images\Progression\Min\the_world_that_never_was\FinalXemnas.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridHayner"   Source="Images\Progression\Min\simulated_twilight_town\Hayner.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridHercules"   Source="Images\Progression\Min\olympus_coliseum\Hercules.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridLeon"   Source="Images\Progression\Min\olympus_coliseum\Leon.png"           GridAllowed="True"                             x:Shared="False"/>
 	<local:GridLabelledImage x:Key="Min-GridMunnyPouch1"   Source="Images\Grid\simple\MunnyPouch1.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridMunnyPouch2"   Source="Images\Grid\simple\MunnyPouch2.png"            GridAllowed="True"                             x:Shared="False"/>

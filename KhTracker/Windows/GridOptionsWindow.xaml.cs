@@ -95,14 +95,14 @@ namespace KhTracker
                             SubCategoryName = "Bingo Logic",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GlobalBingoLogic") ? _gridWindow.gridSettings["GlobalBingoLogic"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (Properties.Settings.Default.GridWindowBingoLogic).ToString() },
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Battleship Logic" ,
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GlobalBattleshipLogic") ? _gridWindow.gridSettings["GlobalBattleshipLogic"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (Properties.Settings.Default.GridWindowBattleshipLogic).ToString() },
                             }
                         }
                     }
@@ -127,7 +127,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "The Experiment", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Experiment") ? _gridWindow.gridSettings["Experiment"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper1") ? _gridWindow.gridSettings["GrimReaper1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper") ? _gridWindow.gridSettings["GrimReaper"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Groundshaker", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Groundshaker") ? _gridWindow.gridSettings["Groundshaker"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Groundshaker", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GroundShaker") ? _gridWindow.gridSettings["GroundShaker"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hades", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Hades") ? _gridWindow.gridSettings["Hades"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hayner", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridHayner") ? _gridWindow.gridSettings["GridHayner"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Hercules", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridHercules") ? _gridWindow.gridSettings["GridHercules"] : true).ToString() },
@@ -266,14 +266,14 @@ namespace KhTracker
                             SubCategoryName = "Reports",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Max Reports", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumReports") ? _gridWindow.gridNumericalSettings["NumReports"] : 11).ToString() },
+                                new Option { Type = OptionType.TextBox, Description = "Max Reports", DefaultValue = (Properties.Settings.Default.GridWindowNumReports).ToString() },
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Visit Unlocks",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = (_gridWindow.gridNumericalSettings.ContainsKey("NumUnlocks") ? _gridWindow.gridNumericalSettings["NumUnlocks"] : 13).ToString() },
+                                new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = (Properties.Settings.Default.GridWindowNumUnlocks).ToString() },
                             }
                         },
                         new SubCategory {
@@ -299,8 +299,8 @@ namespace KhTracker
             // update grid size
             newNumRows = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Rows")?.DefaultValue);
             newNumColumns = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Columns")?.DefaultValue);
-            _gridWindow.gridNumericalSettings["NumRows"] = newNumRows;
-            _gridWindow.gridNumericalSettings["NumColumns"] = newNumColumns;
+            Properties.Settings.Default.GridWindowRows = newNumRows;
+            Properties.Settings.Default.GridWindowColumns = newNumColumns;
             _gridWindow.numRows = newNumRows;
             _gridWindow.numColumns = newNumColumns;
         }
@@ -309,7 +309,7 @@ namespace KhTracker
         {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
-            _gridWindow.gridSettings["GlobalBingoLogic"] = includeGlobalBingoLogic;
+            Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
         }
 
         private void UpdateProgression(Data data)
@@ -386,8 +386,12 @@ namespace KhTracker
             foreach (var boss in bosses.Options)
             {
                 bool includeBoss = bool.Parse(bosses?.Options.FirstOrDefault(o => o.Description == boss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description]))
+                if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description])) 
                     _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
+                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                else
+                    throw new ArgumentException("This boss doesn't exist.");
             }
         }
 
@@ -398,7 +402,6 @@ namespace KhTracker
             foreach (var superboss in superbosses.Options)
             {
                 bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
-                Console.WriteLine($"{superboss.Description} is {includeBoss}");
                 if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
                     _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
             }
@@ -478,7 +481,7 @@ namespace KhTracker
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 _gridWindow.gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
-            _gridWindow.gridNumericalSettings["NumReports"] = numReports;
+            Properties.Settings.Default.GridWindowNumReports = numReports;
         }
 
         private void UpdateUnlocks()
@@ -490,7 +493,7 @@ namespace KhTracker
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
-            _gridWindow.gridNumericalSettings["NumUnlocks"] = numUnlocks;
+            Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
         }
 
         private void UpdateMiscellaneous()
@@ -515,8 +518,6 @@ namespace KhTracker
         private void UpdateGridSettings(Data data)
         {
 
-            _gridWindow.grid.Children.Clear();
-
             UpdateGridSize();
             UpdateGlobalSettings();
             UpdateProgression(data);
@@ -533,39 +534,25 @@ namespace KhTracker
             UpdateMiscellaneous();
 
             // write the updated settings
-            SaveSettings(_gridWindow.gridSettings);
-            SaveNumericalSettings(_gridWindow.gridNumericalSettings);
-
-            // generate new grid
-            
-            _gridWindow.GenerateGrid(newNumRows, newNumColumns);
-        }
-
-        private void SaveSettings(Dictionary<string, bool> settings)
-        {
-            string serializedSettings = JsonSerializer.Serialize(settings);
-
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GridTracker");
-            key.SetValue("Settings", serializedSettings);
-            key.Close();
-        }
-
-        private void SaveNumericalSettings(Dictionary<string, int> numericalSettings)
-        {
-            string serializedSettings = JsonSerializer.Serialize(numericalSettings);
-
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\GridTrackerNumbers");
-            key.SetValue("Settings", serializedSettings);
-            key.Close();
+            Properties.Settings.Default.GridSettings = JsonSerializer.Serialize<Dictionary<string, bool>>(_gridWindow.gridSettings);
         }
 
         private void SavePresetJson(object sender, RoutedEventArgs e)
         {
+            UpdateGridSettings(_data);
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "JSON Files (*.json)|*.json";
             if (saveFileDialog.ShowDialog() == true)
             {
-                var jsonString = JsonSerializer.Serialize(_gridWindow.gridSettings);
+                var combinedSettings = new
+                {
+                    numRows = _gridWindow.numRows,
+                    numColumns = _gridWindow.numColumns,
+                    seedName = _gridWindow.seedName,
+                    gridSettings = _gridWindow.gridSettings
+                };
+
+                var jsonString = JsonSerializer.Serialize(combinedSettings);
                 System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
             }
         }
@@ -574,6 +561,9 @@ namespace KhTracker
         {
             this.Close();
             UpdateGridSettings(_data);
+            // generate new grid
+            _gridWindow.grid.Children.Clear();
+            _gridWindow.GenerateGrid(newNumRows, newNumColumns);
         }
     }
 
