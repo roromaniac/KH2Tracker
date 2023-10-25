@@ -244,13 +244,13 @@
       <Value Profile="(Default)">#FF696969</Value>
     </Setting>
     <Setting Name="MarkedColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF008000</Value>
+      <Value Profile="(Default)">#FF006400</Value>
     </Setting>
     <Setting Name="AnnotatedColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFA500</Value>
     </Setting>
     <Setting Name="BingoColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF800080</Value>
+      <Value Profile="(Default)">#FF6700CC</Value>
     </Setting>
     <Setting Name="GridWindowBingoLogic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

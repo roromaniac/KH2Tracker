@@ -107,8 +107,8 @@
     <local:GridLabelledImage x:Key="Min-HadesCup"		    Source="Images\Checks\Min\Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-OlympusStone"		Source="Images\Checks\Min\Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-UnknownDisk"		Source="Images\Checks\Min\Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-MunnyPouch1"	    Source="Images\Checks\Min\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-MunnyPouch2"	    Source="Images\Checks\Min\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-MunnyPouch1"	    Source="Images\Checks\Min\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-MunnyPouch2"	    Source="Images\Checks\Min\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
     <!-- Grid Tracker-->
     <local:GridLabelledImage x:Key="Min-GridFire1"	        Source="Images\Grid\simple\Fire1.png"           GridAllowed="True"                        x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-GridFire2"	        Source="Images\Grid\simple\Fire2.png"           GridAllowed="True"                        x:Shared="false"/>

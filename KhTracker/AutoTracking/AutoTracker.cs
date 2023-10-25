@@ -617,7 +617,8 @@ namespace KhTracker
                 DeathCheck();
                 LevelsProgressionBonus();
                 DrivesProgressionBonus();
-                AddProgressionPoints(0);
+                if (LevelValue.Text == "1" && StrengthValue.Text == "0" && MagicValue.Text == "0")
+                    AddProgressionPoints(0);
 
                 if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossList.Count() > 0)
                 {
@@ -738,6 +739,24 @@ namespace KhTracker
                 case "MarluxiaData_LingeringWill":
                     checks = new string[] { "MarluxiaData", "LingeringWill" };
                     break;
+                case "FF Team 1":
+                    checks = new string[] { "Leon", "Yuffie" };
+                    break;
+                case "FF Team 2":
+                    checks = new string[] { "Leon (3)", "Yuffie (3)" };
+                    break;
+                case "FF Team 3":
+                    checks = new string[] { "Yuffie (1)", "Tifa" };
+                    break;
+                case "FF Team 4":
+                    checks = new string[] { "Cloud", "Tifa" };
+                    break;
+                case "FF Team 5":
+                    checks = new string[] { "Leon (1)", "Cloud (1)" };
+                    break;
+                case "FF Team 6":
+                    checks = new string[] { "Leon (2)", "Cloud (2)", "Yuffie (2)", "Tifa (2)" };
+                    break;
                 default:
                     break;
             }
@@ -746,19 +765,27 @@ namespace KhTracker
             {
 
                 // boss enemy check
-                if (data.codes.bossNameConversion.ContainsValue(checks[i]))
-                {
-                    var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
-                    Console.WriteLine(originalBoss);
-                    checks[i] = data.BossList.ContainsKey(originalBoss) ? data.codes.bossNameConversion[data.BossList[originalBoss]] : checks[i];
-                    Console.WriteLine(data.codes.bossNameConversion[data.BossList[originalBoss]]);
-                }
-                else if (data.codes.bossNameConversion.ContainsKey(checks[i]))
-                {
-                    Console.WriteLine(checks[i]);
-                    checks[i] = data.BossList.ContainsKey(checks[i]) ? data.codes.bossNameConversion[data.BossList[checks[i]]] : checks[i];
-                    Console.WriteLine(checks[i]);
-                }
+
+                if (data.BossRandoFound)
+
+                    if (data.codes.bossNameConversion.ContainsKey(checks[i]))
+                    {
+                        Console.WriteLine(checks[i]);
+                        if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                        Console.WriteLine(checks[i]);
+                    }
+                    else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
+                    {
+                        var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
+                        Console.WriteLine(originalBoss);
+                        if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
+                        Console.WriteLine(checks[i]);
+                    }
+                    // handle Pete b/c he's weird and shows up twice
+                    if (checks[i] == "OCPete")
+                        checks[i] = "DCPete";      
             }
 
             // TO DO: Check if the grid tracker is open.
@@ -1269,6 +1296,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Fight1");
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1279,6 +1307,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Fight2");
                                 return;
                             }
                             break;
@@ -1291,6 +1320,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 5);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Transport");
                                 return;
                             }
                             break;
@@ -2156,9 +2186,9 @@ namespace KhTracker
                                 boss = "Seifer";
                             break;
                         case 4:
-                            //Tutorial Seifer shouldn't give points
-                            //if (wID1 == 77) // Tutorial 4 - Fighting
-                            //    boss = "Seifer (1)";
+                            //Tutorial Seifer shouldn't give points: handled in GetBossPoints
+                            if (wID1 == 77) // Tutorial 4 - Fighting
+                                boss = "Seifer (1)";
                             if (wID1 == 78) // Seifer I Battle
                                 boss = "Seifer (2)";
                             break;
@@ -2552,7 +2582,9 @@ namespace KhTracker
             string bossType;
             string replacementType;
 
-            if (boss == "Twin Lords")
+            if (boss == "Seifer (1)")
+                return;
+            else if (boss == "Twin Lords")
             {
                 if (data.BossRandoFound)
                 {
