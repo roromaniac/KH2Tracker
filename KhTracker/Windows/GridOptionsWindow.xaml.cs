@@ -115,6 +115,8 @@ namespace KhTracker
                             SubCategoryName = "Bosses",
                             Options = new List<Option>
                             {
+                                new Option { Type = OptionType.CheckBox, Description = "Armor Xemnas I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridArmoredXemnas1") ? _gridWindow.gridSettings["GridArmoredXemnas1"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Armor Xemnas II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridArmoredXemnas2") ? _gridWindow.gridSettings["GridArmoredXemnas2"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Axel I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Axel1") ? _gridWindow.gridSettings["Axel1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Axel II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Axel") ? _gridWindow.gridSettings["Axel"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Barbossa", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Barbossa") ? _gridWindow.gridSettings["Barbossa"] : true).ToString() },
@@ -125,6 +127,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Dark Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DarkThorn") ? _gridWindow.gridSettings["DarkThorn"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Demyx", DefaultValue = (_gridWindow.gridSettings.ContainsKey("HBDemyx") ? _gridWindow.gridSettings["HBDemyx"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "The Experiment", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Experiment") ? _gridWindow.gridSettings["Experiment"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Final Xemnas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridFinalXemnas") ? _gridWindow.gridSettings["GridFinalXemnas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper I", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper1") ? _gridWindow.gridSettings["GrimReaper1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Grim Reaper II", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GrimReaper") ? _gridWindow.gridSettings["GrimReaper"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Groundshaker", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GroundShaker") ? _gridWindow.gridSettings["GroundShaker"] : true).ToString() },
@@ -167,6 +170,7 @@ namespace KhTracker
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Axel (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataAxel") ? _gridWindow.gridSettings["GridDataAxel"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Demyx (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataDemyx") ? _gridWindow.gridSettings["GridDataDemyx"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Final Xemnas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataFinalXemnas") ? _gridWindow.gridSettings["GridDataFinalXemnas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Larxene", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLarxene") ? _gridWindow.gridSettings["GridLarxene"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Larxene (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLarxeneData") ? _gridWindow.gridSettings["GridLarxeneData"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Lexaeus", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLexaeus") ? _gridWindow.gridSettings["GridLexaeus"] : true).ToString() },
@@ -515,7 +519,7 @@ namespace KhTracker
             _gridWindow.gridSettings["Grid7Drives"] = includeAllMaxDrives;
         }
 
-        private void UpdateGridSettings(Data data)
+        private void UpdateGridSettings(Data data, bool overwrite=true)
         {
 
             UpdateGridSize();
@@ -534,7 +538,8 @@ namespace KhTracker
             UpdateMiscellaneous();
 
             // write the updated settings
-            Properties.Settings.Default.GridSettings = JsonSerializer.Serialize<Dictionary<string, bool>>(_gridWindow.gridSettings);
+            if (overwrite)
+                Properties.Settings.Default.GridSettings = JsonSerializer.Serialize<Dictionary<string, bool>>(_gridWindow.gridSettings);
         }
 
         private void SavePresetJson(object sender, RoutedEventArgs e)

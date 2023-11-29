@@ -164,6 +164,7 @@
     <local:GridLabelledImage x:Key="Min-GridSephiroth"        Source="Images\Progression\Min\hollow_bastion\sephiroth.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXaldin"   Source="Images\Progression\Min\beast's_castle\xaldin_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-GridDataFinalXemnas"       Source="Images\Progression\Min\the_world_that_never_was\finalxemnas_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridDataXigbar"   Source="Images\Progression\Min\land_of_dragons\xigbar_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridVexen"            Source="Images\Progression\Min\halloween_town\vexen.png"          GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridVexenData"        Source="Images\Progression\Min\halloween_town\vexen_griddata.png"           GridAllowed="True"                             x:Shared="False"/>

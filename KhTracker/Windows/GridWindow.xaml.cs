@@ -274,6 +274,7 @@ namespace KhTracker
 
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
+            grid.Children.Clear();
             GenerateGrid(numRows, numColumns);
         }
 

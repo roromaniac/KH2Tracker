@@ -10,3 +10,5 @@
 - [ ] Allow for user to customize specific Drive Level 
 	- [ ] Allow for the Max Level check available.
 	- [ ] Allow for levelling all forms to level X.
+- [ ] Remove both the data version and normal version of org members in bunter should they exist.
+	- [ ] May require tracking if bunter logic is on though as they are technically separate bosses.
