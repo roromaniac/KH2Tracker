@@ -1453,7 +1453,11 @@ namespace KhTracker
                                 string bossRepl = bosspair["new"].ToString();
 
                                 data.BossList.Add(bossOrig, bossRepl);
+
                             }
+
+                            bunterCheck(bosses);
+                            
                         }
                         catch
                         {
@@ -3095,6 +3099,67 @@ namespace KhTracker
                 default:
                     return key;
             }
+        }
+
+        private void bunterCheck(List<Dictionary<string, object>> bosses)
+        {
+            // update valid bosses for grid tracker
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridWindow.gridSettings[data.codes.bossNameConversion[bossOrig]] = false;
+                    else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] = false;
+                }
+            }
+
+            // TO DO: Create intermediate variables for readability.
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+                Console.WriteLine(bossOrig);
+                Console.WriteLine(bossRepl);
+
+
+                // disable bosses not in the values of the boss enemy dict
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridWindow.gridSettings[data.codes.bossNameConversion[bossOrig]] = gridWindow.gridSettings[data.codes.bossNameConversion[bossOrig]] ? true : data.BossList.ContainsValue(bossOrig);
+                    else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] = gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] ? true : data.BossList.ContainsValue(bossOrig);
+                }
+
+            }
+
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                // disable bosses in data arenas
+                if (bossOrig.Contains("(Data)"))
+                {
+                    if (((bossOrig == "Axel (Data)") && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace("(Data)", "II")])) || (data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" (Data)", "")])))
+                    {
+                        if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                        {
+                            gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+            }
+            // regenerate the grid tracker to accommodate appropriate bosses
+            gridWindow.grid.Children.Clear();
+            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
         }
 
         private string ConvertKeyNumber(string num, bool type)
