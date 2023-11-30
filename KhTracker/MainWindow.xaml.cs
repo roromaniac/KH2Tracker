@@ -624,6 +624,9 @@ namespace KhTracker
                     fs.Write(title, 0, title.Length);
                 }
             }
+            else
+                System.Windows.Forms.MessageBox.Show("No path set. To set a path, go to\nOptions > Load Hints > Set OpenKH Path.");
+
         }
 
         /// 
