@@ -17,6 +17,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using KhTracker.Hotkeys;
+using System.Text;
 
 namespace KhTracker
 {
@@ -271,6 +272,10 @@ namespace KhTracker
             //message box
             Disconnect.IsChecked = Properties.Settings.Default.Disconnect;
             DisconnectToggle(Disconnect.IsChecked);
+
+            //autoloadhints
+            AutoLoadHintsOption.IsChecked = Properties.Settings.Default.AutoLoadHints;
+            AutoLoadHintsToggle(AutoLoadHintsOption.IsChecked);
 
             #endregion
 
@@ -578,6 +583,47 @@ namespace KhTracker
         {
             Width = 570;
             Height = 880;
+        }
+
+        //openkh path set
+        private void SetOpenKHPath(object sender, RoutedEventArgs e)
+        {
+            SetOpenKHPath();
+        }
+        public void SetOpenKHPath()
+        {
+            //create settings folder if it somehow doesn't exist
+            if (!Directory.Exists("./KhTrackerSettings"))
+            {
+                Directory.CreateDirectory("./KhTrackerSettings");
+            }
+            //create an txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/OpenKHPath.txt"))
+            {
+                //Console.WriteLine("File not found, making");
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes("C:\\Replace this path with the location of your\\openkh mod manager");
+                    fs.Write(title, 0, title.Length);
+                }
+            }
+
+            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                DefaultExt = ".exe",
+                Filter = "exe files (*.exe)|*.exe"
+            };
+            System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes(System.IO.Directory.GetParent(openFileDialog.FileName).ToString());
+                    fs.Write(title, 0, title.Length);
+                }
+            }
         }
 
         /// 

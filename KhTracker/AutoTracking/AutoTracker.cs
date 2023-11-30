@@ -437,6 +437,11 @@ namespace KhTracker
 
         private void FinishSetup(bool PCSX2, Int32 Now, Int32 Save, Int32 Sys3, Int32 Bt10, Int32 BtlEnd, Int32 Slot1, Int32 NextSlot)
         {
+            //Done here cause Valor and Final get detected otherwise
+            //only run if true
+            if (AutoLoadHintsOption.IsChecked)
+                AutoLoadHints();
+
             #region Add ICs
             importantChecks = new List<ImportantCheck>();
             importantChecks.Add(highJump = new Ability(memory, Save + 0x25CE, ADDRESS_OFFSET, 93, "HighJump"));

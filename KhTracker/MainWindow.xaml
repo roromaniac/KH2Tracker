@@ -33,6 +33,9 @@
                     <MenuItem Header="Load JSmartee Hints (*.hints)" 	Click="LoadHints"/>
                     <MenuItem Header="Load Shan Hints (*.pnach)" 		Click="ParseSeed"/>
                     <MenuItem Header="Load KH2Randomizer Seed (*.zip)" 	Click="OpenKHSeed"/>
+                    <Separator/>
+                    <MenuItem Header="Auto-Load Hints (openkh *.hints)" Click="AutoLoadHintsToggle" x:Name="AutoLoadHintsOption" IsCheckable="True" IsChecked="False"/>
+                    <MenuItem Header="Set OpenKH Path (OpenKh.Tools.ModsManager.exe)" Click="SetOpenKHPath"/>
                 </MenuItem>
                 <Separator/>
                 <MenuItem Header="Start Auto-Tracking" Click="InitTracker" x:Name="TrackToggle"/>
