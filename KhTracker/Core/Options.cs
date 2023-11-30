@@ -2053,7 +2053,8 @@ namespace KhTracker
             }
         }
 
-        //Same as OpenKHSeed but uses a directory of an extracted folder
+        //Essentually same as OpenKHSeed but uses the OpenKH Mod Manager directory
+        //instead of extracting a zip
         //Initially meant for use with AutoLoadHints
         private void OpenKHSeedExtracted(string dir)
         {
