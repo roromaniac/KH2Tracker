@@ -49,6 +49,7 @@ namespace KhTracker
             //hotkey stuff
             HotkeysManager.SetupSystemHook();
             LoadHotkeyBind();
+            ProgScrollHotkey();
 
             //start auto-connect if enabled
             AutoConnectOption.IsChecked = Properties.Settings.Default.AutoConnect;
@@ -527,6 +528,21 @@ namespace KhTracker
             if (data.WorldsData.ContainsKey(button.Name) && data.WorldsData[button.Name].value != null)
             {
                 ManualWorldValue(data.WorldsData[button.Name].value, e.Delta);
+            }
+        }
+
+        private void GoAScrollUp()
+        {
+            if (data.WorldsData.ContainsKey("GoA") && data.WorldsData["GoA"].value != null)
+            {
+                ManualWorldValue(data.WorldsData["GoA"].value, 1);
+            }
+        }
+        private void GoAScrollDown()
+        {
+            if (data.WorldsData.ContainsKey("GoA") && data.WorldsData["GoA"].value != null)
+            {
+                ManualWorldValue(data.WorldsData["GoA"].value, -1);
             }
         }
 

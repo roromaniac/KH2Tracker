@@ -194,6 +194,7 @@ namespace KhTracker
         //Hotkey stuff
         public bool usedHotkey = false;
         public GlobalHotkey startAutoTracker1, startAutoTracker2;
+        public GlobalHotkey scrollUp1, scrollUp2, scrollDown1, scrollDown2;
     }
 
     public class WorldData

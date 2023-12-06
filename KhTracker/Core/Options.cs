@@ -3040,6 +3040,18 @@ namespace KhTracker
             }
         }
 
+        private void ProgScrollHotkey()
+        {
+            data.scrollUp1 = new GlobalHotkey(ModifierKeys.Control, Key.Up, GoAScrollUp);
+            HotkeysManager.AddHotkey(data.scrollUp1);
+            data.scrollDown1 = new GlobalHotkey(ModifierKeys.Control, Key.Down, GoAScrollDown);
+            HotkeysManager.AddHotkey(data.scrollDown1);
+            data.scrollUp2 = new GlobalHotkey(ModifierKeys.None, Key.PageUp, GoAScrollUp);
+            HotkeysManager.AddHotkey(data.scrollUp2);
+            data.scrollDown2 = new GlobalHotkey(ModifierKeys.None, Key.PageDown, GoAScrollDown);
+            HotkeysManager.AddHotkey(data.scrollDown2);
+        }
+
         private string UpperCaseFirst(string word)
         {
             if (word.Length <= 0)
