@@ -297,6 +297,20 @@ namespace KhTracker
             }
             catch { }
 
+            //BossHomeHinting TEST
+            try
+            {
+                var points = JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["checkValue"].ToString());
+
+                foreach (var point in points)
+                {
+                    if (point.Key == "boss_final" && point.Value == 269)
+                    {
+                        data.BossHomeHinting = true;
+                    }
+                }
+            }
+            catch { }
 
             //set if world value should change color on completion
             if (reveals.Contains("complete"))
@@ -312,7 +326,7 @@ namespace KhTracker
             }
 
             //reports reveal bosses
-            if(reveals.Contains("bossreports"))
+            if (reveals.Contains("bossreports"))
             {
                 //ReportsToggle(true);
                 TMP_bossReports = true;
@@ -398,7 +412,7 @@ namespace KhTracker
             {
                 //get random based on seed hash
                 Random rand = new Random(data.convertedSeedHash);
-                
+
                 //setup lists
                 List<string> keyList = new List<string>(data.BossList.Keys);
 
@@ -411,7 +425,7 @@ namespace KhTracker
                         keyList.Remove(key);
                         continue;
                     }
-                        
+
                     if (!data.enabledWorlds.Contains(Codes.bossLocations[key]))
                         keyList.Remove(key);
                     else if (key.Contains("(Data)"))
@@ -419,12 +433,12 @@ namespace KhTracker
                         //special case for some datas. we normally don't want
                         //to hint datas unless the world the normally are in is off
                         // (only applies for datas where the data fight is in a different world)
-                        switch(key)
+                        switch (key)
                         {
                             case "Axel (Data)":
                                 if (data.enabledWorlds.Contains("STT"))
                                     keyList.Remove(key);
-                            break;
+                                break;
                             case "Saix (Data)":
                             case "Luxord (Data)":
                             case "Roxas (Data)":
@@ -479,7 +493,7 @@ namespace KhTracker
 
                         worldhint = tmp_origBoss + " is unchanged";
                     }
-                    else 
+                    else
                     {
                         string tmp_origBoss = boss;
                         string tmp_replBoss = data.BossList[boss];
@@ -504,7 +518,7 @@ namespace KhTracker
 
                         worldhint = tmp_origBoss + " became " + tmp_replBoss;
                     }
-                    
+
                     int dummyvalue = -12345; //use this for boss reports i guess
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
                     var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
@@ -512,7 +526,7 @@ namespace KhTracker
 
                     keyList.Remove(boss);
                 }
-                
+
                 data.hintsLoaded = true;
             }
             else if (hintableItems.Contains("report"))
@@ -672,7 +686,7 @@ namespace KhTracker
                 }
                 foreach (var item in world.Value)
                 {
-                    
+
                     string itemName = item;
                     string itemType = Codes.FindItemType(item);
 
@@ -754,7 +768,7 @@ namespace KhTracker
 
         public void UpdatePointScore(int points)
         {
-            if (data.mode != Mode.PointsHints && !data.ScoreMode)
+            if (data.mode != Mode.PointsHints && !data.ScoreMode || data.BossHomeHinting)
                 return;
 
             int WorldBlue = 0;
@@ -1193,7 +1207,7 @@ namespace KhTracker
                         data.reportLocations.Add(location);
                         continue;
                     }
-                        
+
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
                     location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
@@ -1501,8 +1515,8 @@ namespace KhTracker
             data.TotalProgressionPoints += points;
             data.calulating = true;
 
-            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || 
-                data.ProgressionCurrentHint == data.HintCosts.Count || data.ProgressionCurrentHint == data.HintRevealOrder.Count)
+            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 ||
+                data.ProgressionCurrentHint == data.HintCosts.Count || data.ProgressionCurrentHint == data.WorldsEnabled)
             {
                 //update points anyway
                 //ProgressionCollectedValue.Visibility = Visibility.Hidden;
@@ -1514,7 +1528,7 @@ namespace KhTracker
             }
 
             //loop in the event that one progression point rewards a lot
-            while (data.ProgressionPoints >= data.HintCosts[data.ProgressionCurrentHint] && data.ProgressionCurrentHint < data.HintCosts.Count && data.ProgressionCurrentHint < data.HintRevealOrder.Count)
+            while (data.ProgressionPoints >= data.HintCosts[data.ProgressionCurrentHint] && data.ProgressionCurrentHint < data.HintCosts.Count && data.ProgressionCurrentHint < data.WorldsEnabled)
             {
                 #region More Debug
                 //Console.WriteLine("Current Progression Hint = " + data.ProgressionCurrentHint);
@@ -1528,13 +1542,13 @@ namespace KhTracker
                 //reveal hints/world
                 worldsRevealed.Add(ProgressionReveal(data.ProgressionCurrentHint - 1));
 
-                if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count || 
-                    data.ProgressionCurrentHint == data.HintRevealOrder.Count) //revealed last hint
+                if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
+                    data.ProgressionCurrentHint == data.WorldsEnabled) //revealed last hint
                     break;
             }
 
-            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count || 
-                data.ProgressionCurrentHint == data.HintRevealOrder.Count)
+            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
+                data.ProgressionCurrentHint == data.WorldsEnabled)
             {
                 //update points
                 //ProgressionCollectedValue.Visibility = Visibility.Hidden;
@@ -1727,7 +1741,7 @@ namespace KhTracker
                         temp = (data.OC_ProgressionValues[prog - 1] > 0 ? data.WorldCompleteBonus : 0);
                     else if (data.OC_ProgressionValues[prog - 1] > 0)
                         data.WorldsData[worldName].worldGrid.WorldCompleteProgressionBonus();
-                    return data.OC_ProgressionValues[prog - 1] + temp;
+                    return data.OC_ProgressionValues[prog - 1] + temp + 17;
                 case "Agrabah":
                     if (data.WorldsData[worldName].complete && data.WorldsData[worldName].hintedProgression)
                         temp = (data.AG_ProgressionValues[prog - 1] > 0 ? data.WorldCompleteBonus : 0);
@@ -1799,9 +1813,15 @@ namespace KhTracker
                     return 0;
             }
         }
-    
+
         public void ProgressionBossHints()
         {
+            if (data.BossHomeHinting)
+            {
+                BossHomeHinting();
+                return;
+            }
+
             data.progBossInformation.Clear();
             int TempCost = data.HintCosts[0];
 
@@ -1876,10 +1896,10 @@ namespace KhTracker
                         tmp_origBoss = "Pete";
                     }
 
-                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") || 
+                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") ||
                         tmp_origBoss.EndsWith(" (3)") || tmp_origBoss.EndsWith(" (4)"))
                     {
-                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length-4);
+                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length - 4);
                     }
 
                     BossA = tmp_origBoss;
@@ -1936,5 +1956,85 @@ namespace KhTracker
             data.HintCosts.Add(TempCost);
         }
 
+        //TEST
+        public void BossHomeHinting()
+        {
+            data.progBossInformation.Clear();
+            int TempCost = data.HintCosts[0];
+            data.HintCosts = new List<int>();
+            data.WorldsEnabled = data.BossList.Count + 1;
+
+            for (int i = 0; i < data.WorldsEnabled; ++i)
+            {
+                data.HintCosts.Add(TempCost);
+            }
+            data.HintCosts.Add(TempCost);
+
+            for (int i = 0; i < data.STT_ProgressionValues.Count; ++i)
+            {
+                data.STT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.TT_ProgressionValues.Count; ++i)
+            {
+                data.TT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HB_ProgressionValues.Count; ++i)
+            {
+                data.HB_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.CoR_ProgressionValues.Count; ++i)
+            {
+                data.CoR_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.BC_ProgressionValues.Count; ++i)
+            {
+                data.BC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.OC_ProgressionValues.Count; ++i)
+            {
+                data.OC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.AG_ProgressionValues.Count; ++i)
+            {
+                data.AG_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.LoD_ProgressionValues.Count; ++i)
+            {
+                data.LoD_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HAW_ProgressionValues.Count; ++i)
+            {
+                data.HAW_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.PL_ProgressionValues.Count; ++i)
+            {
+                data.PL_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.AT_ProgressionValues.Count; ++i)
+            {
+                data.AT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.DC_ProgressionValues.Count; ++i)
+            {
+                data.DC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HT_ProgressionValues.Count; ++i)
+            {
+                data.HT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.PR_ProgressionValues.Count; ++i)
+            {
+                data.PR_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.SP_ProgressionValues.Count; ++i)
+            {
+                data.SP_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.TWTNW_ProgressionValues.Count; ++i)
+            {
+                data.TWTNW_ProgressionValues[i] = 0;
+            }
+
+        }
     }
 }
