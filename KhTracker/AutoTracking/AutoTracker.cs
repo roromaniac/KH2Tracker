@@ -178,7 +178,6 @@ namespace KhTracker
             if (checkedVer == 0) //no game was detected.
             {
                 //return and keep trying to connect if auto-connect is enabled.
-                if (AutoConnectOption.IsChecked) 
                 {
                     return;
                 }
@@ -190,7 +189,6 @@ namespace KhTracker
                     checkTimer.Stop();
                     checkTimer = null;
                     memory = null;
-                    if(data.usedHotkey)
                     {
                         MessageBox.Show("No game detected.\nPlease start KH2 before using Hotkey.");
                         data.usedHotkey = false;
@@ -202,14 +200,13 @@ namespace KhTracker
             else
             {
                 //if for some reason user starts playing an different version
-                if (data.lastVersion !=0 && data.lastVersion != checkedVer)
                 {
                     //reset tracker
                     OnReset(null, null);
                 }
 
                 //stop timer for checking game version
-                if (checkTimer!= null)
+                if (checkTimer != null)
                 {
                     checkTimer.Stop();
                     checkTimer = null;
@@ -466,7 +463,6 @@ namespace KhTracker
                 importantChecks.Add(finalReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 4, Save + 0x33D6, "FinalReal"));
                 importantChecks.Add(valorReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 1, Save + 0x32F6, Save + 0x06B2, "ValorReal"));
             }
-               
             int fireCount = fire != null ? fire.Level : 0;
             int blizzardCount = blizzard != null ? blizzard.Level : 0;
             int thunderCount = thunder != null ? thunder.Level : 0;
@@ -545,7 +541,6 @@ namespace KhTracker
             stats = new Stats(memory, ADDRESS_OFFSET, Save + 0x24FE, Slot1 + 0x188, Save + 0x3524, Save + 0x3700, NextSlot);
             rewards = new Rewards(memory, ADDRESS_OFFSET, Bt10);
 
-            if(!data.altFinalTracking)
                 checkEveryCheck = new CheckEveryCheck(memory, ADDRESS_OFFSET, Save, Sys3, Bt10, world, stats, rewards, valor, wisdom, limit, master, final);
 
 
@@ -591,14 +586,12 @@ namespace KhTracker
             try
             {
                 //current world
-                world.UpdateMemory();        
 
                 //test displaying sora's correct stats for PR 1st forsed fight
                 if (world.worldNum == 16 && world.roomNumber == 1 && (world.eventID1 == 0x33 || world.eventID1 == 0x34))
                     correctSlot = 2; //move forward this number of slots
 
                 //updates
-                stats.UpdateMemory(correctSlot);        
                 HighlightWorld(world);
                 UpdateStatValues();
                 UpdateWorldProgress(world, false, null);
@@ -609,7 +602,7 @@ namespace KhTracker
                 if (LevelValue.Text == "1" && StrengthValue.Text == "0" && MagicValue.Text == "0")
                     AddProgressionPoints(0);
 
-                if (data.mode == Mode.PointsHints || data.ScoreMode)
+                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting)
                 {
                     UpdatePointScore(0); //update score
                     GetBoss(world, false, null);
@@ -682,7 +675,7 @@ namespace KhTracker
                     data.usedHotkey = false;
                 }
 
-                if(AutoSaveProgress2Option.IsChecked)
+                if (AutoSaveProgress2Option.IsChecked)
                 {
                     if (!Directory.Exists("KhTrackerAutoSaves"))
                     {
@@ -859,7 +852,6 @@ namespace KhTracker
                 }
             }
         }
-        
         private void TrackQuantities()
         {
             while (fire.Level > fireLevel)
@@ -1144,7 +1136,6 @@ namespace KhTracker
                                     newProg = 11; //data demyx + sephi finished
                                 else if (curProg != 11) //just sephi
                                     newProg = 9;
-                                if(data.UsingProgressionHints)
                                 {
                                     UpdateProgressionPoints(wName, 9);
                                     updateProgressionPoints = false;
@@ -1590,19 +1581,6 @@ namespace KhTracker
 
                             }
                             break;
-                            //if (wID1 == 67 && wCom == 1) // Lingering Will finish
-                            //{
-                            //    if (curProg == 7)
-                            //        newProg = 9; //marluxia + LW finished
-                            //    else if (curProg != 9)
-                            //        newProg = 8;
-                            //    if (data.UsingProgressionHints)
-                            //    {
-                            //        UpdateProgressionPoints(wName, 9);
-                            //        updateProgressionPoints = false;
-                            //    }
-                            //}
-                            //break;
                         default:
                             updateProgression = false;
                             break;
@@ -2053,10 +2031,6 @@ namespace KhTracker
                             break;
                         case 4:
                             //Tutorial Seifer shouldn't give points
-                            //if (wID1 == 77) // Tutorial 4 - Fighting
-                            //    boss = "Seifer (1)";
-                            if (wID1 == 78) // Seifer I Battle
-                                boss = "Seifer (2)";
                             break;
                         case 5:
                             if (wID1 == 84) // Hayner Struggle
@@ -2414,9 +2388,6 @@ namespace KhTracker
                     break;
             }
 
-            //return if bo boss beaten found
-
-
             if (!usingSave)
             {
                 //if the boss was found and beaten then set flag
@@ -2429,11 +2400,9 @@ namespace KhTracker
 
             if (boss == "None")
                 return;
-                
             App.logger?.Record("Beaten Boss: " + boss);
 
             //get points for boss kills
-            GetBossPoints(boss);
 
             //add to log
             data.bossEventLog.Add(eventTuple);
@@ -2663,7 +2632,6 @@ namespace KhTracker
                         case "boss_datas":
                         case "boss_sephi":
                         case "boss_terra":
-                        //case "boss_final":
                             bonuspoints += data.PointsDatanew[bossType];
                             break;
                         case "boss_other":
@@ -2679,7 +2647,6 @@ namespace KhTracker
                     points = data.PointsDatanew[bossType];
 
                     //logging
-                    if(data.BossRandoFound)
                     {
                         App.logger?.Record("No replacement found? Boss: " + boss);
                     }
@@ -2725,11 +2692,9 @@ namespace KhTracker
             BindAbility(DodgeRoll, "Obtained", dodgeRoll);
             BindAbility(AerialDodge, "Obtained", aerialDodge);
             BindAbility(Glide, "Obtained", glide);
-            
             BindForm(WisdomM, "Obtained", wisdom);
             BindForm(LimitM, "Obtained", limit);
             BindForm(MasterM, "Obtained", master);
-            
             if (data.altFinalTracking)
             {
                 BindForm(ValorM, "Obtained", valorReal);
