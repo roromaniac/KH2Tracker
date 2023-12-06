@@ -1741,7 +1741,7 @@ namespace KhTracker
                         temp = (data.OC_ProgressionValues[prog - 1] > 0 ? data.WorldCompleteBonus : 0);
                     else if (data.OC_ProgressionValues[prog - 1] > 0)
                         data.WorldsData[worldName].worldGrid.WorldCompleteProgressionBonus();
-                    return data.OC_ProgressionValues[prog - 1] + temp + 17;
+                    return data.OC_ProgressionValues[prog - 1] + temp;
                 case "Agrabah":
                     if (data.WorldsData[worldName].complete && data.WorldsData[worldName].hintedProgression)
                         temp = (data.AG_ProgressionValues[prog - 1] > 0 ? data.WorldCompleteBonus : 0);
