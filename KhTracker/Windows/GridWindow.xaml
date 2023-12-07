@@ -1,0 +1,55 @@
+﻿<Window x:Class="KhTracker.GridWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KhTracker"
+        mc:Ignorable="d"
+        ResizeMode="CanResize"
+        Title="Bingo Window"
+        Height="510" Width="500"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_SizeChanged"
+        Closing="GridWindow_Closing"
+        MinHeight="100" MinWidth="100" Background="#303030">
+
+    <Window.Resources>
+        <Style x:Key="ColorToggleButton" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top" Background="White">
+
+            <MenuItem Header="Options" Focusable="False">
+                <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
+                <MenuItem Header="Grid Checks" Click="Grid_Options" />
+                <MenuItem Header="Pick Colors" Click="PickColor_Click" />
+            </MenuItem>
+            <MenuItem Header="Seeds" Focusable="False">
+                <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
+                <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
+            </MenuItem>
+            <MenuItem x:Name="Seedname" Focusable="False"/>
+            <Separator/>
+
+        </Menu>
+
+        <Grid x:Name="DynamicGrid">
+        </Grid>
+        
+    </DockPanel>
+    
+</Window>

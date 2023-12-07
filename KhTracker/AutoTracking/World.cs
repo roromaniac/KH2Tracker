@@ -104,7 +104,7 @@ namespace KhTracker
             {
                 tempWorld = "";
             }
-            
+
             // Handle AS fights
             if (tempWorld == "HollowBastion")
             {

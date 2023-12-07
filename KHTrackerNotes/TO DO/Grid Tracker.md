@@ -1,0 +1,19 @@
+- [x] Make buttons change color on click.
+	- [x] Ensure that buttons don't share a color flag.
+- [x] Create Options Window that has game settings, and selected checks based on groups (i.e. boss fight, magic, movement, etc.)
+- [x] Allow Grid Tracker to have a variable amount of rows and columns.
+- [x] Save the current options upon close.
+- [x] Create an OPTIONAL folder that can hold settings for the grid tracker.
+- [ ] Create a feature porting list that ports intricate features that were nice from the old tracker to the new one.
+- [ ] Create a pop out window that confirms that the win condition has been met.
+- [ ] Create a pop out window that talks about dimension changes if the user input is faulty.
+- [ ] Create a setting that allows user to either clear the card upon close, or keep the previous card intact (in the event of a crash of some sort).
+- [x] Create a way to associate each button with a specific check. That way, when that check gets autotracker, we can invoke a button press during AutoTrack.cs.
+- [x] Allow for anything that can be tracked to be on the card
+- [x] Update Annotated colors in real time.
+- [x] Clean up code conversion between "Color" type and "Brushes" type.
+	- [x] Maybe create a helper function that returns the converted type instead of constantly creating a new SolidColorBrush every time.
+- [x] Add ability to track drive levels.
+- [x] Add non-progression bosses to the grid check pool (Riku, Sark, Vivi, Seifer, Hayner, Armored 1, Armored 2, Final Xem)
+- [x] Find a way to track munny pouches as a quantity.
+- [x] Make Armored Xemnas 1 and Armored Xemnas 2 assets from Televo set.

@@ -116,7 +116,7 @@ namespace KhTracker
         }
 
         // this is not working
-        public event PropertyChangedEventHandler PropertyChanged = delegate {};
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         public void OnPropertyChanged(string info)
         {
@@ -141,7 +141,7 @@ namespace KhTracker
             previousLevels[0] = previousLevels[1];
             previousLevels[1] = previousLevels[2];
             previousLevels[2] = Level;
-            
+
             if (Level != levelData[1])
                 Level = levelData[1];
 
@@ -175,7 +175,7 @@ namespace KhTracker
 
         public void SetMaxLevelCheck(int lvl)
         {
-            switch(lvl)
+            switch (lvl)
             {
                 case 50:
                     currentCheckArray = levelChecks50;

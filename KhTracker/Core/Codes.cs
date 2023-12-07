@@ -90,7 +90,7 @@ namespace KhTracker
 
         public static string GetHintTextName(string worldName)
         {
-            switch(worldName)
+            switch (worldName)
             {
                 case "SimulatedTwilightTown":
                     return "Simulated Twilight Town";
@@ -122,7 +122,7 @@ namespace KhTracker
                     return "Sora's Heart";
                 case "PuzzSynth":
                     return "Creations";
-                default: 
+                default:
                     return worldName;
             }
         }
@@ -887,6 +887,105 @@ namespace KhTracker
             {"Seifer (4)"},
         };
 
+        public Dictionary<string, string> bossNameConversion = new Dictionary<string, string>()
+        {
+            {"Armor Xemnas I", "ArmoredXemnas1"},
+            {"Armor Xemnas II", "ArmoredXemnas2"},
+            {"Axel (Data)", "DataAxel"},
+            {"Axel I", "Axel1"},
+            {"Axel II", "Axel"},
+            {"Barbossa", "Barbossa"},
+            {"Blizzard Lord", "BlizzardLord"},
+            {"Blizzard Lord (Cups)", "BlizzardLord"},
+            {"Boat Pete", "BoatPete"},
+            {"Cerberus", "Cerberus"},
+            {"Cerberus (Cups)", "Cerberus"},
+            {"Cloud", "Cloud"},
+            {"Cloud (1)", "Cloud"},
+            {"Cloud (2)", "Cloud"},
+            {"Dark Thorn", "DarkThorn"},
+            {"Demyx", "HBDemyx"},
+            {"Demyx (Data)", "DataDemyx"},
+            {"Final Xemnas", "FinalXemnas"},
+            {"Final Xemnas (Data)", "DataFinalXemnas"},
+            {"Grim Reaper I", "GrimReaper1"},
+            {"Grim Reaper II", "GrimReaper"},
+            {"Groundshaker", "GroundShaker"},
+            {"Hades", "Hades"},
+            {"Hades Cups", "Hades"},
+            {"Hades Escape", "Hades"},
+            {"Hades I", "Hades"},
+            {"Hades II", "Hades"},
+            {"Hades II (1)", "Hades"},
+            {"Hayner", "Hayner"},
+            {"Hercules", "Hercules"},
+            {"Hostile Program", "HostileProgram"},
+            {"Hydra", "Hydra"},
+            {"Jafar", "GenieJafar"},
+            {"Larxene", "Larxene"},
+            {"Larxene (Data)", "LarxeneData"},
+            //{"Lingering Will", "LingeringWill"},
+            {"Leon", "Leon"},
+            {"Leon (1)", "Leon"},
+            {"Leon (2)", "Leon"},
+            {"Leon (3)", "Leon"},
+            {"Lexaeus", "Lexaeus"},
+            {"Lexaeus (Data)", "LexaeusData"},
+            {"Luxord", "Luxord"},
+            {"Luxord (Data)", "DataLuxord"},
+            {"Marluxia", "Marluxia"},
+            {"Marluxia (Data)", "MarluxiaData"},
+            {"MCP", "MCP"},
+            {"Oogie Boogie", "OogieBoogie"},
+            {"Past Pete", "OldPete"},
+            {"Pete Cups", "DCPete"},
+            {"Pete OC II", "OCPete"},
+            {"Pete TR", "DCPete"},
+            {"Prison Keeper", "PrisonKeeper"},
+            {"Riku", "Riku"},
+            {"Roxas", "Roxas"},
+            {"Roxas (Data)", "DataRoxas"},
+            {"Saix", "Saix"},
+            {"Saix (Data)", "DataSaix"},
+            {"Sark", "Sark"},
+            {"Scar", "Scar"},
+            {"Seifer", "Seifer"},
+            {"Seifer (1)", "Seifer"},
+            {"Seifer (2)", "Seifer"},
+            {"Seifer (3)", "Seifer"},
+            {"Seifer (4)", "Seifer"},
+            {"Sephiroth", "Sephiroth"},
+            {"Setzer", "Setzer"},
+            {"Shadow Stalker", "ShadowStalker"},
+            {"Shan-Yu", "ShanYu"},
+            {"Storm Rider", "StormRider"},
+            {"Terra", "LingeringWill"},
+            {"The Beast", "Beast"},
+            {"The Experiment", "Experiment"},
+            {"Thresholder", "Thresholder"},
+            {"Tifa", "Tifa"},
+            {"Tifa (1)", "Tifa"},
+            {"Tifa (2)", "Tifa"},
+            {"Twilight Thorn", "TwilightThorn"},
+            {"Vexen", "Vexen"},
+            {"Vexen (Data)", "VexenData"},
+            {"Vivi", "Vivi"},
+            {"Volcano Lord", "VolcanoLord"},
+            {"Volcano Lord (Cups)", "VolcanoLord"},
+            {"Xaldin", "Xaldin"},
+            {"Xaldin (Data)", "DataXaldin"},
+            {"Xemnas", "Xemnas1"},
+            {"Xemnas (Data)", "DataXemnas"},
+            {"Xigbar", "Xigbar"},
+            {"Xigbar (Data)", "DataXigbar"},
+            {"Yuffie", "Yuffie"},
+            {"Yuffie (1)", "Yuffie"},
+            {"Yuffie (2)", "Yuffie"},
+            {"Yuffie (3)", "Yuffie"},
+            {"Zexion", "Zexion"},
+            {"Zexion (Data)", "ZexionData"},
+        };
+
         public static Dictionary<string, string> getColors = new Dictionary<string, string>()
         {
             {"Sora's Heart", "Pink" },
@@ -1316,7 +1415,7 @@ namespace KhTracker
         "11CE05D6",
 
         "11CE0AB6" }; //data demyx
-        
+
         string[] LandOfDragons = new string[] {
         "11CDF72A",
         "11CDF736",
@@ -1348,7 +1447,7 @@ namespace KhTracker
         "11CE06EA",
 
         "11CE0AE6" }; //data xigbar
-        
+
         string[] BeastsCastle = new string[] {
         "11CDFBF2",
         "11CDFBFE",
@@ -1524,7 +1623,7 @@ namespace KhTracker
         "11CE0792",
         "11CE079E",
         "11CE08B2",
-        
+
         "11CE0A4A", //AS lexaeus
         "11CE0A86"}; //data lexaeus
 

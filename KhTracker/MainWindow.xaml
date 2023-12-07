@@ -12,7 +12,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         AllowDrop="True" Drop="DropFile"
-        Title="KH2 Tracker 2.34" Height="880" Width="570" Background="#303030"
+        Title="KH2 Tracker 2.34 Roro Edit" Height="880" Width="570" Background="#303030"
         MinHeight="440" MinWidth="300">
 
     <Window.Resources>
@@ -49,6 +49,7 @@
                 <MenuItem Header="Reset Tracker" 	 Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	 Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Drag and Drop" 	 Click="DragDropToggle" x:Name="DragAndDropOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Grid Tracker"  Click="GridWindow_Open"/>
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>

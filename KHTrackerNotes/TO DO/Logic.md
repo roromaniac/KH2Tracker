@@ -1,0 +1,14 @@
+- [ ] Port Battleship Function to GridTracker
+- [x] Ensure the grid tracker has access to boss enemy replacements once seed is loaded in (should they exist).
+	- [x] Make Boss Enemy functional.
+- [ ] Ensure hints get displayed on the grid tracker if they exist.
+- [x] Bingo Implementation
+	- [x] Include functionality for non-square boards.
+	- [x] Undo a bingo if a button becomes unclicked. 
+- [ ] Ensure that tracking still happens if the world is off in the main window.
+- [x] Store Grid Tracker settings just like DA does.
+- [ ] Allow for user to customize specific Drive Level 
+	- [ ] Allow for the Max Level check available.
+	- [ ] Allow for levelling all forms to level X.
+- [ ] Remove both the data version and normal version of org members in bunter should they exist.
+	- [ ] May require tracking if bunter logic is on though as they are technically separate bosses.

@@ -312,7 +312,7 @@ namespace KhTracker
             }
 
             //reports reveal bosses
-            if(reveals.Contains("bossreports"))
+            if (reveals.Contains("bossreports"))
             {
                 //ReportsToggle(true);
                 TMP_bossReports = true;
@@ -398,7 +398,7 @@ namespace KhTracker
             {
                 //get random based on seed hash
                 Random rand = new Random(data.convertedSeedHash);
-                
+
                 //setup lists
                 List<string> keyList = new List<string>(data.BossList.Keys);
 
@@ -411,7 +411,7 @@ namespace KhTracker
                         keyList.Remove(key);
                         continue;
                     }
-                        
+
                     if (!data.enabledWorlds.Contains(Codes.bossLocations[key]))
                         keyList.Remove(key);
                     else if (key.Contains("(Data)"))
@@ -419,12 +419,12 @@ namespace KhTracker
                         //special case for some datas. we normally don't want
                         //to hint datas unless the world the normally are in is off
                         // (only applies for datas where the data fight is in a different world)
-                        switch(key)
+                        switch (key)
                         {
                             case "Axel (Data)":
                                 if (data.enabledWorlds.Contains("STT"))
                                     keyList.Remove(key);
-                            break;
+                                break;
                             case "Saix (Data)":
                             case "Luxord (Data)":
                             case "Roxas (Data)":
@@ -479,7 +479,7 @@ namespace KhTracker
 
                         worldhint = tmp_origBoss + " is unchanged";
                     }
-                    else 
+                    else
                     {
                         string tmp_origBoss = boss;
                         string tmp_replBoss = data.BossList[boss];
@@ -504,7 +504,7 @@ namespace KhTracker
 
                         worldhint = tmp_origBoss + " became " + tmp_replBoss;
                     }
-                    
+
                     int dummyvalue = -12345; //use this for boss reports i guess
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
                     var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
@@ -512,7 +512,7 @@ namespace KhTracker
 
                     keyList.Remove(boss);
                 }
-                
+
                 data.hintsLoaded = true;
             }
             else if (hintableItems.Contains("report"))
@@ -672,7 +672,7 @@ namespace KhTracker
                 }
                 foreach (var item in world.Value)
                 {
-                    
+
                     string itemName = item;
                     string itemType = Codes.FindItemType(item);
 
@@ -1006,6 +1006,7 @@ namespace KhTracker
                 if (key == "GoA")
                     continue;
 
+                Console.WriteLine(key);
                 data.WorldsData[key].worldGrid.WorldComplete();
                 SetWorldValue(data.WorldsData[key].value, 0);
             }
@@ -1501,7 +1502,7 @@ namespace KhTracker
             data.TotalProgressionPoints += points;
             data.calulating = true;
 
-            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || 
+            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 ||
                 data.ProgressionCurrentHint == data.HintCosts.Count || data.ProgressionCurrentHint == data.WorldsEnabled)
             {
                 //update points anyway
@@ -1528,12 +1529,12 @@ namespace KhTracker
                 //reveal hints/world
                 worldsRevealed.Add(ProgressionReveal(data.ProgressionCurrentHint - 1));
 
-                if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count || 
+                if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
                     data.ProgressionCurrentHint == data.WorldsEnabled) //revealed last hint
                     break;
             }
 
-            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count || 
+            if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
                 data.ProgressionCurrentHint == data.WorldsEnabled)
             {
                 //update points
@@ -1799,7 +1800,7 @@ namespace KhTracker
                     return 0;
             }
         }
-    
+
         public void ProgressionBossHints()
         {
             data.progBossInformation.Clear();

@@ -349,7 +349,7 @@ namespace KhTracker
                 Cross10.Visibility = Visibility.Visible;
                 Cross11.Visibility = Visibility.Visible;
 
-                if(ExtraChecksOption.IsChecked)
+                if (ExtraChecksOption.IsChecked)
                     VisitsRow.Height = new GridLength(1, GridUnitType.Star);
                 else
                     VisitsRow.Height = new GridLength(0, GridUnitType.Star);

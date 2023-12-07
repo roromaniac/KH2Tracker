@@ -29,7 +29,7 @@ namespace KhTracker
         {
             InitializeComponent();
         }
-        
+
         //Adorner subclass specific to this control
         private class ItemAdorner : Adorner
         {
@@ -109,7 +109,7 @@ namespace KhTracker
                 adLayer.Remove(myAdornment);
             }
         }
- 
+
         public void Report_Hover(object sender, RoutedEventArgs e)
         {
             Data data = MainWindow.data;
@@ -119,12 +119,12 @@ namespace KhTracker
 
             if (data.UsingProgressionHints)
             {
-                if(data.progressionType == "Reports" && data.mode != Mode.PointsHints)
+                if (data.progressionType == "Reports" && data.mode != Mode.PointsHints)
                 {
                     return;
                 }
             }
-               
+
             int index = (int)GetValue(Grid.ColumnProperty);
             var repStr1 = data.reportInformation[index].Item1;
             var repStr2 = data.reportInformation[index].Item2;

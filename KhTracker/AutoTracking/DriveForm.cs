@@ -80,7 +80,7 @@ namespace KhTracker
                 byte[] genieData = memory.ReadMemory(genieFixAddr + ADDRESS_OFFSET, 1);
                 genieFix = Convert.ToBoolean(genieData[0]);
             }
-            
+
             return null;
         }
     }

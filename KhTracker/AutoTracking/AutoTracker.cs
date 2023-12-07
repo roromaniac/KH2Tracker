@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -67,7 +68,7 @@ namespace KhTracker
         private ImportantCheck extraItem;
 
         private TornPage pages;
-
+        public GridWindow gridWindow;
         private World world;
         private Stats stats;
         private Rewards rewards;
@@ -82,6 +83,7 @@ namespace KhTracker
         private int reflectLevel;
         private int magnetLevel;
         private int tornPageCount;
+        private int munnyPouchCount;
 
         private CheckEveryCheck checkEveryCheck;
 
@@ -96,6 +98,16 @@ namespace KhTracker
         private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         private int[] tempPre = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         #endregion
+
+        public Dictionary<string, bool> maxDriveLevelFound = new Dictionary<string, bool>()
+        {
+            {"Drive2", false},
+            {"Drive3", false},
+            {"Drive4", false},
+            {"Drive5", false},
+            {"Drive6", false},
+            {"Drive7", false}
+        };
 
         ///
         /// Autotracking Startup
@@ -145,7 +157,6 @@ namespace KhTracker
             {
                 return;
             }
-
             InitTracker();
         }
 
@@ -178,7 +189,7 @@ namespace KhTracker
             if (checkedVer == 0) //no game was detected.
             {
                 //return and keep trying to connect if auto-connect is enabled.
-                if (AutoConnectOption.IsChecked) 
+                if (AutoConnectOption.IsChecked)
                 {
                     return;
                 }
@@ -202,14 +213,14 @@ namespace KhTracker
             else
             {
                 //if for some reason user starts playing an different version
-                if (data.lastVersion !=0 && data.lastVersion != checkedVer)
+                if (data.lastVersion != 0 && data.lastVersion != checkedVer)
                 {
                     //reset tracker
                     OnReset(null, null);
                 }
 
                 //stop timer for checking game version
-                if (checkTimer!= null)
+                if (checkTimer != null)
                 {
                     checkTimer.Stop();
                     checkTimer = null;
@@ -545,7 +556,7 @@ namespace KhTracker
             stats = new Stats(memory, ADDRESS_OFFSET, Save + 0x24FE, Slot1 + 0x188, Save + 0x3524, Save + 0x3700, NextSlot);
             rewards = new Rewards(memory, ADDRESS_OFFSET, Bt10);
 
-            if(!data.altFinalTracking)
+            if (!data.altFinalTracking)
                 checkEveryCheck = new CheckEveryCheck(memory, ADDRESS_OFFSET, Save, Sys3, Bt10, world, stats, rewards, valor, wisdom, limit, master, final);
 
 
@@ -591,14 +602,14 @@ namespace KhTracker
             try
             {
                 //current world
-                world.UpdateMemory();        
+                world.UpdateMemory();
 
                 //test displaying sora's correct stats for PR 1st forsed fight
                 if (world.worldNum == 16 && world.roomNumber == 1 && (world.eventID1 == 0x33 || world.eventID1 == 0x34))
                     correctSlot = 2; //move forward this number of slots
 
                 //updates
-                stats.UpdateMemory(correctSlot);        
+                stats.UpdateMemory(correctSlot);
                 HighlightWorld(world);
                 UpdateStatValues();
                 UpdateWorldProgress(world, false, null);
@@ -606,8 +617,10 @@ namespace KhTracker
                 DeathCheck();
                 LevelsProgressionBonus();
                 DrivesProgressionBonus();
+                if (LevelValue.Text == "1" && StrengthValue.Text == "0" && MagicValue.Text == "0")
+                    AddProgressionPoints(0);
 
-                if (data.mode == Mode.PointsHints || data.ScoreMode)
+                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossList.Count() > 0)
                 {
                     UpdatePointScore(0); //update score
                     GetBoss(world, false, null);
@@ -680,7 +693,7 @@ namespace KhTracker
                     data.usedHotkey = false;
                 }
 
-                if(AutoSaveProgress2Option.IsChecked)
+                if (AutoSaveProgress2Option.IsChecked)
                 {
                     if (!Directory.Exists("KhTrackerAutoSaves"))
                     {
@@ -703,6 +716,105 @@ namespace KhTracker
 
             UpdateCollectedItems();
             DetermineItemLocations();
+        }
+
+        private void UpdateGridTracker(string gridCheckName)
+        {
+
+            Console.WriteLine($"CURRENT CHECK FOUND: {gridCheckName}");
+
+            // deal with doubled up progression icons
+            string[] checks = { gridCheckName };
+            switch (gridCheckName)
+            {
+                case "Lords":
+                    checks = new string[] { "BlizzardLord", "VolcanoLord" };
+                    break;
+                case "SephiDemyx":
+                    checks = new string[] { "Sephiroth", "DataDemyx" };
+                    break;
+                case "Marluxia_LingeringWill":
+                    checks = new string[] { "Marluxia", "LingeringWill" };
+                    break;
+                case "MarluxiaData_LingeringWill":
+                    checks = new string[] { "MarluxiaData", "LingeringWill" };
+                    break;
+                case "FF Team 1":
+                    checks = new string[] { "Leon", "Yuffie" };
+                    break;
+                case "FF Team 2":
+                    checks = new string[] { "Leon (3)", "Yuffie (3)" };
+                    break;
+                case "FF Team 3":
+                    checks = new string[] { "Yuffie (1)", "Tifa" };
+                    break;
+                case "FF Team 4":
+                    checks = new string[] { "Cloud", "Tifa" };
+                    break;
+                case "FF Team 5":
+                    checks = new string[] { "Leon (1)", "Cloud (1)" };
+                    break;
+                case "FF Team 6":
+                    checks = new string[] { "Leon (2)", "Cloud (2)", "Yuffie (2)", "Tifa (2)" };
+                    break;
+                default:
+                    break;
+            }
+
+            for (int i = 0; i < checks.Count(); i++)
+            {
+
+                // boss enemy check
+
+                if (data.BossRandoFound)
+
+                    if (data.codes.bossNameConversion.ContainsKey(checks[i]))
+                    {
+                        Console.WriteLine(checks[i]);
+                        if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                        Console.WriteLine(checks[i]);
+                    }
+                    else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
+                    {
+                        var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
+                        Console.WriteLine(originalBoss);
+                        if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
+                        Console.WriteLine(checks[i]);
+                    }
+                    // handle Pete b/c he's weird and shows up twice
+                    if (checks[i] == "OCPete")
+                        checks[i] = "DCPete";      
+            }
+
+            // TO DO: Check if the grid tracker is open.
+            // If it is... Check if any of the buttons have the collected grid check.
+            foreach (string checkName in checks) {
+
+                for (int row = 0; row < gridWindow.numRows; row++)
+                {
+                    for (int col = 0; col < gridWindow.numColumns; col++)
+                    {
+                        // check if the original OR grid adjusted check key name is on the grid
+                        string[] checkNames = { checkName, "Grid" + checkName };
+                        if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
+                        {
+                            // invoke the appropriate button if the check matches
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                if (!(bool)gridWindow.buttons[row, col].IsChecked)
+                                {
+                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                    gridWindow.buttons[row, col].IsChecked = true;
+                                    gridWindow.buttons[row, col].RaiseEvent(args);
+                                }
+
+                            });
+                        }
+                    }
+                }
+            }
         }
 
         private bool CheckSynthPuzzle()
@@ -854,10 +966,11 @@ namespace KhTracker
                 {
                     world.Add_Item(item);
                     App.logger?.Record(item.Name + " tracked");
+                    UpdateGridTracker(item.Name);
                 }
             }
         }
-        
+
         private void TrackQuantities()
         {
             while (fire.Level > fireLevel)
@@ -1142,7 +1255,7 @@ namespace KhTracker
                                     newProg = 11; //data demyx + sephi finished
                                 else if (curProg != 11) //just sephi
                                     newProg = 9;
-                                if(data.UsingProgressionHints)
+                                if (data.UsingProgressionHints)
                                 {
                                     UpdateProgressionPoints(wName, 9);
                                     updateProgressionPoints = false;
@@ -1183,6 +1296,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Fight1");
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1193,6 +1307,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Fight2");
                                 return;
                             }
                             break;
@@ -1205,6 +1320,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 5);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("Transport");
                                 return;
                             }
                             break;
@@ -1588,19 +1704,19 @@ namespace KhTracker
 
                             }
                             break;
-                            //if (wID1 == 67 && wCom == 1) // Lingering Will finish
-                            //{
-                            //    if (curProg == 7)
-                            //        newProg = 9; //marluxia + LW finished
-                            //    else if (curProg != 9)
-                            //        newProg = 8;
-                            //    if (data.UsingProgressionHints)
-                            //    {
-                            //        UpdateProgressionPoints(wName, 9);
-                            //        updateProgressionPoints = false;
-                            //    }
-                            //}
-                            //break;
+                        //if (wID1 == 67 && wCom == 1) // Lingering Will finish
+                        //{
+                        //    if (curProg == 7)
+                        //        newProg = 9; //marluxia + LW finished
+                        //    else if (curProg != 9)
+                        //        newProg = 8;
+                        //    if (data.UsingProgressionHints)
+                        //    {
+                        //        UpdateProgressionPoints(wName, 9);
+                        //        updateProgressionPoints = false;
+                        //    }
+                        //}
+                        //break;
                         default:
                             updateProgression = false;
                             break;
@@ -1759,6 +1875,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("SimulatedTwilightTown", 8);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataRoxas");
                                 return;
                             }
                             break;
@@ -1773,6 +1890,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("LandofDragons", 9);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataXigbar");
                                 return;
                             }
                             break;
@@ -1787,6 +1905,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PortRoyal", 10);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataLuxord");
                                 return;
                             }
                             break;
@@ -1801,6 +1920,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PrideLands", 7);
                                 data.eventLog.Add(eventTuple);
+                                UpdateGridTracker("DataSaix");
                                 return;
                             }
                             break;
@@ -1837,6 +1957,13 @@ namespace KhTracker
                     return;
                 default: //return if any other world
                     return;
+            }
+
+            // mark progression icon on grid tracker if it exists
+            if (newProg < 99)
+            {
+                var progressCheck = data.ProgressKeys[wName][newProg];
+                UpdateGridTracker(progressCheck);
             }
 
             //progression wasn't updated
@@ -1981,6 +2108,13 @@ namespace KhTracker
                             newChecks.Add(check);
                         }
                     }
+                    else if (check.Name.StartsWith("MunnyPouch"))
+                    {
+                        munnyPouchCount++;
+                        check.Name = $"MunnyPouch{munnyPouchCount}";
+                        collectedChecks.Add(check);
+                        newChecks.Add(check);
+                    }
                     else
                     {
                         collectedChecks.Add(check);
@@ -1988,6 +2122,8 @@ namespace KhTracker
                     }
                 }
             }
+            if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
+                UpdateGridTracker("Grid7Drives");
             TrackQuantities();
         }
 
@@ -2050,9 +2186,9 @@ namespace KhTracker
                                 boss = "Seifer";
                             break;
                         case 4:
-                            //Tutorial Seifer shouldn't give points
-                            //if (wID1 == 77) // Tutorial 4 - Fighting
-                            //    boss = "Seifer (1)";
+                            //Tutorial Seifer shouldn't give points: handled in GetBossPoints
+                            if (wID1 == 77) // Tutorial 4 - Fighting
+                                boss = "Seifer (1)";
                             if (wID1 == 78) // Seifer I Battle
                                 boss = "Seifer (2)";
                             break;
@@ -2414,7 +2550,6 @@ namespace KhTracker
 
             //return if bo boss beaten found
 
-
             if (!usingSave)
             {
                 //if the boss was found and beaten then set flag
@@ -2427,7 +2562,7 @@ namespace KhTracker
 
             if (boss == "None")
                 return;
-                
+
             App.logger?.Record("Beaten Boss: " + boss);
 
             //get points for boss kills
@@ -2435,6 +2570,10 @@ namespace KhTracker
 
             //add to log
             data.bossEventLog.Add(eventTuple);
+
+            //update grid tracker
+            UpdateGridTracker(boss);
+
         }
 
         private void GetBossPoints(string boss)
@@ -2443,7 +2582,9 @@ namespace KhTracker
             string bossType;
             string replacementType;
 
-            if (boss == "Twin Lords")
+            if (boss == "Seifer (1)")
+                return;
+            else if (boss == "Twin Lords")
             {
                 if (data.BossRandoFound)
                 {
@@ -2661,7 +2802,7 @@ namespace KhTracker
                         case "boss_datas":
                         case "boss_sephi":
                         case "boss_terra":
-                        //case "boss_final":
+                            //case "boss_final":
                             bonuspoints += data.PointsDatanew[bossType];
                             break;
                         case "boss_other":
@@ -2677,7 +2818,7 @@ namespace KhTracker
                     points = data.PointsDatanew[bossType];
 
                     //logging
-                    if(data.BossRandoFound)
+                    if (data.BossRandoFound)
                     {
                         App.logger?.Record("No replacement found? Boss: " + boss);
                     }
@@ -2857,6 +2998,13 @@ namespace KhTracker
                     drives = "Drive2";
                     break;
             }
+
+            if (!maxDriveLevelFound[drives])
+            {
+                UpdateGridTracker(drives);
+                maxDriveLevelFound[drives] = true;
+            }
+
 
             DriveFormsCap.SetResourceReference(ContentProperty, Prog + drives);
         }

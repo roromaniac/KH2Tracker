@@ -1,0 +1,120 @@
+﻿<Window x:Class="KhTracker.GridOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:KhTracker"
+        SizeToContent="WidthAndHeight" MinWidth="400" MinHeight="500"
+        ResizeMode="CanResize"
+        Title="Grid Tracker Options" 
+        WindowStartupLocation="CenterScreen"
+        Background="LightBlue">
+
+    <Window.Resources>
+        <!-- Theme styling -->
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="CheckBackground" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" To="LightSkyBlue" Duration="0"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <!-- Check Box Rectangle -->
+                            <Border x:Name="CheckBackground" Width="25" Height="25" CornerRadius="2" Background="Gray" BorderBrush="White" BorderThickness="2"/>
+
+                            <!-- Check Mark -->
+                            <Path x:Name="CheckMark" Width="17" Height="17" Stretch="Fill" Stroke="White" StrokeThickness="2"
+                              Data="M 3,1 L 7,7 M 7,7 L 12,0" Visibility="Collapsed"/>
+
+                            <!-- Content -->
+                            <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Expander}">
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="Background" Value="#F4F4F4"/>
+        </Style>
+        
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Orange"/>
+        </Style>
+        
+        <!-- Template Selector -->
+        <local:OptionTemplateSelector x:Key="OptionSelector">
+            <local:OptionTemplateSelector.CheckBoxTemplate>
+                <DataTemplate>
+                    <CheckBox Content="{Binding Description}" IsChecked="{Binding DefaultValue}" />
+                </DataTemplate>
+            </local:OptionTemplateSelector.CheckBoxTemplate>
+
+            <local:OptionTemplateSelector.TextBoxTemplate>
+                <DataTemplate>
+                    <StackPanel HorizontalAlignment="Center">
+                        <Label Content="{Binding Description}" />
+                        <TextBox Text="{Binding DefaultValue}" Width="200" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+            </local:OptionTemplateSelector.TextBoxTemplate>
+        </local:OptionTemplateSelector>
+    </Window.Resources>
+
+    <StackPanel>
+        <!-- Wrapping StackPanel -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <ItemsControl ItemsSource="{Binding}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Expander Header="{Binding CategoryName}">
+                            <ItemsControl ItemsSource="{Binding SubCategories}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Expander Header="{Binding SubCategoryName}" Padding="10,0,0,0">
+                                            <ItemsControl ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource OptionSelector}">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <UniformGrid Columns="4"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                            </ItemsControl>
+                                        </Expander>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Expander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+        <!-- Submit Button -->
+        <StackPanel Margin="10">
+            <!-- DockPanel for buttons -->
+            <DockPanel LastChildFill="False">
+                <!-- Save These Settings Button -->
+                <Button Content="Save These Settings" HorizontalAlignment="Left" Click="SavePresetJson"/>
+                <!-- Submit Button -->
+                <Button Content="Generate Card with These Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
+            </DockPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

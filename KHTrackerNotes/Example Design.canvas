@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"type":"text","text":"KH2Tracker","id":"8a8b24d58fb379d2","x":-250,"y":-1240,"width":140,"height":60,"color":"2"},
+		{"type":"text","text":"Grid Tracker","id":"23279a9ded0c05c6","x":-80,"y":-1146,"width":140,"height":60,"color":"5"},
+		{"type":"text","text":"All Image Assets","id":"ced2e245debb05f6","x":80,"y":-1040,"width":170,"height":60},
+		{"type":"text","text":"Options Settings","id":"95b4c4f4174e373f","x":80,"y":-940,"width":180,"height":60},
+		{"type":"file","file":"TO DO/Options Window.md","id":"cc8aec682a74bd4b","x":300,"y":-1520,"width":760,"height":260},
+		{"type":"file","file":"TO DO/Grid Tracker.md","id":"824043bc440777a4","x":300,"y":-1230,"width":760,"height":690},
+		{"type":"file","file":"TO DO/KH2Tracker.md","id":"2089e3ead6ef4db3","x":300,"y":-1680,"width":760,"height":120},
+		{"type":"file","file":"TO DO/Assets.md","id":"5d4a1a4446feacd8","x":300,"y":-160,"width":760,"height":200},
+		{"type":"file","file":"TO DO/Logic.md","id":"b8adc9c16f937c22","x":300,"y":-520,"width":760,"height":340}
+	],
+	"edges":[
+		{"id":"a89bae2692fecb7a","fromNode":"8a8b24d58fb379d2","fromSide":"bottom","toNode":"23279a9ded0c05c6","toSide":"left"},
+		{"id":"d1ae789e290f304f","fromNode":"8a8b24d58fb379d2","fromSide":"bottom","toNode":"ced2e245debb05f6","toSide":"left"},
+		{"id":"dd0c02dad8f4987f","fromNode":"23279a9ded0c05c6","fromSide":"bottom","toNode":"ced2e245debb05f6","toSide":"left"},
+		{"id":"48fde97cbbcef940","fromNode":"23279a9ded0c05c6","fromSide":"bottom","toNode":"95b4c4f4174e373f","toSide":"left"}
+	]
+}
