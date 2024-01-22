@@ -3900,7 +3900,8 @@ namespace KhTracker
             //if exactly 1 hint file is found, we're good to load it
             if (hintFiles.Length == 1)
                 OpenKHSeedExtracted(System.IO.Directory.GetParent(hintFiles[0]).ToString());
-            else
+            //if more than 1 hint file is found, don't load anything
+            else if (hintFiles.Length > 1)
                 MessageBox.Show("Multiple hint files detected. Aborting Auto-Loading Hints.\nManually load your seed and/or re-check your Mod Manager.");
         }
     }
