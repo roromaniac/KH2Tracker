@@ -1,4 +1,0 @@
-/* Prevent nested checkboxes from being crossed out when parent checkbox is clicked */
-.task-list-item > input[type="checkbox"] {
-    pointer-events: none;
-}
