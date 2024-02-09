@@ -165,13 +165,17 @@ namespace KhTracker
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
 
+            int synthCount = 0;
             foreach (var report in reportKeys)
             {
                 var world = Codes.ConvertSeedGenName(reports[report.ToString()]["World"].ToString());
                 if (data.UsingProgressionHints && !data.puzzlesOn && world.ToString().Contains("PuzzSynth"))
+                {
+                    synthCount++;
                     continue;
+                }
                 var count = reports[report.ToString()]["Count"].ToString();
-                var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                var location = Codes.ConvertSeedGenName(reports[(report - synthCount).ToString()]["Location"].ToString());
                 data.reportInformation.Add(new Tuple<string, string, int>(null, world, int.Parse(count)));
                 data.reportLocations.Add(location);
             }
