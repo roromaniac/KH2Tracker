@@ -2894,18 +2894,13 @@ namespace KhTracker
 
         private void GetBossPoints(string boss)
         {
-            //Temp case for now
-            if (boss == "Seifer")
-                return;
+            int points;
+            string bossType;
+            string replacementType;
 
-            if (boss == "Twin Lords")
             if (boss == "Seifer (1)")
                 return;
             else if (boss == "Twin Lords")
-            if (boss == "Twin Lords")
-            else if (boss == "Twin Lords")
-            else if (boss == "Twin Lords")
-            if (boss == "Twin Lords")
             {
                 if (data.BossRandoFound)
                 {
