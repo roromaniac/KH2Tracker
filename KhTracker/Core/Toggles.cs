@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Data;
 using System.IO;
+using System.Text;
 
 namespace KhTracker
 {
@@ -1451,6 +1452,74 @@ namespace KhTracker
             Disconnect.IsChecked = toggle;
 
             //logic
+        }
+
+
+        //AutoLoadHints
+        private void AutoLoadHintsToggle(object sender, RoutedEventArgs e)
+        {
+            AutoLoadHintsToggle(AutoLoadHintsOption.IsChecked);
+        }
+        private void AutoLoadHintsToggle(bool toggle)
+        {
+            Properties.Settings.Default.AutoLoadHints = toggle;
+            AutoLoadHintsOption.IsChecked = toggle;
+
+            //create settings folder if it somehow doesn't exist
+            if (!Directory.Exists("./KhTrackerSettings"))
+            {
+                Directory.CreateDirectory("./KhTrackerSettings");
+            }
+            //create a txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/OpenKHPath.txt"))
+            {
+                //Console.WriteLine("File not found, making");
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes("C:\\Replace this path with the location of your\\openkh mod manager");
+                    fs.Write(title, 0, title.Length);
+                }
+            }
+
+            //check for a pre-defined mod manager path
+            //if it is invalid, bring up dialogue box to select a path
+
+            //this is ran whenever the tracker is open(ed) and sees the toggle is set
+            if (toggle)
+            {
+                string[] OpenKHPath = System.IO.File.ReadAllLines("./KhTrackerSettings/OpenKHPath.txt");
+                
+                //Check if the txt is empty or not (crashes when file is empty if user somehow manually deletes path)
+                try
+                {
+                    string temp = OpenKHPath[0];
+                }
+                //Ask to reset path if it's empty
+                catch
+                {
+                    if (MessageBox.Show("OpenKH path not set. Click OK to select your current\nOpenKH Mod Manager application (OpenKh.Tools.ModsManager.exe).\nA shortcut to your Mod Manager can also be selected.") == MessageBoxResult.OK)
+                    {
+                        //handled in MainWindow.xaml.cs
+                        SetOpenKHPath();
+                    }
+                    return;
+                }
+
+                //Console.WriteLine(System.IO.Directory.GetParent(OpenKHPath[0]).ToString());
+
+                if (Directory.Exists(OpenKHPath[0]))
+                {
+                    Console.WriteLine("OpenKH path found");
+                    return;
+                }
+                
+                if (MessageBox.Show("OpenKH path not set. Click OK to select your current\nOpenKH Mod Manager application (OpenKh.Tools.ModsManager.exe).\nA shortcut to your Mod Manager can also be selected.") == MessageBoxResult.OK)
+                {
+                    //handled in MainWindow.xaml.cs
+                    SetOpenKHPath();
+                }
+            }
         }
     }
 }

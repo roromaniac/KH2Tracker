@@ -165,13 +165,17 @@ namespace KhTracker
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
 
+            int synthCount = 0;
             foreach (var report in reportKeys)
             {
                 var world = Codes.ConvertSeedGenName(reports[report.ToString()]["World"].ToString());
                 if (data.UsingProgressionHints && !data.puzzlesOn && world.ToString().Contains("PuzzSynth"))
+                {
+                    synthCount++;
                     continue;
+                }
                 var count = reports[report.ToString()]["Count"].ToString();
-                var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                var location = Codes.ConvertSeedGenName(reports[(report - synthCount).ToString()]["Location"].ToString());
                 data.reportInformation.Add(new Tuple<string, string, int>(null, world, int.Parse(count)));
                 data.reportLocations.Add(location);
             }
@@ -297,6 +301,20 @@ namespace KhTracker
             }
             catch { }
 
+            //BossHomeHinting TEST
+            try
+            {
+                var points = JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["checkValue"].ToString());
+
+                foreach (var point in points)
+                {
+                    if (point.Key == "boss_final" && point.Value == 269)
+                    {
+                        data.BossHomeHinting = true;
+                    }
+                }
+            }
+            catch { }
 
             //set if world value should change color on completion
             if (reveals.Contains("complete"))
@@ -754,7 +772,7 @@ namespace KhTracker
 
         public void UpdatePointScore(int points)
         {
-            if (data.mode != Mode.PointsHints && !data.ScoreMode)
+            if (data.mode != Mode.PointsHints && !data.ScoreMode || data.BossHomeHinting)
                 return;
 
             int WorldBlue = 0;
@@ -1194,7 +1212,7 @@ namespace KhTracker
                         data.reportLocations.Add(location);
                         continue;
                     }
-                        
+
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
                     location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
@@ -1803,6 +1821,12 @@ namespace KhTracker
 
         public void ProgressionBossHints()
         {
+            if (data.BossHomeHinting)
+            {
+                BossHomeHinting();
+                return;
+            }
+
             data.progBossInformation.Clear();
             int TempCost = data.HintCosts[0];
 
@@ -1877,10 +1901,10 @@ namespace KhTracker
                         tmp_origBoss = "Pete";
                     }
 
-                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") || 
+                    if (tmp_origBoss.EndsWith(" (1)") || tmp_origBoss.EndsWith(" (2)") ||
                         tmp_origBoss.EndsWith(" (3)") || tmp_origBoss.EndsWith(" (4)"))
                     {
-                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length-4);
+                        tmp_origBoss = tmp_origBoss.Substring(0, tmp_origBoss.Length - 4);
                     }
 
                     BossA = tmp_origBoss;
@@ -1937,5 +1961,85 @@ namespace KhTracker
             data.HintCosts.Add(TempCost);
         }
 
+        //TEST
+        public void BossHomeHinting()
+        {
+            data.progBossInformation.Clear();
+            int TempCost = data.HintCosts[0];
+            data.HintCosts = new List<int>();
+            data.WorldsEnabled = data.BossList.Count + 1;
+
+            for (int i = 0; i < data.WorldsEnabled; ++i)
+            {
+                data.HintCosts.Add(TempCost);
+            }
+            data.HintCosts.Add(TempCost);
+
+            for (int i = 0; i < data.STT_ProgressionValues.Count; ++i)
+            {
+                data.STT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.TT_ProgressionValues.Count; ++i)
+            {
+                data.TT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HB_ProgressionValues.Count; ++i)
+            {
+                data.HB_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.CoR_ProgressionValues.Count; ++i)
+            {
+                data.CoR_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.BC_ProgressionValues.Count; ++i)
+            {
+                data.BC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.OC_ProgressionValues.Count; ++i)
+            {
+                data.OC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.AG_ProgressionValues.Count; ++i)
+            {
+                data.AG_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.LoD_ProgressionValues.Count; ++i)
+            {
+                data.LoD_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HAW_ProgressionValues.Count; ++i)
+            {
+                data.HAW_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.PL_ProgressionValues.Count; ++i)
+            {
+                data.PL_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.AT_ProgressionValues.Count; ++i)
+            {
+                data.AT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.DC_ProgressionValues.Count; ++i)
+            {
+                data.DC_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.HT_ProgressionValues.Count; ++i)
+            {
+                data.HT_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.PR_ProgressionValues.Count; ++i)
+            {
+                data.PR_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.SP_ProgressionValues.Count; ++i)
+            {
+                data.SP_ProgressionValues[i] = 0;
+            }
+            for (int i = 0; i < data.TWTNW_ProgressionValues.Count; ++i)
+            {
+                data.TWTNW_ProgressionValues[i] = 0;
+            }
+
+        }
     }
 }

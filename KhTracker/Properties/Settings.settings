@@ -212,6 +212,9 @@
     <Setting Name="AutoSaveProgress2" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="AutoLoadHints" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="GridWindowX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
