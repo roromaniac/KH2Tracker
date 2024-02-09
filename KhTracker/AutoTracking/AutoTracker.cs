@@ -626,8 +626,7 @@ namespace KhTracker
                 if (LevelValue.Text == "1" && StrengthValue.Text == "0" && MagicValue.Text == "0")
                     AddProgressionPoints(0);
 
-                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting)
-                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossList.Count() > 0)
+                if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting || data.BossList.Count() > 0)
                 {
                     UpdatePointScore(0); //update score
                     GetBoss(world, false, null);
