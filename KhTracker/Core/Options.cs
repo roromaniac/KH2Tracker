@@ -3005,6 +3005,7 @@ namespace KhTracker
             data.hintsLoaded = false;
             data.seedLoaded = false;
             data.saveFileLoaded = false;
+            data.firstGridOnSeedLoad = true;
 
             data.BossHomeHinting = false;
 

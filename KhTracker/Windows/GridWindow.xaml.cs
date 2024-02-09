@@ -280,14 +280,23 @@ namespace KhTracker
 
         public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
         {
+            int seed;
             grid = new Grid();
             buttons = new ToggleButton[rows, columns];
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
-            if (seedString == null)
+            if (seedString == null && data?.convertedSeedHash != null && data.firstGridOnSeedLoad)
+            {
+                seedName = "[TIED TO SEED]";
+                seed = data.convertedSeedHash;
+                data.firstGridOnSeedLoad = false;
+            }
+            else
+            {
                 seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
-            int seed = seedName.GetHashCode();
+                seed = seedName.GetHashCode();
+            }
             Random rand = new Random(seed);
             Seedname.Header = "Seed: " + seedName;
             List<string> assets = Asset_Collection("Min", seed);
