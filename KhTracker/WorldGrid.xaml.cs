@@ -782,13 +782,67 @@ namespace KhTracker
             }
         }
 
+        public void Handle_GridTrackerHints_BE(string originalBoss, string newBoss)
+        {
+
+            // helper method for overlaying B/E hint images
+            //void OverlayImage(string mainImagePath, string overlayImagePath, string outputPath)
+            //{
+            //    // Load the main image
+            //    using (System.Drawing.Image mainImage = System.Drawing.Image.FromFile(mainImagePath))
+            //    {
+            //        // Load the overlay image
+            //        using (System.Drawing.Image overlayImage = System.Drawing.Image.FromFile(overlayImagePath))
+            //        {
+            //            using (Graphics graphics = Graphics.FromImage(mainImage))
+            //            {
+            //                // Calculate the top-right corner position for the overlay image
+            //                int x = mainImage.Width - overlayImage.Width;
+            //                int y = 0; // Top corner, so Y is 0
+
+            //                // Draw the overlay image on top of the main image
+            //                graphics.DrawImage(overlayImage, new System.Drawing.Point(x, y));
+
+            //                // Save the resulting image to the specified path
+            //                mainImage.Save(outputPath);
+            //            }
+            //        }
+            //    }
+            //}
+
+            // hint visual on grid tracker
+            for (int row = 0; row < window.gridWindow.numRows; row++)
+            {
+                for (int col = 0; col < window.gridWindow.numColumns; col++)
+                {
+                    // check if the original OR grid adjusted check key name is on the grid
+                    foreach (var check in new[] { newBoss, "Grid" + newBoss })
+                    {
+                        if (check == ((string)window.gridWindow.buttons[row, col].Tag).Split('-')[1])
+                        {
+                            // create the appropriate hint
+                            Console.WriteLine(originalBoss);
+                            window.gridWindow.buttons[row, col].SetResourceReference(ContentControl.ContentProperty, "Min-" + check);
+                        }
+                    }
+
+                }
+            }
+        }
+
         public void ProgBossHint(int index)
         {
             Data data = MainWindow.data;
+            string originalBoss = data.progBossInformation[index].Item1;
+            string middle = data.progBossInformation[index].Item2;
+            string newBoss = data.progBossInformation[index].Item3;
+
+            // handle boss hint on grid tracker
+            Handle_GridTrackerHints_BE(originalBoss, newBoss);
 
             // hint text
-            window.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
-            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3, false, false, false));
+            window.SetHintTextRow2(originalBoss, middle, newBoss);
+            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(originalBoss, middle, newBoss, false, false, false));
         }
 
         ///
