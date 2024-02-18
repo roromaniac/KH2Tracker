@@ -158,6 +158,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Tifa", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridTifa") ? _gridWindow.gridSettings["GridTifa"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Twilight Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("TwilightThorn") ? _gridWindow.gridSettings["TwilightThorn"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Vivi", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVivi") ? _gridWindow.gridSettings["GridVivi"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Volcano Lord", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVolcanoLord") ? _gridWindow.gridSettings["GridVolcanoLord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xaldin", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xaldin") ? _gridWindow.gridSettings["Xaldin"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xemnas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xemnas1") ? _gridWindow.gridSettings["Xemnas1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xigbar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xigbar") ? _gridWindow.gridSettings["Xigbar"] : true).ToString() },
@@ -519,7 +520,7 @@ namespace KhTracker
             _gridWindow.gridSettings["Grid7Drives"] = includeAllMaxDrives;
         }
 
-        private void UpdateGridSettings(Data data, bool overwrite=true)
+        public void UpdateGridSettings(Data data, bool overwrite=true)
         {
 
             UpdateGridSize();

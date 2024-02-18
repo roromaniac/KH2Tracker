@@ -41,6 +41,7 @@
             <MenuItem Header="Seeds" Focusable="False">
                 <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
                 <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
+                <MenuItem Header="Always Save Previous Game Mode" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem x:Name="Seedname" Focusable="False"/>
             <Separator/>

@@ -1042,4 +1042,13 @@ namespace KhTracker
         }
 
     }
+    public partial class GridWindow : Window
+    {
+        private void InitOptions()
+        {
+            // save grid settings
+            SavePreviousGridSettingsOption.IsChecked = Properties.Settings.Default.SavePreviousGridSetting;
+            SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
+        }
+    }
 }

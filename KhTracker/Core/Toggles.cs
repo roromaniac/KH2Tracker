@@ -1489,7 +1489,7 @@ namespace KhTracker
             if (toggle)
             {
                 string[] OpenKHPath = System.IO.File.ReadAllLines("./KhTrackerSettings/OpenKHPath.txt");
-                
+
                 //Check if the txt is empty or not (crashes when file is empty if user somehow manually deletes path)
                 try
                 {
@@ -1513,13 +1513,27 @@ namespace KhTracker
                     Console.WriteLine("OpenKH path found");
                     return;
                 }
-                
+
                 if (MessageBox.Show("OpenKH path not set. Click OK to select your current\nOpenKH Mod Manager application (OpenKh.Tools.ModsManager.exe).\nA shortcut to your Mod Manager can also be selected.") == MessageBoxResult.OK)
                 {
                     //handled in MainWindow.xaml.cs
                     SetOpenKHPath();
                 }
             }
+        }
+    }
+
+    //// Grid Tracker Toggles
+    public partial class GridWindow : Window
+    {
+        private void SavePreviousGridSettingsToggle(object sender, RoutedEventArgs e)
+        {
+            SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
+        }
+        private void SavePreviousGridSettingsToggle(bool toggle)
+        {
+            Properties.Settings.Default.SavePreviousGridSetting = toggle;
+            SavePreviousGridSettingsOption.IsChecked = toggle;
         }
     }
 }

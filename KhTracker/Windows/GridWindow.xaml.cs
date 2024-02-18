@@ -24,6 +24,7 @@ namespace KhTracker
         //Dictionary<string, int> important = new Dictionary<string, int>();
         //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         Data data;
+        public GridOptionsWindow gridOptionsWindow;
 
         public int numRows;
         public int numColumns;
@@ -34,10 +35,10 @@ namespace KhTracker
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
 
-
         public GridWindow(Data dataIn)
         {
             InitializeComponent();
+            InitOptions();
 
             gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
             currentColors = GetColorSettings();
@@ -49,6 +50,7 @@ namespace KhTracker
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
 
             data = dataIn;
+            gridOptionsWindow = new GridOptionsWindow(this, data);
 
             Top = Properties.Settings.Default.GridWindowY;
             Left = Properties.Settings.Default.GridWindowX;
@@ -151,11 +153,12 @@ namespace KhTracker
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
+            gridOptionsWindow.UpdateGridSettings(data);
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
         {
-            GridOptionsWindow gridOptionsWindow = new GridOptionsWindow(this, data);
+            
             gridOptionsWindow.ShowDialog();
         }
 
