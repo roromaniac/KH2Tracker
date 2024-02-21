@@ -119,11 +119,19 @@ namespace KhTracker
 
                     using (JsonDocument doc = JsonDocument.Parse(jsonString))
                     {
+
                         var root = doc.RootElement;
                         numRows = root.GetProperty("numRows").GetInt32();
                         numColumns = root.GetProperty("numColumns").GetInt32();
                         seedName = root.GetProperty("seedName").GetString();
                         gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(root.GetProperty("gridSettings").GetRawText());
+                    }
+
+                    if (SavePreviousGridSettingsOption.IsChecked) {
+                        Properties.Settings.Default.GridWindowRows = numRows;
+                        Properties.Settings.Default.GridWindowColumns = numColumns;
+                        Properties.Settings.Default.GridSettings = JsonSerializer.Serialize<Dictionary<string, bool>>(gridSettings);
+                        Properties.Settings.Default.GridWindowBingoLogic = gridSettings["GlobalBingoLogic"];
                     }
 
                     // update number of reports
@@ -153,7 +161,10 @@ namespace KhTracker
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
-            // gridOptionsWindow.UpdateGridSettings(data);
+            // re-init the Grid OptionsWindow so that the properties of grid get re-defined
+            gridOptionsWindow = new GridOptionsWindow(this, data);
+            gridOptionsWindow.UpdateGridSettings(data);
+            
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
