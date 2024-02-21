@@ -153,7 +153,7 @@ namespace KhTracker
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
-            gridOptionsWindow.UpdateGridSettings(data);
+            // gridOptionsWindow.UpdateGridSettings(data);
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
@@ -289,7 +289,8 @@ namespace KhTracker
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
-            if (seedString == null && data?.convertedSeedHash != null && data.firstGridOnSeedLoad)
+
+            if (seedString == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
                 seedName = "[TIED TO SEED]";
                 seed = data.convertedSeedHash;
@@ -700,6 +701,12 @@ namespace KhTracker
                         BingoCheck(grid, i, j);
                 }
             }
+        }
+        private void InitOptions()
+        {
+            // save grid settings
+            SavePreviousGridSettingsOption.IsChecked = Properties.Settings.Default.SavePreviousGridSetting;
+            SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
         }
     }
 }
