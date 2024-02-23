@@ -63,7 +63,7 @@ namespace KhTracker
 
     public partial class GridOptionsWindow : Window
     {
-
+        public bool canClose = false;
         public GridWindow _gridWindow;
         public Data _data;
         int newNumRows;
@@ -297,6 +297,27 @@ namespace KhTracker
                 },
             };
             DataContext = categories;
+        }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.GridOptionsWindowY = RestoreBounds.Top;
+            Properties.Settings.Default.GridOptionsWindowX = RestoreBounds.Left;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Properties.Settings.Default.GridOptionsWindowWidth = RestoreBounds.Width;
+            Properties.Settings.Default.GridOptionsWindowHeight = RestoreBounds.Height;
+        }
+
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            if (!canClose)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void UpdateGridSize()

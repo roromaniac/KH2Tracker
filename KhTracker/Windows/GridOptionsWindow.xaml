@@ -6,6 +6,9 @@
         ResizeMode="CanResize"
         Title="Grid Tracker Options" 
         WindowStartupLocation="CenterScreen"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing"
         Background="LightBlue">
 
     <Window.Resources>

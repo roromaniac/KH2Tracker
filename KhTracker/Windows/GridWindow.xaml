@@ -10,7 +10,7 @@
         Height="510" Width="500"
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
-        Closing="GridWindow_Closing"
+        Closing="Window_Closing"
         MinHeight="100" MinWidth="100" Background="#303030">
 
     <Window.Resources>

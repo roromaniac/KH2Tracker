@@ -1109,5 +1109,53 @@ namespace KhTracker.Properties {
                 this["SavePreviousGridSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GridOptionsWindowX {
+            get {
+                return ((double)(this["GridOptionsWindowX"]));
+            }
+            set {
+                this["GridOptionsWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GridOptionsWindowY {
+            get {
+                return ((double)(this["GridOptionsWindowY"]));
+            }
+            set {
+                this["GridOptionsWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public double GridOptionsWindowHeight {
+            get {
+                return ((double)(this["GridOptionsWindowHeight"]));
+            }
+            set {
+                this["GridOptionsWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
+        public double GridOptionsWindowWidth {
+            get {
+                return ((double)(this["GridOptionsWindowWidth"]));
+            }
+            set {
+                this["GridOptionsWindowWidth"] = value;
+            }
+        }
     }
 }
