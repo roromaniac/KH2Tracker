@@ -71,9 +71,10 @@ namespace KhTracker
             Properties.Settings.Default.GridWindowHeight = RestoreBounds.Height;
         }
 
-        void GridWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.Hide();
+            gridOptionsWindow.Hide();
             if (!canClose)
             {
                 e.Cancel = true;
@@ -169,8 +170,9 @@ namespace KhTracker
 
         private void Grid_Options(object sender, RoutedEventArgs e)
         {
-            
-            gridOptionsWindow.ShowDialog();
+       
+            gridOptionsWindow.Show();
+
         }
 
         private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
