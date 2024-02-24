@@ -776,18 +776,14 @@ namespace KhTracker
 
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
-                        Console.WriteLine(checks[i]);
                         if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                             checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                        Console.WriteLine(checks[i]);
                     }
                     else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
                     {
                         var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
-                        Console.WriteLine(originalBoss);
                         if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
                             checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
-                        Console.WriteLine(checks[i]);
                     }
                     // handle Pete b/c he's weird and shows up twice
                     if (checks[i] == "OCPete")

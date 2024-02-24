@@ -837,6 +837,37 @@ namespace KhTracker
             string middle = data.progBossInformation[index].Item2;
             string newBoss = data.progBossInformation[index].Item3;
 
+            //visualize hint in gridtracker
+            string gridNewBoss = data.codes.bossNameConversion[newBoss];
+            string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
+            if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
+            {
+                try
+                {
+                    // Try to set the resource reference with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                }
+                catch (ResourceReferenceKeyNotFoundException)
+                {
+                    // If the "Grid" key doesn't exist, try with the base key
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
+                }
+            }
+                
+            else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
+            {
+                try
+                {
+                    // Try to set the resource reference with the base key
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
+                }
+                catch (ResourceReferenceKeyNotFoundException)
+                {
+                    // If the base key doesn't exist, try with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                }
+            }
+
             // handle boss hint on grid tracker
             Handle_GridTrackerHints_BE(originalBoss, newBoss);
 
