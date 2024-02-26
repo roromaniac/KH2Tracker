@@ -29,6 +29,8 @@ namespace KhTracker
         public int numRows;
         public int numColumns;
         public string seedName;
+        public bool bingoLogic;
+        public bool battleshipLogic;
 
         public Grid grid;
         public ToggleButton[,] buttons;
@@ -46,6 +48,9 @@ namespace KhTracker
 
             numRows = Properties.Settings.Default.GridWindowRows;
             numColumns = Properties.Settings.Default.GridWindowColumns;
+
+            bingoLogic = Properties.Settings.Default.GridWindowBingoLogic;
+            battleshipLogic = Properties.Settings.Default.GridWindowBattleshipLogic;
 
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
@@ -123,6 +128,8 @@ namespace KhTracker
                     {
 
                         var root = doc.RootElement;
+                        bingoLogic = root.GetProperty("bingoLogic").GetBoolean();
+                        battleshipLogic = root.GetProperty("battleshipLogic").GetBoolean();
                         numRows = root.GetProperty("numRows").GetInt32();
                         numColumns = root.GetProperty("numColumns").GetInt32();
                         seedName = root.GetProperty("seedName").GetString();
@@ -133,7 +140,8 @@ namespace KhTracker
                         Properties.Settings.Default.GridWindowRows = numRows;
                         Properties.Settings.Default.GridWindowColumns = numColumns;
                         Properties.Settings.Default.GridSettings = JsonSerializer.Serialize<Dictionary<string, bool>>(gridSettings);
-                        Properties.Settings.Default.GridWindowBingoLogic = gridSettings["GlobalBingoLogic"];
+                        Properties.Settings.Default.GridWindowBingoLogic = bingoLogic;
+                        Properties.Settings.Default.GridWindowBattleshipLogic = battleshipLogic;
                     }
 
                     // update number of reports

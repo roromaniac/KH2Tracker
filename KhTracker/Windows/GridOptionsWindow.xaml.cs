@@ -335,8 +335,12 @@ namespace KhTracker
         {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
+            _gridWindow.bingoLogic = includeGlobalBingoLogic;
             Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
             // update battleship logic
+            bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
+            _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
+            Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
         }
 
         private void UpdateProgression(Data data)
