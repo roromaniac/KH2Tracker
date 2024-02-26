@@ -32,6 +32,7 @@
     <!--Beasts Castle-->
     <local:GridLabelledImage x:Key="Min-Thresholder"  Source="Images\Progression\Min\beast's_castle\thresholder.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Beast"        Source="Images\Progression\Min\beast's_castle\beast.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-ShadowStalker" Source="Images\Progression\Min\beast's_castle\ShadowStalker.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-DarkThorn"    Source="Images\Progression\Min\beast's_castle\dark_thorn.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Dragoons"     Source="Images\Progression\Min\beast's_castle\dragoons.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Xaldin"       Source="Images\Progression\Min\beast's_castle\xaldin_story.png"           GridAllowed="True"                             x:Shared="False"/>

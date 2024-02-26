@@ -938,6 +938,7 @@ namespace KhTracker
             {"MCP", "MCP"},
             {"Oogie Boogie", "OogieBoogie"},
             {"Past Pete", "OldPete"},
+            {"Pete", "DCPete"},
             {"Pete Cups", "DCPete"},
             {"Pete OC II", "OCPete"},
             {"Pete TR", "DCPete"},
