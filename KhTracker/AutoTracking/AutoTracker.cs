@@ -727,8 +727,6 @@ namespace KhTracker
         private void UpdateGridTracker(string gridCheckName)
         {
 
-            Console.WriteLine($"CURRENT CHECK FOUND: {gridCheckName}");
-
             // deal with doubled up progression icons
             string[] checks = { gridCheckName };
             switch (gridCheckName)
@@ -773,25 +771,19 @@ namespace KhTracker
                 // boss enemy check
 
                 if (data.BossRandoFound)
-
+                {
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
-                        Console.WriteLine(checks[i]);
                         if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                             checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                        Console.WriteLine(checks[i]);
                     }
                     else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
                     {
                         var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
-                        Console.WriteLine(originalBoss);
                         if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
                             checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
-                        Console.WriteLine(checks[i]);
                     }
-                    // handle Pete b/c he's weird and shows up twice
-                    if (checks[i] == "OCPete")
-                        checks[i] = "DCPete";      
+                }
             }
 
             // TO DO: Check if the grid tracker is open.

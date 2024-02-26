@@ -782,50 +782,36 @@ namespace KhTracker
             }
         }
 
-        public void Handle_GridTrackerHints_BE(string originalBoss, string newBoss)
+        public void Handle_GridTrackerHints_BE(string gridOriginalBoss, string gridNewBoss)
         {
 
-            // helper method for overlaying B/E hint images
-            //void OverlayImage(string mainImagePath, string overlayImagePath, string outputPath)
-            //{
-            //    // Load the main image
-            //    using (System.Drawing.Image mainImage = System.Drawing.Image.FromFile(mainImagePath))
-            //    {
-            //        // Load the overlay image
-            //        using (System.Drawing.Image overlayImage = System.Drawing.Image.FromFile(overlayImagePath))
-            //        {
-            //            using (Graphics graphics = Graphics.FromImage(mainImage))
-            //            {
-            //                // Calculate the top-right corner position for the overlay image
-            //                int x = mainImage.Width - overlayImage.Width;
-            //                int y = 0; // Top corner, so Y is 0
-
-            //                // Draw the overlay image on top of the main image
-            //                graphics.DrawImage(overlayImage, new System.Drawing.Point(x, y));
-
-            //                // Save the resulting image to the specified path
-            //                mainImage.Save(outputPath);
-            //            }
-            //        }
-            //    }
-            //}
-
             // hint visual on grid tracker
-            for (int row = 0; row < window.gridWindow.numRows; row++)
+            if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
             {
-                for (int col = 0; col < window.gridWindow.numColumns; col++)
+                if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null) 
+                { 
+                    // Try to set the resource reference with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                }
+                else if (window.TryFindResource($"Min-{gridOriginalBoss}") != null)
                 {
-                    // check if the original OR grid adjusted check key name is on the grid
-                    foreach (var check in new[] { newBoss, "Grid" + newBoss })
-                    {
-                        if (check == ((string)window.gridWindow.buttons[row, col].Tag).Split('-')[1])
-                        {
-                            // create the appropriate hint
-                            Console.WriteLine(originalBoss);
-                            window.gridWindow.buttons[row, col].SetResourceReference(ContentControl.ContentProperty, "Min-" + check);
-                        }
-                    }
+                    // If the "Grid" key doesn't exist, try with the base key
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
 
+                }
+            }
+
+            else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
+            {
+                if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null)
+                {
+                    // Try to set the resource reference with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                }
+                else if (window.TryFindResource($"Min-{gridOriginalBoss}") != null)
+                {
+                    // If the "Grid" key doesn't exist, try with the base key
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
                 }
             }
         }
@@ -837,12 +823,32 @@ namespace KhTracker
             string middle = data.progBossInformation[index].Item2;
             string newBoss = data.progBossInformation[index].Item3;
 
-            // handle boss hint on grid tracker
-            Handle_GridTrackerHints_BE(originalBoss, newBoss);
-
             // hint text
             window.SetHintTextRow2(originalBoss, middle, newBoss);
             data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(originalBoss, middle, newBoss, false, false, false));
+
+            if (newBoss == "unchanged")
+            {
+                newBoss = originalBoss;
+            }
+
+            // handle Pete since he has 2 versions
+            if (newBoss == "Pete")
+            {
+                newBoss = data.BossList.ContainsValue("OCPete") ? "OCPete" : "DCPete";
+            }
+
+            //visualize hint in gridtracker
+            if (data.codes.bossNameConversion.Keys.Contains(newBoss) && data.codes.bossNameConversion.Keys.Contains(originalBoss))
+            {
+                string gridNewBoss = data.codes.bossNameConversion[newBoss];
+                string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
+
+                // handle boss hint on grid tracker
+                Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss);
+            }
+
+
         }
 
         ///

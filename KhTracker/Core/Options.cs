@@ -3842,7 +3842,25 @@ namespace KhTracker
                 // disable bosses in data arenas
                 if (bossOrig.Contains("(Data)"))
                 {
-                    if (((bossOrig == "Axel (Data)") && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace("(Data)", "II")])) || (data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" (Data)", "")])))
+                    // TO DO: CREATE A FLAG IF TELEPORT TO DATA AXEL ARENA IS ON
+                    if (data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" (Data)", "")]))
+                    {
+                        if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                        {
+                            gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+
+                // disable cups replacements
+                if (bossOrig.Contains("Cups"))
+                {
+                    if (
+                        (data.BossList.ContainsKey(bossOrig.Replace(" (Cups)", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" (Cups)", "")])) ||
+                        (data.BossList.ContainsKey(bossOrig.Replace(" Cups", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" Cups", "")]))
+                        )
                     {
                         if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
                             gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;

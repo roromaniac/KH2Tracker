@@ -34,6 +34,7 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
+        public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
 
         public GridWindow(Data dataIn)
         {
@@ -346,8 +347,7 @@ namespace KhTracker
                 }
             }
 
-            //Console.WriteLine(assets[0]);
-
+            // generate the grid
             for (int i = 0; i < numRows; i++)
             {
                 grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
@@ -357,7 +357,6 @@ namespace KhTracker
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             }
-
 
             for (int i = 0; i < numRows; i++)
             {
@@ -379,6 +378,54 @@ namespace KhTracker
                     grid.Children.Add(button);
                 }
             }
+
+            // generate the boss hints
+            bossHintContentControls = new Dictionary<string, ContentControl>();
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    // Create a new Grid as a container for the ContentControl
+                    Grid hintContainer = new Grid
+                    {
+                        // Set the container to fill the grid cell
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch
+                    };
+
+                    // Define row definitions for the hintContainer grid
+                    // Top row will take 25% of the space (for the hint), the rest will be empty
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
+
+                    // Create the ContentControl with desired properties
+                    ContentControl contentControl = new ContentControl
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Right,
+                        VerticalAlignment = VerticalAlignment.Top
+                    };
+
+                    // Naming the ContentControl using its grid position
+                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
+                    bossHintContentControls[bossName] = contentControl;
+
+                    // Add the ContentControl to the first row of the hintContainer
+                    Grid.SetRow(contentControl, 0); // Place it in the top 35% row
+                    Grid.SetColumn(contentControl, 1); // Place it in the right 35% column
+                    hintContainer.Children.Add(contentControl);
+
+                    // Set the hintContainer to be in the specific cell of the main grid
+                    Grid.SetRow(hintContainer, i);
+                    Grid.SetColumn(hintContainer, j);
+
+                    // Add the hintContainer to the main grid, instead of directly adding the contentControl
+                    grid.Children.Add(hintContainer);
+                }
+            }
+
+
             // Add grid to the window or other container
             DynamicGrid.Children.Add(grid);
         }

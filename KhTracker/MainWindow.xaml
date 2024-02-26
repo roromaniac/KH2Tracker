@@ -46,8 +46,8 @@
                 <Separator/>
                 <MenuItem Header="Save Current Progress" Click="SaveProgress"/>
                 <MenuItem Header="Load Tracker Progress" Click="LoadProgress"/>
-                <MenuItem Header="Auto-Save Tracker Progress on Tracker Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True" IsChecked="False"/>
-                <MenuItem Header="Auto-Save Tracker Progress on Connection Loss" Click="AutoSaveProgress2Toggle" x:Name="AutoSaveProgress2Option" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Auto-Save Tracker Progress on Tracker Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Auto-Save Tracker Progress on Connection Loss" Click="AutoSaveProgress2Toggle" x:Name="AutoSaveProgress2Option" IsCheckable="True" IsChecked="True"/>
                 <Separator/>
                 <MenuItem Header="Reset Tracker" 	 Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	 Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
