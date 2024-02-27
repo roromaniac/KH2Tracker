@@ -827,7 +827,7 @@ namespace KhTracker
             window.SetHintTextRow2(originalBoss, middle, newBoss);
             data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(originalBoss, middle, newBoss, false, false, false));
 
-            if (newBoss == "unchanged")
+            if (middle == "is unchanged")
             {
                 newBoss = originalBoss;
             }
