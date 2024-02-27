@@ -772,6 +772,22 @@ namespace KhTracker
 
                 if (data.BossRandoFound)
                 {
+                    // hint the final fights bosses if Xemnas 1 is defeated
+                    if (checks[i] == "Xemnas")
+                    {
+                        string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
+                        foreach (string boss in finalFights)
+                        {
+                            if (data.BossList.ContainsKey(boss) && data.codes.bossNameConversion.ContainsKey(data.BossList[boss]))
+                            {
+                                string origBoss = data.codes.bossNameConversion[boss];
+                                string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss);
+                            }
+                                
+                        }
+                            
+                    }
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
                         if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))

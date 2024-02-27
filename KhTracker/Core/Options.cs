@@ -2117,6 +2117,7 @@ namespace KhTracker
 
                             data.BossList.Add(bossOrig, bossRepl);
                         }
+                        bunterCheck(bosses);
                     }
                     catch
                     {
@@ -3842,7 +3843,6 @@ namespace KhTracker
                 // disable bosses in data arenas
                 if (bossOrig.Contains("(Data)"))
                 {
-                    // TO DO: CREATE A FLAG IF TELEPORT TO DATA AXEL ARENA IS ON
                     if (data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace(" (Data)", "")]))
                     {
                         if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
@@ -3870,6 +3870,54 @@ namespace KhTracker
                         }
                     }
                 }
+
+                // if Hades is an org member, ensure it's the right one
+                if (bossOrig == "Hades II")
+                {
+                    if (data.BossList.ContainsKey(bossOrig) && data.BossList.ContainsKey(bossOrig + " (1)") && (data.BossList[bossOrig] != data.BossList[bossOrig + " (1)"]))
+                    {
+                        if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                        {
+                            gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+
+                // if STT is off, ensure only the Data Axel replacement is eligible if Axel is replaced by an org member
+                if (bossOrig == "Axel II")
+                {
+                    if (!data.BossList.ContainsKey("Axel I")) {
+                        if (data.BossList.ContainsKey(bossOrig) && data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace("II", "(Data)")]))
+                        {
+                            if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            {
+                                gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                            }
+                        }
+                    }
+                }
+
+                // if STT is on, ensure only the Axel II replacement is eligible if Axel is replaced by an org member
+                if (bossOrig == "Axel (Data)")
+                {
+                    if (data.BossList.ContainsKey("Axel I"))
+                    {
+                        if (data.BossList.ContainsKey(bossOrig) && data.BossList.ContainsKey(bossOrig.Replace("(Data)", "II")) && (data.BossList[bossOrig] != data.BossList[bossOrig.Replace("(Data)", "II")]))
+                        {
+                            if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            {
+                                gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                            }
+                        }
+                    }
+                }
+
             }
             // regenerate the grid tracker to accommodate appropriate bosses
             gridWindow.grid.Children.Clear();

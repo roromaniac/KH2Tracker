@@ -781,7 +781,7 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AutoSaveProgress {
             get {
                 return ((bool)(this["AutoSaveProgress"]));
@@ -853,7 +853,7 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AutoSaveProgress2 {
             get {
                 return ((bool)(this["AutoSaveProgress2"]));
@@ -991,8 +991,7 @@ namespace KhTracker.Properties {
             "e,\"Thresholder\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"GridYuff" +
             "ie\":true,\"GrimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizzardL" +
             "ord\":true,\"GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"GridZex" +
-            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"Glob" +
-            "alBingoLogic\":false}\r\n")]
+            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true}\r\n")]
         public string GridSettings {
             get {
                 return ((string)(this["GridSettings"]));

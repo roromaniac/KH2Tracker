@@ -827,21 +827,23 @@ namespace KhTracker
             window.SetHintTextRow2(originalBoss, middle, newBoss);
             data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(originalBoss, middle, newBoss, false, false, false));
 
-            if (newBoss == "unchanged")
+            if (middle == "is unchanged")
             {
                 newBoss = originalBoss;
-            }
-
-            // handle Pete since he has 2 versions
-            if (newBoss == "Pete")
-            {
-                newBoss = data.BossList.ContainsValue("OCPete") ? "OCPete" : "DCPete";
             }
 
             //visualize hint in gridtracker
             if (data.codes.bossNameConversion.Keys.Contains(newBoss) && data.codes.bossNameConversion.Keys.Contains(originalBoss))
             {
+
                 string gridNewBoss = data.codes.bossNameConversion[newBoss];
+
+                // handle Pete since he has 2 versions
+                if (newBoss == "Pete")
+                {
+                    gridNewBoss = data.BossList.ContainsValue("OCPete") ? "OCPete" : "DCPete";
+                }
+
                 string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
 
                 // handle boss hint on grid tracker

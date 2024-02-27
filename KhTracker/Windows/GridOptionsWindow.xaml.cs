@@ -68,6 +68,8 @@ namespace KhTracker
         public Data _data;
         int newNumRows;
         int newNumColumns;
+        bool newBingoLogic;
+        bool newBattleshipLogic;
         List<Category> categories;
         public GridOptionsWindow(GridWindow gridWindow, Data data)
         {
@@ -75,6 +77,8 @@ namespace KhTracker
             _gridWindow = gridWindow;
             newNumRows = gridWindow.numRows;
             newNumColumns = gridWindow.numColumns;
+            newBingoLogic = gridWindow.bingoLogic;
+            newBattleshipLogic = gridWindow.battleshipLogic;
             _data = data;
 
             categories = new List<Category>
@@ -95,14 +99,14 @@ namespace KhTracker
                             SubCategoryName = "Bingo Logic",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (Properties.Settings.Default.GridWindowBingoLogic).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = $"{newBingoLogic}"  },
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Battleship Logic" ,
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (Properties.Settings.Default.GridWindowBattleshipLogic).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
                             }
                         }
                     }
@@ -335,8 +339,12 @@ namespace KhTracker
         {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
+            _gridWindow.bingoLogic = includeGlobalBingoLogic;
             Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
             // update battleship logic
+            bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
+            _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
+            Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
         }
 
         private void UpdateProgression(Data data)
@@ -576,6 +584,8 @@ namespace KhTracker
                 {
                     numRows = _gridWindow.numRows,
                     numColumns = _gridWindow.numColumns,
+                    bingoLogic = _gridWindow.bingoLogic,
+                    battleshipLogic = _gridWindow.battleshipLogic,
                     seedName = _gridWindow.seedName,
                     gridSettings = _gridWindow.gridSettings
                 };
