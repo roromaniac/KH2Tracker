@@ -96,6 +96,8 @@ namespace KhTracker
             {
                 var combinedSettings = new
                 {
+                    bingoLogic = bingoLogic,
+                    battleshipLogic = battleshipLogic,
                     numRows = numRows,
                     numColumns = numColumns,
                     seedName = seedName,
