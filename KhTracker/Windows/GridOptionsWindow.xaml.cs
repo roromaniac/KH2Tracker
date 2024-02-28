@@ -425,8 +425,9 @@ namespace KhTracker
                     _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
                 else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
                     _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
-                else
-                    throw new ArgumentException("This boss doesn't exist.");
+                else if (_gridWindow.gridSettings.ContainsKey(boss.Description))
+                    _gridWindow.gridSettings[boss.Description] = includeBoss;
+
             }
         }
 
