@@ -789,6 +789,17 @@ namespace KhTracker
                         }
                             
                     }
+
+                    // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
+                    // the keys for Hades and Pete in the data.BossList dictionary.
+                    Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string> {
+                                                                        { "Hades", "Hades II (1)" },
+                                                                        { "DCPete", "Pete TR" },
+                                                                        { "OCPete", "Pete OC" }
+                                                                    };
+                    if (mismatchedBossNames.Keys.Contains(checks[i]))
+                        checks[i] = mismatchedBossNames[checks[i]];
+
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
                         if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
@@ -806,15 +817,6 @@ namespace KhTracker
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
             foreach (string checkName in checks) {
-
-                if (data.BossRandoFound)
-                {
-                    // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
-                    // the keys for Hades and Pete in the data.BossList dictionary.
-                    string[] mismatchedBossNames = { "Hades", "DCPete", "OCPete" };
-                    if (mismatchedBossNames.Contains(checkName))
-                        continue;
-                }
 
                 for (int row = 0; row < gridWindow.numRows; row++)
                 {
