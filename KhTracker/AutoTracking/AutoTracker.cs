@@ -772,7 +772,6 @@ namespace KhTracker
 
                 if (data.BossRandoFound)
                 {
-
                     // hint the final fights bosses if Xemnas 1 is defeated
                     if (checks[i] == "Xemnas")
                     {
