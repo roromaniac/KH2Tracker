@@ -806,6 +806,15 @@ namespace KhTracker
             // If it is... Check if any of the buttons have the collected grid check.
             foreach (string checkName in checks) {
 
+                if (data.BossRandoFound)
+                {
+                    // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
+                    // the keys for Hades and Pete in the data.BossList dictionary.
+                    string[] mismatchedBossNames = { "Hades", "DCPete", "OCPete" };
+                    if (mismatchedBossNames.Contains(checkName))
+                        continue;
+                }
+
                 for (int row = 0; row < gridWindow.numRows; row++)
                 {
                     for (int col = 0; col < gridWindow.numColumns; col++)
