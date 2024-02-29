@@ -911,6 +911,7 @@ namespace KhTracker
             {"Grim Reaper I", "GrimReaper1"},
             {"Grim Reaper II", "GrimReaper"},
             {"Groundshaker", "GroundShaker"},
+            {"Hades", "Hades"},
             {"Hades Cups", "Hades"},
             {"Hades Escape", "Hades"},
             {"Hades I", "Hades"},

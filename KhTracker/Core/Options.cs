@@ -2098,38 +2098,6 @@ namespace KhTracker
                 }
             }
 
-            if (enemyfile != null)
-            {
-                using (var reader3 = new StreamReader(enemyfile))
-                {
-                    data.BossRandoFound = true;
-                    data.openKHBossText = reader3.ReadToEnd();
-                    var enemyText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHBossText));
-                    try
-                    {
-                        var enemyObject = JsonSerializer.Deserialize<Dictionary<string, object>>(enemyText);
-                        var bosses = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(enemyObject["BOSSES"].ToString());
-
-                        foreach (var bosspair in bosses)
-                        {
-                            string bossOrig = bosspair["original"].ToString();
-                            string bossRepl = bosspair["new"].ToString();
-
-                            data.BossList.Add(bossOrig, bossRepl);
-                        }
-                        bunterCheck(bosses);
-                    }
-                    catch
-                    {
-                        data.BossRandoFound = false;
-                        data.openKHBossText = "None";
-                        App.logger?.Record("error while trying to parse bosses.");
-                    }
-
-                    reader3.Close();
-                }
-            }
-
             if (hashfile != null || hashfileBackup != null)
             {
                 string[] hash = null;
@@ -2180,6 +2148,38 @@ namespace KhTracker
                     }
 
                     HashToSeed(hash);
+                }
+            }
+
+            if (enemyfile != null)
+            {
+                using (var reader3 = new StreamReader(enemyfile))
+                {
+                    data.BossRandoFound = true;
+                    data.openKHBossText = reader3.ReadToEnd();
+                    var enemyText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHBossText));
+                    try
+                    {
+                        var enemyObject = JsonSerializer.Deserialize<Dictionary<string, object>>(enemyText);
+                        var bosses = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(enemyObject["BOSSES"].ToString());
+
+                        foreach (var bosspair in bosses)
+                        {
+                            string bossOrig = bosspair["original"].ToString();
+                            string bossRepl = bosspair["new"].ToString();
+
+                            data.BossList.Add(bossOrig, bossRepl);
+                        }
+                        bunterCheck(bosses);
+                    }
+                    catch
+                    {
+                        data.BossRandoFound = false;
+                        data.openKHBossText = "None";
+                        App.logger?.Record("error while trying to parse bosses.");
+                    }
+
+                    reader3.Close();
                 }
             }
 
