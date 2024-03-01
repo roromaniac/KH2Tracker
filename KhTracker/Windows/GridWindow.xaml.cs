@@ -37,6 +37,7 @@ namespace KhTracker
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
+        public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
 
         public GridWindow(Data dataIn)
         {
@@ -391,6 +392,7 @@ namespace KhTracker
 
             // generate the boss hints
             bossHintContentControls = new Dictionary<string, ContentControl>();
+            bossHintBorders = new Dictionary<string, Border>();
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
@@ -404,21 +406,42 @@ namespace KhTracker
                     };
 
                     // Define row definitions for the hintContainer grid
-                    // Top row will take 25% of the space (for the hint), the rest will be empty
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
+                    int coveragePercentage = 32;
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+
+                    // Create a Border with a white background for the top right cell
+                    //Border whiteBackground = new Border
+                    //{
+                    //    Background = new SolidColorBrush(Colors.Transparent), // Make the inside of the border transparent
+                    //    BorderBrush = new SolidColorBrush(Colors.White), // Set the color of the border edges
+                    //    BorderThickness = new Thickness(3), // Set the thickness of the edges
+                    //                                        // The rest of the properties remain the same
+                    //};
+                    Border whiteBackground = new Border
+                    {
+                        // this will be the background when a boss hint is acquired
+                        //Background = new SolidColorBrush(Colors.White),
+                    };
+
+                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
+                    bossHintBorders[bossName] = whiteBackground;
+
+                    // Set the Border to occupy the top 35% and the right 35% of the hintContainer
+                    Grid.SetRow(whiteBackground, 0);
+                    Grid.SetColumn(whiteBackground, 1);
+                    hintContainer.Children.Add(whiteBackground);
 
                     // Create the ContentControl with desired properties
                     ContentControl contentControl = new ContentControl
                     {
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Top
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
                     };
 
                     // Naming the ContentControl using its grid position
-                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
                     bossHintContentControls[bossName] = contentControl;
 
                     // Add the ContentControl to the first row of the hintContainer
@@ -434,8 +457,6 @@ namespace KhTracker
                     grid.Children.Add(hintContainer);
                 }
             }
-
-
             // Add grid to the window or other container
             DynamicGrid.Children.Add(grid);
         }

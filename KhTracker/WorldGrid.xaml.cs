@@ -788,6 +788,7 @@ namespace KhTracker
             // hint visual on grid tracker
             if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
             {
+                window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(Colors.White);
                 if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null) 
                 { 
                     // Try to set the resource reference with the "Grid" prefix
@@ -803,6 +804,7 @@ namespace KhTracker
 
             else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
             {
+                window.gridWindow.bossHintBorders[$"Grid{gridNewBoss}"].Background = new SolidColorBrush(Colors.White);
                 if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null)
                 {
                     // Try to set the resource reference with the "Grid" prefix
