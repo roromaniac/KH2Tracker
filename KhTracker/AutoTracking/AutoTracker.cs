@@ -794,7 +794,7 @@ namespace KhTracker
                     Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string> {
                                                                         { "Hades", "Hades II (1)" },
                                                                         { "DCPete", "Pete TR" },
-                                                                        { "OCPete", "Pete OC" }
+                                                                        { "OCPete", "Pete OC II" }
                                                                     };
                     if (mismatchedBossNames.Keys.Contains(checks[i]))
                         checks[i] = mismatchedBossNames[checks[i]];

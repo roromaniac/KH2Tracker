@@ -843,7 +843,7 @@ namespace KhTracker
                 // handle Pete since he has 2 versions
                 if (newBoss == "Pete")
                 {
-                    gridNewBoss = data.BossList.ContainsValue("OCPete") ? "OCPete" : "DCPete";
+                    gridNewBoss = data.BossList.ContainsValue("Pete OC II") ? "OCPete" : "DCPete";
                 }
 
                 string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
