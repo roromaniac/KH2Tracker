@@ -1535,5 +1535,27 @@ namespace KhTracker
             Properties.Settings.Default.SavePreviousGridSetting = toggle;
             SavePreviousGridSettingsOption.IsChecked = toggle;
         }
+
+        private void TelevoIconsToggle(object sender, RoutedEventArgs e)
+        {
+            TelevoIconsToggle(TelevoIconsOption.IsChecked);
+        }
+        private void TelevoIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.TelevoIcons = toggle;
+            TelevoIconsOption.IsChecked = toggle;
+            SonicIconsOption.IsChecked = !toggle;
+        }
+
+        private void SonicIconsToggle(object sender, RoutedEventArgs e)
+        {
+            SonicIconsToggle(SonicIconsOption.IsChecked);
+        }
+        private void SonicIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.SonicIcons = toggle;
+            SonicIconsOption.IsChecked = toggle;
+            TelevoIconsOption.IsChecked = !toggle;
+        }
     }
 }

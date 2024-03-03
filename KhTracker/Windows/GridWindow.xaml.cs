@@ -31,6 +31,7 @@ namespace KhTracker
         public string seedName;
         public bool bingoLogic;
         public bool battleshipLogic;
+        public bool TelevoStyle;
 
         public Grid grid;
         public ToggleButton[,] buttons;
@@ -328,7 +329,7 @@ namespace KhTracker
             }
             Random rand = new Random(seed);
             Seedname.Header = "Seed: " + seedName;
-            List<string> assets = Asset_Collection("Min", seed);
+            List<string> assets = Asset_Collection(TelevoIconsOption.IsChecked ? "Min" : "Old", seed);
 
             if (rows * columns <= 0)
             {
@@ -798,6 +799,14 @@ namespace KhTracker
             // save grid settings
             SavePreviousGridSettingsOption.IsChecked = Properties.Settings.Default.SavePreviousGridSetting;
             SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
+
+            // enable televo icons
+            TelevoIconsOption.IsChecked = Properties.Settings.Default.TelevoIcons;
+            TelevoIconsToggle(TelevoIconsOption.IsChecked);
+
+            // enable sonic icons
+            SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
+            SonicIconsToggle(SonicIconsOption.IsChecked);
         }
     }
 }

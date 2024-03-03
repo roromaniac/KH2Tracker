@@ -1156,5 +1156,29 @@ namespace KhTracker.Properties {
                 this["GridOptionsWindowWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool TelevoIcons {
+            get {
+                return ((bool)(this["TelevoIcons"]));
+            }
+            set {
+                this["TelevoIcons"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SonicIcons {
+            get {
+                return ((bool)(this["SonicIcons"]));
+            }
+            set {
+                this["SonicIcons"] = value;
+            }
+        }
     }
 }
