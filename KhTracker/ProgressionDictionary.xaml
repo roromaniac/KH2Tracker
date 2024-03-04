@@ -343,7 +343,7 @@
     <local:GridLabelledImage x:Key="Old-GridMarluxia"                 Source="Images\Progression\Old\disney_castle\marluxia.png"            GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridMarluxiaData"             Source="Images\Progression\Old\disney_castle\marluxia_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridDataRoxas"        Source="Images\Progression\Old\simulated_twilight_town\roxas.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Old-GridDataSaix"     Source="Images\Progression\Old\pride_lands\saix.png"           GridAllowed="True"                             x:Shared="False" IsEnabled="False"/>
+    <local:GridLabelledImage x:Key="Old-GridDataSaix"     Source="Images\Progression\Old\pride_lands\saix.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridSephiroth"        Source="Images\Progression\Old\hollow_bastion\sephiroth.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridDataXaldin"   Source="Images\Progression\Old\beast's_castle\xaldin_griddata.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridDataXemnas"       Source="Images\Progression\Old\the_world_that_never_was\xemnas.png"           GridAllowed="True"                             x:Shared="False"/>
