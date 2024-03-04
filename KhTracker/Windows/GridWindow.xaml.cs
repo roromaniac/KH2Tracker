@@ -378,6 +378,7 @@ namespace KhTracker
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
+                    Console.WriteLine(button.Tag);
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
                     int current_i = i;
