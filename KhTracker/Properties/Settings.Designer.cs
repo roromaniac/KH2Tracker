@@ -1075,6 +1075,18 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFFFF")]
+        public global::System.Windows.Media.Color HintColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["HintColor"]));
+            }
+            set {
+                this["HintColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool GridWindowBingoLogic {
             get {
@@ -1178,6 +1190,42 @@ namespace KhTracker.Properties {
             }
             set {
                 this["SonicIcons"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF87CEFA")]
+        public global::System.Windows.Media.Color BattleshipMissColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BattleshipMissColor"]));
+            }
+            set {
+                this["BattleshipMissColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF0000")]
+        public global::System.Windows.Media.Color BattleshipHitColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BattleshipHitColor"]));
+            }
+            set {
+                this["BattleshipHitColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFC0CB")]
+        public global::System.Windows.Media.Color BattleshipSunkColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BattleshipSunkColor"]));
+            }
+            set {
+                this["BattleshipSunkColor"] = value;
             }
         }
     }

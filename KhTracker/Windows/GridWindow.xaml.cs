@@ -31,7 +31,6 @@ namespace KhTracker
         public string seedName;
         public bool bingoLogic;
         public bool battleshipLogic;
-        public bool TelevoStyle;
 
         public Grid grid;
         public ToggleButton[,] buttons;
@@ -39,6 +38,7 @@ namespace KhTracker
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
         public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
+        public List<string> assets;
 
         public GridWindow(Data dataIn)
         {
@@ -188,6 +188,25 @@ namespace KhTracker
 
         }
 
+        private List<string> Change_Icons(List<string> imageKeys)
+        {
+            if (TelevoIconsOption.IsChecked)
+            {
+                for (int i = 0; i < imageKeys.Count; i++)
+                {
+                    imageKeys[i] = imageKeys[i].Replace("Old-", "Min-");
+                }
+            }
+            if (SonicIconsOption.IsChecked)
+            {
+                for (int i = 0; i < imageKeys.Count; i++)
+                {
+                    imageKeys[i] = imageKeys[i].Replace("Min-", "Old-");
+                }
+            }
+            return imageKeys;
+        }
+
         private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
         {
 
@@ -260,13 +279,21 @@ namespace KhTracker
             var markedColor = Properties.Settings.Default.MarkedColor;
             var annotatedColor = Properties.Settings.Default.AnnotatedColor;
             var bingoColor = Properties.Settings.Default.BingoColor;
+            var hintColor = Properties.Settings.Default.HintColor;
+            var battleshipMissColor = Properties.Settings.Default.BattleshipMissColor;
+            var battleshipHitColor = Properties.Settings.Default.BattleshipHitColor;
+            var battleshipSunkColor = Properties.Settings.Default.BattleshipSunkColor;
 
             return new Dictionary<string, Color>()
             {
                 { "Unmarked Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
                 { "Marked Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
                 { "Annotated Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
-                { "Bingo Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) }
+                { "Bingo Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) },
+                { "Hint Color", Color.FromArgb(hintColor.A, hintColor.R, hintColor.G, hintColor.B) },
+                { "Battleship Miss Color", Color.FromArgb(battleshipMissColor.A, battleshipMissColor.R, battleshipMissColor.G, battleshipMissColor.B) },
+                { "Battleship Hit Color", Color.FromArgb(battleshipHitColor.A, battleshipHitColor.R, battleshipHitColor.G, battleshipHitColor.B) },
+                { "Battleship Sunk Color", Color.FromArgb(battleshipSunkColor.A, battleshipSunkColor.R, battleshipSunkColor.G, battleshipSunkColor.B) }
             };
         }
 
@@ -282,7 +309,7 @@ namespace KhTracker
             {
                 SetColorForButton(button.Background, currentColors["Unmarked Color"]);
             }
-            if (Properties.Settings.Default.GridWindowBingoLogic)
+            if (bingoLogic)
                 BingoCheck(grid, i, j);
         }
 
@@ -307,7 +334,7 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns);
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool iconChange = false)
         {
             int seed;
             grid = new Grid();
@@ -316,20 +343,23 @@ namespace KhTracker
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
 
-            if (seedString == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
+            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
                 seedName = "[TIED TO SEED]";
                 seed = data.convertedSeedHash;
                 data.firstGridOnSeedLoad = false;
             }
-            else
+            else 
             {
-                seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
+                if (seedName == null)
+                    seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
                 seed = seedName.GetHashCode();
             }
-            Random rand = new Random(seed);
             Seedname.Header = "Seed: " + seedName;
-            List<string> assets = Asset_Collection(TelevoIconsOption.IsChecked ? "Min" : "Old", seed);
+            if (iconChange)
+                assets = Change_Icons(assets);
+            else
+                assets = Asset_Collection(TelevoIconsOption.IsChecked ? "Min" : "Old", seed);
 
             if (rows * columns <= 0)
             {
@@ -772,6 +802,7 @@ namespace KhTracker
                 }
             }
         }
+        // updates colors upon close
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
             // prompt user for new colors
@@ -790,10 +821,19 @@ namespace KhTracker
                         SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
                     else
                         SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
-                    if (Properties.Settings.Default.GridWindowBingoLogic)
+                    if (bingoLogic)
                         BingoCheck(grid, i, j);
                 }
             }
+            // update the hint color
+            foreach (string key in bossHintBorders.Keys)
+            {
+                if (bossHintBorders[key].Background != null)
+                {
+                    SetColorForButton(bossHintBorders[key].Background, currentColors["Hint Color"]);
+                }
+            }
+
         }
         private void InitOptions()
         {

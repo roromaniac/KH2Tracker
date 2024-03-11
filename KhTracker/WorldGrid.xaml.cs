@@ -782,38 +782,41 @@ namespace KhTracker
             }
         }
 
-        public void Handle_GridTrackerHints_BE(string gridOriginalBoss, string gridNewBoss)
+        public void Handle_GridTrackerHints_BE(string gridOriginalBoss, string gridNewBoss, string iconStyle = "Min")
         {
+
+            // get the hint color
+            Color hintColor = window.gridWindow.currentColors["Hint Color"];
 
             // hint visual on grid tracker
             if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
             {
-                window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(Colors.White);
-                if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null) 
+                window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(hintColor);
+                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null) 
                 { 
                     // Try to set the resource reference with the "Grid" prefix
-                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
                 }
-                else if (window.TryFindResource($"Min-{gridOriginalBoss}") != null)
+                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
                 {
                     // If the "Grid" key doesn't exist, try with the base key
-                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
 
                 }
             }
 
             else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
             {
-                window.gridWindow.bossHintBorders[$"Grid{gridNewBoss}"].Background = new SolidColorBrush(Colors.White);
-                if (window.TryFindResource($"Min-Grid{gridOriginalBoss}") != null)
+                window.gridWindow.bossHintBorders[$"Grid{gridNewBoss}"].Background = new SolidColorBrush(hintColor);
+                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null)
                 {
                     // Try to set the resource reference with the "Grid" prefix
-                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-Grid{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
                 }
-                else if (window.TryFindResource($"Min-{gridOriginalBoss}") != null)
+                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
                 {
                     // If the "Grid" key doesn't exist, try with the base key
-                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Min-{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
                 }
             }
         }
@@ -849,7 +852,7 @@ namespace KhTracker
                 string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
 
                 // handle boss hint on grid tracker
-                Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss);
+                Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss, window.gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
             }
 
 

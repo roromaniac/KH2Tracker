@@ -782,7 +782,7 @@ namespace KhTracker
                             {
                                 string origBoss = data.codes.bossNameConversion[boss];
                                 string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
-                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss);
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
                                 
                         }

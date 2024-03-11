@@ -255,6 +255,9 @@
     <Setting Name="BingoColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FF6700CC</Value>
     </Setting>
+    <Setting Name="HintColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFFFFF</Value>
+    </Setting>
     <Setting Name="GridWindowBingoLogic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -281,6 +284,15 @@
     </Setting>
     <Setting Name="SonicIcons" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="BattleshipMissColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF87CEFA</Value>
+    </Setting>
+    <Setting Name="BattleshipHitColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFF0000</Value>
+    </Setting>
+    <Setting Name="BattleshipSunkColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFC0CB</Value>
     </Setting>
   </Settings>
 </SettingsFile>

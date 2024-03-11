@@ -1545,6 +1545,12 @@ namespace KhTracker
             Properties.Settings.Default.TelevoIcons = toggle;
             TelevoIconsOption.IsChecked = toggle;
             SonicIconsOption.IsChecked = !toggle;
+            if (grid != null)
+            {
+                grid.Children.Clear();
+                Console.WriteLine(seedName);
+                GenerateGrid(numRows, numColumns, seedName, true);
+            }
         }
 
         private void SonicIconsToggle(object sender, RoutedEventArgs e)
@@ -1556,6 +1562,12 @@ namespace KhTracker
             Properties.Settings.Default.SonicIcons = toggle;
             SonicIconsOption.IsChecked = toggle;
             TelevoIconsOption.IsChecked = !toggle;
+            if (grid != null)
+            {
+                grid.Children.Clear();
+                Console.WriteLine(seedName);
+                GenerateGrid(numRows, numColumns, seedName, true);
+            }
         }
     }
 }

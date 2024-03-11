@@ -9,59 +9,47 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
-        Background="LightBlue">
+        Background="#303030">
 
     <Window.Resources>
-        <!-- Theme styling -->
-        <Style TargetType="{x:Type CheckBox}">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="10"/>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#048EBB"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type CheckBox}">
-                        <Grid>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
-                                            <ColorAnimation Storyboard.TargetName="CheckBackground" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" To="LightSkyBlue" Duration="0"/>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-
-                            <!-- Check Box Rectangle -->
-                            <Border x:Name="CheckBackground" Width="25" Height="25" CornerRadius="2" Background="Gray" BorderBrush="White" BorderThickness="2"/>
-
-                            <!-- Check Mark -->
-                            <Path x:Name="CheckMark" Width="17" Height="17" Stretch="Fill" Stroke="White" StrokeThickness="2"
-                              Data="M 3,1 L 7,7 M 7,7 L 12,0" Visibility="Collapsed"/>
-
-                            <!-- Content -->
-                            <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+
+        <Style TargetType="{x:Type CheckBox}">
+            <Setter Property="Foreground" Value="#444"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
         <Style TargetType="{x:Type Expander}">
             <Setter Property="Foreground" Value="#444"/>
             <Setter Property="Background" Value="#F4F4F4"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="12"/>
         </Style>
-        
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="Background" Value="Orange"/>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
         </Style>
-        
+
         <!-- Template Selector -->
         <local:OptionTemplateSelector x:Key="OptionSelector">
             <local:OptionTemplateSelector.CheckBoxTemplate>
@@ -81,18 +69,17 @@
         </local:OptionTemplateSelector>
     </Window.Resources>
 
-    <StackPanel>
-        <!-- Wrapping StackPanel -->
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="10">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="5">
             <ItemsControl ItemsSource="{Binding}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Expander Header="{Binding CategoryName}">
-                            <ItemsControl ItemsSource="{Binding SubCategories}">
+                        <Expander Header="{Binding CategoryName}" Margin="5" Foreground="DarkSlateGray">
+                            <ItemsControl ItemsSource="{Binding SubCategories}" Margin="5">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Expander Header="{Binding SubCategoryName}" Padding="10,0,0,0">
-                                            <ItemsControl ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource OptionSelector}">
+                                        <Expander Header="{Binding SubCategoryName}" Padding="2.5" Margin="0,5,0,5" Foreground="DarkSlateGray">
+                                            <ItemsControl ItemsSource="{Binding Options}" ItemTemplateSelector="{StaticResource OptionSelector}" Margin="5">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <UniformGrid Columns="4"/>
@@ -108,15 +95,15 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        
-        <!-- Submit Button -->
+
         <StackPanel Margin="10">
-            <!-- DockPanel for buttons -->
             <DockPanel LastChildFill="False">
-                <!-- Save These Settings Button -->
-                <Button Content="Save These Settings" HorizontalAlignment="Left" Click="SavePresetJson"/>
-                <!-- Submit Button -->
-                <Button Content="Generate Card with These Settings" HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click"/>
+                <Button HorizontalAlignment="Left" Click="SavePresetJson">
+                    <TextBlock Text="Save These Settings" Margin="20,10"/>
+                </Button>
+                <Button HorizontalAlignment="Right" DockPanel.Dock="Right" Click="SubmitButton_Click">
+                    <TextBlock Text="Generate Card with These Settings" Margin="20,10"/>
+                </Button>
             </DockPanel>
         </StackPanel>
     </StackPanel>
