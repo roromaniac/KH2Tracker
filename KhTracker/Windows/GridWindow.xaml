@@ -38,7 +38,7 @@
                 <MenuItem Header="Grid Checks" Click="Grid_Options" />
             </MenuItem>
             <MenuItem Header="Image Visuals" Focusable="False">
-                <MenuItem Header="Pick Colors" Click="PickColor_Click" />
+                <MenuItem Header="Set Colors" Click="PickColor_Click" />
                 <Separator/>
                 <MenuItem Header="Televo Icons" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Sonic Icons" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>

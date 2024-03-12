@@ -57,23 +57,29 @@ namespace KhTracker
             var button = sender as Button;
             if (button != null)
             {
-                // sets the background of button to its current color
-                LastClickedButton = button;
-                SelectedColor = ButtonColors[(string)button.Content];
+                var textBlock = button.Content as TextBlock; // Cast the Content to TextBlock
+                if (textBlock != null)
+                {
+                    // sets the background of button to its current color
+                    LastClickedButton = button;
+                    SelectedColor = ButtonColors[textBlock.Text]; // Use buttonText here
 
-                // update the preview background
-                PreviewBorder.Background = new SolidColorBrush(SelectedColor);
+                    // update the preview background
+                    PreviewBorder.Background = new SolidColorBrush(SelectedColor);
 
-                // reveals the color slider
-                ColorControls.Visibility = Visibility.Visible;
+                    // reveals the color slider
+                    ColorControls.Visibility = Visibility.Visible;
+                }
             }
         }
+
 
         private void SelectColor_Click(object sender, RoutedEventArgs e)
         {
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
-            ButtonColors[(string)LastClickedButton.Content] = SelectedColor; // Update the dictionary
-            SaveColorSettings((string)LastClickedButton.Content, SelectedColor); // Save the dictionary
+            var lastClickedTextBlock = LastClickedButton.Content as TextBlock;  
+            ButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
+            SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
         }
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)

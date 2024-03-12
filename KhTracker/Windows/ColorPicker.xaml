@@ -2,26 +2,78 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Simple Color Picker" Height="400" Width="400">
+        Title="Color Picker" MinHeight="100" MinWidth="200"
+        Background="#303030">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#048EBB"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <StackPanel>
+
         <!-- Buttons for selecting which color to modify -->
-        <WrapPanel HorizontalAlignment="Center">
-            <Button x:Name="UnmarkedColorButton" Content="Unmarked Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="MarkedColorButton" Content="Marked Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="AnnotatedColorButton" Content="Annotated Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="BingoColorButton" Content="Bingo Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="HintColorButton" Content="Hint Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="BattleshipMissColorButton" Content="Battleship Miss Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="BattleshipHitColorButton" Content="Battleship Hit Color" Click="ColorButton_Click" Margin="5"/>
-            <Button x:Name="BattleshipSunkColorButton" Content="Battleship Sunk Color" Click="ColorButton_Click" Margin="5"/>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        </WrapPanel>
+            <!-- First row of buttons -->
+            <Button Grid.Row="0" Grid.Column="0" x:Name="UnmarkedColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Unmarked Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="MarkedColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Marked Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="AnnotatedColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Annotated Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="0" Grid.Column="3" x:Name="HintColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Hint Color" Margin="20,10"/>
+            </Button>
 
-        <!-- The RGB sliders (hidden initially) -->
+            <!-- Adjust Grid.ColumnSpan for buttons to fit in the second row if needed -->
+            <Button Grid.Row="1" Grid.Column="0" x:Name="BingoColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Bingo Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="1" x:Name="BattleshipMissColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Battleship Miss Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="2" x:Name="BattleshipHitColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Battleship Hit Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="1" Grid.Column="3" x:Name="BattleshipSunkColorButton" Click="ColorButton_Click">
+                <TextBlock Text="Battleship Sunk Color" Margin="20,10"/>
+            </Button>
+
+        </Grid>
+
+
         <StackPanel x:Name="ColorControls" Visibility="Collapsed">
-            <xctk:ColorPicker Name="myColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged" />
-            <Border x:Name="PreviewBorder" Height="50" Margin="5"/>
+            <xctk:ColorPicker Name="myColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+            <Border x:Name="PreviewBorder" Height="100" Margin="5"/>
             <Button Content="Select Color" Click="SelectColor_Click"/>
         </StackPanel>
     </StackPanel>

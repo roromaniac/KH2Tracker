@@ -207,7 +207,7 @@ namespace KhTracker
             return imageKeys;
         }
 
-        private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
+        private List<string> Asset_Collection(int seed = 1)
         {
 
             List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary>();
@@ -232,27 +232,27 @@ namespace KhTracker
                 {
                     if (entry.Value is GridLabelledImage img && img.GridAllowed)
                     {
-                        // the split here addresses the image type e.g. min-valor will give me min
-                        if (((string)entry.Key).Split('-')[0] == visual_type)
+                        // regardless of image style, the image ID should be consistent so we just gather all of them from Min
+                        if (((string)entry.Key).Split('-')[0] == "Min")
                         {
                             // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
                             string checkName = ((string)entry.Key).Split('-')[1];
                             gridSettings[checkName] = gridSettings.ContainsKey(checkName) ? gridSettings[checkName] : img.GridAllowed;
                             if (gridSettings[checkName])
-                                trackableItemsDict[entry.Key] = entry.Value;
+                                trackableItemsDict[checkName] = entry.Value;
                         }
                     }
 
                 }
             }
 
-            // RErandomize which reports get included
+            // RE-randomize which reports get included
             var numReports = Properties.Settings.Default.GridWindowNumReports;
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
 
-            // RErandomize which visit unlocks get included
+            // RE-randomize which visit unlocks get included
             var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
             int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
@@ -356,10 +356,20 @@ namespace KhTracker
                 seed = seedName.GetHashCode();
             }
             Seedname.Header = "Seed: " + seedName;
+
             if (iconChange)
+                // switch image style
                 assets = Change_Icons(assets);
             else
-                assets = Asset_Collection(TelevoIconsOption.IsChecked ? "Min" : "Old", seed);
+            {
+                // get raw check names
+                assets = Asset_Collection(seed);
+                // set the content resource reference with style
+                string style = TelevoIconsOption.IsChecked ? "Min-" : "Old-";
+                assets = assets.Select(item => style + item).ToList();
+            }
+
+
 
             if (rows * columns <= 0)
             {
