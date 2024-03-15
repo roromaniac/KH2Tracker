@@ -14,15 +14,7 @@ using System.Text.Json;
 using Path = System.IO.Path;
 using KhTracker.Hotkeys;
 using System.Windows.Input;
-using System.Xml.Linq;
-using System.Text.Json.Serialization;
-using System.Security.Policy;
-using System.Linq.Expressions;
-using System.Windows.Markup;
-using System.Reflection;
-using System.Diagnostics.PerformanceData;
 using MessageForm = System.Windows.Forms;
-using System.Data.Common;
 
 //using System.Text.Json.Serialization;
 //using YamlDotNet.Serialization;
@@ -82,6 +74,7 @@ namespace KhTracker
             settingInfo[7] = SoraLevel01Option.IsChecked;
             settingInfo[8] = SoraLevel50Option.IsChecked;
             settingInfo[9] = SoraLevel99Option.IsChecked;
+            settingInfo[10] = ChestLockOption.IsChecked;
             //World toggles
             settingInfo[10] = SoraHeartOption.IsChecked;
             settingInfo[11] = DrivesOption.IsChecked;
@@ -282,6 +275,7 @@ namespace KhTracker
                 AbilitiesToggle(setting[3]);
                 AntiFormToggle(setting[4]);
                 VisitLockToggle(setting[5]);
+                ChestLockToggle(setting[10]);
                 ExtraChecksToggle(setting[6]);
                 if (setting[7])
                     SoraLevel01Toggle(true);
