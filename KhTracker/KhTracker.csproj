@@ -57,18 +57,6 @@
   <PropertyGroup>
     <ApplicationIcon>tracker.ico</ApplicationIcon>
   </PropertyGroup>
-  <PropertyGroup>
-    <ManifestCertificateThumbprint>BDC7F4C6CA58E5D9C39797A48C77A46B787E2A84</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>KhTracker_TemporaryKey.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>true</SignManifests>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,6 +93,7 @@
     <Compile Include="AutoTracking\CheckEveryCheck.cs" />
     <Compile Include="AutoTracking\Extra.cs" />
     <Compile Include="AutoTracking\Visit.cs" />
+    <Compile Include="AutoTracking\VisitNew.cs" />
     <Compile Include="Core\HintModes.cs" />
     <Compile Include="AutoTracking\Magic.cs" />
     <Compile Include="AutoTracking\Proof.cs" />
@@ -217,7 +206,6 @@
     <Resource Include="Fonts\KHMenu-Italic.otf" />
     <Resource Include="Fonts\KHTitle.otf" />
     <Resource Include="Fonts\KHIcon.otf" />
-    <None Include="KhTracker_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -299,6 +287,21 @@
     <Content Include="CustomImages\Checks\aux_munny_pouch.png" />
     <Content Include="CustomImages\Checks\aux_olympus_stone.png" />
     <Content Include="CustomImages\Checks\aux_unknowndisk.png" />
+    <Content Include="CustomImages\Checks\chest_ag.png" />
+    <Content Include="CustomImages\Checks\chest_bc.png" />
+    <Content Include="CustomImages\Checks\chest_cor.png" />
+    <Content Include="CustomImages\Checks\chest_dc.png" />
+    <Content Include="CustomImages\Checks\chest_haw.png" />
+    <Content Include="CustomImages\Checks\chest_hb.png" />
+    <Content Include="CustomImages\Checks\chest_ht.png" />
+    <Content Include="CustomImages\Checks\chest_lod.png" />
+    <Content Include="CustomImages\Checks\chest_oc.png" />
+    <Content Include="CustomImages\Checks\chest_pl.png" />
+    <Content Include="CustomImages\Checks\chest_pr.png" />
+    <Content Include="CustomImages\Checks\chest_sp.png" />
+    <Content Include="CustomImages\Checks\chest_stt.png" />
+    <Content Include="CustomImages\Checks\chest_tt.png" />
+    <Content Include="CustomImages\Checks\chest_twtnw.png" />
     <Content Include="CustomImages\Checks\form_anti.png" />
     <Content Include="CustomImages\Checks\form_final.png" />
     <Content Include="CustomImages\Checks\form_limit.png" />
@@ -311,11 +314,14 @@
     <Content Include="CustomImages\Checks\lock_bonefist.png" />
     <Content Include="CustomImages\Checks\lock_icecream.png" />
     <Content Include="CustomImages\Checks\lock_identitydisk.png" />
+    <Content Include="CustomImages\Checks\lock_kingsletter.png" />
     <Content Include="CustomImages\Checks\lock_membershipcard.png" />
     <Content Include="CustomImages\Checks\lock_picture.png" />
     <Content Include="CustomImages\Checks\lock_proudfang.png" />
     <Content Include="CustomImages\Checks\lock_scimitar.png" />
+    <Content Include="CustomImages\Checks\lock_sketches.png" />
     <Content Include="CustomImages\Checks\lock_skillcrossbones.png" />
+    <Content Include="CustomImages\Checks\lock_waytothedawn.png" />
     <Content Include="CustomImages\Checks\magic_blizzard.png" />
     <Content Include="CustomImages\Checks\magic_cure.png" />
     <Content Include="CustomImages\Checks\magic_fire.png" />
@@ -334,6 +340,24 @@
     <Content Include="CustomImages\Checks\summon_stitch.png" />
     <Content Include="CustomImages\Checks\torn_pages.png" />
     <Content Include="CustomImages\GhostChecks\ansem_report.png" />
+    <Content Include="CustomImages\GhostChecks\chest_ag.png" />
+    <Content Include="CustomImages\GhostChecks\chest_bc.png" />
+    <Content Include="CustomImages\GhostChecks\chest_cor.png" />
+    <Content Include="CustomImages\GhostChecks\chest_dc.png" />
+    <Content Include="CustomImages\GhostChecks\chest_haw.png" />
+    <Content Include="CustomImages\GhostChecks\chest_hb.png" />
+    <Content Include="CustomImages\GhostChecks\chest_ht.png" />
+    <Content Include="CustomImages\GhostChecks\chest_lod.png" />
+    <Content Include="CustomImages\GhostChecks\chest_oc.png" />
+    <Content Include="CustomImages\GhostChecks\chest_pl.png" />
+    <Content Include="CustomImages\GhostChecks\chest_pr.png" />
+    <Content Include="CustomImages\GhostChecks\chest_sp.png" />
+    <Content Include="CustomImages\GhostChecks\chest_stt.png" />
+    <Content Include="CustomImages\GhostChecks\chest_tt.png" />
+    <Content Include="CustomImages\GhostChecks\chest_twtnw.png" />
+    <Content Include="CustomImages\GhostChecks\lock_kingsletter.png" />
+    <Content Include="CustomImages\GhostChecks\lock_sketches.png" />
+    <Content Include="CustomImages\GhostChecks\lock_waytothedawn.png" />
     <Content Include="CustomImages\Progression\100_acre_wood\balloon_bounce.png" />
     <Content Include="CustomImages\Progression\100_acre_wood\blustery_rescue.png" />
     <Content Include="CustomImages\Progression\100_acre_wood\expotition.png" />
@@ -344,6 +368,48 @@
     <Content Include="CustomImages\Progression\agrabah\elemental_lords.png" />
     <Content Include="CustomImages\Progression\agrabah\jafar.png" />
     <Content Include="CustomImages\Progression\agrabah\lexaeus.png" />
+    <Resource Include="Images\Worlds\Locks\Chest_Locked.png" />
+    <Resource Include="Images\Worlds\Locks\Keyhole_1.png" />
+    <Resource Include="Images\Worlds\Locks\Keyhole_2.png" />
+    <Resource Include="Images\Worlds\Locks\Keyhole_3.png" />
+    <Resource Include="Images\Worlds\Locks\Keyhole.png" />
+    <Resource Include="Images\Worlds\Locks\Chest.png" />
+    <Resource Include="Images\Checks\Old\lock_kingsletter.png" />
+    <Resource Include="Images\Checks\Old\lock_sketches.png" />
+    <Resource Include="Images\Checks\Old\lock_waytothedawn.png" />
+    <Resource Include="Images\Checks\Min\lock_kingsletter.png" />
+    <Resource Include="Images\Checks\Min\lock_sketches.png" />
+    <Resource Include="Images\Checks\Min\lock_waytothedawn.png" />
+    <Resource Include="Images\Checks\Old\chest_ag.png" />
+    <Resource Include="Images\Checks\Old\chest_bc.png" />
+    <Resource Include="Images\Checks\Old\chest_cor.png" />
+    <Resource Include="Images\Checks\Old\chest_dc.png" />
+    <Resource Include="Images\Checks\Old\chest_haw.png" />
+    <Resource Include="Images\Checks\Old\chest_hb.png" />
+    <Resource Include="Images\Checks\Old\chest_ht.png" />
+    <Resource Include="Images\Checks\Old\chest_lod.png" />
+    <Resource Include="Images\Checks\Old\chest_oc.png" />
+    <Resource Include="Images\Checks\Old\chest_pl.png" />
+    <Resource Include="Images\Checks\Old\chest_pr.png" />
+    <Resource Include="Images\Checks\Old\chest_sp.png" />
+    <Resource Include="Images\Checks\Old\chest_stt.png" />
+    <Resource Include="Images\Checks\Old\chest_tt.png" />
+    <Resource Include="Images\Checks\Old\chest_twtnw.png" />
+    <Resource Include="Images\Checks\Min\chest_ag.png" />
+    <Resource Include="Images\Checks\Min\chest_bc.png" />
+    <Resource Include="Images\Checks\Min\chest_cor.png" />
+    <Resource Include="Images\Checks\Min\chest_dc.png" />
+    <Resource Include="Images\Checks\Min\chest_haw.png" />
+    <Resource Include="Images\Checks\Min\chest_hb.png" />
+    <Resource Include="Images\Checks\Min\chest_ht.png" />
+    <Resource Include="Images\Checks\Min\chest_lod.png" />
+    <Resource Include="Images\Checks\Min\chest_oc.png" />
+    <Resource Include="Images\Checks\Min\chest_pl.png" />
+    <Resource Include="Images\Checks\Min\chest_pr.png" />
+    <Resource Include="Images\Checks\Min\chest_sp.png" />
+    <Resource Include="Images\Checks\Min\chest_stt.png" />
+    <Resource Include="Images\Checks\Min\chest_tt.png" />
+    <Resource Include="Images\Checks\Min\chest_twtnw.png" />
     <Resource Include="Images\Progression\Min\the_world_that_never_was\finalxemnas_griddata.png" />
     <Resource Include="Images\Progression\Min\the_world_that_never_was\FinalXemnas.png" />
     <Resource Include="Images\Progression\Min\the_world_that_never_was\ArmoredXemnas2.png" />

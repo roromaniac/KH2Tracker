@@ -22,6 +22,7 @@ using System.Windows.Markup;
 using System.Reflection;
 using System.Diagnostics.PerformanceData;
 using MessageForm = System.Windows.Forms;
+using System.Data.Common;
 
 //using System.Text.Json.Serialization;
 //using YamlDotNet.Serialization;
@@ -2469,7 +2470,7 @@ namespace KhTracker
                     Grid pool;
 
                     if (item.Name.StartsWith("Ghost_"))
-                        pool = VisualTreeHelper.GetChild(ItemPool, 4) as Grid;
+                        pool = VisualTreeHelper.GetChild(ItemPool, 7) as Grid;
                     else
                         pool = data.Items[item.Name].Item2;
 
@@ -2594,6 +2595,19 @@ namespace KhTracker
             tornPageCount = 0;
             munnyPouchCount = 0;
 
+            AuronWepLevel = 0;
+            MulanWepLevel = 0;
+            BeastWepLevel = 0;
+            JackWepLevel = 0;
+            SimbaWepLevel = 0;
+            SparrowWepLevel = 0;
+            AladdinWepLevel = 0;
+            TronWepLevel = 0;
+            MembershipCardLevel = 0;
+            IceCreamLevel = 0;
+            RikuWepLevel = 0;
+            KingsLetterLevel = 0;
+
             if (fire != null)
                 fire.Level = 0;
             if (blizzard != null)
@@ -2608,6 +2622,31 @@ namespace KhTracker
                 magnet.Level = 0;
             if (pages != null)
                 pages.Quantity = 0;
+
+            if (AuronWep != null)
+                AuronWep.Level = 0;
+            if (MulanWep != null)
+                MulanWep.Level = 0;
+            if (BeastWep != null)
+                BeastWep.Level = 0;
+            if (JackWep != null)
+                JackWep.Level = 0;
+            if (SimbaWep != null)
+                SimbaWep.Level = 0;
+            if (SparrowWep != null)
+                SparrowWep.Level = 0;
+            if (AladdinWep != null)
+                AladdinWep.Level = 0;
+            if (TronWep != null)
+                TronWep.Level = 0;
+            if (MembershipCard != null)
+                MembershipCard.Level = 0;
+            if (IceCream != null)
+                IceCream.Level = 0;
+            if (RikuWep != null)
+                RikuWep.Level = 0;
+            if (KingsLetter != null)
+                KingsLetter.Level = 0;
 
             if (highJump != null)
                 highJump.Level = 0;
@@ -2653,6 +2692,19 @@ namespace KhTracker
             WorldGrid.Report_Count = 0;
             WorldGrid.Visit_Count = 0;
 
+            WorldGrid.Real_AuronWep = 0;
+            WorldGrid.Real_MulanWep = 0;
+            WorldGrid.Real_BeastWep = 0;
+            WorldGrid.Real_JackWep = 0;
+            WorldGrid.Real_SimbaWep = 0;
+            WorldGrid.Real_SparrowWep = 0;
+            WorldGrid.Real_AladdinWep = 0;
+            WorldGrid.Real_TronWep = 0;
+            WorldGrid.Real_MembershipCard = 0;
+            WorldGrid.Real_IceCream = 0;
+            WorldGrid.Real_RikuWep = 0;
+            WorldGrid.Real_KingsLetter = 0;
+
             FireCount.Text = "3";
             BlizzardCount.Text = "3";
             ThunderCount.Text = "3";
@@ -2678,6 +2730,44 @@ namespace KhTracker
             WorldGrid.Ghost_Magnet_obtained = 0;
             WorldGrid.Ghost_Pages_obtained = 0;
             WorldGrid.Ghost_Pouches_obtained = 0;
+
+            BCCount.Text = "2";
+            HTCount.Text = "2";
+            PLCount.Text = "2";
+            OCCount.Text = "2";
+            LoDCount.Text = "2";
+            PRCount.Text = "2";
+            AGCount.Text = "2";
+            SPCount.Text = "2";
+            TWTNWCount.Text = "2";
+            HBCount.Text = "2";
+            DCCount.Text = "2";
+            TTCount.Text = "3";
+
+            WorldGrid.Ghost_AuronWep = 0;
+            WorldGrid.Ghost_MulanWep = 0;
+            WorldGrid.Ghost_BeastWep = 0;
+            WorldGrid.Ghost_JackWep = 0;
+            WorldGrid.Ghost_SimbaWep = 0;
+            WorldGrid.Ghost_SparrowWep = 0;
+            WorldGrid.Ghost_AladdinWep = 0;
+            WorldGrid.Ghost_TronWep = 0;
+            WorldGrid.Ghost_MembershipCard = 0;
+            WorldGrid.Ghost_IceCream = 0;
+            WorldGrid.Ghost_RikuWep = 0;
+            WorldGrid.Ghost_KingsLetter = 0;
+            WorldGrid.Ghost_AuronWep_obtained = 0;
+            WorldGrid.Ghost_MulanWep_obtained = 0;
+            WorldGrid.Ghost_BeastWep_obtained = 0;
+            WorldGrid.Ghost_JackWep_obtained = 0;
+            WorldGrid.Ghost_SimbaWep_obtained = 0;
+            WorldGrid.Ghost_SparrowWep_obtained = 0;
+            WorldGrid.Ghost_AladdinWep_obtained = 0;
+            WorldGrid.Ghost_TronWep_obtained = 0;
+            WorldGrid.Ghost_MembershipCard_obtained = 0;
+            WorldGrid.Ghost_IceCream_obtained = 0;
+            WorldGrid.Ghost_RikuWep_obtained = 0;
+            WorldGrid.Ghost_KingsLetter_obtained = 0;
 
             Ghost_FireCount.Visibility = Visibility.Hidden;
             Ghost_BlizzardCount.Visibility = Visibility.Hidden;
@@ -2721,6 +2811,31 @@ namespace KhTracker
             MunnyCount.Fill = (LinearGradientBrush)FindResource("Color_Pouch");
             MunnyCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
 
+            BCCount.Fill = (LinearGradientBrush)FindResource("Color_BC");
+            BCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            HTCount.Fill = (LinearGradientBrush)FindResource("Color_HT");
+            HTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            PLCount.Fill = (LinearGradientBrush)FindResource("Color_PL");
+            PLCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            OCCount.Fill = (LinearGradientBrush)FindResource("Color_OC");
+            OCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            LoDCount.Fill = (LinearGradientBrush)FindResource("Color_LoD");
+            LoDCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            PRCount.Fill = (LinearGradientBrush)FindResource("Color_PR");
+            PRCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            AGCount.Fill = (LinearGradientBrush)FindResource("Color_AG");
+            AGCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            SPCount.Fill = (LinearGradientBrush)FindResource("Color_SP");
+            SPCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            TWTNWCount.Fill = (LinearGradientBrush)FindResource("Color_TWTNW");
+            TWTNWCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            HBCount.Fill = (LinearGradientBrush)FindResource("Color_HB");
+            HBCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            DCCount.Fill = (LinearGradientBrush)FindResource("Color_DC");
+            DCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            TTCount.Fill = (LinearGradientBrush)FindResource("Color_TT");
+            TTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+
             Data.WorldItems.Clear();
             data.TrackedReports.Clear();
 
@@ -2748,9 +2863,9 @@ namespace KhTracker
             //reset pathhints edits
             foreach (string key in data.WorldsData.Keys.ToList())
             {
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Star);
-
-                Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Star);                
+            
+                var pathgrid = (Grid)data.WorldsData[key].top.FindName(key + "Path");
                 pathgrid.Visibility = Visibility.Hidden;
                 foreach (Image child in pathgrid.Children)
                 {
@@ -2761,10 +2876,10 @@ namespace KhTracker
             }
 
             UpdatePointScore(0);
-            ReportsToggle(true);
-            TornPagesToggle(true);
-            ResetHints();
+            ReportsToggle(ReportsOption.IsChecked);
+            TornPagesToggle(TornPagesOption.IsChecked);
             VisitLockToggle(VisitLockOption.IsChecked);
+            ChestLockToggle(ChestLockOption.IsChecked);
 
             DeathCounter = 0;
             DeathValue.Text = "0";
@@ -2787,6 +2902,8 @@ namespace KhTracker
             //reset progression visuals
             PPCount.Width = new GridLength(1.15, GridUnitType.Star);
             PPSep.Width = new GridLength(0.3, GridUnitType.Star);
+
+            ResetHints();
 
             if (data.wasTracking && sender != null)
                 InitTracker();

@@ -197,7 +197,7 @@ namespace KhTracker
 
             if (this.Name.StartsWith("Ghost_"))
             {
-                Grid GhostRow = VisualTreeHelper.GetChild(MainW.ItemPool, 4) as Grid; //ghost grid always at this position
+                Grid GhostRow = VisualTreeHelper.GetChild(MainW.ItemPool, 7) as Grid; //ghost grid always at this position
                 if (Parent != GhostRow)
                 {
                     WorldGrid parent = this.Parent as WorldGrid;

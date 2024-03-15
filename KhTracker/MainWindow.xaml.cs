@@ -96,20 +96,52 @@ namespace KhTracker
             data.TornPages.Add(TornPage4);
             data.TornPages.Add(TornPage5);
 
-            data.VisitLocks.Add(AuronWep);
-            data.VisitLocks.Add(MulanWep);
-            data.VisitLocks.Add(BeastWep);
-            data.VisitLocks.Add(JackWep);
-            data.VisitLocks.Add(SimbaWep);
-            data.VisitLocks.Add(SparrowWep);
-            data.VisitLocks.Add(AladdinWep);
-            data.VisitLocks.Add(TronWep);
-            data.VisitLocks.Add(MembershipCard);
-            data.VisitLocks.Add(IceCream);
-            data.VisitLocks.Add(Picture);
+            data.VisitLocks.Add(AuronWep1);
+            data.VisitLocks.Add(AuronWep2);
+            data.VisitLocks.Add(MulanWep1);
+            data.VisitLocks.Add(MulanWep2);
+            data.VisitLocks.Add(BeastWep1);
+            data.VisitLocks.Add(BeastWep2);
+            data.VisitLocks.Add(JackWep1);
+            data.VisitLocks.Add(JackWep2);
+            data.VisitLocks.Add(SimbaWep1);
+            data.VisitLocks.Add(SimbaWep2);
+            data.VisitLocks.Add(SparrowWep1);
+            data.VisitLocks.Add(SparrowWep2);
+            data.VisitLocks.Add(AladdinWep1);
+            data.VisitLocks.Add(AladdinWep2);
+            data.VisitLocks.Add(TronWep1);
+            data.VisitLocks.Add(TronWep2);
+            data.VisitLocks.Add(MembershipCard1);
+            data.VisitLocks.Add(MembershipCard2);
+            data.VisitLocks.Add(RikuWep1);
+            data.VisitLocks.Add(RikuWep2);
+            data.VisitLocks.Add(KingsLetter1);
+            data.VisitLocks.Add(KingsLetter2);
+            data.VisitLocks.Add(IceCream1);
+            data.VisitLocks.Add(IceCream2);
+            data.VisitLocks.Add(IceCream3);
+            data.VisitLocks.Add(Sketches);
+            //data.VisitLocks.Add(Picture);
 
-            data.WorldsData.Add("SorasHeart", new WorldData(SorasHeartTop, SorasHeart, null, SorasHeartHint, SorasHeartGrid, false, 0));
-            data.WorldsData.Add("DriveForms", new WorldData(DriveFormsTop, DriveForms, null, DriveFormsHint, DriveFormsGrid, false, 0));
+            data.ChestLocks.Add(ChestTT);
+            data.ChestLocks.Add(ChestHB);
+            data.ChestLocks.Add(ChestAG);
+            data.ChestLocks.Add(ChestBC);
+            data.ChestLocks.Add(ChestDC);
+            data.ChestLocks.Add(ChestHT);
+            data.ChestLocks.Add(ChestOC);
+            data.ChestLocks.Add(ChestPL);
+            data.ChestLocks.Add(ChestPR);
+            data.ChestLocks.Add(ChestSP);
+            data.ChestLocks.Add(ChestSTT);
+            data.ChestLocks.Add(ChestCoR);
+            data.ChestLocks.Add(ChestLoD);
+            data.ChestLocks.Add(ChestHAW);
+            data.ChestLocks.Add(ChestTWTNW);
+
+            data.WorldsData.Add("SorasHeart", new WorldData(SorasHeartTop, SorasHeart, null, SorasHeartHint, SorasHeartGrid, false, -1));
+            data.WorldsData.Add("DriveForms", new WorldData(DriveFormsTop, DriveForms, null, DriveFormsHint, DriveFormsGrid, false, -1));
             data.WorldsData.Add("SimulatedTwilightTown", new WorldData(SimulatedTwilightTownTop, SimulatedTwilightTown, SimulatedTwilightTownProgression, SimulatedTwilightTownHint, SimulatedTwilightTownGrid, false, 0));
             data.WorldsData.Add("TwilightTown", new WorldData(TwilightTownTop, TwilightTown, TwilightTownProgression, TwilightTownHint, TwilightTownGrid, false, 0));
             data.WorldsData.Add("HollowBastion", new WorldData(HollowBastionTop, HollowBastion, HollowBastionProgression, HollowBastionHint, HollowBastionGrid, false, 0));
@@ -117,16 +149,16 @@ namespace KhTracker
             data.WorldsData.Add("OlympusColiseum", new WorldData(OlympusColiseumTop, OlympusColiseum, OlympusColiseumProgression, OlympusColiseumHint, OlympusColiseumGrid, false, 0));
             data.WorldsData.Add("Agrabah", new WorldData(AgrabahTop, Agrabah, AgrabahProgression, AgrabahHint, AgrabahGrid, false, 0));
             data.WorldsData.Add("LandofDragons", new WorldData(LandofDragonsTop, LandofDragons, LandofDragonsProgression, LandofDragonsHint, LandofDragonsGrid, false, 0));
-            data.WorldsData.Add("HundredAcreWood", new WorldData(HundredAcreWoodTop, HundredAcreWood, HundredAcreWoodProgression, HundredAcreWoodHint, HundredAcreWoodGrid, false, 0));
+            data.WorldsData.Add("HundredAcreWood", new WorldData(HundredAcreWoodTop, HundredAcreWood, HundredAcreWoodProgression, HundredAcreWoodHint, HundredAcreWoodGrid, false, -1));
             data.WorldsData.Add("PrideLands", new WorldData(PrideLandsTop, PrideLands, PrideLandsProgression, PrideLandsHint, PrideLandsGrid, false, 0));
             data.WorldsData.Add("DisneyCastle", new WorldData(DisneyCastleTop, DisneyCastle, DisneyCastleProgression, DisneyCastleHint, DisneyCastleGrid, false, 0));
             data.WorldsData.Add("HalloweenTown", new WorldData(HalloweenTownTop, HalloweenTown, HalloweenTownProgression, HalloweenTownHint, HalloweenTownGrid, false, 0));
             data.WorldsData.Add("PortRoyal", new WorldData(PortRoyalTop, PortRoyal, PortRoyalProgression, PortRoyalHint, PortRoyalGrid, false, 0));
             data.WorldsData.Add("SpaceParanoids", new WorldData(SpaceParanoidsTop, SpaceParanoids, SpaceParanoidsProgression, SpaceParanoidsHint, SpaceParanoidsGrid, false, 0));
             data.WorldsData.Add("TWTNW", new WorldData(TWTNWTop, TWTNW, TWTNWProgression, TWTNWHint, TWTNWGrid, false, 0));
-            data.WorldsData.Add("GoA", new WorldData(GoATop, GoA, GoAProgression, GoAHint, GoAGrid, true, 0));
-            data.WorldsData.Add("Atlantica", new WorldData(AtlanticaTop, Atlantica, AtlanticaProgression, AtlanticaHint, AtlanticaGrid, false, 0));
-            data.WorldsData.Add("PuzzSynth", new WorldData(PuzzSynthTop, PuzzSynth, null, PuzzSynthHint, PuzzSynthGrid, false, 0));
+            data.WorldsData.Add("GoA", new WorldData(GoATop, GoA, GoAProgression, GoAHint, GoAGrid, true, -1));
+            data.WorldsData.Add("Atlantica", new WorldData(AtlanticaTop, Atlantica, AtlanticaProgression, AtlanticaHint, AtlanticaGrid, false, -1));
+            data.WorldsData.Add("PuzzSynth", new WorldData(PuzzSynthTop, PuzzSynth, null, PuzzSynthHint, PuzzSynthGrid, false, -1));
 
             data.ProgressKeys.Add("SimulatedTwilightTown", new List<string>() { "", "Chests", "Minigame", "TwilightThorn", "Axel1", "Struggle", "ComputerRoom", "Axel", "DataRoxas" });
             data.ProgressKeys.Add("TwilightTown", new List<string>() { "", "Chests", "Station", "MysteriousTower", "Sandlot", "Mansion", "BetwixtAndBetween", "DataAxel" });
@@ -802,159 +834,84 @@ namespace KhTracker
 
         }
 
-        public void VisitLockCheck()
+        //
+        public void SetWorldBoxColor(bool colorBar, bool isResource, string color, Button button, Grid grid)
         {
-            //we use this to check the current lock state and set lock visuals as needed while doing so
-            foreach (string World in data.WorldsData.Keys.ToList())
+
+
+            button = data.selected;
+
+
+
+            foreach (var Box in data.WorldsData[data.selected.Name].top.Children.OfType<Rectangle>())
             {
-                //could probably be handled better. oh well
-                switch (World)
+                if (Box.Opacity != 0.9 && !Box.Name.EndsWith("SelWG"))
+                    Box.Fill = (SolidColorBrush)FindResource("DefaultRec");
+
+                if (Box.Name.EndsWith("SelWG") && !WorldHighlightOption.IsChecked)
+                    Box.Visibility = Visibility.Collapsed;
+            }
+
+
+
+
+
+        }
+
+        public void VisitLockCheck(bool reset = false)
+        {
+            //TODO add suport for simple visit lock tracking (starting with all first visits)
+            //bool simpleLock = ;
+
+            //we use this to check the current lock state and set lock visuals as needed while doing so
+            foreach (string worldName in data.WorldsData.Keys.ToList())
+            {
+                //check if world has any locks (worlds without any will be -1)
+                int worldLockValue = data.WorldsData[worldName].visitLocks;
+                if (worldLockValue < 0)
+                    continue;
+
+                string lockName = worldName + "Locks";
+                Grid worldLocks = data.WorldsData[worldName].top.FindName(lockName) as Grid;
+
+                //get lock status
+                Visibility[] lockStatus = { Visibility.Visible, Visibility.Visible, Visibility.Visible };
+                while(worldLockValue > 0 && !reset)
                 {
-                    case "TwilightTown":
-                        switch (data.WorldsData["TwilightTown"].visitLocks)
-                        {
-                            case 0:
-                                TwilightTownLock_1.Visibility = Visibility.Collapsed;
-                                TwilightTownLock_2.Visibility = Visibility.Collapsed;
-                                TwilightTown.Opacity = 1;
-                                break;
-                            case 1:
-                                TwilightTownLock_1.Visibility = Visibility.Visible;
-                                TwilightTownLock_2.Visibility = Visibility.Collapsed;
-                                TwilightTown.Opacity = 0.45;
-                                break;
-                            case 10:
-                                TwilightTownLock_1.Visibility = Visibility.Collapsed;
-                                TwilightTownLock_2.Visibility = Visibility.Visible;
-                                TwilightTown.Opacity = 0.45;
-                                break;
-                            default:
-                                TwilightTownLock_1.Visibility = Visibility.Visible;
-                                TwilightTownLock_2.Visibility = Visibility.Visible;
-                                TwilightTown.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "HollowBastion":
-                        switch (data.WorldsData["HollowBastion"].visitLocks)
-                        {
-                            case 0:
-                                HollowBastionLock.Visibility = Visibility.Hidden;
-                                HollowBastion.Opacity = 1;
-                                break;
-                            default:
-                                HollowBastionLock.Visibility = Visibility.Visible;
-                                HollowBastion.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "BeastsCastle":
-                        switch (data.WorldsData["BeastsCastle"].visitLocks)
-                        {
-                            case 0:
-                                BeastsCastleLock.Visibility = Visibility.Hidden;
-                                BeastsCastle.Opacity = 1;
-                                break;
-                            default:
-                                BeastsCastleLock.Visibility = Visibility.Visible;
-                                BeastsCastle.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "OlympusColiseum":
-                        switch (data.WorldsData["OlympusColiseum"].visitLocks)
-                        {
-                            case 0:
-                                OlympusColiseumLock.Visibility = Visibility.Hidden;
-                                OlympusColiseum.Opacity = 1;
-                                break;
-                            default:
-                                OlympusColiseumLock.Visibility = Visibility.Visible;
-                                OlympusColiseum.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "Agrabah":
-                        switch (data.WorldsData["Agrabah"].visitLocks)
-                        {
-                            case 0:
-                                AgrabahLock.Visibility = Visibility.Hidden;
-                                Agrabah.Opacity = 1;
-                                break;
-                            default:
-                                AgrabahLock.Visibility = Visibility.Visible;
-                                Agrabah.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "LandofDragons":
-                        switch (data.WorldsData["LandofDragons"].visitLocks)
-                        {
-                            case 0:
-                                LandofDragonsLock.Visibility = Visibility.Hidden;
-                                LandofDragons.Opacity = 1;
-                                break;
-                            default:
-                                LandofDragonsLock.Visibility = Visibility.Visible;
-                                LandofDragons.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "PrideLands":
-                        switch (data.WorldsData["PrideLands"].visitLocks)
-                        {
-                            case 0:
-                                PrideLandsLock.Visibility = Visibility.Hidden;
-                                PrideLands.Opacity = 1;
-                                break;
-                            default:
-                                PrideLandsLock.Visibility = Visibility.Visible;
-                                PrideLands.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "HalloweenTown":
-                        switch (data.WorldsData["HalloweenTown"].visitLocks)
-                        {
-                            case 0:
-                                HalloweenTownLock.Visibility = Visibility.Hidden;
-                                HalloweenTown.Opacity = 1;
-                                break;
-                            default:
-                                HalloweenTownLock.Visibility = Visibility.Visible;
-                                HalloweenTown.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "PortRoyal":
-                        switch (data.WorldsData["PortRoyal"].visitLocks)
-                        {
-                            case 0:
-                                PortRoyalLock.Visibility = Visibility.Hidden;
-                                PortRoyal.Opacity = 1;
-                                break;
-                            default:
-                                PortRoyalLock.Visibility = Visibility.Visible;
-                                PortRoyal.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    case "SpaceParanoids":
-                        switch (data.WorldsData["SpaceParanoids"].visitLocks)
-                        {
-                            case 0:
-                                SpaceParanoidsLock.Visibility = Visibility.Hidden;
-                                SpaceParanoids.Opacity = 1;
-                                break;
-                            default:
-                                SpaceParanoidsLock.Visibility = Visibility.Visible;
-                                SpaceParanoids.Opacity = 0.45;
-                                break;
-                        }
-                        break;
-                    default:
-                        break;
+                    if (worldLockValue >= 100)
+                    {
+                        lockStatus[2] = Visibility.Collapsed;
+                        worldLockValue -= 100;
+                    }
+                    if (worldLockValue >= 10)
+                    {
+                        lockStatus[1] = Visibility.Collapsed;
+                        worldLockValue -= 10;
+                    }
+                    if (worldLockValue == 1)
+                    {
+                        lockStatus[0] = Visibility.Collapsed;
+                        worldLockValue -= 1;
+                    }
+                    if (worldLockValue != 0)
+                    {
+                        Console.WriteLine("lock value isn't 0?");
+                    }
                 }
+
+                //set lock visuals
+                Image lock1 = worldLocks.FindName(lockName + "1") as Image;
+                Image lock2 = worldLocks.FindName(lockName + "2") as Image;
+                Image lock3 = worldLocks.FindName(lockName + "3") as Image;
+                if (lock1 != null)
+                    lock1.Visibility = lockStatus[0];
+                if (lock2 != null)
+                    lock2.Visibility = lockStatus[1];
+                if (lock3 != null)
+                    lock3.Visibility = lockStatus[2];
+
+                if (reset)
+                    data.WorldsData[worldName].visitLocks = 0;
             }
         }
 

@@ -67,6 +67,33 @@ namespace KhTracker
         private ImportantCheck visitItem;
         private ImportantCheck extraItem;
 
+        private VisitNew AuronWep;
+        private VisitNew MulanWep;
+        private VisitNew BeastWep;
+        private VisitNew JackWep;
+        private VisitNew SimbaWep;
+        private VisitNew SparrowWep;
+        private VisitNew AladdinWep;
+        private VisitNew TronWep;
+        private VisitNew MembershipCard;
+        private VisitNew IceCream;
+        private VisitNew RikuWep;
+        private VisitNew KingsLetter;
+
+        private int AuronWepLevel;
+        private int MulanWepLevel;
+        private int BeastWepLevel;
+        private int JackWepLevel;
+        private int SimbaWepLevel;
+        private int SparrowWepLevel;
+        private int AladdinWepLevel;
+        private int TronWepLevel;
+        private int MembershipCardLevel;
+        private int IceCreamLevel;
+        private int RikuWepLevel;
+        private int KingsLetterLevel;
+
+
         private TornPage pages;
         public GridWindow gridWindow;
         private World world;
@@ -523,23 +550,69 @@ namespace KhTracker
             importantChecks.Add(proofItem = new Proof(memory, Save + 0x36B3, ADDRESS_OFFSET, "Nonexistence"));
             importantChecks.Add(proofItem = new Proof(memory, Save + 0x36B2, ADDRESS_OFFSET, "Connection"));
 
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35AE, ADDRESS_OFFSET, "AuronWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35AF, ADDRESS_OFFSET, "MulanWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35B3, ADDRESS_OFFSET, "BeastWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35B4, ADDRESS_OFFSET, "JackWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35B5, ADDRESS_OFFSET, "SimbaWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35B6, ADDRESS_OFFSET, "SparrowWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35C0, ADDRESS_OFFSET, "AladdinWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x35C2, ADDRESS_OFFSET, "TronWep"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x3643, ADDRESS_OFFSET, "MembershipCard"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x3649, ADDRESS_OFFSET, "IceCream"));
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
+
+            int AuronWepCount = AuronWep != null ? AuronWep.Level : 0;
+            int MulanWepCount = MulanWep != null ? MulanWep.Level : 0;
+            int BeastWepCount = BeastWep != null ? BeastWep.Level : 0;
+            int JackWepCount = JackWep != null ? JackWep.Level : 0;
+            int SimbaWepCount = SimbaWep != null ? SimbaWep.Level : 0;
+            int SparrowWepCount = SparrowWep != null ? SparrowWep.Level : 0;
+            int AladdinWepCount = AladdinWep != null ? AladdinWep.Level : 0;
+            int TronWepCount = TronWep != null ? TronWep.Level : 0;
+            int MembershipCardCount = MembershipCard != null ? MembershipCard.Level : 0;
+            int IceCreamCount = IceCream != null ? IceCream.Level : 0;
+            int RikuWepCount = RikuWep != null ? RikuWep.Level : 0;
+            int KingsLetterCount = KingsLetter != null ? KingsLetter.Level : 0;
+            importantChecks.Add(AuronWep = new VisitNew(memory, Save + 0x35AE, ADDRESS_OFFSET, "AuronWep"));
+            importantChecks.Add(MulanWep = new VisitNew(memory, Save + 0x35AF, ADDRESS_OFFSET, "MulanWep"));
+            importantChecks.Add(BeastWep = new VisitNew(memory, Save + 0x35B3, ADDRESS_OFFSET, "BeastWep"));
+            importantChecks.Add(JackWep = new VisitNew(memory, Save + 0x35B4, ADDRESS_OFFSET, "JackWep"));
+            importantChecks.Add(SimbaWep = new VisitNew(memory, Save + 0x35B5, ADDRESS_OFFSET, "SimbaWep"));
+            importantChecks.Add(SparrowWep = new VisitNew(memory, Save + 0x35B6, ADDRESS_OFFSET, "SparrowWep"));
+            importantChecks.Add(AladdinWep = new VisitNew(memory, Save + 0x35C0, ADDRESS_OFFSET, "AladdinWep"));
+            importantChecks.Add(TronWep = new VisitNew(memory, Save + 0x35C2, ADDRESS_OFFSET, "TronWep"));
+            importantChecks.Add(MembershipCard = new VisitNew(memory, Save + 0x3643, ADDRESS_OFFSET, "MembershipCard"));
+            importantChecks.Add(IceCream = new VisitNew(memory, Save + 0x3649, ADDRESS_OFFSET, "IceCream"));
+            importantChecks.Add(RikuWep = new VisitNew(memory, Save + 0x35C1, ADDRESS_OFFSET, "RikuWep"));
+            importantChecks.Add(KingsLetter = new VisitNew(memory, Save + 0x365D, ADDRESS_OFFSET, "KingsLetter"));
+            AuronWep.Level = AuronWepCount;
+            MulanWep.Level = MulanWepCount;
+            BeastWep.Level = BeastWepCount;
+            JackWep.Level = JackWepCount;
+            SimbaWep.Level = SimbaWepCount;
+            SparrowWep.Level = SparrowWepCount;
+            AladdinWep.Level = AladdinWepCount;
+            TronWep.Level = TronWepCount;
+            MembershipCard.Level = MembershipCardCount;
+            IceCream.Level = IceCreamCount;
+            RikuWep.Level = RikuWepCount;
+            KingsLetter.Level = KingsLetterCount;
+            importantChecks.Add(visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches"));
+            //importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
 
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x3696, ADDRESS_OFFSET, "HadesCup"));
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x3644, ADDRESS_OFFSET, "OlympusStone"));
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x365F, ADDRESS_OFFSET, "UnknownDisk"));
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x363C, ADDRESS_OFFSET, "MunnyPouch1"));
             importantChecks.Add(extraItem = new Extra(memory, Save + 0x3695, ADDRESS_OFFSET, "MunnyPouch2"));
+
+
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x35A2, ADDRESS_OFFSET, "ChestTT"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x368D, ADDRESS_OFFSET, "ChestSTT"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3689, ADDRESS_OFFSET, "ChestHB"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3699, ADDRESS_OFFSET, "ChestCoR"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3687, ADDRESS_OFFSET, "ChestAG"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3685, ADDRESS_OFFSET, "ChestBC"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3680, ADDRESS_OFFSET, "ChestDC"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3688, ADDRESS_OFFSET, "ChestHT"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x367C, ADDRESS_OFFSET, "ChestLoD"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x367F, ADDRESS_OFFSET, "ChestOC"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3682, ADDRESS_OFFSET, "ChestPL"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3681, ADDRESS_OFFSET, "ChestPR"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3683, ADDRESS_OFFSET, "ChestSP"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3698, ADDRESS_OFFSET, "ChestTWTNW"));
+            importantChecks.Add(extraItem = new Extra(memory, Save + 0x368A, ADDRESS_OFFSET, "ChestHAW"));
+
 
             //change this for flag checking to determine amount of pages?
             int count = pages != null ? pages.Quantity : 0;
@@ -1022,6 +1095,92 @@ namespace KhTracker
                 newChecks.Add(page);
                 collectedChecks.Add(page);
             }
+            //
+            while (BeastWep.Level > BeastWepLevel)
+            {
+                ++BeastWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "BeastWep" + BeastWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (JackWep.Level > JackWepLevel)
+            {
+                ++JackWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "JackWep" + JackWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (SimbaWep.Level > SimbaWepLevel)
+            {
+                ++SimbaWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "SimbaWep" + SimbaWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (AuronWep.Level > AuronWepLevel)
+            {
+                ++AuronWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "AuronWep" + AuronWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (MulanWep.Level > MulanWepLevel)
+            {
+                ++MulanWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "MulanWep" + MulanWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (SparrowWep.Level > SparrowWepLevel)
+            {
+                ++SparrowWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "SparrowWep" + SparrowWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (AladdinWep.Level > AladdinWepLevel)
+            {
+                ++AladdinWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "AladdinWep" + AladdinWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (TronWep.Level > TronWepLevel)
+            {
+                ++TronWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "TronWep" + TronWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (RikuWep.Level > RikuWepLevel)
+            {
+                ++RikuWepLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "RikuWep" + RikuWepLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (MembershipCard.Level > MembershipCardLevel)
+            {
+                ++MembershipCardLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "MembershipCard" + MembershipCardLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (KingsLetter.Level > KingsLetterLevel)
+            {
+                ++KingsLetterLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "KingsLetter" + KingsLetterLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+            while (IceCream.Level > IceCreamLevel)
+            {
+                ++IceCreamLevel;
+                VisitNew visitnew = new VisitNew(null, 0, 0, "IceCream" + IceCreamLevel.ToString());
+                newChecks.Add(visitnew);
+                collectedChecks.Add(visitnew);
+            }
+
         }
 
         //progression hints level bonus
@@ -2040,7 +2199,7 @@ namespace KhTracker
             {
                 string count = "";
                 // remove magic and torn page count for comparison with item codes and readd to track specific ui copies
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
                 {
                     count = check.Name.Substring(check.Name.Length - 1);
                     check.Name = check.Name.Substring(0, check.Name.Length - 1);
@@ -2082,7 +2241,7 @@ namespace KhTracker
             foreach (ImportantCheck check in importantChecks)
             {
                 // handle these separately due to the way they are stored in memory
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
                     continue;
 
                 if (check.Obtained && collectedChecks.Contains(check) == false)

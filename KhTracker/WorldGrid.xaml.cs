@@ -28,6 +28,19 @@ namespace KhTracker
         public static int Real_Pages = 0;
         public static int Real_Pouches = 0;
 
+        public static int Real_AuronWep = 0;
+        public static int Real_MulanWep = 0;
+        public static int Real_BeastWep = 0;
+        public static int Real_JackWep = 0;
+        public static int Real_SimbaWep = 0;
+        public static int Real_SparrowWep = 0;
+        public static int Real_AladdinWep = 0;
+        public static int Real_TronWep = 0;
+        public static int Real_MembershipCard = 0;
+        public static int Real_IceCream = 0;
+        public static int Real_RikuWep = 0;
+        public static int Real_KingsLetter = 0;
+
         //public static int localLevelCount = 0;
         public static int Ghost_Fire = 0;
         public static int Ghost_Blizzard = 0;
@@ -38,6 +51,19 @@ namespace KhTracker
         public static int Ghost_Pages = 0;
         public static int Ghost_Pouches = 0;
 
+        public static int Ghost_AuronWep = 0;
+        public static int Ghost_MulanWep = 0;
+        public static int Ghost_BeastWep = 0;
+        public static int Ghost_JackWep = 0;
+        public static int Ghost_SimbaWep = 0;
+        public static int Ghost_SparrowWep = 0;
+        public static int Ghost_AladdinWep = 0;
+        public static int Ghost_TronWep = 0;
+        public static int Ghost_MembershipCard = 0;
+        public static int Ghost_IceCream = 0;
+        public static int Ghost_RikuWep = 0;
+        public static int Ghost_KingsLetter = 0;
+
         //amount of obtained ghost magic/pages
         public static int Ghost_Fire_obtained = 0;
         public static int Ghost_Blizzard_obtained = 0;
@@ -47,6 +73,19 @@ namespace KhTracker
         public static int Ghost_Magnet_obtained = 0;
         public static int Ghost_Pages_obtained = 0;
         public static int Ghost_Pouches_obtained = 0;
+
+        public static int Ghost_AuronWep_obtained = 0;
+        public static int Ghost_MulanWep_obtained = 0;
+        public static int Ghost_BeastWep_obtained = 0;
+        public static int Ghost_JackWep_obtained = 0;
+        public static int Ghost_SimbaWep_obtained = 0;
+        public static int Ghost_SparrowWep_obtained = 0;
+        public static int Ghost_AladdinWep_obtained = 0;
+        public static int Ghost_TronWep_obtained = 0;
+        public static int Ghost_MembershipCard_obtained = 0;
+        public static int Ghost_IceCream_obtained = 0;
+        public static int Ghost_RikuWep_obtained = 0;
+        public static int Ghost_KingsLetter_obtained = 0;
 
         //track other types of collections
         public static int Proof_Count = 0;
@@ -123,7 +162,8 @@ namespace KhTracker
             //visit lock check first
             if (window.VisitLockOption.IsChecked)
             {
-                SetVisitLock(button.Name, addRemove);
+                //TODO Fix new Visit Lock visual
+                SetVisitLock(button.Name, add);
             }
 
             if (data.mode == Mode.ShanHints || data.mode == Mode.OpenKHShanHints || data.mode == Mode.PathHints)
@@ -273,7 +313,7 @@ namespace KhTracker
             if (!add)
                 addRemove = -1;
 
-            if (Codes.FindItemType(item.Name) != "magic" && Codes.FindItemType(item.Name) != "page" && !item.Name.Contains("Munny"))    //Codes.FindItemType(item.Name) != "other")
+            if (Codes.FindItemType(item.Name) != "magic" && Codes.FindItemType(item.Name) != "page" && !item.Name.Contains("Munny") && Codes.FindItemType(item.Name) != "visit")    //Codes.FindItemType(item.Name) != "other")
             {
                 //yeah just gonna do things here..
                 //track collection for things that aren't multi's
@@ -421,6 +461,174 @@ namespace KhTracker
                     {
                         window.MunnyCount.Fill = (LinearGradientBrush)FindResource("Color_Pouch");
                         window.MunnyCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "BeastWep":
+                    Real_BeastWep += addRemove;
+                    window.BCCount.Text = (2 - Real_BeastWep).ToString();
+                    if (Real_BeastWep == 2)
+                    {
+                        window.BCCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.BCCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.BCCount.Fill = (LinearGradientBrush)FindResource("Color_BC");
+                        window.BCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "JackWep":
+                    Real_JackWep += addRemove;
+                    window.HTCount.Text = (2 - Real_JackWep).ToString();
+                    if (Real_JackWep == 2)
+                    {
+                        window.HTCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.HTCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.HTCount.Fill = (LinearGradientBrush)FindResource("Color_HT");
+                        window.HTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "SimbaWep":
+                    Real_SimbaWep += addRemove;
+                    window.PLCount.Text = (2 - Real_SimbaWep).ToString();
+                    if (Real_SimbaWep == 2)
+                    {
+                        window.PLCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.PLCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.PLCount.Fill = (LinearGradientBrush)FindResource("Color_PL");
+                        window.PLCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "AuronWep":
+                    Real_AuronWep += addRemove;
+                    window.OCCount.Text = (2 - Real_AuronWep).ToString();
+                    if (Real_AuronWep == 2)
+                    {
+                        window.OCCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.OCCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.OCCount.Fill = (LinearGradientBrush)FindResource("Color_OC");
+                        window.OCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "MulanWep":
+                    Real_MulanWep += addRemove;
+                    window.LoDCount.Text = (2 - Real_MulanWep).ToString();
+                    if (Real_MulanWep == 2)
+                    {
+                        window.LoDCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.LoDCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.LoDCount.Fill = (LinearGradientBrush)FindResource("Color_LoD");
+                        window.LoDCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "SparrowWep":
+                    Real_SparrowWep += addRemove;
+                    window.PRCount.Text = (2 - Real_SparrowWep).ToString();
+                    if (Real_SparrowWep == 2)
+                    {
+                        window.PRCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.PRCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.PRCount.Fill = (LinearGradientBrush)FindResource("Color_PR");
+                        window.PRCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "AladdinWep":
+                    Real_AladdinWep += addRemove;
+                    window.AGCount.Text = (2 - Real_AladdinWep).ToString();
+                    if (Real_AladdinWep == 2)
+                    {
+                        window.AGCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.AGCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.AGCount.Fill = (LinearGradientBrush)FindResource("Color_AG");
+                        window.AGCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "TronWep":
+                    Real_TronWep += addRemove;
+                    window.SPCount.Text = (2 - Real_TronWep).ToString();
+                    if (Real_TronWep == 2)
+                    {
+                        window.SPCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.SPCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.SPCount.Fill = (LinearGradientBrush)FindResource("Color_SP");
+                        window.SPCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "RikuWep":
+                    Real_RikuWep += addRemove;
+                    window.TWTNWCount.Text = (2 - Real_RikuWep).ToString();
+                    if (Real_RikuWep == 2)
+                    {
+                        window.TWTNWCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.TWTNWCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.TWTNWCount.Fill = (LinearGradientBrush)FindResource("Color_TWTNW");
+                        window.TWTNWCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "MembershipCard":
+                    Real_MembershipCard += addRemove;
+                    window.HBCount.Text = (2 - Real_MembershipCard).ToString();
+                    if (Real_MembershipCard == 2)
+                    {
+                        window.HBCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.HBCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.HBCount.Fill = (LinearGradientBrush)FindResource("Color_HB");
+                        window.HBCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "KingsLetter":
+                    Real_KingsLetter += addRemove;
+                    window.DCCount.Text = (2 - Real_KingsLetter).ToString();
+                    if (Real_KingsLetter == 2)
+                    {
+                        window.DCCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.DCCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.DCCount.Fill = (LinearGradientBrush)FindResource("Color_DC");
+                        window.DCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+                    }
+                    return;
+                case "IceCream":
+                    Real_IceCream += addRemove;
+                    window.TTCount.Text = (3 - Real_IceCream).ToString();
+                    if (Real_IceCream == 3)
+                    {
+                        window.TTCount.Fill = (SolidColorBrush)FindResource("Color_Black");
+                        window.TTCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
+                    }
+                    else
+                    {
+                        window.TTCount.Fill = (LinearGradientBrush)FindResource("Color_TT");
+                        window.TTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
                     }
                     return;
                 default:
@@ -851,7 +1059,7 @@ namespace KhTracker
             //get correct item name
             char[] numbers = { '1', '2', '3', '4', '5' };
             string itemname = item.Name;
-            if (Codes.FindItemType(item.Name) == "magic" || Codes.FindItemType(item.Name) == "page" || item.Name.StartsWith("Munny"))
+            if (Codes.FindItemType(item.Name) == "magic" || Codes.FindItemType(item.Name) == "page" || item.Name.StartsWith("Munny") || Codes.FindItemType(item.Name) == "visit")
             {
                 itemname = itemname.TrimEnd(numbers);
             }
@@ -866,7 +1074,7 @@ namespace KhTracker
                     bool isMulti = false;
 
                     //trim numbers
-                    if (Codes.FindItemType(ghostItem.Name) == "magic" || Codes.FindItemType(ghostItem.Name) == "page" || item.Name.StartsWith("Munny"))
+                    if (Codes.FindItemType(ghostItem.Name) == "magic" || Codes.FindItemType(ghostItem.Name) == "page" || item.Name.StartsWith("Munny") || Codes.FindItemType(item.Name) == "visit")
                     {
                         itemnameGhost = itemnameGhost.TrimEnd(numbers);
                         isMulti = true;
@@ -968,7 +1176,7 @@ namespace KhTracker
                 string itemName = ItemCheck.Name;
 
                 //trim numbers if needed
-                if (Codes.FindItemType(ItemCheck.Name) == "magic" || Codes.FindItemType(ItemCheck.Name) == "page" || Codes.FindItemType(ItemCheck.Name) == "other")
+                if (Codes.FindItemType(ItemCheck.Name) == "magic" || Codes.FindItemType(ItemCheck.Name) == "page" || Codes.FindItemType(ItemCheck.Name) == "other" || Codes.FindItemType(ItemCheck.Name) == "visit")
                 {
                     itemName = itemName.TrimEnd(numbers);
                 }
@@ -998,7 +1206,7 @@ namespace KhTracker
             }
 
             //look for avaiable ghost item in item pool to track
-            Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 4) as Grid;
+            Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 7) as Grid;
             foreach (Item Ghost in ItemRow.Children)
             {
                 if (Ghost != null && Ghost.Name.Contains("Ghost_" + itemname))
@@ -1013,7 +1221,7 @@ namespace KhTracker
         private void Handle_Shadows(Item item, bool add)
         {
             //don't hide shadows for the multi items
-            if (Codes.FindItemType(item.Name) == "magic" || Codes.FindItemType(item.Name) == "page" || item.Name.StartsWith("Munny") || item.Name.StartsWith("Ghost_"))
+            if (Codes.FindItemType(item.Name) == "magic" || Codes.FindItemType(item.Name) == "page" || item.Name.StartsWith("Munny") || item.Name.StartsWith("Ghost_") || Codes.FindItemType(item.Name) == "visit")
             {
                 return;
             }
@@ -1141,7 +1349,7 @@ namespace KhTracker
 
                 //look for avaiable ghost item in item pool to track
                 //Note: for now the ghost items are always the 4th itemgrid.
-                Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 4) as Grid;
+                Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 7) as Grid;
                 foreach (Item Ghost in ItemRow.Children)
                 {
                     //Console.WriteLine(Ghost.Name);
@@ -1191,7 +1399,7 @@ namespace KhTracker
                 itemname = item.Name.TrimEnd(numbers);
 
             //update normal items obtained
-            if ((itemntype == "magic" || itemntype == "page" || itemntype == "other") && !itemname.StartsWith("Ghost_"))
+            if ((itemntype == "magic" || itemntype == "page" || itemntype == "other" || itemntype == "visit") && !itemname.StartsWith("Ghost_"))
             {
                 switch (itemname)
                 {
@@ -1218,6 +1426,42 @@ namespace KhTracker
                         break;
                     case "MunnyPouch":
                         Ghost_Pouches_obtained += addremove;
+                        break;
+                    case "BeastWep":
+                        Ghost_BeastWep_obtained += addremove;
+                        break;
+                    case "AuronWep":
+                        Ghost_AuronWep_obtained += addremove;
+                        break;
+                    case "MulanWep":
+                        Ghost_MulanWep_obtained += addremove;
+                        break;
+                    case "JackWep":
+                        Ghost_JackWep_obtained += addremove;
+                        break;
+                    case "SimbaWep":
+                        Ghost_SimbaWep_obtained += addremove;
+                        break;
+                    case "SparrowWep":
+                        Ghost_SparrowWep_obtained += addremove;
+                        break;
+                    case "AladdinWep":
+                        Ghost_AladdinWep_obtained += addremove;
+                        break;
+                    case "TronWep":
+                        Ghost_TronWep_obtained += addremove;
+                        break;
+                    case "MembershipCard":
+                        Ghost_MembershipCard_obtained += addremove;
+                        break;
+                    case "IceCream":
+                        Ghost_IceCream_obtained += addremove;
+                        break;
+                    case "RikuWep":
+                        Ghost_RikuWep_obtained += addremove;
+                        break;
+                    case "KingsLetter":
+                        Ghost_KingsLetter_obtained += addremove;
                         break;
                 }
             }
@@ -1251,6 +1495,42 @@ namespace KhTracker
                     case "Ghost_MunnyPouch":
                         Ghost_Pouches += addremove;
                         break;
+                    case "Ghost_BeastWep":
+                        Ghost_BeastWep += addremove;
+                        break;
+                    case "Ghost_AuronWep":
+                        Ghost_AuronWep += addremove;
+                        break;
+                    case "Ghost_MulanWep":
+                        Ghost_MulanWep += addremove;
+                        break;
+                    case "Ghost_JackWep":
+                        Ghost_JackWep += addremove;
+                        break;
+                    case "Ghost_SimbaWep":
+                        Ghost_SimbaWep += addremove;
+                        break;
+                    case "Ghost_SparrowWep":
+                        Ghost_SparrowWep += addremove;
+                        break;
+                    case "Ghost_AladdinWep":
+                        Ghost_AladdinWep += addremove;
+                        break;
+                    case "Ghost_TronWep":
+                        Ghost_TronWep += addremove;
+                        break;
+                    case "Ghost_MembershipCard":
+                        Ghost_MembershipCard += addremove;
+                        break;
+                    case "Ghost_IceCream":
+                        Ghost_IceCream += addremove;
+                        break;
+                    case "Ghost_RikuWep":
+                        Ghost_RikuWep += addremove;
+                        break;
+                    case "Ghost_KingsLetter":
+                        Ghost_KingsLetter += addremove;
+                        break;
                 }
             }
 
@@ -1272,7 +1552,7 @@ namespace KhTracker
             }
 
             //simplier icon opacity change for non pages/magic
-            if (type != "magic" && type != "page" && !item.Contains("Munny"))
+            if (type != "magic" && type != "page" && !item.Contains("Munny") && type != "visit")
             {
                 //check if a ghost item was tracked
                 if (item.StartsWith("Ghost_"))
@@ -1350,6 +1630,78 @@ namespace KhTracker
                     GhostIC = Ghost_Pouches;
                     ObtainedIC = Ghost_Pouches_obtained;
                     magicValue = window.Ghost_MunnyCount;
+                    break;
+                case "Ghost_BeastWep":
+                case "BeastWep":
+                    GhostIC = Ghost_BeastWep;
+                    ObtainedIC = Ghost_BeastWep_obtained;
+                    magicValue = window.Ghost_BCCount;
+                    break;
+                case "Ghost_JackWep":
+                case "JackWep":
+                    GhostIC = Ghost_JackWep;
+                    ObtainedIC = Ghost_JackWep_obtained;
+                    magicValue = window.Ghost_HTCount;
+                    break;
+                case "Ghost_SimbaWep":
+                case "SimbaWep":
+                    GhostIC = Ghost_SimbaWep;
+                    ObtainedIC = Ghost_SimbaWep_obtained;
+                    magicValue = window.Ghost_PLCount;
+                    break;
+                case "Ghost_AuronWep":
+                case "AuronWep":
+                    GhostIC = Ghost_AuronWep;
+                    ObtainedIC = Ghost_AuronWep_obtained;
+                    magicValue = window.Ghost_OCCount;
+                    break;
+                case "Ghost_MulanWep":
+                case "MulanWep":
+                    GhostIC = Ghost_MulanWep;
+                    ObtainedIC = Ghost_MulanWep_obtained;
+                    magicValue = window.Ghost_LoDCount;
+                    break;
+                case "Ghost_SparrowWep":
+                case "SparrowWep":
+                    GhostIC = Ghost_SparrowWep;
+                    ObtainedIC = Ghost_SparrowWep_obtained;
+                    magicValue = window.Ghost_PRCount;
+                    break;
+                case "Ghost_AladdinWep":
+                case "AladdinWep":
+                    GhostIC = Ghost_AladdinWep;
+                    ObtainedIC = Ghost_AladdinWep_obtained;
+                    magicValue = window.Ghost_AGCount;
+                    break;
+                case "Ghost_TronWep":
+                case "TronWep":
+                    GhostIC = Ghost_TronWep;
+                    ObtainedIC = Ghost_TronWep_obtained;
+                    magicValue = window.Ghost_SPCount;
+                    break;
+                case "Ghost_RikuWep":
+                case "RikuWep":
+                    GhostIC = Ghost_RikuWep;
+                    ObtainedIC = Ghost_RikuWep_obtained;
+                    magicValue = window.Ghost_TWTNWCount;
+                    break;
+                case "Ghost_MembershipCard":
+                case "MembershipCard":
+                    GhostIC = Ghost_MembershipCard;
+                    ObtainedIC = Ghost_MembershipCard_obtained;
+                    magicValue = window.Ghost_HBCount;
+                    break;
+                case "Ghost_KingsLetter":
+                case "KingsLetter":
+                    GhostIC = Ghost_KingsLetter;
+                    ObtainedIC = Ghost_KingsLetter_obtained;
+                    magicValue = window.Ghost_DCCount;
+                    break;
+                case "Ghost_IceCream":
+                case "IceCream":
+                    GhostIC = Ghost_IceCream;
+                    ObtainedIC = Ghost_IceCream_obtained;
+                    magicValue = window.Ghost_TTCount;
                     break;
                 default:
                     Console.WriteLine("Something went wrong? item wasn't expected. Item: " + item);
@@ -1487,51 +1839,85 @@ namespace KhTracker
             }
         }
 
-        private void SetVisitLock(string itemName, int addRemove)
+        private void SetVisitLock(string itemName, bool add)
         {
             Data data = MainWindow.data;
-            //reminder: 1 = locked | 0 = unlocked
-            //reminder for TT: 10 = 3rd visit locked | 1 = 2nd visit locked | 11 = both locked | 0 = both unlocked
+            char[] numbers = { '1', '2', '3', '4', '5' };
+
+            itemName = itemName.TrimEnd(numbers);
+
             switch (itemName)
             {
-                case "AuronWep":
-                    data.WorldsData["OlympusColiseum"].visitLocks -= addRemove;
-                    break;
-                case "MulanWep":
-                    data.WorldsData["LandofDragons"].visitLocks -= addRemove;
-                    break;
                 case "BeastWep":
-                    data.WorldsData["BeastsCastle"].visitLocks -= addRemove;
+                    SetLockValue("BeastsCastle", add);
                     break;
                 case "JackWep":
-                    data.WorldsData["HalloweenTown"].visitLocks -= addRemove;
+                    SetLockValue("HalloweenTown", add);
                     break;
                 case "SimbaWep":
-                    data.WorldsData["PrideLands"].visitLocks -= addRemove;
+                    SetLockValue("PrideLands", add);
+                    break;
+                case "AuronWep":
+                    SetLockValue("OlympusColiseum", add);
+                    break;
+                case "MulanWep":
+                    SetLockValue("LandofDragons", add);
                     break;
                 case "SparrowWep":
-                    data.WorldsData["PortRoyal"].visitLocks -= addRemove;
+                    SetLockValue("PortRoyal", add);
                     break;
                 case "AladdinWep":
-                    data.WorldsData["Agrabah"].visitLocks -= addRemove;
+                    SetLockValue("Agrabah", add);
                     break;
                 case "TronWep":
-                    data.WorldsData["SpaceParanoids"].visitLocks -= addRemove;
+                    SetLockValue("SpaceParanoids", add);
                     break;
-                case "IceCream":
-                    data.WorldsData["TwilightTown"].visitLocks -= (addRemove * 10);
-                    break;
-                case "Picture":
-                    data.WorldsData["TwilightTown"].visitLocks -= addRemove;
+                case "RikuWep":
+                    SetLockValue("TWTNW", add);
                     break;
                 case "MembershipCard":
-                    data.WorldsData["HollowBastion"].visitLocks -= addRemove;
+                    SetLockValue("HollowBastion", add);
+                    break;
+                case "KingsLetter":
+                    SetLockValue("DisneyCastle", add);
+                    break;
+                case "IceCream":
+                    SetLockValue("TwilightTown", add);
+                    break;
+                case "Sketches":
+                    SetLockValue("SimulatedTwilightTown", add);
                     break;
                 default:
                     return;
             }
 
             window.VisitLockCheck();
+        }
+
+        private void SetLockValue(string worldName, bool add)
+        {
+            //reminder 100 = 3rd visit locked | 10 = 2nd visit locked | 1 = 1st visit locked
+            //relleay should redo how this works as i don't need to wory about tt having two items that unlock different visits
+            int currentValue = MainWindow.data.WorldsData[worldName].visitLocks;
+            
+            if (add)
+            {
+                if (currentValue == 0)
+                    MainWindow.data.WorldsData[worldName].visitLocks += 1;
+                if (currentValue == 1)
+                    MainWindow.data.WorldsData[worldName].visitLocks += 10;
+                if (currentValue == 11)
+                    MainWindow.data.WorldsData[worldName].visitLocks += 100;
+            }
+            else
+            {
+                if (currentValue == 111)
+                    MainWindow.data.WorldsData[worldName].visitLocks -= 100;
+                if (currentValue == 11)
+                    MainWindow.data.WorldsData[worldName].visitLocks -= 10;
+                if (currentValue == 1)
+                    MainWindow.data.WorldsData[worldName].visitLocks -= 1;
+            }
         }
 
         private void PathProofToggle(string location, int proofTotal)

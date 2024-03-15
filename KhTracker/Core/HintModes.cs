@@ -254,7 +254,7 @@ namespace KhTracker
             foreach (string key in data.WorldsData.Keys.ToList())
             {
                 //adjust grid sizes for path proof icons
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0.1, GridUnitType.Star);
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0.1, GridUnitType.Star);
 
                 //get grid for path proof collumn and set visibility
                 Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
@@ -1059,7 +1059,7 @@ namespace KhTracker
             foreach (string key in data.WorldsData.Keys.ToList())
             {
                 //adjust grid sizes for path proof icons
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0.1, GridUnitType.Star);
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0.1, GridUnitType.Star);
 
                 //get grid for path proof collumn and set visibility
                 Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
