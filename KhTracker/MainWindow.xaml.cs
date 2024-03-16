@@ -589,6 +589,8 @@ namespace KhTracker
             gridWindow.Close();
             gridWindow.gridOptionsWindow.canClose = true;
             gridWindow.gridOptionsWindow.Close();
+            gridWindow.colorPickerWindow.canClose = true;
+            gridWindow.colorPickerWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

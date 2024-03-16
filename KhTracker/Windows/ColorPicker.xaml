@@ -2,7 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-        Title="Color Picker" MinHeight="100" MinWidth="200"
+        Title="Color Picker" 
+        SizeToContent="WidthAndHeight" MinHeight="100" MinWidth="200"
+        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing"
         Background="#303030">
 
     <Window.Resources>
@@ -71,10 +77,23 @@
         </Grid>
 
 
-        <StackPanel x:Name="ColorControls" Visibility="Collapsed">
-            <xctk:ColorPicker Name="myColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
-            <Border x:Name="PreviewBorder" Height="100" Margin="5"/>
-            <Button Content="Select Color" Click="SelectColor_Click"/>
-        </StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <!-- Left spacing -->
+                <ColumnDefinition Width="2*"/>
+                <!-- Middle column where ColorControls will be, taking 50% of the width -->
+                <ColumnDefinition Width="*"/>
+                <!-- Right spacing -->
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="1" x:Name="ColorControls" Visibility="Collapsed">
+                <xctk:ColorPicker Name="myColorPicker" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
+                <Border x:Name="PreviewBorder" Height="100" Margin="5"/>
+                <Button HorizontalAlignment="Center" Click="SelectColor_Click">
+                    <TextBlock Text="Select Color" Margin="20,10"/>
+                </Button>
+            </StackPanel>
+        </Grid>
     </StackPanel>
 </Window>

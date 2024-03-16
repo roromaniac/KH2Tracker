@@ -991,7 +991,8 @@ namespace KhTracker.Properties {
             "e,\"Thresholder\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"GridYuff" +
             "ie\":true,\"GrimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizzardL" +
             "ord\":true,\"GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"GridZex" +
-            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true}\r\n")]
+            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"Ligh" +
+            "tAndDarkCounts\":true}\r\n")]
         public string GridSettings {
             get {
                 return ((string)(this["GridSettings"]));
@@ -1226,6 +1227,54 @@ namespace KhTracker.Properties {
             }
             set {
                 this["BattleshipSunkColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double ColorWindowWidth {
+            get {
+                return ((double)(this["ColorWindowWidth"]));
+            }
+            set {
+                this["ColorWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double ColorWindowHeight {
+            get {
+                return ((double)(this["ColorWindowHeight"]));
+            }
+            set {
+                this["ColorWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ColorWindowY {
+            get {
+                return ((double)(this["ColorWindowY"]));
+            }
+            set {
+                this["ColorWindowY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ColorWindowX {
+            get {
+                return ((double)(this["ColorWindowX"]));
+            }
+            set {
+                this["ColorWindowX"] = value;
             }
         }
     }

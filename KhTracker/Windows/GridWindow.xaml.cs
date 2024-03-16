@@ -25,6 +25,7 @@ namespace KhTracker
         //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         Data data;
         public GridOptionsWindow gridOptionsWindow;
+        public ColorPickerWindow colorPickerWindow;
 
         public int numRows;
         public int numColumns;
@@ -59,6 +60,7 @@ namespace KhTracker
 
             data = dataIn;
             gridOptionsWindow = new GridOptionsWindow(this, data);
+            colorPickerWindow = new ColorPickerWindow(this, currentColors);
 
             Top = Properties.Settings.Default.GridWindowY;
             Left = Properties.Settings.Default.GridWindowX;
@@ -83,6 +85,7 @@ namespace KhTracker
         {
             this.Hide();
             gridOptionsWindow.Hide();
+            colorPickerWindow.Hide();
             if (!canClose)
             {
                 e.Cancel = true;
@@ -503,12 +506,12 @@ namespace KhTracker
             DynamicGrid.Children.Add(grid);
         }
 
-        private void SetColorForButton(Brush buttonBackground, Color newColor)
+        public void SetColorForButton(Brush buttonBackground, Color newColor)
         {
             ((SolidColorBrush)buttonBackground).Color = newColor;
         }
 
-        private Color GetColorFromButton(Brush buttonBackground)
+        public Color GetColorFromButton(Brush buttonBackground)
         {
             return ((SolidColorBrush)buttonBackground).Color;
         }
@@ -816,35 +819,9 @@ namespace KhTracker
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
             // prompt user for new colors
-            var colorPicker = new ColorPickerWindow(currentColors);
-            var oldAnnotatedColor = currentColors["Annotated Color"];
-            if (colorPicker.ShowDialog() == true)
-            {
-                currentColors = colorPicker.ButtonColors;
-            }
-            //update the new colors on the card
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numColumns; j++)
-                {
-                    if (GetColorFromButton(buttons[i, j].Background).Equals(oldAnnotatedColor))
-                        SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
-                    else
-                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
-                    if (bingoLogic)
-                        BingoCheck(grid, i, j);
-                }
-            }
-            // update the hint color
-            foreach (string key in bossHintBorders.Keys)
-            {
-                if (bossHintBorders[key].Background != null)
-                {
-                    SetColorForButton(bossHintBorders[key].Background, currentColors["Hint Color"]);
-                }
-            }
-
+            colorPickerWindow.Show();
         }
+
         private void InitOptions()
         {
             // save grid settings

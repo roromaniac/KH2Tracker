@@ -2124,6 +2124,8 @@ namespace KhTracker
                         {
                             data.forcedFinal = true;
                             checkEveryCheck.TrackCheck(0x001D);
+                            if (gridWindow.gridSettings["LightAndDarkCounts"])
+                                UpdateGridTracker("Final");
                         }
                         // if not forced Final, track Final Form check like normal
                         // else if Final was forced, check the tracked Final Form check
@@ -2132,6 +2134,11 @@ namespace KhTracker
                             collectedChecks.Add(check);
                             newChecks.Add(check);
                         }
+                    }
+                    else if (check.Name == "FinalReal")
+                    {
+                        if (gridWindow.gridSettings["LightAndDarkCounts"])
+                            UpdateGridTracker("Final");
                     }
                     else if (check.Name.StartsWith("MunnyPouch"))
                     {

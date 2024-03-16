@@ -22,9 +22,13 @@ namespace KhTracker
         public Color SelectedColor { get; private set; }
         public Dictionary<string, Color> ButtonColors;
         private Button LastClickedButton;
+        public bool canClose = false;
+        public GridWindow _gridWindow;
 
-        public ColorPickerWindow(Dictionary<string, Color> currentColors)
+        public ColorPickerWindow(GridWindow gridWindow, Dictionary<string, Color> currentColors)
         {
+            _gridWindow = gridWindow;
+            
             InitializeComponent();
 
             // Initialize the button colors
@@ -51,6 +55,49 @@ namespace KhTracker
             BattleshipSunkColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Sunk Color"]);
         }
 
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ColorWindowY = RestoreBounds.Top;
+            Properties.Settings.Default.ColorWindowX = RestoreBounds.Left;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Properties.Settings.Default.ColorWindowWidth = RestoreBounds.Width;
+            Properties.Settings.Default.ColorWindowHeight = RestoreBounds.Height;
+        }
+
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //update the new colors on the card
+            var oldAnnotatedColor = _gridWindow.currentColors["Annotated Color"];
+            for (int i = 0; i < _gridWindow.numRows; i++)
+            {
+                for (int j = 0; j < _gridWindow.numColumns; j++)
+                {
+                    if (_gridWindow.GetColorFromButton(_gridWindow.buttons[i, j].Background).Equals(oldAnnotatedColor))
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
+                    else
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
+                    if (_gridWindow.bingoLogic)
+                        _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                }
+            }
+            // update the hint color
+            foreach (string key in _gridWindow.bossHintBorders.Keys)
+            {
+                if (_gridWindow.bossHintBorders[key].Background != null)
+                {
+                    _gridWindow.SetColorForButton(_gridWindow.bossHintBorders[key].Background, _gridWindow.currentColors["Hint Color"]);
+                }
+            }
+            this.Hide();
+            this.ColorControls.Visibility = Visibility.Collapsed;
+            if (!canClose)
+            {
+                e.Cancel = true;
+            }
+        }
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {

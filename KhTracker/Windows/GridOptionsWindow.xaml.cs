@@ -2,10 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace KhTracker
 {
@@ -26,16 +28,13 @@ namespace KhTracker
     }
 
     public enum OptionType { CheckBox, TextBox }
-
     public class Option
     {
         public OptionType Type { get; set; }
         public string Description { get; set; }
         public string DefaultValue { get; set; }
-
+        public bool IsSelectAllOption { get; set; } 
     }
-
-
 
     public class OptionTemplateSelector : DataTemplateSelector
     {
@@ -60,6 +59,24 @@ namespace KhTracker
         }
     }
 
+    public class OptionVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // Assuming `value` is the `Option` object
+            var option = value as Option;
+            if (option != null && string.IsNullOrEmpty(option.Description) && !option.IsSelectAllOption)
+            {
+                return Visibility.Collapsed; // Hide spacer options
+            }
+            return Visibility.Visible; // Show all other options
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     public partial class GridOptionsWindow : Window
     {
@@ -71,6 +88,7 @@ namespace KhTracker
         bool newBingoLogic;
         bool newBattleshipLogic;
         List<Category> categories;
+        string[] nonChecks = { "Select All", "" };
         public GridOptionsWindow(GridWindow gridWindow, Data data)
         {
             InitializeComponent();
@@ -240,7 +258,7 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Valor") ? _gridWindow.gridSettings["Valor"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = "true" },
+                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = (_gridWindow.gridSettings.ContainsKey("LightAndDarkCounts") ? _gridWindow.gridSettings["LightAndDarkCounts"] : true).ToString() },
                             }
                         },
                         new SubCategory {
@@ -301,6 +319,24 @@ namespace KhTracker
                 },
             };
             DataContext = categories;
+            foreach (Category category in categories)
+            {
+                List<SubCategory> subcategories = category.SubCategories;
+                foreach(SubCategory subcategory in subcategories)
+                {
+                    List<Option> options = subcategory.Options;
+                    int numberOfOptions = options.Count();
+                    int columnsInGrid = 4; 
+                    int spacersNeeded = ((columnsInGrid - (numberOfOptions % columnsInGrid)) % columnsInGrid) + columnsInGrid;
+
+                    for (int i = 0; i < spacersNeeded; i++)
+                    {
+                        options.Add(new Option { Description = "" }); // Add spacers
+                    }
+
+                    options.Add(new Option { Type = OptionType.CheckBox, Description = "Select All", DefaultValue = "false", IsSelectAllOption = true });
+                }
+            }
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -420,14 +456,16 @@ namespace KhTracker
             var bosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bosses");
             foreach (var boss in bosses.Options)
             {
-                bool includeBoss = bool.Parse(bosses?.Options.FirstOrDefault(o => o.Description == boss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description])) 
-                    _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
-                else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
-                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
-                else if (_gridWindow.gridSettings.ContainsKey(boss.Description))
-                    _gridWindow.gridSettings[boss.Description] = includeBoss;
-
+                if (!nonChecks.Contains(boss.Description))
+                {
+                    bool includeBoss = bool.Parse(bosses?.Options.FirstOrDefault(o => o.Description == boss.Description)?.DefaultValue);
+                    if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description]))
+                        _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                    else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
+                        _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                    else if (_gridWindow.gridSettings.ContainsKey(boss.Description))
+                        _gridWindow.gridSettings[boss.Description] = includeBoss;
+                }
             }
         }
 
@@ -437,9 +475,12 @@ namespace KhTracker
             var superbosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Superbosses");
             foreach (var superboss in superbosses.Options)
             {
-                bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
-                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
+                if (!nonChecks.Contains(superboss.Description))
+                    {
+                    bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
+                    if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
+                        _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
+                }
             }
         }
 
@@ -474,6 +515,8 @@ namespace KhTracker
             bool includeDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Drives")?.DefaultValue);
             foreach (var drive in driveNames)
                 _gridWindow.gridSettings[$"{drive}"] = includeDrives;
+            bool lightAndDarkCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Light & Darkness Counts as Final")?.DefaultValue);
+            _gridWindow.gridSettings["LightAndDarkCounts"] = lightAndDarkCounts;
         }
 
         private void UpdateProofs()
@@ -605,74 +648,5 @@ namespace KhTracker
             _gridWindow.GenerateGrid(newNumRows, newNumColumns);
         }
     }
-
-    //private void SelectAll_Checked(object sender, RoutedEventArgs e)
-    //{
-    //    var checkbox = sender as CheckBox;
-    //    var expander = checkbox.Parent as Expander;
-    //    var itemsControl = FindChild<ItemsControl>(expander, "YourItemsControlName"); // name your ItemsControl if you haven't
-
-    //    foreach (var option in itemsControl.Items)
-    //    {
-    //        var item = (Option)option;
-    //        if (item.Description != "Select All")
-    //        {
-    //            item.DefaultValue = "True";
-    //        }
-    //    }
-    //}
-
-    //private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
-    //{
-    //    var checkbox = sender as CheckBox;
-    //    var expander = checkbox.Parent as Expander;
-    //    var itemsControl = FindChild<ItemsControl>(expander, "YourItemsControlName");
-
-    //    foreach (var option in itemsControl.Items)
-    //    {
-    //        var item = (Option)option;
-    //        if (item.Description != "Select All")
-    //        {
-    //            item.DefaultValue = "False";
-    //        }
-    //    }
-    //}
-
-    //// Utility method to find a child of a control by type
-    //public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-    //{
-    //    // Confirm parent and childName are valid. 
-    //    if (parent == null) return null;
-
-    //    T foundChild = null;
-
-    //    int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-    //    for (int i = 0; i < childrenCount; i++)
-    //    {
-    //        var child = VisualTreeHelper.GetChild(parent, i);
-    //        T childType = child as T;
-    //        if (childType == null)
-    //        {
-    //            foundChild = FindChild<T>(child, childName);
-    //            if (foundChild != null) break;
-    //        }
-    //        else if (!string.IsNullOrEmpty(childName))
-    //        {
-    //            FrameworkElement frameworkElement = child as FrameworkElement;
-    //            if (frameworkElement != null && frameworkElement.Name == childName)
-    //            {
-    //                foundChild = (T)child;
-    //                break;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            foundChild = (T)child;
-    //            break;
-    //        }
-    //    }
-
-    //    return foundChild;
-    //}
 
 }
