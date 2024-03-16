@@ -991,8 +991,8 @@ namespace KhTracker.Properties {
             "e,\"Thresholder\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"GridYuff" +
             "ie\":true,\"GrimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizzardL" +
             "ord\":true,\"GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"GridZex" +
-            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"Ligh" +
-            "tAndDarkCounts\":true}\r\n")]
+            "ionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"Forc" +
+            "ingFinalCounts\":true}\r\n")]
         public string GridSettings {
             get {
                 return ((string)(this["GridSettings"]));

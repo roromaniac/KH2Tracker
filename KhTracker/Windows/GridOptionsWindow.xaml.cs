@@ -258,7 +258,7 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Valor") ? _gridWindow.gridSettings["Valor"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = (_gridWindow.gridSettings.ContainsKey("LightAndDarkCounts") ? _gridWindow.gridSettings["LightAndDarkCounts"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = (_gridWindow.gridSettings.ContainsKey("ForcingFinalCounts") ? _gridWindow.gridSettings["ForcingFinalCounts"] : true).ToString() },
                             }
                         },
                         new SubCategory {
@@ -347,8 +347,8 @@ namespace KhTracker
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Properties.Settings.Default.GridOptionsWindowWidth = RestoreBounds.Width;
-            Properties.Settings.Default.GridOptionsWindowHeight = RestoreBounds.Height;
+            //Properties.Settings.Default.GridOptionsWindowWidth = RestoreBounds.Width;
+            //Properties.Settings.Default.GridOptionsWindowHeight = RestoreBounds.Height;
         }
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -515,8 +515,8 @@ namespace KhTracker
             bool includeDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Drives")?.DefaultValue);
             foreach (var drive in driveNames)
                 _gridWindow.gridSettings[$"{drive}"] = includeDrives;
-            bool lightAndDarkCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Light & Darkness Counts as Final")?.DefaultValue);
-            _gridWindow.gridSettings["LightAndDarkCounts"] = lightAndDarkCounts;
+            bool ForcingFinalCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Light & Darkness Counts as Final")?.DefaultValue);
+            _gridWindow.gridSettings["ForcingFinalCounts"] = ForcingFinalCounts;
         }
 
         private void UpdateProofs()

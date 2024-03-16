@@ -32,7 +32,11 @@
     <DockPanel>
 
         <Menu DockPanel.Dock="Top" Background="White">
-
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
                 <MenuItem Header="Grid Checks" Click="Grid_Options" />
@@ -48,8 +52,7 @@
                 <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
                 <MenuItem Header="Always Save Previous Game Mode" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
-            <MenuItem x:Name="Seedname" Focusable="False"/>
-            <Separator/>
+            <MenuItem x:Name="Seedname" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
 
         </Menu>
 

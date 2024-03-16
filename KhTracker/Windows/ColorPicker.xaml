@@ -4,7 +4,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="Color Picker" 
         SizeToContent="WidthAndHeight" MinHeight="100" MinWidth="200"
-        ResizeMode="CanResize"
+        ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
