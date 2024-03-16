@@ -29,7 +29,7 @@ namespace KhTracker
         private void ShanHints(Dictionary<string, object> hintObject)
         {
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
 
             //Joke JsmarteeHints test
             bool debug = false;
@@ -73,10 +73,12 @@ namespace KhTracker
             {
                 foreach (var item in world.Value)
                 {
-                    if (item.StartsWith("Secret"))
+                    string nameFix = Codes.ConvertSeedGenName(item, true);
+
+                    if (nameFix.StartsWith("Secret"))
                     {
-                        int index = int.Parse(item.Remove(0, 21)) - 1;
-                        Console.WriteLine(index + " - " + Codes.ConvertSeedGenName(world.Key) + " _ " + item);
+                        int index = int.Parse(nameFix.Remove(0, 21)) - 1;
+                        //Console.WriteLine(index + " - " + Codes.ConvertSeedGenName(world.Key) + " _ " + item);
                         TEMP.Add(index, Codes.ConvertSeedGenName(world.Key));
                     }
                 }

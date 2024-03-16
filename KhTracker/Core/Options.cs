@@ -240,7 +240,7 @@ namespace KhTracker
             {
                 if (saveObject["LegacyJsmartee"].ToString().ToLower() == "true")
                 {
-                    LoadLegacy(saveObject, "Jsmartee");
+                    //LoadLegacy(saveObject, "Jsmartee");
                     return;
                 }
             }
@@ -248,7 +248,7 @@ namespace KhTracker
             {
                 if (saveObject["LegacyShan"].ToString().ToLower() == "true")
                 {
-                    LoadLegacy(saveObject, "Shan");
+                    //LoadLegacy(saveObject, "Shan");
                     return;
                 }
             }
@@ -983,131 +983,131 @@ namespace KhTracker
 
         private void LoadLegacy(Dictionary<string, object> Savefile, string LegacyType)
         {
-            if (LegacyType == "Jsmartee")
-            {
-                SetMode(Mode.JsmarteeHints);
-
-                var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacyJHints"].ToString());
-                string line1 = hintStrings[0];
-                data.hintFileText[0] = line1;
-                string[] reportvalues = line1.Split('.');
-
-                string line2 = hintStrings[1];
-                data.hintFileText[1] = line2;
-                line2 = line2.TrimEnd('.');
-                string[] reportorder = line2.Split('.');
-
-                string line3 = hintStrings[2];
-                data.hintFileText[2] = line3;
-                LoadSettings(line3);
-
-                for (int i = 0; i < reportorder.Length; ++i)
-                {
-                    string location = data.codes.FindCode(reportorder[i]);
-                    if (location == "")
-                        location = data.codes.GetDefault(i);
-
-                    data.reportLocations.Add(location);
-                    string[] temp = reportvalues[i].Split(',');
-                    data.reportInformation.Add(new Tuple<string, string, int>(null, data.codes.FindCode(temp[0]), int.Parse(temp[1]) - 32));
-                }
-
-                //end of loading
-                data.hintsLoaded = true;
-                data.legacyJsmartee = true;
-                data.saveFileLoaded = true;
-            }
-            else
-            {
-                //bool autotrackeron = false;
-                //bool ps2tracking = false;
-                ////check for autotracking on and which version
-                //if (aTimer != null)
-                //    autotrackeron = true;
-                //
-                //if (pcsx2tracking)
-                //    ps2tracking = true;
-
-                //FixDictionary();
-                SetMode(Mode.ShanHints);
-
-                var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacySHints"].ToString());
-
-                if (data.shanHintFileText != null)
-                {
-                    data.shanHintFileText = null;
-                }
-
-                foreach (string world in data.WorldsData.Keys.ToList())
-                {
-                    data.WorldsData[world].checkCount.Clear();
-                }
-
-                bool check1 = false;
-                bool check2 = false;
-                for (int i = 0; i < hintStrings.Length; ++i)
-                {
-                    string line = hintStrings[i];
-                    data.shanHintFileText[i] = line;
-
-                    // ignore comment lines
-                    if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
-                        continue;
-
-                    string[] codes = line.Split(',');
-                    if (codes.Length == 5)
-                    {
-                        string world = data.codes.FindCode(codes[2]);
-
-                        //stupid fix
-                        string[] idCode = codes[4].Split('/', ' ');
-
-                        int id = Convert.ToInt32(idCode[0], 16);
-                        if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
-                            continue;
-
-                        string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
-                        data.WorldsData[world].checkCount.Add(item);
-                    }
-                    else if (codes.Length == 1)
-                    {
-                        if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
-                        {
-                            check1 = true;
-                        }
-                        else if (codes[0] == "//Remove Dodge Roll LVl")
-                        {
-                            check2 = true;
-                        }
-                    }
-                }
-                data.legacyShan = true;
-
-                if (check1 == true && check2 == false)
-                {
-                    foreach (string world in data.WorldsData.Keys.ToList())
-                    {
-                        data.WorldsData[world].checkCount.Clear();
-                    }
-                }
-
-                foreach (var key in data.WorldsData.Keys.ToList())
-                {
-                    if (key == "GoA")
-                        continue;
-
-                    data.WorldsData[key].worldGrid.WorldComplete();
-                    SetWorldValue(data.WorldsData[key].value, 0);
-                }
-
-                //end of loading
-                data.saveFileLoaded = true;
-
-                //if (autotrackeron)
-                //{
-                //    InitAutoTracker(ps2tracking);
-                //}
-            }
+            //if (LegacyType == "Jsmartee")
+            //{
+            //    SetMode(Mode.JsmarteeHints);
+            //
+            //    var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacyJHints"].ToString());
+            //    string line1 = hintStrings[0];
+            //    data.hintFileText[0] = line1;
+            //    string[] reportvalues = line1.Split('.');
+            //
+            //    string line2 = hintStrings[1];
+            //    data.hintFileText[1] = line2;
+            //    line2 = line2.TrimEnd('.');
+            //    string[] reportorder = line2.Split('.');
+            //
+            //    string line3 = hintStrings[2];
+            //    data.hintFileText[2] = line3;
+            //    LoadSettings(line3);
+            //
+            //    for (int i = 0; i < reportorder.Length; ++i)
+            //    {
+            //        string location = data.codes.FindCode(reportorder[i]);
+            //        if (location == "")
+            //            location = data.codes.GetDefault(i);
+            //
+            //        data.reportLocations.Add(location);
+            //        string[] temp = reportvalues[i].Split(',');
+            //        data.reportInformation.Add(new Tuple<string, string, int>(null, data.codes.FindCode(temp[0]), int.Parse(temp[1]) - 32));
+            //    }
+            //
+            //    //end of loading
+            //    data.hintsLoaded = true;
+            //    data.legacyJsmartee = true;
+            //    data.saveFileLoaded = true;
+            //}
+            //else
+            //{
+            //    //bool autotrackeron = false;
+            //    //bool ps2tracking = false;
+            //    ////check for autotracking on and which version
+            //    //if (aTimer != null)
+            //    //    autotrackeron = true;
+            //    //
+            //    //if (pcsx2tracking)
+            //    //    ps2tracking = true;
+            //
+            //    //FixDictionary();
+            //    SetMode(Mode.ShanHints);
+            //
+            //    var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacySHints"].ToString());
+            //
+            //    if (data.shanHintFileText != null)
+            //    {
+            //        data.shanHintFileText = null;
+            //    }
+            //
+            //    foreach (string world in data.WorldsData.Keys.ToList())
+            //    {
+            //        data.WorldsData[world].checkCount.Clear();
+            //    }
+            //
+            //    bool check1 = false;
+            //    bool check2 = false;
+            //    for (int i = 0; i < hintStrings.Length; ++i)
+            //    {
+            //        string line = hintStrings[i];
+            //        data.shanHintFileText[i] = line;
+            //
+            //        // ignore comment lines
+            //        if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
+            //            continue;
+            //
+            //        string[] codes = line.Split(',');
+            //        if (codes.Length == 5)
+            //        {
+            //            string world = data.codes.FindCode(codes[2]);
+            //
+            //            //stupid fix
+            //            string[] idCode = codes[4].Split('/', ' ');
+            //
+            //            int id = Convert.ToInt32(idCode[0], 16);
+            //            if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
+            //                continue;
+            //
+            //            string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
+            //            data.WorldsData[world].checkCount.Add(item);
+            //        }
+            //        else if (codes.Length == 1)
+            //        {
+            //            if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
+            //            {
+            //                check1 = true;
+            //            }
+            //            else if (codes[0] == "//Remove Dodge Roll LVl")
+            //            {
+            //                check2 = true;
+            //            }
+            //        }
+            //    }
+            //    data.legacyShan = true;
+            //
+            //    if (check1 == true && check2 == false)
+            //    {
+            //        foreach (string world in data.WorldsData.Keys.ToList())
+            //        {
+            //            data.WorldsData[world].checkCount.Clear();
+            //        }
+            //    }
+            //
+            //    foreach (var key in data.WorldsData.Keys.ToList())
+            //    {
+            //        if (key == "GoA")
+            //            continue;
+            //
+            //        data.WorldsData[key].worldGrid.WorldComplete();
+            //        SetWorldValue(data.WorldsData[key].value, 0);
+            //    }
+            //
+            //    //end of loading
+            //    data.saveFileLoaded = true;
+            //
+            //    //if (autotrackeron)
+            //    //{
+            //    //    InitAutoTracker(ps2tracking);
+            //    //}
+            //}
         }
 
         //progress helpers
@@ -1202,112 +1202,112 @@ namespace KhTracker
         //Shans Classic
         private void ParseSeed(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                DefaultExt = ".pnach",
-                Filter = "pnach files (*.pnach)|*.pnach",
-                Title = "Select Seed File"
-            };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                ParseSeed(openFileDialog.FileName);
-            }
+            //OpenFileDialog openFileDialog = new OpenFileDialog
+            //{
+            //    DefaultExt = ".pnach",
+            //    Filter = "pnach files (*.pnach)|*.pnach",
+            //    Title = "Select Seed File"
+            //};
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    ParseSeed(openFileDialog.FileName);
+            //}
         }
 
         public void ParseSeed(string filename)
         {
-            if (!InProgressCheck("seed"))
-                return;
-
-            //bool autotrackeron = false;
-            //bool ps2tracking = false;
-            //check for autotracking on and which version
-            //if (aTimer != null)
-            //    autotrackeron = true;
+            //if (!InProgressCheck("seed"))
+            //    return;
             //
-            //if (pcsx2tracking)
-            //    ps2tracking = true;
-
-            //FixDictionary();
-            SetMode(Mode.ShanHints);
-
-            if (data.shanHintFileText != null)
-            {
-                data.shanHintFileText = null;
-            }
-
-            foreach (string world in data.WorldsData.Keys.ToList())
-            {
-                data.WorldsData[world].checkCount.Clear();
-            }
-
-            StreamReader streamReader = new StreamReader(filename);
-            bool check1 = false;
-            bool check2 = false;
-
-            int lineNum = 0;
-            while (streamReader.EndOfStream == false)
-            {
-                string line = streamReader.ReadLine();
-                data.shanHintFileText[lineNum] = line;
-
-                // ignore comment lines
-                if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
-                    continue;
-
-                string[] codes = line.Split(',');
-                if (codes.Length == 5)
-                {
-                    string world = data.codes.FindCode(codes[2]);
-
-                    //stupid fix
-                    string[] idCode = codes[4].Split('/', ' ');
-
-                    int id = Convert.ToInt32(idCode[0], 16);
-                    if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
-                        continue;
-
-                    string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
-                    data.WorldsData[world].checkCount.Add(item);
-                }
-                else if (codes.Length == 1)
-                {
-                    if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
-                    {
-                        check1 = true;
-                    }
-                    else if (codes[0] == "//Remove Dodge Roll LVl")
-                    {
-                        check2 = true;
-                    }
-                }
-
-                lineNum++;
-            }
-            streamReader.Close();
-            data.legacyShan = true;
-
-            if (check1 == true && check2 == false)
-            {
-                foreach (string world in data.WorldsData.Keys.ToList())
-                {
-                    data.WorldsData[world].checkCount.Clear();
-                }
-            }
-
-            foreach (var key in data.WorldsData.Keys.ToList())
-            {
-                if (key == "GoA")
-                    continue;
-
-                data.WorldsData[key].worldGrid.WorldComplete();
-                SetWorldValue(data.WorldsData[key].value, 0);
-            }
-
-            data.seedLoaded = true;
-
-            if (data.wasTracking)
-                InitTracker();
+            ////bool autotrackeron = false;
+            ////bool ps2tracking = false;
+            ////check for autotracking on and which version
+            ////if (aTimer != null)
+            ////    autotrackeron = true;
+            ////
+            ////if (pcsx2tracking)
+            ////    ps2tracking = true;
+            //
+            ////FixDictionary();
+            //SetMode(Mode.ShanHints);
+            //
+            //if (data.shanHintFileText != null)
+            //{
+            //    data.shanHintFileText = null;
+            //}
+            //
+            //foreach (string world in data.WorldsData.Keys.ToList())
+            //{
+            //    data.WorldsData[world].checkCount.Clear();
+            //}
+            //
+            //StreamReader streamReader = new StreamReader(filename);
+            //bool check1 = false;
+            //bool check2 = false;
+            //
+            //int lineNum = 0;
+            //while (streamReader.EndOfStream == false)
+            //{
+            //    string line = streamReader.ReadLine();
+            //    data.shanHintFileText[lineNum] = line;
+            //
+            //    // ignore comment lines
+            //    if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
+            //        continue;
+            //
+            //    string[] codes = line.Split(',');
+            //    if (codes.Length == 5)
+            //    {
+            //        string world = data.codes.FindCode(codes[2]);
+            //
+            //        //stupid fix
+            //        string[] idCode = codes[4].Split('/', ' ');
+            //
+            //        int id = Convert.ToInt32(idCode[0], 16);
+            //        if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
+            //            continue;
+            //
+            //        string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
+            //        data.WorldsData[world].checkCount.Add(item);
+            //    }
+            //    else if (codes.Length == 1)
+            //    {
+            //        if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
+            //        {
+            //            check1 = true;
+            //        }
+            //        else if (codes[0] == "//Remove Dodge Roll LVl")
+            //        {
+            //            check2 = true;
+            //        }
+            //    }
+            //
+            //    lineNum++;
+            //}
+            //streamReader.Close();
+            //data.legacyShan = true;
+            //
+            //if (check1 == true && check2 == false)
+            //{
+            //    foreach (string world in data.WorldsData.Keys.ToList())
+            //    {
+            //        data.WorldsData[world].checkCount.Clear();
+            //    }
+            //}
+            //
+            //foreach (var key in data.WorldsData.Keys.ToList())
+            //{
+            //    if (key == "GoA")
+            //        continue;
+            //
+            //    data.WorldsData[key].worldGrid.WorldComplete();
+            //    SetWorldValue(data.WorldsData[key].value, 0);
+            //}
+            //
+            //data.seedLoaded = true;
+            //
+            //if (data.wasTracking)
+            //    InitTracker();
         }
 
         //Jsmartee Classic
