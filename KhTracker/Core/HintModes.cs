@@ -196,7 +196,7 @@ namespace KhTracker
             }
 
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
@@ -276,6 +276,7 @@ namespace KhTracker
             SetProgressionHints(data.UsingProgressionHints);
         }
 
+        //Todo Fix
         private void SpoilerHints(Dictionary<string, object> hintObject)
         {
             if (data.progressionType == "Reports")
@@ -606,6 +607,7 @@ namespace KhTracker
             {"PuzzSynth", 0}
         };
 
+        //TODO Fix
         private void PointsHints(Dictionary<string, object> hintObject)
         {
             data.ShouldResetHash = true;
@@ -983,7 +985,7 @@ namespace KhTracker
         private void ProgressionPathHints(Dictionary<string, object> hintObject)
         {
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             var progHints = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> progHintsKeys = progHints.Keys.Select(int.Parse).ToList();
             progHintsKeys.Sort();
@@ -1080,6 +1082,7 @@ namespace KhTracker
             data.hintsLoaded = true;
         }
 
+        //TODO Fix
         private void ProgressionSpoilerHints(Dictionary<string, object> hintObject)
         {
             bool TMP_bossReports = false;
