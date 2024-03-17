@@ -320,7 +320,6 @@ namespace KhTracker
                 TMP_bossReports = true;
             }
 
-            //need to remember what this is for lmao
             Dictionary<string, int> counts = new Dictionary<string, int>
             {
                 {"Fire", 1 }, {"Blizzard", 1 }, {"Thunder", 1 },
@@ -1117,7 +1116,7 @@ namespace KhTracker
         {
             bool TMP_bossReports = false;
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             List<string> reveals = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
@@ -1159,17 +1158,20 @@ namespace KhTracker
                 {
                     continue;
                 }
-                foreach (string item in world.Value)
+                foreach (int itemNum in world.Value)
                 {
                     //Ignore reports as ICs if report mode is false
                     //if (!data.SpoilerReportMode && item.Contains("Report"))
                     //    continue;
+
+                    string item = Codes.ConvertSeedGenName(itemNum, true);
 
                     if (item.Contains("Report") && !data.SpoilerReportMode && !TMP_bossReports)
                         continue;
 
                     string worldname = Codes.ConvertSeedGenName(world.Key);
                     string checkname = Codes.ConvertSeedGenName(item);
+                    
 
                     data.WorldsData[worldname].checkCount.Add(checkname);
 
@@ -1238,9 +1240,9 @@ namespace KhTracker
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
                     data.reportLocations.Add(location);
 
-                    Console.WriteLine("WORLDSTRING = " + worldstring);
-                    Console.WriteLine("LOCATION = " + location);
-                    Console.WriteLine(data.reportInformation.Count);
+                    //Console.WriteLine("WORLDSTRING = " + worldstring);
+                    //Console.WriteLine("LOCATION = " + location);
+                    //Console.WriteLine(data.reportInformation.Count);
                 }
                 data.hintsLoaded = true;
             }
