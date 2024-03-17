@@ -1551,16 +1551,11 @@ namespace KhTracker
                             ReportsToggle(false);
                             ExtraChecksToggle(false);
                             VisitLockToggle(false);
+                            ChestLockToggle(false);
                             foreach (string item in hintableItems)
                             {
                                 switch (item)
                                 {
-                                    case "magic":
-                                        break;
-                                    case "form":
-                                        break;
-                                    case "summon":
-                                        break;
                                     case "page":
                                         TornPagesToggle(true);
                                         break;
@@ -1576,7 +1571,14 @@ namespace KhTracker
                                     case "visit":
                                         VisitLockToggle(true);
                                         break;
+                                    case "keyblade":
+                                        ChestLockToggle(true);
+                                        break;
                                     case "proof":
+                                    case "magic":
+                                    case "form":
+                                    case "summon":
+                                    default: 
                                         break;
                                 }
                             }
