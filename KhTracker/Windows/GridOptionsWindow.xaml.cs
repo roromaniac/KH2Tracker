@@ -319,22 +319,26 @@ namespace KhTracker
                 },
             };
             DataContext = categories;
+            string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous" };
             foreach (Category category in categories)
             {
                 List<SubCategory> subcategories = category.SubCategories;
                 foreach(SubCategory subcategory in subcategories)
                 {
-                    List<Option> options = subcategory.Options;
-                    int numberOfOptions = options.Count();
-                    int columnsInGrid = 4; 
-                    int spacersNeeded = ((columnsInGrid - (numberOfOptions % columnsInGrid)) % columnsInGrid) + columnsInGrid;
-
-                    for (int i = 0; i < spacersNeeded; i++)
+                    if (selectAllCategories.Contains(subcategory.SubCategoryName))
                     {
-                        options.Add(new Option { Description = "" }); // Add spacers
-                    }
+                        List<Option> options = subcategory.Options;
+                        int numberOfOptions = options.Count();
+                        int columnsInGrid = 4;
+                        int spacersNeeded = ((columnsInGrid - (numberOfOptions % columnsInGrid)) % columnsInGrid) + columnsInGrid;
 
-                    options.Add(new Option { Type = OptionType.CheckBox, Description = "Select All", DefaultValue = "false", IsSelectAllOption = true });
+                        for (int i = 0; i < spacersNeeded; i++)
+                        {
+                            options.Add(new Option { Description = "" }); // Add spacers
+                        }
+
+                        options.Add(new Option { Type = OptionType.CheckBox, Description = "Select All", DefaultValue = "false", IsSelectAllOption = true });
+                    }
                 }
             }
         }
