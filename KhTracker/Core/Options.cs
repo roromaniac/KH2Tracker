@@ -33,11 +33,11 @@ namespace KhTracker
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                if (Path.GetExtension(files[0]).ToUpper() == ".HINT")
-                    LoadHints(files[0]);
-                else if (Path.GetExtension(files[0]).ToUpper() == ".PNACH")
-                    ParseSeed(files[0]);
-                else if (Path.GetExtension(files[0]).ToUpper() == ".ZIP")
+                //if (Path.GetExtension(files[0]).ToUpper() == ".HINT")
+                //    LoadHints(files[0]);
+                //else if (Path.GetExtension(files[0]).ToUpper() == ".PNACH")
+                //    ParseSeed(files[0]);
+                if (Path.GetExtension(files[0]).ToUpper() == ".ZIP")
                     OpenKHSeed(files[0]);
                 else if (Path.GetExtension(files[0]).ToUpper() == ".TSV")
                     Load(files[0]);
@@ -1655,7 +1655,7 @@ namespace KhTracker
                             //to be safe about this i guess
                             //bool abilitiesOn = true;
                             bool puzzleOn = false;
-                            bool synthOn = false;
+                            //bool synthOn = false;
 
                             //load settings from hints
                             foreach (string setting in settings)
@@ -1724,7 +1724,7 @@ namespace KhTracker
                                         break;
                                     case "Synthesis":
                                         SynthToggle(true);
-                                        synthOn = true;
+                                        //synthOn = true;
                                         data.synthOn = true;
                                         break;
                                     case "Form Levels":
@@ -2042,6 +2042,7 @@ namespace KhTracker
                 archive.Dispose();
 
                 data.seedLoaded = true;
+                toggleState(false);
             }
 
             if (data.wasTracking)
@@ -2312,6 +2313,8 @@ namespace KhTracker
                 Defense.Visibility = Visibility.Collapsed;
             }
 
+            toggleState(true);
+
             collectedChecks.Clear();
             newChecks.Clear();
             ModeDisplay.Header = "";
@@ -2464,7 +2467,7 @@ namespace KhTracker
                     Grid pool;
 
                     if (item.Name.StartsWith("Ghost_"))
-                        pool = VisualTreeHelper.GetChild(ItemPool, 7) as Grid;
+                        pool = VisualTreeHelper.GetChild(ItemPool, ItemPool.Children.Count - 1) as Grid;
                     else
                         pool = data.Items[item.Name].Item2;
 
@@ -2772,6 +2775,19 @@ namespace KhTracker
             Ghost_PageCount.Visibility = Visibility.Hidden;
             Ghost_MunnyCount.Visibility = Visibility.Hidden;
 
+            Ghost_BCCount.Visibility = Visibility.Hidden;
+            Ghost_HTCount.Visibility = Visibility.Hidden;
+            Ghost_PLCount.Visibility = Visibility.Hidden;
+            Ghost_OCCount.Visibility = Visibility.Hidden;
+            Ghost_LoDCount.Visibility = Visibility.Hidden;
+            Ghost_PRCount.Visibility = Visibility.Hidden;
+            Ghost_AGCount.Visibility = Visibility.Hidden;
+            Ghost_SPCount.Visibility = Visibility.Hidden;
+            Ghost_TWTNWCount.Visibility = Visibility.Hidden;
+            Ghost_HBCount.Visibility = Visibility.Hidden;
+            Ghost_DCCount.Visibility = Visibility.Hidden;
+            Ghost_TTCount.Visibility = Visibility.Hidden;
+
             FireCount.Fill = (SolidColorBrush)FindResource("Color_Black");
             FireCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
             FireCount.Fill = (LinearGradientBrush)FindResource("Color_Fire");
@@ -2986,6 +3002,23 @@ namespace KhTracker
             {
                 data.Reports[i].HandleItemReturn();
             }
+        }
+
+        private void toggleState(bool clickable)
+        {
+            ReportsOption.IsEnabled = clickable;
+            TornPagesOption.IsEnabled = clickable;
+            PromiseCharmOption.IsEnabled = clickable;
+            AbilitiesOption.IsEnabled = clickable;
+            AntiFormOption.IsEnabled = clickable;
+            VisitLockOption.IsEnabled = clickable;
+            ChestLockOption.IsEnabled = clickable;
+            ExtraChecksOption.IsEnabled = clickable;
+            SoraLevel01Option.IsEnabled = clickable;
+            SoraLevel50Option.IsEnabled = clickable;
+            SoraLevel99Option.IsEnabled = clickable;
+
+            WorldToggleMenuItem.IsEnabled = clickable;
         }
 
         /// 

@@ -109,7 +109,7 @@
                     <MenuItem x:Name="MainImg3Option" Header="Custom Image (No Scaling)" IsCheckable="True" IsChecked="False" Click="MainBG_Img3Toggle"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Worlds" Focusable="False">
+            <MenuItem Header="Worlds" Focusable="False" x:Name="WorldToggleMenuItem">
                 <MenuItem Header="Sora's Heart" 				Click="SoraHeartToggle"			x:Name="SoraHeartOption"		IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Drive Forms" 					Click="DrivesToggle"			x:Name="DrivesOption" 			IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Simulated Twilight Town" 		Click="SimulatedToggle" 		x:Name="SimulatedOption"		IsCheckable="True" IsChecked="True"/>
@@ -184,7 +184,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -809,7 +809,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -883,7 +883,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -974,7 +974,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1706,7 +1706,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1780,7 +1780,7 @@
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -3659,48 +3659,47 @@
                     <local:Item x:Name="Ghost_MunnyPouch1" 	    Content="{DynamicResource Min-MunnyPouch1}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_MunnyPouch2" 	    Content="{DynamicResource Min-MunnyPouch2}"        Opacity="0.5"/>
 
-                    <local:Item x:Name="Ghost_RikuWep1"   Content="{DynamicResource Min-RikuWep}"   Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_RikuWep2"   Content="{DynamicResource Min-RikuWep}"   Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_MembershipCard1"    Content="{DynamicResource Min-MembershipCard}"    Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_MembershipCard2"    Content="{DynamicResource Min-MembershipCard}"    Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_KingsLetter1"   Content="{DynamicResource Min-KingsLetter}"     Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_KingsLetter2"   Content="{DynamicResource Min-KingsLetter}"     Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_IceCream1"   Content="{DynamicResource Min-IceCream}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_IceCream2"   Content="{DynamicResource Min-IceCream}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_IceCream3"   Content="{DynamicResource Min-IceCream}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_Sketches"   Content="{DynamicResource Min-Sketches}"            Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_BeastWep1"   Content="{DynamicResource Min-BeastWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_BeastWep2"   Content="{DynamicResource Min-BeastWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_JackWep1"    Content="{DynamicResource Min-JackWep}"            Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_JackWep2"    Content="{DynamicResource Min-JackWep}"            Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_SimbaWep1"   Content="{DynamicResource Min-SimbaWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_SimbaWep2"   Content="{DynamicResource Min-SimbaWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_AuronWep1"   Content="{DynamicResource Min-AuronWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_AuronWep2"   Content="{DynamicResource Min-AuronWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_MulanWep1"   Content="{DynamicResource Min-MulanWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_MulanWep2"   Content="{DynamicResource Min-MulanWep}"           Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_SparrowWep1" Content="{DynamicResource Min-SparrowWep}"         Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_SparrowWep2" Content="{DynamicResource Min-SparrowWep}"         Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_AladdinWep1" Content="{DynamicResource Min-AladdinWep}"         Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_AladdinWep2" Content="{DynamicResource Min-AladdinWep}"         Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_TronWep1"    Content="{DynamicResource Min-TronWep}"            Grid.Column="0"/>
-                    <local:Item x:Name="Ghost_TronWep2"    Content="{DynamicResource Min-TronWep}"            Grid.Column="0"/>
-
-                    <local:Item  x:Name="Ghost_ChestTT"       Content="{DynamicResource Min-ChestTT}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestSTT"      Content="{DynamicResource Min-ChestSTT}"        Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestHB"       Content="{DynamicResource Min-ChestHB}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestCoR"      Content="{DynamicResource Min-ChestCoR}"        Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestAG"       Content="{DynamicResource Min-ChestAG}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestBC"       Content="{DynamicResource Min-ChestBC}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestDC"       Content="{DynamicResource Min-ChestDC}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestHT"       Content="{DynamicResource Min-ChestHT}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestLoD"      Content="{DynamicResource Min-ChestLoD}"        Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestOC"       Content="{DynamicResource Min-ChestOC}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestPL"       Content="{DynamicResource Min-ChestPL}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestPR"       Content="{DynamicResource Min-ChestPR}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestSP"       Content="{DynamicResource Min-ChestSP}"         Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"      Grid.Column="0"/>
-                    <local:Item  x:Name="Ghost_ChestHAW"      Content="{DynamicResource Min-ChestHAW}"        Grid.Column="0"/>
+                    <local:Item x:Name="Ghost_RikuWep1"             Content="{DynamicResource Min-RikuWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_RikuWep2"             Content="{DynamicResource Min-RikuWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MembershipCard1"      Content="{DynamicResource Min-MembershipCard}"  Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MembershipCard2"      Content="{DynamicResource Min-MembershipCard}"  Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_KingsLetter1"         Content="{DynamicResource Min-KingsLetter}"     Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_KingsLetter2"         Content="{DynamicResource Min-KingsLetter}"     Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream1"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream2"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream3"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_Sketches"             Content="{DynamicResource Min-Sketches}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_BeastWep1"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_BeastWep2"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_JackWep1"             Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_JackWep2"             Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SimbaWep1"            Content="{DynamicResource Min-SimbaWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SimbaWep2"            Content="{DynamicResource Min-SimbaWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AuronWep1"            Content="{DynamicResource Min-AuronWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AuronWep2"            Content="{DynamicResource Min-AuronWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MulanWep1"            Content="{DynamicResource Min-MulanWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MulanWep2"            Content="{DynamicResource Min-MulanWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SparrowWep1"          Content="{DynamicResource Min-SparrowWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SparrowWep2"          Content="{DynamicResource Min-SparrowWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AladdinWep1"          Content="{DynamicResource Min-AladdinWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AladdinWep2"          Content="{DynamicResource Min-AladdinWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_TronWep1"             Content="{DynamicResource Min-TronWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_TronWep2"             Content="{DynamicResource Min-TronWep}"         Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestTT"       Content="{DynamicResource Min-ChestTT}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestSTT"      Content="{DynamicResource Min-ChestSTT}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHB"       Content="{DynamicResource Min-ChestHB}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestCoR"      Content="{DynamicResource Min-ChestCoR}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestAG"       Content="{DynamicResource Min-ChestAG}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestBC"       Content="{DynamicResource Min-ChestBC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestDC"       Content="{DynamicResource Min-ChestDC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHT"       Content="{DynamicResource Min-ChestHT}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestLoD"      Content="{DynamicResource Min-ChestLoD}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestOC"       Content="{DynamicResource Min-ChestOC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestPL"       Content="{DynamicResource Min-ChestPL}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestPR"       Content="{DynamicResource Min-ChestPR}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestSP"       Content="{DynamicResource Min-ChestSP}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"            Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHAW"      Content="{DynamicResource Min-ChestHAW}"              Opacity="0.5"/>
                 </Grid>
             </Grid>
 

@@ -302,10 +302,19 @@ namespace KhTracker
                 VisitsRow.Height = new GridLength(1, GridUnitType.Star);
 
                 Grid VisitRow2 = ItemPool.Children[5] as Grid;
-                double[] resetList = {0.6, 1.0, 0.1, 0.6, 1.0, 0.1, 0.6, 1.0, 0.1, 0.6, 1.0, 0.1};
+                double[] resetList = {
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.0, 
+                    0.0, 1.0};
                 for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
                 {
-                    if (i <= 10)
+                    if (i <= 13)
                         VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
                 }
                 VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
@@ -421,7 +430,18 @@ namespace KhTracker
                 MunnyNum.Width = new GridLength(0.6, GridUnitType.Star);
                 MunnyImg.Width = new GridLength(1.0, GridUnitType.Star);
 
-                VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                if (!VisitLockOption.IsChecked)
+                {
+                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                    foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
+                    {
+                        if (Vlock.Name != "HadesCupCol" && Vlock.Name != "OlympusStoneCol" && Vlock.Name != "UnknownDiskCol")
+                            Vlock.Width = new GridLength(0, GridUnitType.Star);
+                    }
+                    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                }
+                //else
+                //    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
             }
             else
             {
@@ -434,7 +454,15 @@ namespace KhTracker
                 MunnyImg.Width = new GridLength(0, GridUnitType.Star);
 
                 if (VisitLockOption.IsChecked)
+                {
+                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                    foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
+                    {
+                        if (Vlock.Name == "HadesCupCol" || Vlock.Name == "OlympusStoneCol" || Vlock.Name == "UnknownDiskCol")
+                            Vlock.Width = new GridLength(0, GridUnitType.Star);
+                    }
                     VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                }
                 else
                     VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
             }

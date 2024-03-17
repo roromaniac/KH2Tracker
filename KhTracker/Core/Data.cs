@@ -84,6 +84,7 @@ namespace KhTracker
             { "report", 0 },
             { "other", 0},
             { "visit", 0},
+            { "keyblade", 0},
             //bossrelated
             { "boss_as", 0 },
             { "boss_datas", 0 },

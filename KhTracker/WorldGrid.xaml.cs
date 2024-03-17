@@ -1206,7 +1206,7 @@ namespace KhTracker
             }
 
             //look for avaiable ghost item in item pool to track
-            Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 7) as Grid;
+            Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, window.ItemPool.Children.Count - 1) as Grid;
             foreach (Item Ghost in ItemRow.Children)
             {
                 if (Ghost != null && Ghost.Name.Contains("Ghost_" + itemname))
@@ -1349,7 +1349,7 @@ namespace KhTracker
 
                 //look for avaiable ghost item in item pool to track
                 //Note: for now the ghost items are always the 4th itemgrid.
-                Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, 7) as Grid;
+                Grid ItemRow = VisualTreeHelper.GetChild(window.ItemPool, window.ItemPool.Children.Count - 1) as Grid;
                 foreach (Item Ghost in ItemRow.Children)
                 {
                     //Console.WriteLine(Ghost.Name);
@@ -1399,7 +1399,7 @@ namespace KhTracker
                 itemname = item.Name.TrimEnd(numbers);
 
             //update normal items obtained
-            if ((itemntype == "magic" || itemntype == "page" || itemntype == "other" || itemntype == "visit") && !itemname.StartsWith("Ghost_"))
+            if (!itemname.StartsWith("Ghost_"))
             {
                 switch (itemname)
                 {
@@ -1463,11 +1463,13 @@ namespace KhTracker
                     case "KingsLetter":
                         Ghost_KingsLetter_obtained += addremove;
                         break;
+                    default:
+                        break;
                 }
             }
 
             //update ghost items hinted
-            if ((itemntype == "magic" || itemntype == "page" || itemntype == "other") && itemname.StartsWith("Ghost_"))
+            if (itemname.StartsWith("Ghost_"))
             {
                 switch (itemname)
                 {
@@ -1531,6 +1533,8 @@ namespace KhTracker
                     case "Ghost_KingsLetter":
                         Ghost_KingsLetter += addremove;
                         break;
+                    default:
+                        break;
                 }
             }
 
@@ -1539,6 +1543,9 @@ namespace KhTracker
 
         private void SetItemPoolGhosts(string item, string type)
         {
+            if (!item.StartsWith("Ghost_"))
+                return;
+
             int GhostIC = 0;
             int ObtainedIC = 0;
             OutlinedTextBlock magicValue = null;
@@ -1552,28 +1559,35 @@ namespace KhTracker
             }
 
             //simplier icon opacity change for non pages/magic
-            if (type != "magic" && type != "page" && !item.Contains("Munny") && type != "visit")
+            if (type != "magic" && type != "page" && !item.Contains("Munny"))
             {
-                //check if a ghost item was tracked
-                if (item.StartsWith("Ghost_"))
+                if(type == "visit" && !item.Contains("Sketches"))
                 {
-                    //remove ghost prefix
-                    item = item.Remove(0, 6);
-
-                    //get item and world grid it's supposed to be in
-                    Grid tempRow = data.Items[item].Item2;
-                    Item Check = tempRow.FindName(item) as Item;
-
-                    //check to see if item is *in* the ItemPool
-                    if (Check != null && Check.Parent == tempRow)
+                    //do nothing
+                }
+                else
+                {
+                    //check if a ghost item was tracked
+                    if (item.StartsWith("Ghost_"))
                     {
-                        Check.Opacity = universalOpacity; //change opacity
+                        //remove ghost prefix
+                        item = item.Remove(0, 6);
 
-                        Handle_Shadows(Check, false);
+                        //get item and world grid it's supposed to be in
+                        Grid tempRow = data.Items[item].Item2;
+                        Item Check = tempRow.FindName(item) as Item;
+
+                        //check to see if item is *in* the ItemPool
+                        if (Check != null && Check.Parent == tempRow)
+                        {
+                            Check.Opacity = universalOpacity; //change opacity
+
+                            Handle_Shadows(Check, false);
+                        }
+                        return;
                     }
                     return;
                 }
-                return;
             }
 
             ///
