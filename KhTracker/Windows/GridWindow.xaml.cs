@@ -25,6 +25,7 @@ namespace KhTracker
         //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         Data data;
         public GridOptionsWindow gridOptionsWindow;
+        public ColorPickerWindow colorPickerWindow;
 
         public int numRows;
         public int numColumns;
@@ -37,6 +38,8 @@ namespace KhTracker
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
+        public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
+        public List<string> assets;
 
         public GridWindow(Data dataIn)
         {
@@ -57,6 +60,7 @@ namespace KhTracker
 
             data = dataIn;
             gridOptionsWindow = new GridOptionsWindow(this, data);
+            colorPickerWindow = new ColorPickerWindow(this, currentColors);
 
             Top = Properties.Settings.Default.GridWindowY;
             Left = Properties.Settings.Default.GridWindowX;
@@ -81,6 +85,7 @@ namespace KhTracker
         {
             this.Hide();
             gridOptionsWindow.Hide();
+            colorPickerWindow.Hide();
             if (!canClose)
             {
                 e.Cancel = true;
@@ -186,7 +191,26 @@ namespace KhTracker
 
         }
 
-        private List<string> Asset_Collection(string visual_type = "Min", int seed = 1)
+        private List<string> Change_Icons(List<string> imageKeys)
+        {
+            if (TelevoIconsOption.IsChecked)
+            {
+                for (int i = 0; i < imageKeys.Count; i++)
+                {
+                    imageKeys[i] = imageKeys[i].Replace("Old-", "Min-");
+                }
+            }
+            if (SonicIconsOption.IsChecked)
+            {
+                for (int i = 0; i < imageKeys.Count; i++)
+                {
+                    imageKeys[i] = imageKeys[i].Replace("Min-", "Old-");
+                }
+            }
+            return imageKeys;
+        }
+
+        private List<string> Asset_Collection(int seed = 1)
         {
 
             List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary>();
@@ -211,27 +235,27 @@ namespace KhTracker
                 {
                     if (entry.Value is GridLabelledImage img && img.GridAllowed)
                     {
-                        // the split here addresses the image type e.g. min-valor will give me min
-                        if (((string)entry.Key).Split('-')[0] == visual_type)
+                        // regardless of image style, the image ID should be consistent so we just gather all of them from Min
+                        if (((string)entry.Key).Split('-')[0] == "Min")
                         {
                             // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
                             string checkName = ((string)entry.Key).Split('-')[1];
                             gridSettings[checkName] = gridSettings.ContainsKey(checkName) ? gridSettings[checkName] : img.GridAllowed;
                             if (gridSettings[checkName])
-                                trackableItemsDict[entry.Key] = entry.Value;
+                                trackableItemsDict[checkName] = entry.Value;
                         }
                     }
 
                 }
             }
 
-            // RErandomize which reports get included
+            // RE-randomize which reports get included
             var numReports = Properties.Settings.Default.GridWindowNumReports;
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
                 gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
 
-            // RErandomize which visit unlocks get included
+            // RE-randomize which visit unlocks get included
             var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
             int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
@@ -258,13 +282,21 @@ namespace KhTracker
             var markedColor = Properties.Settings.Default.MarkedColor;
             var annotatedColor = Properties.Settings.Default.AnnotatedColor;
             var bingoColor = Properties.Settings.Default.BingoColor;
+            var hintColor = Properties.Settings.Default.HintColor;
+            var battleshipMissColor = Properties.Settings.Default.BattleshipMissColor;
+            var battleshipHitColor = Properties.Settings.Default.BattleshipHitColor;
+            var battleshipSunkColor = Properties.Settings.Default.BattleshipSunkColor;
 
             return new Dictionary<string, Color>()
             {
                 { "Unmarked Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
                 { "Marked Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
                 { "Annotated Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
-                { "Bingo Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) }
+                { "Bingo Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) },
+                { "Hint Color", Color.FromArgb(hintColor.A, hintColor.R, hintColor.G, hintColor.B) },
+                { "Battleship Miss Color", Color.FromArgb(battleshipMissColor.A, battleshipMissColor.R, battleshipMissColor.G, battleshipMissColor.B) },
+                { "Battleship Hit Color", Color.FromArgb(battleshipHitColor.A, battleshipHitColor.R, battleshipHitColor.G, battleshipHitColor.B) },
+                { "Battleship Sunk Color", Color.FromArgb(battleshipSunkColor.A, battleshipSunkColor.R, battleshipSunkColor.G, battleshipSunkColor.B) }
             };
         }
 
@@ -272,6 +304,8 @@ namespace KhTracker
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
+            if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                SetColorForButton(button.Background, currentColors["Original Color"]);
             if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
             {
                 SetColorForButton(button.Background, currentColors["Marked Color"]);
@@ -280,7 +314,7 @@ namespace KhTracker
             {
                 SetColorForButton(button.Background, currentColors["Unmarked Color"]);
             }
-            if (Properties.Settings.Default.GridWindowBingoLogic)
+            if (bingoLogic)
                 BingoCheck(grid, i, j);
         }
 
@@ -305,7 +339,7 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns);
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool iconChange = false)
         {
             int seed;
             grid = new Grid();
@@ -314,20 +348,33 @@ namespace KhTracker
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
 
-            if (seedString == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
+            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
                 seedName = "[TIED TO SEED]";
                 seed = data.convertedSeedHash;
                 data.firstGridOnSeedLoad = false;
             }
-            else
+            else 
             {
-                seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
+                if (seedName == null)
+                    seedName = new string(Enumerable.Range(0, 8).Select(_ => alphanumeric[randValue.Next(alphanumeric.Length)]).ToArray());
                 seed = seedName.GetHashCode();
             }
-            Random rand = new Random(seed);
             Seedname.Header = "Seed: " + seedName;
-            List<string> assets = Asset_Collection("Min", seed);
+
+            if (iconChange)
+                // switch image style
+                assets = Change_Icons(assets);
+            else
+            {
+                // get raw check names
+                assets = Asset_Collection(seed);
+                // set the content resource reference with style
+                string style = TelevoIconsOption.IsChecked ? "Min-" : "Old-";
+                assets = assets.Select(item => style + item).ToList();
+            }
+
+
 
             if (rows * columns <= 0)
             {
@@ -338,6 +385,8 @@ namespace KhTracker
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global"));
             int numChecks = assets.Count - numGlobalSettings;
+            int originalNumRows = rows;
+            int originalNumColumns = columns;
             if (rows * columns > numChecks)
             {
                 while (true)
@@ -351,9 +400,9 @@ namespace KhTracker
                     {
                         numRows = rows;
                         numColumns = columns;
+                        MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
                         break;
                     }
-
                 }
             }
 
@@ -376,6 +425,7 @@ namespace KhTracker
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
+                    Console.WriteLine(button.Tag);
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
                     int current_i = i;
@@ -391,6 +441,7 @@ namespace KhTracker
 
             // generate the boss hints
             bossHintContentControls = new Dictionary<string, ContentControl>();
+            bossHintBorders = new Dictionary<string, Border>();
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
@@ -404,21 +455,42 @@ namespace KhTracker
                     };
 
                     // Define row definitions for the hintContainer grid
-                    // Top row will take 25% of the space (for the hint), the rest will be empty
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(65, GridUnitType.Star) }); // 65% remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(35, GridUnitType.Star) }); // 35% for the hint
+                    int coveragePercentage = 32;
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+
+                    // Create a Border with a white background for the top right cell
+                    //Border whiteBackground = new Border
+                    //{
+                    //    Background = new SolidColorBrush(Colors.Transparent), // Make the inside of the border transparent
+                    //    BorderBrush = new SolidColorBrush(Colors.White), // Set the color of the border edges
+                    //    BorderThickness = new Thickness(3), // Set the thickness of the edges
+                    //                                        // The rest of the properties remain the same
+                    //};
+                    Border whiteBackground = new Border
+                    {
+                        // this will be the background when a boss hint is acquired
+                        //Background = new SolidColorBrush(Colors.White),
+                    };
+
+                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
+                    bossHintBorders[bossName] = whiteBackground;
+
+                    // Set the Border to occupy the top 35% and the right 35% of the hintContainer
+                    Grid.SetRow(whiteBackground, 0);
+                    Grid.SetColumn(whiteBackground, 1);
+                    hintContainer.Children.Add(whiteBackground);
 
                     // Create the ContentControl with desired properties
                     ContentControl contentControl = new ContentControl
                     {
-                        HorizontalAlignment = HorizontalAlignment.Right,
-                        VerticalAlignment = VerticalAlignment.Top
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
                     };
 
                     // Naming the ContentControl using its grid position
-                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
                     bossHintContentControls[bossName] = contentControl;
 
                     // Add the ContentControl to the first row of the hintContainer
@@ -434,18 +506,16 @@ namespace KhTracker
                     grid.Children.Add(hintContainer);
                 }
             }
-
-
             // Add grid to the window or other container
             DynamicGrid.Children.Add(grid);
         }
 
-        private void SetColorForButton(Brush buttonBackground, Color newColor)
+        public void SetColorForButton(Brush buttonBackground, Color newColor)
         {
             ((SolidColorBrush)buttonBackground).Color = newColor;
         }
 
-        private Color GetColorFromButton(Brush buttonBackground)
+        public Color GetColorFromButton(Brush buttonBackground)
         {
             return ((SolidColorBrush)buttonBackground).Color;
         }
@@ -749,34 +819,26 @@ namespace KhTracker
                 }
             }
         }
+        // updates colors upon close
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {
             // prompt user for new colors
-            var colorPicker = new ColorPickerWindow(currentColors);
-            var oldAnnotatedColor = currentColors["Annotated Color"];
-            if (colorPicker.ShowDialog() == true)
-            {
-                currentColors = colorPicker.ButtonColors;
-            }
-            //update the new colors on the card
-            for (int i = 0; i < numRows; i++)
-            {
-                for (int j = 0; j < numColumns; j++)
-                {
-                    if (GetColorFromButton(buttons[i, j].Background).Equals(oldAnnotatedColor))
-                        SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
-                    else
-                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
-                    if (Properties.Settings.Default.GridWindowBingoLogic)
-                        BingoCheck(grid, i, j);
-                }
-            }
+            colorPickerWindow.Show();
         }
+
         private void InitOptions()
         {
             // save grid settings
             SavePreviousGridSettingsOption.IsChecked = Properties.Settings.Default.SavePreviousGridSetting;
             SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
+
+            // enable televo icons
+            TelevoIconsOption.IsChecked = Properties.Settings.Default.TelevoIcons;
+            TelevoIconsToggle(TelevoIconsOption.IsChecked);
+
+            // enable sonic icons
+            SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
+            SonicIconsToggle(SonicIconsOption.IsChecked);
         }
     }
 }

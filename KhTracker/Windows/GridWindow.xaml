@@ -32,19 +32,27 @@
     <DockPanel>
 
         <Menu DockPanel.Dock="Top" Background="White">
-
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
                 <MenuItem Header="Grid Checks" Click="Grid_Options" />
-                <MenuItem Header="Pick Colors" Click="PickColor_Click" />
+            </MenuItem>
+            <MenuItem Header="Image Visuals" Focusable="False">
+                <MenuItem Header="Set Colors" Click="PickColor_Click" />
+                <Separator/>
+                <MenuItem Header="Televo Icons" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Sonic Icons" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem Header="Seeds" Focusable="False">
                 <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
                 <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
                 <MenuItem Header="Always Save Previous Game Mode" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
-            <MenuItem x:Name="Seedname" Focusable="False"/>
-            <Separator/>
+            <MenuItem x:Name="Seedname" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
 
         </Menu>
 

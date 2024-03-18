@@ -772,7 +772,6 @@ namespace KhTracker
 
                 if (data.BossRandoFound)
                 {
-
                     // hint the final fights bosses if Xemnas 1 is defeated
                     if (checks[i] == "Xemnas")
                     {
@@ -783,7 +782,7 @@ namespace KhTracker
                             {
                                 string origBoss = data.codes.bossNameConversion[boss];
                                 string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
-                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss);
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
                                 
                         }
@@ -795,7 +794,7 @@ namespace KhTracker
                     Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string> {
                                                                         { "Hades", "Hades II (1)" },
                                                                         { "DCPete", "Pete TR" },
-                                                                        { "OCPete", "Pete OC" }
+                                                                        { "OCPete", "Pete OC II" }
                                                                     };
                     if (mismatchedBossNames.Keys.Contains(checks[i]))
                         checks[i] = mismatchedBossNames[checks[i]];
@@ -2125,6 +2124,8 @@ namespace KhTracker
                         {
                             data.forcedFinal = true;
                             checkEveryCheck.TrackCheck(0x001D);
+                            if (gridWindow.gridSettings["ForcingFinalCounts"])
+                                UpdateGridTracker("Final");
                         }
                         // if not forced Final, track Final Form check like normal
                         // else if Final was forced, check the tracked Final Form check
@@ -2133,6 +2134,11 @@ namespace KhTracker
                             collectedChecks.Add(check);
                             newChecks.Add(check);
                         }
+                    }
+                    else if (check.Name == "FinalReal")
+                    {
+                        if (gridWindow.gridSettings["ForcingFinalCounts"])
+                            UpdateGridTracker("Final");
                     }
                     else if (check.Name.StartsWith("MunnyPouch"))
                     {

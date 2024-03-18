@@ -2052,6 +2052,10 @@ namespace KhTracker
                 archive.Dispose();
 
                 data.seedLoaded = true;
+
+                // regenerate the grid tracker
+                gridWindow.grid.Children.Clear();
+                gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
             }
 
             if (data.wasTracking)
@@ -2095,38 +2099,6 @@ namespace KhTracker
                 {
                     hashfileBackup = file;
                     //Console.WriteLine("Found hashbackup file = " + hashfileBackup);
-                }
-            }
-
-            if (enemyfile != null)
-            {
-                using (var reader3 = new StreamReader(enemyfile))
-                {
-                    data.BossRandoFound = true;
-                    data.openKHBossText = reader3.ReadToEnd();
-                    var enemyText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHBossText));
-                    try
-                    {
-                        var enemyObject = JsonSerializer.Deserialize<Dictionary<string, object>>(enemyText);
-                        var bosses = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(enemyObject["BOSSES"].ToString());
-
-                        foreach (var bosspair in bosses)
-                        {
-                            string bossOrig = bosspair["original"].ToString();
-                            string bossRepl = bosspair["new"].ToString();
-
-                            data.BossList.Add(bossOrig, bossRepl);
-                        }
-                        bunterCheck(bosses);
-                    }
-                    catch
-                    {
-                        data.BossRandoFound = false;
-                        data.openKHBossText = "None";
-                        App.logger?.Record("error while trying to parse bosses.");
-                    }
-
-                    reader3.Close();
                 }
             }
 
@@ -2180,6 +2152,38 @@ namespace KhTracker
                     }
 
                     HashToSeed(hash);
+                }
+            }
+
+            if (enemyfile != null)
+            {
+                using (var reader3 = new StreamReader(enemyfile))
+                {
+                    data.BossRandoFound = true;
+                    data.openKHBossText = reader3.ReadToEnd();
+                    var enemyText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHBossText));
+                    try
+                    {
+                        var enemyObject = JsonSerializer.Deserialize<Dictionary<string, object>>(enemyText);
+                        var bosses = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(enemyObject["BOSSES"].ToString());
+
+                        foreach (var bosspair in bosses)
+                        {
+                            string bossOrig = bosspair["original"].ToString();
+                            string bossRepl = bosspair["new"].ToString();
+
+                            data.BossList.Add(bossOrig, bossRepl);
+                        }
+                        bunterCheck(bosses);
+                    }
+                    catch
+                    {
+                        data.BossRandoFound = false;
+                        data.openKHBossText = "None";
+                        App.logger?.Record("error while trying to parse bosses.");
+                    }
+
+                    reader3.Close();
                 }
             }
 
@@ -2708,6 +2712,10 @@ namespace KhTracker
             }
 
             data.seedLoaded = true;
+
+            // regenerate the grid tracker
+            gridWindow.grid.Children.Clear();
+            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
         }
 
         //hint helpers
@@ -3919,9 +3927,6 @@ namespace KhTracker
                 }
 
             }
-            // regenerate the grid tracker to accommodate appropriate bosses
-            gridWindow.grid.Children.Clear();
-            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
         }
 
         private string ConvertKeyNumber(string num, bool type)

@@ -22,9 +22,13 @@ namespace KhTracker
         public Color SelectedColor { get; private set; }
         public Dictionary<string, Color> ButtonColors;
         private Button LastClickedButton;
+        public bool canClose = false;
+        public GridWindow _gridWindow;
 
-        public ColorPickerWindow(Dictionary<string, Color> currentColors)
+        public ColorPickerWindow(GridWindow gridWindow, Dictionary<string, Color> currentColors)
         {
+            _gridWindow = gridWindow;
+            
             InitializeComponent();
 
             // Initialize the button colors
@@ -33,7 +37,11 @@ namespace KhTracker
                 { "Unmarked Color", Colors.DimGray },
                 { "Marked Color", Colors.Green },
                 { "Annotated Color", Colors.Orange },
-                { "Bingo Color", Colors.Purple }
+                { "Bingo Color", Colors.Purple },
+                { "Hint Color", Colors.White },
+                { "Battleship Miss Color", Colors.DeepSkyBlue },
+                { "Battleship Hit Color", Colors.Red },
+                { "Battleship Sunk Color", Colors.Pink }
             };
 
             // Set button colors initially
@@ -41,52 +49,92 @@ namespace KhTracker
             MarkedColorButton.Background = new SolidColorBrush(ButtonColors["Marked Color"]);
             AnnotatedColorButton.Background = new SolidColorBrush(ButtonColors["Annotated Color"]);
             BingoColorButton.Background = new SolidColorBrush(ButtonColors["Bingo Color"]);
+            HintColorButton.Background = new SolidColorBrush(ButtonColors["Hint Color"]);
+            BattleshipMissColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Miss Color"]);
+            BattleshipHitColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Hit Color"]);
+            BattleshipSunkColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Sunk Color"]);
         }
 
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ColorWindowY = RestoreBounds.Top;
+            Properties.Settings.Default.ColorWindowX = RestoreBounds.Left;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Properties.Settings.Default.ColorWindowWidth = RestoreBounds.Width;
+            Properties.Settings.Default.ColorWindowHeight = RestoreBounds.Height;
+        }
+
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //update the new colors on the card
+            var oldAnnotatedColor = _gridWindow.currentColors["Annotated Color"];
+            for (int i = 0; i < _gridWindow.numRows; i++)
+            {
+                for (int j = 0; j < _gridWindow.numColumns; j++)
+                {
+                    if (_gridWindow.GetColorFromButton(_gridWindow.buttons[i, j].Background).Equals(oldAnnotatedColor))
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
+                    else
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
+                    if (_gridWindow.bingoLogic)
+                        _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                }
+            }
+            // update the hint color
+            foreach (string key in _gridWindow.bossHintBorders.Keys)
+            {
+                if (_gridWindow.bossHintBorders[key].Background != null)
+                {
+                    _gridWindow.SetColorForButton(_gridWindow.bossHintBorders[key].Background, _gridWindow.currentColors["Hint Color"]);
+                }
+            }
+            this.Hide();
+            this.ColorControls.Visibility = Visibility.Collapsed;
+            if (!canClose)
+            {
+                e.Cancel = true;
+            }
+        }
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             if (button != null)
             {
-                LastClickedButton = button;
-                Color selectedColor = ButtonColors[(string)button.Content];
-                RedSlider.Value = selectedColor.R;
-                GreenSlider.Value = selectedColor.G;
-                BlueSlider.Value = selectedColor.B;
-                UpdateColorPreview();
-                ColorControls.Visibility = Visibility.Visible;
+                var textBlock = button.Content as TextBlock; // Cast the Content to TextBlock
+                if (textBlock != null)
+                {
+                    // sets the background of button to its current color
+                    LastClickedButton = button;
+                    SelectedColor = ButtonColors[textBlock.Text]; // Use buttonText here
+
+                    // update the preview background
+                    PreviewBorder.Background = new SolidColorBrush(SelectedColor);
+
+                    // reveals the color slider
+                    ColorControls.Visibility = Visibility.Visible;
+                }
             }
         }
 
+
         private void SelectColor_Click(object sender, RoutedEventArgs e)
         {
-            SelectedColor = Color.FromRgb((byte)RedSlider.Value, (byte)GreenSlider.Value, (byte)BlueSlider.Value);
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
-            ButtonColors[(string)LastClickedButton.Content] = SelectedColor; // Update the dictionary
-            SaveColorSettings((string)LastClickedButton.Content, SelectedColor); // Save the dictionary
+            var lastClickedTextBlock = LastClickedButton.Content as TextBlock;  
+            ButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
+            SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
         }
 
-        private void ColorSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
-            var red = (byte)RedSlider.Value;
-            var green = (byte)GreenSlider.Value;
-            var blue = (byte)BlueSlider.Value;
-            var rgbColor = Color.FromRgb(red, green, blue);
-            var color = new SolidColorBrush(rgbColor);
-            PreviewBorder.Background = color;
-            SelectedColor = rgbColor;
+            SelectedColor = e.NewValue ?? Colors.Transparent;
+            PreviewBorder.Background = new SolidColorBrush(SelectedColor);
         }
 
-        private void UpdateColorPreview()
-        {
-            var red = (byte)RedSlider.Value;
-            var green = (byte)GreenSlider.Value;
-            var blue = (byte)BlueSlider.Value;
-            var rgbColor = Color.FromRgb(red, green, blue);
-            PreviewBorder.Background = new SolidColorBrush(rgbColor);
-            SelectedColor = rgbColor;
-        }
 
         private void SaveColorSettings(string colorType, Color newColor)
         {
@@ -103,6 +151,18 @@ namespace KhTracker
                     break;
                 case "Bingo Color":
                     Properties.Settings.Default.BingoColor = newColor;
+                    break;
+                case "Hint Color":
+                    Properties.Settings.Default.HintColor = newColor;
+                    break;
+                case "Battleship Miss Color":
+                    Properties.Settings.Default.BattleshipMissColor = newColor;
+                    break;
+                case "Battleship Hit Color":
+                    Properties.Settings.Default.BattleshipHitColor = newColor;
+                    break;
+                case "Battleship Sunk Color":
+                    Properties.Settings.Default.BattleshipSunkColor = newColor;
                     break;
                 default:
                     Console.WriteLine("Color type not implemented.");
