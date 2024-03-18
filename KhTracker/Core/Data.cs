@@ -57,6 +57,7 @@ namespace KhTracker
         public List<Item> Reports = new List<Item>();
         public List<Item> TornPages = new List<Item>();
         public List<Item> VisitLocks = new List<Item>();
+        public List<Item> ChestLocks = new List<Item>();
         public Dictionary<string, Tuple<Item, Grid>> Items = new Dictionary<string, Tuple<Item, Grid>>();
 
         //event tracking
@@ -84,6 +85,7 @@ namespace KhTracker
             { "report", 0 },
             { "other", 0},
             { "visit", 0},
+            { "keyblade", 0},
             //bossrelated
             { "boss_as", 0 },
             { "boss_datas", 0 },

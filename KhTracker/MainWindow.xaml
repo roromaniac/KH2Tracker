@@ -12,7 +12,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         AllowDrop="True" Drop="DropFile"
-        Title="KH2 Tracker 2.34.05 Roro Edit" Height="880" Width="570" Background="#303030"
+        Title="KH2 Tracker 2.4" Height="1000" Width="600" Background="#303030"
         MinHeight="440" MinWidth="300">
 
     <Window.Resources>
@@ -63,7 +63,8 @@
                 <MenuItem Header="Promise Charm"			 Click="PromiseCharmToggle" x:Name="PromiseCharmOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Once More / Second Chance" Click="AbilitiesToggle" 	x:Name="AbilitiesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Anti Form" 				 Click="AntiFormToggle"		x:Name="AntiFormOption"     IsCheckable="True" IsChecked="False"/>
-                <MenuItem Header="World Lock Checks"         Click="VisitLockToggle"	x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="World Visit Locks"         Click="VisitLockToggle"	x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="World Chest Locks"         Click="ChestLockToggle"	x:Name="ChestLockOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Extra Important Checks" 	 Click="ExtraChecksToggle"	x:Name="ExtraChecksOption"  IsCheckable="True" IsChecked="True"/>
                 <Separator/>
                 <MenuItem Header="Show Seed Hash"			    Click="SeedHashToggle"		x:Name="SeedHashOption"			IsCheckable="True" IsChecked="True"/>
@@ -111,7 +112,7 @@
                     <MenuItem x:Name="MainImg3Option" Header="Custom Image (No Scaling)" IsCheckable="True" IsChecked="False" Click="MainBG_Img3Toggle"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="Worlds" Focusable="False">
+            <MenuItem Header="Worlds" Focusable="False" x:Name="WorldToggleMenuItem">
                 <MenuItem Header="Sora's Heart" 				Click="SoraHeartToggle"			x:Name="SoraHeartOption"		IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Drive Forms" 					Click="DrivesToggle"			x:Name="DrivesOption" 			IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Simulated Twilight Town" 		Click="SimulatedToggle" 		x:Name="SimulatedOption"		IsCheckable="True" IsChecked="True"/>
@@ -138,16 +139,16 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <!-- 6.6 -->
-                <RowDefinition x:Name="WorldRow" Height="6.6*"/>
-                <!-- 0.8 -->
-                <RowDefinition x:Name="InfoRow"  Height="1.2*"/>
-                <!-- 0.45 -->
-                <RowDefinition x:Name="FormRow"  Height="0.45*"/>
-                <!-- 2.2 -->
-                <RowDefinition x:Name="CheckRow" Height="2.2*"/>
+                <!-- 6.7 -->
+                <RowDefinition x:Name="WorldRow" Height="6.7*"/>
+                <!-- 1.25 -->
+                <RowDefinition x:Name="InfoRow"  Height="1.25*"/>
                 <!-- 0.5 -->
-                <RowDefinition x:Name="SettingRow" Height="0.5*"/>
+                <RowDefinition x:Name="FormRow"  Height="0.5*"/>
+                <!-- 3.0 -->
+                <RowDefinition x:Name="CheckRow" Height="3*"/>
+                <!-- 0.45 -->
+                <RowDefinition x:Name="SettingRow" Height="0.45*"/>
             </Grid.RowDefinitions>
 
             <!-- World Grids -->
@@ -178,13 +179,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -223,7 +226,7 @@
                             <Image Name="SorasHeartWeapon" Panel.ZIndex="1" IsHitTestVisible="False" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="SorasHeartPath" Grid.Column="1">
+                        <Grid x:Name="SorasHeartPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -236,12 +239,12 @@
                             <Image x:Name="SorasHeartPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="SorasHeartGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="SorasHeartGrid" Grid.Column="3"/>
                         <!-- fancy colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="SorasHeartSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="SorasHeartSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Simulated Twilight Town -->
@@ -251,13 +254,26 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Locks Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Icons -->
+                        <Grid x:Name="SimulatedTwilightTownLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="1.25*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="SimulatedTwilightTownLocks1" Source="Images/Worlds/Locks/Keyhole.png" Visibility="Visible" Grid.Row="2"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -295,7 +311,7 @@
                             <ContentControl Content="{StaticResource Min-Axel1}" x:Name="SimulatedTwilightTownProgression" Panel.ZIndex="1" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Right" MaxHeight="55"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="SimulatedTwilightTownPath" Grid.Column="1">
+                        <Grid x:Name="SimulatedTwilightTownPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -308,12 +324,12 @@
                             <Image x:Name="SimulatedTwilightTownPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="SimulatedTwilightTownGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="SimulatedTwilightTownGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="SimulatedTwilightTownSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="SimulatedTwilightTownSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Hollow Bastion -->
@@ -323,13 +339,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Icons -->
+                        <Grid x:Name="HollowBastionLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="HollowBastionLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"   Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="HollowBastionLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"   Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -360,13 +390,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="HollowBastionLock" Source="Images/Worlds/Locks/HB.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>
+                            <!--Image x:Name="HollowBastionLock" Source="Images/Worlds/Locks/HB.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="HollowBastionHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -378,7 +408,7 @@
                             <!--Image Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Source="Images/default_progression_test/corridors.png" Margin="-5,0,0,0"/-->
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="HollowBastionPath" Grid.Column="1">
+                        <Grid x:Name="HollowBastionPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -391,28 +421,42 @@
                             <Image x:Name="HollowBastionPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="HollowBastionGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="HollowBastionGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="HollowBastionSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="HollowBastionSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Beasts Castle -->
-                    <Grid x:Name="BeastsCastleTop" Grid.Row="3">
+                    <Grid x:Name="BeastsCastleTop" Grid.Row="3" >
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.1*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="BeastsCastleLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="BeastsCastleLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="BeastsCastleLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -442,13 +486,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="BeastsCastleLock" Source="Images/Worlds/Locks/BC.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>
+                            <!--Image x:Name="BeastsCastleLock" Source="Images/Worlds/Locks/BC.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="BeastsCastleHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -458,7 +502,7 @@
                             <ContentControl x:Name="BeastsCastleProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="BeastsCastlePath" Grid.Column="1">
+                        <Grid x:Name="BeastsCastlePath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -471,28 +515,42 @@
                             <Image x:Name="BeastsCastlePath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="BeastsCastleGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="BeastsCastleGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="BeastsCastleSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="BeastsCastleSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Disney Castle -->
-                    <Grid x:Name="DisneyCastleTop" Grid.Row="4">
+                    <Grid x:Name="DisneyCastleTop" Grid.Row="4" >
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="DisneyCastleLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="DisneyCastleLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="DisneyCastleLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -530,7 +588,7 @@
                             <ContentControl x:Name="DisneyCastleProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="DisneyCastlePath" Grid.Column="1">
+                        <Grid x:Name="DisneyCastlePath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -543,28 +601,42 @@
                             <Image x:Name="DisneyCastlePath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="DisneyCastleGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="DisneyCastleGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="DisneyCastleSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="DisneyCastleSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Agrabah -->
-                    <Grid x:Name="AgrabahTop" Grid.Row="5">
+                    <Grid x:Name="AgrabahTop" Grid.Row="5" >
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="AgrabahLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="AgrabahLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="AgrabahLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -594,13 +666,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="AgrabahLock" Source="Images/Worlds/Locks/AG.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>
+                            <!--Image x:Name="AgrabahLock" Source="Images/Worlds/Locks/AG.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="AgrabahHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -610,7 +682,7 @@
                             <ContentControl x:Name="AgrabahProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="AgrabahPath" Grid.Column="1">
+                        <Grid x:Name="AgrabahPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -623,12 +695,12 @@
                             <Image x:Name="AgrabahPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="AgrabahGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="AgrabahGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="AgrabahSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="AgrabahSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Pride Lands -->
@@ -638,13 +710,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="PrideLandsLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="PrideLandsLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="PrideLandsLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -674,13 +760,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="PrideLandsLock" Source="Images/Worlds/Locks/PL.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>
+                            <!--Image x:Name="PrideLandsLock" Source="Images/Worlds/Locks/PL.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                                    <Image.RenderTransform>
+                                        <TransformGroup>
+                                            <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
+                                        </TransformGroup>
+                                    </Image.RenderTransform>
+                                </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="PrideLandsHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -690,7 +776,7 @@
                             <ContentControl x:Name="PrideLandsProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="PrideLandsPath" Grid.Column="1">
+                        <Grid x:Name="PrideLandsPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -703,12 +789,12 @@
                             <Image x:Name="PrideLandsPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="PrideLandsGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="PrideLandsGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="PrideLandsSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="PrideLandsSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- 100 Acre Wood -->
@@ -718,13 +804,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -762,7 +850,7 @@
                             <ContentControl x:Name="HundredAcreWoodProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="HundredAcreWoodPath" Grid.Column="1">
+                        <Grid x:Name="HundredAcreWoodPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -775,12 +863,12 @@
                             <Image x:Name="HundredAcreWoodPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="HundredAcreWoodGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="HundredAcreWoodGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="HundredAcreWoodSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="HundredAcreWoodSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- GoA -->
@@ -790,13 +878,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -834,7 +924,7 @@
                             <ContentControl x:Name="GoAProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="GoAPath" Grid.Column="1">
+                        <Grid x:Name="GoAPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -847,12 +937,12 @@
                             <Image x:Name="GoAPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="GoAGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="GoAGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="GoASelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="GoASelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                 </Grid>
@@ -879,13 +969,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
                             <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -923,7 +1015,7 @@
                             <ContentControl Content="{DynamicResource Min-Drive4}" x:Name="DriveFormsCap" Panel.ZIndex="1" IsHitTestVisible="False" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="-5,0,0,0"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="DriveFormsPath" Grid.Column="1">
+                        <Grid x:Name="DriveFormsPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -936,12 +1028,12 @@
                             <Image x:Name="DriveFormsPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="DriveFormsGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="DriveFormsGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Fill="#FF454545" Grid.Column="1" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="DriveFormsSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="DriveFormsSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Twilight Town -->
@@ -951,13 +1043,28 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="TwilightTownLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="TwilightTownLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"   Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="TwilightTownLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"   Visibility="Visible" Grid.Row="2"/>
+                            <Image x:Name="TwilightTownLocks3" Source="Images/Worlds/Locks/Keyhole_3.png"   Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -987,7 +1094,7 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icons -->
-                            <Image x:Name="TwilightTownLock_1" Source="Images/Worlds/Locks/TT2.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="TwilightTownLock_1" Source="Images/Worlds/Locks/TT2.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
@@ -1000,7 +1107,7 @@
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="TwilightTownHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1010,7 +1117,7 @@
                             <ContentControl x:Name="TwilightTownProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="TwilightTownPath" Grid.Column="1">
+                        <Grid x:Name="TwilightTownPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1023,12 +1130,12 @@
                             <Image x:Name="TwilightTownPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="TwilightTownGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="TwilightTownGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="TwilightTownSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="TwilightTownSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Land of Dragons -->
@@ -1038,13 +1145,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="LandofDragonsLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="LandofDragonsLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="LandofDragonsLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1074,13 +1195,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="LandofDragonsLock" Source="Images/Worlds/Locks/LD.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="LandofDragonsLock" Source="Images/Worlds/Locks/LD.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="LandofDragonsHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1090,7 +1211,7 @@
                             <ContentControl x:Name="LandofDragonsProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="LandofDragonsPath" Grid.Column="1">
+                        <Grid x:Name="LandofDragonsPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1103,12 +1224,12 @@
                             <Image x:Name="LandofDragonsPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="LandofDragonsGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="LandofDragonsGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="LandofDragonsSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="LandofDragonsSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Olympus Coliseum -->
@@ -1118,13 +1239,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="OlympusColiseumLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="OlympusColiseumLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="OlympusColiseumLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1154,13 +1289,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="OlympusColiseumLock" Source="Images/Worlds/Locks/OC.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="OlympusColiseumLock" Source="Images/Worlds/Locks/OC.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="OlympusColiseumHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1170,7 +1305,7 @@
                             <ContentControl x:Name="OlympusColiseumProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="OlympusColiseumPath" Grid.Column="1">
+                        <Grid x:Name="OlympusColiseumPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1183,12 +1318,12 @@
                             <Image x:Name="OlympusColiseumPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="OlympusColiseumGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="OlympusColiseumGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="OlympusColiseumSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="OlympusColiseumSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Port Royal -->
@@ -1198,13 +1333,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="PortRoyalLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="PortRoyalLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="PortRoyalLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1234,13 +1383,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="PortRoyalLock" Source="Images/Worlds/Locks/PR.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="PortRoyalLock" Source="Images/Worlds/Locks/PR.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="PortRoyalHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1250,7 +1399,7 @@
                             <ContentControl x:Name="PortRoyalProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="PortRoyalPath" Grid.Column="1">
+                        <Grid x:Name="PortRoyalPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1263,12 +1412,12 @@
                             <Image x:Name="PortRoyalPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="PortRoyalGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="PortRoyalGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="PortRoyalSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="PortRoyalSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Halloween Town -->
@@ -1278,13 +1427,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="HalloweenTownLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="HalloweenTownLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="HalloweenTownLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1314,13 +1477,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="HalloweenTownLock" Source="Images/Worlds/Locks/HT.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="HalloweenTownLock" Source="Images/Worlds/Locks/HT.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="HalloweenTownHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1330,7 +1493,7 @@
                             <ContentControl x:Name="HalloweenTownProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="HalloweenTownPath" Grid.Column="1">
+                        <Grid x:Name="HalloweenTownPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1343,12 +1506,12 @@
                             <Image x:Name="HalloweenTownPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="HalloweenTownGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="HalloweenTownGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="HalloweenTownSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="HalloweenTownSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Space Paranoids -->
@@ -1358,13 +1521,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="SpaceParanoidsLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="SpaceParanoidsLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="SpaceParanoidsLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1394,13 +1571,13 @@
                                 </Image.RenderTransform>
                             </Image>
                             <!-- lock icon -->
-                            <Image x:Name="SpaceParanoidsLock" Source="Images/Worlds/Locks/SP.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                            <!--Image x:Name="SpaceParanoidsLock" Source="Images/Worlds/Locks/SP.png" Grid.RowSpan="2" Grid.ColumnSpan="3" Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
                                 <Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform ScaleX="0.5" ScaleY="0.5"/>
                                     </TransformGroup>
                                 </Image.RenderTransform>
-                            </Image>
+                            </Image-->
                             <!-- world value -->
                             <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Panel.ZIndex="3" Margin="0,2,5,0" HorizontalAlignment="Right" MaxHeight="25">
                                 <local:OutlinedTextBlock x:Name="SpaceParanoidsHint" FontFamily="{StaticResource Gummi}" FontSize="25pt" 
@@ -1410,7 +1587,7 @@
                             <ContentControl x:Name="SpaceParanoidsProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="SpaceParanoidsPath" Grid.Column="1">
+                        <Grid x:Name="SpaceParanoidsPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1423,12 +1600,12 @@
                             <Image x:Name="SpaceParanoidsPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="SpaceParanoidsGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="SpaceParanoidsGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="SpaceParanoidsSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="SpaceParanoidsSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- TWTNW-->
@@ -1438,13 +1615,27 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
+                        <!-- Lock Grid-->
+                        <Grid x:Name="TWTNWLocks" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                                <RowDefinition />
+                                <RowDefinition Height="0.18*"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="TWTNWLocks1" Source="Images/Worlds/Locks/Keyhole_1.png"      Visibility="Visible" Grid.Row="1" VerticalAlignment="Bottom"/>
+                            <Image x:Name="TWTNWLocks2" Source="Images/Worlds/Locks/Keyhole_2.png"      Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
+                        </Grid>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1482,7 +1673,7 @@
                             <ContentControl x:Name="TWTNWProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="TWTNWPath" Grid.Column="1">
+                        <Grid x:Name="TWTNWPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1495,12 +1686,12 @@
                             <Image x:Name="TWTNWPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="TWTNWGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="TWTNWGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="TWTNWSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="TWTNWSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Atlantica -->
@@ -1510,13 +1701,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1554,7 +1747,7 @@
                             <ContentControl x:Name="AtlanticaProgression" Panel.ZIndex="1" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Left"/>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="AtlanticaPath" Grid.Column="1">
+                        <Grid x:Name="AtlanticaPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1567,12 +1760,12 @@
                             <Image x:Name="AtlanticaPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="AtlanticaGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="AtlanticaGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="AtlanticaSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="AtlanticaSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
                     <!-- Puzzle/Synth -->
@@ -1582,13 +1775,15 @@
                             <RowDefinition Height="0.04*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <!-- Lock Width 0.08 when on -->
+                            <ColumnDefinition Width="0.08*"/>
                             <ColumnDefinition Width="0.27*"/>
                             <!-- Path Width 0.1 when on -->
-                            <ColumnDefinition Width="0.0*"/>
+                            <ColumnDefinition Width="0.10*"/>
                             <ColumnDefinition Width="0.73*"/>
                         </Grid.ColumnDefinitions>
                         <!-- Main Icons -->
-                        <Grid Grid.Column="0">
+                        <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="0.65*"/>
@@ -1624,7 +1819,7 @@
                             </Viewbox>
                         </Grid>
                         <!-- path hints icons -->
-                        <Grid x:Name="PuzzSynthPath" Grid.Column="1">
+                        <Grid x:Name="PuzzSynthPath" Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="0.18*"/>
                                 <RowDefinition />
@@ -1637,16 +1832,16 @@
                             <Image x:Name="PuzzSynthPath_Pea" Source="Images/System/proof_peace.png"     Visibility="Visible" Grid.Row="3" VerticalAlignment="Top"/>
                         </Grid>
                         <!-- item grid -->
-                        <local:WorldGrid x:Name="PuzzSynthGrid" Grid.Column="2"/>
+                        <local:WorldGrid x:Name="PuzzSynthGrid" Grid.Column="3"/>
                         <!-- fancy spacer colors -->
-                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Grid.Column="1" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
-                        <Rectangle Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
-                        <Rectangle Name="PuzzSynthSelWG" Grid.Column="2" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3"/>
+                        <Rectangle Grid.Column="2" Fill="#FF454545" Panel.ZIndex="-1" Opacity="0.9"/>
+                        <Rectangle Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Fill="#D81E1E1E" Panel.ZIndex="-1"/>
+                        <Rectangle Name="PuzzSynthSelWG" Grid.Column="3" Fill="#3F505080" Panel.ZIndex="-1" Visibility="Collapsed"/>
                     </Grid>
 
-
                 </Grid>
+                
             </Grid>
 
             <!-- Info/Stats -->
@@ -1792,16 +1987,16 @@
                         <!-- 0.8* when enabled-->
                         <ColumnDefinition x:Name="NextLevelCol" Width="0.*"/>
                         <ColumnDefinition Width="0.05*"/>
-                        
+
                         <ColumnDefinition Width="1.35*"/>
                         <ColumnDefinition Width="0.05*"/>
-                        
+
                         <ColumnDefinition Width="1.35*"/>
                         <ColumnDefinition Width="0.05*"/>
-                        
+
                         <ColumnDefinition Width="1.35*"/>
                         <ColumnDefinition Width="0.05*"/>
-                        
+
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="0.2*"/>
                         <ColumnDefinition Width="1.5*"/>
@@ -1962,7 +2157,7 @@
                                 </TransformGroup>
                             </Viewbox.RenderTransform>
                             <local:OutlinedTextBlock x:Name="TotalValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
-                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="50">
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="98">
                                 <local:OutlinedTextBlock.Fill>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FFE47606" Offset="0.836"/>
@@ -2217,11 +2412,12 @@
             <!-- Items -->
             <Grid x:Name="ItemPool" Grid.Row="3">
                 <Grid.RowDefinitions>
-                    <RowDefinition x:Name="ReportRow"/>
-                    <RowDefinition x:Name="CountsRow"/>
+                    <RowDefinition x:Name="ReportRow" Height="1*"/>
+                    <RowDefinition x:Name="CountsRow" Height="1*"/>
                     <RowDefinition/>
+                    <RowDefinition x:Name="ChestRow" Height="1*"/>
                     <RowDefinition x:Name="VisitsRow" Height="1*"/>
-                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition x:Name="VisitsRow2" Height="1*"/>
                     <!-- Should never be visible. always 0-->
                     <RowDefinition Height="0*"/>
                 </Grid.RowDefinitions>
@@ -2780,7 +2976,7 @@
 
                 </Grid>
 
-                <!-- Row 4 -->
+                <!-- Row 4 (chest locks) -->
                 <Grid Grid.Row="3" Grid.Column="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -2794,164 +2990,609 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition x:Name="HadesCupCol" Width="1*"/>
-                        <ColumnDefinition x:Name="OlympusStoneCol" Width="1*"/>
-                        <ColumnDefinition x:Name="UnknownDiskCol" Width="1*"/>
-                        <ColumnDefinition x:Name="OnceMoreAlt" Width="0*"/>
-                        <ColumnDefinition x:Name="SecondChanceAlt" Width="0*"/>
-                        <ColumnDefinition x:Name="ConAlt" Width="0*"/>
-                        <ColumnDefinition x:Name="NonAlt" Width="0*"/>
-                        <ColumnDefinition x:Name="PeaAlt" Width="0*"/>
-                        <ColumnDefinition x:Name="PromiseAlt" Width="0*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:Item x:Name="BeastWep" 	    Content="{DynamicResource Min-BeastWep}"        Grid.Column="0"/>
-                    <local:Item x:Name="JackWep" 	    Content="{DynamicResource Min-JackWep}"         Grid.Column="1"/>
-                    <local:Item x:Name="SimbaWep" 	    Content="{DynamicResource Min-SimbaWep}"        Grid.Column="2"/>
-                    <local:Item x:Name="AuronWep" 	    Content="{DynamicResource Min-AuronWep}"        Grid.Column="3"/>
-                    <local:Item x:Name="MulanWep" 	    Content="{DynamicResource Min-MulanWep}"        Grid.Column="4"/>
-                    <local:Item x:Name="SparrowWep"     Content="{DynamicResource Min-SparrowWep}"      Grid.Column="5"/>
-                    <local:Item x:Name="AladdinWep"     Content="{DynamicResource Min-AladdinWep}"      Grid.Column="6"/>
-                    <local:Item x:Name="TronWep" 	    Content="{DynamicResource Min-TronWep}"         Grid.Column="7"/>
-                    <local:Item x:Name="MembershipCard" Content="{DynamicResource Min-MembershipCard}"  Grid.Column="8"/>
-                    <local:Item x:Name="Picture" 	    Content="{DynamicResource Min-Picture}"         Grid.Column="9"/>
-                    <local:Item x:Name="IceCream" 	    Content="{DynamicResource Min-IceCream}"        Grid.Column="10"/>
-                    <local:Item x:Name="HadesCup"       Content="{DynamicResource Min-HadesCup}"          Grid.Column="11"/>
-                    <local:Item x:Name="OlympusStone"   Content="{DynamicResource Min-OlympusStone}"      Grid.Column="12"/>
-                    <local:Item x:Name="UnknownDisk"    Content="{DynamicResource Min-UnknownDisk}"       Grid.Column="13"/>
+                    <local:Item  x:Name="ChestTT"       Content="{DynamicResource Min-ChestTT}"         Grid.Column="0"/>
+                    <local:Item  x:Name="ChestSTT"      Content="{DynamicResource Min-ChestSTT}"        Grid.Column="1"/>
+                    <local:Item  x:Name="ChestHB"       Content="{DynamicResource Min-ChestHB}"         Grid.Column="2"/>
+                    <local:Item  x:Name="ChestCoR"      Content="{DynamicResource Min-ChestCoR}"        Grid.Column="3"/>
+                    <local:Item  x:Name="ChestAG"       Content="{DynamicResource Min-ChestAG}"         Grid.Column="4"/>
+                    <local:Item  x:Name="ChestBC"       Content="{DynamicResource Min-ChestBC}"         Grid.Column="5"/>
+                    <local:Item  x:Name="ChestDC"       Content="{DynamicResource Min-ChestDC}"         Grid.Column="6"/>
+                    <local:Item  x:Name="ChestHT"       Content="{DynamicResource Min-ChestHT}"         Grid.Column="7"/>
+                    <local:Item  x:Name="ChestLoD"      Content="{DynamicResource Min-ChestLoD}"        Grid.Column="8"/>
+                    <local:Item  x:Name="ChestOC"       Content="{DynamicResource Min-ChestOC}"         Grid.Column="9"/>
+                    <local:Item  x:Name="ChestPL"       Content="{DynamicResource Min-ChestPL}"         Grid.Column="10"/>
+                    <local:Item  x:Name="ChestPR"       Content="{DynamicResource Min-ChestPR}"         Grid.Column="11"/>
+                    <local:Item  x:Name="ChestSP"       Content="{DynamicResource Min-ChestSP}"         Grid.Column="12"/>
+                    <local:Item  x:Name="ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"      Grid.Column="13"/>
+                    <local:Item  x:Name="ChestHAW"      Content="{DynamicResource Min-ChestHAW}"        Grid.Column="14"/>
 
                     <!-- silhouettes -->
-                    <ContentControl x:Name="S_BeastWep" Content="{DynamicResource Min-BeastWep}"        Grid.Column="0" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestTT"       Content="{DynamicResource Min-ChestTT}"         Grid.Column="0" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_JackWep" Content="{DynamicResource Min-JackWep}"          Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestSTT"      Content="{DynamicResource Min-ChestSTT}"        Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_SimbaWep" Content="{DynamicResource Min-SimbaWep}"        Grid.Column="2" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestHB"       Content="{DynamicResource Min-ChestHB}"         Grid.Column="2" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_AuronWep" Content="{DynamicResource Min-AuronWep}"        Grid.Column="3" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestCoR"      Content="{DynamicResource Min-ChestCoR}"        Grid.Column="3" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_MulanWep" Content="{DynamicResource Min-MulanWep}"        Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestAG"       Content="{DynamicResource Min-ChestAG}"         Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_SparrowWep" Content="{DynamicResource Min-SparrowWep}"    Grid.Column="5" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestBC"       Content="{DynamicResource Min-ChestBC}"         Grid.Column="5" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_AladdinWep" Content="{DynamicResource Min-AladdinWep}"    Grid.Column="6" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestDC"       Content="{DynamicResource Min-ChestDC}"         Grid.Column="6" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_TronWep" Content="{DynamicResource Min-TronWep}"          Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestHT"       Content="{DynamicResource Min-ChestHT}"         Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_MembershipCard" Content="{DynamicResource Min-MembershipCard}"    Grid.Column="8" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestLoD"      Content="{DynamicResource Min-ChestLoD}"        Grid.Column="8" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_Picture" Content="{DynamicResource Min-Picture}"                  Grid.Column="9" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestOC"       Content="{DynamicResource Min-ChestOC}"         Grid.Column="9" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_IceCream" Content="{DynamicResource Min-IceCream}"                Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestPL"       Content="{DynamicResource Min-ChestPL}"         Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"                Grid.Column="11" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestPR"       Content="{DynamicResource Min-ChestPR}"         Grid.Column="11" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"        Grid.Column="12" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestSP"       Content="{DynamicResource Min-ChestSP}"         Grid.Column="12" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_UnknownDisk" Content="{DynamicResource Min-UnknownDisk}"          Grid.Column="13" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"      Grid.Column="13" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_ChestHAW"      Content="{DynamicResource Min-ChestHAW}"        Grid.Column="14" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
 
-                    <!-- alt silhouettes -->
-                    <Image x:Name="Cross01" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="0" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                </Grid>
+
+                <!-- Row 5 (world locks 1)-->
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1.0*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1.0*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Numbers -->
+                    <Viewbox Grid.Column="0" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="BCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE632A2" Offset="1"/>
+                                    <GradientStop Color="#FFE49BB9" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="3" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="HTCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF7753E0" Offset="1"/>
+                                    <GradientStop Color="#FFE696FF" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="6" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="PLCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFD73435" Offset="1"/>
+                                    <GradientStop Color="#FFFF9546" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="9" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="OCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF62B055" Offset="1"/>
+                                    <GradientStop Color="#FFECFF5B" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="12" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="LoDCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFD73435" Offset="1"/>
+                                    <GradientStop Color="#FFFF9546" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="15" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="PRCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF6F51F1" Offset="1"/>
+                                    <GradientStop Color="#FFA2C7FF" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="18" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="AGCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE16902" Offset="1"/>
+                                    <GradientStop Color="#FFFFF64A" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="21" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="SPCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFB23F7D" Offset="1"/>
+                                    <GradientStop Color="#FF949BE8" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+
+                    <local:Item x:Name="BeastWep1"   Content="{DynamicResource Min-BeastWep1}"   Grid.Column="1"/>
+                    <local:Item x:Name="BeastWep2"   Content="{DynamicResource Min-BeastWep2}"   Grid.Column="1"/>
+                    <local:Item x:Name="JackWep1"    Content="{DynamicResource Min-JackWep1}"    Grid.Column="4"/>
+                    <local:Item x:Name="JackWep2"    Content="{DynamicResource Min-JackWep2}"    Grid.Column="4"/>
+                    <local:Item x:Name="SimbaWep1"   Content="{DynamicResource Min-SimbaWep1}"   Grid.Column="7"/>
+                    <local:Item x:Name="SimbaWep2"   Content="{DynamicResource Min-SimbaWep2}"   Grid.Column="7"/>
+                    <local:Item x:Name="AuronWep1"   Content="{DynamicResource Min-AuronWep1}"   Grid.Column="10"/>
+                    <local:Item x:Name="AuronWep2"   Content="{DynamicResource Min-AuronWep2}"   Grid.Column="10"/>
+                    <local:Item x:Name="MulanWep1"   Content="{DynamicResource Min-MulanWep1}"   Grid.Column="13"/>
+                    <local:Item x:Name="MulanWep2"   Content="{DynamicResource Min-MulanWep2}"   Grid.Column="13"/>
+                    <local:Item x:Name="SparrowWep1" Content="{DynamicResource Min-SparrowWep1}" Grid.Column="16"/>
+                    <local:Item x:Name="SparrowWep2" Content="{DynamicResource Min-SparrowWep2}" Grid.Column="16"/>
+                    <local:Item x:Name="AladdinWep1" Content="{DynamicResource Min-AladdinWep1}" Grid.Column="19"/>
+                    <local:Item x:Name="AladdinWep2" Content="{DynamicResource Min-AladdinWep2}" Grid.Column="19"/>
+                    <local:Item x:Name="TronWep1"    Content="{DynamicResource Min-TronWep1}"    Grid.Column="22"/>
+                    <local:Item x:Name="TronWep2"    Content="{DynamicResource Min-TronWep2}"    Grid.Column="22"/>
+
+
+                    <!-- silhouettes -->
+                    <ContentControl x:Name="S_BeastWep" Content="{DynamicResource Min-BeastWep}"                   Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross02" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_JackWep" Content="{DynamicResource Min-JackWep}"           Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross03" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="2" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_SimbaWep" Content="{DynamicResource Min-SimbaWep}"             Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross04" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="3" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_AuronWep" Content="{DynamicResource Min-AuronWep}"                   Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross05" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_MulanWep" Content="{DynamicResource Min-MulanWep}"             Grid.Column="13" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross06" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="5" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_SparrowWep" Content="{DynamicResource Min-SparrowWep}"               Grid.Column="16" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross07" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="6" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_AladdinWep" Content="{DynamicResource Min-AladdinWep}"           Grid.Column="19" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross08" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_TronWep" Content="{DynamicResource Min-TronWep}"        Grid.Column="22" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross09" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="8" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+
+                    <!-- Ghost Nums -->
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_BCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_HTCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="6" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_PLCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="9" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_OCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="12" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_LoDCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="15" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_PRCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="18" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_AGCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="5" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="21" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_SPCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="2" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                </Grid>
+
+                <!-- Row 6 (world locks 2) -->
+                <Grid Grid.Row="5" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.1*"/>
+                        <ColumnDefinition Width="0.6*"/>
+                        <ColumnDefinition Width="1*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="SketchesCol" Width="1*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="HadesCupCol" Width="1.0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="OlympusStoneCol" Width="1.0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="UnknownDiskCol" Width="1.0*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Numbers -->
+                    <Viewbox Grid.Column="0" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="TWTNWCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF9079AA" Offset="1"/>
+                                    <GradientStop Color="White" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="3" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="HBCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF7753E0" Offset="1"/>
+                                    <GradientStop Color="#FFE696FF" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="6" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="DCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF319CFE" Offset="1"/>
+                                    <GradientStop Color="#FFADFFFF" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <Viewbox Grid.Column="9" MaxHeight="70">
+                        <local:OutlinedTextBlock x:Name="TTCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="3">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF319CFE" Offset="1"/>
+                                    <GradientStop Color="#FFADFFFF" Offset="0.4"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+
+
+                    <local:Item x:Name="RikuWep1"   Content="{DynamicResource Min-RikuWep1}"   Grid.Column="1"/>
+                    <local:Item x:Name="RikuWep2"   Content="{DynamicResource Min-RikuWep2}"   Grid.Column="1"/>
+                    <local:Item x:Name="MembershipCard1"    Content="{DynamicResource Min-MembershipCard1}"    Grid.Column="4"/>
+                    <local:Item x:Name="MembershipCard2"    Content="{DynamicResource Min-MembershipCard2}"    Grid.Column="4"/>
+                    <local:Item x:Name="KingsLetter1"   Content="{DynamicResource Min-KingsLetter1}"   Grid.Column="7"/>
+                    <local:Item x:Name="KingsLetter2"   Content="{DynamicResource Min-KingsLetter2}"   Grid.Column="7"/>
+                    <local:Item x:Name="IceCream1"   Content="{DynamicResource Min-IceCream1}"   Grid.Column="10"/>
+                    <local:Item x:Name="IceCream2"   Content="{DynamicResource Min-IceCream2}"   Grid.Column="10"/>
+                    <local:Item x:Name="IceCream3"   Content="{DynamicResource Min-IceCream3}"   Grid.Column="10"/>
+                    <local:Item x:Name="Sketches"   Content="{DynamicResource Min-Sketches}"   Grid.Column="13"/>
+
+                    <local:Item x:Name="HadesCup"       Content="{DynamicResource Min-HadesCup}"        Grid.Column="16"/>
+                    <local:Item x:Name="OlympusStone"   Content="{DynamicResource Min-OlympusStone}"    Grid.Column="19"/>
+                    <local:Item x:Name="UnknownDisk"    Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="22"/>
+
+
+                    <!-- silhouettes -->
+                    <ContentControl x:Name="S_RikuWep" Content="{DynamicResource Min-RikuWep}"                   Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross10" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="9" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_MembershipCard" Content="{DynamicResource Min-MembershipCard}"           Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
-                    <Image x:Name="Cross11" Source="Images/System/cross.png" Visibility="Collapsed" Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
-                        <Image.Effect>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_KingsLetter" Content="{DynamicResource Min-KingsLetter}"             Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
-                        </Image.Effect>
-                    </Image>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_IceCream" Content="{DynamicResource Min-IceCream}"                   Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_Sketches" Content="{DynamicResource Min-Sketches}"             Grid.Column="13" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"               Grid.Column="16" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"           Grid.Column="19" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_UnknownDisk" Content="{DynamicResource Min-UnknownDisk}"        Grid.Column="22" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+
+                    <!-- Ghost Nums -->
+                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_TWTNWCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_HBCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="6" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_DCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+                    <Grid Grid.Column="9" Grid.ColumnSpan="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Viewbox Grid.Column="1">
+                            <local:OutlinedTextBlock Visibility="Hidden" x:Name="Ghost_TTCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" 
+                                                 FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
+                        </Viewbox>
+                    </Grid>
+
                 </Grid>
 
                 <!-- Ghost Items -->
-                <Grid Grid.Row="5" Grid.Column="1">
+                <Grid Grid.Row="6" Grid.Column="1">
                     <local:Item x:Name="Ghost_Report1" 			Content="{DynamicResource Min-Report}"  	     Opacity="0.5"/>
                     <local:Item x:Name="Ghost_Report2" 			Content="{DynamicResource Min-Report}"  	     Opacity="0.5"/>
                     <local:Item x:Name="Ghost_Report3" 			Content="{DynamicResource Min-Report}"  	     Opacity="0.5"/>
@@ -3007,7 +3648,7 @@
                     <local:Item x:Name="Ghost_Nonexistence" 	Content="{DynamicResource Min-Nonexistence}"		Opacity="0.5"/>
                     <local:Item x:Name="Ghost_Peace" 			Content="{DynamicResource Min-Peace}"		Opacity="0.5"/>
                     <local:Item x:Name="Ghost_PromiseCharm" 	Content="{DynamicResource Min-PromiseCharm}"	Opacity="0.5"/>
-                    <local:Item x:Name="Ghost_BeastWep" 	    Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
+                    <!--local:Item x:Name="Ghost_BeastWep" 	    Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_JackWep" 	        Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
                     <local:Item x:Name="Ghost_SimbaWep" 	    Content="{DynamicResource Min-SimbaWep}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_AuronWep" 	    Content="{DynamicResource Min-AuronWep}"        Opacity="0.5"/>
@@ -3017,9 +3658,51 @@
                     <local:Item x:Name="Ghost_TronWep" 	        Content="{DynamicResource Min-TronWep}"         Opacity="0.5"/>
                     <local:Item x:Name="Ghost_MembershipCard" 	Content="{DynamicResource Min-MembershipCard}"  Opacity="0.5"/>
                     <local:Item x:Name="Ghost_Picture" 	        Content="{DynamicResource Min-Picture}"         Opacity="0.5"/>
-                    <local:Item x:Name="Ghost_IceCream" 	    Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream" 	    Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/-->
                     <local:Item x:Name="Ghost_MunnyPouch1" 	    Content="{DynamicResource Min-MunnyPouch1}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_MunnyPouch2" 	    Content="{DynamicResource Min-MunnyPouch2}"        Opacity="0.5"/>
+
+                    <local:Item x:Name="Ghost_RikuWep1"             Content="{DynamicResource Min-RikuWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_RikuWep2"             Content="{DynamicResource Min-RikuWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MembershipCard1"      Content="{DynamicResource Min-MembershipCard}"  Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MembershipCard2"      Content="{DynamicResource Min-MembershipCard}"  Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_KingsLetter1"         Content="{DynamicResource Min-KingsLetter}"     Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_KingsLetter2"         Content="{DynamicResource Min-KingsLetter}"     Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream1"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream2"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_IceCream3"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_Sketches"             Content="{DynamicResource Min-Sketches}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_BeastWep1"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_BeastWep2"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_JackWep1"             Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_JackWep2"             Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SimbaWep1"            Content="{DynamicResource Min-SimbaWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SimbaWep2"            Content="{DynamicResource Min-SimbaWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AuronWep1"            Content="{DynamicResource Min-AuronWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AuronWep2"            Content="{DynamicResource Min-AuronWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MulanWep1"            Content="{DynamicResource Min-MulanWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MulanWep2"            Content="{DynamicResource Min-MulanWep}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SparrowWep1"          Content="{DynamicResource Min-SparrowWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_SparrowWep2"          Content="{DynamicResource Min-SparrowWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AladdinWep1"          Content="{DynamicResource Min-AladdinWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_AladdinWep2"          Content="{DynamicResource Min-AladdinWep}"      Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_TronWep1"             Content="{DynamicResource Min-TronWep}"         Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_TronWep2"             Content="{DynamicResource Min-TronWep}"         Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestTT"       Content="{DynamicResource Min-ChestTT}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestSTT"      Content="{DynamicResource Min-ChestSTT}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHB"       Content="{DynamicResource Min-ChestHB}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestCoR"      Content="{DynamicResource Min-ChestCoR}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestAG"       Content="{DynamicResource Min-ChestAG}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestBC"       Content="{DynamicResource Min-ChestBC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestDC"       Content="{DynamicResource Min-ChestDC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHT"       Content="{DynamicResource Min-ChestHT}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestLoD"      Content="{DynamicResource Min-ChestLoD}"              Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestOC"       Content="{DynamicResource Min-ChestOC}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestPL"       Content="{DynamicResource Min-ChestPL}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestPR"       Content="{DynamicResource Min-ChestPR}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestSP"       Content="{DynamicResource Min-ChestSP}"               Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"            Opacity="0.5"/>
+                    <local:Item  x:Name="Ghost_ChestHAW"      Content="{DynamicResource Min-ChestHAW}"              Opacity="0.5"/>
                 </Grid>
             </Grid>
 

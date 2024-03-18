@@ -14,13 +14,6 @@ using System.Text.Json;
 using Path = System.IO.Path;
 using KhTracker.Hotkeys;
 using System.Windows.Input;
-using System.Xml.Linq;
-using System.Text.Json.Serialization;
-using System.Security.Policy;
-using System.Linq.Expressions;
-using System.Windows.Markup;
-using System.Reflection;
-using System.Diagnostics.PerformanceData;
 using MessageForm = System.Windows.Forms;
 
 //using System.Text.Json.Serialization;
@@ -40,11 +33,11 @@ namespace KhTracker
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                if (Path.GetExtension(files[0]).ToUpper() == ".HINT")
-                    LoadHints(files[0]);
-                else if (Path.GetExtension(files[0]).ToUpper() == ".PNACH")
-                    ParseSeed(files[0]);
-                else if (Path.GetExtension(files[0]).ToUpper() == ".ZIP")
+                //if (Path.GetExtension(files[0]).ToUpper() == ".HINT")
+                //    LoadHints(files[0]);
+                //else if (Path.GetExtension(files[0]).ToUpper() == ".PNACH")
+                //    ParseSeed(files[0]);
+                if (Path.GetExtension(files[0]).ToUpper() == ".ZIP")
                     OpenKHSeed(files[0]);
                 else if (Path.GetExtension(files[0]).ToUpper() == ".TSV")
                     Load(files[0]);
@@ -81,6 +74,7 @@ namespace KhTracker
             settingInfo[7] = SoraLevel01Option.IsChecked;
             settingInfo[8] = SoraLevel50Option.IsChecked;
             settingInfo[9] = SoraLevel99Option.IsChecked;
+            settingInfo[10] = ChestLockOption.IsChecked;
             //World toggles
             settingInfo[10] = SoraHeartOption.IsChecked;
             settingInfo[11] = DrivesOption.IsChecked;
@@ -246,7 +240,7 @@ namespace KhTracker
             {
                 if (saveObject["LegacyJsmartee"].ToString().ToLower() == "true")
                 {
-                    LoadLegacy(saveObject, "Jsmartee");
+                    //LoadLegacy(saveObject, "Jsmartee");
                     return;
                 }
             }
@@ -254,7 +248,7 @@ namespace KhTracker
             {
                 if (saveObject["LegacyShan"].ToString().ToLower() == "true")
                 {
-                    LoadLegacy(saveObject, "Shan");
+                    //LoadLegacy(saveObject, "Shan");
                     return;
                 }
             }
@@ -281,6 +275,7 @@ namespace KhTracker
                 AbilitiesToggle(setting[3]);
                 AntiFormToggle(setting[4]);
                 VisitLockToggle(setting[5]);
+                ChestLockToggle(setting[10]);
                 ExtraChecksToggle(setting[6]);
                 if (setting[7])
                     SoraLevel01Toggle(true);
@@ -988,131 +983,131 @@ namespace KhTracker
 
         private void LoadLegacy(Dictionary<string, object> Savefile, string LegacyType)
         {
-            if (LegacyType == "Jsmartee")
-            {
-                SetMode(Mode.JsmarteeHints);
-
-                var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacyJHints"].ToString());
-                string line1 = hintStrings[0];
-                data.hintFileText[0] = line1;
-                string[] reportvalues = line1.Split('.');
-
-                string line2 = hintStrings[1];
-                data.hintFileText[1] = line2;
-                line2 = line2.TrimEnd('.');
-                string[] reportorder = line2.Split('.');
-
-                string line3 = hintStrings[2];
-                data.hintFileText[2] = line3;
-                LoadSettings(line3);
-
-                for (int i = 0; i < reportorder.Length; ++i)
-                {
-                    string location = data.codes.FindCode(reportorder[i]);
-                    if (location == "")
-                        location = data.codes.GetDefault(i);
-
-                    data.reportLocations.Add(location);
-                    string[] temp = reportvalues[i].Split(',');
-                    data.reportInformation.Add(new Tuple<string, string, int>(null, data.codes.FindCode(temp[0]), int.Parse(temp[1]) - 32));
-                }
-
-                //end of loading
-                data.hintsLoaded = true;
-                data.legacyJsmartee = true;
-                data.saveFileLoaded = true;
-            }
-            else
-            {
-                //bool autotrackeron = false;
-                //bool ps2tracking = false;
-                ////check for autotracking on and which version
-                //if (aTimer != null)
-                //    autotrackeron = true;
-                //
-                //if (pcsx2tracking)
-                //    ps2tracking = true;
-
-                //FixDictionary();
-                SetMode(Mode.ShanHints);
-
-                var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacySHints"].ToString());
-
-                if (data.shanHintFileText != null)
-                {
-                    data.shanHintFileText = null;
-                }
-
-                foreach (string world in data.WorldsData.Keys.ToList())
-                {
-                    data.WorldsData[world].checkCount.Clear();
-                }
-
-                bool check1 = false;
-                bool check2 = false;
-                for (int i = 0; i < hintStrings.Length; ++i)
-                {
-                    string line = hintStrings[i];
-                    data.shanHintFileText[i] = line;
-
-                    // ignore comment lines
-                    if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
-                        continue;
-
-                    string[] codes = line.Split(',');
-                    if (codes.Length == 5)
-                    {
-                        string world = data.codes.FindCode(codes[2]);
-
-                        //stupid fix
-                        string[] idCode = codes[4].Split('/', ' ');
-
-                        int id = Convert.ToInt32(idCode[0], 16);
-                        if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
-                            continue;
-
-                        string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
-                        data.WorldsData[world].checkCount.Add(item);
-                    }
-                    else if (codes.Length == 1)
-                    {
-                        if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
-                        {
-                            check1 = true;
-                        }
-                        else if (codes[0] == "//Remove Dodge Roll LVl")
-                        {
-                            check2 = true;
-                        }
-                    }
-                }
-                data.legacyShan = true;
-
-                if (check1 == true && check2 == false)
-                {
-                    foreach (string world in data.WorldsData.Keys.ToList())
-                    {
-                        data.WorldsData[world].checkCount.Clear();
-                    }
-                }
-
-                foreach (var key in data.WorldsData.Keys.ToList())
-                {
-                    if (key == "GoA")
-                        continue;
-
-                    data.WorldsData[key].worldGrid.WorldComplete();
-                    SetWorldValue(data.WorldsData[key].value, 0);
-                }
-
-                //end of loading
-                data.saveFileLoaded = true;
-
-                //if (autotrackeron)
-                //{
-                //    InitAutoTracker(ps2tracking);
-                //}
-            }
+            //if (LegacyType == "Jsmartee")
+            //{
+            //    SetMode(Mode.JsmarteeHints);
+            //
+            //    var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacyJHints"].ToString());
+            //    string line1 = hintStrings[0];
+            //    data.hintFileText[0] = line1;
+            //    string[] reportvalues = line1.Split('.');
+            //
+            //    string line2 = hintStrings[1];
+            //    data.hintFileText[1] = line2;
+            //    line2 = line2.TrimEnd('.');
+            //    string[] reportorder = line2.Split('.');
+            //
+            //    string line3 = hintStrings[2];
+            //    data.hintFileText[2] = line3;
+            //    LoadSettings(line3);
+            //
+            //    for (int i = 0; i < reportorder.Length; ++i)
+            //    {
+            //        string location = data.codes.FindCode(reportorder[i]);
+            //        if (location == "")
+            //            location = data.codes.GetDefault(i);
+            //
+            //        data.reportLocations.Add(location);
+            //        string[] temp = reportvalues[i].Split(',');
+            //        data.reportInformation.Add(new Tuple<string, string, int>(null, data.codes.FindCode(temp[0]), int.Parse(temp[1]) - 32));
+            //    }
+            //
+            //    //end of loading
+            //    data.hintsLoaded = true;
+            //    data.legacyJsmartee = true;
+            //    data.saveFileLoaded = true;
+            //}
+            //else
+            //{
+            //    //bool autotrackeron = false;
+            //    //bool ps2tracking = false;
+            //    ////check for autotracking on and which version
+            //    //if (aTimer != null)
+            //    //    autotrackeron = true;
+            //    //
+            //    //if (pcsx2tracking)
+            //    //    ps2tracking = true;
+            //
+            //    //FixDictionary();
+            //    SetMode(Mode.ShanHints);
+            //
+            //    var hintStrings = JsonSerializer.Deserialize<string[]>(Savefile["LegacySHints"].ToString());
+            //
+            //    if (data.shanHintFileText != null)
+            //    {
+            //        data.shanHintFileText = null;
+            //    }
+            //
+            //    foreach (string world in data.WorldsData.Keys.ToList())
+            //    {
+            //        data.WorldsData[world].checkCount.Clear();
+            //    }
+            //
+            //    bool check1 = false;
+            //    bool check2 = false;
+            //    for (int i = 0; i < hintStrings.Length; ++i)
+            //    {
+            //        string line = hintStrings[i];
+            //        data.shanHintFileText[i] = line;
+            //
+            //        // ignore comment lines
+            //        if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
+            //            continue;
+            //
+            //        string[] codes = line.Split(',');
+            //        if (codes.Length == 5)
+            //        {
+            //            string world = data.codes.FindCode(codes[2]);
+            //
+            //            //stupid fix
+            //            string[] idCode = codes[4].Split('/', ' ');
+            //
+            //            int id = Convert.ToInt32(idCode[0], 16);
+            //            if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
+            //                continue;
+            //
+            //            string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
+            //            data.WorldsData[world].checkCount.Add(item);
+            //        }
+            //        else if (codes.Length == 1)
+            //        {
+            //            if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
+            //            {
+            //                check1 = true;
+            //            }
+            //            else if (codes[0] == "//Remove Dodge Roll LVl")
+            //            {
+            //                check2 = true;
+            //            }
+            //        }
+            //    }
+            //    data.legacyShan = true;
+            //
+            //    if (check1 == true && check2 == false)
+            //    {
+            //        foreach (string world in data.WorldsData.Keys.ToList())
+            //        {
+            //            data.WorldsData[world].checkCount.Clear();
+            //        }
+            //    }
+            //
+            //    foreach (var key in data.WorldsData.Keys.ToList())
+            //    {
+            //        if (key == "GoA")
+            //            continue;
+            //
+            //        data.WorldsData[key].worldGrid.WorldComplete();
+            //        SetWorldValue(data.WorldsData[key].value, 0);
+            //    }
+            //
+            //    //end of loading
+            //    data.saveFileLoaded = true;
+            //
+            //    //if (autotrackeron)
+            //    //{
+            //    //    InitAutoTracker(ps2tracking);
+            //    //}
+            //}
         }
 
         //progress helpers
@@ -1207,112 +1202,112 @@ namespace KhTracker
         //Shans Classic
         private void ParseSeed(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                DefaultExt = ".pnach",
-                Filter = "pnach files (*.pnach)|*.pnach",
-                Title = "Select Seed File"
-            };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                ParseSeed(openFileDialog.FileName);
-            }
+            //OpenFileDialog openFileDialog = new OpenFileDialog
+            //{
+            //    DefaultExt = ".pnach",
+            //    Filter = "pnach files (*.pnach)|*.pnach",
+            //    Title = "Select Seed File"
+            //};
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    ParseSeed(openFileDialog.FileName);
+            //}
         }
 
         public void ParseSeed(string filename)
         {
-            if (!InProgressCheck("seed"))
-                return;
-
-            //bool autotrackeron = false;
-            //bool ps2tracking = false;
-            //check for autotracking on and which version
-            //if (aTimer != null)
-            //    autotrackeron = true;
+            //if (!InProgressCheck("seed"))
+            //    return;
             //
-            //if (pcsx2tracking)
-            //    ps2tracking = true;
-
-            //FixDictionary();
-            SetMode(Mode.ShanHints);
-
-            if (data.shanHintFileText != null)
-            {
-                data.shanHintFileText = null;
-            }
-
-            foreach (string world in data.WorldsData.Keys.ToList())
-            {
-                data.WorldsData[world].checkCount.Clear();
-            }
-
-            StreamReader streamReader = new StreamReader(filename);
-            bool check1 = false;
-            bool check2 = false;
-
-            int lineNum = 0;
-            while (streamReader.EndOfStream == false)
-            {
-                string line = streamReader.ReadLine();
-                data.shanHintFileText[lineNum] = line;
-
-                // ignore comment lines
-                if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
-                    continue;
-
-                string[] codes = line.Split(',');
-                if (codes.Length == 5)
-                {
-                    string world = data.codes.FindCode(codes[2]);
-
-                    //stupid fix
-                    string[] idCode = codes[4].Split('/', ' ');
-
-                    int id = Convert.ToInt32(idCode[0], 16);
-                    if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
-                        continue;
-
-                    string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
-                    data.WorldsData[world].checkCount.Add(item);
-                }
-                else if (codes.Length == 1)
-                {
-                    if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
-                    {
-                        check1 = true;
-                    }
-                    else if (codes[0] == "//Remove Dodge Roll LVl")
-                    {
-                        check2 = true;
-                    }
-                }
-
-                lineNum++;
-            }
-            streamReader.Close();
-            data.legacyShan = true;
-
-            if (check1 == true && check2 == false)
-            {
-                foreach (string world in data.WorldsData.Keys.ToList())
-                {
-                    data.WorldsData[world].checkCount.Clear();
-                }
-            }
-
-            foreach (var key in data.WorldsData.Keys.ToList())
-            {
-                if (key == "GoA")
-                    continue;
-
-                data.WorldsData[key].worldGrid.WorldComplete();
-                SetWorldValue(data.WorldsData[key].value, 0);
-            }
-
-            data.seedLoaded = true;
-
-            if (data.wasTracking)
-                InitTracker();
+            ////bool autotrackeron = false;
+            ////bool ps2tracking = false;
+            ////check for autotracking on and which version
+            ////if (aTimer != null)
+            ////    autotrackeron = true;
+            ////
+            ////if (pcsx2tracking)
+            ////    ps2tracking = true;
+            //
+            ////FixDictionary();
+            //SetMode(Mode.ShanHints);
+            //
+            //if (data.shanHintFileText != null)
+            //{
+            //    data.shanHintFileText = null;
+            //}
+            //
+            //foreach (string world in data.WorldsData.Keys.ToList())
+            //{
+            //    data.WorldsData[world].checkCount.Clear();
+            //}
+            //
+            //StreamReader streamReader = new StreamReader(filename);
+            //bool check1 = false;
+            //bool check2 = false;
+            //
+            //int lineNum = 0;
+            //while (streamReader.EndOfStream == false)
+            //{
+            //    string line = streamReader.ReadLine();
+            //    data.shanHintFileText[lineNum] = line;
+            //
+            //    // ignore comment lines
+            //    if (line.Length >= 2 && line[0] == '/' && line[1] == '/')
+            //        continue;
+            //
+            //    string[] codes = line.Split(',');
+            //    if (codes.Length == 5)
+            //    {
+            //        string world = data.codes.FindCode(codes[2]);
+            //
+            //        //stupid fix
+            //        string[] idCode = codes[4].Split('/', ' ');
+            //
+            //        int id = Convert.ToInt32(idCode[0], 16);
+            //        if (world == "" || world == "GoA" || data.codes.itemCodes.ContainsKey(id) == false || (id >= 226 && id <= 238))
+            //            continue;
+            //
+            //        string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
+            //        data.WorldsData[world].checkCount.Add(item);
+            //    }
+            //    else if (codes.Length == 1)
+            //    {
+            //        if (codes[0] == "//Remove High Jump LVl" || codes[0] == "//Remove Quick Run LVl")
+            //        {
+            //            check1 = true;
+            //        }
+            //        else if (codes[0] == "//Remove Dodge Roll LVl")
+            //        {
+            //            check2 = true;
+            //        }
+            //    }
+            //
+            //    lineNum++;
+            //}
+            //streamReader.Close();
+            //data.legacyShan = true;
+            //
+            //if (check1 == true && check2 == false)
+            //{
+            //    foreach (string world in data.WorldsData.Keys.ToList())
+            //    {
+            //        data.WorldsData[world].checkCount.Clear();
+            //    }
+            //}
+            //
+            //foreach (var key in data.WorldsData.Keys.ToList())
+            //{
+            //    if (key == "GoA")
+            //        continue;
+            //
+            //    data.WorldsData[key].worldGrid.WorldComplete();
+            //    SetWorldValue(data.WorldsData[key].value, 0);
+            //}
+            //
+            //data.seedLoaded = true;
+            //
+            //if (data.wasTracking)
+            //    InitTracker();
         }
 
         //Jsmartee Classic
@@ -2216,40 +2211,42 @@ namespace KhTracker
 
                         #region Settings
 
-                        TornPagesToggle(false);
-                        AbilitiesToggle(false);
-                        ReportsToggle(false);
-                        ExtraChecksToggle(false);
-                        VisitLockToggle(false);
-                        foreach (string item in hintableItems)
-                        {
-                            switch (item)
+                            TornPagesToggle(false);
+                            AbilitiesToggle(false);
+                            ReportsToggle(false);
+                            ExtraChecksToggle(false);
+                            VisitLockToggle(false);
+                            ChestLockToggle(false);
+                            foreach (string item in hintableItems)
                             {
-                                case "magic":
-                                    break;
-                                case "form":
-                                    break;
-                                case "summon":
-                                    break;
-                                case "page":
-                                    TornPagesToggle(true);
-                                    break;
-                                case "ability":
-                                    AbilitiesToggle(true);
-                                    break;
-                                case "report":
-                                    ReportsToggle(true);
-                                    break;
-                                case "other":
-                                    ExtraChecksToggle(true);
-                                    break;
-                                case "visit":
-                                    VisitLockToggle(true);
-                                    break;
-                                case "proof":
-                                    break;
+                                switch (item)
+                                {
+                                    case "page":
+                                        TornPagesToggle(true);
+                                        break;
+                                    case "ability":
+                                        AbilitiesToggle(true);
+                                        break;
+                                    case "report":
+                                        ReportsToggle(true);
+                                        break;
+                                    case "other":
+                                        ExtraChecksToggle(true);
+                                        break;
+                                    case "visit":
+                                        VisitLockToggle(true);
+                                        break;
+                                    case "keyblade":
+                                        ChestLockToggle(true);
+                                        break;
+                                    case "proof":
+                                    case "magic":
+                                    case "form":
+                                    case "summon":
+                                    default: 
+                                        break;
+                                }
                             }
-                        }
 
                         //if (hintableItems.Contains("report"))
                         //    ReportsToggle(true);
@@ -2322,205 +2319,205 @@ namespace KhTracker
                         Double SpacerValue = 10;
                         #endregion
 
-                        //to be safe about this i guess
-                        //bool abilitiesOn = true;
-                        bool puzzleOn = false;
-                        bool synthOn = false;
+                            //to be safe about this i guess
+                            //bool abilitiesOn = true;
+                            bool puzzleOn = false;
+                            //bool synthOn = false;
 
                         //load settings from hints
                         foreach (string setting in settings)
                         {
                             Console.WriteLine("setting found = " + setting);
 
-                            switch (setting)
-                            {
-                                //items
-                                case "PromiseCharm":
-                                    PromiseCharmToggle(true);
-                                    break;
-                                //case "Level1Mode":
-                                //    abilitiesOn = false;
-                                //    break;
-                                case "visit_locking":
-                                    VisitLockToggle(true);
-                                    break;
-                                //case "extra_ics":
-                                //    ExtraChecksToggle(true);
-                                //    break;
-                                case "Anti-Form":
-                                    AntiFormToggle(true);
-                                    break;
-                                //worlds
-                                case "Level":
-                                    SoraHeartToggle(false);
-                                    SoraLevel01Toggle(true);
-                                    //AbilitiesToggle(true);
-                                    Setting_Level_01.Width = new GridLength(1.5, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "ExcludeFrom50":
-                                    SoraLevel50Toggle(true);
-                                    //AbilitiesToggle(true);
-                                    Setting_Level_50.Width = new GridLength(1.5, GridUnitType.Star);
-                                    SpacerValue--;
-                                    data.HintRevealOrder.Add("SorasHeart");
-                                    break;
-                                case "ExcludeFrom99":
-                                    SoraLevel99Toggle(true);
-                                    //AbilitiesToggle(true);
-                                    Setting_Level_99.Width = new GridLength(1.5, GridUnitType.Star);
-                                    SpacerValue--;
-                                    data.HintRevealOrder.Add("SorasHeart");
-                                    break;
-                                case "Simulated Twilight Town":
-                                    SimulatedToggle(true);
-                                    data.enabledWorlds.Add("STT");
-                                    data.HintRevealOrder.Add("SimulatedTwilightTown");
-                                    break;
-                                case "Hundred Acre Wood":
-                                    HundredAcreWoodToggle(true);
-                                    data.enabledWorlds.Add("HundredAcreWood");
-                                    data.HintRevealOrder.Add("HundredAcreWood");
-                                    break;
-                                case "Atlantica":
-                                    AtlanticaToggle(true);
-                                    data.enabledWorlds.Add("Atlantica");
-                                    data.HintRevealOrder.Add("Atlantica");
-                                    break;
-                                case "Puzzle":
-                                    PuzzleToggle(true);
-                                    puzzleOn = true;
-                                    data.puzzlesOn = true;
-                                    break;
-                                case "Synthesis":
-                                    SynthToggle(true);
-                                    synthOn = true;
-                                    data.synthOn = true;
-                                    break;
-                                case "Form Levels":
-                                    DrivesToggle(true);
-                                    data.HintRevealOrder.Add("DriveForms");
-                                    break;
-                                case "Land of Dragons":
-                                    LandofDragonsToggle(true);
-                                    data.enabledWorlds.Add("LoD");
-                                    data.HintRevealOrder.Add("LandofDragons");
-                                    break;
-                                case "Beast's Castle":
-                                    BeastCastleToggle(true);
-                                    data.enabledWorlds.Add("BC");
-                                    data.HintRevealOrder.Add("BeastsCastle");
-                                    break;
-                                case "Hollow Bastion":
-                                    HollowBastionToggle(true);
-                                    data.enabledWorlds.Add("HB");
-                                    data.HintRevealOrder.Add("HollowBastion");
-                                    break;
-                                case "Twilight Town":
-                                    TwilightTownToggle(true);
-                                    data.enabledWorlds.Add("TT");
-                                    data.HintRevealOrder.Add("TwilightTown");
-                                    break;
-                                case "The World That Never Was":
-                                    TWTNWToggle(true);
-                                    data.enabledWorlds.Add("TWTNW");
-                                    data.HintRevealOrder.Add("TWTNW");
-                                    break;
-                                case "Space Paranoids":
-                                    SpaceParanoidsToggle(true);
-                                    data.enabledWorlds.Add("SP");
-                                    data.HintRevealOrder.Add("SpaceParanoids");
-                                    break;
-                                case "Port Royal":
-                                    PortRoyalToggle(true);
-                                    data.enabledWorlds.Add("PR");
-                                    data.HintRevealOrder.Add("PortRoyal");
-                                    break;
-                                case "Olympus Coliseum":
-                                    OlympusToggle(true);
-                                    data.enabledWorlds.Add("OC");
-                                    data.HintRevealOrder.Add("OlympusColiseum");
-                                    break;
-                                case "Agrabah":
-                                    AgrabahToggle(true);
-                                    data.enabledWorlds.Add("AG");
-                                    data.HintRevealOrder.Add("Agrabah");
-                                    break;
-                                case "Halloween Town":
-                                    HalloweenTownToggle(true);
-                                    data.enabledWorlds.Add("HT");
-                                    data.HintRevealOrder.Add("HalloweenTown");
-                                    break;
-                                case "Pride Lands":
-                                    PrideLandsToggle(true);
-                                    data.enabledWorlds.Add("PL");
-                                    data.HintRevealOrder.Add("PrideLands");
-                                    break;
-                                case "Disney Castle / Timeless River":
-                                    DisneyCastleToggle(true);
-                                    data.enabledWorlds.Add("DC");
-                                    data.HintRevealOrder.Add("DisneyCastle");
-                                    break;
-                                //settings
-                                case "better_stt":
-                                    Setting_BetterSTT.Width = new GridLength(1.1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Cavern of Remembrance":
-                                    Setting_Cavern.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Data Split":
-                                    Setting_Absent_Split.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    data.dataSplit = true;
-                                    break;
-                                case "Absent Silhouettes":
-                                    if (!data.dataSplit) //only use if we didn't already set the data split version
-                                    {
-                                        Setting_Absent.Width = new GridLength(1, GridUnitType.Star);
+                                switch (setting)
+                                {
+                                    //items
+                                    case "PromiseCharm":
+                                        PromiseCharmToggle(true);
+                                        break;
+                                    //case "Level1Mode":
+                                    //    abilitiesOn = false;
+                                    //    break;
+                                    case "visit_locking":
+                                        VisitLockToggle(true);
+                                        break;
+                                    //case "extra_ics":
+                                    //    ExtraChecksToggle(true);
+                                    //    break;
+                                    case "Anti-Form":
+                                        AntiFormToggle(true);
+                                        break;
+                                    //worlds
+                                    case "Level":
+                                        SoraHeartToggle(false);
+                                        SoraLevel01Toggle(true);
+                                        //AbilitiesToggle(true);
+                                        Setting_Level_01.Width = new GridLength(1.5, GridUnitType.Star);
                                         SpacerValue--;
-                                    }
-                                    break;
-                                case "Sephiroth":
-                                    Setting_Sephiroth.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Lingering Will (Terra)":
-                                    Setting_Terra.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Data Organization XIII":
-                                    Setting_Datas.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Transport to Remembrance":
-                                    Setting_Transport.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Olympus Cups":
-                                    Setting_Cups.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "Hades Paradox Cup":
-                                    Setting_HadesCup.Width = new GridLength(1, GridUnitType.Star);
-                                    SpacerValue--;
-                                    break;
-                                case "ScoreMode":
-                                    data.ScoreMode = true;
-                                    break;
-                                //progression hints
-                                case "ProgressionHints":
-                                    data.UsingProgressionHints = true;
-                                    data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
-                                    data.WorldsData["GoA"].value.Text = "0";
-                                    //Console.WriteLine("ENABLING PROGRESSION HINTS");
-                                    break;
-                                case "dummy_forms":
-                                    data.altFinalTracking = true;
-                                    break;
+                                        break;
+                                    case "ExcludeFrom50":
+                                        SoraLevel50Toggle(true);
+                                        //AbilitiesToggle(true);
+                                        Setting_Level_50.Width = new GridLength(1.5, GridUnitType.Star);
+                                        SpacerValue--;
+                                        data.HintRevealOrder.Add("SorasHeart");
+                                        break;
+                                    case "ExcludeFrom99":
+                                        SoraLevel99Toggle(true);
+                                        //AbilitiesToggle(true);
+                                        Setting_Level_99.Width = new GridLength(1.5, GridUnitType.Star);
+                                        SpacerValue--;
+                                        data.HintRevealOrder.Add("SorasHeart");
+                                        break;
+                                    case "Simulated Twilight Town":
+                                        SimulatedToggle(true);
+                                        data.enabledWorlds.Add("STT");
+                                        data.HintRevealOrder.Add("SimulatedTwilightTown");
+                                        break;
+                                    case "Hundred Acre Wood":
+                                        HundredAcreWoodToggle(true);
+                                        data.enabledWorlds.Add("HundredAcreWood");
+                                        data.HintRevealOrder.Add("HundredAcreWood");
+                                        break;
+                                    case "Atlantica":
+                                        AtlanticaToggle(true);
+                                        data.enabledWorlds.Add("Atlantica");
+                                        data.HintRevealOrder.Add("Atlantica");
+                                        break;
+                                    case "Puzzle":
+                                        PuzzleToggle(true);
+                                        puzzleOn = true;
+                                        data.puzzlesOn = true;
+                                        break;
+                                    case "Synthesis":
+                                        SynthToggle(true);
+                                        //synthOn = true;
+                                        data.synthOn = true;
+                                        break;
+                                    case "Form Levels":
+                                        DrivesToggle(true);
+                                        data.HintRevealOrder.Add("DriveForms");
+                                        break;
+                                    case "Land of Dragons":
+                                        LandofDragonsToggle(true);
+                                        data.enabledWorlds.Add("LoD");
+                                        data.HintRevealOrder.Add("LandofDragons");
+                                        break;
+                                    case "Beast's Castle":
+                                        BeastCastleToggle(true);
+                                        data.enabledWorlds.Add("BC");
+                                        data.HintRevealOrder.Add("BeastsCastle");
+                                        break;
+                                    case "Hollow Bastion":
+                                        HollowBastionToggle(true);
+                                        data.enabledWorlds.Add("HB");
+                                        data.HintRevealOrder.Add("HollowBastion");
+                                        break;
+                                    case "Twilight Town":
+                                        TwilightTownToggle(true);
+                                        data.enabledWorlds.Add("TT");
+                                        data.HintRevealOrder.Add("TwilightTown");
+                                        break;
+                                    case "The World That Never Was":
+                                        TWTNWToggle(true);
+                                        data.enabledWorlds.Add("TWTNW");
+                                        data.HintRevealOrder.Add("TWTNW");
+                                        break;
+                                    case "Space Paranoids":
+                                        SpaceParanoidsToggle(true);
+                                        data.enabledWorlds.Add("SP");
+                                        data.HintRevealOrder.Add("SpaceParanoids");
+                                        break;
+                                    case "Port Royal":
+                                        PortRoyalToggle(true);
+                                        data.enabledWorlds.Add("PR");
+                                        data.HintRevealOrder.Add("PortRoyal");
+                                        break;
+                                    case "Olympus Coliseum":
+                                        OlympusToggle(true);
+                                        data.enabledWorlds.Add("OC");
+                                        data.HintRevealOrder.Add("OlympusColiseum");
+                                        break;
+                                    case "Agrabah":
+                                        AgrabahToggle(true);
+                                        data.enabledWorlds.Add("AG");
+                                        data.HintRevealOrder.Add("Agrabah");
+                                        break;
+                                    case "Halloween Town":
+                                        HalloweenTownToggle(true);
+                                        data.enabledWorlds.Add("HT");
+                                        data.HintRevealOrder.Add("HalloweenTown");
+                                        break;
+                                    case "Pride Lands":
+                                        PrideLandsToggle(true);
+                                        data.enabledWorlds.Add("PL");
+                                        data.HintRevealOrder.Add("PrideLands");
+                                        break;
+                                    case "Disney Castle / Timeless River":
+                                        DisneyCastleToggle(true);
+                                        data.enabledWorlds.Add("DC");
+                                        data.HintRevealOrder.Add("DisneyCastle");
+                                        break;
+                                    //settings
+                                    case "better_stt":
+                                        Setting_BetterSTT.Width = new GridLength(1.1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Cavern of Remembrance":
+                                        Setting_Cavern.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Data Split":
+                                        Setting_Absent_Split.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        data.dataSplit = true;
+                                        break;
+                                    case "Absent Silhouettes":
+                                        if (!data.dataSplit) //only use if we didn't already set the data split version
+                                        {
+                                            Setting_Absent.Width = new GridLength(1, GridUnitType.Star);
+                                            SpacerValue--;
+                                        }
+                                        break;
+                                    case "Sephiroth":
+                                        Setting_Sephiroth.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Lingering Will (Terra)":
+                                        Setting_Terra.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Data Organization XIII":
+                                        Setting_Datas.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Transport to Remembrance":
+                                        Setting_Transport.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Olympus Cups":
+                                        Setting_Cups.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "Hades Paradox Cup":
+                                        Setting_HadesCup.Width = new GridLength(1, GridUnitType.Star);
+                                        SpacerValue--;
+                                        break;
+                                    case "ScoreMode":
+                                        data.ScoreMode = true;
+                                        break;
+                                    //progression hints
+                                    case "ProgressionHints":
+                                        data.UsingProgressionHints = true;
+                                        data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
+                                        data.WorldsData["GoA"].value.Text = "0";
+                                        //Console.WriteLine("ENABLING PROGRESSION HINTS");
+                                        break;
+                                    case "dummy_forms":
+                                        data.altFinalTracking = true;
+                                        break;
+                                }
                             }
-                        }
 
                         //if (abilitiesOn == false)
                         //    AbilitiesToggle(false);
@@ -2711,7 +2708,11 @@ namespace KhTracker
                 }
             }
 
-            data.seedLoaded = true;
+                archive.Dispose();
+
+                data.seedLoaded = true;
+                toggleState(false);
+            }
 
             // regenerate the grid tracker
             gridWindow.grid.Children.Clear();
@@ -2980,6 +2981,8 @@ namespace KhTracker
                 Defense.Visibility = Visibility.Collapsed;
             }
 
+            toggleState(true);
+
             collectedChecks.Clear();
             newChecks.Clear();
             ModeDisplay.Header = "";
@@ -3135,7 +3138,7 @@ namespace KhTracker
                     Grid pool;
 
                     if (item.Name.StartsWith("Ghost_"))
-                        pool = VisualTreeHelper.GetChild(ItemPool, 4) as Grid;
+                        pool = VisualTreeHelper.GetChild(ItemPool, ItemPool.Children.Count - 1) as Grid;
                     else
                         pool = data.Items[item.Name].Item2;
 
@@ -3260,6 +3263,19 @@ namespace KhTracker
             tornPageCount = 0;
             munnyPouchCount = 0;
 
+            AuronWepLevel = 0;
+            MulanWepLevel = 0;
+            BeastWepLevel = 0;
+            JackWepLevel = 0;
+            SimbaWepLevel = 0;
+            SparrowWepLevel = 0;
+            AladdinWepLevel = 0;
+            TronWepLevel = 0;
+            MembershipCardLevel = 0;
+            IceCreamLevel = 0;
+            RikuWepLevel = 0;
+            KingsLetterLevel = 0;
+
             if (fire != null)
                 fire.Level = 0;
             if (blizzard != null)
@@ -3274,6 +3290,31 @@ namespace KhTracker
                 magnet.Level = 0;
             if (pages != null)
                 pages.Quantity = 0;
+
+            if (AuronWep != null)
+                AuronWep.Level = 0;
+            if (MulanWep != null)
+                MulanWep.Level = 0;
+            if (BeastWep != null)
+                BeastWep.Level = 0;
+            if (JackWep != null)
+                JackWep.Level = 0;
+            if (SimbaWep != null)
+                SimbaWep.Level = 0;
+            if (SparrowWep != null)
+                SparrowWep.Level = 0;
+            if (AladdinWep != null)
+                AladdinWep.Level = 0;
+            if (TronWep != null)
+                TronWep.Level = 0;
+            if (MembershipCard != null)
+                MembershipCard.Level = 0;
+            if (IceCream != null)
+                IceCream.Level = 0;
+            if (RikuWep != null)
+                RikuWep.Level = 0;
+            if (KingsLetter != null)
+                KingsLetter.Level = 0;
 
             if (highJump != null)
                 highJump.Level = 0;
@@ -3319,6 +3360,19 @@ namespace KhTracker
             WorldGrid.Report_Count = 0;
             WorldGrid.Visit_Count = 0;
 
+            WorldGrid.Real_AuronWep = 0;
+            WorldGrid.Real_MulanWep = 0;
+            WorldGrid.Real_BeastWep = 0;
+            WorldGrid.Real_JackWep = 0;
+            WorldGrid.Real_SimbaWep = 0;
+            WorldGrid.Real_SparrowWep = 0;
+            WorldGrid.Real_AladdinWep = 0;
+            WorldGrid.Real_TronWep = 0;
+            WorldGrid.Real_MembershipCard = 0;
+            WorldGrid.Real_IceCream = 0;
+            WorldGrid.Real_RikuWep = 0;
+            WorldGrid.Real_KingsLetter = 0;
+
             FireCount.Text = "3";
             BlizzardCount.Text = "3";
             ThunderCount.Text = "3";
@@ -3345,6 +3399,44 @@ namespace KhTracker
             WorldGrid.Ghost_Pages_obtained = 0;
             WorldGrid.Ghost_Pouches_obtained = 0;
 
+            BCCount.Text = "2";
+            HTCount.Text = "2";
+            PLCount.Text = "2";
+            OCCount.Text = "2";
+            LoDCount.Text = "2";
+            PRCount.Text = "2";
+            AGCount.Text = "2";
+            SPCount.Text = "2";
+            TWTNWCount.Text = "2";
+            HBCount.Text = "2";
+            DCCount.Text = "2";
+            TTCount.Text = "3";
+
+            WorldGrid.Ghost_AuronWep = 0;
+            WorldGrid.Ghost_MulanWep = 0;
+            WorldGrid.Ghost_BeastWep = 0;
+            WorldGrid.Ghost_JackWep = 0;
+            WorldGrid.Ghost_SimbaWep = 0;
+            WorldGrid.Ghost_SparrowWep = 0;
+            WorldGrid.Ghost_AladdinWep = 0;
+            WorldGrid.Ghost_TronWep = 0;
+            WorldGrid.Ghost_MembershipCard = 0;
+            WorldGrid.Ghost_IceCream = 0;
+            WorldGrid.Ghost_RikuWep = 0;
+            WorldGrid.Ghost_KingsLetter = 0;
+            WorldGrid.Ghost_AuronWep_obtained = 0;
+            WorldGrid.Ghost_MulanWep_obtained = 0;
+            WorldGrid.Ghost_BeastWep_obtained = 0;
+            WorldGrid.Ghost_JackWep_obtained = 0;
+            WorldGrid.Ghost_SimbaWep_obtained = 0;
+            WorldGrid.Ghost_SparrowWep_obtained = 0;
+            WorldGrid.Ghost_AladdinWep_obtained = 0;
+            WorldGrid.Ghost_TronWep_obtained = 0;
+            WorldGrid.Ghost_MembershipCard_obtained = 0;
+            WorldGrid.Ghost_IceCream_obtained = 0;
+            WorldGrid.Ghost_RikuWep_obtained = 0;
+            WorldGrid.Ghost_KingsLetter_obtained = 0;
+
             Ghost_FireCount.Visibility = Visibility.Hidden;
             Ghost_BlizzardCount.Visibility = Visibility.Hidden;
             Ghost_ThunderCount.Visibility = Visibility.Hidden;
@@ -3353,6 +3445,19 @@ namespace KhTracker
             Ghost_MagnetCount.Visibility = Visibility.Hidden;
             Ghost_PageCount.Visibility = Visibility.Hidden;
             Ghost_MunnyCount.Visibility = Visibility.Hidden;
+
+            Ghost_BCCount.Visibility = Visibility.Hidden;
+            Ghost_HTCount.Visibility = Visibility.Hidden;
+            Ghost_PLCount.Visibility = Visibility.Hidden;
+            Ghost_OCCount.Visibility = Visibility.Hidden;
+            Ghost_LoDCount.Visibility = Visibility.Hidden;
+            Ghost_PRCount.Visibility = Visibility.Hidden;
+            Ghost_AGCount.Visibility = Visibility.Hidden;
+            Ghost_SPCount.Visibility = Visibility.Hidden;
+            Ghost_TWTNWCount.Visibility = Visibility.Hidden;
+            Ghost_HBCount.Visibility = Visibility.Hidden;
+            Ghost_DCCount.Visibility = Visibility.Hidden;
+            Ghost_TTCount.Visibility = Visibility.Hidden;
 
             FireCount.Fill = (SolidColorBrush)FindResource("Color_Black");
             FireCount.Stroke = (SolidColorBrush)FindResource("Color_Trans");
@@ -3387,6 +3492,31 @@ namespace KhTracker
             MunnyCount.Fill = (LinearGradientBrush)FindResource("Color_Pouch");
             MunnyCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
 
+            BCCount.Fill = (LinearGradientBrush)FindResource("Color_BC");
+            BCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            HTCount.Fill = (LinearGradientBrush)FindResource("Color_HT");
+            HTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            PLCount.Fill = (LinearGradientBrush)FindResource("Color_PL");
+            PLCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            OCCount.Fill = (LinearGradientBrush)FindResource("Color_OC");
+            OCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            LoDCount.Fill = (LinearGradientBrush)FindResource("Color_LoD");
+            LoDCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            PRCount.Fill = (LinearGradientBrush)FindResource("Color_PR");
+            PRCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            AGCount.Fill = (LinearGradientBrush)FindResource("Color_AG");
+            AGCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            SPCount.Fill = (LinearGradientBrush)FindResource("Color_SP");
+            SPCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            TWTNWCount.Fill = (LinearGradientBrush)FindResource("Color_TWTNW");
+            TWTNWCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            HBCount.Fill = (LinearGradientBrush)FindResource("Color_HB");
+            HBCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            DCCount.Fill = (LinearGradientBrush)FindResource("Color_DC");
+            DCCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+            TTCount.Fill = (LinearGradientBrush)FindResource("Color_TT");
+            TTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
+
             Data.WorldItems.Clear();
             data.TrackedReports.Clear();
 
@@ -3414,9 +3544,9 @@ namespace KhTracker
             //reset pathhints edits
             foreach (string key in data.WorldsData.Keys.ToList())
             {
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Star);
-
-                Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Star);                
+            
+                var pathgrid = (Grid)data.WorldsData[key].top.FindName(key + "Path");
                 pathgrid.Visibility = Visibility.Hidden;
                 foreach (Image child in pathgrid.Children)
                 {
@@ -3427,10 +3557,10 @@ namespace KhTracker
             }
 
             UpdatePointScore(0);
-            ReportsToggle(true);
-            TornPagesToggle(true);
-            ResetHints();
+            ReportsToggle(ReportsOption.IsChecked);
+            TornPagesToggle(TornPagesOption.IsChecked);
             VisitLockToggle(VisitLockOption.IsChecked);
+            ChestLockToggle(ChestLockOption.IsChecked);
 
             DeathCounter = 0;
             DeathValue.Text = "0";
@@ -3453,6 +3583,8 @@ namespace KhTracker
             //reset progression visuals
             PPCount.Width = new GridLength(1.15, GridUnitType.Star);
             PPSep.Width = new GridLength(0.3, GridUnitType.Star);
+
+            ResetHints();
 
             if (data.wasTracking && sender != null)
                 InitTracker();
@@ -3541,6 +3673,23 @@ namespace KhTracker
             {
                 data.Reports[i].HandleItemReturn();
             }
+        }
+
+        private void toggleState(bool clickable)
+        {
+            ReportsOption.IsEnabled = clickable;
+            TornPagesOption.IsEnabled = clickable;
+            PromiseCharmOption.IsEnabled = clickable;
+            AbilitiesOption.IsEnabled = clickable;
+            AntiFormOption.IsEnabled = clickable;
+            VisitLockOption.IsEnabled = clickable;
+            ChestLockOption.IsEnabled = clickable;
+            ExtraChecksOption.IsEnabled = clickable;
+            SoraLevel01Option.IsEnabled = clickable;
+            SoraLevel50Option.IsEnabled = clickable;
+            SoraLevel99Option.IsEnabled = clickable;
+
+            WorldToggleMenuItem.IsEnabled = clickable;
         }
 
         /// 

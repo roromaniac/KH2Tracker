@@ -29,7 +29,7 @@ namespace KhTracker
         private void ShanHints(Dictionary<string, object> hintObject)
         {
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
 
             //Joke JsmarteeHints test
             bool debug = false;
@@ -73,10 +73,12 @@ namespace KhTracker
             {
                 foreach (var item in world.Value)
                 {
-                    if (item.StartsWith("Secret"))
+                    string nameFix = Codes.ConvertSeedGenName(item, true);
+
+                    if (nameFix.StartsWith("Secret"))
                     {
-                        int index = int.Parse(item.Remove(0, 21)) - 1;
-                        Console.WriteLine(index + " - " + Codes.ConvertSeedGenName(world.Key) + " _ " + item);
+                        int index = int.Parse(nameFix.Remove(0, 21)) - 1;
+                        //Console.WriteLine(index + " - " + Codes.ConvertSeedGenName(world.Key) + " _ " + item);
                         TEMP.Add(index, Codes.ConvertSeedGenName(world.Key));
                     }
                 }
@@ -198,7 +200,7 @@ namespace KhTracker
             }
 
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
@@ -258,7 +260,7 @@ namespace KhTracker
             foreach (string key in data.WorldsData.Keys.ToList())
             {
                 //adjust grid sizes for path proof icons
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0.1, GridUnitType.Star);
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0.1, GridUnitType.Star);
 
                 //get grid for path proof collumn and set visibility
                 Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
@@ -288,7 +290,7 @@ namespace KhTracker
 
             bool TMP_bossReports = false;
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             List<string> reveals = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
@@ -341,18 +343,25 @@ namespace KhTracker
                 {"Fire", 1 }, {"Blizzard", 1 }, {"Thunder", 1 },
                 {"Cure", 1 }, {"Magnet", 1 }, {"Reflect", 1},
                 {"TornPage", 1}, {"MunnyPouch", 1},
+                {"AuronWep", 1}, {"MulanWep", 1}, {"BeastWep", 1},
+                {"JackWep", 1}, {"SimbaWep", 1}, {"SparrowWep", 1},
+                {"AladdinWep", 1}, {"TronWep", 1}, {"RikuWep", 1},
+                {"MembershipCard", 1}, {"IceCream", 1}, {"KingsLetter", 1},
             };
 
+            //start parsing world data
             foreach (var world in worlds)
             {
+                //these are starting items, so skip
                 if (world.Key == "Critical Bonuses" || world.Key == "Garden of Assemblage")
                 {
                     continue;
                 }
-                foreach (string item in world.Value)
+                foreach (int itemNum in world.Value)
                 {
                     string worldname = Codes.ConvertSeedGenName(world.Key);
-                    string checkname = Codes.ConvertSeedGenName(item);
+                    string checkname = Codes.ConvertSeedGenName(itemNum);
+                    string item = Codes.ConvertSeedGenName(itemNum, true);
 
                     data.WorldsData[worldname].checkCount.Add(checkname);
 
@@ -626,12 +635,20 @@ namespace KhTracker
         {
             data.ShouldResetHash = true;
 
-            var worldsP = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worldsP = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             var reportsP = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             var points = JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["checkValue"].ToString());
 
             List<int> reportKeysP = reportsP.Keys.Select(int.Parse).ToList();
             reportKeysP.Sort();
+
+            var hintableItems = new List<string>();
+            //fallback for older seeds
+            try
+            {
+                hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
+            }
+            catch { }
 
             //set point values
             foreach (var point in points)
@@ -660,6 +677,8 @@ namespace KhTracker
                 data.PointsDatanew["visit"] = 1;
             if (!points.Keys.Contains("other"))
                 data.PointsDatanew["other"] = data.PointsDatanew["ability"];
+            if (!points.Keys.Contains("keyblade"))
+                data.PointsDatanew["keyblade"] = 1;
 
             if (!points.Keys.Contains("collection_proof"))
                 data.PointsDatanew["collection_proof"] = 0;
@@ -691,12 +710,23 @@ namespace KhTracker
                 foreach (var item in world.Value)
                 {
 
-                    string itemName = item;
-                    string itemType = Codes.FindItemType(item);
+                    string itemName = Codes.ConvertSeedGenName(item, true); //item;
+                    string itemType = Codes.FindItemType(itemName);
 
-                    //Zero point items are not ICs
-                    if (data.PointsDatanew[itemType] == 0)
-                        continue;
+                    //old method
+                    if (hintableItems.Count == 0)
+                    {
+                        //Zero point items are not ICs
+                        if (data.PointsDatanew[itemType] == 0)
+                            continue;
+                    }
+                    else 
+                    {
+                        //use hintable items list to determine hintable items instead
+                        if (!hintableItems.Contains(itemType))
+                            continue;
+                    }
+
 
                     data.WorldsData[Codes.ConvertSeedGenName(world.Key)].checkCount.Add(Codes.ConvertSeedGenName(item));
 
@@ -736,16 +766,20 @@ namespace KhTracker
             //set hints for each report
             foreach (var reportP in reportKeysP)
             {
-                var worldP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["World"].ToString());
-                var checkP = reportsP[reportP.ToString()]["check"].ToString();
-                var locationP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["Location"].ToString());
+                if (hintableItems.Contains("report"))
+                {
+                    var worldP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["World"].ToString());
+                    var checkP = reportsP[reportP.ToString()]["check"].ToString();
+                    var locationP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["Location"].ToString());
 
-                data.reportInformation.Add(new Tuple<string, string, int>(worldP, checkP, 0));
-                data.reportLocations.Add(locationP);
+                    data.reportInformation.Add(new Tuple<string, string, int>(worldP, checkP, 0));
+                    data.reportLocations.Add(locationP);
+
+                    //ReportsToggle(true);
+                    data.hintsLoaded = true;
+                }
             }
 
-            //ReportsToggle(true);
-            data.hintsLoaded = true;
             WorldPoints_c = WorldPoints;
             SetProgressionHints(data.UsingProgressionHints);
         }
@@ -999,7 +1033,7 @@ namespace KhTracker
         private void ProgressionPathHints(Dictionary<string, object> hintObject)
         {
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             var progHints = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> progHintsKeys = progHints.Keys.Select(int.Parse).ToList();
             progHintsKeys.Sort();
@@ -1077,7 +1111,7 @@ namespace KhTracker
             foreach (string key in data.WorldsData.Keys.ToList())
             {
                 //adjust grid sizes for path proof icons
-                data.WorldsData[key].top.ColumnDefinitions[1].Width = new GridLength(0.1, GridUnitType.Star);
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0.1, GridUnitType.Star);
 
                 //get grid for path proof collumn and set visibility
                 Grid pathgrid = data.WorldsData[key].top.FindName(key + "Path") as Grid;
@@ -1100,7 +1134,7 @@ namespace KhTracker
         {
             bool TMP_bossReports = false;
             data.ShouldResetHash = true;
-            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(hintObject["world"].ToString());
+            var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
             List<string> reveals = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
@@ -1142,17 +1176,20 @@ namespace KhTracker
                 {
                     continue;
                 }
-                foreach (string item in world.Value)
+                foreach (int itemNum in world.Value)
                 {
                     //Ignore reports as ICs if report mode is false
                     //if (!data.SpoilerReportMode && item.Contains("Report"))
                     //    continue;
+
+                    string item = Codes.ConvertSeedGenName(itemNum, true);
 
                     if (item.Contains("Report") && !data.SpoilerReportMode && !TMP_bossReports)
                         continue;
 
                     string worldname = Codes.ConvertSeedGenName(world.Key);
                     string checkname = Codes.ConvertSeedGenName(item);
+                    
 
                     data.WorldsData[worldname].checkCount.Add(checkname);
 
@@ -1221,9 +1258,9 @@ namespace KhTracker
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
                     data.reportLocations.Add(location);
 
-                    Console.WriteLine("WORLDSTRING = " + worldstring);
-                    Console.WriteLine("LOCATION = " + location);
-                    Console.WriteLine(data.reportInformation.Count);
+                    //Console.WriteLine("WORLDSTRING = " + worldstring);
+                    //Console.WriteLine("LOCATION = " + location);
+                    //Console.WriteLine(data.reportInformation.Count);
                 }
                 data.hintsLoaded = true;
             }

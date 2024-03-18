@@ -24,7 +24,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Atlantica" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="WindowX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -283,6 +283,9 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SonicIcons" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="WorldChestLock" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="BattleshipMissColor" Type="System.Windows.Media.Color" Scope="User">

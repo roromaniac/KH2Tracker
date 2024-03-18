@@ -111,23 +111,54 @@ namespace KhTracker
                 {PromiseCharm,   new Tuple<string, Item, ContentControl, string>("Cus-PromiseCharm",   Ghost_PromiseCharm,   S_PromiseCharm,    "CustomImages/Checks/promise_charm.png")},
                 {OnceMore,       new Tuple<string, Item, ContentControl, string>("Cus-OnceMore",       Ghost_OnceMore,       S_OnceMore,        "CustomImages/Checks/once_more.png")},
                 {SecondChance,   new Tuple<string, Item, ContentControl, string>("Cus-SecondChance",   Ghost_SecondChance,   S_SecondChance,    "CustomImages/Checks/second_chance.png")},
-                {MulanWep,       new Tuple<string, Item, ContentControl, string>("Cus-MulanWep",       Ghost_MulanWep,       S_MulanWep,        "CustomImages/Checks/lock_AncestorSword.png")},
-                {AuronWep,       new Tuple<string, Item, ContentControl, string>("Cus-AuronWep",       Ghost_AuronWep,       S_AuronWep,        "CustomImages/Checks/lock_BattlefieldsofWar.png")},
-                {BeastWep,       new Tuple<string, Item, ContentControl, string>("Cus-BeastWep",       Ghost_BeastWep,       S_BeastWep,        "CustomImages/Checks/lock_BeastClaw.png")},
-                {JackWep,        new Tuple<string, Item, ContentControl, string>("Cus-JackWep",        Ghost_JackWep,        S_JackWep,         "CustomImages/Checks/lock_BoneFist.png")},
-                {IceCream,       new Tuple<string, Item, ContentControl, string>("Cus-IceCream",       Ghost_IceCream,       S_IceCream,        "CustomImages/Checks/lock_IceCream.png")},
-                {TronWep,        new Tuple<string, Item, ContentControl, string>("Cus-TronWep",        Ghost_TronWep,        S_TronWep,         "CustomImages/Checks/lock_IdentityDisk.png")},
-                {Picture,        new Tuple<string, Item, ContentControl, string>("Cus-Picture",        Ghost_Picture,        S_Picture,         "CustomImages/Checks/lock_Picture.png")},
-                {MembershipCard, new Tuple<string, Item, ContentControl, string>("Cus-MembershipCard", Ghost_MembershipCard, S_MembershipCard,  "CustomImages/Checks/lock_membershipcard.png")},
-                {SimbaWep,       new Tuple<string, Item, ContentControl, string>("Cus-SimbaWep",       Ghost_SimbaWep,       S_SimbaWep,        "CustomImages/Checks/lock_ProudFang.png")},
-                {AladdinWep,     new Tuple<string, Item, ContentControl, string>("Cus-AladdinWep",     Ghost_AladdinWep,     S_AladdinWep,      "CustomImages/Checks/lock_Scimitar.png")},
-                {SparrowWep,     new Tuple<string, Item, ContentControl, string>("Cus-SparrowWep",     Ghost_SparrowWep,     S_SparrowWep,      "CustomImages/Checks/lock_SkillCrossbones.png")},
+                {MulanWep1,       new Tuple<string, Item, ContentControl, string>("Cus-MulanWep1",          Ghost_MulanWep1,       S_MulanWep,       "CustomImages/Checks/lock_AncestorSword.png")},
+                {MulanWep2,       new Tuple<string, Item, ContentControl, string>("Cus-MulanWep2",          Ghost_MulanWep2,       null,             "CustomImages/Checks/lock_AncestorSword.png")},
+                {AuronWep1,       new Tuple<string, Item, ContentControl, string>("Cus-AuronWep1",          Ghost_AuronWep1,       S_AuronWep,       "CustomImages/Checks/lock_BattlefieldsofWar.png")},
+                {AuronWep2,       new Tuple<string, Item, ContentControl, string>("Cus-AuronWep2",          Ghost_AuronWep2,       null,             "CustomImages/Checks/lock_BattlefieldsofWar.png")},
+                {BeastWep1,       new Tuple<string, Item, ContentControl, string>("Cus-BeastWep1",          Ghost_BeastWep1,       S_BeastWep,       "CustomImages/Checks/lock_BeastClaw.png")},
+                {BeastWep2,       new Tuple<string, Item, ContentControl, string>("Cus-BeastWep2",          Ghost_BeastWep2,       null,             "CustomImages/Checks/lock_BeastClaw.png")},
+                {JackWep1,        new Tuple<string, Item, ContentControl, string>("Cus-JackWep1",           Ghost_JackWep1,        S_JackWep,        "CustomImages/Checks/lock_BoneFist.png")},
+                {JackWep2,        new Tuple<string, Item, ContentControl, string>("Cus-JackWep2",           Ghost_JackWep2,        null,             "CustomImages/Checks/lock_BoneFist.png")},
+                {IceCream1,       new Tuple<string, Item, ContentControl, string>("Cus-IceCream1",          Ghost_IceCream1,       S_IceCream,       "CustomImages/Checks/lock_IceCream.png")},
+                {IceCream2,       new Tuple<string, Item, ContentControl, string>("Cus-IceCream2",          Ghost_IceCream2,       null,             "CustomImages/Checks/lock_IceCream.png")},
+                {IceCream3,       new Tuple<string, Item, ContentControl, string>("Cus-IceCream3",          Ghost_IceCream3,       null,             "CustomImages/Checks/lock_IceCream.png")},
+                {TronWep1,        new Tuple<string, Item, ContentControl, string>("Cus-TronWep1",           Ghost_TronWep1,        S_TronWep,        "CustomImages/Checks/lock_IdentityDisk.png")},
+                {TronWep2,        new Tuple<string, Item, ContentControl, string>("Cus-TronWep2",           Ghost_TronWep2,        null,             "CustomImages/Checks/lock_IdentityDisk.png")},
+                {MembershipCard1, new Tuple<string, Item, ContentControl, string>("Cus-MembershipCard1",    Ghost_MembershipCard1, S_MembershipCard, "CustomImages/Checks/lock_membershipcard.png")},
+                {MembershipCard2, new Tuple<string, Item, ContentControl, string>("Cus-MembershipCard2",    Ghost_MembershipCard2, null,             "CustomImages/Checks/lock_membershipcard.png")},
+                {SimbaWep1,       new Tuple<string, Item, ContentControl, string>("Cus-SimbaWep1",          Ghost_SimbaWep1,       S_SimbaWep,       "CustomImages/Checks/lock_ProudFang.png")},
+                {SimbaWep2,       new Tuple<string, Item, ContentControl, string>("Cus-SimbaWep2",          Ghost_SimbaWep2,       null,             "CustomImages/Checks/lock_ProudFang.png")},
+                {AladdinWep1,     new Tuple<string, Item, ContentControl, string>("Cus-AladdinWep1",        Ghost_AladdinWep1,     S_AladdinWep,     "CustomImages/Checks/lock_Scimitar.png")},
+                {AladdinWep2,     new Tuple<string, Item, ContentControl, string>("Cus-AladdinWep2",        Ghost_AladdinWep2,     null,             "CustomImages/Checks/lock_Scimitar.png")},
+                {SparrowWep1,     new Tuple<string, Item, ContentControl, string>("Cus-SparrowWep1",        Ghost_SparrowWep1,     S_SparrowWep,     "CustomImages/Checks/lock_SkillCrossbones.png")},
+                {SparrowWep2,     new Tuple<string, Item, ContentControl, string>("Cus-SparrowWep1",        Ghost_SparrowWep2,     null,             "CustomImages/Checks/lock_SkillCrossbones.png")},
+                {RikuWep1,        new Tuple<string, Item, ContentControl, string>("Cus-RikuWep1",           Ghost_RikuWep1,        S_RikuWep,        "CustomImages/Checks/lock_waytothedawn.png")},
+                {RikuWep2,        new Tuple<string, Item, ContentControl, string>("Cus-RikuWep2",           Ghost_RikuWep2,        null,             "CustomImages/Checks/lock_waytothedawn.png")},
+                {KingsLetter1,    new Tuple<string, Item, ContentControl, string>("Cus-KingsLetter1",       Ghost_KingsLetter1,    S_KingsLetter,    "CustomImages/Checks/lock_kingsletter.png")},
+                {KingsLetter2,    new Tuple<string, Item, ContentControl, string>("Cus-KingsLetter2",       Ghost_KingsLetter2,    null,             "CustomImages/Checks/lock_kingsletter.png")},
+                {Sketches,        new Tuple<string, Item, ContentControl, string>("Cus-Sketches",           Ghost_Sketches,        S_Sketches,       "CustomImages/Checks/lock_sketches.png")},
+                //{Picture,        new Tuple<string, Item, ContentControl, string>("Cus-Picture",        Ghost_Picture,        S_Picture,         "CustomImages/Checks/lock_Picture.png")},
                 {HadesCup,       new Tuple<string, Item, ContentControl, string>("Cus-HadesCup",       Ghost_HadesCup,       S_HadesCup,        "CustomImages/Checks/aux_hades_cup.png")},
                 {OlympusStone,   new Tuple<string, Item, ContentControl, string>("Cus-OlympusStone",   Ghost_OlympusStone,   S_OlympusStone,    "CustomImages/Checks/aux_olympus_stone.png")},
                 {UnknownDisk,    new Tuple<string, Item, ContentControl, string>("Cus-UnknownDisk",    Ghost_UnknownDisk,    S_UnknownDisk,     "CustomImages/Checks/aux_UnknownDisk.png")},
                 {MunnyPouch1,    new Tuple<string, Item, ContentControl, string>("Cus-MunnyPouch1",    Ghost_MunnyPouch1,    S_MunnyPouch,      "CustomImages/Checks/aux_munny_pouch.png")},
                 {MunnyPouch2,    new Tuple<string, Item, ContentControl, string>("Cus-MunnyPouch2",    Ghost_MunnyPouch2,    null,              "CustomImages/Checks/aux_munny_pouch.png")},
-                {Anti,           new Tuple<string, Item, ContentControl, string>("Cus-Anti",           Ghost_Anti,           S_Anti,            "CustomImages/Checks/form_anti.png")}
+                {Anti,           new Tuple<string, Item, ContentControl, string>("Cus-Anti",           Ghost_Anti,           S_Anti,            "CustomImages/Checks/form_anti.png")},
+                {ChestTT,        new Tuple<string, Item, ContentControl, string>("Cus-ChestTT",        Ghost_ChestTT,        S_ChestTT,         "CustomImages/Checks/chest_tt.png")},
+                {ChestHB,        new Tuple<string, Item, ContentControl, string>("Cus-ChestHB",        Ghost_ChestHB,        S_ChestHB,         "CustomImages/Checks/chest_hb.png")},
+                {ChestAG,        new Tuple<string, Item, ContentControl, string>("Cus-ChestAG",        Ghost_ChestAG,        S_ChestAG,         "CustomImages/Checks/chest_ag.png")},
+                {ChestBC,        new Tuple<string, Item, ContentControl, string>("Cus-ChestBC",        Ghost_ChestBC,        S_ChestBC,         "CustomImages/Checks/chest_bc.png")},
+                {ChestDC,        new Tuple<string, Item, ContentControl, string>("Cus-ChestDC",        Ghost_ChestDC,        S_ChestDC,         "CustomImages/Checks/chest_dc.png")},
+                {ChestHT,        new Tuple<string, Item, ContentControl, string>("Cus-ChestHT",        Ghost_ChestHT,        S_ChestHT,         "CustomImages/Checks/chest_ht.png")},
+                {ChestOC,        new Tuple<string, Item, ContentControl, string>("Cus-ChestOC",        Ghost_ChestOC,        S_ChestOC,         "CustomImages/Checks/chest_oc.png")},
+                {ChestPL,        new Tuple<string, Item, ContentControl, string>("Cus-ChestPL",        Ghost_ChestPL,        S_ChestPL,         "CustomImages/Checks/chest_pl.png")},
+                {ChestPR,        new Tuple<string, Item, ContentControl, string>("Cus-ChestPR",        Ghost_ChestPR,        S_ChestPR,         "CustomImages/Checks/chest_pr.png")},
+                {ChestSP,        new Tuple<string, Item, ContentControl, string>("Cus-ChestSP",        Ghost_ChestSP,        S_ChestSP,         "CustomImages/Checks/chest_sp.png")},
+                {ChestSTT,       new Tuple<string, Item, ContentControl, string>("Cus-ChestSTT",       Ghost_ChestSTT,       S_ChestSTT,        "CustomImages/Checks/chest_stt.png")},
+                {ChestCoR,       new Tuple<string, Item, ContentControl, string>("Cus-ChestCoR",       Ghost_ChestCoR,       S_ChestCoR,        "CustomImages/Checks/chest_cor.png")},
+                {ChestLoD,       new Tuple<string, Item, ContentControl, string>("Cus-ChestLoD",       Ghost_ChestLoD,       S_ChestLoD,        "CustomImages/Checks/chest_lod.png")},
+                {ChestHAW,       new Tuple<string, Item, ContentControl, string>("Cus-ChestHAW",       Ghost_ChestHAW,       S_ChestHAW,        "CustomImages/Checks/chest_haw.png")},
+                {ChestTWTNW,     new Tuple<string, Item, ContentControl, string>("Cus-ChestTWTNW",     Ghost_ChestTWTNW,     S_ChestTWTNW,      "CustomImages/Checks/chest_twtnw.png")}
             };
 
             //ghost items
@@ -184,23 +215,54 @@ namespace KhTracker
                 {Ghost_PromiseCharm,    new Tuple<string, string>("CustomImages/GhostChecks/promise_charm.png", "Cus-G_PromiseCharm")},
                 {Ghost_OnceMore,        new Tuple<string, string>("CustomImages/GhostChecks/once_more.png", "Cus-G_OnceMore")},
                 {Ghost_SecondChance,    new Tuple<string, string>("CustomImages/GhostChecks/second_chance.png", "Cus-G_SecondChance")},
-                {Ghost_MulanWep,        new Tuple<string, string>("CustomImages/GhostChecks/lock_AncestorSword.png", "Cus-G_MulanWep")},
-                {Ghost_AuronWep,        new Tuple<string, string>("CustomImages/GhostChecks/lock_BattlefieldsofWar.png", "Cus-G_AuronWep")},
-                {Ghost_BeastWep,        new Tuple<string, string>("CustomImages/GhostChecks/lock_BeastClaw.png", "Cus-G_BeastWep")},
-                {Ghost_JackWep,         new Tuple<string, string>("CustomImages/GhostChecks/lock_BoneFist.png", "Cus-G_JackWep")},
-                {Ghost_IceCream,        new Tuple<string, string>("CustomImages/GhostChecks/lock_IceCream.png", "Cus-G_IceCream")},
-                {Ghost_TronWep,         new Tuple<string, string>("CustomImages/GhostChecks/lock_IdentityDisk.png", "Cus-G_TronWep")},
-                {Ghost_Picture,         new Tuple<string, string>("CustomImages/GhostChecks/lock_Picture.png", "Cus-G_Picture")},
-                {Ghost_MembershipCard,  new Tuple<string, string>("CustomImages/GhostChecks/lock_membershipcard.png", "Cus-G_MembershipCard")},
-                {Ghost_SimbaWep,        new Tuple<string, string>("CustomImages/GhostChecks/lock_ProudFang.png", "Cus-G_SimbaWep")},
-                {Ghost_AladdinWep,      new Tuple<string, string>("CustomImages/GhostChecks/lock_Scimitar.png", "Cus-G_AladdinWep")},
-                {Ghost_SparrowWep,      new Tuple<string, string>("CustomImages/GhostChecks/lock_SkillCrossbones.png", "Cus-G_SparrowWep")},
+                {Ghost_MulanWep1,       new Tuple<string, string>("CustomImages/GhostChecks/lock_AncestorSword.png", "Cus-G_MulanWep1")},
+                {Ghost_MulanWep2,       new Tuple<string, string>("CustomImages/GhostChecks/lock_AncestorSword.png", "Cus-G_MulanWep2")},
+                {Ghost_AuronWep1,       new Tuple<string, string>("CustomImages/GhostChecks/lock_BattlefieldsofWar.png", "Cus-G_AuronWep1")},
+                {Ghost_AuronWep2,       new Tuple<string, string>("CustomImages/GhostChecks/lock_BattlefieldsofWar.png", "Cus-G_AuronWep2")},
+                {Ghost_BeastWep1,       new Tuple<string, string>("CustomImages/GhostChecks/lock_BeastClaw.png", "Cus-G_BeastWep1")},
+                {Ghost_BeastWep2,       new Tuple<string, string>("CustomImages/GhostChecks/lock_BeastClaw.png", "Cus-G_BeastWep2")},
+                {Ghost_JackWep1,        new Tuple<string, string>("CustomImages/GhostChecks/lock_BoneFist.png", "Cus-G_JackWep1")},
+                {Ghost_JackWep2,        new Tuple<string, string>("CustomImages/GhostChecks/lock_BoneFist.png", "Cus-G_JackWep2")},
+                {Ghost_IceCream1,       new Tuple<string, string>("CustomImages/GhostChecks/lock_IceCream.png", "Cus-G_IceCream1")},
+                {Ghost_IceCream2,       new Tuple<string, string>("CustomImages/GhostChecks/lock_IceCream.png", "Cus-G_IceCream2")},
+                {Ghost_IceCream3,       new Tuple<string, string>("CustomImages/GhostChecks/lock_IceCream.png", "Cus-G_IceCream3")},
+                {Ghost_TronWep1,        new Tuple<string, string>("CustomImages/GhostChecks/lock_IdentityDisk.png", "Cus-G_TronWep1")},
+                {Ghost_TronWep2,        new Tuple<string, string>("CustomImages/GhostChecks/lock_IdentityDisk.png", "Cus-G_TronWep2")},
+                {Ghost_MembershipCard1, new Tuple<string, string>("CustomImages/GhostChecks/lock_membershipcard.png", "Cus-G_MembershipCard1")},
+                {Ghost_MembershipCard2, new Tuple<string, string>("CustomImages/GhostChecks/lock_membershipcard.png", "Cus-G_MembershipCard2")},
+                {Ghost_SimbaWep1,       new Tuple<string, string>("CustomImages/GhostChecks/lock_ProudFang.png", "Cus-G_SimbaWep1")},
+                {Ghost_SimbaWep2,       new Tuple<string, string>("CustomImages/GhostChecks/lock_ProudFang.png", "Cus-G_SimbaWep2")},
+                {Ghost_AladdinWep1,     new Tuple<string, string>("CustomImages/GhostChecks/lock_Scimitar.png", "Cus-G_AladdinWep1")},
+                {Ghost_AladdinWep2,     new Tuple<string, string>("CustomImages/GhostChecks/lock_Scimitar.png", "Cus-G_AladdinWep2")},
+                {Ghost_SparrowWep1,     new Tuple<string, string>("CustomImages/GhostChecks/lock_SkillCrossbones.png", "Cus-G_SparrowWep1")},
+                {Ghost_SparrowWep2,     new Tuple<string, string>("CustomImages/GhostChecks/lock_SkillCrossbones.png", "Cus-G_SparrowWep2")},
+                {Ghost_RikuWep1,        new Tuple<string, string>("CustomImages/GhostChecks/lock_waytothedawn.png", "Cus-G_RikuWep1")},
+                {Ghost_RikuWep2,        new Tuple<string, string>("CustomImages/GhostChecks/lock_waytothedawn.png", "Cus-G_RikuWep2")},
+                {Ghost_KingsLetter1,    new Tuple<string, string>("CustomImages/GhostChecks/lock_kingsletter.png", "Cus-G_KingsLetter1")},
+                {Ghost_KingsLetter2,    new Tuple<string, string>("CustomImages/GhostChecks/lock_kingsletter.png", "Cus-G_KingsLetter2")},
+                {Ghost_Sketches,        new Tuple<string, string>("CustomImages/GhostChecks/lock_sketches.png", "Cus-G_Sketches")},
+                //{Ghost_Picture,         new Tuple<string, string>("CustomImages/GhostChecks/lock_Picture.png", "Cus-G_Picture")},
                 {Ghost_HadesCup,        new Tuple<string, string>("CustomImages/GhostChecks/aux_hades_cup.png", "Cus-G_HadesCup")},
                 {Ghost_OlympusStone,    new Tuple<string, string>("CustomImages/GhostChecks/aux_olympus_stone.png", "Cus-G_OlympusStone")},
                 {Ghost_UnknownDisk,     new Tuple<string, string>("CustomImages/GhostChecks/aux_UnknownDisk.png", "Cus-G_UnknownDisk")},
                 {Ghost_MunnyPouch1,     new Tuple<string, string>("CustomImages/GhostChecks/aux_munny_pouch.png", "Cus-G_MunnyPouch1")},
                 {Ghost_MunnyPouch2,     new Tuple<string, string>("CustomImages/GhostChecks/aux_munny_pouch.png", "Cus-G_MunnyPouch2")},
-                {Ghost_Anti,            new Tuple<string, string>("CustomImages/GhostChecks/form_anti.png", "Cus-G_Anti")}
+                {Ghost_Anti,            new Tuple<string, string>("CustomImages/GhostChecks/form_anti.png", "Cus-G_Anti")},
+                {Ghost_ChestTT,         new Tuple<string, string>("CustomImages/GhostChecks/chest_tt.png", "Cus-G_ChestTT")},
+                {Ghost_ChestHB,         new Tuple<string, string>("CustomImages/GhostChecks/chest_hb.png", "Cus-G_ChestHB")},
+                {Ghost_ChestAG,         new Tuple<string, string>("CustomImages/GhostChecks/chest_ag.png", "Cus-G_ChestAG")},
+                {Ghost_ChestBC,         new Tuple<string, string>("CustomImages/GhostChecks/chest_bc.png", "Cus-G_ChestBC")},
+                {Ghost_ChestDC,         new Tuple<string, string>("CustomImages/GhostChecks/chest_dc.png", "Cus-G_ChestDC")},
+                {Ghost_ChestHT,         new Tuple<string, string>("CustomImages/GhostChecks/chest_ht.png", "Cus-G_ChestHT")},
+                {Ghost_ChestOC,         new Tuple<string, string>("CustomImages/GhostChecks/chest_oc.png", "Cus-G_ChestOC")},
+                {Ghost_ChestPL,         new Tuple<string, string>("CustomImages/GhostChecks/chest_pl.png", "Cus-G_ChestPL")},
+                {Ghost_ChestPR,         new Tuple<string, string>("CustomImages/GhostChecks/chest_pr.png", "Cus-G_ChestPR")},
+                {Ghost_ChestSP,         new Tuple<string, string>("CustomImages/GhostChecks/chest_sp.png", "Cus-G_ChestSP")},
+                {Ghost_ChestSTT,        new Tuple<string, string>("CustomImages/GhostChecks/chest_stt.png", "Cus-G_ChestSTT")},
+                {Ghost_ChestCoR,        new Tuple<string, string>("CustomImages/GhostChecks/chest_cor.png", "Cus-G_ChestCoR")},
+                {Ghost_ChestLoD,        new Tuple<string, string>("CustomImages/GhostChecks/chest_lod.png", "Cus-G_ChestLoD")},
+                {Ghost_ChestHAW,        new Tuple<string, string>("CustomImages/GhostChecks/chest_haw.png", "Cus-G_ChestHAW")},
+                {Ghost_ChestTWTNW,      new Tuple<string, string>("CustomImages/GhostChecks/chest_twtnw.png", "Cus-G_ChestTWTNW")}
             };
         }
 
@@ -346,6 +408,7 @@ namespace KhTracker
                         if (item.Value.Item2 != null)
                         {
                             Item ghost = item.Value.Item2;
+                            //check if item is a report. this makes all ghost reports use the same image to prevent cheating.
                             if (Codes.FindItemType(ghost.Name) != "report")
                                 ghost.SetResourceReference(ContentProperty, item.Value.Item1);
                             else
@@ -415,31 +478,32 @@ namespace KhTracker
                 DefenseIcon.SetResourceReference(ContentProperty, "Cus-DefenseIcon");
 
             //visit locks
-            if (Directory.Exists("CustomImages/Worlds/Locks/"))
-            {
-                if (File.Exists("CustomImages/Worlds/Locks/HB.png"))
-                    HollowBastionLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/HB.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/OC.png"))
-                    OlympusColiseumLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/OC.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/LD.png"))
-                    LandofDragonsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/LD.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/PL.png"))
-                    PrideLandsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/PL.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/HT.png"))
-                    HalloweenTownLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/HT.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/SP.png"))
-                    SpaceParanoidsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/SP.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/BC.png"))
-                    BeastsCastleLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/BC.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/AG.png"))
-                    AgrabahLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/AG.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/PR.png"))
-                    PortRoyalLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/PR.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/TT3.png"))
-                    TwilightTownLock_1.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/TT3.png", UriKind.Absolute));
-                if (File.Exists("CustomImages/Worlds/Locks/TT2.png"))
-                    TwilightTownLock_2.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/TT2.png", UriKind.Absolute));
-            }
+            //TODO Fix Visit Lock Custom Image Loading
+            //if (Directory.Exists("CustomImages/Worlds/Locks/"))
+            //{
+            //    if (File.Exists("CustomImages/Worlds/Locks/HB.png"))
+            //        HollowBastionLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/HB.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/OC.png"))
+            //        OlympusColiseumLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/OC.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/LD.png"))
+            //        LandofDragonsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/LD.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/PL.png"))
+            //        PrideLandsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/PL.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/HT.png"))
+            //        HalloweenTownLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/HT.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/SP.png"))
+            //        SpaceParanoidsLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/SP.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/BC.png"))
+            //        BeastsCastleLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/BC.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/AG.png"))
+            //        AgrabahLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/AG.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/PR.png"))
+            //        PortRoyalLock.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/PR.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/TT3.png"))
+            //        TwilightTownLock_1.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/TT3.png", UriKind.Absolute));
+            //    if (File.Exists("CustomImages/Worlds/Locks/TT2.png"))
+            //        TwilightTownLock_2.Source = new BitmapImage(new Uri("pack://application:,,,/CustomImages/Worlds/Locks/TT2.png", UriKind.Absolute));
+            //}
 
             //world cross
             if (File.Exists("CustomImages/System/crossworld.png"))
@@ -625,6 +689,11 @@ namespace KhTracker
 
                 //dirty way of doing this, but oh well
                 //shadows
+
+                //TEMP skip loading custom image for items that don't have them set up yet
+                if (!CusItemCheck.ContainsKey(data.Items[item].Item1))
+                    continue;
+
                 if (CusItemCheck[data.Items[item].Item1].Item3 != null)
                     CusItemCheck[data.Items[item].Item1].Item3.SetResourceReference(ContentProperty, type + item);
             }

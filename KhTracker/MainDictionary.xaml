@@ -41,7 +41,56 @@
     </LinearGradientBrush>
     <SolidColorBrush x:Key="Color_Black" Color="Black"/>
     <SolidColorBrush x:Key="Color_Trans" Color="Transparent"/>
-    
+
+    <LinearGradientBrush x:Key="Color_BC" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFE632A2" Offset="1"/>
+        <GradientStop Color="#FFE49BB9" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_HT" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF7753E0" Offset="1"/>
+        <GradientStop Color="#FFE696FF" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_PL" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD73435" Offset="1"/>
+        <GradientStop Color="#FFFF9546" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_OC" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF62B055" Offset="1"/>
+        <GradientStop Color="#FFECFF5B" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_LoD" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFD73435" Offset="1"/>
+        <GradientStop Color="#FFFF9546" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_PR" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF6F51F1" Offset="1"/>
+        <GradientStop Color="#FFA2C7FF" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_AG" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFE16902" Offset="1"/>
+        <GradientStop Color="#FFFFF64A" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_SP" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFB23F7D" Offset="1"/>
+        <GradientStop Color="#FF949BE8" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_TWTNW" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF9079AA" Offset="1"/>
+        <GradientStop Color="White" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_HB" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF7753E0" Offset="1"/>
+        <GradientStop Color="#FFE696FF" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_DC" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF319CFE" Offset="1"/>
+        <GradientStop Color="#FFADFFFF" Offset="0.4"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Color_TT" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF319CFE" Offset="1"/>
+        <GradientStop Color="#FFADFFFF" Offset="0.4"/>
+    </LinearGradientBrush>
+
     <!--Classic-->
     <SolidColorBrush x:Key="ClassicYellow" Color="#FFE500"/>
     <!--Hinted Hints-->

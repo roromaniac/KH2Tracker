@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Windows.Data;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace KhTracker
 {
@@ -292,89 +293,92 @@ namespace KhTracker
             Properties.Settings.Default.WorldVisitLock = toggle;
             VisitLockOption.IsChecked = toggle;
 
-            int value = 0;
-
             if (toggle)
             {
-                value = 1;
-
-                S_MulanWep.Visibility = Visibility.Visible;
-                S_AuronWep.Visibility = Visibility.Visible;
-                S_BeastWep.Visibility = Visibility.Visible;
-                S_JackWep.Visibility = Visibility.Visible;
-                S_IceCream.Visibility = Visibility.Visible;
-                S_TronWep.Visibility = Visibility.Visible;
-                S_Picture.Visibility = Visibility.Visible;
-                S_MembershipCard.Visibility = Visibility.Visible;
-                S_SimbaWep.Visibility = Visibility.Visible;
-                S_AladdinWep.Visibility = Visibility.Visible;
-                S_SparrowWep.Visibility = Visibility.Visible;
-
-                Cross01.Visibility = Visibility.Collapsed;
-                Cross02.Visibility = Visibility.Collapsed;
-                Cross03.Visibility = Visibility.Collapsed;
-                Cross04.Visibility = Visibility.Collapsed;
-                Cross05.Visibility = Visibility.Collapsed;
-                Cross06.Visibility = Visibility.Collapsed;
-                Cross07.Visibility = Visibility.Collapsed;
-                Cross08.Visibility = Visibility.Collapsed;
-                Cross09.Visibility = Visibility.Collapsed;
-                Cross10.Visibility = Visibility.Collapsed;
-                Cross11.Visibility = Visibility.Collapsed;
+                foreach (string worldName in data.WorldsData.Keys.ToList())
+                {
+                    data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0.08, GridUnitType.Star);
+                }
 
                 VisitsRow.Height = new GridLength(1, GridUnitType.Star);
+
+                Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                double[] resetList = {
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.1, 
+                    0.6, 1.0, 
+                    0.0, 
+                    0.0, 1.0};
+                for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
+                {
+                    if (i <= 13)
+                        VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
+                }
+                VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
             }
             else
             {
-                S_MulanWep.Visibility = Visibility.Collapsed;
-                S_AuronWep.Visibility = Visibility.Collapsed;
-                S_BeastWep.Visibility = Visibility.Collapsed;
-                S_JackWep.Visibility = Visibility.Collapsed;
-                S_IceCream.Visibility = Visibility.Collapsed;
-                S_TronWep.Visibility = Visibility.Collapsed;
-                S_Picture.Visibility = Visibility.Collapsed;
-                S_MembershipCard.Visibility = Visibility.Collapsed;
-                S_SimbaWep.Visibility = Visibility.Collapsed;
-                S_AladdinWep.Visibility = Visibility.Collapsed;
-                S_SparrowWep.Visibility = Visibility.Collapsed;
+                //TODO give each visit number/sep/item a name in mainwindow.xml
+                //we then have a if or case statement for setting width of everything automatically like below
+                //we can then also use it for removing numbers and such for first visit locking being off
 
-                Cross01.Visibility = Visibility.Visible;
-                Cross02.Visibility = Visibility.Visible;
-                Cross03.Visibility = Visibility.Visible;
-                Cross04.Visibility = Visibility.Visible;
-                Cross05.Visibility = Visibility.Visible;
-                Cross06.Visibility = Visibility.Visible;
-                Cross07.Visibility = Visibility.Visible;
-                Cross08.Visibility = Visibility.Visible;
-                Cross09.Visibility = Visibility.Visible;
-                Cross10.Visibility = Visibility.Visible;
-                Cross11.Visibility = Visibility.Visible;
+                foreach (string worldName in data.WorldsData.Keys.ToList())
+                {
+                    data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Star);
+                }
 
                 if (ExtraChecksOption.IsChecked)
-                    VisitsRow.Height = new GridLength(1, GridUnitType.Star);
-                else
+                {
                     VisitsRow.Height = new GridLength(0, GridUnitType.Star);
+
+                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                    foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
+                    {
+                        if (Vlock.Name != "HadesCupCol" && Vlock.Name != "OlympusStoneCol" && Vlock.Name != "UnknownDiskCol")
+                            Vlock.Width = new GridLength(0, GridUnitType.Star);
+                    }
+                    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                }
+                else 
+                {
+                    VisitsRow.Height = new GridLength(0, GridUnitType.Star);
+                    VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
+                }
             }
-
-
-            //set lock values
-            data.WorldsData["TwilightTown"].visitLocks = value * 11;
-            data.WorldsData["HollowBastion"].visitLocks = value;
-            data.WorldsData["BeastsCastle"].visitLocks = value;
-            data.WorldsData["OlympusColiseum"].visitLocks = value;
-            data.WorldsData["Agrabah"].visitLocks = value;
-            data.WorldsData["LandofDragons"].visitLocks = value;
-            data.WorldsData["PrideLands"].visitLocks = value;
-            data.WorldsData["HalloweenTown"].visitLocks = value;
-            data.WorldsData["PortRoyal"].visitLocks = value;
-            data.WorldsData["SpaceParanoids"].visitLocks = value;
 
             for (int i = 0; i < data.VisitLocks.Count; ++i)
             {
                 HandleItemToggle(toggle, data.VisitLocks[i], false);
             }
 
-            VisitLockCheck();
+            VisitLockCheck(true);
+        }
+
+        private void ChestLockToggle(object sender, RoutedEventArgs e)
+        {
+            ChestLockToggle(ChestLockOption.IsChecked);
+        }
+
+        private void ChestLockToggle(bool toggle)
+        {
+            Properties.Settings.Default.WorldChestLock = toggle;
+            ChestLockOption.IsChecked = toggle;
+
+            if (toggle)
+                ChestRow.Height = new GridLength(1, GridUnitType.Star);
+            else
+                ChestRow.Height = new GridLength(0, GridUnitType.Star);
+
+
+            for (int i = 0; i < data.ChestLocks.Count; ++i)
+            {
+                HandleItemToggle(toggle, data.ChestLocks[i], false);
+            }
+
         }
 
         private void TornPagesToggle(object sender, RoutedEventArgs e)
@@ -427,7 +431,18 @@ namespace KhTracker
                 MunnyNum.Width = new GridLength(0.6, GridUnitType.Star);
                 MunnyImg.Width = new GridLength(1.0, GridUnitType.Star);
 
-                VisitsRow.Height = new GridLength(1, GridUnitType.Star);
+                if (!VisitLockOption.IsChecked)
+                {
+                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                    foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
+                    {
+                        if (Vlock.Name != "HadesCupCol" && Vlock.Name != "OlympusStoneCol" && Vlock.Name != "UnknownDiskCol")
+                            Vlock.Width = new GridLength(0, GridUnitType.Star);
+                    }
+                    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                }
+                //else
+                //    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
             }
             else
             {
@@ -440,9 +455,17 @@ namespace KhTracker
                 MunnyImg.Width = new GridLength(0, GridUnitType.Star);
 
                 if (VisitLockOption.IsChecked)
-                    VisitsRow.Height = new GridLength(1, GridUnitType.Star);
+                {
+                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                    foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
+                    {
+                        if (Vlock.Name == "HadesCupCol" || Vlock.Name == "OlympusStoneCol" || Vlock.Name == "UnknownDiskCol")
+                            Vlock.Width = new GridLength(0, GridUnitType.Star);
+                    }
+                    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                }
                 else
-                    VisitsRow.Height = new GridLength(0, GridUnitType.Star);
+                    VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
             }
 
             HandleItemToggle(toggle, HadesCup, false);
@@ -536,6 +559,31 @@ namespace KhTracker
             WorldGrid.Ghost_Magnet_obtained = 0;
             WorldGrid.Ghost_Pages_obtained = 0;
             WorldGrid.Ghost_Pouches_obtained = 0;
+
+            WorldGrid.Ghost_AuronWep = 0;
+            WorldGrid.Ghost_MulanWep = 0;
+            WorldGrid.Ghost_BeastWep = 0;
+            WorldGrid.Ghost_JackWep = 0;
+            WorldGrid.Ghost_SimbaWep = 0;
+            WorldGrid.Ghost_SparrowWep = 0;
+            WorldGrid.Ghost_AladdinWep = 0;
+            WorldGrid.Ghost_TronWep = 0;
+            WorldGrid.Ghost_MembershipCard = 0;
+            WorldGrid.Ghost_IceCream = 0;
+            WorldGrid.Ghost_RikuWep = 0;
+            WorldGrid.Ghost_KingsLetter = 0;
+            WorldGrid.Ghost_AuronWep_obtained = 0;
+            WorldGrid.Ghost_MulanWep_obtained = 0;
+            WorldGrid.Ghost_BeastWep_obtained = 0;
+            WorldGrid.Ghost_JackWep_obtained = 0;
+            WorldGrid.Ghost_SimbaWep_obtained = 0;
+            WorldGrid.Ghost_SparrowWep_obtained = 0;
+            WorldGrid.Ghost_AladdinWep_obtained = 0;
+            WorldGrid.Ghost_TronWep_obtained = 0;
+            WorldGrid.Ghost_MembershipCard_obtained = 0;
+            WorldGrid.Ghost_IceCream_obtained = 0;
+            WorldGrid.Ghost_RikuWep_obtained = 0;
+            WorldGrid.Ghost_KingsLetter_obtained = 0;
         }
 
         private void GhostMathToggle(object sender, RoutedEventArgs e)
