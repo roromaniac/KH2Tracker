@@ -2708,11 +2708,8 @@ namespace KhTracker
                 }
             }
 
-                archive.Dispose();
-
-                data.seedLoaded = true;
-                toggleState(false);
-            }
+            data.seedLoaded = true;
+            toggleState(false);
 
             // regenerate the grid tracker
             gridWindow.grid.Children.Clear();

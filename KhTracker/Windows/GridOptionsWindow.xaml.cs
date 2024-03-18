@@ -9,6 +9,8 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
+
 
 namespace KhTracker
 {
@@ -112,8 +114,45 @@ namespace KhTracker
         }
     }
 
-    public partial class GridOptionsWindow : Window
+    public class IsWarningNeededConverter : IMultiValueConverter
     {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length != 2 || !(values[0] is int) || !(values[1] is int))
+                return false;
+
+            int numSquares = (int)values[0];
+            int trueChecksCount = (int)values[1];
+
+            return trueChecksCount < numSquares;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public partial class GridOptionsWindow : Window, INotifyPropertyChanged
+    {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int TrueChecksCount
+        {
+            get { return _gridWindow.gridSettings.Count(kvp => kvp.Value == true); }
+        }
+
+        public int NumSquares
+        {
+            get { return _gridWindow.numRows * _gridWindow.numColumns; }
+        }
+
         public bool canClose = false;
         public GridWindow _gridWindow;
         public Data _data;
@@ -331,6 +370,13 @@ namespace KhTracker
                             }
                         },
                         new SubCategory {
+                            SubCategoryName = "World Chest Locks",
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.TextBox, Description = "Max World Chest Locks", DefaultValue = (Properties.Settings.Default.GridWindowNumChestLocks).ToString() },
+                            }
+                        },
+                        new SubCategory {
                             SubCategoryName = "Visit Unlocks",
                             Options = new List<Option>
                             {
@@ -352,7 +398,7 @@ namespace KhTracker
                     }
                 },
             };
-            DataContext = categories;
+            DataContext = categories; 
             string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous" };
             foreach (Category category in categories)
             {
@@ -377,6 +423,45 @@ namespace KhTracker
             }
         }
 
+        private void UpdateTextBoxes(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
+
+            var option = textBox.DataContext as Option;
+            textBox.Text = textBox.Text == "" ? option.DefaultValue : textBox.Text;
+            if (option != null && textBox.Text != "")
+            {
+                option.DefaultValue = textBox.Text;
+                UpdateGridSettings(_data);
+            }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Use regular expression to allow only numeric input
+            e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9]+$");
+        }
+
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                string text = (String)e.DataObject.GetData(typeof(String));
+                // Use regular expression to check if text is numeric
+                if (!System.Text.RegularExpressions.Regex.IsMatch(text, "^[0-9]+$"))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+
+
         private void SelectAllChecks(object sender, RoutedEventArgs e)
         {
             CheckBox selectAllCheckbox = sender as CheckBox;
@@ -386,19 +471,27 @@ namespace KhTracker
 
             // Assuming the sender's DataContext is an Option and you can get the SubCategory from there
             var currentOption = selectAllCheckbox.DataContext as Option;
-            if (currentOption == null || !currentOption.IsSelectAllOption) return;
-
-            // Find the parent SubCategory
-            var subCategory = categories.SelectMany(c => c.SubCategories)
-                                         .FirstOrDefault(sc => sc.Options.Contains(currentOption));
-            if (subCategory == null) return;
-
-            // Toggle all checkboxes based on the state of the "Select All" checkbox
-            foreach (var option in subCategory.Options)
+            if (currentOption == null) 
+                return;
+            if (!currentOption.IsSelectAllOption)
             {
-                if (!option.IsSelectAllOption)
+                UpdateGridSettings(_data);
+            }
+            else
+            {
+
+                // Find the parent SubCategory
+                var subCategory = categories.SelectMany(c => c.SubCategories)
+                                             .FirstOrDefault(sc => sc.Options.Contains(currentOption));
+                if (subCategory == null) return;
+
+                // Toggle all checkboxes based on the state of the "Select All" checkbox
+                foreach (var option in subCategory.Options)
                 {
-                    option.DefaultValue = isChecked.ToString();
+                    if (!option.IsSelectAllOption)
+                    {
+                        option.DefaultValue = isChecked.ToString();
+                    }
                 }
             }
 
@@ -634,12 +727,24 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
-            int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);
-            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
-            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
+            var unlockNames = new[] { "AladdinWep1", "AuronWep1", "BeastWep1", "IceCream1", "JackWep1", "MembershipCard1", "MulanWep1", "SimbaWep1", "SparrowWep1", "TronWep1", "AladdinWep2", "AuronWep2", "BeastWep2", "IceCream2", "JackWep2", "MembershipCard2", "MulanWep2", "SimbaWep2", "SparrowWep2", "TronWep2", "IceCream3", "Sketches", "RikuWep1", "RikuWep2", "KingsLetter1", "KingsLetter2" }; 
+            int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);                                                                              	
+            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
+            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())                                                                                                                                                                                                                                                                      
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
             Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+        }
+
+        private void UpdateWorldChestLocks() 
+        {
+            // update visit unlocks
+            // randomize which visit unlocks get included
+            var worldChestLockNames = new[] { "ChestAG", "ChestBC", "ChestDC", "ChestHT", "ChestOC", "ChestPL", "ChestPR", "ChestSP", "ChestTT", "ChestHB", "ChestLoD", "ChestCoR", "ChestSTT", "ChestHAW", "ChestTWTNW" };
+            int numChestLocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "World Chest Locks")?.Options.FirstOrDefault(o => o.Description == "Max World Chest Locks")?.DefaultValue);
+            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
+            foreach (int i in Enumerable.Range(1, worldChestLockNames.Length).ToList())
+                _gridWindow.gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
+            Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
         }
 
         private void UpdateMiscellaneous()
@@ -663,21 +768,24 @@ namespace KhTracker
 
         public void UpdateGridSettings(Data data, bool overwrite=true)
         {
-
             UpdateGridSize();
             UpdateGlobalSettings();
-            UpdateProgression(data);
-            UpdateBosses(data);
-            UpdateSuperbosses(data);
+            UpdateProgression(_data);
+            UpdateBosses(_data);
+            UpdateSuperbosses(_data);
             UpdateMagics();
             UpdateSummons();
             UpdateDrives();
             UpdateProofs();
             UpdateSCOM();
             UpdateTornPages();
+            UpdateWorldChestLocks();
             UpdateUnlocks();
             UpdateReports();
             UpdateMiscellaneous();
+
+            OnPropertyChanged(nameof(TrueChecksCount));
+            OnPropertyChanged(nameof(NumSquares));
 
             // write the updated settings
             if (overwrite)

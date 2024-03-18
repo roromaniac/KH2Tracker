@@ -81,6 +81,8 @@
 
         <local:OptionVisibilityConverter x:Key="OptionVisibilityConverter"/>
 
+        <local:IsWarningNeededConverter x:Key="IsWarningNeededConverter"/>
+
         <local:OptionTemplateSelector x:Key="OptionSelector">
             <local:OptionTemplateSelector.CheckBoxTemplate>
                 <DataTemplate>
@@ -96,7 +98,10 @@
                 <DataTemplate>
                     <StackPanel HorizontalAlignment="Center">
                         <Label Content="{Binding Description}"/>
-                        <TextBox Text="{Binding DefaultValue}" Width="200" Margin="10"/>
+                        <TextBox Text="{Binding DefaultValue}" Width="200" Margin="10"
+                                 TextChanged="UpdateTextBoxes"
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 DataObject.Pasting="TextBox_Pasting"/>
                     </StackPanel>
                 </DataTemplate>
             </local:OptionTemplateSelector.TextBoxTemplate>
@@ -129,6 +134,37 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
+
+
+        <StackPanel Margin="10">
+            <Border Background="#F4F4F4" Padding="10" CornerRadius="5">
+                <TextBlock TextAlignment="Center" FontWeight="Bold" FontSize="16" FontFamily="Segoe UI">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <DataTrigger Value="True">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource IsWarningNeededConverter}">
+                                            <Binding Path="NumSquares" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                            <Binding Path="TrueChecksCount" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat="Squares: {0}, Checks: {1}">
+                            <Binding Path="NumSquares" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                            <Binding Path="TrueChecksCount" RelativeSource="{RelativeSource AncestorType=Window}"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>
+            </Border>
+        </StackPanel>
+
 
         <StackPanel Margin="10">
             <DockPanel LastChildFill="False">

@@ -241,7 +241,7 @@
       <Value Profile="(Default)">13</Value>
     </Setting>
     <Setting Name="GridWindowNumUnlocks" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">11</Value>
+      <Value Profile="(Default)">26</Value>
     </Setting>
     <Setting Name="UnmarkedColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FF696969</Value>
@@ -308,6 +308,9 @@
     </Setting>
     <Setting Name="ColorWindowX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="GridWindowNumChestLocks" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
     </Setting>
   </Settings>
 </SettingsFile>

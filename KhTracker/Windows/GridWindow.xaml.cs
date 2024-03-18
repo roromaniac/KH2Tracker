@@ -256,11 +256,18 @@ namespace KhTracker
                 gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
 
             // RE-randomize which visit unlocks get included
-            var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
+            var unlockNames = new[] { "AladdinWep1", "AuronWep1", "BeastWep1", "IceCream1", "JackWep1", "MembershipCard1", "MulanWep1", "SimbaWep1", "SparrowWep1", "TronWep1", "AladdinWep2", "AuronWep2", "BeastWep2", "IceCream2", "JackWep2", "MembershipCard2", "MulanWep2", "SimbaWep2", "SparrowWep2", "TronWep2", "IceCream3", "Sketches", "RikuWep1", "RikuWep2", "KingsLetter1", "KingsLetter2" };
             int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
                 gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
+
+            // RE-randomize which visit world chest locks get included
+            var worldChestLockNames = new[] { "ChestAG", "ChestBC", "ChestDC", "ChestHT", "ChestOC", "ChestPL", "ChestPR", "ChestSP", "ChestTT", "ChestHB", "ChestLoD", "ChestCoR", "ChestSTT", "ChestHAW", "ChestTWTNW" };
+            int numChestLocks = Properties.Settings.Default.GridWindowNumChestLocks;
+            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
+            foreach (int i in Enumerable.Range(1, worldChestLockNames.Length).ToList())
+                gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
 
             Random rng = new Random(seed);
             var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
