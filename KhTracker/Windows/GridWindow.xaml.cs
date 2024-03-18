@@ -304,6 +304,8 @@ namespace KhTracker
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
+            if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                SetColorForButton(button.Background, currentColors["Original Color"]);
             if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
             {
                 SetColorForButton(button.Background, currentColors["Marked Color"]);
@@ -383,6 +385,8 @@ namespace KhTracker
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global"));
             int numChecks = assets.Count - numGlobalSettings;
+            int originalNumRows = rows;
+            int originalNumColumns = columns;
             if (rows * columns > numChecks)
             {
                 while (true)
@@ -396,9 +400,9 @@ namespace KhTracker
                     {
                         numRows = rows;
                         numColumns = columns;
+                        MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
                         break;
                     }
-
                 }
             }
 

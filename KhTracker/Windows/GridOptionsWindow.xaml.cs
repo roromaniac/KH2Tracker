@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.Json;
@@ -28,12 +29,45 @@ namespace KhTracker
     }
 
     public enum OptionType { CheckBox, TextBox }
-    public class Option
+    public class Option : INotifyPropertyChanged
     {
         public OptionType Type { get; set; }
-        public string Description { get; set; }
-        public string DefaultValue { get; set; }
-        public bool IsSelectAllOption { get; set; } 
+        private string description;
+        private string defaultValue;
+        public bool IsSelectAllOption { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    OnPropertyChanged(nameof(Description));
+                }
+            }
+        }
+
+        public string DefaultValue
+        {
+            get { return defaultValue; }
+            set
+            {
+                if (defaultValue != value)
+                {
+                    defaultValue = value;
+                    OnPropertyChanged(nameof(DefaultValue));
+                }
+            }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class OptionTemplateSelector : DataTemplateSelector
@@ -342,6 +376,35 @@ namespace KhTracker
                 }
             }
         }
+
+        private void SelectAllChecks(object sender, RoutedEventArgs e)
+        {
+            CheckBox selectAllCheckbox = sender as CheckBox;
+            if (selectAllCheckbox == null) return;
+
+            bool isChecked = selectAllCheckbox.IsChecked ?? false;
+
+            // Assuming the sender's DataContext is an Option and you can get the SubCategory from there
+            var currentOption = selectAllCheckbox.DataContext as Option;
+            if (currentOption == null || !currentOption.IsSelectAllOption) return;
+
+            // Find the parent SubCategory
+            var subCategory = categories.SelectMany(c => c.SubCategories)
+                                         .FirstOrDefault(sc => sc.Options.Contains(currentOption));
+            if (subCategory == null) return;
+
+            // Toggle all checkboxes based on the state of the "Select All" checkbox
+            foreach (var option in subCategory.Options)
+            {
+                if (!option.IsSelectAllOption)
+                {
+                    option.DefaultValue = isChecked.ToString();
+                }
+            }
+
+            // This assumes you're using some form of INotifyPropertyChanged in your Option class to update the UI
+        }
+
 
         private void Window_LocationChanged(object sender, EventArgs e)
         {

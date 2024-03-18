@@ -2052,6 +2052,10 @@ namespace KhTracker
                 archive.Dispose();
 
                 data.seedLoaded = true;
+
+                // regenerate the grid tracker
+                gridWindow.grid.Children.Clear();
+                gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
             }
 
             if (data.wasTracking)
@@ -2708,6 +2712,10 @@ namespace KhTracker
             }
 
             data.seedLoaded = true;
+
+            // regenerate the grid tracker
+            gridWindow.grid.Children.Clear();
+            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
         }
 
         //hint helpers
@@ -3919,9 +3927,6 @@ namespace KhTracker
                 }
 
             }
-            // regenerate the grid tracker to accommodate appropriate bosses
-            gridWindow.grid.Children.Clear();
-            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
         }
 
         private string ConvertKeyNumber(string num, bool type)

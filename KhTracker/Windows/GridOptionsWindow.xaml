@@ -86,7 +86,9 @@
                 <DataTemplate>
                     <CheckBox Content="{Binding Description}" 
                       IsChecked="{Binding DefaultValue}" 
-                      Visibility="{Binding Converter={StaticResource OptionVisibilityConverter}}"/>
+                      Visibility="{Binding Converter={StaticResource OptionVisibilityConverter}}"
+                      Checked="SelectAllChecks"
+                      Unchecked="SelectAllChecks"/>
                 </DataTemplate>
             </local:OptionTemplateSelector.CheckBoxTemplate>
 
