@@ -511,6 +511,8 @@ namespace KhTracker
             {"MunnyPouch", "other"},
             {"MunnyPouch1", "other"},
             {"MunnyPouch2", "other"},
+            {"RikuWep", "visit"},
+            {"KingsLetter", "visit"},
             {"AuronWep1", "visit"},
             {"AuronWep2", "visit"},
             {"MulanWep1", "visit"},
