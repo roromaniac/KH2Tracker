@@ -364,8 +364,8 @@ namespace KhTracker
             {537, "Hades Cup Trophy"},
             {370, "Olympus Stone"},
             {462, "Unknown Disk"},
-            {362, "Munny Pouch"},
-            {535, "Munny Pouch"},
+            {362, "Munny Pouch (Olette)"},
+            {535, "Munny Pouch (Mickey)"},
             {073, "Way to the Dawn (Riku)"},
             {460, "Disney Castle Key"},
             {368, "Namine's Sketches"},
@@ -415,6 +415,8 @@ namespace KhTracker
             {"Scimitar (Aladdin)", "Scimitar"},
             {"Identity Disk (Tron)", "Identity Disk"},
             {"Way to the Dawn (Riku)", "Way to the Dawn"},
+            {"Munny Pouch (Olette)", "Munny Pouch"},
+            {"Munny Pouch (Mickey)", "Munny Pouch"},
             {"Sora's Heart",            "Levels" },
             {"Drive Forms",             "Drives" },
             {"Simulated Twilight Town", "STT" },
@@ -715,6 +717,8 @@ namespace KhTracker
             {"Olympus Stone", "other"},
             {"Unknown Disk", "other"},
             {"Munny Pouch", "other"},
+            {"Munny Pouch (Olette)", "other"},
+            {"Munny Pouch (Mickey)", "other"},
             {"Way to the Dawn (Riku)", "visit"},
             {"Disney Castle Key", "visit"},
             {"Namine's Sketches", "visit"},
@@ -797,7 +801,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            {"Munny Pouch (Olette)", "MunnyPouch1"},
+            {"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
@@ -896,7 +902,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            {"Munny Pouch (Olette)", "MunnyPouch1"},
+            {"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> bossTypes = new Dictionary<string, string>()
