@@ -2267,13 +2267,6 @@ namespace KhTracker
                             newChecks.Add(check);
                         }
                     }
-                    else if (check.Name.StartsWith("MunnyPouch"))
-                    {
-                        munnyPouchCount++;
-                        //check.Name = $"MunnyPouch{munnyPouchCount}";
-                        collectedChecks.Add(check);
-                        newChecks.Add(check);
-                    }
                     else
                     {
                         collectedChecks.Add(check);
