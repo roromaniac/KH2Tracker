@@ -364,8 +364,8 @@ namespace KhTracker
             {537, "Hades Cup Trophy"},
             {370, "Olympus Stone"},
             {462, "Unknown Disk"},
-            {362, "Munny Pouch (Olette)"},
-            {535, "Munny Pouch (Mickey)"},
+            {362, "Munny Pouch"},
+            {535, "Munny Pouch"},
             {073, "Way to the Dawn (Riku)"},
             {460, "Disney Castle Key"},
             {368, "Namine's Sketches"},
@@ -717,8 +717,8 @@ namespace KhTracker
             {"Olympus Stone", "other"},
             {"Unknown Disk", "other"},
             {"Munny Pouch", "other"},
-            {"Munny Pouch (Olette)", "other"},
-            {"Munny Pouch (Mickey)", "other"},
+            //{"Munny Pouch (Olette)", "other"},
+            //{"Munny Pouch (Mickey)", "other"},
             {"Way to the Dawn (Riku)", "visit"},
             {"Disney Castle Key", "visit"},
             {"Namine's Sketches", "visit"},
@@ -802,8 +802,8 @@ namespace KhTracker
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
             {"Sweet Memories", "ChestHAW"},
-            {"Munny Pouch (Olette)", "MunnyPouch1"},
-            {"Munny Pouch (Mickey)", "MunnyPouch2"}
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
@@ -903,8 +903,8 @@ namespace KhTracker
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
             {"Sweet Memories", "ChestHAW"},
-            {"Munny Pouch (Olette)", "MunnyPouch1"},
-            {"Munny Pouch (Mickey)", "MunnyPouch2"}
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> bossTypes = new Dictionary<string, string>()
