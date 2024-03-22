@@ -77,10 +77,17 @@ namespace KhTracker
                 {
                     if (_gridWindow.GetColorFromButton(_gridWindow.buttons[i, j].Background).Equals(oldAnnotatedColor))
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
+                    if (_gridWindow.battleshipLogic)
+                    {
+                        bool squareMarked = _gridWindow.placedShips[i, j] == 1;
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareMarked ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
+                    }
                     else
+                    {
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
-                    if (_gridWindow.bingoLogic)
-                        _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                        if (_gridWindow.bingoLogic)
+                            _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                    }
                 }
             }
             // update the hint color

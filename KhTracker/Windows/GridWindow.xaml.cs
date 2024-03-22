@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,6 +41,14 @@ namespace KhTracker
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
         public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
         public List<string> assets;
+
+        // battleship specific
+        private Random random;
+        public int[,] placedShips;
+        private List<Tuple<int, int>> possibleShipHeads;
+        private List<int> shipSizes = new List<int> { 2, 3, 3, 4, 5 }; // Assuming you have this set somewhere
+        private int currentShipId = 1; // Start with 1 and increment for each ship
+
 
         public GridWindow(Data dataIn)
         {
@@ -311,18 +320,40 @@ namespace KhTracker
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
-                SetColorForButton(button.Background, currentColors["Original Color"]);
-            if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+            if (battleshipLogic)
             {
-                SetColorForButton(button.Background, currentColors["Marked Color"]);
+                if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                    SetColorForButton(button.Background, currentColors["Original Color"]);
+                else if (GetColorFromButton(button.Background) == currentColors["Battleship Sunk Color"])
+                {
+                    UnmarkSunkShips(i, j);
+                }
+                else if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                {
+                    // fix this to be conditional on the button corresponding to a ship
+                    SetColorForButton(button.Background, (placedShips[i, j] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
+                    MarkSunkShips(i, j);
+                }
+                else
+                {
+                    SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                }
             }
             else
             {
-                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                    SetColorForButton(button.Background, currentColors["Original Color"]);
+                if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                {
+                    SetColorForButton(button.Background, currentColors["Marked Color"]);
+                }
+                else
+                {
+                    SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                }
+                if (bingoLogic)
+                    BingoCheck(grid, i, j);
             }
-            if (bingoLogic)
-                BingoCheck(grid, i, j);
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e)
@@ -338,7 +369,6 @@ namespace KhTracker
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
         }
-
 
         public void GenerateGrid(object sender, RoutedEventArgs e)
         {
@@ -380,8 +410,6 @@ namespace KhTracker
                 string style = TelevoIconsOption.IsChecked ? "Min-" : "Old-";
                 assets = assets.Select(item => style + item).ToList();
             }
-
-
 
             if (rows * columns <= 0)
             {
@@ -444,6 +472,12 @@ namespace KhTracker
                     buttons[i, j] = button;
                     grid.Children.Add(button);
                 }
+            }
+
+            // generate battleship board
+            if (battleshipLogic)
+            {
+                placedShips = GenerateSameBoard(numRows, numColumns);
             }
 
             // generate the boss hints
@@ -826,6 +860,196 @@ namespace KhTracker
                 }
             }
         }
+
+        public int[,] GenerateSameBoard(int numRows, int numColumns)
+        {
+            random = new Random(seedName.GetHashCode());
+            placedShips = new int[numRows, numColumns];
+
+            // Initialize all possible starting points for ship heads
+            possibleShipHeads = Enumerable.Range(0, numRows)
+                                           .SelectMany(row => Enumerable.Range(0, numColumns), (row, col) => new Tuple<int, int>(row, col))
+                                           .ToList();
+
+            if (!TryPlaceShips(0))
+            {
+                throw new Exception("Failed to place all ships.");
+            }
+
+            return placedShips;
+        }
+
+        private bool TryPlaceShips(int shipIndex)
+        {
+            if (shipIndex >= shipSizes.Count)
+            {
+                return true; // All ships placed successfully
+            }
+
+            int shipSize = shipSizes[shipIndex];
+            // Shuffle possible starting points to ensure random selection
+            var shuffledShipHeads = possibleShipHeads.OrderBy(x => random.Next()).ToList();
+
+            foreach (var head in shuffledShipHeads)
+            {
+                var directions = new List<string> { "down", "right" };
+                // Shuffle directions to randomize the orientation selection
+                var shuffledDirections = directions.OrderBy(x => random.Next()).ToList();
+
+                foreach (var direction in shuffledDirections)
+                {
+                    if (IsDirectionValid(placedShips, head.Item1, head.Item2, shipSize, direction, numRows, numColumns))
+                    {
+                        PlaceShip(head, shipSize, direction);
+                        if (TryPlaceShips(shipIndex + 1))
+                        {
+                            return true;
+                        }
+                        // Remove the ship if placing subsequent ships failed, effectively backtracking
+                        RemoveShip(head, shipSize, direction);
+                    }
+                }
+            }
+
+            return false; // Unable to place this ship, prompting backtracking
+        }
+
+        private void RemoveShip(Tuple<int, int> shipHead, int shipSize, string direction)
+        {
+            int x = shipHead.Item1;
+            int y = shipHead.Item2;
+
+            if (direction == "down")
+            {
+                for (int i = 0; i < shipSize; i++)
+                {
+                    placedShips[x + i, y] = 0; // Mark the cell as empty
+                }
+            }
+            else if (direction == "right")
+            {
+                for (int i = 0; i < shipSize; i++)
+                {
+                    placedShips[x, y + i] = 0; // Mark the cell as empty
+                }
+            }
+        }
+
+        // Your existing IsDirectionValid method goes here unchanged.
+
+        private void PlaceShip(Tuple<int, int> shipHead, int shipSize, string direction)
+        {
+            int x = shipHead.Item1;
+            int y = shipHead.Item2;
+
+            if (direction == "down")
+            {
+                for (int i = 0; i < shipSize; i++)
+                {
+                    placedShips[x + i, y] = currentShipId;
+                }
+            }
+            else if (direction == "right")
+            {
+                for (int i = 0; i < shipSize; i++)
+                {
+                    placedShips[x, y + i] = currentShipId;
+                }
+            }
+            currentShipId++; // Move to the next ship ID for the next ship
+        }
+
+
+        bool IsDirectionValid(int[,] board, int x, int y, int shipSize, string direction, int numRows, int numColumns)
+        {
+            if (direction == "down")
+            {
+                if (x + shipSize > numRows) return false; // Ship goes out of bounds
+                for (int i = 0; i < shipSize; i++)
+                {
+                    // Check if the cell is already occupied
+                    if (board[x + i, y] != 0) return false;
+
+                    // Check adjacent cells for existing ships (excluding diagonal cells)
+                    if (y > 0 && board[x + i, y - 1] != 0) return false; // Left
+                    if (y < numColumns - 1 && board[x + i, y + 1] != 0) return false; // Right
+                    if (i == 0 && x > 0 && board[x - 1, y] != 0) return false; // Above the first cell
+                    if (i == shipSize - 1 && x + shipSize < numRows && board[x + shipSize, y] != 0) return false; // Below the last cell
+                }
+            }
+            else if (direction == "right")
+            {
+                if (y + shipSize > numColumns) return false; // Ship goes out of bounds
+                for (int i = 0; i < shipSize; i++)
+                {
+                    // Check if the cell is already occupied
+                    if (board[x, y + i] != 0) return false;
+
+                    // Check adjacent cells for existing ships (excluding diagonal cells)
+                    if (x > 0 && board[x - 1, y + i] != 0) return false; // Above
+                    if (x < numRows - 1 && board[x + 1, y + i] != 0) return false; // Below
+                    if (i == 0 && y > 0 && board[x, y - 1] != 0) return false; // Left of the first cell
+                    if (i == shipSize - 1 && y + shipSize < numColumns && board[x, y + shipSize] != 0) return false; // Right of the last cell
+                }
+            }
+
+            return true;
+        }
+
+        private void UnmarkSunkShips(int hitRow, int hitColumn)
+        {
+            int shipId = placedShips[hitRow, hitColumn];
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    // If we find a part of the ship that has not been hit, return false
+                    if (placedShips[row, column] == shipId)
+                    {
+                        if (row == hitRow && column == hitColumn)
+                            SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
+                        else
+                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Hit Color"]);
+                    }
+                }
+            }
+        }
+
+        private void MarkSunkShips(int hitRow, int hitColumn)
+        {
+            bool shipSunk = true;
+            int shipId = placedShips[hitRow, hitColumn];
+
+            // Iterate over the entire grid to check if any part of the ship is not hit
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    // If we find a part of the ship that has not been hit, return false
+                    if (placedShips[row, column] == shipId && !(buttons[row, column].IsChecked ?? false))
+                    {
+                        shipSunk = false;
+                    }
+                }
+            }
+
+            if (shipSunk)
+            {
+                for (int row = 0; row < numRows; row++)
+                {
+                    for (int column = 0; column < numColumns; column++)
+                    {
+                        // If we find a part of the ship that has not been hit, return false
+                        if (placedShips[row, column] == shipId)
+                        {
+                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
+                        }
+                    }
+                }
+            }
+        }
+
+
         // updates colors upon close
         private void PickColor_Click(object sender, RoutedEventArgs e)
         {

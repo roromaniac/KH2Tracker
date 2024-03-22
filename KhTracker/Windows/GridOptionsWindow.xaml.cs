@@ -461,7 +461,6 @@ namespace KhTracker
         }
 
 
-
         private void SelectAllChecks(object sender, RoutedEventArgs e)
         {
             CheckBox selectAllCheckbox = sender as CheckBox;

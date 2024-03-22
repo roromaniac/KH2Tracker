@@ -178,8 +178,6 @@
     <local:GridLabelledImage x:Key="Min-GridHayner"   Source="Images\Progression\Min\simulated_twilight_town\Hayner.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridHercules"   Source="Images\Progression\Min\olympus_coliseum\hercules.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridLeon"   Source="Images\Progression\Min\olympus_coliseum\leon.png"           GridAllowed="True"                             x:Shared="False"/>
-	<local:GridLabelledImage x:Key="Min-GridMunnyPouch1"   Source="Images\Grid\simple\MunnyPouch1.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-GridMunnyPouch2"   Source="Images\Grid\simple\MunnyPouch2.png"            GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridRiku"   Source="Images\Progression\Min\land_of_dragons\Riku.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridSeifer"   Source="Images\Progression\Min\simulated_twilight_town\Seifer.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GridSetzer"   Source="Images\Progression\Min\simulated_twilight_town\Setzer.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -360,8 +358,6 @@
     <local:GridLabelledImage x:Key="Old-GridHayner"   Source="Images\Progression\Old\simulated_twilight_town\Hayner.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridHercules"   Source="Images\Progression\Old\olympus_coliseum\hercules.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridLeon"   Source="Images\Progression\Old\olympus_coliseum\leon.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Old-GridMunnyPouch1"   Source="Images\Grid\simple\MunnyPouch1.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Old-GridMunnyPouch2"   Source="Images\Grid\simple\MunnyPouch2.png"            GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridRiku"   Source="Images\Progression\Old\land_of_dragons\Riku.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridSeifer"   Source="Images\Progression\Old\simulated_twilight_town\Seifer.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GridSetzer"   Source="Images\Progression\Old\simulated_twilight_town\Setzer.png"           GridAllowed="True"                             x:Shared="False"/>
