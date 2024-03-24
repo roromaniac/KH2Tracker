@@ -433,6 +433,72 @@ namespace KhTracker
             {"Atlantica",               "AT" }
         };
 
+        public static List<string> worldUnlocks = new List<string>()
+        {
+            "AuronWep1",
+            "AuronWep2",
+            "MulanWep1",
+            "MulanWep2",
+            "BeastWep1",
+            "BeastWep2",
+            "JackWep1",
+            "JackWep2",
+            "SimbaWep1",
+            "SimbaWep2",
+            "SparrowWep1",
+            "SparrowWep2",
+            "AladdinWep1",
+            "AladdinWep2",
+            "TronWep1",
+            "TronWep2",
+            "MembershipCard1",
+            "MembershipCard2",
+            "IceCream1",
+            "IceCream2",
+            "IceCream3",
+            "RikuWep1",
+            "RikuWep2",
+            "KingsLetter1",
+            "KingsLetter2",
+            "Sketches"
+        };
+
+        public static List<string> reports = new List<string>()
+        {
+            "Report1",
+            "Report2",
+            "Report3",
+            "Report4",
+            "Report5",
+            "Report6",
+            "Report7",
+            "Report8",
+            "Report9",
+            "Report10",
+            "Report11",
+            "Report12",
+            "Report13"
+        };
+
+        public static List<string> chestLocks = new List<string>()
+        {
+            "ChestTT",
+            "ChestSTT",
+            "ChestHB",
+            "ChestCoR",
+            "ChestAG",
+            "ChestBC",
+            "ChestDC",
+            "ChestHT",
+            "ChestLoD",
+            "ChestOC",
+            "ChestPL",
+            "ChestPR",
+            "ChestSP",
+            "ChestTWTNW",
+            "ChestHAW"
+        };
+
         public static Dictionary<string, string> itemTypes = new Dictionary<string, string>()
         {
             {"Report1", "report"},
@@ -503,7 +569,7 @@ namespace KhTracker
             {"TronWep", "visit"},
             {"MembershipCard", "visit"},
             {"IceCream", "visit"},
-            //{"Picture", "visit"},
+            {"Picture", "visit"},
             {"Anti", "form"},
             {"HadesCup", "other"},
             {"OlympusStone", "other"},

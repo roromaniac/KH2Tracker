@@ -430,6 +430,34 @@ namespace KhTracker
 
             var option = textBox.DataContext as Option;
             textBox.Text = textBox.Text == "" ? option.DefaultValue : textBox.Text;
+            
+            if (option.Description == "Max Visit Unlocks")
+            {
+                int maxUnlocks = Codes.worldUnlocks.Count;
+                if (int.Parse(textBox.Text) > maxUnlocks)
+                {
+                    textBox.Text = maxUnlocks.ToString();
+                }
+            }
+
+            if (option.Description == "Max World Chest Locks")
+            {
+                int maxChestLocks = Codes.chestLocks.Count;
+                if (int.Parse(textBox.Text) > maxChestLocks)
+                {
+                    textBox.Text = maxChestLocks.ToString();
+                }
+            }
+
+            if (option.Description == "Max Reports")
+            {
+                int maxReports = Codes.reports.Count;
+                if (int.Parse(textBox.Text) > maxReports)
+                {
+                    textBox.Text = maxReports.ToString();
+                }
+            }
+
             if (option != null && textBox.Text != "")
             {
                 option.DefaultValue = textBox.Text;
@@ -726,10 +754,10 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var unlockNames = new[] { "AladdinWep1", "AuronWep1", "BeastWep1", "IceCream1", "JackWep1", "MembershipCard1", "MulanWep1", "SimbaWep1", "SparrowWep1", "TronWep1", "AladdinWep2", "AuronWep2", "BeastWep2", "IceCream2", "JackWep2", "MembershipCard2", "MulanWep2", "SimbaWep2", "SparrowWep2", "TronWep2", "IceCream3", "Sketches", "RikuWep1", "RikuWep2", "KingsLetter1", "KingsLetter2" }; 
+            var unlockNames = Codes.itemTypes.Where(kv => kv.Value == "visit" && !kv.Key.StartsWith("Ghost")).Select(kv => kv.Key).ToList();
             int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);                                                                              	
-            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
-            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())                                                                                                                                                                                                                                                                      
+            var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
+            foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())                                                                                                                                                                                                                                                                      
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
             Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
         }
@@ -738,10 +766,10 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var worldChestLockNames = new[] { "ChestAG", "ChestBC", "ChestDC", "ChestHT", "ChestOC", "ChestPL", "ChestPR", "ChestSP", "ChestTT", "ChestHB", "ChestLoD", "ChestCoR", "ChestSTT", "ChestHAW", "ChestTWTNW" };
+            var worldChestLockNames = Codes.itemTypes.Where(kv => kv.Value == "keyblade" && !kv.Key.StartsWith("Ghost")).Select(kv => kv.Key).ToList();
             int numChestLocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "World Chest Locks")?.Options.FirstOrDefault(o => o.Description == "Max World Chest Locks")?.DefaultValue);
-            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
-            foreach (int i in Enumerable.Range(1, worldChestLockNames.Length).ToList())
+            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
+            foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
                 _gridWindow.gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
             Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
         }

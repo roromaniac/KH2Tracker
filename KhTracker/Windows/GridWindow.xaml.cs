@@ -238,6 +238,28 @@ namespace KhTracker
 
             var trackableItemsDict = new Dictionary<object, object>();
 
+            Random rng = new Random(seed);
+
+            // RE-randomize which reports get included
+            var numReports = Properties.Settings.Default.GridWindowNumReports;
+            var randomReports = Enumerable.Range(1, 13).OrderBy(g => rng.Next()).Take(numReports).ToList();
+            foreach (int reportNum in Enumerable.Range(1, 13).ToList())
+                gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
+
+            // RE-randomize which visit unlocks get included
+            var unlockNames = Codes.worldUnlocks;
+            int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
+            var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => rng.Next()).Take(numUnlocks).ToList();
+            foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())
+                gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
+
+            // RE-randomize which visit world chest locks get included
+            var worldChestLockNames = Codes.chestLocks;
+            int numChestLocks = Properties.Settings.Default.GridWindowNumChestLocks;
+            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => rng.Next()).Take(numChestLocks).ToList();
+            foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
+                gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
+
             foreach (ResourceDictionary rd in itemsDictionaries)
             {
                 foreach (DictionaryEntry entry in rd)
@@ -258,27 +280,6 @@ namespace KhTracker
                 }
             }
 
-            // RE-randomize which reports get included
-            var numReports = Properties.Settings.Default.GridWindowNumReports;
-            var randomReports = Enumerable.Range(1, 13).OrderBy(g => Guid.NewGuid()).Take(numReports).ToList();
-            foreach (int reportNum in Enumerable.Range(1, 13).ToList())
-                gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
-
-            // RE-randomize which visit unlocks get included
-            var unlockNames = new[] { "AladdinWep1", "AuronWep1", "BeastWep1", "IceCream1", "JackWep1", "MembershipCard1", "MulanWep1", "SimbaWep1", "SparrowWep1", "TronWep1", "AladdinWep2", "AuronWep2", "BeastWep2", "IceCream2", "JackWep2", "MembershipCard2", "MulanWep2", "SimbaWep2", "SparrowWep2", "TronWep2", "IceCream3", "Sketches", "RikuWep1", "RikuWep2", "KingsLetter1", "KingsLetter2" };
-            int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
-            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
-            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
-                gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
-
-            // RE-randomize which visit world chest locks get included
-            var worldChestLockNames = new[] { "ChestAG", "ChestBC", "ChestDC", "ChestHT", "ChestOC", "ChestPL", "ChestPR", "ChestSP", "ChestTT", "ChestHB", "ChestLoD", "ChestCoR", "ChestSTT", "ChestHAW", "ChestTWTNW" };
-            int numChestLocks = Properties.Settings.Default.GridWindowNumChestLocks;
-            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
-            foreach (int i in Enumerable.Range(1, worldChestLockNames.Length).ToList())
-                gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
-
-            Random rng = new Random(seed);
             var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
 
             List<string> imageKeys = new List<string>();
@@ -460,7 +461,6 @@ namespace KhTracker
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
-                    Console.WriteLine(button.Tag);
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
                     int current_i = i;
@@ -471,6 +471,7 @@ namespace KhTracker
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
                     grid.Children.Add(button);
+                    button.ToolTip = ((string)button.Tag).Split('-')[1];
                 }
             }
 
@@ -1045,6 +1046,28 @@ namespace KhTracker
                             SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
                         }
                     }
+                }
+                bool allShipsSunk = true;
+                for (int row = 0; row < numRows; row++)
+                {
+                    for (int column = 0; column < numColumns; column++)
+                    {
+                        if (placedShips[row, column] != 0)
+                        {
+                            if (GetColorFromButton(buttons[row, column].Background) != currentColors["Battleship Sunk Color"])
+                                allShipsSunk = false;
+                            // stop checking for all ships sunk
+                            if (!allShipsSunk)
+                                break;
+                        }
+                    }
+                    // stop checking for all ships sunk
+                    if (!allShipsSunk)
+                        break;
+                }
+                if (allShipsSunk)
+                {
+                    MessageBox.Show("Congrats! You sunk all ships!");
                 }
             }
         }
