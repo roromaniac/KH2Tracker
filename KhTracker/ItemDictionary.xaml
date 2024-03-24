@@ -281,8 +281,8 @@
     <local:GridLabelledImage x:Key="Old-HadesCup"		    Source="Images\Checks\Old\Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-OlympusStone"		Source="Images\Checks\Old\Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-UnknownDisk"		Source="Images\Checks\Old\Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MunnyPouch1"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MunnyPouch2"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MunnyPouch1"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MunnyPouch2"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
     <!-- World Chest Locks-->
     <local:GridLabelledImage x:Key="Old-ChestAG"		    Source="Images\Checks\Old\chest_ag.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-ChestBC"		    Source="Images\Checks\Old\chest_bc.png"           GridAllowed="True"                     x:Shared="false"/>
@@ -414,8 +414,8 @@
     <local:GridLabelledImage x:Key="Cus-HadesCup"		    Source="pack://application:,,,/CustomImages/Checks/Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-OlympusStone"		Source="pack://application:,,,/CustomImages/Checks/Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-UnknownDisk"		Source="pack://application:,,,/CustomImages/Checks/Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-MunnyPouch1"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-MunnyPouch2"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MunnyPouch1"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MunnyPouch2"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
 
     <!--Custom Item Icons (Ghost)-->
     <local:GridLabelledImage x:Key="Cus-G_Report"             Source="pack://application:,,,/CustomImages/GhostChecks/ansem_report.png"           GridAllowed="True"                      x:Shared="false"/>
@@ -486,8 +486,8 @@
     <local:GridLabelledImage x:Key="Cus-G_HadesCup"		    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_OlympusStone"		Source="pack://application:,,,/CustomImages/GhostChecks/Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_UnknownDisk"		Source="pack://application:,,,/CustomImages/GhostChecks/Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
 
     <!--Custom Other (Main)-->
     <!--local:GridLabelledImage x:Key="Cus-OnceMore"			Source="pack://application:,,,/CustomImages/Checks/once_more.png"           GridAllowed="True"            x:Shared="false"/>

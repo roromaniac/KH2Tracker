@@ -702,8 +702,8 @@ namespace KhTracker
                 if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting || data.BossList.Count() > 0)
                 {
                     UpdatePointScore(0); //update score
-                    GetBoss(world, false, null);
                 }
+                GetBoss(world, false, null);
 
                 importantChecks.ForEach(delegate (ImportantCheck importantCheck)
                 {
@@ -888,26 +888,30 @@ namespace KhTracker
 
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
-            foreach (string checkName in checks) {
+            foreach (string checkName in checks)
+            {
+                string tempCheckName = checkName;
+
+                if (data.codes.bossNameConversion.ContainsKey(checkName))
+                    tempCheckName = data.codes.bossNameConversion[checkName];
+
+                string[] checkNames = { tempCheckName, "Grid" + tempCheckName };
 
                 for (int row = 0; row < gridWindow.numRows; row++)
                 {
                     for (int col = 0; col < gridWindow.numColumns; col++)
                     {
                         // check if the original OR grid adjusted check key name is on the grid
-                        string[] checkNames = { checkName, "Grid" + checkName };
                         if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
                         {
                             // invoke the appropriate button if the check matches
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
+                            Application.Current.Dispatcher.Invoke(() => {
                                 if (!(bool)gridWindow.buttons[row, col].IsChecked)
                                 {
                                     RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
                                     gridWindow.buttons[row, col].IsChecked = true;
                                     gridWindow.buttons[row, col].RaiseEvent(args);
                                 }
-
                             });
                         }
                     }
@@ -2748,9 +2752,6 @@ namespace KhTracker
             //return if bo boss beaten found
 
 
-
-
-
             if (!usingSave)
             {
                 //if the boss was found and beaten then set flag
@@ -2767,10 +2768,13 @@ namespace KhTracker
 
             App.logger?.Record("Beaten Boss: " + boss);
 
+            //update grid tracker
+            UpdateGridTracker(boss);
+
             //get points for boss kills
             if (!data.BossHomeHinting)
                 GetBossPoints(boss);
-            else
+            else if (data.BossRandoFound)
             {
                 int PPoints = 1;
 
@@ -3071,9 +3075,6 @@ namespace KhTracker
             }
             //add to log
             data.bossEventLog.Add(eventTuple);
-
-            //update grid tracker
-            UpdateGridTracker(boss);
 
         }
 

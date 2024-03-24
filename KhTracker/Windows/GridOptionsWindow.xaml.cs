@@ -239,7 +239,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Oogie Boogie", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OogieBoogie") ? _gridWindow.gridSettings["OogieBoogie"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Pete TR", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DCPete") ? _gridWindow.gridSettings["DCPete"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Prison Keeper", DefaultValue = (_gridWindow.gridSettings.ContainsKey("PrisonKeeper") ? _gridWindow.gridSettings["PrisonKeeper"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Riku", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Riku") ? _gridWindow.gridSettings["Riku"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Riku", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridRiku") ? _gridWindow.gridSettings["GridRiku"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Roxas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Roxas") ? _gridWindow.gridSettings["Roxas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Saix", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Saix") ? _gridWindow.gridSettings["Saix"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Sark", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Sark") ? _gridWindow.gridSettings["Sark"] : true).ToString() },
@@ -754,7 +754,7 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var unlockNames = Codes.itemTypes.Where(kv => kv.Value == "visit" && !kv.Key.StartsWith("Ghost")).Select(kv => kv.Key).ToList();
+            var unlockNames = Codes.worldUnlocks;
             int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);                                                                              	
             var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
             foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())                                                                                                                                                                                                                                                                      
@@ -766,7 +766,7 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var worldChestLockNames = Codes.itemTypes.Where(kv => kv.Value == "keyblade" && !kv.Key.StartsWith("Ghost")).Select(kv => kv.Key).ToList();
+            var worldChestLockNames = Codes.chestLocks;
             int numChestLocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "World Chest Locks")?.Options.FirstOrDefault(o => o.Description == "Max World Chest Locks")?.DefaultValue);
             var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())

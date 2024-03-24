@@ -21,7 +21,7 @@
     <local:GridLabelledImage x:Key="Min-Chasm"        Source="Images\Progression\Min\agrabah\chasm_of_challenges.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-TreasureRoom" Source="Images\Progression\Min\agrabah\treasure_room.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Lords"        Source="Images\Progression\Min\agrabah\elemental_lords.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Carpet"       Source="Images\Progression\Min\agrabah\magic_switches.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Carpet"       Source="Images\Progression\Min\agrabah\magic_switches.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-GenieJafar"   Source="Images\Progression\Min\agrabah\jafar.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Lexaeus"      Source="Images\Progression\Min\absent.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-LexaeusData"  Source="Images\Progression\Min\agrabah\lexaeus.png"           GridAllowed="False"                             x:Shared="False"/>
@@ -201,7 +201,7 @@
     <local:GridLabelledImage x:Key="Old-Chasm"        Source="Images\Progression\Old\agrabah\chasm_of_challenges.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-TreasureRoom" Source="Images\Progression\Old\agrabah\treasure_room.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-Lords"        Source="Images\Progression\Old\agrabah\elemental_lords.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Old-Carpet"       Source="Images\Progression\Old\agrabah\magic_switches.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Old-Carpet"       Source="Images\Progression\Old\agrabah\magic_switches.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-GenieJafar"   Source="Images\Progression\Old\agrabah\jafar.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-Lexaeus"      Source="Images\Progression\Old\absent.png"           GridAllowed="False"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-LexaeusData"  Source="Images\Progression\Old\agrabah\lexaeus.png"           GridAllowed="False"                             x:Shared="False"/>
@@ -218,7 +218,7 @@
     <local:GridLabelledImage x:Key="Old-Xaldin"       Source="Images\Progression\Old\beast's_castle\xaldin_story.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-DataXaldin"   Source="Images\Progression\Old\beast's_castle\xaldin.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Disney Castle-->
-    <local:GridLabelledImage x:Key="Old-Minnie"                   Source="Images\Progression\Old\disney_castle\Oldnie.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Old-Minnie"                   Source="Images\Progression\Old\disney_castle\minnie.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-OldPete"                  Source="Images\Progression\Old\disney_castle\old_pete.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-Windows"                  Source="Images\Progression\Old\disney_castle\windows_of_time.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-BoatPete"                 Source="Images\Progression\Old\disney_castle\steamboat_pete.png"           GridAllowed="True"                             x:Shared="False"/>

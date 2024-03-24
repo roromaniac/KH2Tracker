@@ -44,6 +44,7 @@ namespace KhTracker
 
         // battleship specific
         private Random random;
+        public int seed;
         public int[,] placedShips;
         private List<Tuple<int, int>> possibleShipHeads;
         private List<int> shipSizes = new List<int> { 2, 3, 3, 4, 5 }; // Assuming you have this set somewhere
@@ -170,7 +171,7 @@ namespace KhTracker
                     Properties.Settings.Default.GridWindowNumReports = numReports;
 
                     // update number of unlocks
-                    var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
+                    var unlockNames = Codes.worldUnlocks;
                     int numUnlocks = 0;
                     foreach (string unlock in unlockNames)
                     {
@@ -178,6 +179,16 @@ namespace KhTracker
                             numUnlocks++;
                     }
                     Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+
+                    // update number of chest locks
+                    var worldChestLockNames = Codes.chestLocks;
+                    int numChestLocks = 0;
+                    foreach (string unlock in unlockNames)
+                    {
+                        if (gridSettings[unlock])
+                            numChestLocks++;
+                    }
+                    Properties.Settings.Default.GridWindowNumUnlocks = numChestLocks;
                 }
                 catch
                 {
@@ -379,7 +390,13 @@ namespace KhTracker
 
         public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool iconChange = false)
         {
-            int seed;
+            // default to 5x5 grid if negative value manages to make it in
+            if (rows <= 0 || columns <= 0)
+            {
+                rows = 5;
+                columns = 5;
+            }
+
             grid = new Grid();
             buttons = new ToggleButton[rows, columns];
             var randValue = new Random();
@@ -412,34 +429,23 @@ namespace KhTracker
                 assets = assets.Select(item => style + item).ToList();
             }
 
-            if (rows * columns <= 0)
-            {
-                numRows = 5;
-                numColumns = 5;
-            }
-
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
-            int numGlobalSettings = gridSettings.Keys.Count(k => k.StartsWith("Global"));
-            int numChecks = assets.Count - numGlobalSettings;
+            int numChecks = assets.Count;
             int originalNumRows = rows;
             int originalNumColumns = columns;
             if (rows * columns > numChecks)
             {
-                while (true)
+                while (rows * columns > numChecks)
                 {
                     int currentMax = Math.Max(rows, columns);
                     if (currentMax == rows)
                         rows -= 1;
                     else
                         columns -= 1;
-                    if (!(rows * columns > numChecks))
-                    {
-                        numRows = rows;
-                        numColumns = columns;
-                        MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
-                        break;
-                    }
                 }
+                numRows = rows;
+                numColumns = columns;
+                MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
             }
 
             // generate the grid
@@ -864,7 +870,7 @@ namespace KhTracker
 
         public int[,] GenerateSameBoard(int numRows, int numColumns)
         {
-            random = new Random(seedName.GetHashCode());
+            random = new Random(data?.convertedSeedHash ?? seed);
             placedShips = new int[numRows, numColumns];
 
             // Initialize all possible starting points for ship heads
