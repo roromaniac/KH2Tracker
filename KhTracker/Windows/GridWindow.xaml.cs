@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Microsoft.VisualBasic;
 
 using System;
 using System.Collections;
@@ -202,6 +203,16 @@ namespace KhTracker
             gridOptionsWindow = new GridOptionsWindow(this, data);
             gridOptionsWindow.UpdateGridSettings(data);
             
+        }
+
+        private void SetSeedname(object sender, RoutedEventArgs e)
+        {
+            var inputDialog = new SeedNamer();
+            if (inputDialog.ShowDialog() == true)
+            {
+                seedName = inputDialog.InputText;
+            }
+            GenerateGrid(numRows, numColumns, seedName);
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
