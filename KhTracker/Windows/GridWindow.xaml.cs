@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Security.Cryptography;
+using System.Threading;
 
 namespace KhTracker
 {
@@ -37,6 +39,8 @@ namespace KhTracker
 
         public Grid grid;
         public ToggleButton[,] buttons;
+        public Color[,] originalColors;
+        public bool[,] bingoStatus;
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
@@ -345,9 +349,7 @@ namespace KhTracker
             var button = (ToggleButton)sender;
             if (battleshipLogic)
             {
-                if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
-                    SetColorForButton(button.Background, currentColors["Original Color"]);
-                else if (GetColorFromButton(button.Background) == currentColors["Battleship Sunk Color"])
+                if (GetColorFromButton(button.Background) == currentColors["Battleship Sunk Color"])
                 {
                     UnmarkSunkShips(i, j);
                 }
@@ -364,8 +366,6 @@ namespace KhTracker
             }
             else
             {
-                if (currentColors.ContainsKey("Original Color") && GetColorFromButton(button.Background) == currentColors["Annotated Color"])
-                    SetColorForButton(button.Background, currentColors["Original Color"]);
                 if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
                 {
                     SetColorForButton(button.Background, currentColors["Marked Color"]);
@@ -375,20 +375,23 @@ namespace KhTracker
                     SetColorForButton(button.Background, currentColors["Unmarked Color"]);
                 }
                 if (bingoLogic)
+                {
                     BingoCheck(grid, i, j);
+                    UpdateBingoCells();
+                }
             }
         }
 
-        public void Button_RightClick(object sender, RoutedEventArgs e)
+        public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
             if (GetColorFromButton(button.Background) == currentColors["Annotated Color"])
             {
-                SetColorForButton(button.Background, currentColors["Original Color"]);
+                SetColorForButton(button.Background, originalColors[i, j]);
             }
             else
             {
-                currentColors["Original Color"] = GetColorFromButton(button.Background);
+                originalColors[i, j] = GetColorFromButton(button.Background);
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
         }
@@ -409,7 +412,9 @@ namespace KhTracker
             }
 
             grid = new Grid();
-            buttons = new ToggleButton[rows, columns];
+            buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
+            originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
+            bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
@@ -483,9 +488,14 @@ namespace KhTracker
                     int current_i = i;
                     int current_j = j;
                     button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
-                    button.MouseRightButtonUp += Button_RightClick;
+                    button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
+                    if (iconChange)
+                    {
+                        button.Background = buttons[i, j].Background;
+                        button.IsChecked = buttons[i, j].IsChecked;
+                    }
                     buttons[i, j] = button;
                     grid.Children.Add(button);
                     button.ToolTip = ((string)button.Tag).Split('-')[1];
@@ -581,14 +591,15 @@ namespace KhTracker
 
         public void BingoCheck(Grid grid, int i, int j)
         {
-
             int rowCount = grid.RowDefinitions.Count;
             int columnCount = grid.ColumnDefinitions.Count;
-
 
             // remove any bingos if we are unclicking
             if (buttons[i, j].IsChecked == false)
             {
+                // remove unclicked button's bingo status
+                bingoStatus[i, j] = false;
+
                 // check if we can have diagonal bingos
                 if (rowCount == columnCount)
                 {
@@ -597,36 +608,36 @@ namespace KhTracker
                     {
                         for (int index = 0; index < rowCount; index++)
                         {
-                            if (GetColorFromButton(buttons[index, index].Background).Equals(currentColors["Bingo Color"]))
+                            if (bingoStatus[index, index])
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
-                                bool part_of_row_bingo = true;
-                                bool part_of_column_bingo = true;
+                                bool partOfRowBingo = true;
+                                bool partOfColumnBingo = true;
                                 for (int check = 0; check < rowCount; check++)
                                 {
-                                    if (!GetColorFromButton(buttons[index, check].Background).Equals(currentColors["Bingo Color"]))
-                                        part_of_row_bingo = false;
-                                    if (!GetColorFromButton(buttons[check, index].Background).Equals(currentColors["Bingo Color"]))
-                                        part_of_column_bingo = false;
-                                    if (!part_of_row_bingo && !part_of_column_bingo)
+                                    if (!bingoStatus[index, check])
+                                        partOfRowBingo = false;
+                                    if (!bingoStatus[check, index])
+                                        partOfColumnBingo = false;
+                                    if (!partOfRowBingo && !partOfColumnBingo)
                                     {
                                         if (index != i)
                                         {
                                             // check that the middle button (if it exists) is not part of the other diagonal bingo
                                             if (index * 2 == rowCount - 1)
                                             {
-                                                for (int diag_check = 0; diag_check < rowCount; diag_check++)
+                                                for (int diagCheck = 0; diagCheck < rowCount; diagCheck++)
                                                 {
-                                                    if (!GetColorFromButton(buttons[diag_check, rowCount - 1 - diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                                    if (!bingoStatus[diagCheck, rowCount - 1 - diagCheck])
                                                     {
-                                                        SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
+                                                        bingoStatus[index, index] = false;
                                                         break;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
+                                                bingoStatus[index, index] = false;
                                                 break;
                                             }
                                         }
@@ -641,37 +652,36 @@ namespace KhTracker
                     {
                         for (int index = 0; index < rowCount; index++)
                         {
-                            
-                            if (GetColorFromButton(buttons[index, rowCount - 1 - index].Background).Equals(currentColors["Bingo Color"]))
+                            if (bingoStatus[index, rowCount - 1 - index])
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
-                                bool part_of_row_bingo = true;
-                                bool part_of_column_bingo = true;
+                                bool partOfRowBingo = true;
+                                bool partOfColumnBingo = true;
                                 for (int check = 0; check < rowCount; check++)
                                 {
-                                    if (!GetColorFromButton(buttons[index, check].Background).Equals(currentColors["Bingo Color"]))
-                                        part_of_row_bingo = false;
-                                    if (!GetColorFromButton(buttons[check, rowCount - 1 - index].Background).Equals(currentColors["Bingo Color"]))
-                                        part_of_column_bingo = false;
-                                    if (!part_of_row_bingo && !part_of_column_bingo)
+                                    if (!bingoStatus[index, check])
+                                        partOfRowBingo = false;
+                                    if (!bingoStatus[check, rowCount - 1 - index])
+                                        partOfColumnBingo = false;
+                                    if (!partOfRowBingo && !partOfColumnBingo)
                                     {
                                         if (index != i)
                                         {
                                             // check that the middle button (if it exists) is not part of the other diagonal bingo
                                             if (index * 2 == rowCount - 1)
                                             {
-                                                for (int diag_check = 0; diag_check < rowCount; diag_check++)
+                                                for (int diagCheck = 0; diagCheck < rowCount; diagCheck++)
                                                 {
-                                                    if (!GetColorFromButton(buttons[diag_check, diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                                    if (!bingoStatus[diagCheck, diagCheck])
                                                     {
-                                                        SetColorForButton(buttons[index, index].Background, currentColors["Marked Color"]);
+                                                        bingoStatus[index, rowCount - 1 - index] = false;
                                                         break;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                SetColorForButton(buttons[index, rowCount - 1 - index].Background, currentColors["Marked Color"]);
+                                                bingoStatus[index, rowCount - 1 - index] = false;
                                                 break;
                                             }
                                         }
@@ -684,21 +694,21 @@ namespace KhTracker
                 // remove vertical bingo
                 for (int row = 0; row < rowCount; row++)
                 {
-                    bool part_of_row_bingo = true;
-                    bool part_of_left_diag_bingo = true;
-                    bool part_of_right_diag_bingo = true;
+                    bool partOfRowBingo = true;
+                    bool partOfLeftDiagBingo = true;
+                    bool partOfRightDiagBingo = true;
 
-                    if (GetColorFromButton(buttons[row, j].Background).Equals(currentColors["Bingo Color"]))
+                    if (bingoStatus[row, j])
                     {
                         // check that the button in question is not a part of a row bingo before removing bingo background 
-                        for (int col_check = 0; col_check < columnCount; col_check++)
+                        for (int colCheck = 0; colCheck < columnCount; colCheck++)
                         {
                             if (row != i)
                             {
-                                
-                                if (!GetColorFromButton(buttons[row, col_check].Background).Equals(currentColors["Bingo Color"]))
+
+                                if (!bingoStatus[row, colCheck])
                                 {
-                                    part_of_row_bingo = false;
+                                    partOfRowBingo = false;
                                     break;
                                 }
                             }
@@ -708,59 +718,59 @@ namespace KhTracker
                             // check that the button in question is not a part of left diagonal bingo before removing bingo background 
                             if (j == row)
                             {
-                                for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
+                                for (int leftDiagCheck = 0; leftDiagCheck < rowCount; leftDiagCheck++)
                                 {
-                                    if (!GetColorFromButton(buttons[left_diag_check, left_diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                    if (!bingoStatus[leftDiagCheck, leftDiagCheck])
                                     {
-                                        part_of_left_diag_bingo = false;
+                                        partOfLeftDiagBingo = false;
                                         break;
                                     }
                                 }
                             }
                             else
-                                part_of_left_diag_bingo = false;
+                                partOfLeftDiagBingo = false;
                             // check that the button in question is not a part of right diagonal bingo before removing bingo background
                             if (j == rowCount - 1 - row)
                             {
-                                for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
+                                for (int rightDiagCheck = 0; rightDiagCheck < rowCount; rightDiagCheck++)
                                 {
-                                    if (!GetColorFromButton(buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                    if (!bingoStatus[rightDiagCheck, rowCount - 1 - rightDiagCheck])
                                     {
-                                        part_of_right_diag_bingo = false;
+                                        partOfRightDiagBingo = false;
                                         break;
                                     }
                                 }
                             }
                             else
-                                part_of_right_diag_bingo = false;
+                                partOfRightDiagBingo = false;
                         }
                         else
                         {
-                            part_of_left_diag_bingo = false;
-                            part_of_right_diag_bingo = false;
+                            partOfLeftDiagBingo = false;
+                            partOfRightDiagBingo = false;
                         }
-                        if (!part_of_row_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
-                            SetColorForButton(buttons[row, j].Background, currentColors["Marked Color"]);
+                        if (!partOfRowBingo && !partOfLeftDiagBingo && !partOfRightDiagBingo)
+                            bingoStatus[row, j] = false;
                     }
                 }
 
                 // remove horizontal bingo
                 for (int col = 0; col < columnCount; col++)
                 {
-                    bool part_of_column_bingo = true;
-                    bool part_of_left_diag_bingo = true;
-                    bool part_of_right_diag_bingo = true;
-                    
-                    if (GetColorFromButton(buttons[i, col].Background).Equals(currentColors["Bingo Color"]))
+                    bool partOfColumnBingo = true;
+                    bool partOfLeftDiagBingo = true;
+                    bool partOfRightDiagBingo = true;
+
+                    if (bingoStatus[i, col])
                     {
-                        // check that the button in question is not a part of a col bingo before removing bingo background 
-                        for (int row_check = 0; row_check < rowCount; row_check++)
+                        // check that the button in question is not a part of a column bingo before removing bingo background 
+                        for (int rowCheck = 0; rowCheck < rowCount; rowCheck++)
                         {
                             if (col != j)
-                            { 
-                                if (!GetColorFromButton(buttons[row_check, col].Background).Equals(currentColors["Bingo Color"]))
+                            {
+                                if (!bingoStatus[rowCheck, col])
                                 {
-                                    part_of_column_bingo = false;
+                                    partOfColumnBingo = false;
                                     break;
                                 }
                             }
@@ -770,39 +780,39 @@ namespace KhTracker
                             // check that the button in question is not a part of left diagonal bingo before removing bingo background 
                             if (i == col)
                             {
-                                for (int left_diag_check = 0; left_diag_check < rowCount; left_diag_check++)
+                                for (int leftDiagCheck = 0; leftDiagCheck < rowCount; leftDiagCheck++)
                                 {
-                                    if (!GetColorFromButton(buttons[left_diag_check, left_diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                    if (!bingoStatus[leftDiagCheck, leftDiagCheck])
                                     {
-                                        part_of_left_diag_bingo = false;
+                                        partOfLeftDiagBingo = false;
                                         break;
                                     }
                                 }
                             }
                             else
-                                part_of_left_diag_bingo = false;
+                                partOfLeftDiagBingo = false;
                             // check that the button in question is not a part of right diagonal bingo before removing bingo background
                             if (i == rowCount - 1 - col)
                             {
-                                for (int right_diag_check = 0; right_diag_check < rowCount; right_diag_check++)
+                                for (int rightDiagCheck = 0; rightDiagCheck < rowCount; rightDiagCheck++)
                                 {
-                                    if (!GetColorFromButton(buttons[right_diag_check, rowCount - 1 - right_diag_check].Background).Equals(currentColors["Bingo Color"]))
+                                    if (!bingoStatus[rightDiagCheck, rowCount - 1 - rightDiagCheck])
                                     {
-                                        part_of_right_diag_bingo = false;
+                                        partOfRightDiagBingo = false;
                                         break;
                                     }
                                 }
                             }
                             else
-                                part_of_right_diag_bingo = false;
+                                partOfRightDiagBingo = false;
                         }
                         else
                         {
-                            part_of_left_diag_bingo = false;
-                            part_of_right_diag_bingo = false;
+                            partOfLeftDiagBingo = false;
+                            partOfRightDiagBingo = false;
                         }
-                        if (!part_of_column_bingo && !part_of_left_diag_bingo && !part_of_right_diag_bingo)
-                            SetColorForButton(buttons[i, col].Background, currentColors["Marked Color"]);
+                        if (!partOfColumnBingo && !partOfLeftDiagBingo && !partOfRightDiagBingo)
+                            bingoStatus[i, col] = false;
                     }
                 }
             }
@@ -824,8 +834,8 @@ namespace KhTracker
                             }
                             if (index == rowCount - 1)
                             {
-                                for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
-                                    SetColorForButton(buttons[bingo_index, bingo_index].Background, currentColors["Bingo Color"]);
+                                for (int bingoIndex = 0; bingoIndex < rowCount; bingoIndex++)
+                                    bingoStatus[bingoIndex, bingoIndex] = true;
                             }
                         }
 
@@ -842,8 +852,8 @@ namespace KhTracker
                             }
                             if (index == rowCount - 1)
                             {
-                                for (int bingo_index = 0; bingo_index < rowCount; bingo_index++)
-                                    SetColorForButton(buttons[bingo_index, rowCount - 1 - bingo_index].Background, currentColors["Bingo Color"]);
+                                for (int bingoIndex = 0; bingoIndex < rowCount; bingoIndex++)
+                                    bingoStatus[bingoIndex, rowCount - 1 - bingoIndex] = true;
                             }
                         }
 
@@ -858,8 +868,8 @@ namespace KhTracker
                     }
                     if (row == rowCount - 1)
                     {
-                        for (int bingo_row = 0; bingo_row < rowCount; bingo_row++)
-                            SetColorForButton(buttons[bingo_row, j].Background, currentColors["Bingo Color"]);
+                        for (int bingoRow = 0; bingoRow < rowCount; bingoRow++)
+                            bingoStatus[bingoRow, j] = true;
                     }
                 }
 
@@ -872,8 +882,34 @@ namespace KhTracker
                     }
                     if (col == columnCount - 1)
                     {
-                        for (int bingo_col = 0; bingo_col < columnCount; bingo_col++)
-                            SetColorForButton(buttons[i, bingo_col].Background, currentColors["Bingo Color"]);
+                        for (int bingoCol = 0; bingoCol < columnCount; bingoCol++)
+                            bingoStatus[i, bingoCol] = true;
+                    }
+                }
+            }
+        }
+
+        public void UpdateBingoCells()
+        {
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    if (bingoStatus[i, j])
+                    {
+                        SetColorForButton(buttons[i, j].Background, currentColors["Bingo Color"]);
+                    }
+                    else if (GetColorFromButton(buttons[i, j].Background) == currentColors["Annotated Color"])
+                    {
+                        continue;
+                    }
+                    else if (buttons[i, j].IsChecked ?? false)
+                    {
+                        SetColorForButton(buttons[i, j].Background, currentColors["Marked Color"]);
+                    }
+                    else
+                    {
+                        SetColorForButton(buttons[i, j].Background, currentColors["Unmarked Color"]);
                     }
                 }
             }

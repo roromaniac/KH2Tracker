@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KhTracker"
         mc:Ignorable="d"
         ResizeMode="CanResize"
-        Title="Bingo Window"
+        Title="KH2 Grid Tracker 1.0"
         Height="510" Width="500"
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"

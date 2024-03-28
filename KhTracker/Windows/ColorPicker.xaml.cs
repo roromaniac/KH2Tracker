@@ -95,7 +95,10 @@ namespace KhTracker
                     {
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
                         if (_gridWindow.bingoLogic)
+                        {
                             _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                            _gridWindow.UpdateBingoCells();
+                        }
                     }
                 }
             }

@@ -36,9 +36,23 @@ namespace KhTracker
         public OptionType Type { get; set; }
         private string description;
         private string defaultValue;
+        private double textBoxWidth;
         public bool IsSelectAllOption { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public double TextBoxWidth
+        {
+            get { return textBoxWidth; }
+            set
+            {
+                if (textBoxWidth != value)
+                {
+                    textBoxWidth = value;
+                    OnPropertyChanged(nameof(TextBoxWidth));
+                }
+            }
+        }
+
 
         public string Description
         {
@@ -182,8 +196,8 @@ namespace KhTracker
                             SubCategoryName = "Board Size",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Number of Rows", DefaultValue = $"{newNumRows}" },
-                                new Option { Type = OptionType.TextBox, Description = "Number of Columns", DefaultValue = $"{newNumColumns}"  }
+                                new Option { Type = OptionType.TextBox, Description = "Number of Rows", DefaultValue = $"{newNumRows}", TextBoxWidth = 5},
+                                new Option { Type = OptionType.TextBox, Description = "Number of Columns", DefaultValue = $"{newNumColumns}", TextBoxWidth = 5  }
                             }
                         },
                         new SubCategory {
@@ -198,6 +212,10 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
+                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Sizes", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomSizes") ? _gridWindow.gridSettings["BattleshipRandomSizes"] : false).ToString() },
+                                new Option { Description = "" },
+                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5" },
                             }
                         }
                     }
@@ -564,10 +582,14 @@ namespace KhTracker
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
             _gridWindow.bingoLogic = includeGlobalBingoLogic;
             Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
+
             // update battleship logic
             bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
             _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
             Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
+
+            bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
+            bool randomShipSizes = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Sizes")?.DefaultValue);
         }
 
         private void UpdateProgression(Data data)
