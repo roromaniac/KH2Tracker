@@ -13,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Data.Common;
 
 namespace KhTracker
 {
@@ -53,6 +54,7 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] bingoStatus;
+        public bool[,] battleshipSunkStatus;
         public bool[,] annotationStatus;
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
@@ -364,15 +366,16 @@ namespace KhTracker
             var button = (ToggleButton)sender;
             if (battleshipLogic)
             {
-                if (GetColorFromButton(button.Background) == currentColors["Battleship Sunk Color"])
+                if (battleshipSunkStatus[i, j])
                 {
-                    UnmarkSunkShips(i, j);
+                    shipSunkCheck(i, j);
+                    UpdateShipStatusUI();
                 }
-                else if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                else if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
                     // fix this to be conditional on the button corresponding to a ship
-                    SetColorForButton(button.Background, (placedShips[i, j] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
-                    MarkSunkShips(i, j);
+                    shipSunkCheck(i, j);
+                    UpdateShipStatusUI();
                 }
                 else
                 {
@@ -381,7 +384,7 @@ namespace KhTracker
             }
             else
             {
-                if (GetColorFromButton(button.Background) == currentColors["Unmarked Color"] || GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+                if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
                     SetColorForButton(button.Background, currentColors["Marked Color"]);
                 }
@@ -397,7 +400,9 @@ namespace KhTracker
             }
             if (fogOfWar)
             {
+                // reveal the button's own property
                 buttons[i, j].SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                // reveal the button's neighbors' properties
                 int westRange = fogOfWarSpan.ContainsKey("W") ? fogOfWarSpan["W"] : 1;
                 int eastRange = fogOfWarSpan.ContainsKey("E") ? fogOfWarSpan["E"] : 1;
                 int northRange = fogOfWarSpan.ContainsKey("N") ? fogOfWarSpan["N"] : 1;
@@ -424,9 +429,9 @@ namespace KhTracker
                     if ((i - north) >= 0)
                         buttons[i - north, j].SetResourceReference(ContentProperty, assets[((i - north) * numColumns) + j]);
                 }
+                // south check
                 for (int south = 1; south <= southRange; south++)
                 {
-                    // south check
                     if ((i + south) < numRows)
                         buttons[i + south, j].SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
                 }
@@ -492,6 +497,7 @@ namespace KhTracker
             buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
             originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
             bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
+            battleshipSunkStatus = (iconChange && battleshipSunkStatus != null) ? battleshipSunkStatus : new bool[rows, columns];
             annotationStatus = (iconChange && annotationStatus != null) ? annotationStatus : new bool[rows, columns];
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
@@ -1092,7 +1098,6 @@ namespace KhTracker
             currentShipId++; // Move to the next ship ID for the next ship
         }
 
-
         bool IsDirectionValid(int[,] board, int x, int y, int shipSize, string direction, int numRows, int numColumns)
         {
             if (direction == "down")
@@ -1129,26 +1134,7 @@ namespace KhTracker
             return true;
         }
 
-        private void UnmarkSunkShips(int hitRow, int hitColumn)
-        {
-            int shipId = placedShips[hitRow, hitColumn];
-            for (int row = 0; row < numRows; row++)
-            {
-                for (int column = 0; column < numColumns; column++)
-                {
-                    // If we find a part of the ship that has not been hit, return false
-                    if (placedShips[row, column] == shipId)
-                    {
-                        if (row == hitRow && column == hitColumn)
-                            SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
-                        else
-                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Hit Color"]);
-                    }
-                }
-            }
-        }
-
-        private void MarkSunkShips(int hitRow, int hitColumn)
+        private void shipSunkCheck(int hitRow, int hitColumn)
         {
             bool shipSunk = true;
             int shipId = placedShips[hitRow, hitColumn];
@@ -1163,44 +1149,63 @@ namespace KhTracker
                     {
                         shipSunk = false;
                     }
-                }
-            }
-
-            if (shipSunk)
-            {
-                for (int row = 0; row < numRows; row++)
-                {
-                    for (int column = 0; column < numColumns; column++)
-                    {
-                        // If we find a part of the ship that has not been hit, return false
-                        if (placedShips[row, column] == shipId)
-                        {
-                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
-                        }
-                    }
-                }
-                bool allShipsSunk = true;
-                for (int row = 0; row < numRows; row++)
-                {
-                    for (int column = 0; column < numColumns; column++)
-                    {
-                        if (placedShips[row, column] != 0)
-                        {
-                            if (GetColorFromButton(buttons[row, column].Background) != currentColors["Battleship Sunk Color"])
-                                allShipsSunk = false;
-                            // stop checking for all ships sunk
-                            if (!allShipsSunk)
-                                break;
-                        }
-                    }
-                    // stop checking for all ships sunk
-                    if (!allShipsSunk)
+                    if (!shipSunk)
                         break;
                 }
-                if (allShipsSunk)
+                if (!shipSunk)
+                    break;
+            }
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
                 {
-                    MessageBox.Show("Congrats! You sunk all ships!");
+                    if (placedShips[row, column] == shipId)
+                    {
+                        battleshipSunkStatus[row, column] = shipSunk;
+                    }
                 }
+            }
+        }
+
+        private void UpdateShipStatusUI()
+        {
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    if (battleshipSunkStatus[row, column])
+                        SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
+                    else if (buttons[row, column].IsChecked ?? false)
+                    {
+                        SetColorForButton(buttons[row, column].Background, placedShips[row, column] != 0 ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
+                    }
+                    else
+                    {
+                        SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
+                    }
+                }
+            }
+            bool allShipsSunk = true;
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    if (placedShips[row, column] != 0)
+                    {
+                        if (!battleshipSunkStatus[row, column])
+                            allShipsSunk = false;
+                        // stop checking for all ships sunk
+                        if (!allShipsSunk)
+                            break;
+                    }
+                }
+                // stop checking for all ships sunk
+                if (!allShipsSunk)
+                    break;
+            }
+            if (allShipsSunk)
+            {
+                MessageBox.Show("Congrats! You sunk all ships!");
             }
         }
 

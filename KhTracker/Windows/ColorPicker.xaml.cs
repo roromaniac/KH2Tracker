@@ -79,12 +79,11 @@ namespace KhTracker
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //update the new colors on the card
-            var oldAnnotatedColor = _gridWindow.currentColors["Annotated Color"];
             for (int i = 0; i < _gridWindow.numRows; i++)
             {
                 for (int j = 0; j < _gridWindow.numColumns; j++)
                 {
-                    if (_gridWindow.GetColorFromButton(_gridWindow.buttons[i, j].Background).Equals(oldAnnotatedColor))
+                    if (_gridWindow.annotationStatus[i, j])
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
                     if (_gridWindow.battleshipLogic)
                     {
