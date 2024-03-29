@@ -219,6 +219,7 @@ namespace KhTracker
         bool newBingoLogic;
         bool newBattleshipLogic;
         bool newFogOfWar;
+        Dictionary<string, int> newFogOfWarSpan;
         List<Category> categories;
         string[] nonChecks = { "Select All", "" };
         public GridOptionsWindow(GridWindow gridWindow, Data data)
@@ -230,7 +231,7 @@ namespace KhTracker
             newBingoLogic = gridWindow.bingoLogic;
             newBattleshipLogic = gridWindow.battleshipLogic;
             newFogOfWar = gridWindow.fogOfWar;
-
+            newFogOfWarSpan = gridWindow.fogOfWarSpan;
             _data = data;
 
             categories = new List<Category>
@@ -252,7 +253,6 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = $"{newBingoLogic}"  },
-                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
                             }
                         },
                         new SubCategory {
@@ -260,10 +260,27 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
-                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Sizes", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomSizes") ? _gridWindow.gridSettings["BattleshipRandomSizes"] : false).ToString() },
                                 new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
+                            }
+                        },
+                        new SubCategory {
+                            SubCategoryName = "Fog of War Logic" ,
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.CheckBox, Description = "Include Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "West Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("W") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "East Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("E") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "North Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("N") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "South Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("S") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "NorthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NW") ? newFogOfWarSpan["NW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "NorthEast Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NE") ? newFogOfWarSpan["NE"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "SouthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("SW") ? newFogOfWarSpan["SW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "SouthEast Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("SE") ? newFogOfWarSpan["SE"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                             }
                         }
                     }
@@ -585,6 +602,7 @@ namespace KhTracker
                         var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
                         shipSizesOption.Visibility = Visibility.Collapsed;
                     }
+
                 }
                 else if (currentOption.Description == "Include Bingo Logic")
                 {
@@ -598,6 +616,14 @@ namespace KhTracker
                         // hide ship sizes
                         var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
                         shipSizesOption.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (currentOption.Description == "Include Fog of War Logic")
+                {
+                    foreach (string spanDescription in new[] { "West Hint Span", "East Hint Span", "North Hint Span", "South Hint Span", "NorthWest Hint Span", "NorthEast Hint Span", "SouthWest Hint Span", "SouthEast Hint Span"})
+                    {
+                        var currentSpanOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == $"{spanDescription}");
+                        currentSpanOption.Visibility = selectAllCheckbox.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
                     }
                 }
                 UpdateGridSettings(_data);
@@ -670,11 +696,29 @@ namespace KhTracker
             Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
             Properties.Settings.Default.BattleshipRandomSizes = randomShipSizes;
 
-            bool fogOfWarBingo = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
-            bool fogOfWarBattleship = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
+            bool includeFogOfWar = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "Include Fog of War Logic")?.DefaultValue);
+            _gridWindow.fogOfWar = includeFogOfWar;
+            Properties.Settings.Default.FogOfWar = includeFogOfWar;
 
-            _gridWindow.fogOfWar = (fogOfWarBingo || fogOfWarBattleship);
-            Properties.Settings.Default.FogOfWar = (fogOfWarBingo || fogOfWarBattleship);
+            int westSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "West Hint Span")?.DefaultValue);
+            int eastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "East Hint Span")?.DefaultValue);
+            int northSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "North Hint Span")?.DefaultValue);
+            int southSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "South Hint Span")?.DefaultValue);
+            int northWestSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "NorthWest Hint Span")?.DefaultValue);
+            int northEastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "NorthEast Hint Span")?.DefaultValue);
+            int southWestSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "SouthWest Hint Span")?.DefaultValue);
+            int southEastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "SouthEast Hint Span")?.DefaultValue);
+
+            _gridWindow.fogOfWarSpan["W"] = westSpan;
+            _gridWindow.fogOfWarSpan["E"] = eastSpan;
+            _gridWindow.fogOfWarSpan["N"] = northSpan;
+            _gridWindow.fogOfWarSpan["S"] = southSpan;
+            _gridWindow.fogOfWarSpan["NW"] = northWestSpan;
+            _gridWindow.fogOfWarSpan["NE"] = northEastSpan;
+            _gridWindow.fogOfWarSpan["SW"] = southWestSpan;
+            _gridWindow.fogOfWarSpan["SE"] = southEastSpan;
+
+            Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize<Dictionary<string, int>>(_gridWindow.fogOfWarSpan);
         }
 
         private void UpdateProgression(Data data)

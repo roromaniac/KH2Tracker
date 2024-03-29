@@ -321,5 +321,8 @@
     <Setting Name="BattleshipRandomSizes" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="FogOfWarSpan" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{"W": 1, "E": 1, "N": 1, "S": 1, "NW": 0, "NE": 0, "SW": 0, "SE": 0}</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

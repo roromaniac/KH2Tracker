@@ -1337,5 +1337,17 @@ namespace KhTracker.Properties {
                 this["BattleshipRandomSizes"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{\"W\": 1, \"E\": 1, \"N\": 1, \"S\": 1, \"NW\": 0, \"NE\": 0, \"SW\": 0, \"SE\": 0}")]
+        public string FogOfWarSpan {
+            get {
+                return ((string)(this["FogOfWarSpan"]));
+            }
+            set {
+                this["FogOfWarSpan"] = value;
+            }
+        }
     }
 }

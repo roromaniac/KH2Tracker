@@ -37,6 +37,17 @@ namespace KhTracker
         public bool bingoLogic;
         public bool battleshipLogic;
         public bool fogOfWar;
+        public Dictionary<string, int> fogOfWarSpan = new Dictionary<string, int>()
+        {
+            { "W", 1 },
+            { "E", 1 },
+            { "N", 1 },
+            { "S", 1 },
+            { "NW", 0 },
+            { "NE", 0 },
+            { "SW", 0 },
+            { "SE", 0 },
+        };
 
         public Grid grid;
         public ToggleButton[,] buttons;
@@ -72,6 +83,7 @@ namespace KhTracker
             bingoLogic = Properties.Settings.Default.GridWindowBingoLogic;
             battleshipLogic = Properties.Settings.Default.GridWindowBattleshipLogic;
             fogOfWar = Properties.Settings.Default.FogOfWar;
+            fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
 
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
@@ -386,14 +398,14 @@ namespace KhTracker
             if (fogOfWar)
             {
                 buttons[i, j].SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
-                int westRange = 1;
-                int eastRange = 1;
-                int northRange = 1;
-                int southRange = 1;
-                int northwestRange = 3;
-                int northeastRange = 3;
-                int southwestRange = 3;
-                int southeastRange = 3;
+                int westRange = fogOfWarSpan.ContainsKey("W") ? fogOfWarSpan["W"] : 1;
+                int eastRange = fogOfWarSpan.ContainsKey("E") ? fogOfWarSpan["E"] : 1;
+                int northRange = fogOfWarSpan.ContainsKey("N") ? fogOfWarSpan["N"] : 1;
+                int southRange = fogOfWarSpan.ContainsKey("S") ? fogOfWarSpan["S"] : 1;
+                int northwestRange = fogOfWarSpan.ContainsKey("NW") ? fogOfWarSpan["NW"] : 0;
+                int northeastRange = fogOfWarSpan.ContainsKey("NE") ? fogOfWarSpan["NE"] : 0;
+                int southwestRange = fogOfWarSpan.ContainsKey("SW") ? fogOfWarSpan["SW"] : 0;
+                int southeastRange = fogOfWarSpan.ContainsKey("SE") ? fogOfWarSpan["SE"] : 0;
                 // west check
                 for (int west = 1; west <= westRange; west++)
                 {
