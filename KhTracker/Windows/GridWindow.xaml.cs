@@ -383,6 +383,42 @@ namespace KhTracker
                     UpdateBingoCells();
                 }
             }
+            if (fogOfWar)
+            {
+                buttons[i, j].SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                int west = 1;
+                int east = 1;
+                int north = 1;
+                int south = 1;
+                int northwest = 1;
+                int northeast = 1;
+                int southwest = 1;
+                int southeast = 1;
+                // west check
+                if ((j - west) >= 0)
+                    buttons[i, j - west].SetResourceReference(ContentProperty, assets[(i * numColumns) + (j - west)]);
+                // east check
+                if ((j + east) < numColumns)
+                    buttons[i, j + east].SetResourceReference(ContentProperty, assets[(i * numColumns) + (j + east)]);
+                // north check
+                if ((i - north) >= 0)
+                    buttons[i - north, j].SetResourceReference(ContentProperty, assets[((i - north) * numColumns) + j]);
+                // south check
+                if ((i + south) < numRows)
+                    buttons[i + south, j].SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
+                // northwest check
+                if ((i - northwest) >= 0 && (j - northwest) >= 0) 
+                    buttons[i - north, j - west].SetResourceReference(ContentProperty, assets[((i - north) * numColumns) + (j - west)]);
+                // northeast check
+                if ((i - northeast) >= 0 && (j + northeast) < numColumns)
+                    buttons[i - northeast, j + northeast].SetResourceReference(ContentProperty, assets[((i - northeast) * numColumns) + (j + northeast)]);
+                // southwest check
+                if ((i + southwest) < numRows && (j - southwest) >= 0)
+                    buttons[i + southwest, j - southwest].SetResourceReference(ContentProperty, assets[((i + southwest) * numColumns) + (j - southwest)]);
+                // southeast check
+                if ((i + southeast) < numRows && (j + southeast) < numColumns)
+                    buttons[i + southeast, j + southeast].SetResourceReference(ContentProperty, assets[((i + southeast) * numColumns) + (j + southeast)]);
+            }
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)

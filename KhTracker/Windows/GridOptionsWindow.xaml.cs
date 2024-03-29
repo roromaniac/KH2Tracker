@@ -218,6 +218,7 @@ namespace KhTracker
         int newNumColumns;
         bool newBingoLogic;
         bool newBattleshipLogic;
+        bool newFogOfWar;
         List<Category> categories;
         string[] nonChecks = { "Select All", "" };
         public GridOptionsWindow(GridWindow gridWindow, Data data)
@@ -228,6 +229,8 @@ namespace KhTracker
             newNumColumns = gridWindow.numColumns;
             newBingoLogic = gridWindow.bingoLogic;
             newBattleshipLogic = gridWindow.battleshipLogic;
+            newFogOfWar = gridWindow.fogOfWar;
+
             _data = data;
 
             categories = new List<Category>
@@ -249,7 +252,7 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = $"{newBingoLogic}"  },
-                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("FogOfWar") ? _gridWindow.gridSettings["FogOfWar"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
                             }
                         },
                         new SubCategory {
@@ -257,10 +260,9 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
-                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("FogOfWar") ? _gridWindow.gridSettings["FogOfWar"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Sizes", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomSizes") ? _gridWindow.gridSettings["BattleshipRandomSizes"] : false).ToString() },
-                                new Option { Description = "" },
                                 new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
                             }
                         }
@@ -551,7 +553,6 @@ namespace KhTracker
             }
         }
 
-
         private void SelectAllChecks(object sender, RoutedEventArgs e)
         {
             CheckBox selectAllCheckbox = sender as CheckBox;
@@ -619,7 +620,6 @@ namespace KhTracker
             }
         }
 
-
         private void Window_LocationChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.GridOptionsWindowY = RestoreBounds.Top;
@@ -673,6 +673,7 @@ namespace KhTracker
             bool fogOfWarBingo = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
             bool fogOfWarBattleship = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
 
+            _gridWindow.fogOfWar = (fogOfWarBingo || fogOfWarBattleship);
             Properties.Settings.Default.FogOfWar = (fogOfWarBingo || fogOfWarBattleship);
         }
 
