@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,7 +54,6 @@ namespace KhTracker
             }
         }
 
-
         public string Description
         {
             get { return description; }
@@ -76,6 +76,20 @@ namespace KhTracker
                 {
                     defaultValue = value;
                     OnPropertyChanged(nameof(DefaultValue));
+                }
+            }
+        }
+
+        private Visibility _visibility = Visibility.Visible;
+        public Visibility Visibility
+        {
+            get => _visibility;
+            set
+            {
+                if (_visibility != value)
+                {
+                    _visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
                 }
             }
         }
@@ -116,9 +130,7 @@ namespace KhTracker
             // Assuming `value` is the `Option` object
             var option = value as Option;
             if (option != null && string.IsNullOrEmpty(option.Description) && !option.IsSelectAllOption)
-            {
                 return Visibility.Collapsed; // Hide spacer options
-            }
             return Visibility.Visible; // Show all other options
         }
 
@@ -147,6 +159,24 @@ namespace KhTracker
         }
     }
 
+    public class BindingProxy : Freezable
+    {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BindingProxy();
+        }
+
+        public object Data
+        {
+            get { return (object)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new PropertyMetadata(null));
+    }
+
     public partial class GridOptionsWindow : Window, INotifyPropertyChanged
     {
 
@@ -160,6 +190,20 @@ namespace KhTracker
         public int TrueChecksCount
         {
             get { return _gridWindow.gridSettings.Count(kvp => kvp.Value == true); }
+        }
+
+        private int _columnsInGrid = 4;
+        public int ColumnsInGrid
+        {
+            get { return _columnsInGrid; }
+            set
+            {
+                if (value != _columnsInGrid)
+                {
+                    _columnsInGrid = value;
+                    OnPropertyChanged(nameof(ColumnsInGrid)); ;
+                }
+            }
         }
 
         public int NumSquares
@@ -205,6 +249,7 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = $"{newBingoLogic}"  },
+                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("FogOfWar") ? _gridWindow.gridSettings["FogOfWar"] : false).ToString() },
                             }
                         },
                         new SubCategory {
@@ -212,10 +257,11 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
+                                new Option { Type = OptionType.CheckBox, Description = "Fog of War Logic", DefaultValue = (_gridWindow.gridSettings.ContainsKey("FogOfWar") ? _gridWindow.gridSettings["FogOfWar"] : false).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Sizes", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomSizes") ? _gridWindow.gridSettings["BattleshipRandomSizes"] : false).ToString() },
                                 new Option { Description = "" },
-                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5" },
+                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
                             }
                         }
                     }
@@ -427,8 +473,7 @@ namespace KhTracker
                     {
                         List<Option> options = subcategory.Options;
                         int numberOfOptions = options.Count();
-                        int columnsInGrid = 4;
-                        int spacersNeeded = ((columnsInGrid - (numberOfOptions % columnsInGrid)) % columnsInGrid) + columnsInGrid;
+                        int spacersNeeded = ((ColumnsInGrid - (numberOfOptions % ColumnsInGrid)) % ColumnsInGrid) + ColumnsInGrid;
 
                         for (int i = 0; i < spacersNeeded; i++)
                         {
@@ -520,14 +565,47 @@ namespace KhTracker
                 return;
             if (!currentOption.IsSelectAllOption)
             {
+                if (currentOption.Description == "Include Battleship Logic")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // un-toggle bingo logic
+                        _gridWindow.bingoLogic = false;
+                        var includeBingoOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic");
+                        includeBingoOption.DefaultValue = false.ToString();
+
+                        // show ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        // hide ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (currentOption.Description == "Include Bingo Logic")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // un-toggle battleship logic
+                        _gridWindow.battleshipLogic = false;
+                        var includeBattleshipOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic");
+                        includeBattleshipOption.DefaultValue = false.ToString();
+
+                        // hide ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Collapsed;
+                    }
+                }
                 UpdateGridSettings(_data);
             }
             else
             {
 
                 // Find the parent SubCategory
-                var subCategory = categories.SelectMany(c => c.SubCategories)
-                                             .FirstOrDefault(sc => sc.Options.Contains(currentOption));
+                var subCategory = categories.SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.Options.Contains(currentOption));
                 if (subCategory == null) return;
 
                 // Toggle all checkboxes based on the state of the "Select All" checkbox
@@ -539,8 +617,6 @@ namespace KhTracker
                     }
                 }
             }
-
-            // This assumes you're using some form of INotifyPropertyChanged in your Option class to update the UI
         }
 
 
@@ -590,6 +666,14 @@ namespace KhTracker
 
             bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
             bool randomShipSizes = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Sizes")?.DefaultValue);
+
+            Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
+            Properties.Settings.Default.BattleshipRandomSizes = randomShipSizes;
+
+            bool fogOfWarBingo = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
+            bool fogOfWarBattleship = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Fog of War Logic")?.DefaultValue);
+
+            Properties.Settings.Default.FogOfWar = (fogOfWarBingo || fogOfWarBattleship);
         }
 
         private void UpdateProgression(Data data)

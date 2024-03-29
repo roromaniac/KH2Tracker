@@ -36,11 +36,13 @@ namespace KhTracker
         public string seedName;
         public bool bingoLogic;
         public bool battleshipLogic;
+        public bool fogOfWar;
 
         public Grid grid;
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] bingoStatus;
+        public bool[,] annotationStatus;
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
@@ -69,6 +71,7 @@ namespace KhTracker
 
             bingoLogic = Properties.Settings.Default.GridWindowBingoLogic;
             battleshipLogic = Properties.Settings.Default.GridWindowBattleshipLogic;
+            fogOfWar = Properties.Settings.Default.FogOfWar;
 
             GenerateGrid(numRows, numColumns);
             //Item.UpdateTotal += new Item.TotalHandler(UpdateTotal);
@@ -385,13 +388,15 @@ namespace KhTracker
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (GetColorFromButton(button.Background) == currentColors["Annotated Color"])
+            if (annotationStatus[i, j])
             {
+                annotationStatus[i, j] = false;
                 SetColorForButton(button.Background, originalColors[i, j]);
             }
             else
             {
                 originalColors[i, j] = GetColorFromButton(button.Background);
+                annotationStatus[i, j] = true;
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
         }
@@ -415,6 +420,7 @@ namespace KhTracker
             buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
             originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
             bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
+            annotationStatus = (iconChange && annotationStatus != null) ? annotationStatus : new bool[rows, columns];
             var randValue = new Random();
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             seedName = seedString;
@@ -480,7 +486,8 @@ namespace KhTracker
                 for (int j = 0; j < numColumns; j++)
                 {
                     ToggleButton button = new ToggleButton();
-                    button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    if (!fogOfWar)
+                        button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -899,7 +906,7 @@ namespace KhTracker
                     {
                         SetColorForButton(buttons[i, j].Background, currentColors["Bingo Color"]);
                     }
-                    else if (GetColorFromButton(buttons[i, j].Background) == currentColors["Annotated Color"])
+                    else if (annotationStatus[i, j])
                     {
                         continue;
                     }

@@ -85,6 +85,8 @@
 
         <local:IsWarningNeededConverter x:Key="IsWarningNeededConverter"/>
 
+        <local:BindingProxy x:Key="proxy" Data="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+
         <local:OptionTemplateSelector x:Key="OptionSelector">
             <local:OptionTemplateSelector.CheckBoxTemplate>
                 <DataTemplate>
@@ -105,9 +107,10 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="{Binding Description}" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         <TextBox Text="{Binding DefaultValue}" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"
-                             TextChanged="UpdateTextBoxes"
-                             PreviewTextInput="TextBox_PreviewTextInput"
-                             DataObject.Pasting="TextBox_Pasting"/>
+                                 Visibility="{Binding Visibility}"
+                                 TextChanged="UpdateTextBoxes"
+                                 PreviewTextInput="TextBox_PreviewTextInput"
+                                 DataObject.Pasting="TextBox_Pasting"/>
                     </Grid>
                 </DataTemplate>
             </local:OptionTemplateSelector.TextBoxTemplate>
@@ -127,7 +130,7 @@
                                             <ItemsControl ItemsSource="{Binding Options}" Grid.IsSharedSizeScope="True" ItemTemplateSelector="{StaticResource OptionSelector}">
                                                 <ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
-                                                        <UniformGrid Columns="4"/>
+                                                        <UniformGrid Columns="{Binding Data.ColumnsInGrid, Source={StaticResource proxy}}"/>
                                                     </ItemsPanelTemplate>
                                                 </ItemsControl.ItemsPanel>
                                             </ItemsControl>
