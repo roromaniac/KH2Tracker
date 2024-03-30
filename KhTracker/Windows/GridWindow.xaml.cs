@@ -67,7 +67,7 @@ namespace KhTracker
         public int seed;
         public int[,] placedShips;
         private List<Tuple<int, int>> possibleShipHeads;
-        private List<int> shipSizes = new List<int> { 2, 3, 3, 4, 5 }; // Assuming you have this set somewhere
+        public List<int> shipSizes = new List<int> { 1, 1 }; // Assuming you have this set somewhere
         private int currentShipId = 1; // Start with 1 and increment for each ship
 
 
@@ -84,6 +84,7 @@ namespace KhTracker
 
             bingoLogic = Properties.Settings.Default.GridWindowBingoLogic;
             battleshipLogic = Properties.Settings.Default.GridWindowBattleshipLogic;
+            shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
             fogOfWar = Properties.Settings.Default.FogOfWar;
             fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
 
@@ -603,6 +604,8 @@ namespace KhTracker
             if (battleshipLogic)
             {
                 placedShips = GenerateSameBoard(numRows, numColumns);
+                // if there are no ship ids, we failed to place the ships and we turn the logic off
+                battleshipLogic = placedShips.Cast<int>().Max() == 0 ? false : true;
             }
 
             // generate the boss hints
@@ -1026,7 +1029,9 @@ namespace KhTracker
 
             if (!TryPlaceShips(0))
             {
-                throw new Exception("Failed to place all ships.");
+                MessageBox.Show("Failed to place all ships. Turning battleship logic off. Please increase the grid dimensions or lower the number/size of ships.");
+                battleshipLogic = false;
+                //GenerateGrid(numRows, numColumns, seedName);
             }
 
             return placedShips;

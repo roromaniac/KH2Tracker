@@ -1328,18 +1328,6 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool BattleshipRandomSizes {
-            get {
-                return ((bool)(this["BattleshipRandomSizes"]));
-            }
-            set {
-                this["BattleshipRandomSizes"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{\"W\": 1, \"E\": 1, \"N\": 1, \"S\": 1, \"NW\": 0, \"NE\": 0, \"SW\": 0, \"SE\": 0}")]
         public string FogOfWarSpan {
             get {
@@ -1347,6 +1335,18 @@ namespace KhTracker.Properties {
             }
             set {
                 this["FogOfWarSpan"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{2, 3, 3, 4, 5}")]
+        public string ShipSizes {
+            get {
+                return ((string)(this["ShipSizes"]));
+            }
+            set {
+                this["ShipSizes"] = value;
             }
         }
     }

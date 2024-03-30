@@ -261,9 +261,9 @@ namespace KhTracker
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
                                 new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Sizes", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomSizes") ? _gridWindow.gridSettings["BattleshipRandomSizes"] : false).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
-                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"2, 3, 3, 4, 5", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"1, 1", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
                             }
                         },
                         new SubCategory {
@@ -551,7 +551,14 @@ namespace KhTracker
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // Use regular expression to allow only numeric input
-            e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9]+$");
+            TextBox shipSizesTextBox = sender as TextBox;
+            var currentOption = shipSizesTextBox.DataContext as Option;
+            if (currentOption.Description == "Ship Sizes")
+                e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9,]+$");
+            else
+            {
+                e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9]+$");
+            }
         }
 
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
@@ -691,11 +698,18 @@ namespace KhTracker
             _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
             Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
 
+            _gridWindow.shipSizes = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue
+                                                                .TrimEnd(new char[] { ',', ' ', '\t', '\n', '\r' })
+                                                                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                                                .Select(s => s.Trim())
+                                                                .Where(s => !string.IsNullOrWhiteSpace(s))
+                                                                .Select(int.Parse)
+                                                                .ToList();
+            Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
+
             bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
-            bool randomShipSizes = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Sizes")?.DefaultValue);
 
             Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
-            Properties.Settings.Default.BattleshipRandomSizes = randomShipSizes;
 
             bool includeFogOfWar = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "Include Fog of War Logic")?.DefaultValue);
             _gridWindow.fogOfWar = includeFogOfWar;
@@ -719,7 +733,7 @@ namespace KhTracker
             _gridWindow.fogOfWarSpan["SW"] = southWestSpan;
             _gridWindow.fogOfWarSpan["SE"] = southEastSpan;
 
-            Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize<Dictionary<string, int>>(_gridWindow.fogOfWarSpan);
+            Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
         }
 
         private void UpdateProgression(Data data)
