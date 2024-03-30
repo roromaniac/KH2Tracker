@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -87,6 +88,10 @@ namespace KhTracker
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
                     if (_gridWindow.battleshipLogic)
                     {
+                        if (_gridWindow.battleshipSunkStatus[i, j])
+                        {
+                            _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Battleship Sunk Color"]);
+                        }
                         bool squareMarked = _gridWindow.placedShips[i, j] == 1;
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareMarked ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
                     }
@@ -95,7 +100,7 @@ namespace KhTracker
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
                         if (_gridWindow.bingoLogic)
                         {
-                            _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                            _gridWindow.BingoCheck(i, j);
                             _gridWindow.UpdateBingoCells();
                         }
                     }

@@ -175,6 +175,19 @@ namespace KhTracker
                         gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(root.GetProperty("gridSettings").GetRawText());
                     }
 
+                    // ensure all of the grid settings keys are present
+                    var defaultSettingsJson = Properties.Settings.Default.GridSettings;
+                    var defaultSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(defaultSettingsJson);
+
+                    foreach (var key in defaultSettings.Keys)
+                    {
+                        if (!gridSettings.ContainsKey(key))
+                        {
+                            gridSettings.Add(key, defaultSettings[key]); // Add missing keys with their default values
+                        }
+                    }
+
+
                     if (SavePreviousGridSettingsOption.IsChecked) {
                         Properties.Settings.Default.GridWindowRows = numRows;
                         Properties.Settings.Default.GridWindowColumns = numColumns;
@@ -373,7 +386,6 @@ namespace KhTracker
                 }
                 else if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
-                    // fix this to be conditional on the button corresponding to a ship
                     shipSunkCheck(i, j);
                     UpdateShipStatusUI();
                 }
@@ -394,7 +406,7 @@ namespace KhTracker
                 }
                 if (bingoLogic)
                 {
-                    BingoCheck(grid, i, j);
+                    BingoCheck(i, j);
                     UpdateBingoCells();
                 }
             }
@@ -674,10 +686,8 @@ namespace KhTracker
             return ((SolidColorBrush)buttonBackground).Color;
         }
 
-        public void BingoCheck(Grid grid, int i, int j)
+        public void BingoCheck(int i, int j)
         {
-            int rowCount = grid.RowDefinitions.Count;
-            int columnCount = grid.ColumnDefinitions.Count;
 
             // remove any bingos if we are unclicking
             if (buttons[i, j].IsChecked == false)
@@ -686,19 +696,19 @@ namespace KhTracker
                 bingoStatus[i, j] = false;
 
                 // check if we can have diagonal bingos
-                if (rowCount == columnCount)
+                if (numRows == numColumns)
                 {
                     // remove left diagonal
                     if (i == j)
                     {
-                        for (int index = 0; index < rowCount; index++)
+                        for (int index = 0; index < numRows; index++)
                         {
                             if (bingoStatus[index, index])
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
                                 bool partOfRowBingo = true;
                                 bool partOfColumnBingo = true;
-                                for (int check = 0; check < rowCount; check++)
+                                for (int check = 0; check < numRows; check++)
                                 {
                                     if (!bingoStatus[index, check])
                                         partOfRowBingo = false;
@@ -709,11 +719,11 @@ namespace KhTracker
                                         if (index != i)
                                         {
                                             // check that the middle button (if it exists) is not part of the other diagonal bingo
-                                            if (index * 2 == rowCount - 1)
+                                            if (index * 2 == numRows - 1)
                                             {
-                                                for (int diagCheck = 0; diagCheck < rowCount; diagCheck++)
+                                                for (int diagCheck = 0; diagCheck < numRows; diagCheck++)
                                                 {
-                                                    if (!bingoStatus[diagCheck, rowCount - 1 - diagCheck])
+                                                    if (!bingoStatus[diagCheck, numRows - 1 - diagCheck])
                                                     {
                                                         bingoStatus[index, index] = false;
                                                         break;
@@ -733,40 +743,40 @@ namespace KhTracker
                     }
 
                     // remove right diagonal
-                    if (i == rowCount - 1 - j)
+                    if (i == numRows - 1 - j)
                     {
-                        for (int index = 0; index < rowCount; index++)
+                        for (int index = 0; index < numRows; index++)
                         {
-                            if (bingoStatus[index, rowCount - 1 - index])
+                            if (bingoStatus[index, numRows - 1 - index])
                             {
                                 // check that the button in question is not a part of a row or column bingo before removing bingo background
                                 bool partOfRowBingo = true;
                                 bool partOfColumnBingo = true;
-                                for (int check = 0; check < rowCount; check++)
+                                for (int check = 0; check < numRows; check++)
                                 {
                                     if (!bingoStatus[index, check])
                                         partOfRowBingo = false;
-                                    if (!bingoStatus[check, rowCount - 1 - index])
+                                    if (!bingoStatus[check, numRows - 1 - index])
                                         partOfColumnBingo = false;
                                     if (!partOfRowBingo && !partOfColumnBingo)
                                     {
                                         if (index != i)
                                         {
                                             // check that the middle button (if it exists) is not part of the other diagonal bingo
-                                            if (index * 2 == rowCount - 1)
+                                            if (index * 2 == numRows - 1)
                                             {
-                                                for (int diagCheck = 0; diagCheck < rowCount; diagCheck++)
+                                                for (int diagCheck = 0; diagCheck < numRows; diagCheck++)
                                                 {
                                                     if (!bingoStatus[diagCheck, diagCheck])
                                                     {
-                                                        bingoStatus[index, rowCount - 1 - index] = false;
+                                                        bingoStatus[index, numRows - 1 - index] = false;
                                                         break;
                                                     }
                                                 }
                                             }
                                             else
                                             {
-                                                bingoStatus[index, rowCount - 1 - index] = false;
+                                                bingoStatus[index, numRows - 1 - index] = false;
                                                 break;
                                             }
                                         }
@@ -777,7 +787,7 @@ namespace KhTracker
                     }
                 }
                 // remove vertical bingo
-                for (int row = 0; row < rowCount; row++)
+                for (int row = 0; row < numRows; row++)
                 {
                     bool partOfRowBingo = true;
                     bool partOfLeftDiagBingo = true;
@@ -786,7 +796,7 @@ namespace KhTracker
                     if (bingoStatus[row, j])
                     {
                         // check that the button in question is not a part of a row bingo before removing bingo background 
-                        for (int colCheck = 0; colCheck < columnCount; colCheck++)
+                        for (int colCheck = 0; colCheck < numColumns; colCheck++)
                         {
                             if (row != i)
                             {
@@ -798,12 +808,12 @@ namespace KhTracker
                                 }
                             }
                         }
-                        if (rowCount == columnCount)
+                        if (numRows == numColumns)
                         {
                             // check that the button in question is not a part of left diagonal bingo before removing bingo background 
                             if (j == row)
                             {
-                                for (int leftDiagCheck = 0; leftDiagCheck < rowCount; leftDiagCheck++)
+                                for (int leftDiagCheck = 0; leftDiagCheck < numRows; leftDiagCheck++)
                                 {
                                     if (!bingoStatus[leftDiagCheck, leftDiagCheck])
                                     {
@@ -815,11 +825,11 @@ namespace KhTracker
                             else
                                 partOfLeftDiagBingo = false;
                             // check that the button in question is not a part of right diagonal bingo before removing bingo background
-                            if (j == rowCount - 1 - row)
+                            if (j == numRows - 1 - row)
                             {
-                                for (int rightDiagCheck = 0; rightDiagCheck < rowCount; rightDiagCheck++)
+                                for (int rightDiagCheck = 0; rightDiagCheck < numRows; rightDiagCheck++)
                                 {
-                                    if (!bingoStatus[rightDiagCheck, rowCount - 1 - rightDiagCheck])
+                                    if (!bingoStatus[rightDiagCheck, numRows - 1 - rightDiagCheck])
                                     {
                                         partOfRightDiagBingo = false;
                                         break;
@@ -840,7 +850,7 @@ namespace KhTracker
                 }
 
                 // remove horizontal bingo
-                for (int col = 0; col < columnCount; col++)
+                for (int col = 0; col < numColumns; col++)
                 {
                     bool partOfColumnBingo = true;
                     bool partOfLeftDiagBingo = true;
@@ -849,7 +859,7 @@ namespace KhTracker
                     if (bingoStatus[i, col])
                     {
                         // check that the button in question is not a part of a column bingo before removing bingo background 
-                        for (int rowCheck = 0; rowCheck < rowCount; rowCheck++)
+                        for (int rowCheck = 0; rowCheck < numRows; rowCheck++)
                         {
                             if (col != j)
                             {
@@ -860,12 +870,12 @@ namespace KhTracker
                                 }
                             }
                         }
-                        if (rowCount == columnCount)
+                        if (numRows == numColumns)
                         {
                             // check that the button in question is not a part of left diagonal bingo before removing bingo background 
                             if (i == col)
                             {
-                                for (int leftDiagCheck = 0; leftDiagCheck < rowCount; leftDiagCheck++)
+                                for (int leftDiagCheck = 0; leftDiagCheck < numRows; leftDiagCheck++)
                                 {
                                     if (!bingoStatus[leftDiagCheck, leftDiagCheck])
                                     {
@@ -877,11 +887,11 @@ namespace KhTracker
                             else
                                 partOfLeftDiagBingo = false;
                             // check that the button in question is not a part of right diagonal bingo before removing bingo background
-                            if (i == rowCount - 1 - col)
+                            if (i == numRows - 1 - col)
                             {
-                                for (int rightDiagCheck = 0; rightDiagCheck < rowCount; rightDiagCheck++)
+                                for (int rightDiagCheck = 0; rightDiagCheck < numRows; rightDiagCheck++)
                                 {
-                                    if (!bingoStatus[rightDiagCheck, rowCount - 1 - rightDiagCheck])
+                                    if (!bingoStatus[rightDiagCheck, numRows - 1 - rightDiagCheck])
                                     {
                                         partOfRightDiagBingo = false;
                                         break;
@@ -906,20 +916,20 @@ namespace KhTracker
             else
             {
                 // check if we can have diagonal bingos
-                if (rowCount == columnCount)
+                if (numRows == numColumns)
                 {
                     // add left diagonal
                     if (i == j)
                     {
-                        for (int index = 0; index < rowCount; index++)
+                        for (int index = 0; index < numRows; index++)
                         {
                             if (buttons[index, index].IsChecked == false)
                             {
                                 break;
                             }
-                            if (index == rowCount - 1)
+                            if (index == numRows - 1)
                             {
-                                for (int bingoIndex = 0; bingoIndex < rowCount; bingoIndex++)
+                                for (int bingoIndex = 0; bingoIndex < numRows; bingoIndex++)
                                     bingoStatus[bingoIndex, bingoIndex] = true;
                             }
                         }
@@ -927,47 +937,47 @@ namespace KhTracker
                     }
 
                     // add right diagonal
-                    if (i == rowCount - 1 - j)
+                    if (i == numRows - 1 - j)
                     {
-                        for (int index = 0; index < rowCount; index++)
+                        for (int index = 0; index < numRows; index++)
                         {
-                            if (buttons[index, rowCount - 1 - index].IsChecked == false)
+                            if (buttons[index, numRows - 1 - index].IsChecked == false)
                             {
                                 break;
                             }
-                            if (index == rowCount - 1)
+                            if (index == numRows - 1)
                             {
-                                for (int bingoIndex = 0; bingoIndex < rowCount; bingoIndex++)
-                                    bingoStatus[bingoIndex, rowCount - 1 - bingoIndex] = true;
+                                for (int bingoIndex = 0; bingoIndex < numRows; bingoIndex++)
+                                    bingoStatus[bingoIndex, numRows - 1 - bingoIndex] = true;
                             }
                         }
 
                     }
                 }
                 // add vertical bingo
-                for (int row = 0; row < rowCount; row++)
+                for (int row = 0; row < numRows; row++)
                 {
                     if (buttons[row, j].IsChecked == false)
                     {
                         break;
                     }
-                    if (row == rowCount - 1)
+                    if (row == numRows - 1)
                     {
-                        for (int bingoRow = 0; bingoRow < rowCount; bingoRow++)
+                        for (int bingoRow = 0; bingoRow < numRows; bingoRow++)
                             bingoStatus[bingoRow, j] = true;
                     }
                 }
 
                 // add horizontal bingo
-                for (int col = 0; col < columnCount; col++)
+                for (int col = 0; col < numColumns; col++)
                 {
                     if (buttons[i, col].IsChecked == false)
                     {
                         break;
                     }
-                    if (col == columnCount - 1)
+                    if (col == numColumns - 1)
                     {
-                        for (int bingoCol = 0; bingoCol < columnCount; bingoCol++)
+                        for (int bingoCol = 0; bingoCol < numColumns; bingoCol++)
                             bingoStatus[i, bingoCol] = true;
                     }
                 }
@@ -976,25 +986,29 @@ namespace KhTracker
 
         public void UpdateBingoCells()
         {
-            for (int i = 0; i < numRows; i++)
+            for (int row = 0; row < numRows; row++)
             {
-                for (int j = 0; j < numColumns; j++)
+                for (int column = 0; column < numColumns; column++)
                 {
-                    if (bingoStatus[i, j])
+                    if (bingoStatus[row, column])
                     {
-                        SetColorForButton(buttons[i, j].Background, currentColors["Bingo Color"]);
+                        SetColorForButton(buttons[row, column].Background, currentColors["Bingo Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        annotationStatus[row, column] = false;
                     }
-                    else if (annotationStatus[i, j])
+                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
                     {
-                        continue;
+                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
                     }
-                    else if (buttons[i, j].IsChecked ?? false)
+                    else if (buttons[row, column].IsChecked ?? false)
                     {
-                        SetColorForButton(buttons[i, j].Background, currentColors["Marked Color"]);
+                        SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                     }
                     else
                     {
-                        SetColorForButton(buttons[i, j].Background, currentColors["Unmarked Color"]);
+                        SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                     }
                 }
             }
@@ -1174,14 +1188,24 @@ namespace KhTracker
                 for (int column = 0; column < numColumns; column++)
                 {
                     if (battleshipSunkStatus[row, column])
+                    {
                         SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        annotationStatus[row, column] = false;
+                    }
+                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
+                    {
+                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? ((placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]) : currentColors["Unmarked Color"];
+                    }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
-                        SetColorForButton(buttons[row, column].Background, placedShips[row, column] != 0 ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
+                        SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                     }
                     else
                     {
                         SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                     }
                 }
             }

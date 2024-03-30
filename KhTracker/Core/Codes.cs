@@ -1297,6 +1297,15 @@ namespace KhTracker
             {"Zexion (Data)", "ZexionData"},
         };
 
+        // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
+        // the keys for Hades and Pete in the data.BossList dictionary.
+        public static Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string>()
+        {
+            { "Hades", "Hades II (1)" },
+            { "DCPete", "Pete TR" },
+            { "OCPete", "Pete OC II" }
+        };
+
         public static Dictionary<string, string> getColors = new Dictionary<string, string>()
         {
             {"Sora's Heart", "Pink" },

@@ -862,15 +862,8 @@ namespace KhTracker
                             
                     }
 
-                    // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
-                    // the keys for Hades and Pete in the data.BossList dictionary.
-                    Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string> {
-                                                                        { "Hades", "Hades II (1)" },
-                                                                        { "DCPete", "Pete TR" },
-                                                                        { "OCPete", "Pete OC II" }
-                                                                    };
-                    if (mismatchedBossNames.Keys.Contains(checks[i]))
-                        checks[i] = mismatchedBossNames[checks[i]];
+                    if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
+                        checks[i] = Codes.mismatchedBossNames[checks[i]];
 
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
