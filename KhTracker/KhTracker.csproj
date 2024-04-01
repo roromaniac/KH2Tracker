@@ -213,6 +213,7 @@
     <Resource Include="Fonts\KHMenu-Italic.otf" />
     <Resource Include="Fonts\KHTitle.otf" />
     <Resource Include="Fonts\KHIcon.otf" />
+    <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
@@ -220,9 +221,6 @@
     </None>
     <Resource Include="Images\FailBar.png" />
     <Resource Include="Images\FailX.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

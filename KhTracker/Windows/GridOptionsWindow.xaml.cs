@@ -189,7 +189,7 @@ namespace KhTracker
 
         public int TrueChecksCount
         {
-            get { return _gridWindow.gridSettings.Count(kvp => kvp.Value == true); }
+            get { return _gridWindow.gridSettings.Count(kvp => kvp.Value == true && !new[] { "ForcingFinalCounts" }.Contains(kvp.Key)); }
         }
 
         private int _columnsInGrid = 4;
@@ -218,6 +218,10 @@ namespace KhTracker
         int newNumColumns;
         bool newBingoLogic;
         bool newBattleshipLogic;
+        bool newBattleshipRandomCount;
+        int newMaxShipCount;
+        int newMinShipCount;
+        List<int> newShipSizes;
         bool newFogOfWar;
         Dictionary<string, int> newFogOfWarSpan;
         List<Category> categories;
@@ -226,12 +230,16 @@ namespace KhTracker
         {
             InitializeComponent();
             _gridWindow = gridWindow;
-            newNumRows = gridWindow.numRows;
-            newNumColumns = gridWindow.numColumns;
-            newBingoLogic = gridWindow.bingoLogic;
             newBattleshipLogic = gridWindow.battleshipLogic;
+            newBattleshipRandomCount = gridWindow.battleshipRandomCount;
+            newBingoLogic = gridWindow.bingoLogic;
             newFogOfWar = gridWindow.fogOfWar;
             newFogOfWarSpan = gridWindow.fogOfWarSpan;
+            newMaxShipCount = gridWindow.maxShipCount;
+            newMinShipCount = gridWindow.minShipCount;
+            newNumColumns = gridWindow.numColumns;
+            newNumRows = gridWindow.numRows;
+            newShipSizes = gridWindow.shipSizes;
             _data = data;
 
             categories = new List<Category>
@@ -260,10 +268,13 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
-                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = (_gridWindow.gridSettings.ContainsKey("BattleshipRandomCount") ? _gridWindow.gridSettings["BattleshipRandomCount"] : false).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = $"{newBattleshipRandomCount}" },
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
-                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"1, 1", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
+                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"{string.Join(", ", newShipSizes)}", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
+                                new Option { Type = OptionType.TextBox, Description = "Min Ship Count", DefaultValue = $"{newMinShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "Max Ship Count", DefaultValue = $"{newMaxShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
                             }
                         },
                         new SubCategory {
@@ -609,6 +620,13 @@ namespace KhTracker
                         // hide ship sizes
                         var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
                         shipSizesOption.Visibility = Visibility.Collapsed;
+
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
                     }
 
                 }
@@ -624,6 +642,34 @@ namespace KhTracker
                         // hide ship sizes
                         var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
                         shipSizesOption.Visibility = Visibility.Collapsed;
+
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (currentOption.Description == "Random Ship Count")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // show random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Visible;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
                     }
                 }
                 else if (currentOption.Description == "Include Fog of War Logic")
@@ -698,18 +744,31 @@ namespace KhTracker
             _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
             Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
 
-            _gridWindow.shipSizes = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue
-                                                                .TrimEnd(new char[] { ',', ' ', '\t', '\n', '\r' })
-                                                                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                                                .Select(s => s.Trim())
-                                                                .Where(s => !string.IsNullOrWhiteSpace(s))
-                                                                .Select(int.Parse)
-                                                                .ToList();
+            var shipSizesOptionList = (categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue);
+            // text boxes are strings so we need to convert string to list if we are updating from the options window instead of uploading a card
+            Console.WriteLine($"{shipSizesOptionList}");
+            if (shipSizesOptionList.GetType() == typeof(string))
+                _gridWindow.shipSizes = shipSizesOptionList
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) // Split by comma
+                    .SelectMany(chunk => chunk.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) // Split by space after trimming
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(int.Parse)
+                    .ToList();
             Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
 
             bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
 
+            _gridWindow.battleshipRandomCount = randomShipCount;
             Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
+
+            int minNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Min Ship Count")?.DefaultValue);
+            int maxNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Max Ship Count")?.DefaultValue);
+
+            _gridWindow.minShipCount = minNumShips;
+            Properties.Settings.Default.MinShipCount = minNumShips;
+
+            _gridWindow.maxShipCount = maxNumShips;
+            Properties.Settings.Default.MaxShipCount = maxNumShips;
 
             bool includeFogOfWar = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "Include Fog of War Logic")?.DefaultValue);
             _gridWindow.fogOfWar = includeFogOfWar;
@@ -999,6 +1058,9 @@ namespace KhTracker
                     bingoLogic = _gridWindow.bingoLogic,
                     battleshipLogic = _gridWindow.battleshipLogic,
                     seedName = _gridWindow.seedName,
+                    shipSizes = _gridWindow.shipSizes,
+                    fogOfWar = _gridWindow.fogOfWar,
+                    fogOfWarSpan = _gridWindow.fogOfWarSpan,
                     gridSettings = _gridWindow.gridSettings
                 };
 
