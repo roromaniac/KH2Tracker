@@ -1061,7 +1061,10 @@ namespace KhTracker
                     shipSizes = _gridWindow.shipSizes,
                     fogOfWar = _gridWindow.fogOfWar,
                     fogOfWarSpan = _gridWindow.fogOfWarSpan,
-                    gridSettings = _gridWindow.gridSettings
+                    gridSettings = _gridWindow.gridSettings,
+                    minShipCount = _gridWindow.minShipCount,
+                    maxShipCount = _gridWindow.maxShipCount,                  
+                    battleshipRandomCount = _gridWindow.battleshipRandomCount
                 };
 
                 var jsonString = JsonSerializer.Serialize(combinedSettings);

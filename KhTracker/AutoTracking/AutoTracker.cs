@@ -805,7 +805,7 @@ namespace KhTracker
             switch (gridCheckName)
             {
                 case "Lords":
-                    checks = new string[] { "BlizzardLord", "VolcanoLord" };
+                    checks = new string[] { "BlizzardLord", "VolcanoLord", "Lords" };
                     break;
                 case "SephiDemyx":
                     checks = new string[] { "Sephiroth", "DataDemyx" };
