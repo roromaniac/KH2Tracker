@@ -623,6 +623,7 @@ namespace KhTracker
             }
 
             grid = new Grid();
+            gridOptionsWindow = new GridOptionsWindow(this, data);
             buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
             originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
             bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];

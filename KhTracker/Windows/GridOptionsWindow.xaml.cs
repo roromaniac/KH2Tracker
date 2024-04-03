@@ -211,6 +211,7 @@ namespace KhTracker
             get { return _gridWindow.numRows * _gridWindow.numColumns; }
         }
 
+        private dynamic originalSettings;
         public bool canClose = false;
         public GridWindow _gridWindow;
         public Data _data;
@@ -241,6 +242,22 @@ namespace KhTracker
             newNumRows = gridWindow.numRows;
             newShipSizes = gridWindow.shipSizes;
             _data = data;
+
+            originalSettings = new
+            {
+                numRows = _gridWindow.numRows,
+                numColumns = _gridWindow.numColumns,
+                bingoLogic = _gridWindow.bingoLogic,
+                battleshipLogic = _gridWindow.battleshipLogic,
+                seedName = _gridWindow.seedName,
+                shipSizes = _gridWindow.shipSizes,
+                fogOfWar = _gridWindow.fogOfWar,
+                fogOfWarSpan = _gridWindow.fogOfWarSpan,
+                gridSettings = _gridWindow.gridSettings,
+                minShipCount = _gridWindow.minShipCount,
+                maxShipCount = _gridWindow.maxShipCount,
+                battleshipRandomCount = _gridWindow.battleshipRandomCount
+            };
 
             categories = new List<Category>
             {
@@ -746,7 +763,6 @@ namespace KhTracker
 
             var shipSizesOptionList = (categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue);
             // text boxes are strings so we need to convert string to list if we are updating from the options window instead of uploading a card
-            Console.WriteLine($"{shipSizesOptionList}");
             if (shipSizesOptionList.GetType() == typeof(string))
                 _gridWindow.shipSizes = shipSizesOptionList
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) // Split by comma
@@ -1070,6 +1086,19 @@ namespace KhTracker
                 var jsonString = JsonSerializer.Serialize(combinedSettings);
                 System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
             }
+
+            _gridWindow.numRows = originalSettings.numRows;
+            _gridWindow.numColumns = originalSettings.numColumns;
+            _gridWindow.bingoLogic = originalSettings.bingoLogic;
+            _gridWindow.battleshipLogic = originalSettings.battleshipLogic;
+            _gridWindow.seedName = originalSettings.seedName;
+            _gridWindow.shipSizes = originalSettings.shipSizes;
+            _gridWindow.fogOfWar = originalSettings.fogOfWar;
+            _gridWindow.fogOfWarSpan = originalSettings.fogOfWarSpan;
+            _gridWindow.gridSettings = originalSettings.gridSettings;
+            _gridWindow.minShipCount = originalSettings.minShipCount;
+            _gridWindow.maxShipCount = originalSettings.maxShipCount;                 
+            _gridWindow.battleshipRandomCount = originalSettings.battleshipRandomCount;
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
