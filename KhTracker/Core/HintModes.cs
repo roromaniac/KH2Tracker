@@ -1168,7 +1168,13 @@ namespace KhTracker
                 {"Fire", 1 }, {"Blizzard", 1 }, {"Thunder", 1 },
                 {"Cure", 1 }, {"Magnet", 1 }, {"Reflect", 1},
                 {"TornPage", 1}, {"MunnyPouch", 1},
+                {"AuronWep", 1}, {"MulanWep", 1}, {"BeastWep", 1},
+                {"JackWep", 1}, {"SimbaWep", 1}, {"SparrowWep", 1},
+                {"AladdinWep", 1}, {"TronWep", 1}, {"RikuWep", 1},
+                {"MembershipCard", 1}, {"IceCream", 1}, {"KingsLetter", 1},
             };
+
+            Dictionary<int, string> repWorlds = new Dictionary<int, string>();
 
             foreach (var world in worlds)
             {
@@ -1183,6 +1189,12 @@ namespace KhTracker
                     //    continue;
 
                     string item = Codes.ConvertSeedGenName(itemNum, true);
+
+                    if (item.Contains("Report"))
+                    {
+                        repWorlds.Add(Int32.Parse(item.Remove(0, 22)), Codes.ConvertSeedGenName(world.Key));
+                    }
+                        
 
                     if (item.Contains("Report") && !data.SpoilerReportMode && !TMP_bossReports)
                         continue;
@@ -1235,7 +1247,12 @@ namespace KhTracker
                 {
                     string worldstring = reports[report.ToString()]["World"].ToString();
                     int dummyvalue = 0;
-                    string location;
+                    string location = "";
+                    if (report < 14)
+                    {
+                        location = repWorlds[report];
+                    }
+
                     if (worldstring.StartsWith("Nothing_"))
                     {
                         worldstring = worldstring.Remove(0, 8);
@@ -1245,14 +1262,14 @@ namespace KhTracker
                     {
                         //still need to get and add location for report to track to correct world
                         //we can't just skip everything if creations was set to be hinted
-                        location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                        //location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
                         data.reportLocations.Add(location);
                         continue;
                     }
 
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
-                    location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                    //location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
 
 
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));

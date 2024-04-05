@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -44,15 +45,24 @@ namespace KhTracker
                 { "Battleship Sunk Color", Colors.Pink }
             };
 
-            // Set button colors initially
+            // Set button colors and foreground text colors initially
             UnmarkedColorButton.Background = new SolidColorBrush(ButtonColors["Unmarked Color"]);
+            Console.WriteLine($"FFFFFFFFFFFFFF: {ButtonColors["Unmarked Color"]}");
+            SetForegroundColor(ButtonColors["Unmarked Color"], UnmarkedColorButton);
             MarkedColorButton.Background = new SolidColorBrush(ButtonColors["Marked Color"]);
+            SetForegroundColor(ButtonColors["Marked Color"], MarkedColorButton);
             AnnotatedColorButton.Background = new SolidColorBrush(ButtonColors["Annotated Color"]);
+            SetForegroundColor(ButtonColors["Annotated Color"], AnnotatedColorButton);
             BingoColorButton.Background = new SolidColorBrush(ButtonColors["Bingo Color"]);
+            SetForegroundColor(ButtonColors["Bingo Color"], AnnotatedColorButton);
             HintColorButton.Background = new SolidColorBrush(ButtonColors["Hint Color"]);
+            SetForegroundColor(ButtonColors["Hint Color"], HintColorButton);
             BattleshipMissColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Miss Color"]);
+            SetForegroundColor(ButtonColors["Battleship Miss Color"], BattleshipMissColorButton);
             BattleshipHitColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Hit Color"]);
+            SetForegroundColor(ButtonColors["Battleship Hit Color"], BattleshipHitColorButton);
             BattleshipSunkColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Sunk Color"]);
+            SetForegroundColor(ButtonColors["Battleship Sunk Color"], BattleshipSunkColorButton);
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -70,17 +80,30 @@ namespace KhTracker
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //update the new colors on the card
-            var oldAnnotatedColor = _gridWindow.currentColors["Annotated Color"];
             for (int i = 0; i < _gridWindow.numRows; i++)
             {
                 for (int j = 0; j < _gridWindow.numColumns; j++)
                 {
-                    if (_gridWindow.GetColorFromButton(_gridWindow.buttons[i, j].Background).Equals(oldAnnotatedColor))
+                    if (_gridWindow.annotationStatus[i, j])
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
+                    if (_gridWindow.battleshipLogic)
+                    {
+                        if (_gridWindow.battleshipSunkStatus[i, j])
+                        {
+                            _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Battleship Sunk Color"]);
+                        }
+                        bool squareMarked = _gridWindow.placedShips[i, j] == 1;
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareMarked ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
+                    }
                     else
+                    {
                         _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
-                    if (_gridWindow.bingoLogic)
-                        _gridWindow.BingoCheck(_gridWindow.grid, i, j);
+                        if (_gridWindow.bingoLogic)
+                        {
+                            _gridWindow.BingoCheck(i, j);
+                            _gridWindow.UpdateBingoCells();
+                        }
+                    }
                 }
             }
             // update the hint color
@@ -99,6 +122,21 @@ namespace KhTracker
             }
         }
 
+        private void SetForegroundColor(Color color, Button button)
+        {
+            // Calculate the luminance of the SelectedColor
+            double luminance = (0.299 * color.R + 0.587 * color.G + 0.114 * color.B) / 255;
+            // If luminance is greater than 0.5, the color is closer to white, so use a dark color for the foreground; otherwise, use a light color.
+            if (luminance > 0.5)
+            {
+                button.Foreground = new SolidColorBrush(Colors.Black); // Dark foreground for lighter backgrounds
+            }
+            else
+            {
+                button.Foreground = new SolidColorBrush(Colors.White); // Light foreground for darker backgrounds
+            }
+        }
+
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -114,6 +152,9 @@ namespace KhTracker
                     // update the preview background
                     PreviewBorder.Background = new SolidColorBrush(SelectedColor);
 
+                    // update the foreground text
+                    SetForegroundColor(SelectedColor, button);
+
                     // reveals the color slider
                     ColorControls.Visibility = Visibility.Visible;
                 }
@@ -127,6 +168,7 @@ namespace KhTracker
             var lastClickedTextBlock = LastClickedButton.Content as TextBlock;  
             ButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
             SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
+            SetForegroundColor(SelectedColor, LastClickedButton);
         }
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)

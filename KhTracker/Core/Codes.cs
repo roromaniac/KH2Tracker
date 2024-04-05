@@ -415,6 +415,8 @@ namespace KhTracker
             {"Scimitar (Aladdin)", "Scimitar"},
             {"Identity Disk (Tron)", "Identity Disk"},
             {"Way to the Dawn (Riku)", "Way to the Dawn"},
+            {"Munny Pouch (Olette)", "Munny Pouch"},
+            {"Munny Pouch (Mickey)", "Munny Pouch"},
             {"Sora's Heart",            "Levels" },
             {"Drive Forms",             "Drives" },
             {"Simulated Twilight Town", "STT" },
@@ -431,6 +433,72 @@ namespace KhTracker
             {"Port Royal",              "PR" },
             {"Space Paranoids",         "SP" },
             {"Atlantica",               "AT" }
+        };
+
+        public static List<string> worldUnlocks = new List<string>()
+        {
+            "AuronWep1",
+            "AuronWep2",
+            "MulanWep1",
+            "MulanWep2",
+            "BeastWep1",
+            "BeastWep2",
+            "JackWep1",
+            "JackWep2",
+            "SimbaWep1",
+            "SimbaWep2",
+            "SparrowWep1",
+            "SparrowWep2",
+            "AladdinWep1",
+            "AladdinWep2",
+            "TronWep1",
+            "TronWep2",
+            "MembershipCard1",
+            "MembershipCard2",
+            "IceCream1",
+            "IceCream2",
+            "IceCream3",
+            "RikuWep1",
+            "RikuWep2",
+            "KingsLetter1",
+            "KingsLetter2",
+            "Sketches"
+        };
+
+        public static List<string> reports = new List<string>()
+        {
+            "Report1",
+            "Report2",
+            "Report3",
+            "Report4",
+            "Report5",
+            "Report6",
+            "Report7",
+            "Report8",
+            "Report9",
+            "Report10",
+            "Report11",
+            "Report12",
+            "Report13"
+        };
+
+        public static List<string> chestLocks = new List<string>()
+        {
+            "ChestTT",
+            "ChestSTT",
+            "ChestHB",
+            "ChestCoR",
+            "ChestAG",
+            "ChestBC",
+            "ChestDC",
+            "ChestHT",
+            "ChestLoD",
+            "ChestOC",
+            "ChestPL",
+            "ChestPR",
+            "ChestSP",
+            "ChestTWTNW",
+            "ChestHAW"
         };
 
         public static Dictionary<string, string> itemTypes = new Dictionary<string, string>()
@@ -503,7 +571,7 @@ namespace KhTracker
             {"TronWep", "visit"},
             {"MembershipCard", "visit"},
             {"IceCream", "visit"},
-            //{"Picture", "visit"},
+            {"Picture", "visit"},
             {"Anti", "form"},
             {"HadesCup", "other"},
             {"OlympusStone", "other"},
@@ -511,6 +579,8 @@ namespace KhTracker
             {"MunnyPouch", "other"},
             {"MunnyPouch1", "other"},
             {"MunnyPouch2", "other"},
+            {"RikuWep", "visit"},
+            {"KingsLetter", "visit"},
             {"AuronWep1", "visit"},
             {"AuronWep2", "visit"},
             {"MulanWep1", "visit"},
@@ -713,6 +783,8 @@ namespace KhTracker
             {"Olympus Stone", "other"},
             {"Unknown Disk", "other"},
             {"Munny Pouch", "other"},
+            //{"Munny Pouch (Olette)", "other"},
+            //{"Munny Pouch (Mickey)", "other"},
             {"Way to the Dawn (Riku)", "visit"},
             {"Disney Castle Key", "visit"},
             {"Namine's Sketches", "visit"},
@@ -795,7 +867,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
@@ -894,7 +968,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> bossTypes = new Dictionary<string, string>()
@@ -1229,6 +1305,15 @@ namespace KhTracker
             {"Yuffie (3)", "Yuffie"},
             {"Zexion", "Zexion"},
             {"Zexion (Data)", "ZexionData"},
+        };
+
+        // if we're playing boss rando, we don't want to deal with the progression checks "Hades" and "DCPete" since they aren't
+        // the keys for Hades and Pete in the data.BossList dictionary.
+        public static Dictionary<string, string> mismatchedBossNames = new Dictionary<string, string>()
+        {
+            { "Hades", "Hades II (1)" },
+            { "DCPete", "Pete TR" },
+            { "OCPete", "Pete OC II" }
         };
 
         public static Dictionary<string, string> getColors = new Dictionary<string, string>()
