@@ -410,12 +410,56 @@
     <local:GridLabelledImage x:Key="Cus-Picture"		    Source="pack://application:,,,/CustomImages/Checks/Lock_Picture.png"           GridAllowed="True"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-OnceMore"		Source="pack://application:,,,/CustomImages/Checks/once_more.png"           GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-SecondChance"	Source="pack://application:,,,/CustomImages/Checks/second_chance.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-RikuWep"		    Source="pack://application:,,,/CustomImages/Checks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-Sketches"		    Source="pack://application:,,,/CustomImages/Checks/lock_sketches.png"           GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-KingsLetter"	    Source="pack://application:,,,/CustomImages/Checks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-RikuWep1"		    Source="pack://application:,,,/CustomImages/Checks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-RikuWep2"		    Source="pack://application:,,,/CustomImages/Checks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-KingsLetter1"	    Source="pack://application:,,,/CustomImages/Checks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-KingsLetter2"	    Source="pack://application:,,,/CustomImages/Checks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-AuronWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-AuronWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MulanWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MulanWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-BeastWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-BeastWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-JackWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-JackWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-SimbaWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-SimbaWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-SparrowWep1"	    Source="pack://application:,,,/CustomImages/Checks/Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-SparrowWep2"	    Source="pack://application:,,,/CustomImages/Checks/Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-AladdinWep1"	    Source="pack://application:,,,/CustomImages/Checks/Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-AladdinWep2"	    Source="pack://application:,,,/CustomImages/Checks/Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-TronWep1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-TronWep2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MembershipCard1"    Source="pack://application:,,,/CustomImages/Checks/Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MembershipCard2"    Source="pack://application:,,,/CustomImages/Checks/Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-IceCream1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-IceCream2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-IceCream3"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>    
     <!-- Extra -->
     <local:GridLabelledImage x:Key="Cus-HadesCup"		    Source="pack://application:,,,/CustomImages/Checks/Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-OlympusStone"		Source="pack://application:,,,/CustomImages/Checks/Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-UnknownDisk"		Source="pack://application:,,,/CustomImages/Checks/Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-MunnyPouch1"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-MunnyPouch2"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MunnyPouch1"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-MunnyPouch2"	    Source="pack://application:,,,/CustomImages/Checks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <!-- World Chest Locks-->
+    <local:GridLabelledImage x:Key="Cus-ChestAG"		    Source="pack://application:,,,/CustomImages/Checks/chest_ag.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestBC"		    Source="pack://application:,,,/CustomImages/Checks/chest_bc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestDC"		    Source="pack://application:,,,/CustomImages/Checks/chest_dc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestHT"		    Source="pack://application:,,,/CustomImages/Checks/chest_ht.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestOC"		    Source="pack://application:,,,/CustomImages/Checks/chest_oc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestPL"		    Source="pack://application:,,,/CustomImages/Checks/chest_pl.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestPR"		    Source="pack://application:,,,/CustomImages/Checks/chest_pr.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestSP"		    Source="pack://application:,,,/CustomImages/Checks/chest_sp.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestTT"		    Source="pack://application:,,,/CustomImages/Checks/chest_tt.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestHB"		    Source="pack://application:,,,/CustomImages/Checks/chest_hb.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestLoD"		    Source="pack://application:,,,/CustomImages/Checks/chest_lod.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestCoR"		    Source="pack://application:,,,/CustomImages/Checks/chest_cor.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestSTT"		    Source="pack://application:,,,/CustomImages/Checks/chest_stt.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestHAW"		    Source="pack://application:,,,/CustomImages/Checks/chest_haw.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-ChestTWTNW"		    Source="pack://application:,,,/CustomImages/Checks/chest_twtnw.png"        GridAllowed="True"                     x:Shared="false"/>
 
     <!--Custom Item Icons (Ghost)-->
     <local:GridLabelledImage x:Key="Cus-G_Report"             Source="pack://application:,,,/CustomImages/GhostChecks/ansem_report.png"           GridAllowed="True"                      x:Shared="false"/>
@@ -482,12 +526,59 @@
     <local:GridLabelledImage x:Key="Cus-G_Picture"		    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_Picture.png"           GridAllowed="True"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_OnceMore"			Source="pack://application:,,,/CustomImages/GhostChecks/once_more.png"           GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_SecondChance"		Source="pack://application:,,,/CustomImages/GhostChecks/second_chance.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_RikuWep"		    Source="pack://application:,,,/CustomImages/GhostChecks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_Sketches"		    Source="pack://application:,,,/CustomImages/GhostChecks/lock_sketches.png"           GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_KingsLetter"	    Source="pack://application:,,,/CustomImages/GhostChecks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_RikuWep1"		    Source="pack://application:,,,/CustomImages/GhostChecks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_RikuWep2"		    Source="pack://application:,,,/CustomImages/GhostChecks/lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_KingsLetter1"	    Source="pack://application:,,,/CustomImages/GhostChecks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_KingsLetter2"	    Source="pack://application:,,,/CustomImages/GhostChecks/lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_AuronWep1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_AuronWep2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MulanWep1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MulanWep2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_BeastWep1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_BeastWep2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_JackWep1"		    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_JackWep2"		    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_SimbaWep1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_SimbaWep2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_SparrowWep1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_SparrowWep2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_AladdinWep1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_AladdinWep2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_TronWep1"		    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_TronWep2"		    Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MembershipCard1"  Source="pack://application:,,,/CustomImages/GhostChecks/Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MembershipCard2"  Source="pack://application:,,,/CustomImages/GhostChecks/Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_IceCream1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_IceCream2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_IceCream3"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
+
     <!-- Extra -->
     <local:GridLabelledImage x:Key="Cus-G_HadesCup"		    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_OlympusStone"		Source="pack://application:,,,/CustomImages/GhostChecks/Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Cus-G_UnknownDisk"		Source="pack://application:,,,/CustomImages/GhostChecks/Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch1"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_MunnyPouch2"	    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <!-- World Chest Locks-->
+    <local:GridLabelledImage x:Key="Cus-G_ChestAG"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_ag.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestBC"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_bc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestDC"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_dc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestHT"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_ht.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestOC"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_oc.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestPL"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_pl.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestPR"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_pr.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestSP"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_sp.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestTT"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_tt.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestHB"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_hb.png"           GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestLoD"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_lod.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestCoR"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_cor.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestSTT"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_stt.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestHAW"		    Source="pack://application:,,,/CustomImages/GhostChecks/chest_haw.png"          GridAllowed="True"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Cus-G_ChestTWTNW"		Source="pack://application:,,,/CustomImages/GhostChecks/chest_twtnw.png"        GridAllowed="True"                     x:Shared="false"/>
+
+
 
     <!--Custom Other (Main)-->
     <!--local:GridLabelledImage x:Key="Cus-OnceMore"			Source="pack://application:,,,/CustomImages/Checks/once_more.png"           GridAllowed="True"            x:Shared="false"/>

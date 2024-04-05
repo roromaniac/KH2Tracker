@@ -2445,19 +2445,19 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <local:Item x:Name="Report1" Content="{DynamicResource Min-Report1}"   Grid.Column="0" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report2" Content="{DynamicResource Min-Report2}"   Grid.Column="1" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report3" Content="{DynamicResource Min-Report3}"   Grid.Column="2" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report4" Content="{DynamicResource Min-Report4}"   Grid.Column="3" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report5" Content="{DynamicResource Min-Report5}"   Grid.Column="4" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report6" Content="{DynamicResource Min-Report6}"   Grid.Column="5" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report7" Content="{DynamicResource Min-Report7}"   Grid.Column="6" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report8" Content="{DynamicResource Min-Report8}"   Grid.Column="7" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report9" Content="{DynamicResource Min-Report9}"   Grid.Column="8" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report10" Content="{DynamicResource Min-Report10}" Grid.Column="9" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report11" Content="{DynamicResource Min-Report11}" Grid.Column="10" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report12" Content="{DynamicResource Min-Report12}" Grid.Column="11" Panel.ZIndex="0"/>
-                    <local:Item x:Name="Report13" Content="{DynamicResource Min-Report13}" Grid.Column="12" Panel.ZIndex="0"/>
+                    <local:Item x:Name="Report1" Content="{DynamicResource Min-Report1}"   Grid.Column="0" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 1"/>
+                    <local:Item x:Name="Report2" Content="{DynamicResource Min-Report2}"   Grid.Column="1" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 2"/>
+                    <local:Item x:Name="Report3" Content="{DynamicResource Min-Report3}"   Grid.Column="2" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 3"/>
+                    <local:Item x:Name="Report4" Content="{DynamicResource Min-Report4}"   Grid.Column="3" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 4"/>
+                    <local:Item x:Name="Report5" Content="{DynamicResource Min-Report5}"   Grid.Column="4" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 5"/>
+                    <local:Item x:Name="Report6" Content="{DynamicResource Min-Report6}"   Grid.Column="5" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 6"/>
+                    <local:Item x:Name="Report7" Content="{DynamicResource Min-Report7}"   Grid.Column="6" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 7"/>
+                    <local:Item x:Name="Report8" Content="{DynamicResource Min-Report8}"   Grid.Column="7" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 8"/>
+                    <local:Item x:Name="Report9" Content="{DynamicResource Min-Report9}"   Grid.Column="8" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 9"/>
+                    <local:Item x:Name="Report10" Content="{DynamicResource Min-Report10}" Grid.Column="9" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 10"/>
+                    <local:Item x:Name="Report11" Content="{DynamicResource Min-Report11}" Grid.Column="10" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 11"/>
+                    <local:Item x:Name="Report12" Content="{DynamicResource Min-Report12}" Grid.Column="11" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 12"/>
+                    <local:Item x:Name="Report13" Content="{DynamicResource Min-Report13}" Grid.Column="12" Panel.ZIndex="0" ToolTip="Secret Ansem's Report 13"/>
 
                     <!-- Fail Icons -->
                     <ContentControl x:Name="Attempts1" Content="{DynamicResource Fail0}"  Grid.Column="0" Panel.ZIndex="1"/>
@@ -2659,31 +2659,31 @@
                         </local:OutlinedTextBlock>
                     </Viewbox>
 
-                    <local:Item x:Name="Fire1"        Content="{DynamicResource Min-Fire1}"         Grid.Column="1"/>
-                    <local:Item x:Name="Fire2"        Content="{DynamicResource Min-Fire2}"         Grid.Column="1"/>
-                    <local:Item x:Name="Fire3"        Content="{DynamicResource Min-Fire3}"         Grid.Column="1"/>
-                    <local:Item x:Name="Blizzard1"    Content="{DynamicResource Min-Blizzard1}"     Grid.Column="4"/>
-                    <local:Item x:Name="Blizzard2"    Content="{DynamicResource Min-Blizzard2}"     Grid.Column="4"/>
-                    <local:Item x:Name="Blizzard3"    Content="{DynamicResource Min-Blizzard3}"     Grid.Column="4"/>
-                    <local:Item x:Name="Thunder1"     Content="{DynamicResource Min-Thunder1}"      Grid.Column="7"/>
-                    <local:Item x:Name="Thunder2"     Content="{DynamicResource Min-Thunder2}"      Grid.Column="7"/>
-                    <local:Item x:Name="Thunder3"     Content="{DynamicResource Min-Thunder3}"      Grid.Column="7"/>
-                    <local:Item x:Name="Cure1"        Content="{DynamicResource Min-Cure1}"         Grid.Column="10"/>
-                    <local:Item x:Name="Cure2"        Content="{DynamicResource Min-Cure2}"         Grid.Column="10"/>
-                    <local:Item x:Name="Cure3"        Content="{DynamicResource Min-Cure3}"         Grid.Column="10"/>
-                    <local:Item x:Name="Reflect1"     Content="{DynamicResource Min-Reflect1}"      Grid.Column="13"/>
-                    <local:Item x:Name="Reflect2"     Content="{DynamicResource Min-Reflect2}"      Grid.Column="13"/>
-                    <local:Item x:Name="Reflect3"     Content="{DynamicResource Min-Reflect3}"      Grid.Column="13"/>
-                    <local:Item x:Name="Magnet1"      Content="{DynamicResource Min-Magnet1}"       Grid.Column="16"/>
-                    <local:Item x:Name="Magnet2"      Content="{DynamicResource Min-Magnet2}"       Grid.Column="16"/>
-                    <local:Item x:Name="Magnet3"      Content="{DynamicResource Min-Magnet3}"       Grid.Column="16"/>
-                    <local:Item x:Name="TornPage1"    Content="{DynamicResource Min-TornPage1}"     Grid.Column="19"/>
-                    <local:Item x:Name="TornPage2"    Content="{DynamicResource Min-TornPage2}"     Grid.Column="19"/>
-                    <local:Item x:Name="TornPage3"    Content="{DynamicResource Min-TornPage3}"     Grid.Column="19"/>
-                    <local:Item x:Name="TornPage4"    Content="{DynamicResource Min-TornPage4}"     Grid.Column="19"/>
-                    <local:Item x:Name="TornPage5"    Content="{DynamicResource Min-TornPage5}"     Grid.Column="19"/>
-                    <local:Item x:Name="MunnyPouch1"  Content="{DynamicResource Min-MunnyPouch1}"   Grid.Column="22"/>
-                    <local:Item x:Name="MunnyPouch2"  Content="{DynamicResource Min-MunnyPouch2}"   Grid.Column="22"/>
+                    <local:Item x:Name="Fire1"        Content="{DynamicResource Min-Fire1}"         Grid.Column="1"  ToolTip="Fire Element"/>
+                    <local:Item x:Name="Fire2"        Content="{DynamicResource Min-Fire2}"         Grid.Column="1"  ToolTip="Fire Element"/>
+                    <local:Item x:Name="Fire3"        Content="{DynamicResource Min-Fire3}"         Grid.Column="1"  ToolTip="Fire Element"/>
+                    <local:Item x:Name="Blizzard1"    Content="{DynamicResource Min-Blizzard1}"     Grid.Column="4"  ToolTip="Blizzard Element"/>
+                    <local:Item x:Name="Blizzard2"    Content="{DynamicResource Min-Blizzard2}"     Grid.Column="4"  ToolTip="Blizzard Element"/>
+                    <local:Item x:Name="Blizzard3"    Content="{DynamicResource Min-Blizzard3}"     Grid.Column="4"  ToolTip="Blizzard Element"/>
+                    <local:Item x:Name="Thunder1"     Content="{DynamicResource Min-Thunder1}"      Grid.Column="7"  ToolTip="Thunder Element"/>
+                    <local:Item x:Name="Thunder2"     Content="{DynamicResource Min-Thunder2}"      Grid.Column="7"  ToolTip="Thunder Element"/>
+                    <local:Item x:Name="Thunder3"     Content="{DynamicResource Min-Thunder3}"      Grid.Column="7"  ToolTip="Thunder Element"/>
+                    <local:Item x:Name="Cure1"        Content="{DynamicResource Min-Cure1}"         Grid.Column="10" ToolTip="Cure Element"/>
+                    <local:Item x:Name="Cure2"        Content="{DynamicResource Min-Cure2}"         Grid.Column="10" ToolTip="Cure Element"/>
+                    <local:Item x:Name="Cure3"        Content="{DynamicResource Min-Cure3}"         Grid.Column="10" ToolTip="Cure Element"/>
+                    <local:Item x:Name="Reflect1"     Content="{DynamicResource Min-Reflect1}"      Grid.Column="13" ToolTip="Reflect Element"/>
+                    <local:Item x:Name="Reflect2"     Content="{DynamicResource Min-Reflect2}"      Grid.Column="13" ToolTip="Reflect Element"/>
+                    <local:Item x:Name="Reflect3"     Content="{DynamicResource Min-Reflect3}"      Grid.Column="13" ToolTip="Reflect Element"/>
+                    <local:Item x:Name="Magnet1"      Content="{DynamicResource Min-Magnet1}"       Grid.Column="16" ToolTip="Magnet Element"/>
+                    <local:Item x:Name="Magnet2"      Content="{DynamicResource Min-Magnet2}"       Grid.Column="16" ToolTip="Magnet Element"/>
+                    <local:Item x:Name="Magnet3"      Content="{DynamicResource Min-Magnet3}"       Grid.Column="16" ToolTip="Magnet Element"/>
+                    <local:Item x:Name="TornPage1"    Content="{DynamicResource Min-TornPage1}"     Grid.Column="19" ToolTip="Torn Pages"/>
+                    <local:Item x:Name="TornPage2"    Content="{DynamicResource Min-TornPage2}"     Grid.Column="19" ToolTip="Torn Pages"/>
+                    <local:Item x:Name="TornPage3"    Content="{DynamicResource Min-TornPage3}"     Grid.Column="19" ToolTip="Torn Pages"/>
+                    <local:Item x:Name="TornPage4"    Content="{DynamicResource Min-TornPage4}"     Grid.Column="19" ToolTip="Torn Pages"/>
+                    <local:Item x:Name="TornPage5"    Content="{DynamicResource Min-TornPage5}"     Grid.Column="19" ToolTip="Torn Pages"/>
+                    <local:Item x:Name="MunnyPouch1"  Content="{DynamicResource Min-MunnyPouch1}"   Grid.Column="22" ToolTip="Munny Pouch"/>
+                    <local:Item x:Name="MunnyPouch2"  Content="{DynamicResource Min-MunnyPouch2}"   Grid.Column="22" ToolTip="Munny Pouch"/>
 
 
                     <!-- silhouettes -->
@@ -2873,22 +2873,22 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <local:Item x:Name="Valor"        Content="{DynamicResource Min-Valor}"         Grid.Column="0"/>
-                    <local:Item x:Name="Wisdom"       Content="{DynamicResource Min-Wisdom}"        Grid.Column="1"/>
-                    <local:Item x:Name="Limit"        Content="{DynamicResource Min-Limit}"         Grid.Column="2"/>
-                    <local:Item x:Name="Master"       Content="{DynamicResource Min-Master}"        Grid.Column="3"/>
-                    <local:Item x:Name="Final"        Content="{DynamicResource Min-Final}"         Grid.Column="4"/>
-                    <local:Item x:Name="Anti"         Content="{DynamicResource Min-Anti}"          Grid.Column="5"/>
-                    <local:Item x:Name="Baseball"     Content="{DynamicResource Min-Baseball}"      Grid.Column="6"/>
-                    <local:Item x:Name="Lamp"         Content="{DynamicResource Min-Lamp}"          Grid.Column="7"/>
-                    <local:Item x:Name="Ukulele"      Content="{DynamicResource Min-Ukulele}"       Grid.Column="8"/>
-                    <local:Item x:Name="Feather"      Content="{DynamicResource Min-Feather}"       Grid.Column="9"/>
-                    <local:Item x:Name="OnceMore"     Content="{DynamicResource Min-OnceMore}"      Grid.Column="10"/>
-                    <local:Item x:Name="SecondChance" Content="{DynamicResource Min-SecondChance}"  Grid.Column="11"/>
-                    <local:Item x:Name="Connection"   Content="{DynamicResource Min-Connection}"    Grid.Column="12"/>
-                    <local:Item x:Name="Nonexistence" Content="{DynamicResource Min-Nonexistence}"  Grid.Column="13"/>
-                    <local:Item x:Name="Peace"        Content="{DynamicResource Min-Peace}"         Grid.Column="14"/>
-                    <local:Item x:Name="PromiseCharm" Content="{DynamicResource Min-PromiseCharm}"  Grid.Column="15"/>
+                    <local:Item x:Name="Valor"        Content="{DynamicResource Min-Valor}"         Grid.Column="0"  ToolTip="Valor Form"/>
+                    <local:Item x:Name="Wisdom"       Content="{DynamicResource Min-Wisdom}"        Grid.Column="1"  ToolTip="Wisdom Form"/>
+                    <local:Item x:Name="Limit"        Content="{DynamicResource Min-Limit}"         Grid.Column="2"  ToolTip="Limit Form"/>
+                    <local:Item x:Name="Master"       Content="{DynamicResource Min-Master}"        Grid.Column="3"  ToolTip="Master Form"/>
+                    <local:Item x:Name="Final"        Content="{DynamicResource Min-Final}"         Grid.Column="4"  ToolTip="Final Form"/>
+                    <local:Item x:Name="Anti"         Content="{DynamicResource Min-Anti}"          Grid.Column="5"  ToolTip="Anti-Form"/>
+                    <local:Item x:Name="Baseball"     Content="{DynamicResource Min-Baseball}"      Grid.Column="6"  ToolTip="Baseball Charm"/>
+                    <local:Item x:Name="Lamp"         Content="{DynamicResource Min-Lamp}"          Grid.Column="7"  ToolTip="Lamp Charm"/>
+                    <local:Item x:Name="Ukulele"      Content="{DynamicResource Min-Ukulele}"       Grid.Column="8"  ToolTip="Ukulele Charm"/>
+                    <local:Item x:Name="Feather"      Content="{DynamicResource Min-Feather}"       Grid.Column="9"  ToolTip="Feather Charm"/>
+                    <local:Item x:Name="OnceMore"     Content="{DynamicResource Min-OnceMore}"      Grid.Column="10" ToolTip="Once More"/>
+                    <local:Item x:Name="SecondChance" Content="{DynamicResource Min-SecondChance}"  Grid.Column="11" ToolTip="Second Chance"/>
+                    <local:Item x:Name="Connection"   Content="{DynamicResource Min-Connection}"    Grid.Column="12" ToolTip="Proof of Connection"/>
+                    <local:Item x:Name="Nonexistence" Content="{DynamicResource Min-Nonexistence}"  Grid.Column="13" ToolTip="Proof of Nonexistence"/>
+                    <local:Item x:Name="Peace"        Content="{DynamicResource Min-Peace}"         Grid.Column="14" ToolTip="Proof of Peace"/>
+                    <local:Item x:Name="PromiseCharm" Content="{DynamicResource Min-PromiseCharm}"  Grid.Column="15" ToolTip="Promise Charm"/>
 
                     <!-- silhouettes -->
                     <ContentControl x:Name="S_Valor" Content="{DynamicResource Min-Valor}"      Grid.Column="0" Panel.ZIndex="-2" Opacity="1">
@@ -2996,21 +2996,21 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <local:Item  x:Name="ChestTT"       Content="{DynamicResource Min-ChestTT}"         Grid.Column="0"/>
-                    <local:Item  x:Name="ChestSTT"      Content="{DynamicResource Min-ChestSTT}"        Grid.Column="1"/>
-                    <local:Item  x:Name="ChestHB"       Content="{DynamicResource Min-ChestHB}"         Grid.Column="2"/>
-                    <local:Item  x:Name="ChestCoR"      Content="{DynamicResource Min-ChestCoR}"        Grid.Column="3"/>
-                    <local:Item  x:Name="ChestAG"       Content="{DynamicResource Min-ChestAG}"         Grid.Column="4"/>
-                    <local:Item  x:Name="ChestBC"       Content="{DynamicResource Min-ChestBC}"         Grid.Column="5"/>
-                    <local:Item  x:Name="ChestDC"       Content="{DynamicResource Min-ChestDC}"         Grid.Column="6"/>
-                    <local:Item  x:Name="ChestHT"       Content="{DynamicResource Min-ChestHT}"         Grid.Column="7"/>
-                    <local:Item  x:Name="ChestLoD"      Content="{DynamicResource Min-ChestLoD}"        Grid.Column="8"/>
-                    <local:Item  x:Name="ChestOC"       Content="{DynamicResource Min-ChestOC}"         Grid.Column="9"/>
-                    <local:Item  x:Name="ChestPL"       Content="{DynamicResource Min-ChestPL}"         Grid.Column="10"/>
-                    <local:Item  x:Name="ChestPR"       Content="{DynamicResource Min-ChestPR}"         Grid.Column="11"/>
-                    <local:Item  x:Name="ChestSP"       Content="{DynamicResource Min-ChestSP}"         Grid.Column="12"/>
-                    <local:Item  x:Name="ChestTWTNW"    Content="{DynamicResource Min-ChestTWTNW}"      Grid.Column="13"/>
-                    <local:Item  x:Name="ChestHAW"      Content="{DynamicResource Min-ChestHAW}"        Grid.Column="14"/>
+                    <local:Item  x:Name="ChestTT"    Content="{DynamicResource Min-ChestTT}"    Grid.Column="0"  ToolTip="Oathkeeper"/>
+                    <local:Item  x:Name="ChestSTT"   Content="{DynamicResource Min-ChestSTT}"   Grid.Column="1"  ToolTip="Bond of Flame"/>
+                    <local:Item  x:Name="ChestHB"    Content="{DynamicResource Min-ChestHB}"    Grid.Column="2"  ToolTip="Sleeping Lion"/>
+                    <local:Item  x:Name="ChestCoR"   Content="{DynamicResource Min-ChestCoR}"   Grid.Column="3"  ToolTip="Winner's Proof"/>
+                    <local:Item  x:Name="ChestAG"    Content="{DynamicResource Min-ChestAG}"    Grid.Column="4"  ToolTip="Wishing Lamp"/>
+                    <local:Item  x:Name="ChestBC"    Content="{DynamicResource Min-ChestBC}"    Grid.Column="5"  ToolTip="Rumbling Rose"/>
+                    <local:Item  x:Name="ChestDC"    Content="{DynamicResource Min-ChestDC}"    Grid.Column="6"  ToolTip="Monochrome"/>
+                    <local:Item  x:Name="ChestHT"    Content="{DynamicResource Min-ChestHT}"    Grid.Column="7"  ToolTip="Decisive Pumpkin"/>
+                    <local:Item  x:Name="ChestLoD"   Content="{DynamicResource Min-ChestLoD}"   Grid.Column="8"  ToolTip="Hidden Dragon"/>
+                    <local:Item  x:Name="ChestOC"    Content="{DynamicResource Min-ChestOC}"    Grid.Column="9"  ToolTip="Hero's Crest"/>
+                    <local:Item  x:Name="ChestPL"    Content="{DynamicResource Min-ChestPL}"    Grid.Column="10" ToolTip="Circle of Life"/>
+                    <local:Item  x:Name="ChestPR"    Content="{DynamicResource Min-ChestPR}"    Grid.Column="11" ToolTip="Follow the Wind"/>
+                    <local:Item  x:Name="ChestSP"    Content="{DynamicResource Min-ChestSP}"    Grid.Column="12" ToolTip="Photon Debugger"/>
+                    <local:Item  x:Name="ChestTWTNW" Content="{DynamicResource Min-ChestTWTNW}" Grid.Column="13" ToolTip="Two Become One"/>
+                    <local:Item  x:Name="ChestHAW"   Content="{DynamicResource Min-ChestHAW}"   Grid.Column="14" ToolTip="Sweet Memories"/>
 
                     <!-- silhouettes -->
                     <ContentControl x:Name="S_ChestTT"       Content="{DynamicResource Min-ChestTT}"         Grid.Column="0" Panel.ZIndex="-2" Opacity="1">
@@ -3208,22 +3208,22 @@
                         </local:OutlinedTextBlock>
                     </Viewbox>
 
-                    <local:Item x:Name="BeastWep1"   Content="{DynamicResource Min-BeastWep1}"   Grid.Column="1"/>
-                    <local:Item x:Name="BeastWep2"   Content="{DynamicResource Min-BeastWep2}"   Grid.Column="1"/>
-                    <local:Item x:Name="JackWep1"    Content="{DynamicResource Min-JackWep1}"    Grid.Column="4"/>
-                    <local:Item x:Name="JackWep2"    Content="{DynamicResource Min-JackWep2}"    Grid.Column="4"/>
-                    <local:Item x:Name="SimbaWep1"   Content="{DynamicResource Min-SimbaWep1}"   Grid.Column="7"/>
-                    <local:Item x:Name="SimbaWep2"   Content="{DynamicResource Min-SimbaWep2}"   Grid.Column="7"/>
-                    <local:Item x:Name="AuronWep1"   Content="{DynamicResource Min-AuronWep1}"   Grid.Column="10"/>
-                    <local:Item x:Name="AuronWep2"   Content="{DynamicResource Min-AuronWep2}"   Grid.Column="10"/>
-                    <local:Item x:Name="MulanWep1"   Content="{DynamicResource Min-MulanWep1}"   Grid.Column="13"/>
-                    <local:Item x:Name="MulanWep2"   Content="{DynamicResource Min-MulanWep2}"   Grid.Column="13"/>
-                    <local:Item x:Name="SparrowWep1" Content="{DynamicResource Min-SparrowWep1}" Grid.Column="16"/>
-                    <local:Item x:Name="SparrowWep2" Content="{DynamicResource Min-SparrowWep2}" Grid.Column="16"/>
-                    <local:Item x:Name="AladdinWep1" Content="{DynamicResource Min-AladdinWep1}" Grid.Column="19"/>
-                    <local:Item x:Name="AladdinWep2" Content="{DynamicResource Min-AladdinWep2}" Grid.Column="19"/>
-                    <local:Item x:Name="TronWep1"    Content="{DynamicResource Min-TronWep1}"    Grid.Column="22"/>
-                    <local:Item x:Name="TronWep2"    Content="{DynamicResource Min-TronWep2}"    Grid.Column="22"/>
+                    <local:Item x:Name="BeastWep1"   Content="{DynamicResource Min-BeastWep1}"   Grid.Column="1"  ToolTip="Beast's Claw"/>
+                    <local:Item x:Name="BeastWep2"   Content="{DynamicResource Min-BeastWep2}"   Grid.Column="1"  ToolTip="Beast's Claw"/>
+                    <local:Item x:Name="JackWep1"    Content="{DynamicResource Min-JackWep1}"    Grid.Column="4"  ToolTip="Bone Fist"/>
+                    <local:Item x:Name="JackWep2"    Content="{DynamicResource Min-JackWep2}"    Grid.Column="4"  ToolTip="Bone Fist"/>
+                    <local:Item x:Name="SimbaWep1"   Content="{DynamicResource Min-SimbaWep1}"   Grid.Column="7"  ToolTip="Proud Fang"/>
+                    <local:Item x:Name="SimbaWep2"   Content="{DynamicResource Min-SimbaWep2}"   Grid.Column="7"  ToolTip="Proud Fang"/>
+                    <local:Item x:Name="AuronWep1"   Content="{DynamicResource Min-AuronWep1}"   Grid.Column="10" ToolTip="Battlefields of War"/>
+                    <local:Item x:Name="AuronWep2"   Content="{DynamicResource Min-AuronWep2}"   Grid.Column="10" ToolTip="Battlefields of War"/>
+                    <local:Item x:Name="MulanWep1"   Content="{DynamicResource Min-MulanWep1}"   Grid.Column="13" ToolTip="Sword of the Ancestor"/>
+                    <local:Item x:Name="MulanWep2"   Content="{DynamicResource Min-MulanWep2}"   Grid.Column="13" ToolTip="Sword of the Ancestor"/>
+                    <local:Item x:Name="SparrowWep1" Content="{DynamicResource Min-SparrowWep1}" Grid.Column="16" ToolTip="Skill and Crossbones"/>
+                    <local:Item x:Name="SparrowWep2" Content="{DynamicResource Min-SparrowWep2}" Grid.Column="16" ToolTip="Skill and Crossbones"/>
+                    <local:Item x:Name="AladdinWep1" Content="{DynamicResource Min-AladdinWep1}" Grid.Column="19" ToolTip="Scimitar"/>
+                    <local:Item x:Name="AladdinWep2" Content="{DynamicResource Min-AladdinWep2}" Grid.Column="19" ToolTip="Scimitar"/>
+                    <local:Item x:Name="TronWep1"    Content="{DynamicResource Min-TronWep1}"    Grid.Column="22" ToolTip="Identity Disk"/>
+                    <local:Item x:Name="TronWep2"    Content="{DynamicResource Min-TronWep2}"    Grid.Column="22" ToolTip="Identity Disk"/>
 
 
                     <!-- silhouettes -->
@@ -3469,20 +3469,19 @@
                     </Viewbox>
 
 
-                    <local:Item x:Name="RikuWep1"   Content="{DynamicResource Min-RikuWep1}"   Grid.Column="1"/>
-                    <local:Item x:Name="RikuWep2"   Content="{DynamicResource Min-RikuWep2}"   Grid.Column="1"/>
-                    <local:Item x:Name="MembershipCard1"    Content="{DynamicResource Min-MembershipCard1}"    Grid.Column="4"/>
-                    <local:Item x:Name="MembershipCard2"    Content="{DynamicResource Min-MembershipCard2}"    Grid.Column="4"/>
-                    <local:Item x:Name="KingsLetter1"   Content="{DynamicResource Min-KingsLetter1}"   Grid.Column="7"/>
-                    <local:Item x:Name="KingsLetter2"   Content="{DynamicResource Min-KingsLetter2}"   Grid.Column="7"/>
-                    <local:Item x:Name="IceCream1"   Content="{DynamicResource Min-IceCream1}"   Grid.Column="10"/>
-                    <local:Item x:Name="IceCream2"   Content="{DynamicResource Min-IceCream2}"   Grid.Column="10"/>
-                    <local:Item x:Name="IceCream3"   Content="{DynamicResource Min-IceCream3}"   Grid.Column="10"/>
-                    <local:Item x:Name="Sketches"   Content="{DynamicResource Min-Sketches}"   Grid.Column="13"/>
-
-                    <local:Item x:Name="HadesCup"       Content="{DynamicResource Min-HadesCup}"        Grid.Column="16"/>
-                    <local:Item x:Name="OlympusStone"   Content="{DynamicResource Min-OlympusStone}"    Grid.Column="19"/>
-                    <local:Item x:Name="UnknownDisk"    Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="22"/>
+                    <local:Item x:Name="RikuWep1"           Content="{DynamicResource Min-RikuWep1}"        Grid.Column="1"  ToolTip="Way to the Dawn"/>
+                    <local:Item x:Name="RikuWep2"           Content="{DynamicResource Min-RikuWep2}"        Grid.Column="1"  ToolTip="Way to the Dawn"/>
+                    <local:Item x:Name="MembershipCard1"    Content="{DynamicResource Min-MembershipCard1}" Grid.Column="4"  ToolTip="Membership Card"/>
+                    <local:Item x:Name="MembershipCard2"    Content="{DynamicResource Min-MembershipCard2}" Grid.Column="4"  ToolTip="Membership Card"/>
+                    <local:Item x:Name="KingsLetter1"       Content="{DynamicResource Min-KingsLetter1}"    Grid.Column="7"  ToolTip="Disney Castle Key"/>
+                    <local:Item x:Name="KingsLetter2"       Content="{DynamicResource Min-KingsLetter2}"    Grid.Column="7"  ToolTip="Disney Castle Key"/>
+                    <local:Item x:Name="IceCream1"          Content="{DynamicResource Min-IceCream1}"       Grid.Column="10" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="IceCream2"          Content="{DynamicResource Min-IceCream2}"       Grid.Column="10" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="IceCream3"          Content="{DynamicResource Min-IceCream3}"       Grid.Column="10" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="Sketches"           Content="{DynamicResource Min-Sketches}"        Grid.Column="13" ToolTip="Namine's Sketches"/>
+                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="16" ToolTip="Hades Cup Trophy"/>
+                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="19" ToolTip="Olympus Stone"/>
+                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="22" ToolTip="Unknown Disk"/>
 
 
                     <!-- silhouettes -->

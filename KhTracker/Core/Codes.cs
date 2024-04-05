@@ -415,6 +415,8 @@ namespace KhTracker
             {"Scimitar (Aladdin)", "Scimitar"},
             {"Identity Disk (Tron)", "Identity Disk"},
             {"Way to the Dawn (Riku)", "Way to the Dawn"},
+            {"Munny Pouch (Olette)", "Munny Pouch"},
+            {"Munny Pouch (Mickey)", "Munny Pouch"},
             {"Sora's Heart",            "Levels" },
             {"Drive Forms",             "Drives" },
             {"Simulated Twilight Town", "STT" },
@@ -577,6 +579,8 @@ namespace KhTracker
             {"MunnyPouch", "other"},
             {"MunnyPouch1", "other"},
             {"MunnyPouch2", "other"},
+            {"RikuWep", "visit"},
+            {"KingsLetter", "visit"},
             {"AuronWep1", "visit"},
             {"AuronWep2", "visit"},
             {"MulanWep1", "visit"},
@@ -779,6 +783,8 @@ namespace KhTracker
             {"Olympus Stone", "other"},
             {"Unknown Disk", "other"},
             {"Munny Pouch", "other"},
+            //{"Munny Pouch (Olette)", "other"},
+            //{"Munny Pouch (Mickey)", "other"},
             {"Way to the Dawn (Riku)", "visit"},
             {"Disney Castle Key", "visit"},
             {"Namine's Sketches", "visit"},
@@ -861,7 +867,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
@@ -960,7 +968,9 @@ namespace KhTracker
             {"Follow the Wind", "ChestPR"},
             {"Photon Debugger", "ChestSP"},
             {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"}
+            {"Sweet Memories", "ChestHAW"},
+            //{"Munny Pouch (Olette)", "MunnyPouch1"},
+            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
         };
 
         public static Dictionary<string, string> bossTypes = new Dictionary<string, string>()
