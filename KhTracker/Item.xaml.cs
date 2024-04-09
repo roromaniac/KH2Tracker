@@ -151,7 +151,7 @@ namespace KhTracker
                         }
                         else if (repInt == -12345)
                         {
-                            MainW.SetHintText(data.reportInformation[index].Item1, "", "", false, false, false);
+                            MainW.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
                         }
                         else if (repInt == -999)
                         {

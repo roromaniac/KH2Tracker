@@ -331,6 +331,8 @@ namespace KhTracker
                 {"MembershipCard", 1}, {"IceCream", 1}, {"KingsLetter", 1},
             };
 
+            Dictionary<int, string> repWorlds = new Dictionary<int, string>();
+
             //start parsing world data
             foreach (var world in worlds)
             {
@@ -344,6 +346,11 @@ namespace KhTracker
                     string worldname = Codes.ConvertSeedGenName(world.Key);
                     string checkname = Codes.ConvertSeedGenName(itemNum);
                     string item = Codes.ConvertSeedGenName(itemNum, true);
+
+                    if (item.Contains("Report"))
+                    {
+                        repWorlds.Add(Int32.Parse(item.Remove(0, 22)), Codes.ConvertSeedGenName(world.Key));
+                    }
 
                     data.WorldsData[worldname].checkCount.Add(checkname);
 
@@ -514,9 +521,17 @@ namespace KhTracker
                         worldhint = tmp_origBoss + " became " + tmp_replBoss;
                     }
 
+                    string worldstring = reports[report.ToString()]["World"].ToString();
+                    string location = "";
+                    if (report < 14)
+                    {
+                        location = repWorlds[report];
+                    }
+
+
                     int dummyvalue = -12345; //use this for boss reports i guess
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));
-                    var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                    //location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
                     data.reportLocations.Add(location);
 
                     keyList.Remove(boss);
@@ -1121,6 +1136,14 @@ namespace KhTracker
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
+            var hintableItems = new List<string>();
+            //fallback for older seeds
+            try
+            {
+                hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
+            }
+            catch { }
+
 
             //set if world value should change color on completion
             if (reveals.Contains("complete"))
@@ -1230,7 +1253,7 @@ namespace KhTracker
                     string worldstring = reports[report.ToString()]["World"].ToString();
                     int dummyvalue = 0;
                     string location = "";
-                    if (report < 14)
+                    if (report < 14 && hintableItems.Contains("report"))
                     {
                         location = repWorlds[report];
                     }
