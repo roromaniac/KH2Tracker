@@ -93,7 +93,16 @@ namespace KhTracker
             battleshipRandomCount = Properties.Settings.Default.BattleshipRandomCount;
             minShipCount = Properties.Settings.Default.MinShipCount;
             maxShipCount = Properties.Settings.Default.MaxShipCount;
-            shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
+            Console.WriteLine("AHHHHHHHHH");
+            try
+            {
+                shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
+            }
+            catch (JsonException ex)
+            {
+                Console.WriteLine("Ships file did not deserialize correctly.");
+                shipSizes = new List<int>{ 1, 1 };
+            }
             fogOfWar = Properties.Settings.Default.FogOfWar;
             fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
 

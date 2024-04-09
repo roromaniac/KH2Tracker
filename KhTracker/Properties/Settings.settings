@@ -321,7 +321,7 @@
       <Value Profile="(Default)">{"W": 1, "E": 1, "N": 1, "S": 1, "NW": 0, "NE": 0, "SW": 0, "SE": 0}</Value>
     </Setting>
     <Setting Name="ShipSizes" Type="System.String" Scope="User">
-      <Value Profile="(Default)">{2, 3, 3, 4, 5}</Value>
+      <Value Profile="(Default)">[2, 3, 3, 4, 5]</Value>
     </Setting>
     <Setting Name="MaxShipCount" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>

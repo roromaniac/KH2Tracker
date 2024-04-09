@@ -1346,7 +1346,7 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("{2, 3, 3, 4, 5}")]
+        [global::System.Configuration.DefaultSettingValueAttribute("[2, 3, 3, 4, 5]")]
         public string ShipSizes {
             get {
                 return ((string)(this["ShipSizes"]));
