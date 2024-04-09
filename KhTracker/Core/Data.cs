@@ -38,6 +38,7 @@ namespace KhTracker
         public bool seedLoaded = false;
         public int lastVersion = 0;
         public bool wasTracking = false;
+        public bool firstGridOnSeedLoad = true;
         public Codes codes = new Codes();
 
         //Report stuff      
@@ -196,6 +197,10 @@ namespace KhTracker
         //Hotkey stuff
         public bool usedHotkey = false;
         public GlobalHotkey startAutoTracker1, startAutoTracker2;
+        public GlobalHotkey scrollUp1, scrollUp2, scrollDown1, scrollDown2;
+
+        //BossHomeHinting TEST
+        public bool BossHomeHinting = false;
     }
 
     public class WorldData

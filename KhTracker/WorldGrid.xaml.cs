@@ -747,6 +747,30 @@ namespace KhTracker
                 }
             }
 
+            //prog shan specific
+            if (item.Name.StartsWith("Report") && data.mode == Mode.OpenKHShanHints && data.UsingProgressionHints)
+            {
+                int index = int.Parse(item.Name.Remove(0, 6)) - 1;
+
+                if (!data.reportLocationsUsed[index])
+                {
+                    window.AddProgressionPoints(data.ReportBonus);
+                    data.reportLocationsUsed[index] = true;
+                }
+                else
+                {
+                    //check if the report was already obtained before giving points
+                    if (!data.reportLocationsUsed[index])
+                    {
+                        window.AddProgressionPoints(data.ReportBonus);
+                        data.reportLocationsUsed[index] = true;
+                    }
+                    // show hint text on report hover
+                    item.MouseEnter -= item.Report_Hover;
+                    item.MouseEnter += item.Report_Hover;
+                }
+            }
+
             return true;
         }
 
@@ -966,13 +990,80 @@ namespace KhTracker
             }
         }
 
+        public void Handle_GridTrackerHints_BE(string gridOriginalBoss, string gridNewBoss, string iconStyle = "Min")
+        {
+
+            // get the hint color
+            Color hintColor = window.gridWindow.currentColors["Hint Color"];
+
+            // hint visual on grid tracker
+            if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
+            {
+                window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(hintColor);
+                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null) 
+                { 
+                    // Try to set the resource reference with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
+                }
+                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
+                {
+                    // If the "Grid" key doesn't exist, try with the base key
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
+
+                }
+            }
+
+            else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
+            {
+                window.gridWindow.bossHintBorders[$"Grid{gridNewBoss}"].Background = new SolidColorBrush(hintColor);
+                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null)
+                {
+                    // Try to set the resource reference with the "Grid" prefix
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
+                }
+                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
+                {
+                    // If the "Grid" key doesn't exist, try with the base key
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
+                }
+            }
+        }
+
         public void ProgBossHint(int index)
         {
             Data data = MainWindow.data;
+            string originalBoss = data.progBossInformation[index].Item1;
+            string middle = data.progBossInformation[index].Item2;
+            string newBoss = data.progBossInformation[index].Item3;
 
             // hint text
-            window.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
-            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3, false, false, false));
+            window.SetHintTextRow2(originalBoss, middle, newBoss);
+            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(originalBoss, middle, newBoss, false, false, false));
+
+            if (middle == "is unchanged")
+            {
+                newBoss = originalBoss;
+            }
+
+            //visualize hint in gridtracker
+            if (data.codes.bossNameConversion.Keys.Contains(newBoss) && data.codes.bossNameConversion.Keys.Contains(originalBoss))
+            {
+
+                string gridNewBoss = data.codes.bossNameConversion[newBoss];
+
+                // handle Pete since he has 2 versions
+                if (newBoss == "Pete")
+                {
+                    gridNewBoss = data.BossList.ContainsValue("Pete OC II") ? "OCPete" : "DCPete";
+                }
+
+                string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
+
+                // handle boss hint on grid tracker
+                Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss, window.gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
+            }
+
+
         }
 
         ///

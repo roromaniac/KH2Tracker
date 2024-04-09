@@ -90,22 +90,22 @@
     <local:GridLabelledImage x:Key="Min-TornPage3"        Source="Images\Checks\Min\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-TornPage4"        Source="Images\Checks\Min\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-TornPage5"        Source="Images\Checks\Min\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-AuronWep"		    Source="Images\Checks\Min\Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-MulanWep"		    Source="Images\Checks\Min\Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-BeastWep"		    Source="Images\Checks\Min\Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-JackWep"		    Source="Images\Checks\Min\Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-SimbaWep"		    Source="Images\Checks\Min\Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-SparrowWep"	    Source="Images\Checks\Min\Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-AladdinWep"	    Source="Images\Checks\Min\Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-TronWep"		    Source="Images\Checks\Min\Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-MembershipCard"   Source="Images\Checks\Min\Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-IceCream"		    Source="Images\Checks\Min\Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-Picture"		    Source="Images\Checks\Min\Lock_Picture.png"           GridAllowed="True"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-AuronWep"		    Source="Images\Checks\Min\Lock_BattlefieldsofWar.png"           GridAllowed="False"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-MulanWep"		    Source="Images\Checks\Min\Lock_AncestorSword.png"           GridAllowed="False"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-BeastWep"		    Source="Images\Checks\Min\Lock_BeastClaw.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-JackWep"		    Source="Images\Checks\Min\Lock_BoneFist.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-SimbaWep"		    Source="Images\Checks\Min\Lock_ProudFang.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-SparrowWep"	    Source="Images\Checks\Min\Lock_SkillCrossbones.png"           GridAllowed="False"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-AladdinWep"	    Source="Images\Checks\Min\Lock_Scimitar.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-TronWep"		    Source="Images\Checks\Min\Lock_IdentityDisk.png"           GridAllowed="False"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-MembershipCard"   Source="Images\Checks\Min\Lock_membershipcard.png"           GridAllowed="False"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-IceCream"		    Source="Images\Checks\Min\Lock_IceCream.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-Picture"		    Source="Images\Checks\Min\Lock_Picture.png"           GridAllowed="False"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-OnceMore"			Source="Images\Checks\once_more.png"           GridAllowed="True"                             x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-SecondChance"		Source="Images\Checks\second_chance.png"           GridAllowed="True"                         x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-RikuWep"		Source="Images\Checks\Min\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-RikuWep"		Source="Images\Checks\Min\lock_waytothedawn.png"       GridAllowed="False"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-Sketches"		Source="Images\Checks\Min\lock_sketches.png"           GridAllowed="True"                         x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Min-KingsLetter"	Source="Images\Checks\Min\lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Min-KingsLetter"	Source="Images\Checks\Min\lock_kingsletter.png"        GridAllowed="False"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-RikuWep1"		Source="Images\Checks\Min\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-RikuWep2"		Source="Images\Checks\Min\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-KingsLetter1"	Source="Images\Checks\Min\lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
@@ -184,7 +184,7 @@
     <local:GridLabelledImage x:Key="Min-GridMunnyPouch2"        Source="Images\Grid\simple\MunnyPouch2.png"           GridAllowed="True"                        x:Shared="false"/>
 
     <!--Old Item Icons-->
-    <local:GridLabelledImage x:Key="Old-Report"           Source="Images\Checks\Old\ansem_report.png"           GridAllowed="True"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Report"           Source="Images\Checks\Old\ansem_report.png"           GridAllowed="False"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Report1"          Source="Images\Checks\Old\ansem_report01.png"           GridAllowed="True"                    x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Report2"          Source="Images\Checks\Old\ansem_report02.png"           GridAllowed="True"                    x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Report3"          Source="Images\Checks\Old\ansem_report03.png"           GridAllowed="True"                    x:Shared="false"/>
@@ -203,7 +203,7 @@
     <local:GridLabelledImage x:Key="Old-Limit"	        Source="Images\Checks\Old\form_limit.png"           GridAllowed="True"                        x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Master"	        Source="Images\Checks\Old\form_master.png"           GridAllowed="True"                       x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Final"	        Source="Images\Checks\Old\form_final.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Anti"		        Source="Images\Checks\Old\form_anti.png"           GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Anti"		        Source="Images\Checks\Old\form_anti.png"           GridAllowed="False"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Lamp"			    Source="Images\Checks\Old\summon_genie.png"           GridAllowed="True"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Ukulele"		    Source="Images\Checks\Old\summon_stitch.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Baseball"	        Source="Images\Checks\Old\summon_chicken_little.png"           GridAllowed="True"             x:Shared="false"/>
@@ -212,45 +212,45 @@
     <local:GridLabelledImage x:Key="Old-Connection"	    Source="Images\Checks\Old\proof_connection.png"           GridAllowed="True"                  x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Peace"		    Source="Images\Checks\Old\proof_peace.png"           GridAllowed="True"                       x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-PromiseCharm"	    Source="Images\Checks\Old\promise_charm.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Fire1"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Fire2"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Fire3"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Blizzard1"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Blizzard2"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Blizzard3"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Thunder1"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Thunder2"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Thunder3"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Cure1"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Cure2"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Cure3"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Reflect1"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Reflect2"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Reflect3"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Magnet1"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="True"                      x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Magnet2"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="True"                      x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Magnet3"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="True"                      x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TornPage1"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TornPage2"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TornPage3"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TornPage4"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TornPage5"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="True"                        x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-AuronWep"		    Source="Images\Checks\Old\Lock_BattlefieldsofWar.png"           GridAllowed="True"            x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MulanWep"		    Source="Images\Checks\Old\Lock_AncestorSword.png"           GridAllowed="True"                x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-BeastWep"		    Source="Images\Checks\Old\Lock_BeastClaw.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-JackWep"		    Source="Images\Checks\Old\Lock_BoneFist.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-SimbaWep"		    Source="Images\Checks\Old\Lock_ProudFang.png"           GridAllowed="True"                    x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-SparrowWep"	    Source="Images\Checks\Old\Lock_SkillCrossbones.png"           GridAllowed="True"              x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-AladdinWep"	    Source="Images\Checks\Old\Lock_Scimitar.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-TronWep"		    Source="Images\Checks\Old\Lock_IdentityDisk.png"           GridAllowed="True"                 x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MembershipCard"   Source="Images\Checks\Old\Lock_membershipcard.png"           GridAllowed="True"               x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-IceCream"		    Source="Images\Checks\Old\Lock_IceCream.png"           GridAllowed="True"                     x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-Picture"		    Source="Images\Checks\Old\Lock_Picture.png"           GridAllowed="True"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Fire1"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Fire2"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Fire3"	        Source="Images\Checks\Old\magic_fire.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Blizzard1"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Blizzard2"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Blizzard3"        Source="Images\Checks\Old\magic_blizzard.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Thunder1"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Thunder2"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Thunder3"	        Source="Images\Checks\Old\magic_thunder.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Cure1"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Cure2"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Cure3"	        Source="Images\Checks\Old\magic_cure.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Reflect1"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Reflect2"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Reflect3"	        Source="Images\Checks\Old\magic_reflect.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Magnet1"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="False"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Magnet2"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="False"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Magnet3"	        Source="Images\Checks\Old\magic_magnet.png"           GridAllowed="False"                      x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TornPage1"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TornPage2"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TornPage3"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TornPage4"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TornPage5"        Source="Images\Checks\Old\torn_pages.png"           GridAllowed="False"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-AuronWep"		    Source="Images\Checks\Old\Lock_BattlefieldsofWar.png"           GridAllowed="False"            x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MulanWep"		    Source="Images\Checks\Old\Lock_AncestorSword.png"           GridAllowed="False"                x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-BeastWep"		    Source="Images\Checks\Old\Lock_BeastClaw.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-JackWep"		    Source="Images\Checks\Old\Lock_BoneFist.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-SimbaWep"		    Source="Images\Checks\Old\Lock_ProudFang.png"           GridAllowed="False"                    x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-SparrowWep"	    Source="Images\Checks\Old\Lock_SkillCrossbones.png"           GridAllowed="False"              x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-AladdinWep"	    Source="Images\Checks\Old\Lock_Scimitar.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-TronWep"		    Source="Images\Checks\Old\Lock_IdentityDisk.png"           GridAllowed="False"                 x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MembershipCard"   Source="Images\Checks\Old\Lock_membershipcard.png"           GridAllowed="False"               x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-IceCream"		    Source="Images\Checks\Old\Lock_IceCream.png"           GridAllowed="False"                     x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-Picture"		    Source="Images\Checks\Old\Lock_Picture.png"           GridAllowed="False"                      x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-OnceMore"			Source="Images\Checks\once_more.png"           GridAllowed="True"                             x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-SecondChance"		Source="Images\Checks\second_chance.png"           GridAllowed="True"                         x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-RikuWep"		    Source="Images\Checks\Old\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-RikuWep"		    Source="Images\Checks\Old\lock_waytothedawn.png"       GridAllowed="False"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-Sketches"		    Source="Images\Checks\Old\lock_sketches.png"           GridAllowed="True"                         x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-KingsLetter"	    Source="Images\Checks\Old\lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-KingsLetter"	    Source="Images\Checks\Old\lock_kingsletter.png"        GridAllowed="False"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-RikuWep1"		    Source="Images\Checks\Old\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-RikuWep2"		    Source="Images\Checks\Old\lock_waytothedawn.png"       GridAllowed="True"                         x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-KingsLetter1"	    Source="Images\Checks\Old\lock_kingsletter.png"        GridAllowed="True"                         x:Shared="false"/>
@@ -281,8 +281,8 @@
     <local:GridLabelledImage x:Key="Old-HadesCup"		    Source="Images\Checks\Old\Aux_hades_cup.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-OlympusStone"		Source="Images\Checks\Old\Aux_olympus_stone.png"           GridAllowed="True"                 x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-UnknownDisk"		Source="Images\Checks\Old\Aux_UnknownDisk.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MunnyPouch1"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
-    <local:GridLabelledImage x:Key="Old-MunnyPouch2"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="True"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MunnyPouch1"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-MunnyPouch2"	    Source="Images\Checks\Old\Aux_munny_pouch.png"           GridAllowed="False"                   x:Shared="false"/>
     <!-- World Chest Locks-->
     <local:GridLabelledImage x:Key="Old-ChestAG"		    Source="Images\Checks\Old\chest_ag.png"           GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-ChestBC"		    Source="Images\Checks\Old\chest_bc.png"           GridAllowed="True"                     x:Shared="false"/>
@@ -299,7 +299,34 @@
     <local:GridLabelledImage x:Key="Old-ChestSTT"		    Source="Images\Checks\Old\chest_stt.png"          GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-ChestHAW"		    Source="Images\Checks\Old\chest_haw.png"          GridAllowed="True"                     x:Shared="false"/>
     <local:GridLabelledImage x:Key="Old-ChestTWTNW"		    Source="Images\Checks\Old\chest_twtnw.png"        GridAllowed="True"                     x:Shared="false"/>
-    
+    <!-- Grid Tracker-->
+    <local:GridLabelledImage x:Key="Old-GridFire1"	        Source="Images\Grid\simple\Fire1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridFire2"	        Source="Images\Grid\simple\Fire2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridFire3"	        Source="Images\Grid\simple\Fire3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridBlizzard1"	        Source="Images\Grid\simple\Blizzard1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridBlizzard2"	        Source="Images\Grid\simple\Blizzard2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridBlizzard3"	        Source="Images\Grid\simple\Blizzard3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridThunder1"	        Source="Images\Grid\simple\Thunder1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridThunder2"	        Source="Images\Grid\simple\Thunder2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridThunder3"	        Source="Images\Grid\simple\Thunder3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridCure1"	        Source="Images\Grid\simple\Cure1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridCure2"	        Source="Images\Grid\simple\Cure2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridCure3"	        Source="Images\Grid\simple\Cure3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridMagnet1"	        Source="Images\Grid\simple\Magnet1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridMagnet2"	        Source="Images\Grid\simple\Magnet2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridMagnet3"	        Source="Images\Grid\simple\Magnet3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridReflect1"	        Source="Images\Grid\simple\Reflect1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridReflect2"	        Source="Images\Grid\simple\Reflect2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridReflect3"	        Source="Images\Grid\simple\Reflect3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridTornPage1"        Source="Images\Grid\simple\TornPage1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridTornPage2"        Source="Images\Grid\simple\TornPage2.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridTornPage3"        Source="Images\Grid\simple\TornPage3.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridTornPage4"        Source="Images\Grid\simple\TornPage4.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridTornPage5"        Source="Images\Grid\simple\TornPage5.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridMunnyPouch1"        Source="Images\Grid\simple\MunnyPouch1.png"           GridAllowed="True"                        x:Shared="false"/>
+    <local:GridLabelledImage x:Key="Old-GridMunnyPouch2"        Source="Images\Grid\simple\MunnyPouch2.png"           GridAllowed="True"                        x:Shared="false"/>
+
+
     <!--Other (Simple)-->
     <!--local:GridLabelledImage x:Key="Min-OnceMore_key"		Source="Images\Checks\once_more_key.png"           GridAllowed="True"            x:Shared="false"/>
     <local:GridLabelledImage x:Key="Min-SecondChance_key" Source="Images\Checks\second_chance_key.png"           GridAllowed="True"            x:Shared="false"/>

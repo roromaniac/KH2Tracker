@@ -16,6 +16,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using KhTracker.Hotkeys;
+using System.Text;
 
 namespace KhTracker
 {
@@ -48,6 +49,7 @@ namespace KhTracker
             //hotkey stuff
             HotkeysManager.SetupSystemHook();
             LoadHotkeyBind();
+            ProgScrollHotkey();
 
             //start auto-connect if enabled
             AutoConnectOption.IsChecked = Properties.Settings.Default.AutoConnect;
@@ -307,6 +309,10 @@ namespace KhTracker
             Disconnect.IsChecked = Properties.Settings.Default.Disconnect;
             DisconnectToggle(Disconnect.IsChecked);
 
+            //autoloadhints
+            AutoLoadHintsOption.IsChecked = Properties.Settings.Default.AutoLoadHints;
+            AutoLoadHintsToggle(AutoLoadHintsOption.IsChecked);
+
             #endregion
 
             #region Visual
@@ -565,6 +571,21 @@ namespace KhTracker
             }
         }
 
+        private void GoAScrollUp()
+        {
+            if (data.WorldsData.ContainsKey("GoA") && data.WorldsData["GoA"].value != null)
+            {
+                ManualWorldValue(data.WorldsData["GoA"].value, 1);
+            }
+        }
+        private void GoAScrollDown()
+        {
+            if (data.WorldsData.ContainsKey("GoA") && data.WorldsData["GoA"].value != null)
+            {
+                ManualWorldValue(data.WorldsData["GoA"].value, -1);
+            }
+        }
+
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.PageDown && data.selected != null)
@@ -598,6 +619,10 @@ namespace KhTracker
 
             gridWindow.canClose = true;
             gridWindow.Close();
+            gridWindow.gridOptionsWindow.canClose = true;
+            gridWindow.gridOptionsWindow.Close();
+            gridWindow.colorPickerWindow.canClose = true;
+            gridWindow.colorPickerWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -619,6 +644,50 @@ namespace KhTracker
 
             gridWindow.Width = 500;
             gridWindow.Height = 680;
+        }
+
+        //openkh path set
+        private void SetOpenKHPath(object sender, RoutedEventArgs e)
+        {
+            SetOpenKHPath();
+        }
+        public void SetOpenKHPath()
+        {
+            //create settings folder if it somehow doesn't exist
+            if (!Directory.Exists("./KhTrackerSettings"))
+            {
+                Directory.CreateDirectory("./KhTrackerSettings");
+            }
+            //create an txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/OpenKHPath.txt"))
+            {
+                //Console.WriteLine("File not found, making");
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes("C:\\Replace this path with the location of your\\openkh mod manager");
+                    fs.Write(title, 0, title.Length);
+                }
+            }
+
+            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                DefaultExt = ".exe",
+                Filter = "exe files (*.exe)|*.exe"
+            };
+            System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes(System.IO.Directory.GetParent(openFileDialog.FileName).ToString());
+                    fs.Write(title, 0, title.Length);
+                }
+            }
+            else
+                System.Windows.Forms.MessageBox.Show("No path set. To set a path, go to\nOptions > Load Hints > Set OpenKH Path.");
+
         }
 
         /// 
@@ -674,7 +743,10 @@ namespace KhTracker
                     else
                     {
                         SetHintText(temp.Item1, temp.Item2, temp.Item3, temp.Item4, temp.Item5, temp.Item6);
-                        HighlightProgHintedWorlds(new List<string> { Codes.GetWorldName(temp.Item1) });
+                        if (data.mode == Mode.PathHints || data.mode == Mode.OpenKHJsmarteeHints)
+                            HighlightProgHintedWorlds(new List<string> { data.reportInformation[num - 1].Item2 });
+                        else
+                            HighlightProgHintedWorlds(new List<string> { Codes.GetWorldName(temp.Item1) });
                     }
 
                 }

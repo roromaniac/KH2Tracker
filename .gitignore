@@ -338,3 +338,6 @@ MigrationBackup/
 /KhTracker/Images/ReportTest2.png
 /KhTracker/Images/ReportTest1.png
 /KhTracker/KhTracker_TemporaryKey.pfx
+
+# Remove Obsidian
+KHTrackerNotes/

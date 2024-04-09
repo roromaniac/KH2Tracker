@@ -1,8 +1,0 @@
-- [ ] Make the elements in the dropdown menu span the height of the options window.
-- [ ] Create option in drives to allow final form tracking as L&D.
-- [x] Create an option that saves numRows and numColumns and regenerates the card when updated.
-- [x] Create a button that regenerates card with new settings.
-- [x] Update the tracker settings in its own method.
-- [ ] Create a "Select All" toggle that selects everything within a subcategory.
-- [ ] Make popup windows for error/caught exception messages.
-- [ ] Create a ToolTip for each category by creating a new field for every Option called "ToolTip".

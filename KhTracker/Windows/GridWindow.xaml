@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:KhTracker"
         mc:Ignorable="d"
         ResizeMode="CanResize"
-        Title="Bingo Window"
+        Title="KH2 Grid Tracker 1.0"
         Height="510" Width="500"
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
-        Closing="GridWindow_Closing"
+        Closing="Window_Closing"
         MinHeight="100" MinWidth="100" Background="#303030">
 
     <Window.Resources>
@@ -32,18 +32,29 @@
     <DockPanel>
 
         <Menu DockPanel.Dock="Top" Background="White">
-
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
                 <MenuItem Header="Grid Checks" Click="Grid_Options" />
-                <MenuItem Header="Pick Colors" Click="PickColor_Click" />
+            </MenuItem>
+            <MenuItem Header="Image Visuals" Focusable="False">
+                <MenuItem Header="Set Colors" Click="PickColor_Click" />
+                <Separator/>
+                <MenuItem Header="Televo Icons" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Sonic Icons" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem Header="Seeds" Focusable="False">
                 <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
                 <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
+                <MenuItem Header="Set Seed Name" Click="SetSeedname" />
+                <Separator/>
+                <MenuItem Header="Always Save Previous Game Mode" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
-            <MenuItem x:Name="Seedname" Focusable="False"/>
-            <Separator/>
+            <MenuItem x:Name="Seedname" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
 
         </Menu>
 

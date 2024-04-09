@@ -2,10 +2,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+
 
 namespace KhTracker
 {
@@ -26,16 +32,73 @@ namespace KhTracker
     }
 
     public enum OptionType { CheckBox, TextBox }
-
-    public class Option
+    public class Option : INotifyPropertyChanged
     {
         public OptionType Type { get; set; }
-        public string Description { get; set; }
-        public string DefaultValue { get; set; }
+        private string description;
+        private string defaultValue;
+        private double textBoxWidth;
+        public bool IsSelectAllOption { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+        public double TextBoxWidth
+        {
+            get { return textBoxWidth; }
+            set
+            {
+                if (textBoxWidth != value)
+                {
+                    textBoxWidth = value;
+                    OnPropertyChanged(nameof(TextBoxWidth));
+                }
+            }
+        }
+
+        public string Description
+        {
+            get { return description; }
+            set
+            {
+                if (description != value)
+                {
+                    description = value;
+                    OnPropertyChanged(nameof(Description));
+                }
+            }
+        }
+
+        public string DefaultValue
+        {
+            get { return defaultValue; }
+            set
+            {
+                if (defaultValue != value)
+                {
+                    defaultValue = value;
+                    OnPropertyChanged(nameof(DefaultValue));
+                }
+            }
+        }
+
+        private Visibility _visibility = Visibility.Visible;
+        public Visibility Visibility
+        {
+            get => _visibility;
+            set
+            {
+                if (_visibility != value)
+                {
+                    _visibility = value;
+                    OnPropertyChanged(nameof(Visibility));
+                }
+            }
+        }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
-
-
 
     public class OptionTemplateSelector : DataTemplateSelector
     {
@@ -60,22 +123,141 @@ namespace KhTracker
         }
     }
 
+    public class OptionVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // Assuming `value` is the `Option` object
+            var option = value as Option;
+            if (option != null && string.IsNullOrEmpty(option.Description) && !option.IsSelectAllOption)
+                return Visibility.Collapsed; // Hide spacer options
+            return Visibility.Visible; // Show all other options
+        }
 
-    public partial class GridOptionsWindow : Window
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class IsWarningNeededConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length != 2 || !(values[0] is int) || !(values[1] is int))
+                return false;
+
+            int numSquares = (int)values[0];
+            int trueChecksCount = (int)values[1];
+
+            return trueChecksCount < numSquares;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class BindingProxy : Freezable
+    {
+        protected override Freezable CreateInstanceCore()
+        {
+            return new BindingProxy();
+        }
+
+        public object Data
+        {
+            get { return (object)GetValue(DataProperty); }
+            set { SetValue(DataProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Data. This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("Data", typeof(object), typeof(BindingProxy), new PropertyMetadata(null));
+    }
+
+    public partial class GridOptionsWindow : Window, INotifyPropertyChanged
     {
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int TrueChecksCount
+        {
+            get { return _gridWindow.gridSettings.Count(kvp => kvp.Value == true && !new[] { "ForcingFinalCounts" }.Contains(kvp.Key)); }
+        }
+
+        private int _columnsInGrid = 4;
+        public int ColumnsInGrid
+        {
+            get { return _columnsInGrid; }
+            set
+            {
+                if (value != _columnsInGrid)
+                {
+                    _columnsInGrid = value;
+                    OnPropertyChanged(nameof(ColumnsInGrid)); ;
+                }
+            }
+        }
+
+        public int NumSquares
+        {
+            get { return _gridWindow.numRows * _gridWindow.numColumns; }
+        }
+
+        private dynamic originalSettings;
+        public bool canClose = false;
         public GridWindow _gridWindow;
         public Data _data;
         int newNumRows;
         int newNumColumns;
+        bool newBingoLogic;
+        bool newBattleshipLogic;
+        bool newBattleshipRandomCount;
+        int newMaxShipCount;
+        int newMinShipCount;
+        List<int> newShipSizes;
+        bool newFogOfWar;
+        Dictionary<string, int> newFogOfWarSpan;
         List<Category> categories;
+        string[] nonChecks = { "Select All", "" };
         public GridOptionsWindow(GridWindow gridWindow, Data data)
         {
             InitializeComponent();
             _gridWindow = gridWindow;
-            newNumRows = gridWindow.numRows;
+            newBattleshipLogic = gridWindow.battleshipLogic;
+            newBattleshipRandomCount = gridWindow.battleshipRandomCount;
+            newBingoLogic = gridWindow.bingoLogic;
+            newFogOfWar = gridWindow.fogOfWar;
+            newFogOfWarSpan = gridWindow.fogOfWarSpan;
+            newMaxShipCount = gridWindow.maxShipCount;
+            newMinShipCount = gridWindow.minShipCount;
             newNumColumns = gridWindow.numColumns;
+            newNumRows = gridWindow.numRows;
+            newShipSizes = gridWindow.shipSizes;
             _data = data;
+
+            originalSettings = new
+            {
+                numRows = _gridWindow.numRows,
+                numColumns = _gridWindow.numColumns,
+                bingoLogic = _gridWindow.bingoLogic,
+                battleshipLogic = _gridWindow.battleshipLogic,
+                seedName = _gridWindow.seedName,
+                shipSizes = _gridWindow.shipSizes,
+                fogOfWar = _gridWindow.fogOfWar,
+                fogOfWarSpan = _gridWindow.fogOfWarSpan,
+                gridSettings = _gridWindow.gridSettings,
+                minShipCount = _gridWindow.minShipCount,
+                maxShipCount = _gridWindow.maxShipCount,
+                battleshipRandomCount = _gridWindow.battleshipRandomCount
+            };
 
             categories = new List<Category>
             {
@@ -87,22 +269,47 @@ namespace KhTracker
                             SubCategoryName = "Board Size",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.TextBox, Description = "Number of Rows", DefaultValue = $"{newNumRows}" },
-                                new Option { Type = OptionType.TextBox, Description = "Number of Columns", DefaultValue = $"{newNumColumns}"  }
+                                new Option { Type = OptionType.TextBox, Description = "Number of Rows", DefaultValue = $"{newNumRows}", TextBoxWidth = 5},
+                                new Option { Type = OptionType.TextBox, Description = "Number of Columns", DefaultValue = $"{newNumColumns}", TextBoxWidth = 5  }
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Bingo Logic",
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = (Properties.Settings.Default.GridWindowBingoLogic).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Bingo Logic", DefaultValue = $"{newBingoLogic}"  },
                             }
                         },
                         new SubCategory {
                             SubCategoryName = "Battleship Logic" ,
                             Options = new List<Option>
                             {
-                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = (Properties.Settings.Default.GridWindowBattleshipLogic).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Include Battleship Logic", DefaultValue = $"{newBattleshipLogic}" },
+                                new Option { Type = OptionType.CheckBox, Description = "Random Ship Count", DefaultValue = $"{newBattleshipRandomCount}" },
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "Ship Sizes", DefaultValue = $"{string.Join(", ", newShipSizes)}", Visibility = newBattleshipLogic ? Visibility.Visible : Visibility.Collapsed },
+                                new Option { Type = OptionType.TextBox, Description = "Min Ship Count", DefaultValue = $"{newMinShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "Max Ship Count", DefaultValue = $"{newMaxShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                            }
+                        },
+                        new SubCategory {
+                            SubCategoryName = "Fog of War Logic" ,
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.CheckBox, Description = "Include Fog of War Logic", DefaultValue = $"{newFogOfWar}" },
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                                new Option { Type = OptionType.TextBox, Description = "West Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("W") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "East Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("E") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "North Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("N") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "South Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("S") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "NorthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NW") ? newFogOfWarSpan["NW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "NorthEast Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NE") ? newFogOfWarSpan["NE"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "SouthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("SW") ? newFogOfWarSpan["SW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "SouthEast Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("SE") ? newFogOfWarSpan["SE"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                             }
                         }
                     }
@@ -144,7 +351,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Oogie Boogie", DefaultValue = (_gridWindow.gridSettings.ContainsKey("OogieBoogie") ? _gridWindow.gridSettings["OogieBoogie"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Pete TR", DefaultValue = (_gridWindow.gridSettings.ContainsKey("DCPete") ? _gridWindow.gridSettings["DCPete"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Prison Keeper", DefaultValue = (_gridWindow.gridSettings.ContainsKey("PrisonKeeper") ? _gridWindow.gridSettings["PrisonKeeper"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Riku", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Riku") ? _gridWindow.gridSettings["Riku"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Riku", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridRiku") ? _gridWindow.gridSettings["GridRiku"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Roxas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Roxas") ? _gridWindow.gridSettings["Roxas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Saix", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Saix") ? _gridWindow.gridSettings["Saix"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Sark", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Sark") ? _gridWindow.gridSettings["Sark"] : true).ToString() },
@@ -158,6 +365,7 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Tifa", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridTifa") ? _gridWindow.gridSettings["GridTifa"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Twilight Thorn", DefaultValue = (_gridWindow.gridSettings.ContainsKey("TwilightThorn") ? _gridWindow.gridSettings["TwilightThorn"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Vivi", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVivi") ? _gridWindow.gridSettings["GridVivi"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Volcano Lord", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVolcanoLord") ? _gridWindow.gridSettings["GridVolcanoLord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xaldin", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xaldin") ? _gridWindow.gridSettings["Xaldin"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xemnas", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xemnas1") ? _gridWindow.gridSettings["Xemnas1"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xigbar", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Xigbar") ? _gridWindow.gridSettings["Xigbar"] : true).ToString() },
@@ -175,13 +383,13 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "Larxene (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLarxeneData") ? _gridWindow.gridSettings["GridLarxeneData"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Lexaeus", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLexaeus") ? _gridWindow.gridSettings["GridLexaeus"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Lexaeus (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLexaeusData") ? _gridWindow.gridSettings["GridLexaeusData"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Lingering Will", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLingeringWill") ? _gridWindow.gridSettings["GridLingeringWill"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Luxord (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataLuxord") ? _gridWindow.gridSettings["GridDataLuxord"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Marluxia", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridMarluxia") ? _gridWindow.gridSettings["GridMarluxia"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Marluxia (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridMarluxiaData") ? _gridWindow.gridSettings["GridMarluxiaData"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Roxas (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataRoxas") ? _gridWindow.gridSettings["GridDataRoxas"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Saix (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataSaix") ? _gridWindow.gridSettings["GridDataSaix"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Sephiroth", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridSephiroth") ? _gridWindow.gridSettings["GridSephiroth"] : true).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Terra", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridLingeringWill") ? _gridWindow.gridSettings["GridLingeringWill"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Vexen", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVexen") ? _gridWindow.gridSettings["GridVexen"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Vexen (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridVexenData") ? _gridWindow.gridSettings["GridVexenData"] : true).ToString() },
                                 new Option { Type = OptionType.CheckBox, Description = "Xaldin (Data)", DefaultValue = (_gridWindow.gridSettings.ContainsKey("GridDataXaldin") ? _gridWindow.gridSettings["GridDataXaldin"] : true).ToString() },
@@ -235,7 +443,7 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Drives", DefaultValue = (_gridWindow.gridSettings.ContainsKey("Valor") ? _gridWindow.gridSettings["Valor"] : true).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = "true" },
+                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = (_gridWindow.gridSettings.ContainsKey("ForcingFinalCounts") ? _gridWindow.gridSettings["ForcingFinalCounts"] : true).ToString() },
                             }
                         },
                         new SubCategory {
@@ -274,6 +482,13 @@ namespace KhTracker
                             }
                         },
                         new SubCategory {
+                            SubCategoryName = "World Chest Locks",
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.TextBox, Description = "Max World Chest Locks", DefaultValue = (Properties.Settings.Default.GridWindowNumChestLocks).ToString() },
+                            }
+                        },
+                        new SubCategory {
                             SubCategoryName = "Visit Unlocks",
                             Options = new List<Option>
                             {
@@ -295,7 +510,232 @@ namespace KhTracker
                     }
                 },
             };
-            DataContext = categories;
+            DataContext = categories; 
+            string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous" };
+            foreach (Category category in categories)
+            {
+                List<SubCategory> subcategories = category.SubCategories;
+                foreach(SubCategory subcategory in subcategories)
+                {
+                    if (selectAllCategories.Contains(subcategory.SubCategoryName))
+                    {
+                        List<Option> options = subcategory.Options;
+                        int numberOfOptions = options.Count();
+                        int spacersNeeded = ((ColumnsInGrid - (numberOfOptions % ColumnsInGrid)) % ColumnsInGrid) + ColumnsInGrid;
+
+                        for (int i = 0; i < spacersNeeded; i++)
+                        {
+                            options.Add(new Option { Description = "" }); // Add spacers
+                        }
+
+                        options.Add(new Option { Type = OptionType.CheckBox, Description = "Select All", DefaultValue = "false", IsSelectAllOption = true });
+                    }
+                }
+            }
+        }
+
+        private void UpdateTextBoxes(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox == null) return;
+
+            var option = textBox.DataContext as Option;
+            textBox.Text = textBox.Text == "" ? option.DefaultValue : textBox.Text;
+            
+            if (option.Description == "Max Visit Unlocks")
+            {
+                int maxUnlocks = Codes.worldUnlocks.Count;
+                if (int.Parse(textBox.Text) > maxUnlocks)
+                {
+                    textBox.Text = maxUnlocks.ToString();
+                }
+            }
+
+            if (option.Description == "Max World Chest Locks")
+            {
+                int maxChestLocks = Codes.chestLocks.Count;
+                if (int.Parse(textBox.Text) > maxChestLocks)
+                {
+                    textBox.Text = maxChestLocks.ToString();
+                }
+            }
+
+            if (option.Description == "Max Reports")
+            {
+                int maxReports = Codes.reports.Count;
+                if (int.Parse(textBox.Text) > maxReports)
+                {
+                    textBox.Text = maxReports.ToString();
+                }
+            }
+
+            if (option != null && textBox.Text != "")
+            {
+                option.DefaultValue = textBox.Text;
+                UpdateGridSettings(_data);
+            }
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // Use regular expression to allow only numeric input
+            TextBox shipSizesTextBox = sender as TextBox;
+            var currentOption = shipSizesTextBox.DataContext as Option;
+            if (currentOption.Description == "Ship Sizes")
+                e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9,]+$");
+            else
+            {
+                e.Handled = !System.Text.RegularExpressions.Regex.IsMatch(e.Text, "^[0-9]+$");
+            }
+        }
+
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                string text = (String)e.DataObject.GetData(typeof(String));
+                // Use regular expression to check if text is numeric
+                if (!System.Text.RegularExpressions.Regex.IsMatch(text, "^[0-9]+$"))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+
+        private void SelectAllChecks(object sender, RoutedEventArgs e)
+        {
+            CheckBox selectAllCheckbox = sender as CheckBox;
+            if (selectAllCheckbox == null) return;
+
+            bool isChecked = selectAllCheckbox.IsChecked ?? false;
+
+            // Assuming the sender's DataContext is an Option and you can get the SubCategory from there
+            var currentOption = selectAllCheckbox.DataContext as Option;
+            if (currentOption == null) 
+                return;
+            if (!currentOption.IsSelectAllOption)
+            {
+                if (currentOption.Description == "Include Battleship Logic")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // un-toggle bingo logic
+                        _gridWindow.bingoLogic = false;
+                        var includeBingoOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic");
+                        includeBingoOption.DefaultValue = false.ToString();
+
+                        // show ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        // hide ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Collapsed;
+
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
+                    }
+
+                }
+                else if (currentOption.Description == "Include Bingo Logic")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // un-toggle battleship logic
+                        _gridWindow.battleshipLogic = false;
+                        var includeBattleshipOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic");
+                        includeBattleshipOption.DefaultValue = false.ToString();
+
+                        // hide ship sizes
+                        var shipSizesOption = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Ship Sizes");
+                        shipSizesOption.Visibility = Visibility.Collapsed;
+
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (currentOption.Description == "Random Ship Count")
+                {
+                    if (selectAllCheckbox.IsChecked ?? false)
+                    {
+                        // show random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Visible;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        // hide random ship counts
+                        var minNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Min Ship Count");
+                        minNumShips.Visibility = Visibility.Collapsed;
+
+                        var maxNumShips = categories.SelectMany(c => c.SubCategories).SelectMany(sc => sc.Options).FirstOrDefault(o => o.Description == "Max Ship Count");
+                        maxNumShips.Visibility = Visibility.Collapsed;
+                    }
+                }
+                else if (currentOption.Description == "Include Fog of War Logic")
+                {
+                    foreach (string spanDescription in new[] { "West Hint Span", "East Hint Span", "North Hint Span", "South Hint Span", "NorthWest Hint Span", "NorthEast Hint Span", "SouthWest Hint Span", "SouthEast Hint Span"})
+                    {
+                        var currentSpanOption = categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == $"{spanDescription}");
+                        currentSpanOption.Visibility = selectAllCheckbox.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
+                    }
+                }
+                UpdateGridSettings(_data);
+            }
+            else
+            {
+
+                // Find the parent SubCategory
+                var subCategory = categories.SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.Options.Contains(currentOption));
+                if (subCategory == null) return;
+
+                // Toggle all checkboxes based on the state of the "Select All" checkbox
+                foreach (var option in subCategory.Options)
+                {
+                    if (!option.IsSelectAllOption)
+                    {
+                        option.DefaultValue = isChecked.ToString();
+                    }
+                }
+            }
+        }
+
+        private void Window_LocationChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.GridOptionsWindowY = RestoreBounds.Top;
+            Properties.Settings.Default.GridOptionsWindowX = RestoreBounds.Left;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //Properties.Settings.Default.GridOptionsWindowWidth = RestoreBounds.Width;
+            //Properties.Settings.Default.GridOptionsWindowHeight = RestoreBounds.Height;
+        }
+
+        void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.Hide();
+            if (!canClose)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void UpdateGridSize()
@@ -313,7 +753,62 @@ namespace KhTracker
         {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
+            _gridWindow.bingoLogic = includeGlobalBingoLogic;
             Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
+
+            // update battleship logic
+            bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
+            _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
+            Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
+
+            var shipSizesOptionList = (categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue);
+            // text boxes are strings so we need to convert string to list if we are updating from the options window instead of uploading a card
+            if (shipSizesOptionList.GetType() == typeof(string))
+                _gridWindow.shipSizes = shipSizesOptionList
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries) // Split by comma
+                    .SelectMany(chunk => chunk.Trim().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)) // Split by space after trimming
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Select(int.Parse)
+                    .ToList();
+            Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
+
+            bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
+
+            _gridWindow.battleshipRandomCount = randomShipCount;
+            Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
+
+            int minNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Min Ship Count")?.DefaultValue);
+            int maxNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Max Ship Count")?.DefaultValue);
+
+            _gridWindow.minShipCount = minNumShips;
+            Properties.Settings.Default.MinShipCount = minNumShips;
+
+            _gridWindow.maxShipCount = maxNumShips;
+            Properties.Settings.Default.MaxShipCount = maxNumShips;
+
+            bool includeFogOfWar = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "Include Fog of War Logic")?.DefaultValue);
+            _gridWindow.fogOfWar = includeFogOfWar;
+            Properties.Settings.Default.FogOfWar = includeFogOfWar;
+
+            int westSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "West Hint Span")?.DefaultValue);
+            int eastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "East Hint Span")?.DefaultValue);
+            int northSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "North Hint Span")?.DefaultValue);
+            int southSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "South Hint Span")?.DefaultValue);
+            int northWestSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "NorthWest Hint Span")?.DefaultValue);
+            int northEastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "NorthEast Hint Span")?.DefaultValue);
+            int southWestSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "SouthWest Hint Span")?.DefaultValue);
+            int southEastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "SouthEast Hint Span")?.DefaultValue);
+
+            _gridWindow.fogOfWarSpan["W"] = westSpan;
+            _gridWindow.fogOfWarSpan["E"] = eastSpan;
+            _gridWindow.fogOfWarSpan["N"] = northSpan;
+            _gridWindow.fogOfWarSpan["S"] = southSpan;
+            _gridWindow.fogOfWarSpan["NW"] = northWestSpan;
+            _gridWindow.fogOfWarSpan["NE"] = northEastSpan;
+            _gridWindow.fogOfWarSpan["SW"] = southWestSpan;
+            _gridWindow.fogOfWarSpan["SE"] = southEastSpan;
+
+            Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
         }
 
         private void UpdateProgression(Data data)
@@ -389,13 +884,16 @@ namespace KhTracker
             var bosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bosses");
             foreach (var boss in bosses.Options)
             {
-                bool includeBoss = bool.Parse(bosses?.Options.FirstOrDefault(o => o.Description == boss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description])) 
-                    _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
-                else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
-                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
-                else
-                    throw new ArgumentException("This boss doesn't exist.");
+                if (!nonChecks.Contains(boss.Description))
+                {
+                    bool includeBoss = bool.Parse(bosses?.Options.FirstOrDefault(o => o.Description == boss.Description)?.DefaultValue);
+                    if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[boss.Description]))
+                        _gridWindow.gridSettings[data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                    else if (data.codes.bossNameConversion.ContainsKey(boss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[boss.Description]))
+                        _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[boss.Description]] = includeBoss;
+                    else if (_gridWindow.gridSettings.ContainsKey(boss.Description))
+                        _gridWindow.gridSettings[boss.Description] = includeBoss;
+                }
             }
         }
 
@@ -405,9 +903,12 @@ namespace KhTracker
             var superbosses = categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Superbosses");
             foreach (var superboss in superbosses.Options)
             {
-                bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
-                if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
-                    _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
+                if (!nonChecks.Contains(superboss.Description))
+                    {
+                    bool includeBoss = bool.Parse(superbosses?.Options.FirstOrDefault(o => o.Description == superboss.Description)?.DefaultValue);
+                    if (data.codes.bossNameConversion.ContainsKey(superboss.Description) && _gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[superboss.Description]))
+                        _gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[superboss.Description]] = includeBoss;
+                }
             }
         }
 
@@ -442,6 +943,8 @@ namespace KhTracker
             bool includeDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Drives")?.DefaultValue);
             foreach (var drive in driveNames)
                 _gridWindow.gridSettings[$"{drive}"] = includeDrives;
+            bool ForcingFinalCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Light & Darkness Counts as Final")?.DefaultValue);
+            _gridWindow.gridSettings["ForcingFinalCounts"] = ForcingFinalCounts;
         }
 
         private void UpdateProofs()
@@ -492,12 +995,24 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var unlockNames = new[] { "AladdinWep", "AuronWep", "BeastWep", "IceCream", "JackWep", "MembershipCard", "MulanWep", "Picture", "SimbaWep", "SparrowWep", "TronWep" };
-            int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);
-            var randomUnlocks = Enumerable.Range(1, unlockNames.Length).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();
-            foreach (int i in Enumerable.Range(1, unlockNames.Length).ToList())
+            var unlockNames = Codes.worldUnlocks;
+            int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);                                                                              	
+            var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
+            foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())                                                                                                                                                                                                                                                                      
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
             Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+        }
+
+        private void UpdateWorldChestLocks() 
+        {
+            // update visit unlocks
+            // randomize which visit unlocks get included
+            var worldChestLockNames = Codes.chestLocks;
+            int numChestLocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "World Chest Locks")?.Options.FirstOrDefault(o => o.Description == "Max World Chest Locks")?.DefaultValue);
+            var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
+            foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
+                _gridWindow.gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
+            Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
         }
 
         private void UpdateMiscellaneous()
@@ -519,23 +1034,26 @@ namespace KhTracker
             _gridWindow.gridSettings["Grid7Drives"] = includeAllMaxDrives;
         }
 
-        private void UpdateGridSettings(Data data, bool overwrite=true)
+        public void UpdateGridSettings(Data data, bool overwrite=true)
         {
-
             UpdateGridSize();
             UpdateGlobalSettings();
-            UpdateProgression(data);
-            UpdateBosses(data);
-            UpdateSuperbosses(data);
+            UpdateProgression(_data);
+            UpdateBosses(_data);
+            UpdateSuperbosses(_data);
             UpdateMagics();
             UpdateSummons();
             UpdateDrives();
             UpdateProofs();
             UpdateSCOM();
             UpdateTornPages();
+            UpdateWorldChestLocks();
             UpdateUnlocks();
             UpdateReports();
             UpdateMiscellaneous();
+
+            OnPropertyChanged(nameof(TrueChecksCount));
+            OnPropertyChanged(nameof(NumSquares));
 
             // write the updated settings
             if (overwrite)
@@ -553,13 +1071,34 @@ namespace KhTracker
                 {
                     numRows = _gridWindow.numRows,
                     numColumns = _gridWindow.numColumns,
+                    bingoLogic = _gridWindow.bingoLogic,
+                    battleshipLogic = _gridWindow.battleshipLogic,
                     seedName = _gridWindow.seedName,
-                    gridSettings = _gridWindow.gridSettings
+                    shipSizes = _gridWindow.shipSizes,
+                    fogOfWar = _gridWindow.fogOfWar,
+                    fogOfWarSpan = _gridWindow.fogOfWarSpan,
+                    gridSettings = _gridWindow.gridSettings,
+                    minShipCount = _gridWindow.minShipCount,
+                    maxShipCount = _gridWindow.maxShipCount,                  
+                    battleshipRandomCount = _gridWindow.battleshipRandomCount
                 };
 
                 var jsonString = JsonSerializer.Serialize(combinedSettings);
                 System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
             }
+
+            _gridWindow.numRows = originalSettings.numRows;
+            _gridWindow.numColumns = originalSettings.numColumns;
+            _gridWindow.bingoLogic = originalSettings.bingoLogic;
+            _gridWindow.battleshipLogic = originalSettings.battleshipLogic;
+            _gridWindow.seedName = originalSettings.seedName;
+            _gridWindow.shipSizes = originalSettings.shipSizes;
+            _gridWindow.fogOfWar = originalSettings.fogOfWar;
+            _gridWindow.fogOfWarSpan = originalSettings.fogOfWarSpan;
+            _gridWindow.gridSettings = originalSettings.gridSettings;
+            _gridWindow.minShipCount = originalSettings.minShipCount;
+            _gridWindow.maxShipCount = originalSettings.maxShipCount;                 
+            _gridWindow.battleshipRandomCount = originalSettings.battleshipRandomCount;
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
@@ -571,74 +1110,5 @@ namespace KhTracker
             _gridWindow.GenerateGrid(newNumRows, newNumColumns);
         }
     }
-
-    //private void SelectAll_Checked(object sender, RoutedEventArgs e)
-    //{
-    //    var checkbox = sender as CheckBox;
-    //    var expander = checkbox.Parent as Expander;
-    //    var itemsControl = FindChild<ItemsControl>(expander, "YourItemsControlName"); // name your ItemsControl if you haven't
-
-    //    foreach (var option in itemsControl.Items)
-    //    {
-    //        var item = (Option)option;
-    //        if (item.Description != "Select All")
-    //        {
-    //            item.DefaultValue = "True";
-    //        }
-    //    }
-    //}
-
-    //private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
-    //{
-    //    var checkbox = sender as CheckBox;
-    //    var expander = checkbox.Parent as Expander;
-    //    var itemsControl = FindChild<ItemsControl>(expander, "YourItemsControlName");
-
-    //    foreach (var option in itemsControl.Items)
-    //    {
-    //        var item = (Option)option;
-    //        if (item.Description != "Select All")
-    //        {
-    //            item.DefaultValue = "False";
-    //        }
-    //    }
-    //}
-
-    //// Utility method to find a child of a control by type
-    //public static T FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
-    //{
-    //    // Confirm parent and childName are valid. 
-    //    if (parent == null) return null;
-
-    //    T foundChild = null;
-
-    //    int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-    //    for (int i = 0; i < childrenCount; i++)
-    //    {
-    //        var child = VisualTreeHelper.GetChild(parent, i);
-    //        T childType = child as T;
-    //        if (childType == null)
-    //        {
-    //            foundChild = FindChild<T>(child, childName);
-    //            if (foundChild != null) break;
-    //        }
-    //        else if (!string.IsNullOrEmpty(childName))
-    //        {
-    //            FrameworkElement frameworkElement = child as FrameworkElement;
-    //            if (frameworkElement != null && frameworkElement.Name == childName)
-    //            {
-    //                foundChild = (T)child;
-    //                break;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            foundChild = (T)child;
-    //            break;
-    //        }
-    //    }
-
-    //    return foundChild;
-    //}
 
 }
