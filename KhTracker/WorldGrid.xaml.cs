@@ -913,7 +913,7 @@ namespace KhTracker
                 }
                 else if (data.reportInformation[index].Item3 == -12345)
                 {
-                    window.SetHintText(data.reportInformation[index].Item1, "", "", false, false, false);
+                    window.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
                 }
                 else if (data.reportInformation[index].Item3 == -999)
                 {
