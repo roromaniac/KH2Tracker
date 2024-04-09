@@ -93,7 +93,6 @@ namespace KhTracker
             battleshipRandomCount = Properties.Settings.Default.BattleshipRandomCount;
             minShipCount = Properties.Settings.Default.MinShipCount;
             maxShipCount = Properties.Settings.Default.MaxShipCount;
-            Console.WriteLine("AHHHHHHHHH");
             try
             {
                 shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
