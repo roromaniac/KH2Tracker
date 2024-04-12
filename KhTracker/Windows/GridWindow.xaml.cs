@@ -97,7 +97,7 @@ namespace KhTracker
             {
                 shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
             }
-            catch (JsonException ex)
+            catch (JsonException)
             {
                 Console.WriteLine("Ships file did not deserialize correctly.");
                 shipSizes = new List<int>{ 1, 1 };
@@ -242,7 +242,7 @@ namespace KhTracker
                             : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes); 
                     }
                 }
-                catch (JsonException ex)
+                catch (JsonException)
                 {
                     Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
                     return;

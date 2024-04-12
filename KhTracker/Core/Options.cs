@@ -1475,7 +1475,7 @@ namespace KhTracker
                             //to be safe about this i guess
                             //bool abilitiesOn = true;
                             bool puzzleOn = false;
-                            bool synthOn = false;
+                            //bool synthOn = false;
 
                             //load settings from hints
                             foreach (string setting in settings)
@@ -1544,7 +1544,7 @@ namespace KhTracker
                                         break;
                                     case "Synthesis":
                                         SynthToggle(true);
-                                        synthOn = true;
+                                        //synthOn = true;
                                         data.synthOn = true;
                                         break;
                                     case "Form Levels":
