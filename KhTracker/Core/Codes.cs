@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows.Controls;
 
 namespace KhTracker
 {
     public class Codes
     {
-        //Helpers
-
+        //Convert tracker world internal names to readable names
         public static string GetHintTextName(string worldName)
         {
             switch (worldName)
@@ -50,6 +46,7 @@ namespace KhTracker
             }
         }
 
+        //Convert seed gen world names to tracker internal names
         public static string GetWorldName(string worldName)
         {
             switch (worldName)
@@ -89,38 +86,7 @@ namespace KhTracker
             }
         }
 
-        public static string FindShortName(string name)
-        {
-            if (shortNames.ContainsKey(name))
-                return shortNames[name];
-            else
-                return name;
-        }
-
-        public static string FindItemType(string name)
-        {
-            if (itemTypes.Keys.Contains(name))
-                return itemTypes[name];
-            else
-                return "Unknown";
-        }
-
-        public static string FindItemName(string name)
-        {
-            if (convertItemNames.ContainsKey(name))
-                return convertItemNames[name];
-            else
-                return name;
-        }
-
-        public static string ConvertSeedGenName(string name)
-        {
-            if (convertOpenKH.ContainsKey(name))
-                return convertOpenKH[name];
-            else
-                return "Unknown";
-        }
-
+        //Convert seed gen item Ids to tracker item names
         public static string ConvertSeedGenName(int itemID, bool usegenName = false)
         {
             if (seedgenItemID.ContainsKey(itemID))
@@ -134,7 +100,6 @@ namespace KhTracker
                 return "Unknown";
         }
 
-        //Dictionaries
         public Dictionary<int, string> itemCodes = new Dictionary<int, string>
         {
             {21, "Fire"},
@@ -286,6 +251,128 @@ namespace KhTracker
             {0x1EF, "Sweet Memories"}
         };
 
+        //Convert seed gen item names to tracker internal names
+        public static string ConvertSeedGenName(string name)
+        {
+            if (convertOpenKH.ContainsKey(name))
+                return convertOpenKH[name];
+            else
+                return "Unknown";
+        }
+
+        public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
+        {
+            //worlds
+            {"Level", "SorasHeart" },
+            {"Form Levels", "DriveForms" },
+            {"Simulated Twilight Town", "SimulatedTwilightTown" },
+            {"Twilight Town", "TwilightTown" },
+            {"Hollow Bastion", "HollowBastion" },
+            {"Beast's Castle", "BeastsCastle" },
+            {"Olympus Coliseum", "OlympusColiseum" },
+            {"Agrabah", "Agrabah" },
+            {"Land of Dragons", "LandofDragons" },
+            {"Hundred Acre Wood", "HundredAcreWood" },
+            {"Pride Lands", "PrideLands" },
+            {"Disney Castle / Timeless River", "DisneyCastle" },
+            {"Halloween Town", "HalloweenTown" },
+            {"Port Royal", "PortRoyal" },
+            {"Space Paranoids", "SpaceParanoids" },
+            {"The World That Never Was", "TWTNW" },
+            {"Atlantica", "Atlantica" },
+            {"Garden of Assemblage", "GoA"},
+            {"", "GoA"},
+            {"Critical Bonuses", "GoA"},
+            {"Creations", "PuzzSynth"},
+            {"Empty", "Empty"},
+            //items
+            {"Proof of Connection", "Connection" },
+            {"Proof of Nonexistence", "Nonexistence" },
+            {"Proof of Peace", "Peace" },
+            {"PromiseCharm", "PromiseCharm" },
+            {"Valor Form", "Valor" },
+            {"Wisdom Form", "Wisdom" },
+            {"Limit Form", "Limit" },
+            {"Master Form", "Master" },
+            {"Final Form", "Final" },
+            {"Fire Element", "Fire" },
+            {"Blizzard Element", "Blizzard" },
+            {"Thunder Element", "Thunder" },
+            {"Cure Element", "Cure" },
+            {"Magnet Element", "Magnet" },
+            {"Reflect Element", "Reflect" },
+            {"Ukulele Charm (Stitch)", "Ukulele" },
+            {"Baseball Charm (Chicken Little)", "Baseball" },
+            {"Lamp Charm (Genie)", "Lamp" },
+            {"Feather Charm (Peter Pan)", "Feather" },
+            {"Torn Pages", "TornPage" },
+            {"Second Chance", "SecondChance" },
+            {"Once More", "OnceMore" },
+            {"Secret Ansem's Report 1", "Report1"},
+            {"Secret Ansem's Report 2", "Report2"},
+            {"Secret Ansem's Report 3", "Report3"},
+            {"Secret Ansem's Report 4", "Report4"},
+            {"Secret Ansem's Report 5", "Report5"},
+            {"Secret Ansem's Report 6", "Report6"},
+            {"Secret Ansem's Report 7", "Report7"},
+            {"Secret Ansem's Report 8", "Report8"},
+            {"Secret Ansem's Report 9", "Report9"},
+            {"Secret Ansem's Report 10", "Report10"},
+            {"Secret Ansem's Report 11", "Report11"},
+            {"Secret Ansem's Report 12", "Report12"},
+            {"Secret Ansem's Report 13", "Report13"},
+            {"Secret Ansem's Report 14", "Report14"},
+            {"Secret Ansem's Report 15", "Report15"},
+            {"Secret Ansem's Report 16", "Report16"},
+            {"Battlefields of War (Auron)", "AuronWep"},
+            {"Sword of the Ancestor (Mulan)", "MulanWep"},
+            {"Beast's Claw (Beast)", "BeastWep"},
+            {"Bone Fist (Jack Skellington)", "JackWep"},
+            {"Proud Fang (Simba)", "SimbaWep"},
+            {"Skill and Crossbones (Jack Sparrow)", "SparrowWep"},
+            {"Scimitar (Aladdin)", "AladdinWep"},
+            {"Identity Disk (Tron)", "TronWep"},
+            {"Membership Card", "MembershipCard"},
+            {"Ice Cream", "IceCream"},
+            {"Anti-Form", "Anti"},
+            {"Hades Cup Trophy", "HadesCup"},
+            {"Olympus Stone", "OlympusStone"},
+            {"Unknown Disk", "UnknownDisk"},
+            {"Munny Pouch", "MunnyPouch" },
+            {"Way to the Dawn (Riku)", "RikuWep"},
+            {"Disney Castle Key", "KingsLetter"},
+            {"Namine's Sketches", "Sketches"},
+            {"Oathkeeper", "ChestTT"},
+            {"Bond of Flame", "ChestSTT"},
+            {"Sleeping Lion", "ChestHB"},
+            {"Winner's Proof", "ChestCoR"},
+            {"Wishing Lamp", "ChestAG"},
+            {"Rumbling Rose", "ChestBC"},
+            {"Monochrome", "ChestDC"},
+            {"Decisive Pumpkin", "ChestHT"},
+            {"Hidden Dragon", "ChestLoD"},
+            {"Hero's Crest", "ChestOC"},
+            {"Circle of Life", "ChestPL"},
+            {"Follow the Wind", "ChestPR"},
+            {"Photon Debugger", "ChestSP"},
+            {"Two Become One", "ChestTWTNW"},
+            {"Sweet Memories", "ChestHAW"},
+        };
+
+        //Convert some item names to something else shorter
+        public static string FindShortName(string input, bool shorter = false)
+        {
+            string name = input;
+
+            if (shorter && shorterNames.ContainsKey(name))
+                return shorterNames[name];
+
+            if (shortNames.ContainsKey(name))
+                return shortNames[name];
+
+            return name;
+        }
+
         public static Dictionary<string, string> shortNames = new Dictionary<string, string>()
         {
             {"Secret Ansem's Report 1", "Ansem's Report"},
@@ -317,23 +404,52 @@ namespace KhTracker
             {"Way to the Dawn (Riku)", "Way to the Dawn"},
             {"Munny Pouch (Olette)", "Munny Pouch"},
             {"Munny Pouch (Mickey)", "Munny Pouch"},
-            {"Sora's Heart",            "Levels" },
-            {"Drive Forms",             "Drives" },
+            {"Sora's Heart", "Levels" },
+            {"Drive Forms", "Drives" },
             {"Simulated Twilight Town", "STT" },
-            {"Twilight Town",           "TT" },
-            {"Hollow Bastion",          "HB" },
-            {"Beast's Castle",          "BC" },
-            {"Olympus Coliseum",        "OC" },
-            {"Agrabah",                 "AG" },
-            {"Land of Dragons",         "LoD" },
-            {"Hundred Acre Wood",       "100AW" },
-            {"Pride Lands",             "PL" },
-            {"Disney Castle",           "DC" },
-            {"Halloween Town",          "HT" },
-            {"Port Royal",              "PR" },
-            {"Space Paranoids",         "SP" },
-            {"Atlantica",               "AT" }
+            {"Twilight Town", "TT" },
+            {"Hollow Bastion", "HB" },
+            {"Beast's Castle", "BC" },
+            {"Olympus Coliseum", "OC" },
+            {"Agrabah", "AG" },
+            {"Land of Dragons", "LoD" },
+            {"Hundred Acre Wood", "100AW" },
+            {"Pride Lands", "PL" },
+            {"Disney Castle", "DC" },
+            {"Halloween Town", "HT" },
+            {"Port Royal", "PR" },
+            {"Space Paranoids", "SP" },
+            {"Atlantica", "AT" }
         };
+
+        public static Dictionary<string, string> shorterNames = new Dictionary<string, string>()
+        {
+            {"Sora's Heart", "Levels" },
+            {"Drive Forms", "Drives" },
+            {"Simulated Twilight Town", "STT" },
+            {"Twilight Town", "TT" },
+            {"Hollow Bastion", "HB" },
+            {"Beast's Castle", "BC" },
+            {"Olympus Coliseum", "OC" },
+            {"Agrabah", "AG" },
+            {"Land of Dragons", "LoD" },
+            {"Hundred Acre Wood", "100AW" },
+            {"Pride Lands", "PL" },
+            {"Disney Castle", "DC" },
+            {"Halloween Town", "HT" },
+            {"Port Royal", "PR" },
+            {"Space Paranoids", "SP" },
+            {"Atlantica", "AT" }
+        };
+
+        //Find the item type an Important Check belongs to
+        public static string FindItemType(string name)
+        {
+            if (itemTypes.Keys.Contains(name))
+                return itemTypes[name];
+            else
+                return "Unknown";
+        }
 
         public static Dictionary<string, string> itemTypes = new Dictionary<string, string>()
         {
@@ -508,17 +624,6 @@ namespace KhTracker
             {"Ghost_Nonexistence", "proof"},
             {"Ghost_Peace", "proof"},
             {"Ghost_PromiseCharm", "proof"},
-            //{"Ghost_AuronWep", "visit"},
-            //{"Ghost_MulanWep", "visit"},
-            //{"Ghost_BeastWep", "visit"},
-            //{"Ghost_JackWep", "visit"},
-            //{"Ghost_SimbaWep", "visit"},
-            //{"Ghost_SparrowWep", "visit"},
-            //{"Ghost_AladdinWep", "visit"},
-            //{"Ghost_TronWep", "visit"},
-            //{"Ghost_MembershipCard", "visit"},
-            //{"Ghost_IceCream", "visit"},
-            //{"Ghost_Picture", "visit"},
             {"Ghost_Anti", "form"},
             {"Ghost_HadesCup", "other"},
             {"Ghost_OlympusStone", "other"},
@@ -617,8 +722,6 @@ namespace KhTracker
             {"Olympus Stone", "other"},
             {"Unknown Disk", "other"},
             {"Munny Pouch", "other"},
-            //{"Munny Pouch (Olette)", "other"},
-            //{"Munny Pouch (Mickey)", "other"},
             {"Way to the Dawn (Riku)", "visit"},
             {"Disney Castle Key", "visit"},
             {"Namine's Sketches", "visit"},
@@ -639,176 +742,7 @@ namespace KhTracker
             {"Sweet Memories", "keyblade"}
         };
 
-        public static Dictionary<string, string> convertItemNames = new Dictionary<string, string>()
-        {
-            {"Secret Ansem's Report 1", "Report1"},
-            {"Secret Ansem's Report 2", "Report2"},
-            {"Secret Ansem's Report 3", "Report3"},
-            {"Secret Ansem's Report 4", "Report4"},
-            {"Secret Ansem's Report 5", "Report5"},
-            {"Secret Ansem's Report 6", "Report6"},
-            {"Secret Ansem's Report 7", "Report7"},
-            {"Secret Ansem's Report 8", "Report8"},
-            {"Secret Ansem's Report 9", "Report9"},
-            {"Secret Ansem's Report 10", "Report10"},
-            {"Secret Ansem's Report 11", "Report11"},
-            {"Secret Ansem's Report 12", "Report12"},
-            {"Secret Ansem's Report 13", "Report13"},
-            {"Valor Form", "Valor"},
-            {"Wisdom Form", "Wisdom"},
-            {"Limit Form", "Limit"},
-            {"Master Form", "Master"},
-            {"Final Form", "Final"},
-            {"Once More", "OnceMore"},
-            {"Second Chance", "SecondChance"},
-            {"Baseball Charm (Chicken Little)", "Baseball"},
-            {"Lamp Charm (Genie)", "Lamp"},
-            {"Ukulele Charm (Stitch)", "Ukulele"},
-            {"Feather Charm (Peter Pan)", "Feather"},
-            {"Proof of Connection", "Connection"},
-            {"Proof of Nonexistence", "Nonexistence"},
-            {"Proof of Peace", "Peace"},
-            {"PromiseCharm", "PromiseCharm"},
-            {"Battlefields of War (Auron)", "AuronWep"},
-            {"Sword of the Ancestor (Mulan)", "MulanWep"},
-            {"Beast's Claw (Beast)", "BeastWep"},
-            {"Bone Fist (Jack Skellington)", "JackWep"},
-            {"Proud Fang (Simba)", "SimbaWep"},
-            {"Skill and Crossbones (Jack Sparrow)", "SparrowWep"},
-            {"Scimitar (Aladdin)", "AladdinWep"},
-            {"Identity Disk (Tron)", "TronWep"},
-            {"Membership Card", "MembershipCard"},
-            {"Ice Cream", "IceCream"},
-            //{"Picture", "Picture"},
-            {"Anti-Form", "Anti"},
-            {"Hades Cup Trophy", "HadesCup"},
-            {"Olympus Stone", "OlympusStone"},
-            {"Unknown Disk", "UnknownDisk"},
-            {"Way to the Dawn (Riku)", "RikuWep"},
-            {"Disney Castle Key", "KingsLetter"},
-            {"Namine's Sketches", "Sketches"},
-            {"Oathkeeper", "ChestTT"},
-            {"Bond of Flame", "ChestSTT"},
-            {"Sleeping Lion", "ChestHB"},
-            {"Winner's Proof", "ChestCoR"},
-            {"Wishing Lamp", "ChestAG"},
-            {"Rumbling Rose", "ChestBC"},
-            {"Monochrome", "ChestDC"},
-            {"Decisive Pumpkin", "ChestHT"},
-            {"Hidden Dragon", "ChestLoD"},
-            {"Hero's Crest", "ChestOC"},
-            {"Circle of Life", "ChestPL"},
-            {"Follow the Wind", "ChestPR"},
-            {"Photon Debugger", "ChestSP"},
-            {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"},
-            //{"Munny Pouch (Olette)", "MunnyPouch1"},
-            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
-        };
-
-        public static Dictionary<string, string> convertOpenKH = new Dictionary<string, string>()
-        {
-            //worlds
-            {"Level", "SorasHeart" },
-            {"Form Levels", "DriveForms" },
-            {"Simulated Twilight Town", "SimulatedTwilightTown" },
-            {"Twilight Town", "TwilightTown" },
-            {"Hollow Bastion", "HollowBastion" },
-            {"Beast's Castle", "BeastsCastle" },
-            {"Olympus Coliseum", "OlympusColiseum" },
-            {"Agrabah", "Agrabah" },
-            {"Land of Dragons", "LandofDragons" },
-            {"Hundred Acre Wood", "HundredAcreWood" },
-            {"Pride Lands", "PrideLands" },
-            {"Disney Castle / Timeless River", "DisneyCastle" },
-            {"Halloween Town", "HalloweenTown" },
-            {"Port Royal", "PortRoyal" },
-            {"Space Paranoids", "SpaceParanoids" },
-            {"The World That Never Was", "TWTNW" },
-            {"Atlantica", "Atlantica" },
-            {"Garden of Assemblage", "GoA"},
-            {"", "GoA"},
-            {"Critical Bonuses", "GoA"},
-            {"Creations", "PuzzSynth"},
-            {"Empty", "Empty"},
-            //items
-            {"Proof of Connection", "Connection" },
-            {"Proof of Nonexistence", "Nonexistence" },
-            {"Proof of Peace", "Peace" },
-            {"PromiseCharm", "PromiseCharm" },
-            {"Valor Form", "Valor" },
-            {"Wisdom Form", "Wisdom" },
-            {"Limit Form", "Limit" },
-            {"Master Form", "Master" },
-            {"Final Form", "Final" },
-            {"Fire Element", "Fire" },
-            {"Blizzard Element", "Blizzard" },
-            {"Thunder Element", "Thunder" },
-            {"Cure Element", "Cure" },
-            {"Magnet Element", "Magnet" },
-            {"Reflect Element", "Reflect" },
-            {"Ukulele Charm (Stitch)", "Ukulele" },
-            {"Baseball Charm (Chicken Little)", "Baseball" },
-            {"Lamp Charm (Genie)", "Lamp" },
-            {"Feather Charm (Peter Pan)", "Feather" },
-            {"Torn Pages", "TornPage" },
-            {"Second Chance", "SecondChance" },
-            {"Once More", "OnceMore" },
-            {"Secret Ansem's Report 1", "Report1"},
-            {"Secret Ansem's Report 2", "Report2"},
-            {"Secret Ansem's Report 3", "Report3"},
-            {"Secret Ansem's Report 4", "Report4"},
-            {"Secret Ansem's Report 5", "Report5"},
-            {"Secret Ansem's Report 6", "Report6"},
-            {"Secret Ansem's Report 7", "Report7"},
-            {"Secret Ansem's Report 8", "Report8"},
-            {"Secret Ansem's Report 9", "Report9"},
-            {"Secret Ansem's Report 10", "Report10"},
-            {"Secret Ansem's Report 11", "Report11"},
-            {"Secret Ansem's Report 12", "Report12"},
-            {"Secret Ansem's Report 13", "Report13"},
-            {"Secret Ansem's Report 14", "Report14"},
-            {"Secret Ansem's Report 15", "Report15"},
-            {"Secret Ansem's Report 16", "Report16"},
-            {"Battlefields of War (Auron)", "AuronWep"},
-            {"Sword of the Ancestor (Mulan)", "MulanWep"},
-            {"Beast's Claw (Beast)", "BeastWep"},
-            {"Bone Fist (Jack Skellington)", "JackWep"},
-            {"Proud Fang (Simba)", "SimbaWep"},
-            {"Skill and Crossbones (Jack Sparrow)", "SparrowWep"},
-            {"Scimitar (Aladdin)", "AladdinWep"},
-            {"Identity Disk (Tron)", "TronWep"},
-            {"Membership Card", "MembershipCard"},
-            {"Ice Cream", "IceCream"},
-            {"Anti-Form", "Anti"},
-            {"Hades Cup Trophy", "HadesCup"},
-            {"Olympus Stone", "OlympusStone"},
-            {"Unknown Disk", "UnknownDisk"},
-            {"Munny Pouch", "MunnyPouch" },
-            {"Way to the Dawn (Riku)", "RikuWep"},
-            {"Disney Castle Key", "KingsLetter"},
-            {"Namine's Sketches", "Sketches"},
-            {"Oathkeeper", "ChestTT"},
-            {"Bond of Flame", "ChestSTT"},
-            {"Sleeping Lion", "ChestHB"},
-            {"Winner's Proof", "ChestCoR"},
-            {"Wishing Lamp", "ChestAG"},
-            {"Rumbling Rose", "ChestBC"},
-            {"Monochrome", "ChestDC"},
-            {"Decisive Pumpkin", "ChestHT"},
-            {"Hidden Dragon", "ChestLoD"},
-            {"Hero's Crest", "ChestOC"},
-            {"Circle of Life", "ChestPL"},
-            {"Follow the Wind", "ChestPR"},
-            {"Photon Debugger", "ChestSP"},
-            {"Two Become One", "ChestTWTNW"},
-            {"Sweet Memories", "ChestHAW"},
-            //{"Munny Pouch (Olette)", "MunnyPouch1"},
-            //{"Munny Pouch (Mickey)", "MunnyPouch2"}
-        };
-
-
-        //Used to get what color text should be for hint text
+        //Get what color text should be for hint text
         public static string GetTextColor(string name)
         {
             if (getColors.Keys.Contains(name))
@@ -911,8 +845,7 @@ namespace KhTracker
             {"Sweet Memories", "Gold"}
         };
 
-
-        //Used to convert the seed icon image hash into numbers 
+        //Convert the seed icon image hash into numbers 
         public static Dictionary<string, int> HashInt = new Dictionary<string, int>
         {
             {"ability-unequip", 1},
@@ -952,7 +885,6 @@ namespace KhTracker
             {"weapon-shield", 35},
             {"weapon-staff", 36}
         };
-
 
         //Bosses and Boss Rando
         public static string FindBossType(string name)
