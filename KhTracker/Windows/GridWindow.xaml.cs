@@ -244,7 +244,7 @@ namespace KhTracker
                 }
                 catch (JsonException ex)
                 {
-                    Console.WriteLine("FILE DID NOT READ CORRECTLY");
+                    Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
                     return;
                 }
 
@@ -317,9 +317,8 @@ namespace KhTracker
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
             // re-init the Grid OptionsWindow so that the checkboxes and textboxes re-updated based on current grid data
-            gridOptionsWindow = new GridOptionsWindow(this, data);
-            gridOptionsWindow.UpdateGridSettings(data);
-            
+            gridOptionsWindow.InitializeData(this, data);
+            gridOptionsWindow.UpdateGridOptionsUI();
         }
 
         private void SetSeedname(object sender, RoutedEventArgs e)
@@ -631,7 +630,8 @@ namespace KhTracker
             }
 
             grid = new Grid();
-            gridOptionsWindow = new GridOptionsWindow(this, data);
+            gridOptionsWindow.InitializeData(this, data);
+            gridOptionsWindow.UpdateGridOptionsUI();
             buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
             originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
             bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
@@ -682,8 +682,8 @@ namespace KhTracker
                 numRows = rows;
                 numColumns = columns;
                 // update the row and column values
-                gridOptionsWindow = new GridOptionsWindow(this, data);
-                gridOptionsWindow.UpdateGridSettings(data);
+                gridOptionsWindow.InitializeData(this, data);
+                gridOptionsWindow.UpdateGridOptionsUI();
                 MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
             }
 
@@ -1168,8 +1168,6 @@ namespace KhTracker
                                            .SelectMany(row => Enumerable.Range(0, numColumns), (row, col) => new Tuple<int, int>(row, col))
                                            .ToList();
 
-            Console.WriteLine($"{possibleShipHeads}");
-
             if (!TryPlaceShips(0))
             {
                 MessageBox.Show("Failed to place all ships. As a result, no ships have been placed. Please increase the grid dimensions or lower the number/size of ships.");
@@ -1189,7 +1187,6 @@ namespace KhTracker
             int shipSize = sampledShipSizes[shipIndex];
             // Shuffle possible starting points to ensure random selection
             var shuffledShipHeads = possibleShipHeads.OrderBy(x => random.Next()).ToList();
-            Console.WriteLine(shuffledShipHeads.Count);
             int maxPlacementAttempts = 100;
             int shipPlacementAttempts = 0;
 
