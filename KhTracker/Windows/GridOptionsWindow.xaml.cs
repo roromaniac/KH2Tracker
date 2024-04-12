@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Net.Sockets;
+//using System.Net.Sockets;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -573,7 +573,7 @@ namespace KhTracker
             
             if (option.Description == "Max Visit Unlocks")
             {
-                int maxUnlocks = Codes.worldUnlocks.Count;
+                int maxUnlocks = MainWindow.data.VisitLocks.Count;
                 if (int.Parse(textBox.Text) > maxUnlocks)
                 {
                     textBox.Text = maxUnlocks.ToString();
@@ -582,7 +582,7 @@ namespace KhTracker
 
             if (option.Description == "Max World Chest Locks")
             {
-                int maxChestLocks = Codes.chestLocks.Count;
+                int maxChestLocks = MainWindow.data.VisitLocks.ConvertAll<string>(x => x.ToString()).Count;
                 if (int.Parse(textBox.Text) > maxChestLocks)
                 {
                     textBox.Text = maxChestLocks.ToString();
@@ -591,7 +591,7 @@ namespace KhTracker
 
             if (option.Description == "Max Reports")
             {
-                int maxReports = Codes.reports.Count;
+                int maxReports = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList().Count;
                 if (int.Parse(textBox.Text) > maxReports)
                 {
                     textBox.Text = maxReports.ToString();
@@ -1030,7 +1030,8 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var unlockNames = Codes.worldUnlocks;
+
+            List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
             int numUnlocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Visit Unlocks")?.Options.FirstOrDefault(o => o.Description == "Max Visit Unlocks")?.DefaultValue);                                                                              	
             var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
             foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())                                                                                                                                                                                                                                                                      
@@ -1043,7 +1044,7 @@ namespace KhTracker
         {
             // update visit unlocks
             // randomize which visit unlocks get included
-            var worldChestLockNames = Codes.chestLocks;
+            List<string> worldChestLockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
             int numChestLocks = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "World Chest Locks")?.Options.FirstOrDefault(o => o.Description == "Max World Chest Locks")?.DefaultValue);
             var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
