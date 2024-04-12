@@ -617,12 +617,12 @@ namespace KhTracker
             }
             Properties.Settings.Default.Save();
 
-            gridWindow.canClose = true;
-            gridWindow.Close();
-            gridWindow.gridOptionsWindow.canClose = true;
-            gridWindow.gridOptionsWindow.Close();
             gridWindow.colorPickerWindow.canClose = true;
             gridWindow.colorPickerWindow.Close();
+            gridWindow.gridOptionsWindow.canClose = true;
+            gridWindow.gridOptionsWindow.Close();
+            gridWindow.canClose = true;
+            gridWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

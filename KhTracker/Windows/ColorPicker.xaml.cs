@@ -47,7 +47,6 @@ namespace KhTracker
 
             // Set button colors and foreground text colors initially
             UnmarkedColorButton.Background = new SolidColorBrush(ButtonColors["Unmarked Color"]);
-            Console.WriteLine($"FFFFFFFFFFFFFF: {ButtonColors["Unmarked Color"]}");
             SetForegroundColor(ButtonColors["Unmarked Color"], UnmarkedColorButton);
             MarkedColorButton.Background = new SolidColorBrush(ButtonColors["Marked Color"]);
             SetForegroundColor(ButtonColors["Marked Color"], MarkedColorButton);

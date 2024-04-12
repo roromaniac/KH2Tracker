@@ -214,6 +214,7 @@ namespace KhTracker
         private dynamic originalSettings;
         public bool canClose = false;
         public GridWindow _gridWindow;
+        public Dictionary<string, bool> newGridSettings;
         public Data _data;
         int newNumRows;
         int newNumColumns;
@@ -230,18 +231,40 @@ namespace KhTracker
         public GridOptionsWindow(GridWindow gridWindow, Data data)
         {
             InitializeComponent();
+            InitializeData(gridWindow, data);
+            UpdateGridOptionsUI();
+        }
+
+        public void InitializeData(GridWindow gridWindow, Data data)
+        {
             _gridWindow = gridWindow;
             newBattleshipLogic = gridWindow.battleshipLogic;
             newBattleshipRandomCount = gridWindow.battleshipRandomCount;
             newBingoLogic = gridWindow.bingoLogic;
             newFogOfWar = gridWindow.fogOfWar;
             newFogOfWarSpan = gridWindow.fogOfWarSpan;
+            newGridSettings = gridWindow.gridSettings;
             newMaxShipCount = gridWindow.maxShipCount;
             newMinShipCount = gridWindow.minShipCount;
             newNumColumns = gridWindow.numColumns;
             newNumRows = gridWindow.numRows;
             newShipSizes = gridWindow.shipSizes;
             _data = data;
+
+            if (_gridWindow.SavePreviousGridSettingsOption.IsChecked)
+            {
+                Properties.Settings.Default.GridWindowRows = newNumRows;
+                Properties.Settings.Default.GridWindowColumns = newNumColumns;
+                Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(newGridSettings);
+                Properties.Settings.Default.GridWindowBingoLogic = newBingoLogic;
+                Properties.Settings.Default.GridWindowBattleshipLogic = newBattleshipLogic;
+                Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(newShipSizes);
+                Properties.Settings.Default.BattleshipRandomCount = newBattleshipRandomCount;
+                Properties.Settings.Default.FogOfWar = newFogOfWar;
+                Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(newFogOfWarSpan);
+                Properties.Settings.Default.MaxShipCount = newMaxShipCount;
+                Properties.Settings.Default.MinShipCount = newMinShipCount;
+            }
 
             originalSettings = new
             {
@@ -259,6 +282,12 @@ namespace KhTracker
                 battleshipRandomCount = _gridWindow.battleshipRandomCount
             };
 
+            OnPropertyChanged(nameof(TrueChecksCount));
+            OnPropertyChanged(nameof(NumSquares));
+        }
+
+        public void UpdateGridOptionsUI()
+        {
             categories = new List<Category>
             {
                 new Category {
@@ -510,12 +539,12 @@ namespace KhTracker
                     }
                 },
             };
-            DataContext = categories; 
+            DataContext = categories;
             string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous" };
             foreach (Category category in categories)
             {
                 List<SubCategory> subcategories = category.SubCategories;
-                foreach(SubCategory subcategory in subcategories)
+                foreach (SubCategory subcategory in subcategories)
                 {
                     if (selectAllCategories.Contains(subcategory.SubCategoryName))
                     {
@@ -572,7 +601,7 @@ namespace KhTracker
             if (option != null && textBox.Text != "")
             {
                 option.DefaultValue = textBox.Text;
-                UpdateGridSettings(_data);
+                UpdateGridSettings(_data, _gridWindow.SavePreviousGridSettingsOption.IsChecked);
             }
         }
 
@@ -697,7 +726,7 @@ namespace KhTracker
                         currentSpanOption.Visibility = selectAllCheckbox.IsChecked ?? false ? Visibility.Visible : Visibility.Collapsed;
                     }
                 }
-                UpdateGridSettings(_data);
+                UpdateGridSettings(_data, _gridWindow.SavePreviousGridSettingsOption.IsChecked);
             }
             else
             {
@@ -738,28 +767,29 @@ namespace KhTracker
             }
         }
 
-        private void UpdateGridSize()
+        private void UpdateGridSize(bool overwrite)
         {
             // update grid size
             newNumRows = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Rows")?.DefaultValue);
             newNumColumns = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Board Size")?.Options.FirstOrDefault(o => o.Description == "Number of Columns")?.DefaultValue);
-            Properties.Settings.Default.GridWindowRows = newNumRows;
-            Properties.Settings.Default.GridWindowColumns = newNumColumns;
+            if (overwrite)
+            {
+                Properties.Settings.Default.GridWindowRows = newNumRows;
+                Properties.Settings.Default.GridWindowColumns = newNumColumns;
+            }
             _gridWindow.numRows = newNumRows;
             _gridWindow.numColumns = newNumColumns;
         }
 
-        private void UpdateGlobalSettings()
+        private void UpdateGlobalSettings(bool overwrite)
         {
             // update bingo logic
             bool includeGlobalBingoLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bingo Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bingo Logic")?.DefaultValue);
             _gridWindow.bingoLogic = includeGlobalBingoLogic;
-            Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
 
             // update battleship logic
             bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
             _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
-            Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
 
             var shipSizesOptionList = (categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue);
             // text boxes are strings so we need to convert string to list if we are updating from the options window instead of uploading a card
@@ -770,25 +800,20 @@ namespace KhTracker
                     .Where(s => !string.IsNullOrWhiteSpace(s))
                     .Select(int.Parse)
                     .ToList();
-            Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
 
             bool randomShipCount = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Random Ship Count")?.DefaultValue);
 
             _gridWindow.battleshipRandomCount = randomShipCount;
-            Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
 
             int minNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Min Ship Count")?.DefaultValue);
             int maxNumShips = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Max Ship Count")?.DefaultValue);
 
             _gridWindow.minShipCount = minNumShips;
-            Properties.Settings.Default.MinShipCount = minNumShips;
 
             _gridWindow.maxShipCount = maxNumShips;
-            Properties.Settings.Default.MaxShipCount = maxNumShips;
 
             bool includeFogOfWar = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "Include Fog of War Logic")?.DefaultValue);
             _gridWindow.fogOfWar = includeFogOfWar;
-            Properties.Settings.Default.FogOfWar = includeFogOfWar;
 
             int westSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "West Hint Span")?.DefaultValue);
             int eastSpan = int.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Fog of War Logic")?.Options.FirstOrDefault(o => o.Description == "East Hint Span")?.DefaultValue);
@@ -808,7 +833,17 @@ namespace KhTracker
             _gridWindow.fogOfWarSpan["SW"] = southWestSpan;
             _gridWindow.fogOfWarSpan["SE"] = southEastSpan;
 
-            Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
+            if (overwrite)
+            {
+                Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
+                Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
+                Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
+                Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
+                Properties.Settings.Default.MinShipCount = minNumShips;
+                Properties.Settings.Default.MaxShipCount = maxNumShips;
+                Properties.Settings.Default.FogOfWar = includeFogOfWar;
+                Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
+            }
         }
 
         private void UpdateProgression(Data data)
@@ -980,7 +1015,7 @@ namespace KhTracker
             }
         }
 
-        private void UpdateReports()
+        private void UpdateReports(bool overwrite)
         {
             // update reports
             // randomize which reports get included
@@ -991,7 +1026,7 @@ namespace KhTracker
             Properties.Settings.Default.GridWindowNumReports = numReports;
         }
 
-        private void UpdateUnlocks()
+        private void UpdateUnlocks(bool overwrite)
         {
             // update visit unlocks
             // randomize which visit unlocks get included
@@ -1000,10 +1035,11 @@ namespace KhTracker
             var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numUnlocks).ToList();                                                                                                                                                                                                                      
             foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())                                                                                                                                                                                                                                                                      
                 _gridWindow.gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
-            Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+            if (overwrite)
+                Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
         }
 
-        private void UpdateWorldChestLocks() 
+        private void UpdateWorldChestLocks(bool overwrite) 
         {
             // update visit unlocks
             // randomize which visit unlocks get included
@@ -1012,7 +1048,8 @@ namespace KhTracker
             var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => Guid.NewGuid()).Take(numChestLocks).ToList();
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
                 _gridWindow.gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
-            Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
+            if (overwrite)
+                Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
         }
 
         private void UpdateMiscellaneous()
@@ -1036,20 +1073,20 @@ namespace KhTracker
 
         public void UpdateGridSettings(Data data, bool overwrite=true)
         {
-            UpdateGridSize();
-            UpdateGlobalSettings();
-            UpdateProgression(_data);
-            UpdateBosses(_data);
-            UpdateSuperbosses(_data);
+            UpdateGridSize(overwrite);
+            UpdateGlobalSettings(overwrite);
+            UpdateProgression(data);
+            UpdateBosses(data);
+            UpdateSuperbosses(data);
             UpdateMagics();
             UpdateSummons();
             UpdateDrives();
             UpdateProofs();
             UpdateSCOM();
             UpdateTornPages();
-            UpdateWorldChestLocks();
-            UpdateUnlocks();
-            UpdateReports();
+            UpdateWorldChestLocks(overwrite);
+            UpdateUnlocks(overwrite);
+            UpdateReports(overwrite);
             UpdateMiscellaneous();
 
             OnPropertyChanged(nameof(TrueChecksCount));
@@ -1062,7 +1099,7 @@ namespace KhTracker
 
         private void SavePresetJson(object sender, RoutedEventArgs e)
         {
-            UpdateGridSettings(_data);
+            UpdateGridSettings(_data, _gridWindow.SavePreviousGridSettingsOption.IsChecked);
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.Filter = "JSON Files (*.json)|*.json";
             if (saveFileDialog.ShowDialog() == true)
@@ -1104,7 +1141,7 @@ namespace KhTracker
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-            UpdateGridSettings(_data);
+            UpdateGridSettings(_data, _gridWindow.SavePreviousGridSettingsOption.IsChecked);
             // generate new grid
             _gridWindow.grid.Children.Clear();
             _gridWindow.GenerateGrid(newNumRows, newNumColumns);
