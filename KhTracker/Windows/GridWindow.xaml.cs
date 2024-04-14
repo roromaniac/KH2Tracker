@@ -82,7 +82,14 @@ namespace KhTracker
             InitializeComponent();
             InitOptions();
 
-            gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+            try
+            {
+                gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+            }
+            catch (JsonException e)
+            {
+                MessageBox.Show("Grid settings did not deserialize correctly. Please reconfigure the settings.");
+            }
             currentColors = GetColorSettings();
 
             numRows = Properties.Settings.Default.GridWindowRows;
@@ -99,12 +106,18 @@ namespace KhTracker
             }
             catch (JsonException ex)
             {
-                Console.WriteLine("Ships file did not deserialize correctly.");
+                MessageBox.Show("Ships file did not deserialize correctly.");
                 shipSizes = new List<int>{ 1, 1 };
             }
             fogOfWar = Properties.Settings.Default.FogOfWar;
-            fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
-
+            try
+            {
+                fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
+            }
+            catch (JsonException ex)
+            {
+                MessageBox.Show("Fog of war dictionary had an error loading. Please try again.");
+            }
             data = dataIn;
             gridOptionsWindow = new GridOptionsWindow(this, data);
             colorPickerWindow = new ColorPickerWindow(this, currentColors);
@@ -271,7 +284,34 @@ namespace KhTracker
                     }
                 }
 
-                if (SavePreviousGridSettingsOption.IsChecked) {
+                // update number of reports
+                int numReports = 0;
+                for (int i = 1; i <= 13; i++)
+                {
+                    if (gridSettings[$"Report{i}"])
+                        numReports++;
+                }
+
+                // update number of unlocks
+                var unlockNames = Codes.worldUnlocks;
+                int numUnlocks = 0;
+                foreach (string unlock in unlockNames)
+                {
+                    if (gridSettings[unlock])
+                        numUnlocks++;
+                }
+
+                // update number of chest locks
+                var worldChestLockNames = Codes.chestLocks;
+                int numChestLocks = 0;
+                foreach (string chestLock in worldChestLockNames)
+                {
+                    if (gridSettings[chestLock])
+                        numChestLocks++;
+                }
+
+                if (SavePreviousGridSettingsOption.IsChecked)
+                {
                     Properties.Settings.Default.GridWindowRows = numRows;
                     Properties.Settings.Default.GridWindowColumns = numColumns;
                     Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
@@ -283,40 +323,13 @@ namespace KhTracker
                     Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
                     Properties.Settings.Default.MaxShipCount = maxShipCount;
                     Properties.Settings.Default.MinShipCount = minShipCount;
+                    Properties.Settings.Default.GridWindowNumReports = numReports;
+                    Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+                    Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
                 }
-
-                // update number of reports
-                int numReports = 0;
-                for (int i = 1; i <= 13; i++)
-                {
-                    if (gridSettings[$"Report{i}"])
-                        numReports++;
-                }
-                Properties.Settings.Default.GridWindowNumReports = numReports;
-
-                // update number of unlocks
-                var unlockNames = Codes.worldUnlocks;
-                int numUnlocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numUnlocks++;
-                }
-                Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
-
-                // update number of chest locks
-                var worldChestLockNames = Codes.chestLocks;
-                int numChestLocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numChestLocks++;
-                }
-                Properties.Settings.Default.GridWindowNumUnlocks = numChestLocks;
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
-            // re-init the Grid OptionsWindow so that the checkboxes and textboxes re-updated based on current grid data
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
         }
@@ -497,6 +510,7 @@ namespace KhTracker
             {
                 // reveal the button's own property
                 buttons[i, j].SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                buttons[i, j].ToolTip = ((string)buttons[i, j].Tag).Split('-')[1];
                 // reveal the button's neighbors' properties
                 int westRange = fogOfWarSpan.ContainsKey("W") ? fogOfWarSpan["W"] : 1;
                 int eastRange = fogOfWarSpan.ContainsKey("E") ? fogOfWarSpan["E"] : 1;
@@ -1379,6 +1393,19 @@ namespace KhTracker
             }
             if (allShipsSunk && placedShips.Cast<int>().Max() > 0)
             {
+                // spoil the card with all the remaining unchecked cells
+                for (int row = 0; row < numRows; row++)
+                {
+                    for (int column = 0; column < numColumns; column++)
+                    {
+                        if (!buttons[row, column].IsChecked ?? false)
+                        {
+                            buttons[row, column].SetResourceReference(ContentProperty, assets[(row * numColumns) + column]);
+                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Miss Color"]);
+                            originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        }
+                    }
+                }
                 MessageBox.Show("Congrats! You sunk all ships!");
             }
         }
