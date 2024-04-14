@@ -414,7 +414,6 @@ namespace KhTracker
                                 trackableItemsDict[checkName] = entry.Value;
                         }
                     }
-
                 }
             }
 
@@ -661,7 +660,7 @@ namespace KhTracker
                 // get raw check names
                 assets = Asset_Collection(seed);
                 // set the content resource reference with style
-                string style = TelevoIconsOption.IsChecked ? "Min-" : "Old-";
+                string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
                 assets = assets.Select(item => style + item).ToList();
             }
 

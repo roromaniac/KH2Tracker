@@ -162,7 +162,6 @@ namespace KhTracker
             //visit lock check first
             if (window.VisitLockOption.IsChecked)
             {
-                //TODO Fix new Visit Lock visual
                 SetVisitLock(button.Name, add);
             }
 

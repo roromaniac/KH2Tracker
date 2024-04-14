@@ -1613,7 +1613,7 @@ namespace KhTracker
             if (grid != null)
             {
                 grid.Children.Clear();
-                Console.WriteLine(seedName);
+                //Console.WriteLine(seedName);
                 GenerateGrid(numRows, numColumns, seedName, true);
             }
         }

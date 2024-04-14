@@ -1,0 +1,423 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KhTracker">
+
+    <!-- Items -->
+    <Grid x:Key="Grid_Min-Report1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid> 
+    <Grid x:Key="Grid_Min-Report3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report8" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\8.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report9" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\9.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report10" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\10.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report11" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\11.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report12" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\12.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Report13" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\13.png"/>
+    </Grid>
+
+    <Grid x:Key="Grid_Min-GridTornPage1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\TornPage.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridTornPage2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\TornPage.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridTornPage3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\TornPage.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridTornPage4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\TornPage.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridTornPage5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\TornPage.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    
+    <Image x:Key="Grid_Min-Valor" Source="Images\Grid\Checks\Min\form_valor.png" x:Shared="false"/>
+    <Grid x:Key="Grid_Min-Valor2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Valor3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Valor4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Valor5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Valor6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Valor7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Image x:Key="Grid_Min-Wisdom"	Source="Images\Grid\Checks\Min\form_wisdom.png" x:Shared="false"/>
+    <Grid x:Key="Grid_Min-Wisdom2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Wisdom3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Wisdom4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Wisdom5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Wisdom6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Wisdom7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Image x:Key="Grid_Min-Limit"	Source="Images\Grid\Checks\Min\form_limit.png" x:Shared="false"/>
+    <Grid x:Key="Grid_Min-Limit2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Limit3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Limit4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Limit5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Limit6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Limit7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Image x:Key="Grid_Min-Master"	Source="Images\Grid\Checks\Min\form_master.png" x:Shared="false"/>
+    <Grid x:Key="Grid_Min-Master2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Master3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Master4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Master5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Master6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Master7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Image x:Key="Grid_Min-Final"	Source="Images\Grid\Checks\Min\form_final.png" x:Shared="false"/>
+    <Grid x:Key="Grid_Min-Final2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Final3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Final4" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Final5" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Final6" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-Final7" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Image x:Key="Grid_Min-Anti"	Source="Images\Grid\Checks\Min\form_anti.png" x:Shared="false"/>
+
+    <Image x:Key="Grid_Min-Lamp"        Source="Images\Grid\Checks\Min\summon_genie.png"            x:Shared="false"/>
+    <Image x:Key="Grid_Min-Ukulele"     Source="Images\Grid\Checks\Min\summon_stitch.png"           x:Shared="false"/>
+    <Image x:Key="Grid_Min-Baseball"    Source="Images\Grid\Checks\Min\summon_chicken_little.png"   x:Shared="false"/>
+    <Image x:Key="Grid_Min-Feather"     Source="Images\Grid\Checks\Min\summon_peter_pan.png"        x:Shared="false"/>
+    
+    <Image x:Key="Grid_Min-Nonexistence"    Source="Images\Grid\Checks\Min\proof_nonexistence.png"  x:Shared="false"/>
+    <Image x:Key="Grid_Min-Connection"	    Source="Images\Grid\Checks\Min\proof_connection.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-Peace"		    Source="Images\Grid\Checks\Min\proof_peace.png"         x:Shared="false"/>
+    <Image x:Key="Grid_Min-PromiseCharm"    Source="Images\Grid\Checks\Min\promise_charm.png"       x:Shared="false"/>
+
+    <Image x:Key="Grid_Min-OnceMore"        Source="Images\Grid\Checks\Min\ability_OnceMore.png"        x:Shared="false"/>
+    <Image x:Key="Grid_Min-SecondChance"    Source="Images\Grid\Checks\Min\ability_secondchance.png"    x:Shared="false"/>
+
+    <Image x:Key="Grid_Min-Sketches" Source="Images\Checks\Min\lock_sketches.png"    x:Shared="false"/>
+    <Grid x:Key="Grid_Min-RikuWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\lock_waytothedawn.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-RikuWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\lock_waytothedawn.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-KingsLetter1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\lock_kingsletter.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-KingsLetter2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\lock_kingsletter.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-AuronWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BattlefieldsofWar.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-AuronWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BattlefieldsofWar.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-MulanWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_AncestorSword.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-MulanWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_AncestorSword.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-BeastWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BeastClaw.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-BeastWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BeastClaw.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-JackWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BoneFist.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-JackWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_BoneFist.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-SimbaWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_ProudFang.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-SimbaWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_ProudFang.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-SparrowWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_SkillCrossbones.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-SparrowWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_SkillCrossbones.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-AladdinWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_Scimitar.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-AladdinWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_Scimitar.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-TronWep1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_IdentityDisk.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-TronWep2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_IdentityDisk.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-MembershipCard1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_membershipcard.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-MembershipCard2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_membershipcard.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-IceCream1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_IceCream.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-IceCream2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_IceCream.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-IceCream3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Lock_IceCream.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+
+    <Image x:Key="Grid_Min-HadesCup"      Source="Images\Grid\Checks\Min\Aux_hades_cup.png"        x:Shared="false"/>
+    <Image x:Key="Grid_Min-OlympusStone"  Source="Images\Grid\Checks\Min\Aux_olympus_stone.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-UnknownDisk"   Source="Images\Grid\Checks\Min\Aux_UnknownDisk.png"      x:Shared="false"/>
+    <Grid x:Key="Grid_Min-GridMunnyPouch1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Aux_munny_pouch.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridMunnyPouch2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\Aux_munny_pouch.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+
+    <Image x:Key="Grid_Min-ChestAG"	    Source="Images\Grid\Checks\Min\chest_ag.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestBC"	    Source="Images\Grid\Checks\Min\chest_bc.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestDC"	    Source="Images\Grid\Checks\Min\chest_dc.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestHT"	    Source="Images\Grid\Checks\Min\chest_ht.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestOC"	    Source="Images\Grid\Checks\Min\chest_oc.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestPL"	    Source="Images\Grid\Checks\Min\chest_pl.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestPR"	    Source="Images\Grid\Checks\Min\chest_pr.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestSP"	    Source="Images\Grid\Checks\Min\chest_sp.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestTT"	    Source="Images\Grid\Checks\Min\chest_tt.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestHB"	    Source="Images\Grid\Checks\Min\chest_hb.png"     x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestLoD"	Source="Images\Grid\Checks\Min\chest_lod.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestCoR"	Source="Images\Grid\Checks\Min\chest_cor.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestSTT"	Source="Images\Grid\Checks\Min\chest_stt.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestHAW"	Source="Images\Grid\Checks\Min\chest_haw.png"    x:Shared="false"/>
+    <Image x:Key="Grid_Min-ChestTWTNW"  Source="Images\Grid\Checks\Min\chest_twtnw.png"  x:Shared="false"/>
+
+    <Grid x:Key="Grid_Min-GridFire1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_fire.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridFire2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_fire.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridFire3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_fire.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridBlizzard1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_blizzard.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridBlizzard2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_blizzard.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridBlizzard3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_blizzard.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridThunder1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_thunder.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridThunder2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_thunder.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridThunder3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_thunder.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridCure1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_cure.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridCure2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_cure.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridCure3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_cure.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridReflect1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_reflect.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridReflect2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_reflect.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridReflect3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_reflect.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridMagnet1" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_magnet.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridMagnet2" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_magnet.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-GridMagnet3" x:Shared="false" >
+        <Image Source="Images\Grid\Checks\Min\magic_magnet.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+
+</ResourceDictionary>

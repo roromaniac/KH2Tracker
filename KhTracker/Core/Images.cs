@@ -783,5 +783,4 @@ namespace KhTracker
             set { SetValue(GridAllowedProperty, value); }
         }
     }
-
 }
