@@ -1345,13 +1345,7 @@ namespace KhTracker
                         var hintText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHHintText));
                         var hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
                         var settings = new List<string>();
-                        var hintableItems = new List<string>();
-                        //fallback for older seeds
-                        try
-                        {
-                            hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
-                        }
-                        catch { }
+                        var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
 
                         data.ShouldResetHash = false;
 
@@ -1371,16 +1365,11 @@ namespace KhTracker
                             ReportsToggle(false);
                             ExtraChecksToggle(false);
                             VisitLockToggle(false);
+                            ChestLockToggle(false);
                             foreach (string item in hintableItems)
                             {
                                 switch (item)
                                 {
-                                    case "magic":
-                                        break;
-                                    case "form":
-                                        break;
-                                    case "summon":
-                                        break;
                                     case "page":
                                         TornPagesToggle(true);
                                         break;
@@ -1396,7 +1385,14 @@ namespace KhTracker
                                     case "visit":
                                         VisitLockToggle(true);
                                         break;
+                                    case "keyblade":
+                                        ChestLockToggle(true);
+                                        break;
                                     case "proof":
+                                    case "magic":
+                                    case "form":
+                                    case "summon":
+                                    default:
                                         break;
                                 }
                             }
@@ -1864,6 +1860,7 @@ namespace KhTracker
                 archive.Dispose();
 
                 data.seedLoaded = true;
+                toggleState(false);
 
                 // regenerate the grid tracker
                 gridWindow.grid.Children.Clear();
@@ -2007,13 +2004,7 @@ namespace KhTracker
                     var hintText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHHintText));
                     var hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
                     var settings = new List<string>();
-                    var hintableItems = new List<string>();
-                    //fallback for older seeds
-                    try
-                    {
-                        hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
-                    }
-                    catch { }
+                    var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
 
                     data.ShouldResetHash = false;
 
