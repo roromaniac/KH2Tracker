@@ -1337,7 +1337,7 @@
     <!--Image x:Key="Grid_Old-Axel1"               Source="Images\Grid\Bosses\Old\org_axelstruggle.png"                                x:Shared="False"/-->
     <Grid x:Key="Grid_Old-Axel1" x:Shared="false" >
         <Image Source="Images\Grid\Bosses\Old\org_axelstruggle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1sh sonic style ico.png"/>
     </Grid>
 
     <Image x:Key="Grid_Old-Struggle"            Source="Images\Grid\Progression\Old\simulated_twilight_town\struggle.png"           x:Shared="False"/>
