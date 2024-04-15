@@ -12,7 +12,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         AllowDrop="True" Drop="DropFile"
-        Title="KH2 Tracker 2.4" Height="1000" Width="600" Background="#303030"
+        Title="KH2 Tracker 2.5" Height="1000" Width="600" Background="#303030"
         MinHeight="440" MinWidth="300">
 
     <Window.Resources>
@@ -29,9 +29,9 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
-                <MenuItem Header="Load Hints...">
-                    <MenuItem Header="Load JSmartee Hints (*.hints)" 	Click="LoadHints"/>
-                    <MenuItem Header="Load Shan Hints (*.pnach)" 		Click="ParseSeed"/>
+                <MenuItem Header="Hint Loading...">
+                    <!--MenuItem Header="Load JSmartee Hints (*.hints)" 	Click="LoadHints"/>
+                    <MenuItem Header="Load Shan Hints (*.pnach)" 		Click="ParseSeed"/-->
                     <MenuItem Header="Load KH2Randomizer Seed (*.zip)" 	Click="OpenKHSeed"/>
                     <Separator/>
                     <MenuItem Header="Auto-Load Hints (openkh *.hints)" Click="AutoLoadHintsToggle" x:Name="AutoLoadHintsOption" IsCheckable="True" IsChecked="False"/>

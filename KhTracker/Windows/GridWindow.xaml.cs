@@ -257,7 +257,7 @@ namespace KhTracker
                             : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes); 
                     }
                 }
-                catch (JsonException ex)
+                catch (JsonException)
                 {
                     Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
                     return;
@@ -295,7 +295,7 @@ namespace KhTracker
                 }
 
                 // update number of unlocks
-                var unlockNames = Codes.worldUnlocks;
+                List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
                 int numUnlocks = 0;
                 foreach (string unlock in unlockNames)
                 {
@@ -304,7 +304,7 @@ namespace KhTracker
                 }
 
                 // update number of chest locks
-                var worldChestLockNames = Codes.chestLocks;
+                List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
                 int numChestLocks = 0;
                 foreach (string chestLock in worldChestLockNames)
                 {
@@ -400,14 +400,14 @@ namespace KhTracker
                 gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum);
 
             // RE-randomize which visit unlocks get included
-            var unlockNames = Codes.worldUnlocks;
+            List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
             int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => rng.Next()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())
                 gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i);
 
             // RE-randomize which visit world chest locks get included
-            var worldChestLockNames = Codes.chestLocks;
+            List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
             int numChestLocks = Properties.Settings.Default.GridWindowNumChestLocks;
             var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => rng.Next()).Take(numChestLocks).ToList();
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
