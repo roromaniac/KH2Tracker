@@ -250,7 +250,7 @@ namespace KhTracker
 
                         seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
                             ? seedNameElement.GetString()
-                            : RandomSeedName(8);
+                            : RandomSeedName(8, seed);
 
                         shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                             ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
@@ -628,9 +628,9 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns);
         }
 
-        private static string RandomSeedName(int length)
+        private static string RandomSeedName(int length, int? seed = null)
         {
-            var randValue = new Random();
+            var randValue = seed == null ? new Random() : new Random((int)seed);
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             return new string(Enumerable.Repeat(alphanumeric, length)
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
@@ -658,7 +658,7 @@ namespace KhTracker
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
                 seed = data.convertedSeedHash;
-                seedName = $"[TIED TO SEED] {RandomSeedName(8)}";
+                seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
             else 
@@ -739,7 +739,7 @@ namespace KhTracker
                     }
                     buttons[i, j] = button;
                     grid.Children.Add(button);
-                    if (!fogOfWar || (buttons[i, j] != null && (buttons[i, j].IsChecked ?? false)))
+                    if (!fogOfWar || buttonContentRevealed)
                         button.ToolTip = ((string)button.Tag).Split('-')[1];
                 }
             }
