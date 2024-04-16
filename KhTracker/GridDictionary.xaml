@@ -747,7 +747,7 @@
     <Image x:Key="Grid_Min-Pete"                Source="Images\Grid\Bosses\Min\pete.png"            x:Shared="false" ToolTip="Pete (Boss)"/>
 <!--#endregion-->
 
-    <!--#region Classic-->
+<!--#region Classic-->
     <!-- Items -->
     <!--Reports-->
     <Grid x:Key="Grid_Old-Report1" x:Shared="false" ToolTip="Ansem Reprot 1">

@@ -130,8 +130,8 @@
     <local:GridLabelledImage x:Key="Min-Xigbar"           Source="Images\Progression\Min\the_world_that_never_was\xigbar.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Luxord"           Source="Images\Progression\Min\the_world_that_never_was\luxord.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-Saix"             Source="Images\Progression\Min\the_world_that_never_was\saix.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-Xemnas1"          Source="Images\Progression\Min\the_world_that_never_was\kingdom_hearts.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Min-DataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\xemnas.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-Xemnas1"          Source="Images\Progression\Min\the_world_that_never_was\xemnas.png"           GridAllowed="True"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Min-DataXemnas"       Source="Images\Progression\Min\the_world_that_never_was\finalxemnas.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Twilight Town-->
     <local:GridLabelledImage x:Key="Min-Station"           Source="Images\Progression\Min\twilight_town\dusks.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Min-MysteriousTower"   Source="Images\Progression\Min\twilight_town\mysterious_tower.png"           GridAllowed="True"                             x:Shared="False"/>
@@ -311,7 +311,7 @@
     <local:GridLabelledImage x:Key="Old-Luxord"           Source="Images\Progression\Old\the_world_that_never_was\luxord.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-Saix"             Source="Images\Progression\Old\the_world_that_never_was\saix.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-Xemnas1"          Source="Images\Progression\Old\the_world_that_never_was\xemnas.png"           GridAllowed="True"                             x:Shared="False"/>
-    <local:GridLabelledImage x:Key="Old-DataXemnas"       Source="Images\Progression\Old\the_world_that_never_was\xemnas.png"           GridAllowed="False"                             x:Shared="False"/>
+    <local:GridLabelledImage x:Key="Old-DataXemnas"       Source="Images\Progression\Old\the_world_that_never_was\xemnas_data.png"           GridAllowed="False"                             x:Shared="False"/>
     <!--Twilight Town-->
     <local:GridLabelledImage x:Key="Old-Station"           Source="Images\Progression\Old\twilight_town\dusks.png"           GridAllowed="True"                             x:Shared="False"/>
     <local:GridLabelledImage x:Key="Old-MysteriousTower"   Source="Images\Progression\Old\twilight_town\mysterious_tower.png"           GridAllowed="True"                             x:Shared="False"/>
