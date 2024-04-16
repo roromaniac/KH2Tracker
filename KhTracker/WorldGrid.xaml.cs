@@ -300,6 +300,102 @@ namespace KhTracker
             }
             item.MouseDown -= item.Item_Return;
             item.MouseDown += item.Item_Return;
+
+            Grid_Add_Item(item, false);
+        }
+
+        //Marks sure the grid tracker always tracks items sets in order
+        //(fire as fire1, fira as fire2, ect.)
+        //this was done because it was relying soely on the item name itself which had the possibility of
+        //being tracked in any order, especially with manual tracking
+        public void Grid_Add_Item(Item item, bool gridOnly)
+        {
+            //do nothing for ghost items
+            if (item.Name.StartsWith("Ghost_"))
+                return;
+
+            //need to update real multi counts if item is not enabled in the main window before grid tracking starts
+            if (gridOnly)
+                UpdateMulti(item, true);
+
+            string itemType = Codes.FindItemType(item.Name);
+            string NewName = item.Name;
+            string modifier = "";
+
+            //check if item is a multi type and get the correct number modifier for it
+            if (item.Name.Contains("Munny") || itemType == "magic" || itemType == "page" || itemType == "visit")
+            {
+                char[] numbers = { '1', '2', '3', '4', '5' };
+                NewName = item.Name.TrimEnd(numbers);
+
+                switch (NewName)
+                {
+                    case "Fire":
+                        modifier = Real_Fire.ToString();
+                        break;
+                    case "Blizzard":
+                        modifier = Real_Blizzard.ToString();
+                        break;
+                    case "Thunder":
+                        modifier = Real_Thunder.ToString();
+                        break;
+                    case "Cure":
+                        modifier = Real_Cure.ToString();
+                        break;
+                    case "Reflect":
+                        modifier = Real_Reflect.ToString();
+                        break;
+                    case "Magnet":
+                        modifier = Real_Magnet.ToString();
+                        break;
+                    case "TornPage":
+                        modifier = Real_Pages.ToString();
+                        break;
+                    case "MunnyPouch":
+                        modifier = Real_Pouches.ToString();
+                        break;
+                    case "RikuWep":
+                        modifier = Real_RikuWep.ToString();
+                        break;
+                    case "MembershipCard":
+                        modifier = Real_MembershipCard.ToString();
+                        break;
+                    case "KingsLetter":
+                        modifier = Real_KingsLetter.ToString();
+                        break;
+                    case "IceCream":
+                        modifier = Real_IceCream.ToString();
+                        break;
+                    case "BeastWep":
+                        modifier = Real_BeastWep.ToString();
+                        break;
+                    case "JackWep":
+                        modifier = Real_JackWep.ToString();
+                        break;
+                    case "SimbaWep":
+                        modifier = Real_SimbaWep.ToString();
+                        break;
+                    case "AuronWep":
+                        modifier = Real_AuronWep.ToString();
+                        break;
+                    case "MulanWep":
+                        modifier = Real_MulanWep.ToString();
+                        break;
+                    case "SparrowWep":
+                        modifier = Real_SparrowWep.ToString();
+                        break;
+                    case "AladdinWep":
+                        modifier = Real_AladdinWep.ToString();
+                        break;
+                    case "TronWep":
+                        modifier = Real_TronWep.ToString();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            window.UpdateGridTracker(NewName+modifier);
         }
 
         public void UpdateMulti(Item item, bool add)
@@ -2070,5 +2166,6 @@ namespace KhTracker
                 window.SetHintText("Impossible Path Error! How are you seeing this?");
             }
         }
+    
     }
 }
