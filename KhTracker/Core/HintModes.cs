@@ -1154,13 +1154,8 @@ namespace KhTracker
             var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
-            var hintableItems = new List<string>();
-            //fallback for older seeds
-            try
-            {
-                hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
-            }
-            catch { }
+            var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
+            var startingInventory = new List<int>(JsonSerializer.Deserialize<List<int>>(hintObject["startingInventory"].ToString()));
 
 
             //set if world value should change color on completion
@@ -1197,7 +1192,24 @@ namespace KhTracker
                 {"MembershipCard", 1}, {"IceCream", 1}, {"KingsLetter", 1},
             };
 
-            Dictionary<int, string> repWorlds = new Dictionary<int, string>();
+            //Dictionary<int, string> repWorlds = new Dictionary<int, string>();
+            //get how many reports are in starting inventory
+            //foreach (int startingID in startingInventory)
+            //{
+            //    switch(startingID)
+            //    {
+            //        case 1:
+            //
+            //        break;
+            //
+            //
+            //
+            //
+            //    }
+            //
+            //
+            //
+            //}
 
             foreach (var world in worlds)
             {
@@ -1213,10 +1225,10 @@ namespace KhTracker
 
                     string item = Codes.ConvertSeedGenName(itemNum, true);
 
-                    if (item.Contains("Report"))
-                    {
-                        repWorlds.Add(Int32.Parse(item.Remove(0, 22)), Codes.ConvertSeedGenName(world.Key));
-                    }
+                    //if (item.Contains("Report"))
+                    //{
+                    //    repWorlds.Add(Int32.Parse(item.Remove(0, 22)), Codes.ConvertSeedGenName(world.Key));
+                    //}
                         
 
                     if (item.Contains("Report") && !data.SpoilerReportMode && !TMP_bossReports)
@@ -1271,10 +1283,10 @@ namespace KhTracker
                     string worldstring = reports[report.ToString()]["World"].ToString();
                     int dummyvalue = 0;
                     string location = "";
-                    if (report < 14 && hintableItems.Contains("report"))
-                    {
-                        location = repWorlds[report];
-                    }
+                    //if (report < 14 && hintableItems.Contains("report"))
+                    //{
+                    //    location = repWorlds[report];
+                    //}
 
                     if (worldstring.StartsWith("Nothing_"))
                     {
@@ -1285,14 +1297,14 @@ namespace KhTracker
                     {
                         //still need to get and add location for report to track to correct world
                         //we can't just skip everything if creations was set to be hinted
-                        //location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
-                        data.reportLocations.Add(location);
+                        location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                        //data.reportLocations.Add(location);
                         continue;
                     }
 
 
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
-                    //location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                    location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
 
 
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, null, dummyvalue));

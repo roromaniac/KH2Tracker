@@ -797,7 +797,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
-        private void UpdateGridTracker(string gridCheckName)
+        public void UpdateGridTracker(string gridCheckName)
         {
 
             // deal with doubled up progression icons
@@ -1053,15 +1053,26 @@ namespace KhTracker
 
             //do a check in the report handler to actually make sure reports don't
             //track to the wrong place in the case of mismatched seeds/hints
-            if (ItemRow.FindName(itemName) is Item item && item.IsVisible)
+            if (ItemRow.FindName(itemName) is Item item)
             {
-                bool validItem = world.ReportHandler(item);
-
-                if (validItem)
+                if (item.IsVisible)
                 {
-                    world.Add_Item(item);
-                    App.logger?.Record(item.Name + " tracked");
-                    UpdateGridTracker(item.Name);
+                    bool validItem = world.ReportHandler(item);
+
+                    if (validItem)
+                    {
+                        world.Add_Item(item);
+                        App.logger?.Record(item.Name + " tracked");
+
+                        //moved to end of Add_Item function
+                        //this allows grid to track by manually placing checks on the main window
+                        //UpdateGridTracker(item.Name);
+                    }
+                }
+                else //attempt to track to grid tracker anyway
+                {
+                    App.logger?.Record(item.Name + " tracked in Grid Tracker");
+                    world.Grid_Add_Item(item, true);
                 }
             }
         }

@@ -59,6 +59,7 @@
         </Menu>
 
         <Grid x:Name="DynamicGrid">
+
         </Grid>
         
     </DockPanel>

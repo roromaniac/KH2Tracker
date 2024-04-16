@@ -429,7 +429,6 @@ namespace KhTracker
                                 trackableItemsDict[checkName] = entry.Value;
                         }
                     }
-
                 }
             }
 
@@ -529,7 +528,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i, j - west];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j - west)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                         
                 }
@@ -540,7 +539,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i, j + east];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j + east)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // north check
@@ -550,7 +549,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - north, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - north) * numColumns) + j]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // south check
@@ -560,7 +559,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + south, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }    
                 }
                 // northwest check
@@ -570,7 +569,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northwest, j - northwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northwest) * numColumns) + (j - northwest)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     } 
                 }
                 // northeast check
@@ -580,7 +579,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northeast, j + northeast];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northeast) * numColumns) + (j + northeast)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // southwest check
@@ -590,7 +589,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + southwest, j - southwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + southwest) * numColumns) + (j - southwest)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // southeast check
@@ -600,7 +599,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + southeast, j + southeast];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + southeast) * numColumns) + (j + southeast)]);
-                        currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
+                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
             }
@@ -677,7 +676,7 @@ namespace KhTracker
                 // get raw check names
                 assets = Asset_Collection(seed);
                 // set the content resource reference with style
-                string style = TelevoIconsOption.IsChecked ? "Min-" : "Old-";
+                string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
                 assets = assets.Select(item => style + item).ToList();
             }
 
