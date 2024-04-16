@@ -1448,7 +1448,8 @@ namespace KhTracker
                 data.TrackedReports.Add(report);
 
             //create temp list of what a world should have
-            List<string> WorldItems = data.WorldsData[worldname].checkCount;
+            List<string> tempWorldItems = new List<string>();
+            tempWorldItems.AddRange(data.WorldsData[worldname].checkCount);
             char[] numbers = { '1', '2', '3', '4', '5' };
 
             //Get list of items we should track. we don't want to place more ghosts than is needed
@@ -1461,16 +1462,16 @@ namespace KhTracker
                     continue;
 
                 //do not trim numbers if report
-                if (item.Name.Contains("Report") && WorldItems.Contains(item.Name))
-                    WorldItems.Remove(item.Name);
-                else if (WorldItems.Contains(item.Name.TrimEnd(numbers)))
+                if (item.Name.Contains("Report") && tempWorldItems.Contains(item.Name))
+                    tempWorldItems.Remove(item.Name);
+                else if (tempWorldItems.Contains(item.Name.TrimEnd(numbers)))
                 {
-                    WorldItems.Remove(item.Name.TrimEnd(numbers));
+                    tempWorldItems.Remove(item.Name.TrimEnd(numbers));
                 }
             }
 
             //start tracking what's left in the temp list
-            foreach (string itemname in WorldItems)
+            foreach (string itemname in tempWorldItems)
             {
                 //don't track item types not set in reveal list
                 if (!data.SpoilerRevealTypes.Contains(Codes.FindItemType(itemname)))
@@ -1971,7 +1972,11 @@ namespace KhTracker
 
         public void WorldComplete()
         {
+            
             Data data = MainWindow.data;
+
+            window.AddProgressionPoints(5);
+              
             //run a check for current world to check if all checks have been found
 
             //get worldname by rmoving "Grid" from the end of the current worldgrid name

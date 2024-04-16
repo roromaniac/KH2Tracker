@@ -1733,7 +1733,7 @@ namespace KhTracker
 
                 data.WorldsData[RealWorldName].worldGrid.ProgressionReport_Path(hintNum);
             }
-            else if (data.mode == Mode.SpoilerHints && data.SpoilerReportMode) //spoiler
+            else if (data.mode == Mode.SpoilerHints && data.SpoilerReportMode && data.hintsLoaded) //spoiler
             {
                 RealWorldName = data.reportInformation[hintNum].Item1;
                 //Console.WriteLine("Spoiler Revealing " + RealWorldName);

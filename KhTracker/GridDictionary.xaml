@@ -1277,10 +1277,11 @@
     <Image x:Key="Grid_Old-OldPete"             Source="Images\Grid\Bosses\Old\pastpete.png"                                        x:Shared="false" ToolTip="Past Pete Fight"/>
     <Image x:Key="Grid_Old-Windows"             Source="Images\Grid\Progression\Old\disney_castle\windows_of_time.png"              x:Shared="false" ToolTip="The Windows of Time"/>
     <Image x:Key="Grid_Old-BoatPete"            Source="Images\Grid\Progression\Old\disney_castle\steamboat_pete.png"               x:Shared="false" ToolTip="Steamboat Pete Fight"/>
-    <Grid x:Key="Grid_Old-DCPete" x:Shared="false" ToolTip="Pete (Timeless River)">
+    <Image x:Key="Grid_Old-DCPete"              Source="Images\Grid\Bosses\Old\peteTR.png"                                          x:Shared="false" ToolTip="Pete (Timeless River)"/>
+    <!--Grid x:Key="Grid_Old-DCPete" x:Shared="false" ToolTip="Pete (Timeless River)">
         <Image Source="Images\Grid\Bosses\Old\pete.png"/>
         <Image Source="Images\Grid\Overlays\Worlds\DisneyCastle.png"/>
-    </Grid>
+    </Grid-->
     <!--Halloween Town-->
     <Image x:Key="Grid_Old-CandyCaneLane"       Source="Images\Grid\Progression\Old\halloween_town\candy_cane_lane.png"             x:Shared="false" ToolTip="Candy Cane Lane Forced Fight"/>
     <Image x:Key="Grid_Old-PrisonKeeper"        Source="Images\Grid\Bosses\Old\prisonkeeper.png"                                    x:Shared="false" ToolTip="Prison Keeper"/>
@@ -1327,9 +1328,17 @@
     <Image x:Key="Grid_Old-GrimReaper"          Source="Images\Grid\Bosses\Old\grimreaper2.png"                                     x:Shared="false" ToolTip="Cursed Reaper"/>
     <!--Pride Lands-->
     <Image x:Key="Grid_Old-Simba"               Source="Images\Grid\Progression\Old\pride_lands\oasis.png"                          x:Shared="false" ToolTip="The Oasis"/>
-    <Image x:Key="Grid_Old-Hyenas1"             Source="Images\Grid\Progression\Old\pride_lands\timon_and_pumba.png"                x:Shared="false" ToolTip="Protect Timon and Pumba"/>
+    <!--Image x:Key="Grid_Old-Hyenas1"             Source="Images\Grid\Progression\Old\pride_lands\timon_and_pumba.png"                x:Shared="false" ToolTip="Protect Timon and Pumba"/-->
+    <Grid x:Key="Grid_Old-Hyenas1" x:Shared="false" ToolTip="Hyenas First Fight" >
+        <Image Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
     <Image x:Key="Grid_Old-Scar"                Source="Images\Grid\Bosses\Old\scar.png"                                            x:Shared="false" ToolTip="Scar"/>
-    <Image x:Key="Grid_Old-Hyenas2"             Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"                         x:Shared="false" ToolTip="Hyenas Second Fight"/>
+    <!--Image x:Key="Grid_Old-Hyenas2"             Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"                         x:Shared="false" ToolTip="Hyenas Second Fight"/-->
+    <Grid x:Key="Grid_Old-Hyenas2" x:Shared="false" ToolTip="Hyenas Second Fight" >
+        <Image Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
     <Image x:Key="Grid_Old-GroundShaker"        Source="Images\Grid\Bosses\Old\groundshaker.png"                                    x:Shared="false" ToolTip="Groundshaker"/>
     <!--Simulated Twilight Town-->
     <Image x:Key="Grid_Old-Minigame"            Source="Images\Grid\Progression\Old\simulated_twilight_town\munny_pouch.png"        x:Shared="false" ToolTip="Part-Time Job"/>
@@ -1337,7 +1346,7 @@
     <!--Image x:Key="Grid_Old-Axel1"               Source="Images\Grid\Bosses\Old\org_axelstruggle.png"                                x:Shared="false" ToolTip="Axel (Struggle Arena)"/-->
     <Grid x:Key="Grid_Old-Axel1" x:Shared="false" ToolTip="Axel (Struggle Arena)" >
         <Image Source="Images\Grid\Bosses\Old\org_axelstruggle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\1sh sonic style ico.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
     <Image x:Key="Grid_Old-Struggle"            Source="Images\Grid\Progression\Old\simulated_twilight_town\struggle.png"           x:Shared="false" ToolTip="Struggle Finals"/>
     <Image x:Key="Grid_Old-ComputerRoom"        Source="Images\Grid\Progression\Old\simulated_twilight_town\computer_room.png"      x:Shared="false" ToolTip="The Mansion Basement"/>
