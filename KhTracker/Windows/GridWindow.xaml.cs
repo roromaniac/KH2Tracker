@@ -738,7 +738,7 @@ namespace KhTracker
                     }
                     buttons[i, j] = button;
                     grid.Children.Add(button);
-                    if (!fogOfWar || buttonContentRevealed)
+                    if (!fogOfWar)
                         button.ToolTip = ((string)button.Tag).Split('-')[1];
                 }
             }
