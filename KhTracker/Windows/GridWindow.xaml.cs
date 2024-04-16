@@ -30,7 +30,7 @@ namespace KhTracker
         //Dictionary<string, int> totals = new Dictionary<string, int>();
         //Dictionary<string, int> important = new Dictionary<string, int>();
         //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
-        Data data;
+        readonly Data data;
         public GridOptionsWindow gridOptionsWindow;
         public ColorPickerWindow colorPickerWindow;
 
@@ -82,7 +82,14 @@ namespace KhTracker
             InitializeComponent();
             InitOptions();
 
-            gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+            try
+            {
+                gridSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Grid settings did not deserialize correctly. Please reconfigure the settings.");
+            }
             currentColors = GetColorSettings();
 
             numRows = Properties.Settings.Default.GridWindowRows;
@@ -99,12 +106,18 @@ namespace KhTracker
             }
             catch (JsonException)
             {
-                Console.WriteLine("Ships file did not deserialize correctly.");
+                MessageBox.Show("Ships file did not deserialize correctly.");
                 shipSizes = new List<int>{ 1, 1 };
             }
             fogOfWar = Properties.Settings.Default.FogOfWar;
-            fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
-
+            try
+            {
+                fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Fog of war dictionary had an error loading. Please try again.");
+            }
             data = dataIn;
             gridOptionsWindow = new GridOptionsWindow(this, data);
             colorPickerWindow = new ColorPickerWindow(this, currentColors);
@@ -144,25 +157,27 @@ namespace KhTracker
 
         private void DownloadCardSetting(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "JSON Files (*.json)|*.json";
-            saveFileDialog.FileName = "settings.json";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "JSON Files (*.json)|*.json",
+                FileName = "settings.json"
+            };
             if (saveFileDialog.ShowDialog() == true)
             {
                 var combinedSettings = new
                 {
-                    battleshipLogic = battleshipLogic,
-                    battleshipRandomCount = battleshipRandomCount,
-                    bingoLogic = bingoLogic,
-                    fogOfWar = fogOfWar,
-                    fogOfWarSpan = fogOfWarSpan,
-                    gridSettings = gridSettings,
-                    maxShipCount = maxShipCount,
-                    minShipCount = minShipCount,
-                    numColumns = numColumns,
-                    numRows = numRows,
-                    seedName = seedName,
-                    shipSizes = shipSizes,
+                    battleshipLogic,
+                    battleshipRandomCount,
+                    bingoLogic,
+                    fogOfWar,
+                    fogOfWarSpan,
+                    gridSettings,
+                    maxShipCount,
+                    minShipCount,
+                    numColumns,
+                    numRows,
+                    seedName,
+                    shipSizes,
                 };
 
                 var jsonString = JsonSerializer.Serialize(combinedSettings);
@@ -235,7 +250,7 @@ namespace KhTracker
 
                         seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
                             ? seedNameElement.GetString()
-                            : randomSeedName(8);
+                            : RandomSeedName(8, seed);
 
                         shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                             ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
@@ -271,7 +286,34 @@ namespace KhTracker
                     }
                 }
 
-                if (SavePreviousGridSettingsOption.IsChecked) {
+                // update number of reports
+                int numReports = 0;
+                for (int i = 1; i <= 13; i++)
+                {
+                    if (gridSettings[$"Report{i}"])
+                        numReports++;
+                }
+
+                // update number of unlocks
+                List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
+                int numUnlocks = 0;
+                foreach (string unlock in unlockNames)
+                {
+                    if (gridSettings[unlock])
+                        numUnlocks++;
+                }
+
+                // update number of chest locks
+                List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
+                int numChestLocks = 0;
+                foreach (string chestLock in worldChestLockNames)
+                {
+                    if (gridSettings[chestLock])
+                        numChestLocks++;
+                }
+
+                if (SavePreviousGridSettingsOption.IsChecked)
+                {
                     Properties.Settings.Default.GridWindowRows = numRows;
                     Properties.Settings.Default.GridWindowColumns = numColumns;
                     Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
@@ -283,40 +325,13 @@ namespace KhTracker
                     Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
                     Properties.Settings.Default.MaxShipCount = maxShipCount;
                     Properties.Settings.Default.MinShipCount = minShipCount;
+                    Properties.Settings.Default.GridWindowNumReports = numReports;
+                    Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+                    Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
                 }
-
-                // update number of reports
-                int numReports = 0;
-                for (int i = 1; i <= 13; i++)
-                {
-                    if (gridSettings[$"Report{i}"])
-                        numReports++;
-                }
-                Properties.Settings.Default.GridWindowNumReports = numReports;
-
-                // update number of unlocks
-                List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
-                int numUnlocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numUnlocks++;
-                }
-                Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
-
-                // update number of chest locks
-                List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
-                int numChestLocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numChestLocks++;
-                }
-                Properties.Settings.Default.GridWindowNumUnlocks = numChestLocks;
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
-            // re-init the Grid OptionsWindow so that the checkboxes and textboxes re-updated based on current grid data
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
         }
@@ -382,21 +397,21 @@ namespace KhTracker
             var numReports = Properties.Settings.Default.GridWindowNumReports;
             var randomReports = Enumerable.Range(1, 13).OrderBy(g => rng.Next()).Take(numReports).ToList();
             foreach (int reportNum in Enumerable.Range(1, 13).ToList())
-                gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum) ? true : false;
+                gridSettings[$"Report{reportNum}"] = randomReports.Contains(reportNum);
 
             // RE-randomize which visit unlocks get included
             List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
             int numUnlocks = Properties.Settings.Default.GridWindowNumUnlocks;
             var randomUnlocks = Enumerable.Range(1, unlockNames.Count).OrderBy(g => rng.Next()).Take(numUnlocks).ToList();
             foreach (int i in Enumerable.Range(1, unlockNames.Count).ToList())
-                gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i) ? true : false;
+                gridSettings[unlockNames[i - 1]] = randomUnlocks.Contains(i);
 
             // RE-randomize which visit world chest locks get included
             List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
             int numChestLocks = Properties.Settings.Default.GridWindowNumChestLocks;
             var randomChestLocks = Enumerable.Range(1, worldChestLockNames.Count).OrderBy(g => rng.Next()).Take(numChestLocks).ToList();
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
-                gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i) ? true : false;
+                gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i);
 
             foreach (ResourceDictionary rd in itemsDictionaries)
             {
@@ -463,12 +478,12 @@ namespace KhTracker
             {
                 if (battleshipSunkStatus[i, j])
                 {
-                    shipSunkCheck(i, j);
+                    ShipSunkCheck(i, j);
                     UpdateShipStatusUI();
                 }
                 else if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
-                    shipSunkCheck(i, j);
+                    ShipSunkCheck(i, j);
                     UpdateShipStatusUI();
                 }
                 else
@@ -496,6 +511,7 @@ namespace KhTracker
             {
                 // reveal the button's own property
                 buttons[i, j].SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                buttons[i, j].ToolTip = ((string)buttons[i, j].Tag).Split('-')[1];
                 // reveal the button's neighbors' properties
                 int westRange = fogOfWarSpan.ContainsKey("W") ? fogOfWarSpan["W"] : 1;
                 int eastRange = fogOfWarSpan.ContainsKey("E") ? fogOfWarSpan["E"] : 1;
@@ -611,9 +627,9 @@ namespace KhTracker
             GenerateGrid(numRows, numColumns);
         }
 
-        private static string randomSeedName(int length)
+        private static string RandomSeedName(int length, int? seed = null)
         {
-            var randValue = new Random();
+            var randValue = seed == null ? new Random() : new Random((int)seed);
             string alphanumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             return new string(Enumerable.Repeat(alphanumeric, length)
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
@@ -640,14 +656,14 @@ namespace KhTracker
 
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
-                seedName = "[TIED TO SEED]";
                 seed = data.convertedSeedHash;
+                seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
             else 
             {
                 if (seedName == null)
-                    seedName = randomSeedName(8);
+                    seedName = RandomSeedName(8);
                 seed = seedName.GetHashCode();
             }
             Seedname.Header = "Seed: " + seedName;
@@ -702,7 +718,8 @@ namespace KhTracker
                 for (int j = 0; j < numColumns; j++)
                 {
                     ToggleButton button = new ToggleButton();
-                    if (!fogOfWar)
+                    bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
+                    if (!fogOfWar || buttonContentRevealed)
                         button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
@@ -721,8 +738,8 @@ namespace KhTracker
                     }
                     buttons[i, j] = button;
                     grid.Children.Add(button);
-                    //if (!fogOfWar)
-                    //    button.ToolTip = ((string)button.Tag).Split('-')[1];
+                    if (!fogOfWar)
+                        button.ToolTip = ((string)button.Tag).Split('-')[1];
                 }
             }
 
@@ -1297,7 +1314,7 @@ namespace KhTracker
             return true;
         }
 
-        private void shipSunkCheck(int hitRow, int hitColumn)
+        private void ShipSunkCheck(int hitRow, int hitColumn)
         {
             bool shipSunk = true;
             int shipId = placedShips[hitRow, hitColumn];
@@ -1378,6 +1395,19 @@ namespace KhTracker
             }
             if (allShipsSunk && placedShips.Cast<int>().Max() > 0)
             {
+                // spoil the card with all the remaining unchecked cells
+                for (int row = 0; row < numRows; row++)
+                {
+                    for (int column = 0; column < numColumns; column++)
+                    {
+                        if (!buttons[row, column].IsChecked ?? false)
+                        {
+                            buttons[row, column].SetResourceReference(ContentProperty, assets[(row * numColumns) + column]);
+                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Miss Color"]);
+                            originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        }
+                    }
+                }
                 MessageBox.Show("Congrats! You sunk all ships!");
             }
         }
