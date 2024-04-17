@@ -1595,9 +1595,29 @@ namespace KhTracker
             SonicIconsOption.IsChecked = !toggle;
             if (grid != null)
             {
-                grid.Children.Clear();
-                Console.WriteLine(seedName);
-                GenerateGrid(numRows, numColumns, seedName, true);
+                //grid.Children.Clear();
+                //Console.WriteLine(seedName);
+                //GenerateGrid(numRows, numColumns, seedName, true);
+
+                //don't regen card, just reload resource reference
+                foreach (var child in grid.Children)
+                {
+                    //check if it's a toggle button
+                    if (child is ToggleButton square)
+                    {
+                        //get the tagname
+                        string squareTag = square.Tag.ToString();
+
+                        //if tagname is what we expect use it for new resource reference
+                        if (squareTag.StartsWith("Grid_Old-"))
+                        {
+                            squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
+                            square.SetResourceReference(ContentProperty, squareTag);
+                            //update tag for child
+                            square.Tag = squareTag;
+                        }
+                    }
+                }
             }
         }
 
@@ -1612,9 +1632,29 @@ namespace KhTracker
             TelevoIconsOption.IsChecked = !toggle;
             if (grid != null)
             {
-                grid.Children.Clear();
+                //grid.Children.Clear();
                 //Console.WriteLine(seedName);
-                GenerateGrid(numRows, numColumns, seedName, true);
+                //GenerateGrid(numRows, numColumns, seedName, true);
+
+                //don't regen card, just reload resource reference
+                foreach (var child in grid.Children)
+                {
+                    //check if it's a toggle button
+                    if (child is ToggleButton square)
+                    {
+                        //get the tagname
+                        string squareTag = square.Tag.ToString();
+
+                        //if tagname is what we expect use it for new resource reference
+                        if (squareTag.StartsWith("Grid_Min-"))
+                        {
+                            squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
+                            square.SetResourceReference(ContentProperty, squareTag);
+                            //update tag for child
+                            square.Tag = squareTag;
+                        }
+                    }
+                }
             }
         }
     }
