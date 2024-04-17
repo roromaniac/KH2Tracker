@@ -766,21 +766,22 @@ namespace KhTracker
         }
     }
 
-    public class GridLabelledImage : Image
-    {
-        // fixes image quality for some reason
-        public GridLabelledImage()
-        {
-            RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
-        }
-
-        public static readonly DependencyProperty GridAllowedProperty =
-            DependencyProperty.Register("GridAllowed", typeof(bool), typeof(GridLabelledImage), new PropertyMetadata(true));
-
-        public bool GridAllowed
-        {
-            get { return (bool)GetValue(GridAllowedProperty); }
-            set { SetValue(GridAllowedProperty, value); }
-        }
-    }
+    //No longer needed
+    //public class GridLabelledImage : Image
+    //{
+    //    // fixes image quality for some reason
+    //    public GridLabelledImage()
+    //    {
+    //        RenderOptions.SetBitmapScalingMode(this, BitmapScalingMode.HighQuality);
+    //    }
+    //
+    //    public static readonly DependencyProperty GridAllowedProperty =
+    //        DependencyProperty.Register("GridAllowed", typeof(bool), typeof(GridLabelledImage), new PropertyMetadata(true));
+    //
+    //    public bool GridAllowed
+    //    {
+    //        get { return (bool)GetValue(GridAllowedProperty); }
+    //        set { SetValue(GridAllowedProperty, value); }
+    //    }
+    //}
 }
