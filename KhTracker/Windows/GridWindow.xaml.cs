@@ -374,23 +374,6 @@ namespace KhTracker
 
         private List<string> Asset_Collection(int seed = 1)
         {
-
-            List<ResourceDictionary> itemsDictionaries = new List<ResourceDictionary>();
-
-            var trackableChecksDict = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/ItemDictionary.xaml")
-            };
-            itemsDictionaries.Add(trackableChecksDict);
-
-            var trackableProgressionDict = new ResourceDictionary
-            {
-                Source = new Uri("pack://application:,,,/ProgressionDictionary.xaml")
-            };
-            itemsDictionaries.Add(trackableProgressionDict);
-
-            var trackableItemsDict = new Dictionary<object, object>();
-
             Random rng = new Random(seed);
 
             // RE-randomize which reports get included
@@ -413,34 +396,24 @@ namespace KhTracker
             foreach (int i in Enumerable.Range(1, worldChestLockNames.Count).ToList())
                 gridSettings[worldChestLockNames[i - 1]] = randomChestLocks.Contains(i);
 
-            foreach (ResourceDictionary rd in itemsDictionaries)
-            {
-                foreach (DictionaryEntry entry in rd)
-                {
-                    if (entry.Value is GridLabelledImage img && img.GridAllowed)
-                    {
-                        // regardless of image style, the image ID should be consistent so we just gather all of them from Min
-                        if (((string)entry.Key).Split('-')[0] == "Min")
-                        {
-                            // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
-                            string checkName = ((string)entry.Key).Split('-')[1];
-                            gridSettings[checkName] = gridSettings.ContainsKey(checkName) ? gridSettings[checkName] : img.GridAllowed;
-                            if (gridSettings[checkName])
-                                trackableItemsDict[checkName] = entry.Value;
-                        }
-                    }
-                }
-            }
-
-            var randomizedItemsDict = trackableItemsDict.OrderBy(x => rng.Next()).ToDictionary(x => x.Key, x => x.Value);
-
             List<string> imageKeys = new List<string>();
-
-            foreach (KeyValuePair<object, object> kvp in randomizedItemsDict)
+            //use gridAssetList dictionary in Codes.cs as resource for every valid grid square 
+            foreach (string resourceName in Codes.gridAssetList)
             {
-                imageKeys.Add((string)kvp.Key);
+                // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
+
+                // since we now use a dictinary with only valid names,
+                // if a name doesn't exist add it, but set it as false
+                // (assume we added a new option, but not the means to use it yet so ignore adding it) 
+                if (!gridSettings.ContainsKey(resourceName))
+                    gridSettings[resourceName] = false;
+                //if setting exists add it to list if true
+                if (gridSettings[resourceName])
+                    imageKeys.Add(resourceName);
             }
 
+            //Shuffle the imageKeys then return it
+            imageKeys = imageKeys.OrderBy(x => rng.Next()).ToList();
             return imageKeys;
         }
 

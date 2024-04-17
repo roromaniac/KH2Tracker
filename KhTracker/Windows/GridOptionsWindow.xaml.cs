@@ -899,7 +899,8 @@ namespace KhTracker
                 }
                 else
                 {
-                    var driveLevels = new[] { "Drive2", "Drive3", "Drive4", "Drive5", "Drive6", "Drive7" };
+                    //removed "Drive2". it was the equavalant to a free space or "no drives collected"
+                    var driveLevels = new[] { "Drive3", "Drive4", "Drive5", "Drive6", "Drive7" };
                     foreach (var driveLevel in driveLevels)
                     {
                         if (_gridWindow.gridSettings.ContainsKey(driveLevel))
