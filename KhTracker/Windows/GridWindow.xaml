@@ -58,10 +58,64 @@
 
         </Menu>
 
-        <Grid x:Name="DynamicGrid">
+
+        <Grid x:Name="MainGrid" Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <!-- Should be 0.1* when enabled -->
+                <RowDefinition x:Name="GridTextHeader" Height="0*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid x:Name="TextGrid" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="0">
+                    <local:OutlinedTextBlock FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="L">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFEC8200" Offset="1"/>
+                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1">
+                    <local:OutlinedTextBlock FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="OBJECTIVE MODE">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF5D6677" Offset="1"/>
+                                <GradientStop Color="White" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="2">
+                    <local:OutlinedTextBlock FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="L">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFEC8200" Offset="1"/>
+                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+            </Grid>
+
+            <Grid x:Name="DynamicGrid" Grid.Row="1">
+
+            </Grid>
 
         </Grid>
-        
+
+
+
     </DockPanel>
     
 </Window>

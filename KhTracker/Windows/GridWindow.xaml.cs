@@ -608,7 +608,7 @@ namespace KhTracker
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool iconChange = false)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
         {
             // default to 5x5 grid if negative value manages to make it in
             if (rows <= 0 || columns <= 0)
@@ -620,11 +620,18 @@ namespace KhTracker
             grid = new Grid();
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
-            buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
-            originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
-            bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
-            battleshipSunkStatus = (iconChange && battleshipSunkStatus != null) ? battleshipSunkStatus : new bool[rows, columns];
-            annotationStatus = (iconChange && annotationStatus != null) ? annotationStatus : new bool[rows, columns];
+            //buttons = (iconChange && buttons != null) ? buttons : new ToggleButton[rows, columns];
+            //originalColors = (iconChange && originalColors != null) ? originalColors : new Color[rows, columns];
+            //bingoStatus = (iconChange && bingoStatus != null) ? bingoStatus : new bool[rows, columns];
+            //battleshipSunkStatus = (iconChange && battleshipSunkStatus != null) ? battleshipSunkStatus : new bool[rows, columns];
+            //annotationStatus = (iconChange && annotationStatus != null) ? annotationStatus : new bool[rows, columns];
+
+            buttons = new ToggleButton[rows, columns];
+            originalColors = new Color[rows, columns];
+            bingoStatus = new bool[rows, columns];
+            battleshipSunkStatus = new bool[rows, columns];
+            annotationStatus = new bool[rows, columns];
+
             seedName = seedString;
 
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
@@ -641,17 +648,23 @@ namespace KhTracker
             }
             Seedname.Header = "Seed: " + seedName;
 
-            if (iconChange)
-                // switch image style
-                assets = Change_Icons(assets);
-            else
-            {
-                // get raw check names
-                assets = Asset_Collection(seed);
-                // set the content resource reference with style
-                string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
-                assets = assets.Select(item => style + item).ToList();
-            }
+            //if (iconChange)
+            //    // switch image style
+            //    assets = Change_Icons(assets);
+            //else
+            //{
+            //    // get raw check names
+            //    assets = Asset_Collection(seed);
+            //    // set the content resource reference with style
+            //    string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
+            //    assets = assets.Select(item => style + item).ToList();
+            //}
+
+            // get raw check names
+            assets = Asset_Collection(seed);
+            // set the content resource reference with style
+            string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
+            assets = assets.Select(item => style + item).ToList();
 
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numChecks = assets.Count;
@@ -704,11 +717,11 @@ namespace KhTracker
                     button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
-                    if (iconChange)
-                    {
-                        button.Background = buttons[i, j].Background;
-                        button.IsChecked = buttons[i, j].IsChecked;
-                    }
+                    //if (iconChange)
+                    //{
+                    //    button.Background = buttons[i, j].Background;
+                    //    button.IsChecked = buttons[i, j].IsChecked;
+                    //}
                     buttons[i, j] = button;
                     grid.Children.Add(button);
                     if (!fogOfWar)
