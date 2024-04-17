@@ -146,14 +146,14 @@ namespace KhTracker
             UpdateMulti(button, add);
 
             int gridremainder = 0;
-            if (Children.Count % 5 != 0)
+            if (Children.Count % 7 != 0)
                 gridremainder = 1;
 
-            int gridnum = Math.Max((Children.Count / 5) + gridremainder, 1);
+            int gridnum = Math.Max((Children.Count / 7) + gridremainder, 1);
             Rows = gridnum;
 
             // default 1, add .5 for every row
-            double length = 1 + ((Children.Count - 1) / 5) / 2.0;
+            double length = 1 + ((Children.Count - 1) / 7) / 2.0;
             Grid outerGrid = (Parent as Grid).Parent as Grid;
             int row = (int)Parent.GetValue(Grid.RowProperty);
             outerGrid.RowDefinitions[row].Height = new GridLength(length, GridUnitType.Star);
