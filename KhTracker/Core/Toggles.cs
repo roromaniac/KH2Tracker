@@ -1605,16 +1605,24 @@ namespace KhTracker
                     //check if it's a toggle button
                     if (child is ToggleButton square)
                     {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-
-                        //if tagname is what we expect use it for new resource reference
-                        if (squareTag.StartsWith("Grid_Old-"))
+                        //just ccontinue to next child if fog of war square
+                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
                         {
-                            squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
-                            square.SetResourceReference(ContentProperty, squareTag);
-                            //update tag for child
-                            square.Tag = squareTag;
+                            continue;
+                        }
+                        else
+                        {
+                            //get the tagname
+                            string squareTag = square.Tag.ToString();
+
+                            //if tagname is what we expect use it for new resource reference
+                            if (squareTag.StartsWith("Grid_Old-"))
+                            {
+                                squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
+                                square.SetResourceReference(ContentProperty, squareTag);
+                                //update tag for child
+                                square.Tag = squareTag;
+                            }
                         }
                     }
                 }
@@ -1642,16 +1650,24 @@ namespace KhTracker
                     //check if it's a toggle button
                     if (child is ToggleButton square)
                     {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-
-                        //if tagname is what we expect use it for new resource reference
-                        if (squareTag.StartsWith("Grid_Min-"))
+                        //just ccontinue to next child if fog of war square
+                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
                         {
-                            squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                            square.SetResourceReference(ContentProperty, squareTag);
-                            //update tag for child
-                            square.Tag = squareTag;
+                            continue;
+                        }
+                        else
+                        {
+                            //get the tagname
+                            string squareTag = square.Tag.ToString();
+
+                            //if tagname is what we expect use it for new resource reference
+                            if (squareTag.StartsWith("Grid_Min-"))
+                            {
+                                squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
+                                square.SetResourceReference(ContentProperty, squareTag);
+                                //update tag for child
+                                square.Tag = squareTag;
+                            }
                         }
                     }
                 }

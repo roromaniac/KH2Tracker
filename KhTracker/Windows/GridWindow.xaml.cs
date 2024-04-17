@@ -705,8 +705,12 @@ namespace KhTracker
                 {
                     ToggleButton button = new ToggleButton();
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
+                    
                     if (!fogOfWar || buttonContentRevealed)
                         button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    else
+                        button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");

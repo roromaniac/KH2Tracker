@@ -2,6 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:KhTracker">
 
+    <Image x:Key="Grid_QuestionMark" Source="Images\Grid\Overlays\Numbers\QuestionMark.png" x:Shared="false" ToolTip="Unknown"/>
+    
 <!--#region Minimal-->
     <!-- Items -->
     <!--Reports-->

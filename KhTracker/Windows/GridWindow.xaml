@@ -32,9 +32,7 @@
         </Style>
     </Window.Resources>
 
-
     <DockPanel>
-
         <Menu DockPanel.Dock="Top" Background="White">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -42,35 +40,30 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
+                <MenuItem Header="Grid Settings" Click="Grid_Options" />
+                <MenuItem Header="Color Settings" Click="PickColor_Click" />
                 <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
-                <MenuItem Header="Grid Checks" Click="Grid_Options" />
             </MenuItem>
             <MenuItem Header="Image Visuals" Focusable="False">
-                <MenuItem Header="Set Colors" Click="PickColor_Click" />
-                <Separator/>
-                <MenuItem Header="Televo Icons" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Sonic Icons" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Simple Icon Style" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Game Icons Style" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem Header="Seeds" Focusable="False">
-                <MenuItem Header="Download Card Setting" Click="DownloadCardSetting" />
-                <MenuItem Header="Upload Card Setting" Click="UploadCardSetting" />
+                <MenuItem Header="Save Card Settings" Click="DownloadCardSetting" />
+                <MenuItem Header="Load Card Settings" Click="UploadCardSetting" />
                 <MenuItem Header="Set Seed Name" Click="SetSeedname" />
                 <Separator/>
-                <MenuItem Header="Always Save Previous Game Mode" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Auto-Save Previous Grid Settings" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem x:Name="Seedname" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
-
         </Menu>
 
-
         <Grid x:Name="MainGrid" Grid.Row="1">
-
             <Grid.RowDefinitions>
                 <!-- Should be 0.1* when enabled -->
                 <RowDefinition x:Name="GridTextHeader" Height="0*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            
             <Grid x:Name="TextGrid" Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -112,14 +105,8 @@
                 </Viewbox>
             </Grid>
 
-            <Grid x:Name="DynamicGrid" Grid.Row="1">
-
-            </Grid>
+            <Grid x:Name="DynamicGrid" Grid.Row="1"/>
 
         </Grid>
-
-
-
     </DockPanel>
-    
 </Window>
