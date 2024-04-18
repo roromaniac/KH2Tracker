@@ -1663,6 +1663,7 @@ namespace KhTracker
                     }
                 }
 
+                //finally update all names in "assets" from grid window
                 Change_Icons();
             }
         }
@@ -1678,10 +1679,6 @@ namespace KhTracker
             TelevoIconsOption.IsChecked = !toggle;
             if (grid != null)
             {
-                //grid.Children.Clear();
-                //Console.WriteLine(seedName);
-                //GenerateGrid(numRows, numColumns, seedName, true);
-
                 //don't regen card, just reload resource reference
                 foreach (var child in grid.Children)
                 {
@@ -1700,8 +1697,6 @@ namespace KhTracker
                             square.Tag = squareTag;
                         }
 
-                        
-
                         //just continue to next child if fog of war square or shouldn't update tag
                         if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
                         {
@@ -1713,6 +1708,7 @@ namespace KhTracker
                     }
                 }
 
+                //finally update all names in "assets" from grid window
                 Change_Icons();
             }
         }

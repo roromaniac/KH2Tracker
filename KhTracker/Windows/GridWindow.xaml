@@ -73,7 +73,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="0">
-                    <local:OutlinedTextBlock FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                    <local:OutlinedTextBlock x:Name="BannerIconL" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="L">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -84,7 +84,7 @@
                     </local:OutlinedTextBlock>
                 </Viewbox>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1">
-                    <local:OutlinedTextBlock FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                    <local:OutlinedTextBlock x:Name="BannerMain" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="OBJECTIVE MODE">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -95,7 +95,7 @@
                     </local:OutlinedTextBlock>
                 </Viewbox>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="2">
-                    <local:OutlinedTextBlock FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                    <local:OutlinedTextBlock x:Name="BannerIconR" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="L">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

@@ -16,6 +16,7 @@ using System.Threading;
 using System.Data.Common;
 using System.Windows.Input;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+using System.Windows.Shapes;
 
 namespace KhTracker
 {
@@ -611,6 +612,9 @@ namespace KhTracker
 
         public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
         {
+            //reset banner visibility
+            UpdateGridBanner(false);
+
             // default to 5x5 grid if negative value manages to make it in
             if (rows <= 0 || columns <= 0)
             {
@@ -1402,7 +1406,8 @@ namespace KhTracker
                         }
                     }
                 }
-                MessageBox.Show("Congrats! You sunk all ships!");
+                //MessageBox.Show("Congrats! You sunk all ships!");
+                UpdateGridBanner(true, "SUNK ALL SHIPS!", "H");
             }
         }
 
@@ -1432,5 +1437,19 @@ namespace KhTracker
             SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
             SonicIconsToggle(SonicIconsOption.IsChecked);
         }
+    
+        private void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "")
+        {
+            //Update Text
+            BannerIconL.Text = textIcon;
+            BannerIconR.Text = textIcon;
+            BannerMain.Text = textMain;
+
+            //Banner Visibility
+            if (showBanner)
+                GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
+            else
+                GridTextHeader.Height = new GridLength(0, GridUnitType.Star);
+        }  
     }
 }
