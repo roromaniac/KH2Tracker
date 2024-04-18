@@ -709,8 +709,11 @@ namespace KhTracker
                     if (!fogOfWar || buttonContentRevealed)
                         button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     else
-                        button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
-
+                    {
+                        if (FogIconOption.IsChecked)
+                            button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                    }
+                        
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -1415,6 +1418,10 @@ namespace KhTracker
             // save grid settings
             SavePreviousGridSettingsOption.IsChecked = Properties.Settings.Default.SavePreviousGridSetting;
             SavePreviousGridSettingsToggle(SavePreviousGridSettingsOption.IsChecked);
+
+            // enable fog of war image
+            FogIconOption.IsChecked = Properties.Settings.Default.FogIconSetting;
+            FogIconToggle(FogIconOption.IsChecked);
 
             // enable televo icons
             TelevoIconsOption.IsChecked = Properties.Settings.Default.TelevoIcons;

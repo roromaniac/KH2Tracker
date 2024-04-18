@@ -1584,6 +1584,45 @@ namespace KhTracker
             SavePreviousGridSettingsOption.IsChecked = toggle;
         }
 
+        private void FogIconToggle(object sender, RoutedEventArgs e)
+        {
+            FogIconToggle(FogIconOption.IsChecked);
+        }
+        private void FogIconToggle(bool toggle)
+        {
+            Properties.Settings.Default.FogIconSetting = toggle;
+            FogIconOption.IsChecked = toggle;
+
+            //revert or add the fog squares
+            if (grid != null)
+            {
+                // add Question Mark Image
+                if (toggle)
+                {
+                    foreach (var child in grid.Children)
+                    {
+                        if (child is ToggleButton square && square.Content == null)
+                        {
+                            square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                        }
+                    }
+                }
+                else // remove image
+                {
+                    foreach (var child in grid.Children)
+                    {
+                        if (child is ToggleButton square)
+                        {
+                            if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
+                            {
+                                square.Content = null;
+                            }                   
+                        }
+                    }
+                }
+            }
+        }
+
         private void TelevoIconsToggle(object sender, RoutedEventArgs e)
         {
             TelevoIconsToggle(TelevoIconsOption.IsChecked);

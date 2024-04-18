@@ -24,6 +24,8 @@ namespace KhTracker
         //item | dictionary key | ghost | shadow | path
         private Dictionary<Item, Tuple<string, Item, ContentControl, string>> CusItemCheck;
         private Dictionary<Item, Tuple<string, string>> CusItemCheckG;
+        //dictionary key/ new resource key
+        private Dictionary<string, Tuple<string, Item, ContentControl, string>> CusGridImages;
 
         //handle adding all custom images and such
         public void InitImages()
@@ -264,6 +266,8 @@ namespace KhTracker
                 {Ghost_ChestHAW,        new Tuple<string, string>("CustomImages/GhostChecks/chest_haw.png", "Cus-G_ChestHAW")},
                 {Ghost_ChestTWTNW,      new Tuple<string, string>("CustomImages/GhostChecks/chest_twtnw.png", "Cus-G_ChestTWTNW")}
             };
+        
+        
         }
 
         private void MainBG_DefToggle(object sender, RoutedEventArgs e)
