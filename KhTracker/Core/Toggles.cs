@@ -1634,37 +1634,36 @@ namespace KhTracker
             SonicIconsOption.IsChecked = !toggle;
             if (grid != null)
             {
-                //grid.Children.Clear();
-                //Console.WriteLine(seedName);
-                //GenerateGrid(numRows, numColumns, seedName, true);
-
                 //don't regen card, just reload resource reference
                 foreach (var child in grid.Children)
                 {
                     //check if it's a toggle button
                     if (child is ToggleButton square)
                     {
-                        //just ccontinue to next child if fog of war square
-                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
+                        //get the tagname
+                        string squareTag = square.Tag.ToString();
+                        bool updatetag = squareTag.StartsWith("Grid_Old-");
+
+                        //if tagname is what we expect, update it
+                        if (updatetag)
+                        {
+                            //update tag for child
+                            squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
+                            square.Tag = squareTag;
+                        }
+
+                        //just continue to next child if fog of war square or shouldn't update tag
+                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
                         {
                             continue;
                         }
-                        else
-                        {
-                            //get the tagname
-                            string squareTag = square.Tag.ToString();
 
-                            //if tagname is what we expect use it for new resource reference
-                            if (squareTag.StartsWith("Grid_Old-"))
-                            {
-                                squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
-                                square.SetResourceReference(ContentProperty, squareTag);
-                                //update tag for child
-                                square.Tag = squareTag;
-                            }
-                        }
+                        //update image if tag was updated and image is visible
+                        square.SetResourceReference(ContentProperty, squareTag);
                     }
                 }
+
+                Change_Icons();
             }
         }
 
@@ -1689,27 +1688,32 @@ namespace KhTracker
                     //check if it's a toggle button
                     if (child is ToggleButton square)
                     {
-                        //just ccontinue to next child if fog of war square
-                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
+                        //get the tagname
+                        string squareTag = square.Tag.ToString();
+                        bool updatetag = squareTag.StartsWith("Grid_Min-");
+
+                        //if tagname is what we expect, update it
+                        if (updatetag)
+                        {
+                            //update tag for child
+                            squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
+                            square.Tag = squareTag;
+                        }
+
+                        
+
+                        //just continue to next child if fog of war square or shouldn't update tag
+                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
                         {
                             continue;
                         }
-                        else
-                        {
-                            //get the tagname
-                            string squareTag = square.Tag.ToString();
 
-                            //if tagname is what we expect use it for new resource reference
-                            if (squareTag.StartsWith("Grid_Min-"))
-                            {
-                                squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                                square.SetResourceReference(ContentProperty, squareTag);
-                                //update tag for child
-                                square.Tag = squareTag;
-                            }
-                        }
+                        //update image if tag was updated and image is visible
+                        square.SetResourceReference(ContentProperty, squareTag);
                     }
                 }
+
+                Change_Icons();
             }
         }
 
@@ -1746,8 +1750,13 @@ namespace KhTracker
                             //if tagname is what we expect use it for new resource reference
                             if (squareTag.StartsWith("Grid_Min-"))
                             {
-                                squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                                square.SetResourceReference(ContentProperty, squareTag);
+                                //only update reference for visible squares
+                                if (square.Content != null)
+                                {
+                                    squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
+                                    square.SetResourceReference(ContentProperty, squareTag);
+                                }
+
                                 //update tag for child
                                 square.Tag = squareTag;
                             }

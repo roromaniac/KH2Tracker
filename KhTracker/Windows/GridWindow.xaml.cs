@@ -353,23 +353,24 @@ namespace KhTracker
 
         }
 
-        private List<string> Change_Icons(List<string> imageKeys)
+        private void Change_Icons()
         {
+            //repurpose to update assets list
             if (TelevoIconsOption.IsChecked)
             {
-                for (int i = 0; i < imageKeys.Count; i++)
+                for (int i = 0; i < assets.Count; i++)
                 {
-                    imageKeys[i] = imageKeys[i].Replace("Old-", "Min-");
+                    assets[i] = assets[i].Replace("Old-", "Min-");
                 }
             }
             if (SonicIconsOption.IsChecked)
             {
-                for (int i = 0; i < imageKeys.Count; i++)
+                for (int i = 0; i < assets.Count; i++)
                 {
-                    imageKeys[i] = imageKeys[i].Replace("Min-", "Old-");
+                    assets[i] = assets[i].Replace("Min-", "Old-");
                 }
             }
-            return imageKeys;
+            //return imageKeys;
         }
 
         private List<string> Asset_Collection(int seed = 1)
@@ -398,7 +399,7 @@ namespace KhTracker
 
             List<string> imageKeys = new List<string>();
             //use gridAssetList dictionary in Codes.cs as resource for every valid grid square 
-            foreach (string resourceName in Codes.gridAssetList)
+            foreach (string resourceName in Codes.gridAssetList.Keys)
             {
                 // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
 
