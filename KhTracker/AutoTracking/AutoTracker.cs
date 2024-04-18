@@ -1670,7 +1670,7 @@ namespace KhTracker
                                 newProg = 1;
                             break;
                         case 1:
-                            if (wID1 == 70 && wCom == 1) // Mission 3 (Search) finish
+                            if (wID1 == 0 && wID2 == 0 && wID3 == 15) // All 3 missions finished
                                 newProg = 2;
                             break;
                         case 3:
