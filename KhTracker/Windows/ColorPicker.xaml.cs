@@ -91,8 +91,8 @@ namespace KhTracker
                         {
                             _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Battleship Sunk Color"]);
                         }
-                        bool squareMarked = _gridWindow.placedShips[i, j] == 1;
-                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareMarked ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
+                        bool squareIsShip = _gridWindow.placedShips[i, j] != 0;
+                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareIsShip ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
                     }
                     else
                     {
