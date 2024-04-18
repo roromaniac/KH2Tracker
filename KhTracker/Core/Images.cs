@@ -24,8 +24,9 @@ namespace KhTracker
         //item | dictionary key | ghost | shadow | path
         private Dictionary<Item, Tuple<string, Item, ContentControl, string>> CusItemCheck;
         private Dictionary<Item, Tuple<string, string>> CusItemCheckG;
-        //dictionary key/ new resource key
-        private Dictionary<string, Tuple<string, Item, ContentControl, string>> CusGridImages;
+        
+        //
+        public static ResourceDictionary CusGridDic = new ResourceDictionary();
 
         //handle adding all custom images and such
         public void InitImages()
@@ -773,20 +774,107 @@ namespace KhTracker
         {
             if (Directory.Exists("CustomImages/Grid/"))
             {
+                //data.customGridImageFound = true;
 
+                ResourceDictionary tempDict = new ResourceDictionary
+                {
+                    Source = new Uri("pack://application:,,,/GridDictionary.xaml")
+                };
 
+                //check overlays first
+                List<string> numList = new List<string>()
+                {
+                    {"1.png"},
+                    {"2.png"},
+                    {"3.png"},
+                    {"4.png"},
+                    {"5.png"},
+                    {"6.png"},
+                    {"7.png"},
+                    {"8.png"},
+                    {"9.png"},
+                    {"10.png"},
+                    {"11.png"},
+                    {"12.png"},
+                    {"13.png"},
+                    {"AllDrive2.png"},
+                    {"AllDrive3.png"},
+                    {"AllDrive4.png"},
+                    {"AllDrive5.png"},
+                    {"AllDrive6.png"},
+                    {"AllDrive7.png"},
+                    {"Max.png"},
+                };
+                List<string> wldList = new List<string>()
+                {
+                    {"Absent.png"},
+                    {"Data.png"},
+                    {"DisneyCastle.png"},
+                    {"Olympus.png"},
+                };
+                if (Directory.Exists("CustomImages/Grid/Overlays/"))
+                {
+                    //numbers first
+                    for (int i = 0; i < numList.Count; ++i)
+                    {
+                        if (Directory.Exists("CustomImages/Grid/Overlays/Numbers/"))
+                        {
+                            if (File.Exists("CustomImages/Grid/Overlays/Numbers/" + numList[i]))
+                            {
+                                numList[i] = "pack://application:,,,/CustomImages/Grid/Overlays/Numbers/" + numList[i];
+                            }
+                            else
+                            {
+                                numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
+                            }
+                        }
+                        else
+                        {
+                            numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
+                        }
+                    }
+                    //world overlays
+                    for (int i = 0; i < wldList.Count; ++i)
+                    {
+                        if (Directory.Exists("CustomImages/Grid/Overlays/Worlds/"))
+                        {
+                            if (File.Exists("CustomImages/Grid/Overlays/Worlds/" + wldList[i]))
+                            {
+                                wldList[i] = "pack://application:,,,/CustomImages/Grid/Overlays/Worlds/" + wldList[i];
+                            }
+                            else
+                            {
+                                wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
+                            }
+                        }
+                        else
+                        {
+                            wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
+                        }
+                    }
+                }
+                else //default paths for all overlays
+                {
+                    for (int i = 0; i < numList.Count; ++i)
+                    {
+                        numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
+                    }
+                    for (int i = 0; i < wldList.Count; ++i)
+                    {
+                        wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
+                    }
+                }
 
-
-
-
-
-
-
-
-
+                //start building resource dict
+                foreach (DictionaryEntry entry in tempDict)
+                {
+                    //remove all but custom icon entries
+                    if (!entry.Key.ToString().StartsWith("Grid_Cus-"))
+                    {
+                        tempDict.Remove(entry.Key);
+                    }
+                }
             }
-
-
         }
     }
 }

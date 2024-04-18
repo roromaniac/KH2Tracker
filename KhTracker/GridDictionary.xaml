@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:KhTracker">
 
     <Image x:Key="Grid_QuestionMark" Source="Images\Grid\Overlays\Numbers\QuestionMark.png" x:Shared="false" ToolTip="Unknown"/>
+    <Image x:Key="Grid_Cus-QuestionMark" Source="pack://application:,,,/CustomImages/Grid/Overlays/Numbers/QuestionMark.png" x:Shared="false" ToolTip="Unknown"/>
     
 <!--#region Minimal-->
     <!-- Items -->

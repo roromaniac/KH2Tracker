@@ -1712,5 +1712,49 @@ namespace KhTracker
                 }
             }
         }
+
+        private void CustomIconsToggle(object sender, RoutedEventArgs e)
+        {
+            //CustomIconsToggle(CustomIconsOption.IsChecked);
+        }
+        private void CustomIconsToggle(bool toggle)
+        {
+            //Properties.Settings.Default.SonicIcons = toggle;
+            //SonicIconsOption.IsChecked = toggle;
+            //TelevoIconsOption.IsChecked = !toggle;
+            if (grid != null)
+            {
+                //don't regen card, just reload resource reference
+                foreach (var child in grid.Children)
+                {
+                    //check if it's a toggle button
+                    if (child is ToggleButton square)
+                    {
+                        //Fog of War square change
+                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
+                        {
+                            if (MainWindow.CusGridDic["Grid_Cus-QuestionMark"] != null)
+                                square.SetResourceReference(ContentProperty, "Grid_Cus-QuestionMark");
+                            else
+                                square.SetResourceReference(ContentProperty, "Grid-QuestionMark");
+                        }
+                        else
+                        {
+                            //get the tagname
+                            string squareTag = square.Tag.ToString();
+
+                            //if tagname is what we expect use it for new resource reference
+                            if (squareTag.StartsWith("Grid_Min-"))
+                            {
+                                squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
+                                square.SetResourceReference(ContentProperty, squareTag);
+                                //update tag for child
+                                square.Tag = squareTag;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

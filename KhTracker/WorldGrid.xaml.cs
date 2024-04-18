@@ -1971,11 +1971,8 @@ namespace KhTracker
         ///
 
         public void WorldComplete()
-        {
-            
+        {          
             Data data = MainWindow.data;
-
-            window.AddProgressionPoints(5);
               
             //run a check for current world to check if all checks have been found
 
