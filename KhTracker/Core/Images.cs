@@ -793,6 +793,11 @@ namespace KhTracker
 
                     //get source path from entry and check if file exists
                     var cusImage = entry.Value as Image;
+                    if(cusImage.Source == null)
+                    {
+                        tempDict.Remove(entry.Key);
+                        continue;
+                    }
                     string cusPath = cusImage.Source.ToString().Remove(0, 23);
 
                     //remove files that don't exist
