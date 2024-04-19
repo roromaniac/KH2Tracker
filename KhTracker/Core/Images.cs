@@ -773,10 +773,6 @@ namespace KhTracker
         {
             if (Directory.Exists("CustomImages/Grid/"))
             {
-                bool itemDir = Directory.Exists("CustomImages/Grid/Checks/");
-                bool bossDir = Directory.Exists("CustomImages/Grid/Bosses/");
-                bool progDir = Directory.Exists("CustomImages/Grid/Progression/");
-
                 //build temp dict with only Custom entires from grid dict
                 ResourceDictionary tempDict = new ResourceDictionary
                 {
@@ -784,52 +780,16 @@ namespace KhTracker
                 };
                 foreach (DictionaryEntry entry in tempDict)
                 {
-                    //remove non custom entries
-                    if (!entry.Key.ToString().StartsWith("Grid_Cus-"))
-                    {
-                        tempDict.Remove(entry.Key);
-                        continue;
-                    }
-
-                    //get source path from entry and check if file exists
                     var cusImage = entry.Value as Image;
-                    if(cusImage.Source == null)
+
+                    //remove non custom entries or entries with custom images that doesn't exist
+                    if (!entry.Key.ToString().StartsWith("Grid_Cus-") || cusImage.Source == null)
                     {
                         tempDict.Remove(entry.Key);
                         continue;
                     }
-                    string cusPath = cusImage.Source.ToString().Remove(0, 23);
 
-                    //remove files that don't exist
-                    if (cusPath.Contains("/Checks/") && itemDir)
-                    {
-                        if (!File.Exists(cusPath))
-                        {
-                            tempDict.Remove(entry.Key);
-                        }
-                        continue;
-                    }
-                    if (cusPath.Contains("/Bosses/") && bossDir)
-                    {
-                        if (!File.Exists(cusPath))
-                        {
-                            tempDict.Remove(entry.Key);
-                        }
-                        continue;
-                    }
-                    if (cusPath.Contains("/Progression/") && progDir)
-                    {
-                        if (!File.Exists(cusPath))
-                        {
-                            tempDict.Remove(entry.Key);
-                        }
-                        continue;
-                    }
-                }
-
-                //get remaining keys and dd to list
-                foreach (DictionaryEntry entry in tempDict)
-                {
+                    //add key to list of avaiable images
                     CusGridImagesList.Add(entry.Key.ToString());
                 }
             }
