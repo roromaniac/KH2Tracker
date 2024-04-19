@@ -1601,9 +1601,39 @@ namespace KhTracker
                 {
                     foreach (var child in grid.Children)
                     {
-                        if (child is ToggleButton square && square.Content == null)
+                        if (child is ToggleButton square)
                         {
-                            square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                            if(square.Content == null)
+                            {
+                                //check for custom
+                                if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
+                                {
+                                    if (File.Exists("CustomImages/Grid/QuestionMark.png"))
+                                    {
+                                        square.SetResourceReference(ContentProperty, "Grid_QuestionMark-Custom");
+                                    }
+                                    else
+                                        square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                                }
+                                else
+                                    square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                            }
+                            else
+                            {
+                                if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
+                                {
+                                    //check for custom
+                                    if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
+                                    {
+                                        if (File.Exists("CustomImages/Grid/QuestionMark.png"))
+                                        {
+                                            square.SetResourceReference(ContentProperty, "Grid_QuestionMark-Custom");
+                                        }
+                                    }
+                                    else
+                                        square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                                }
+                            }
                         }
                     }
                 }
@@ -1632,6 +1662,7 @@ namespace KhTracker
             Properties.Settings.Default.TelevoIcons = toggle;
             TelevoIconsOption.IsChecked = toggle;
             SonicIconsOption.IsChecked = !toggle;
+            bool checkCustom = CustomGridIconsOption.IsChecked;
             if (grid != null)
             {
                 //don't regen card, just reload resource reference
@@ -1642,24 +1673,44 @@ namespace KhTracker
                     {
                         //get the tagname
                         string squareTag = square.Tag.ToString();
-                        bool updatetag = squareTag.StartsWith("Grid_Old-");
+                        bool updateTag = false;
 
                         //if tagname is what we expect, update it
-                        if (updatetag)
+                        if (squareTag.StartsWith("Grid_Old-"))
                         {
                             //update tag for child
                             squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
                             square.Tag = squareTag;
+                            updateTag = true;
+                        }
+                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
+                        {
+                            //update tag for child
+                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Min-");
+                            square.Tag = squareTag;
+                            updateTag = true;
                         }
 
                         //just continue to next child if fog of war square or shouldn't update tag
-                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
+                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updateTag)
                         {
                             continue;
                         }
 
                         //update image if tag was updated and image is visible
-                        square.SetResourceReference(ContentProperty, squareTag);
+                        if(checkCustom)
+                        {
+                            string cusCheck = squareTag.Replace("Grid_Min-", "Grid_Cus-");
+                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
+                            {
+                                square.SetResourceReference(ContentProperty, cusCheck);
+                            }
+                            else
+                                square.SetResourceReference(ContentProperty, squareTag);
+
+                        }
+                        else
+                            square.SetResourceReference(ContentProperty, squareTag);
                     }
                 }
 
@@ -1677,6 +1728,7 @@ namespace KhTracker
             Properties.Settings.Default.SonicIcons = toggle;
             SonicIconsOption.IsChecked = toggle;
             TelevoIconsOption.IsChecked = !toggle;
+            bool checkCustom = CustomGridIconsOption.IsChecked;
             if (grid != null)
             {
                 //don't regen card, just reload resource reference
@@ -1696,6 +1748,12 @@ namespace KhTracker
                             squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
                             square.Tag = squareTag;
                         }
+                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
+                        {
+                            //update tag for child
+                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Old-");
+                            square.Tag = squareTag;
+                        }
 
                         //just continue to next child if fog of war square or shouldn't update tag
                         if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
@@ -1704,7 +1762,19 @@ namespace KhTracker
                         }
 
                         //update image if tag was updated and image is visible
-                        square.SetResourceReference(ContentProperty, squareTag);
+                        if (checkCustom)
+                        {
+                            string cusCheck = squareTag.Replace("Grid_Old-", "Grid_Cus-");
+                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
+                            {
+                                square.SetResourceReference(ContentProperty, cusCheck);
+                            }
+                            else
+                                square.SetResourceReference(ContentProperty, squareTag);
+
+                        }
+                        else
+                            square.SetResourceReference(ContentProperty, squareTag);
                     }
                 }
 
@@ -1713,53 +1783,23 @@ namespace KhTracker
             }
         }
 
-        private void CustomIconsToggle(object sender, RoutedEventArgs e)
+        private void CustomGridIconsToggle(object sender, RoutedEventArgs e)
         {
-            //CustomIconsToggle(CustomIconsOption.IsChecked);
-        }
-        private void CustomIconsToggle(bool toggle)
-        {
-            //Properties.Settings.Default.SonicIcons = toggle;
-            //SonicIconsOption.IsChecked = toggle;
-            //TelevoIconsOption.IsChecked = !toggle;
-            if (grid != null)
+            Properties.Settings.Default.GridCustomImages = CustomGridIconsOption.IsChecked;
+
+            //did this lazily, lol go back and optimize later
+            if (TelevoIconsOption.IsChecked)
             {
-                //don't regen card, just reload resource reference
-                foreach (var child in grid.Children)
-                {
-                    //check if it's a toggle button
-                    if (child is ToggleButton square)
-                    {
-                        //Fog of War square change
-                        if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
-                        {
-                            if (MainWindow.CusGridDic["Grid_Cus-QuestionMark"] != null)
-                                square.SetResourceReference(ContentProperty, "Grid_Cus-QuestionMark");
-                            else
-                                square.SetResourceReference(ContentProperty, "Grid-QuestionMark");
-                        }
-                        else
-                        {
-                            //get the tagname
-                            string squareTag = square.Tag.ToString();
-
-                            //if tagname is what we expect use it for new resource reference
-                            if (squareTag.StartsWith("Grid_Min-"))
-                            {
-                                //only update reference for visible squares
-                                if (square.Content != null)
-                                {
-                                    squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                                    square.SetResourceReference(ContentProperty, squareTag);
-                                }
-
-                                //update tag for child
-                                square.Tag = squareTag;
-                            }
-                        }
-                    }
-                }
+                SonicIconsToggle(true);
+                TelevoIconsToggle(true);
             }
+            else
+            {
+                TelevoIconsToggle(true);
+                SonicIconsToggle(true);
+            }
+
+            FogIconToggle(FogIconOption.IsChecked);
         }
     }
 }

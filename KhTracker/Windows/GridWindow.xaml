@@ -45,8 +45,9 @@
                 <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
             </MenuItem>
             <MenuItem Header="Image Visuals" Focusable="False">
-                <MenuItem Header="Simple Icon Style" Click="TelevoIconsToggle" x:Name="TelevoIconsOption" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Game Icons Style" Click="SonicIconsToggle" x:Name="SonicIconsOption" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Simple Icon Style"  Click="TelevoIconsToggle"     x:Name="TelevoIconsOption"      IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Game Icons Style"   Click="SonicIconsToggle"      x:Name="SonicIconsOption"       IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Load Custom Icons"  Click="CustomGridIconsToggle" x:Name="CustomGridIconsOption"  IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Show `?` for Fog of War Squares" Click="FogIconToggle" x:Name="FogIconOption" IsCheckable="True" IsChecked="False"/>
             </MenuItem>

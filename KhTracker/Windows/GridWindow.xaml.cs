@@ -17,6 +17,7 @@ using System.Data.Common;
 using System.Windows.Input;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace KhTracker
 {
@@ -356,22 +357,38 @@ namespace KhTracker
 
         private void Change_Icons()
         {
-            //repurpose to update assets list
-            if (TelevoIconsOption.IsChecked)
-            {
-                for (int i = 0; i < assets.Count; i++)
-                {
-                    assets[i] = assets[i].Replace("Old-", "Min-");
-                }
-            }
+            bool useCustom = CustomGridIconsOption.IsChecked;
+            string prefix1 = "Grid_Min-";
+            string prefix2 = "Grid_Old-";
             if (SonicIconsOption.IsChecked)
             {
-                for (int i = 0; i < assets.Count; i++)
+                prefix1 = "Grid_Old-";
+                prefix2 = "Grid_Min-";
+            }
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                //if already a custom prefix then skip
+                if(useCustom && assets[i].StartsWith("Grid_Cus-"))
+                    continue;
+
+                //if custom toggle on then check for and replace normal prefix with custom one
+                if (useCustom)
                 {
-                    assets[i] = assets[i].Replace("Min-", "Old-");
+                    string cusCheck = assets[i].Replace(prefix1, "Grid_Cus-");
+                    if (MainWindow.CusGridImagesList.Contains(cusCheck))
+                        assets[i] = cusCheck;
+
+                }
+                //if custom toggle is off check if prefix was custom and fix it elxe replace as normal
+                else
+                {
+                    if (assets[i].StartsWith("Grid_Cus-"))
+                        assets[i] = assets[i].Replace("Grid_Cus-", prefix2);
+                    else
+                        assets[i] = assets[i].Replace(prefix1, prefix2);
                 }
             }
-            //return imageKeys;
         }
 
         private List<string> Asset_Collection(int seed = 1)
@@ -671,6 +688,10 @@ namespace KhTracker
             string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
             assets = assets.Select(item => style + item).ToList();
 
+            //if custom images we need to fix the asset names
+            if (CustomGridIconsOption.IsChecked)
+                Change_Icons();
+
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numChecks = assets.Count;
             int originalNumRows = rows;
@@ -716,7 +737,21 @@ namespace KhTracker
                     else
                     {
                         if (FogIconOption.IsChecked)
-                            button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                        {
+                            //check for custom
+                            if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
+                            {
+                                if (File.Exists("CustomImages/Grid/QuestionMark.png"))
+                                {
+                                    button.SetResourceReference(ContentProperty, "Grid_QuestionMark-Custom");
+                                }
+                                else
+                                    button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                            }
+                            else
+                                button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                        }
+                            
                     }
                         
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);

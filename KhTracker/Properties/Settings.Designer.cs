@@ -1391,5 +1391,17 @@ namespace KhTracker.Properties {
                 this["FogIconSetting"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GridCustomImages {
+            get {
+                return ((bool)(this["GridCustomImages"]));
+            }
+            set {
+                this["GridCustomImages"] = value;
+            }
+        }
     }
 }

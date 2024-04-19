@@ -24,9 +24,7 @@ namespace KhTracker
         //item | dictionary key | ghost | shadow | path
         private Dictionary<Item, Tuple<string, Item, ContentControl, string>> CusItemCheck;
         private Dictionary<Item, Tuple<string, string>> CusItemCheckG;
-        
-        //
-        public static ResourceDictionary CusGridDic = new ResourceDictionary();
+        public static List<string> CusGridImagesList = new List<string>();
 
         //handle adding all custom images and such
         public void InitImages()
@@ -268,7 +266,8 @@ namespace KhTracker
                 {Ghost_ChestTWTNW,      new Tuple<string, string>("CustomImages/GhostChecks/chest_twtnw.png", "Cus-G_ChestTWTNW")}
             };
 
-            //GridCustomImageCheck();
+            //get list of custom images that exist
+            GridCustomImageCheck();
         }
 
         private void MainBG_DefToggle(object sender, RoutedEventArgs e)
@@ -774,365 +773,59 @@ namespace KhTracker
         {
             if (Directory.Exists("CustomImages/Grid/"))
             {
-                //data.customGridImageFound = true;
+                bool itemDir = Directory.Exists("CustomImages/Grid/Checks/");
+                bool bossDir = Directory.Exists("CustomImages/Grid/Bosses/");
+                bool progDir = Directory.Exists("CustomImages/Grid/Progression/");
 
+                //build temp dict with only Custom entires from grid dict
                 ResourceDictionary tempDict = new ResourceDictionary
                 {
                     Source = new Uri("pack://application:,,,/GridDictionary.xaml")
                 };
-
-                //remove uneeded entries
                 foreach (DictionaryEntry entry in tempDict)
                 {
-                    //remove all but custom icon entries
+                    //remove non custom entries
                     if (!entry.Key.ToString().StartsWith("Grid_Cus-"))
                     {
                         tempDict.Remove(entry.Key);
-                    }   
-                }
+                        continue;
+                    }
 
-                //check overlays first
-                List<string> numList = new List<string>()
-                {
-                    {"1.png"},
-                    {"2.png"},
-                    {"3.png"},
-                    {"4.png"},
-                    {"5.png"},
-                    {"6.png"},
-                    {"7.png"},
-                    {"8.png"},
-                    {"9.png"},
-                    {"10.png"},
-                    {"11.png"},
-                    {"12.png"},
-                    {"13.png"},
-                    {"AllDrive7.png"},
-                    {"Max.png"},
-                };
-                List<string> wldList = new List<string>()
-                {
-                    {"Absent.png"},
-                    {"Data.png"},
-                    {"DisneyCastle.png"},
-                    {"Olympus.png"},
-                };
-                bool cusNumberFound = false;
-                bool cusWorldFound = false;
-                if (Directory.Exists("CustomImages/Grid/Overlays/"))
-                {
-                    //numbers first
-                    for (int i = 0; i < numList.Count; ++i)
+                    //get source path from entry and check if file exists
+                    var cusImage = entry.Value as Image;
+                    string cusPath = cusImage.Source.ToString().Remove(0, 23);
+
+                    //remove files that don't exist
+                    if (cusPath.Contains("/Checks/") && itemDir)
                     {
-                        if (Directory.Exists("CustomImages/Grid/Overlays/Numbers/"))
+                        if (!File.Exists(cusPath))
                         {
-                            if (File.Exists("CustomImages/Grid/Overlays/Numbers/" + numList[i]))
-                            {
-                                numList[i] = "pack://application:,,,/CustomImages/Grid/Overlays/Numbers/" + numList[i];
-                                cusNumberFound = true;
-                            }
-                            else
-                            {
-                                numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
-                            }
+                            tempDict.Remove(entry.Key);
                         }
-                        else
-                        {
-                            numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
-                        }
+                        continue;
                     }
-                    //world overlays
-                    for (int i = 0; i < wldList.Count; ++i)
+                    if (cusPath.Contains("/Bosses/") && bossDir)
                     {
-                        if (Directory.Exists("CustomImages/Grid/Overlays/Worlds/"))
+                        if (!File.Exists(cusPath))
                         {
-                            if (File.Exists("CustomImages/Grid/Overlays/Worlds/" + wldList[i]))
-                            {
-                                wldList[i] = "pack://application:,,,/CustomImages/Grid/Overlays/Worlds/" + wldList[i];
-                                cusWorldFound = true;
-                            }
-                            else
-                            {
-                                wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
-                            }
+                            tempDict.Remove(entry.Key);
                         }
-                        else
+                        continue;
+                    }
+                    if (cusPath.Contains("/Progression/") && progDir)
+                    {
+                        if (!File.Exists(cusPath))
                         {
-                            wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
+                            tempDict.Remove(entry.Key);
                         }
-                    }
-                }
-                else //default paths for all overlays
-                {
-                    for (int i = 0; i < numList.Count; ++i)
-                    {
-                        numList[i] = "Images\\Grid\\Overlays\\Numbers\\" + numList[i];
-                    }
-                    for (int i = 0; i < wldList.Count; ++i)
-                    {
-                        wldList[i] = "Images\\Grid\\Overlays\\Worlds\\" + wldList[i];
+                        continue;
                     }
                 }
 
-                Dictionary<string, string> overylayAssets = new Dictionary<string, string>()
+                //get remaining keys and dd to list
+                foreach (DictionaryEntry entry in tempDict)
                 {
-                    {"Grid_Cus-AladdinWep1","1.png"},
-                    {"Grid_Cus-AladdinWep2","2.png"},
-                    {"Grid_Cus-AuronWep1","1.png"},
-                    {"Grid_Cus-AuronWep2","2.png"},
-                    {"Grid_Cus-BeastWep1","1.png"},
-                    {"Grid_Cus-BeastWep2","2.png"},
-                    {"Grid_Cus-DCPete","DisneyCastle.png"},
-                    {"Grid_Cus-Drive2","1.png"},
-                    {"Grid_Cus-Drive3","2.png"},
-                    {"Grid_Cus-Drive4","3.png"},
-                    {"Grid_Cus-Drive5","4.png"},
-                    {"Grid_Cus-Drive6","5.png"},
-                    {"Grid_Cus-Drive7","6.png"},
-                    {"Grid_Cus-Grid7Drives","AllDrive7.png"},
-                    {"Grid_Cus-GridArmoredXemnas1","1.png"},
-                    {"Grid_Cus-GridArmoredXemnas2","2.png"},
-                    {"Grid_Cus-GridBlizzard1","1.png"},
-                    {"Grid_Cus-GridBlizzard2","2.png"},
-                    {"Grid_Cus-GridBlizzard3","3.png"},
-                    {"Grid_Cus-GridCure1","1.png"},
-                    {"Grid_Cus-GridCure2","2.png"},
-                    {"Grid_Cus-GridCure3","3.png"},
-                    {"Grid_Cus-GridDataAxel","data.png"},
-                    {"Grid_Cus-GridDataDemyx","data.png"},
-                    {"Grid_Cus-GridDataFinalXemnas","data.png"},
-                    {"Grid_Cus-GridDataLuxord","data.png"},
-                    {"Grid_Cus-GridDataRoxas","data.png"},
-                    {"Grid_Cus-GridDataSaix","data.png"},
-                    {"Grid_Cus-GridDataXaldin","data.png"},
-                    {"Grid_Cus-GridDataXemnas","data.png"},
-                    {"Grid_Cus-GridDataXigbar","data.png"},
-                    {"Grid_Cus-GridFire1","1.png"},
-                    {"Grid_Cus-GridFire2","2.png"},
-                    {"Grid_Cus-GridFire3","3.png"},
-                    {"Grid_Cus-GridLarxene","absent.png"},
-                    {"Grid_Cus-GridLarxeneData","data.png"},
-                    {"Grid_Cus-GridLexaeus","absent.png"},
-                    {"Grid_Cus-GridLexaeusData","data.png"},
-                    {"Grid_Cus-GridMagnet1","1.png"},
-                    {"Grid_Cus-GridMagnet2","2.png"},
-                    {"Grid_Cus-GridMagnet3","3.png"},
-                    {"Grid_Cus-GridMarluxia","absent.png"},
-                    {"Grid_Cus-GridMarluxiaData","data.png"},
-                    {"Grid_Cus-GridMunnyPouch1","1.png"},
-                    {"Grid_Cus-GridMunnyPouch2","2.png"},
-                    {"Grid_Cus-GridReflect1","1.png"},
-                    {"Grid_Cus-GridReflect2","2.png"},
-                    {"Grid_Cus-GridReflect3","3.png"},
-                    {"Grid_Cus-GridThunder1","1.png"},
-                    {"Grid_Cus-GridThunder2","2.png"},
-                    {"Grid_Cus-GridThunder3","3.png"},
-                    {"Grid_Cus-GridTornPage1","1.png"},
-                    {"Grid_Cus-GridTornPage2","2.png"},
-                    {"Grid_Cus-GridTornPage3","3.png"},
-                    {"Grid_Cus-GridTornPage4","4.png"},
-                    {"Grid_Cus-GridTornPage5","5.png"},
-                    {"Grid_Cus-GridVexen","absent.png"},
-                    {"Grid_Cus-GridVexenData","data.png"},
-                    {"Grid_Cus-GridZexion","absent.png"},
-                    {"Grid_Cus-GridZexionData","data.png"},
-                    {"Grid_Cus-IceCream1","1.png"},
-                    {"Grid_Cus-IceCream2","2.png"},
-                    {"Grid_Cus-IceCream3","3.png"},
-                    {"Grid_Cus-JackWep1","1.png"},
-                    {"Grid_Cus-JackWep2","2.png"},
-                    {"Grid_Cus-KingsLetter1","1.png"},
-                    {"Grid_Cus-KingsLetter2","2.png"},
-                    {"Grid_Cus-MembershipCard1","1.png"},
-                    {"Grid_Cus-MembershipCard2","2.png"},
-                    {"Grid_Cus-MulanWep1","1.png"},
-                    {"Grid_Cus-MulanWep2","2.png"},
-                    {"Grid_Cus-Report1","1.png"},
-                    {"Grid_Cus-Report2","2.png"},
-                    {"Grid_Cus-Report3","3.png"},
-                    {"Grid_Cus-Report4","4.png"},
-                    {"Grid_Cus-Report5","5.png"},
-                    {"Grid_Cus-Report6","6.png"},
-                    {"Grid_Cus-Report7","7.png"},
-                    {"Grid_Cus-Report8","8.png"},
-                    {"Grid_Cus-Report9","9.png"},
-                    {"Grid_Cus-Report10","10.png"},
-                    {"Grid_Cus-Report11","11.png"},
-                    {"Grid_Cus-Report12","12.png"},
-                    {"Grid_Cus-Report13","13.png"},
-                    {"Grid_Cus-RikuWep1","1.png"},
-                    {"Grid_Cus-RikuWep2","2.png"},
-                    {"Grid_Cus-SimbaWep1","1.png"},
-                    {"Grid_Cus-SimbaWep2","2.png"},
-                    {"Grid_Cus-SparrowWep1","1.png"},
-                    {"Grid_Cus-SparrowWep2","2.png"},
-                    {"Grid_Cus-TronWep1","1.png"},
-                    {"Grid_Cus-TronWep2","2.png"},
-                };
-
-                //start building resource dict
-                foreach (string asset in Codes.gridAssetList.Keys)
-                {
-                    string cusItemPath = "CustomImages/Grid/Checks/";
-                    string cusProgPath = "CustomImages/Grid/Progression/";
-                    string cusBossPath = "CustomImages/Grid/Bosses/";
-                    bool cusItemFound = Directory.Exists(cusItemPath);
-                    bool cusProgFound = Directory.Exists(cusProgPath);
-                    bool cusBossFound = Directory.Exists(cusBossPath);
-                    string imageName = Codes.gridAssetList[asset].Item1;
-                    string imageType = Codes.gridAssetList[asset].Item2;
-
-                    //Remove entries that don't have images
-                    if (imageType == "Check" && cusItemFound)
-                    {
-                        //If custom file for asset doesn't exist then remove it
-                        if (!File.Exists(cusItemPath + imageName))
-                        {
-                            tempDict.Remove("Grid_Cus-" + asset);
-                        }
-                    }
-                    else if (imageType == "Prog" && cusProgFound)
-                    {
-                        //If custom file for asset doesn't exist then remove it
-                        if (!File.Exists(cusProgPath + imageName))
-                        {
-                            tempDict.Remove("Grid_Cus-" + asset);
-                        }
-                    }
-                    else if (imageType == "Boss" && cusBossFound)
-                    {
-                        //If custom file for asset doesn't exist then remove it
-                        if (!File.Exists(cusBossPath + imageName))
-                        {
-                            tempDict.Remove("Grid_Cus-" + asset);
-                        }
-                    }
-                    else
-                        tempDict.Remove("Grid_Cus-" + asset);
-                }
-
-                if (tempDict.Count > 0)
-                {
-                    //rebuild entries that had custom images found
-                    foreach (DictionaryEntry asset in tempDict)
-                    {
-                        //backup key & tooltip
-                        var assetKey = asset.Key;
-
-                        //clear entry
-                        //tempDict.Remove(assetKey.ToString());
-
-                        //get correct path for image
-                        string cusItemPath = "pack://application:,,,/CustomImages/Grid/Checks/";
-                        string cusProgPath = "pack://application:,,,/CustomImages/Grid/Progression/";
-                        string cusBossPath = "pack://application:,,,/CustomImages/Grid/Bosses/";
-                        string imageName = Codes.gridAssetList[assetKey.ToString()].Item1;
-                        string imageType = Codes.gridAssetList[assetKey.ToString()].Item2;
-                        string newPath = "";
-                        if (imageType == "Check")
-                            newPath = cusItemPath;
-                        else if (imageType == "Prog")
-                            newPath = cusProgPath;
-                        else if (imageType == "Boss")
-                            newPath = cusBossPath;
-
-                        var mainImg = new Image { Source = new BitmapImage(new Uri(newPath + imageName, UriKind.Absolute)) };
-
-                        if (overylayAssets.ContainsKey(assetKey.ToString()))
-                        {
-                            //rebuild as image with overlay
-                            //Grid overlayImage = new Grid();
-                            Grid overlayImage = asset.Value as Grid;
-                            overlayImage.Children.Clear();
-                            string overlayPath = "";
-                            UriKind overlayKind = UriKind.Relative;
-
-                            switch(overylayAssets[assetKey.ToString()])
-                            {
-                                case "1.png":
-                                    overlayPath = numList[0];
-                                    break;
-                                case "2.png":
-                                    overlayPath = numList[1];
-                                    break;
-                                case "3.png":
-                                    overlayPath = numList[2];
-                                    break;
-                                case "4.png":
-                                    overlayPath = numList[3];
-                                    break;
-                                case "5.png":
-                                    overlayPath = numList[4];
-                                    break;
-                                case "6.png":
-                                    overlayPath = numList[5];
-                                    break;
-                                case "7.png":
-                                    overlayPath = numList[6];
-                                    break;
-                                case "8.png":
-                                    overlayPath = numList[7];
-                                    break;
-                                case "9.png":
-                                    overlayPath = numList[8];
-                                    break;
-                                case "10.png":
-                                    overlayPath = numList[9];
-                                    break;
-                                case "11.png":
-                                    overlayPath = numList[10];
-                                    break;
-                                case "12.png":
-                                    overlayPath = numList[11];
-                                    break;
-                                case "13.png":
-                                    overlayPath = numList[12];
-                                    break;
-                                case "AllDrive7.png":
-                                    overlayPath = numList[13];
-                                    break;
-                                case "absent.png":
-                                    overlayPath = wldList[0];
-                                    break;
-                                case "data.png":
-                                    overlayPath = wldList[1];
-                                    break;
-                                case "DisneyCastle.png":
-                                    overlayPath = wldList[2];
-                                    break;
-                                default: 
-                                    break;
-                            }
-
-                            if (overlayPath.StartsWith("pack://"))
-                            {
-                                //is a custom image
-                                overlayKind = UriKind.Absolute;
-                            }
-
-                            var overImg = new Image { Source = new BitmapImage(new Uri(overlayPath, overlayKind)) };
-                            overlayImage.Children.Add(mainImg);
-                            overlayImage.Children.Add(overImg);
-                        }
-
-
-
-
-
-                    }
-
-                }
-                else if (cusNumberFound) 
-                {
-                    //rebuild entries for images with number overlays
-
-
-                }
-                else if (cusWorldFound) 
-                {
-                    //rebuild entries for images with number overlays
-
-
+                    CusGridImagesList.Add(entry.Key.ToString());
                 }
             }
         }
