@@ -357,6 +357,9 @@ namespace KhTracker
 
         private void Change_Icons()
         {
+            //entire thing changed to help with changing image styles and custom images
+            //use this after the asset list is created and after switching styles/toggling custom image loading
+
             bool useCustom = CustomGridIconsOption.IsChecked;
             string prefix1 = "Grid_Min-";
             string prefix2 = "Grid_Old-";
@@ -377,17 +380,17 @@ namespace KhTracker
                 {
                     string cusCheck = assets[i].Replace(prefix1, "Grid_Cus-");
                     if (MainWindow.CusGridImagesList.Contains(cusCheck))
+                    {
                         assets[i] = cusCheck;
+                        continue;
+                    }
+                }
 
-                }
-                //if custom toggle is off check if prefix was custom and fix it elxe replace as normal
+                //if custom toggle is off check if prefix was custom and fix it else replace as normal
+                if (assets[i].StartsWith("Grid_Cus-"))
+                    assets[i] = assets[i].Replace("Grid_Cus-", prefix2);
                 else
-                {
-                    if (assets[i].StartsWith("Grid_Cus-"))
-                        assets[i] = assets[i].Replace("Grid_Cus-", prefix2);
-                    else
-                        assets[i] = assets[i].Replace(prefix1, prefix2);
-                }
+                    assets[i] = assets[i].Replace(prefix1, prefix2);
             }
         }
 
@@ -417,7 +420,7 @@ namespace KhTracker
 
             List<string> imageKeys = new List<string>();
             //use gridAssetList dictionary in Codes.cs as resource for every valid grid square 
-            foreach (string resourceName in Codes.gridAssetList.Keys)
+            foreach (string resourceName in Codes.gridAssetList)
             {
                 // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
 
@@ -754,6 +757,229 @@ namespace KhTracker
                             
                     }
                         
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
+                    button.Tag = assets[(i * numColumns) + j].ToString();
+                    button.Style = (Style)FindResource("ColorToggleButton");
+                    // keep i and j static for the button
+                    int current_i = i;
+                    int current_j = j;
+                    button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
+                    button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
+                    Grid.SetRow(button, i);
+                    Grid.SetColumn(button, j);
+                    //if (iconChange)
+                    //{
+                    //    button.Background = buttons[i, j].Background;
+                    //    button.IsChecked = buttons[i, j].IsChecked;
+                    //}
+                    buttons[i, j] = button;
+                    grid.Children.Add(button);
+                    if (!fogOfWar)
+                        button.ToolTip = ((string)button.Tag).Split('-')[1];
+                }
+            }
+
+            // generate battleship board
+            if (battleshipLogic)
+            {
+                if (battleshipRandomCount)
+                {
+                    Random rng = new Random(seed);
+                    if (minShipCount > maxShipCount)
+                        minShipCount = maxShipCount;
+                    int numToSample = rng.Next(minShipCount, maxShipCount + 1);
+                    sampledShipSizes = new List<int>();
+
+                    for (int i = 0; i < numToSample; i++)
+                    {
+                        int randomIndex = rng.Next(shipSizes.Count);
+                        sampledShipSizes.Add(shipSizes[randomIndex]);
+                    }
+                }
+                else
+                    sampledShipSizes = shipSizes;
+                placedShips = GenerateSameBoard(numRows, numColumns);
+            }
+
+            // generate the boss hints
+            bossHintContentControls = new Dictionary<string, ContentControl>();
+            bossHintBorders = new Dictionary<string, Border>();
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    // Create a new Grid as a container for the ContentControl
+                    Grid hintContainer = new Grid
+                    {
+                        // Set the container to fill the grid cell
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch
+                    };
+
+                    // Define row definitions for the hintContainer grid
+                    int coveragePercentage = 32;
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+
+                    // Create a Border with a white background for the top right cell
+                    //Border whiteBackground = new Border
+                    //{
+                    //    Background = new SolidColorBrush(Colors.Transparent), // Make the inside of the border transparent
+                    //    BorderBrush = new SolidColorBrush(Colors.White), // Set the color of the border edges
+                    //    BorderThickness = new Thickness(3), // Set the thickness of the edges
+                    //                                        // The rest of the properties remain the same
+                    //};
+                    Border whiteBackground = new Border
+                    {
+                        // this will be the background when a boss hint is acquired
+                        //Background = new SolidColorBrush(Colors.White),
+                    };
+
+                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
+                    bossHintBorders[bossName] = whiteBackground;
+
+                    // Set the Border to occupy the top 35% and the right 35% of the hintContainer
+                    Grid.SetRow(whiteBackground, 0);
+                    Grid.SetColumn(whiteBackground, 1);
+                    hintContainer.Children.Add(whiteBackground);
+
+                    // Create the ContentControl with desired properties
+                    ContentControl contentControl = new ContentControl
+                    {
+                        HorizontalAlignment = HorizontalAlignment.Stretch,
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                    };
+
+                    // Naming the ContentControl using its grid position
+                    bossHintContentControls[bossName] = contentControl;
+
+                    // Add the ContentControl to the first row of the hintContainer
+                    Grid.SetRow(contentControl, 0); // Place it in the top 35% row
+                    Grid.SetColumn(contentControl, 1); // Place it in the right 35% column
+                    hintContainer.Children.Add(contentControl);
+
+                    // Set the hintContainer to be in the specific cell of the main grid
+                    Grid.SetRow(hintContainer, i);
+                    Grid.SetColumn(hintContainer, j);
+
+                    // Add the hintContainer to the main grid, instead of directly adding the contentControl
+                    grid.Children.Add(hintContainer);
+                }
+            }
+            // Add grid to the window or other container
+            DynamicGrid.Children.Add(grid);
+        }
+
+        public void GenerateGrid_Objectives(int rows = 3, int columns = 3, int objNeed = 7, int objTotal = 13)
+        {
+            //Set banner text and visibility
+            UpdateGridBanner(true, "Objective Mode", "L");
+
+            grid = new Grid();
+            //gridOptionsWindow.InitializeData(this, data);
+            //gridOptionsWindow.UpdateGridOptionsUI();
+
+            buttons = new ToggleButton[rows, columns];
+            originalColors = new Color[rows, columns];
+            bingoStatus = new bool[rows, columns];
+            battleshipSunkStatus = new bool[rows, columns];
+            annotationStatus = new bool[rows, columns];
+            Seedname.Header = "[OBJECTIVES]";
+
+            // get raw check names
+            // assets = Asset_Collection(seed);
+
+            //dummy list for testing
+            assets = new List<string>()
+            {
+            {"Report1"},
+            {"Report2"},
+            {"Report3"},
+            {"Report4"},
+            {"Report5"},
+            {"Report6"},
+            {"Report7"},
+            {"Report8"},
+            {"Report9"},
+            {"Report10"},
+            {"Report11"},
+            {"Report12"},
+            {"Report13"},
+            };
+
+
+            // set the content resource reference with style
+            string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
+            assets = assets.Select(item => style + item).ToList();
+
+            //if custom images we need to fix the asset names
+            if (CustomGridIconsOption.IsChecked)
+                Change_Icons();
+
+            // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
+            int numChecks = assets.Count;
+            int originalNumRows = rows;
+            int originalNumColumns = columns;
+            if (rows * columns > numChecks)
+            {
+                while (rows * columns > numChecks)
+                {
+                    int currentMax = Math.Max(rows, columns);
+                    if (currentMax == rows)
+                        rows -= 1;
+                    else
+                        columns -= 1;
+                }
+                numRows = rows;
+                numColumns = columns;
+                // update the row and column values
+                gridOptionsWindow.InitializeData(this, data);
+                gridOptionsWindow.UpdateGridOptionsUI();
+                MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
+            }
+
+            // generate the grid
+            for (int i = 0; i < numRows; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            for (int j = 0; j < numColumns; j++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    ToggleButton button = new ToggleButton();
+                    bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
+
+                    if (!fogOfWar || buttonContentRevealed)
+                        button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    else
+                    {
+                        if (FogIconOption.IsChecked)
+                        {
+                            //check for custom
+                            if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
+                            {
+                                if (File.Exists("CustomImages/Grid/QuestionMark.png"))
+                                {
+                                    button.SetResourceReference(ContentProperty, "Grid_QuestionMark-Custom");
+                                }
+                                else
+                                    button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                            }
+                            else
+                                button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
+                        }
+
+                    }
+
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");

@@ -31,8 +31,8 @@
             <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Hint Loading...">
                     <!--MenuItem Header="Load JSmartee Hints (*.hints)" 	Click="LoadHints"/>
-                    <MenuItem Header="Load Shan Hints (*.pnach)" 		Click="ParseSeed"/-->
-                    <MenuItem Header="Load KH2Randomizer Seed (*.zip)" 	Click="OpenKHSeed"/>
+                    <MenuItem Header="Load Shan Hints (*.pnach)" 		    Click="ParseSeed"/-->
+                    <MenuItem Header="Load KH2 Randomizer Seed (*.zip)" 	Click="OpenKHSeed"/>
                     <Separator/>
                     <MenuItem Header="Auto-Load Hints (openkh *.hints)" Click="AutoLoadHintsToggle" x:Name="AutoLoadHintsOption" IsCheckable="True" IsChecked="False"/>
                     <MenuItem Header="Set OpenKH Path (OpenKh.Tools.ModsManager.exe)" Click="SetOpenKHPath"/>
@@ -41,8 +41,6 @@
                 <MenuItem Header="Start Auto-Tracking" Click="InitTracker" x:Name="TrackToggle"/>
                 <MenuItem Header="Enable Auto-Connect/Reconnect" Click="AutoConnectToggle" x:Name="AutoConnectOption" IsCheckable="True" IsChecked="False" 
                           ToolTip="Automatically search and connect to the game on tracker start-up or if game closes."/>
-                <!--MenuItem Header="Start PCSX2 Tracking" 	    Click="InitPCSX2Tracker" x:Name="TrackPCSX2Toggle"/>
-                <MenuItem Header="Start PC Port Tracking" 	    Click="InitPCTracker"    x:Name="TrackPCToggle"/-->
                 <Separator/>
                 <MenuItem Header="Save Current Progress" Click="SaveProgress"/>
                 <MenuItem Header="Load Tracker Progress" Click="LoadProgress"/>
