@@ -138,11 +138,10 @@ namespace KhTracker
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button != null)
+            if (sender is Button button)
             {
-                var textBlock = button.Content as TextBlock; // Cast the Content to TextBlock
-                if (textBlock != null)
+                // Cast the Content to TextBlock
+                if (button.Content is TextBlock textBlock)
                 {
                     // sets the background of button to its current color
                     LastClickedButton = button;
