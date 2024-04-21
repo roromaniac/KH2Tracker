@@ -439,7 +439,7 @@ namespace KhTracker
             return imageKeys;
         }
 
-        private Dictionary<string, Color> GetColorSettings()
+        public static Dictionary<string, Color> GetColorSettings()
         {
 
             var unmarkedColor = Properties.Settings.Default.UnmarkedColor;

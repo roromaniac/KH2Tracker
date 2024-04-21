@@ -395,7 +395,7 @@ namespace KhTracker
                 }
             }
 
-            window.UpdateGridTracker(NewName+modifier);
+            window.UpdateSupportingTrackers(NewName+modifier);
         }
 
         public void UpdateMulti(Item item, bool add)

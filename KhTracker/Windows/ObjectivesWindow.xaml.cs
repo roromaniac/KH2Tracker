@@ -33,7 +33,7 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] annotationStatus;
-        public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
+        public Dictionary<string, Color> currentColors = GridWindow.GetColorSettings();
         public List<string> assets = new List<string>();
         public int numRows;
         public int numColumns;
@@ -350,7 +350,7 @@ namespace KhTracker
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
-                    button.Background = (SolidColorBrush)FindResource("DefaultRec");
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -399,6 +399,15 @@ namespace KhTracker
         {
             var button = (ToggleButton)sender;
             annotationStatus[i, j] = false;
+
+            if (button.IsChecked ?? false || annotationStatus[i, j])
+            {
+                SetColorForButton(button.Background, currentColors["Marked Color"]);
+            }
+            else
+            {
+                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+            }
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)

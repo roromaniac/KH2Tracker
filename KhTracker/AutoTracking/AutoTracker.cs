@@ -798,7 +798,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
-        public void UpdateGridTracker(string gridCheckName)
+        public void UpdateSupportingTrackers(string gridCheckName)
         {
 
             // deal with doubled up progression icons
@@ -905,6 +905,38 @@ namespace KhTracker
                                     RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
                                     gridWindow.buttons[row, col].IsChecked = true;
                                     gridWindow.buttons[row, col].RaiseEvent(args);
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            // TO DO: Check if the objective tracker is open.
+            // If it is... Check if any of the buttons have the collected objective check.
+            foreach (string checkName in checks)
+            {
+                string tempCheckName = checkName;
+
+                if (data.codes.bossNameConversion.ContainsKey(checkName))
+                    tempCheckName = data.codes.bossNameConversion[checkName];
+
+                string[] checkNames = { tempCheckName, "Grid" + tempCheckName };
+
+                for (int row = 0; row < objWindow.numRows; row++)
+                {
+                    for (int col = 0; col < objWindow.numColumns; col++)
+                    {
+                        // check if the original OR grid adjusted check key name is on the grid
+                        if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
+                        {
+                            // invoke the appropriate button if the check matches
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                if (!(bool)objWindow.buttons[row, col].IsChecked)
+                                {
+                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                    objWindow.buttons[row, col].IsChecked = true;
+                                    objWindow.buttons[row, col].RaiseEvent(args);
                                 }
                             });
                         }
@@ -1067,7 +1099,7 @@ namespace KhTracker
 
                         //moved to end of Add_Item function
                         //this allows grid to track by manually placing checks on the main window
-                        //UpdateGridTracker(item.Name);
+                        //UpdateSupportingTrackers(item.Name);
                     }
                 }
                 else //attempt to track to grid tracker anyway
@@ -1489,7 +1521,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("Fight1");
+                                UpdateSupportingTrackers("Fight1");
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1500,7 +1532,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("Fight2");
+                                UpdateSupportingTrackers("Fight2");
                                 return;
                             }
                             break;
@@ -1513,7 +1545,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 5);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("Transport");
+                                UpdateSupportingTrackers("Transport");
                                 return;
                             }
                             break;
@@ -2068,7 +2100,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("SimulatedTwilightTown", 8);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("DataRoxas");
+                                UpdateSupportingTrackers("DataRoxas");
                                 return;
                             }
                             break;
@@ -2083,7 +2115,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("LandofDragons", 9);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("DataXigbar");
+                                UpdateSupportingTrackers("DataXigbar");
                                 return;
                             }
                             break;
@@ -2098,7 +2130,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PortRoyal", 10);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("DataLuxord");
+                                UpdateSupportingTrackers("DataLuxord");
                                 return;
                             }
                             break;
@@ -2113,7 +2145,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("PrideLands", 7);
                                 data.eventLog.Add(eventTuple);
-                                UpdateGridTracker("DataSaix");
+                                UpdateSupportingTrackers("DataSaix");
                                 return;
                             }
                             break;
@@ -2156,7 +2188,7 @@ namespace KhTracker
             if (newProg < 99)
             {
                 var progressCheck = data.ProgressKeys[wName][newProg];
-                UpdateGridTracker(progressCheck);
+                UpdateSupportingTrackers(progressCheck);
             }
 
             //progression wasn't updated
@@ -2293,7 +2325,7 @@ namespace KhTracker
                             data.forcedFinal = true;
                             checkEveryCheck.TrackCheck(0x001D);
                             if (gridWindow.gridSettings["ForcingFinalCounts"])
-                                UpdateGridTracker("Final");
+                                UpdateSupportingTrackers("Final");
                         }
                         // if not forced Final, track Final Form check like normal
                         // else if Final was forced, check the tracked Final Form check
@@ -2306,7 +2338,7 @@ namespace KhTracker
                     else if (check.Name == "FinalReal")
                     {
                         if (gridWindow.gridSettings["ForcingFinalCounts"])
-                            UpdateGridTracker("Final");
+                            UpdateSupportingTrackers("Final");
                     }
                     else if (check.Name.StartsWith("MunnyPouch"))
                     {
@@ -2323,7 +2355,7 @@ namespace KhTracker
                 }
             }
             if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
-                UpdateGridTracker("Grid7Drives");
+                UpdateSupportingTrackers("Grid7Drives");
             TrackQuantities();
         }
 
@@ -2774,7 +2806,7 @@ namespace KhTracker
             App.logger?.Record("Beaten Boss: " + boss);
 
             //update grid tracker
-            UpdateGridTracker(boss);
+            UpdateSupportingTrackers(boss);
 
             //get points for boss kills
             if (!data.BossHomeHinting)
@@ -3508,7 +3540,7 @@ namespace KhTracker
 
             if (!maxDriveLevelFound[drives])
             {
-                UpdateGridTracker(drives);
+                UpdateSupportingTrackers(drives);
                 maxDriveLevelFound[drives] = true;
             }
 
