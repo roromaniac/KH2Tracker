@@ -83,7 +83,7 @@
     </Grid>
     <!--Drive Forms-->
     <Image x:Key="Grid_Min-Valor" Source="Images\Grid\Checks\Min\form_valor.png"    x:Shared="false" ToolTip="Valor Form"/>
-    <!--Grid x:Key="Grid_Min-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
+    <Grid x:Key="Grid_Min-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -106,9 +106,9 @@
     <Grid x:Key="Grid_Min-Valor7" x:Shared="false" ToolTip="Valor Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Min-Wisdom"	Source="Images\Grid\Checks\Min\form_wisdom.png" x:Shared="false" ToolTip="Wisdom Form"/>
-    <!--Grid x:Key="Grid_Min-Wisdom2" x:Shared="false" ToolTip="Wisdom Form Level 2">
+    <Grid x:Key="Grid_Min-Wisdom2" x:Shared="false" ToolTip="Wisdom Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -131,9 +131,9 @@
     <Grid x:Key="Grid_Min-Wisdom7" x:Shared="false" ToolTip="Wisdom Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Min-Limit"	Source="Images\Grid\Checks\Min\form_limit.png"  x:Shared="false" ToolTip="Limit Form"/>
-    <!--Grid x:Key="Grid_Min-Limit2" x:Shared="false" ToolTip="Limit Form Level 2">
+    <Grid x:Key="Grid_Min-Limit2" x:Shared="false" ToolTip="Limit Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -156,9 +156,9 @@
     <Grid x:Key="Grid_Min-Limit7" x:Shared="false" ToolTip="Limit Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Min-Master"	Source="Images\Grid\Checks\Min\form_master.png" x:Shared="false" ToolTip="Master Form"/>
-    <!--Grid x:Key="Grid_Min-Master2" x:Shared="false" ToolTip="Master Form Level 2">
+    <Grid x:Key="Grid_Min-Master2" x:Shared="false" ToolTip="Master Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -181,9 +181,9 @@
     <Grid x:Key="Grid_Min-Master7" x:Shared="false" ToolTip="Master Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Min-Final"	Source="Images\Grid\Checks\Min\form_final.png"  x:Shared="false" ToolTip="Final Form"/>
-    <!--Grid x:Key="Grid_Min-Final2" x:Shared="false" ToolTip="Final Form Level 2">
+    <Grid x:Key="Grid_Min-Final2" x:Shared="false" ToolTip="Final Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -206,7 +206,7 @@
     <Grid x:Key="Grid_Min-Final7" x:Shared="false" ToolTip="Final Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Min-Anti"	Source="Images\Grid\Checks\Min\form_anti.png"   x:Shared="false" ToolTip="Anti-Form"/>
     <!--Summons-->
     <Image x:Key="Grid_Min-Lamp"            Source="Images\Grid\Checks\Min\summon_genie.png"            x:Shared="false" ToolTip="Lamp Charm"/>
@@ -828,7 +828,7 @@
     </Grid>
     <!--Drive Forms-->
     <Image x:Key="Grid_Old-Valor" Source="Images\Grid\Checks\Old\form_valor.png"    x:Shared="false" ToolTip="Valor Form"/>
-    <!--Grid x:Key="Grid_Old-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
+    <Grid x:Key="Grid_Old-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -851,9 +851,9 @@
     <Grid x:Key="Grid_Old-Valor7" x:Shared="false" ToolTip="Valor Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Old-Wisdom"	Source="Images\Grid\Checks\Old\form_wisdom.png" x:Shared="false" ToolTip="Wisdom Form"/>
-    <!--Grid x:Key="Grid_Old-Wisdom2" x:Shared="false" ToolTip="Wisdom Form Level 2">
+    <Grid x:Key="Grid_Old-Wisdom2" x:Shared="false" ToolTip="Wisdom Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_wisdom.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -876,9 +876,9 @@
     <Grid x:Key="Grid_Old-Wisdom7" x:Shared="false" ToolTip="Wisdom Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_wisdom.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Old-Limit"	Source="Images\Grid\Checks\Old\form_limit.png"  x:Shared="false" ToolTip="Limit Form"/>
-    <!--Grid x:Key="Grid_Old-Limit2" x:Shared="false" ToolTip="Limit Form Level 2">
+    <Grid x:Key="Grid_Old-Limit2" x:Shared="false" ToolTip="Limit Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_Limit.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -901,9 +901,9 @@
     <Grid x:Key="Grid_Old-Limit7" x:Shared="false" ToolTip="Limit Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_Limit.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Old-Master"	Source="Images\Grid\Checks\Old\form_master.png" x:Shared="false" ToolTip="Master Form"/>
-    <!--Grid x:Key="Grid_Old-Master2" x:Shared="false" ToolTip="Master Form Level 2">
+    <Grid x:Key="Grid_Old-Master2" x:Shared="false" ToolTip="Master Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_Master.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -926,9 +926,9 @@
     <Grid x:Key="Grid_Old-Master7" x:Shared="false" ToolTip="Master Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_Master.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Old-Final"	Source="Images\Grid\Checks\Old\form_final.png"  x:Shared="false" ToolTip="Final Form"/>
-    <!--Grid x:Key="Grid_Old-Final2" x:Shared="false" ToolTip="Final Form Level 2">
+    <Grid x:Key="Grid_Old-Final2" x:Shared="false" ToolTip="Final Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -951,7 +951,7 @@
     <Grid x:Key="Grid_Old-Final7" x:Shared="false" ToolTip="Final Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <Image x:Key="Grid_Old-Anti"	Source="Images\Grid\Checks\Old\form_anti.png"   x:Shared="false" ToolTip="Anti-Form"/>
     <!--Summons-->
     <Image x:Key="Grid_Old-Lamp"            Source="Images\Grid\Checks\Old\summon_genie.png"            x:Shared="false" ToolTip="Lamp Charm"/>
@@ -1536,10 +1536,40 @@
     <Image x:Key="Grid_Cus-GridTornPage5" Source="pack://application:,,,/CustomImages/Grid/Checks/TornPage5.png" x:Shared="false" ToolTip="Torn Page 5"/>
     <!--Drive Forms-->
     <Image x:Key="Grid_Cus-Valor"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor.png"   x:Shared="false" ToolTip="Valor Form"/>
+    <Image x:Key="Grid_Cus-Valor2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor2.png"   x:Shared="false" ToolTip="Valor Form Level 2"/>
+    <Image x:Key="Grid_Cus-Valor3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor3.png"   x:Shared="false" ToolTip="Valor Form Level 3"/>
+    <Image x:Key="Grid_Cus-Valor4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor4.png"   x:Shared="false" ToolTip="Valor Form Level 4"/>
+    <Image x:Key="Grid_Cus-Valor5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor5.png"   x:Shared="false" ToolTip="Valor Form Level 5"/>
+    <Image x:Key="Grid_Cus-Valor6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor6.png"   x:Shared="false" ToolTip="Valor Form Level 6"/>
+    <Image x:Key="Grid_Cus-Valor7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor7.png"   x:Shared="false" ToolTip="Valor Form Level 7"/>
     <Image x:Key="Grid_Cus-Wisdom"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom.png"  x:Shared="false" ToolTip="Wisdom Form"/>
+    <Image x:Key="Grid_Cus-Wisdom2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom2.png"  x:Shared="false" ToolTip="Wisdom Form Level 2"/>
+    <Image x:Key="Grid_Cus-Wisdom3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom3.png"  x:Shared="false" ToolTip="Wisdom Form Level 3"/>
+    <Image x:Key="Grid_Cus-Wisdom4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom4.png"  x:Shared="false" ToolTip="Wisdom Form Level 4"/>
+    <Image x:Key="Grid_Cus-Wisdom5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom5.png"  x:Shared="false" ToolTip="Wisdom Form Level 5"/>
+    <Image x:Key="Grid_Cus-Wisdom6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom6.png"  x:Shared="false" ToolTip="Wisdom Form Level 6"/>
+    <Image x:Key="Grid_Cus-Wisdom7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom7.png"  x:Shared="false" ToolTip="Wisdom Form Level 7"/>
     <Image x:Key="Grid_Cus-Limit"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit.png"   x:Shared="false" ToolTip="Limit Form"/>
+    <Image x:Key="Grid_Cus-Limit2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit2.png"   x:Shared="false" ToolTip="Limit Form Level 2"/>
+    <Image x:Key="Grid_Cus-Limit3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit3.png"   x:Shared="false" ToolTip="Limit Form Level 3"/>
+    <Image x:Key="Grid_Cus-Limit4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit4.png"   x:Shared="false" ToolTip="Limit Form Level 4"/>
+    <Image x:Key="Grid_Cus-Limit5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit5.png"   x:Shared="false" ToolTip="Limit Form Level 5"/>
+    <Image x:Key="Grid_Cus-Limit6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit6.png"   x:Shared="false" ToolTip="Limit Form Level 6"/>
+    <Image x:Key="Grid_Cus-Limit7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit7.png"   x:Shared="false" ToolTip="Limit Form Level 7"/>
     <Image x:Key="Grid_Cus-Master"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master.png"  x:Shared="false" ToolTip="Master Form"/>
+    <Image x:Key="Grid_Cus-Master2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master2.png"  x:Shared="false" ToolTip="Master Form Level 2"/>
+    <Image x:Key="Grid_Cus-Master3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master3.png"  x:Shared="false" ToolTip="Master Form Level 3"/>
+    <Image x:Key="Grid_Cus-Master4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master4.png"  x:Shared="false" ToolTip="Master Form Level 4"/>
+    <Image x:Key="Grid_Cus-Master5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master5.png"  x:Shared="false" ToolTip="Master Form Level 5"/>
+    <Image x:Key="Grid_Cus-Master6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master6.png"  x:Shared="false" ToolTip="Master Form Level 6"/>
+    <Image x:Key="Grid_Cus-Master7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master7.png"  x:Shared="false" ToolTip="Master Form Level 7"/>
     <Image x:Key="Grid_Cus-Final"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final.png"   x:Shared="false" ToolTip="Final Form"/>
+    <Image x:Key="Grid_Cus-Final2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final2.png"   x:Shared="false" ToolTip="Final Form Level 2"/>
+    <Image x:Key="Grid_Cus-Final3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final3.png"   x:Shared="false" ToolTip="Final Form Level 3"/>
+    <Image x:Key="Grid_Cus-Final4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final4.png"   x:Shared="false" ToolTip="Final Form Level 4"/>
+    <Image x:Key="Grid_Cus-Final5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final5.png"   x:Shared="false" ToolTip="Final Form Level 5"/>
+    <Image x:Key="Grid_Cus-Final6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final6.png"   x:Shared="false" ToolTip="Final Form Level 6"/>
+    <Image x:Key="Grid_Cus-Final7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"   x:Shared="false" ToolTip="Final Form Level 7"/>
     <Image x:Key="Grid_Cus-Anti"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Anti.png"    x:Shared="false" ToolTip="Anti-Form"/>
     <!--Summons-->
     <Image x:Key="Grid_Cus-Lamp"	    Source="pack://application:,,,/CustomImages/Grid/Checks/Summon_Genie.png"           x:Shared="false" ToolTip="Lamp Charm"/>
@@ -1773,5 +1803,48 @@
     <Image x:Key="Grid_Cus-GridBlizzardLord"    Source="pack://application:,,,/CustomImages/Grid/Bosses/BlizzardLord.png"       x:Shared="false" ToolTip="Blizzard Lord"/>
     <Image x:Key="Grid_Cus-GridVolcanoLord"     Source="pack://application:,,,/CustomImages/Grid/Bosses/VolcanoLord.png"        x:Shared="false" ToolTip="Volcanic Lord"/>
     <!--#endregion-->
+
+    <!-- Objective Specific -->
+    <Image x:Key="Grid_Min-EndOfCoR"	Source="Images\Grid\Objectives\Min\EndOfCoR.png"        x:Shared="false" ToolTip="Last Chest of CoR"/>
+    <Image x:Key="Grid_Min-CupPP"	    Source="Images\Grid\Objectives\Min\PainandPanicCup.png" x:Shared="false" ToolTip="Pain and Panic Cup"/>
+    <Image x:Key="Grid_Min-CupC"	    Source="Images\Grid\Objectives\Min\CerberusCup.png"     x:Shared="false" ToolTip="Cerberus Cup"/>
+    <Image x:Key="Grid_Min-CupT"	    Source="Images\Grid\Objectives\Min\TitanCup.png"        x:Shared="false" ToolTip="Titan Cup"/>
+    <Image x:Key="Grid_Min-CupGoF"	    Source="Images\Grid\Objectives\Min\GoddessCup.png"      x:Shared="false" ToolTip="Goddess of Fate Cup"/>
+    <Grid x:Key="Grid_Min-ObjectivePresents1" x:Shared="false" ToolTip="Presents">
+        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-ObjectivePresents2" x:Shared="false" ToolTip="Create Decoy Presents">
+        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzAwakening" x:Shared="false" ToolTip="Awakening Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzHeart" x:Shared="false" ToolTip="Heart Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzDuality" x:Shared="false" ToolTip="Duality Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzFrontier" x:Shared="false" ToolTip="Frontier Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzDaylight" x:Shared="false" ToolTip="Daylight Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Grid_Min-PuzzSunset" x:Shared="false" ToolTip="Sunset Puzzle Reward">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+
+
+
+
 
 </ResourceDictionary>

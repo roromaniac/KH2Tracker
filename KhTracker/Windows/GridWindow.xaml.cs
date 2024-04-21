@@ -464,7 +464,6 @@ namespace KhTracker
             };
         }
 
-
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
@@ -1448,7 +1447,6 @@ namespace KhTracker
                 UpdateGridBanner(true, "SUNK ALL SHIPS!", "H");
             }
         }
-
 
         // updates colors upon close
         private void PickColor_Click(object sender, RoutedEventArgs e)

@@ -1397,27 +1397,6 @@ namespace KhTracker
                                 }
                             }
 
-                            //if (hintableItems.Contains("report"))
-                            //    ReportsToggle(true);
-                            //else
-                            //    ReportsToggle(false);
-                            //
-                            //if (hintableItems.Contains("page"))
-                            //    TornPagesToggle(true);
-                            //else
-                            //    TornPagesToggle(false);
-                            //
-                            //if (hintableItems.Contains("ability"))
-                            //    AbilitiesToggle(true);
-                            //else
-                            //    AbilitiesToggle(false);
-                            //
-                            //if (hintableItems.Count == 0)
-                            //{
-                            //    ReportsToggle(true);
-                            //    TornPagesToggle(true);
-                            //    AbilitiesToggle(true);
-                            //}
 
                             //item settings
                             PromiseCharmToggle(false);
@@ -1665,6 +1644,9 @@ namespace KhTracker
                                     case "dummy_forms":
                                         data.altFinalTracking = true;
                                         break;
+                                    case "objectives":
+                                        data.objectiveMode = true;
+                                        break;
                                 }
                             }
 
@@ -1852,6 +1834,18 @@ namespace KhTracker
                         }
 
                         data.hintsLoaded = true;
+
+                        //gen objective window grid
+                        if (objWindow.objGrid != null)
+                            objWindow.objGrid.Children.Clear();
+                        if (data.objectiveMode)
+                        {
+                            objWindow.GenerateObjGrid(hintObject);
+                        }
+                        else
+                        {
+                            objWindow.UpdateGridBanner(true, "NO OBJECTIVES TO LOAD", "/");
+                        }
 
                         reader.Close();
                     }
@@ -2825,6 +2819,8 @@ namespace KhTracker
             data.firstGridOnSeedLoad = true;
 
             data.BossHomeHinting = false;
+
+            data.objectiveMode = false;
 
             //prog boss hint stuff
             BossHintTextMiddle.Text = "";
@@ -4022,5 +4018,9 @@ namespace KhTracker
             gridWindow.Show();
         }
 
+        private void objWindow_Open(object sender, RoutedEventArgs e)
+        {
+            objWindow.Show();
+        }
     }
 }

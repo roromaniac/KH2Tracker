@@ -222,7 +222,9 @@ namespace KhTracker
 
             // start the grid tracking logic
             gridWindow = new GridWindow(data);
+            objWindow = new ObjectivesWindow(data);
             Grid grid = gridWindow.DynamicGrid;
+            Grid objGrid = objWindow.DynamicGrid;
         }
 
         private void InitOptions()
@@ -623,6 +625,9 @@ namespace KhTracker
             gridWindow.gridOptionsWindow.Close();
             gridWindow.canClose = true;
             gridWindow.Close();
+
+            objWindow.canClose = true;
+            objWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

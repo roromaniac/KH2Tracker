@@ -1,0 +1,115 @@
+﻿<Window x:Class="KhTracker.ObjectivesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KhTracker"
+        mc:Ignorable="d"
+        ResizeMode="CanResize"
+        LocationChanged="Window_LocationChanged"
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing"
+        Title="Objectives Window" Height="500" Width="500"
+        MinHeight="100" MinWidth="100" Background="#303030">
+    
+    <Window.Resources>
+        <Style x:Key="ColorToggleButton" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Gray"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="White">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <!--MenuItem Header="Options" Focusable="False">
+                <MenuItem Header="Grid Settings" Click="Grid_Options" />
+                <MenuItem Header="Color Settings" Click="PickColor_Click" />
+                <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
+            </MenuItem-->
+            <!--MenuItem Header="Image Visuals" Focusable="False">
+                <MenuItem Header="Simple Icon Style"  Click="TelevoIconsToggle"     x:Name="TelevoIconsOption"      IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Game Icons Style"   Click="SonicIconsToggle"      x:Name="SonicIconsOption"       IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Load Custom Icons"  Click="CustomGridIconsToggle" x:Name="CustomGridIconsOption"  IsCheckable="True" IsChecked="False"/>
+                <Separator/>
+                <MenuItem Header="Show `?` for Fog of War Squares" Click="FogIconToggle" x:Name="FogIconOption" IsCheckable="True" IsChecked="False"/>
+            </MenuItem-->
+            <!--MenuItem Header="Seeds" Focusable="False">
+                <MenuItem Header="Save Card Settings" Click="DownloadCardSetting" />
+                <MenuItem Header="Load Card Settings" Click="UploadCardSetting" />
+                <MenuItem Header="Set Seed Name" Click="SetSeedname" />
+                <Separator/>
+                <MenuItem Header="Auto-Save Previous Grid Settings" Click="SavePreviousGridSettingsToggle" x:Name="SavePreviousGridSettingsOption" IsCheckable="True" IsChecked="False"/>
+            </MenuItem-->
+        </Menu>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <!-- Should be 0.1* when enabled -->
+                <RowDefinition x:Name="GridTextHeader" Height="0.1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="0">
+                    <local:OutlinedTextBlock x:Name="OBannerIconL" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFEC8200" Offset="1"/>
+                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1">
+                    <local:OutlinedTextBlock x:Name="OBannerMain" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="NO OBJECTIVES TO LOAD">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF5D6677" Offset="1"/>
+                                <GradientStop Color="White" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+                <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="2">
+                    <local:OutlinedTextBlock x:Name="OBannerIconR" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
+                        <local:OutlinedTextBlock.Fill>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FFEC8200" Offset="1"/>
+                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                            </LinearGradientBrush>
+                        </local:OutlinedTextBlock.Fill>
+                    </local:OutlinedTextBlock>
+                </Viewbox>
+            </Grid>
+
+            <Grid x:Name="DynamicGrid" Grid.Row="1">
+                
+            </Grid>
+
+        </Grid>
+    </DockPanel>
+</Window>
