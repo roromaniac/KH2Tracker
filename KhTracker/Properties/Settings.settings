@@ -336,10 +336,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ObjectiveWindowHeight" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="ObjectiveWindowWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">500</Value>
     </Setting>
     <Setting Name="ObjectiveWindowX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>

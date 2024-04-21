@@ -1406,7 +1406,7 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public double ObjectiveWindowHeight {
             get {
                 return ((double)(this["ObjectiveWindowHeight"]));
@@ -1418,7 +1418,7 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("500")]
         public double ObjectiveWindowWidth {
             get {
                 return ((double)(this["ObjectiveWindowWidth"]));
