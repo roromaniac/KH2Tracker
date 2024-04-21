@@ -926,19 +926,23 @@ namespace KhTracker
                 {
                     for (int col = 0; col < objWindow.numColumns; col++)
                     {
-                        // check if the original OR grid adjusted check key name is on the grid
-                        if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
+                        // ensure the cell in the objectives grid has content
+                        if (row * objWindow.numColumns + col < objWindow.assets.Count())
                         {
-                            // invoke the appropriate button if the check matches
-                            Application.Current.Dispatcher.Invoke(() =>
+                            // check if the original OR objective adjusted check key name is on the grid
+                            if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
                             {
-                                if (!(bool)objWindow.buttons[row, col].IsChecked)
+                                // invoke the appropriate button if the check matches
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                    objWindow.buttons[row, col].IsChecked = true;
-                                    objWindow.buttons[row, col].RaiseEvent(args);
-                                }
-                            });
+                                    if (!(bool)objWindow.buttons[row, col].IsChecked)
+                                    {
+                                        RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                        objWindow.buttons[row, col].IsChecked = true;
+                                        objWindow.buttons[row, col].RaiseEvent(args);
+                                    }
+                                });
+                            }
                         }
                     }
                 }

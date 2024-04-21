@@ -24,7 +24,15 @@ namespace KhTracker
     /// <summary>
     /// Interaction logic for GridWindow.xaml
     /// </summary>
-    public partial class GridWindow : Window
+    /// 
+
+    public interface IColorableWindow
+    {
+        void HandleClosing(ColorPickerWindow sender);
+    }
+
+
+    public partial class GridWindow : Window, IColorableWindow
     {
         public bool canClose = false;
         //Dictionary<string, int> worlds = new Dictionary<string, int>();
@@ -1453,6 +1461,46 @@ namespace KhTracker
         {
             // prompt user for new colors
             colorPickerWindow.Show();
+        }
+
+        public void HandleClosing(ColorPickerWindow sender)
+        {
+            //update the new colors on the card
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    if (annotationStatus[i, j])
+                        SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
+                    if (battleshipLogic)
+                    {
+                        if (battleshipSunkStatus[i, j])
+                        {
+                            SetColorForButton(buttons[i, j].Background, currentColors["Battleship Sunk Color"]);
+                        }
+                        bool squareIsShip = placedShips[i, j] != 0;
+                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]) : currentColors["Unmarked Color"]);
+                    }
+                    else
+                    {
+                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
+                        if (bingoLogic)
+                        {
+                            BingoCheck(i, j);
+                            UpdateBingoCells();
+                        }
+                    }
+                }
+            }
+            // update the hint color
+            foreach (string key in bossHintBorders.Keys)
+            {
+                if (bossHintBorders[key].Background != null)
+                {
+                    SetColorForButton(bossHintBorders[key].Background, currentColors["Hint Color"]);
+                }
+            }
+            sender.Hide();
         }
 
         private void InitOptions()
