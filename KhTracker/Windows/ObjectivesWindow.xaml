@@ -60,7 +60,7 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <!-- Should be 0.1* when enabled -->
-                <RowDefinition x:Name="GridTextHeader" Height="0.1*"/>
+                <RowDefinition x:Name="GridTextHeader" Height="1000*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -74,8 +74,8 @@
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFEC8200" Offset="1"/>
-                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                                <GradientStop Color="#FF7F2525" Offset="1"/>
+                                <GradientStop Color="#FFFF4600" Offset="0.4"/>
                             </LinearGradientBrush>
                         </local:OutlinedTextBlock.Fill>
                     </local:OutlinedTextBlock>
@@ -96,8 +96,8 @@
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FFEC8200" Offset="1"/>
-                                <GradientStop Color="#FFFFDE00" Offset="0.4"/>
+                                <GradientStop Color="#FF7F2525" Offset="1"/>
+                                <GradientStop Color="#FFFF4600" Offset="0.4"/>
                             </LinearGradientBrush>
                         </local:OutlinedTextBlock.Fill>
                     </local:OutlinedTextBlock>

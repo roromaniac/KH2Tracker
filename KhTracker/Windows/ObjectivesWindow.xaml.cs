@@ -38,6 +38,7 @@ namespace KhTracker
         public int numRows;
         public int numColumns;
         public ColorPickerWindow colorPickerWindow;
+        private int objectivesNeed = 0;
 
         //lookup table for what size the grid should be for certain objective counts
         private Dictionary<int, Tuple<int,int>> objSizeLookup = new Dictionary<int, Tuple<int, int>>()
@@ -280,7 +281,7 @@ namespace KhTracker
             UpdateGridBanner(true, "Current Objectives", "L");
 
             //get total needed
-            data.objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
+            objectivesNeed = 10;//JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
 
             //build asset list
             assets.Clear();
@@ -373,18 +374,20 @@ namespace KhTracker
             DynamicGrid.Children.Add(objGrid);
         }
 
-        public void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "")
+        public void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "", string iconColor = "Banner_Gold")
         {
             //Update Text
             OBannerIconL.Text = textIcon;
             OBannerIconR.Text = textIcon;
             OBannerMain.Text = textMain;
+            OBannerIconL.Fill = (LinearGradientBrush)FindResource(iconColor);
+            OBannerIconR.Fill = (LinearGradientBrush)FindResource(iconColor);
 
             //Banner Visibility
             if (showBanner)
                 GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
             else
-                GridTextHeader.Height = new GridLength(0, GridUnitType.Star);
+                GridTextHeader.Height = new GridLength(100, GridUnitType.Star);
         }
 
         private List<string> Asset_Collection()
@@ -412,6 +415,8 @@ namespace KhTracker
             {
                 SetColorForButton(button.Background, currentColors["Unmarked Color"]);
             }
+
+            checkNeeded();
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
@@ -427,6 +432,38 @@ namespace KhTracker
                 originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
+            }
+        }
+
+        public void checkNeeded()
+        {
+            if(objectivesNeed != 0)
+            {
+                List<ToggleButton> completeSquares = new List<ToggleButton>();
+                foreach (var square in objGrid.Children)
+                {
+                    if (square is ToggleButton button)
+                    {
+                        if (button.IsChecked == true)
+                            completeSquares.Add(button);
+                    }
+
+                }
+                if (completeSquares.Count >= objectivesNeed)
+                {
+                    foreach (ToggleButton square in completeSquares)
+                    {
+                        SetColorForButton(square.Background, currentColors["Battleship Sunk Color"]);
+                    }
+                }
+                else
+                {
+                    foreach (ToggleButton square in completeSquares)
+                    {
+                        SetColorForButton(square.Background, currentColors["Marked Color"]);
+                    }
+                }
+
             }
         }
 

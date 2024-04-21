@@ -149,36 +149,7 @@ namespace KhTracker
 
             data.usedHotkey = true;
             InitTracker(null, null);
-            //int vercheck = CheckVersion();
-            //if (vercheck == 1)
-            //{             
-            //    InitAutoTracker(true);
-            //    return;
-            //}
-            //else if (vercheck == 2)
-            //{
-            //    InitAutoTracker(false);
-            //    return;
-            //}
-            //else
-            //{
-            //    MessageBox.Show("No game detected.\nPlease start KH2 before using Hotkey.");
-            //    data.usedHotkey = false;
-            //}
         }
-
-        //buttons merged so no need for both of these anymore
-        //public void InitPCSX2Tracker(object sender, RoutedEventArgs e)
-        //{
-        //    pcsx2tracking = true;
-        //    InitAutoTracker(true);
-        //}
-        //
-        //public void InitPCTracker(object sender, RoutedEventArgs e)
-        //{
-        //    pcsx2tracking = false;
-        //    InitAutoTracker(false);
-        //}
 
         public void InitTracker(object sender, RoutedEventArgs e)
         {
@@ -711,44 +682,47 @@ namespace KhTracker
                     importantCheck.UpdateMemory();
                 });
 
+                if (data.objectiveMode)
+                    UpdateSupportingTrackers("Dummy");
+
                 #region For Debugging
-                ////Modified to only update if any of these actually change instead of updating every tick
-                //temp[0] = world.roomNumber;
-                //temp[1] = world.worldNum;
-                //temp[2] = world.eventID1;
-                //temp[3] = world.eventID2;
-                //temp[4] = world.eventID3;
-                //temp[5] = world.eventComplete;
-                //temp[6] = world.cupRound;
-                //if (!Enumerable.SequenceEqual(temp, tempPre))
-                //{
-                //    Console.WriteLine("world num = " + world.worldNum);
-                //    Console.WriteLine("room num  = " + world.roomNumber);
-                //    Console.WriteLine("event id1 = " + world.eventID1);
-                //    Console.WriteLine("event id2 = " + world.eventID2);
-                //    Console.WriteLine("event id3 = " + world.eventID3);
-                //    Console.WriteLine("event cpl = " + world.eventComplete);
-                //    Console.WriteLine("Cup Round = " + world.cupRound);
-                //    Console.WriteLine("===========================");
-                //    tempPre[0] = temp[0];
-                //    tempPre[1] = temp[1];
-                //    tempPre[2] = temp[2];
-                //    tempPre[3] = temp[3];
-                //    tempPre[4] = temp[4];
-                //    tempPre[5] = temp[5];
-                //    tempPre[6] = temp[6];
-                //}
+                    ////Modified to only update if any of these actually change instead of updating every tick
+                    //temp[0] = world.roomNumber;
+                    //temp[1] = world.worldNum;
+                    //temp[2] = world.eventID1;
+                    //temp[3] = world.eventID2;
+                    //temp[4] = world.eventID3;
+                    //temp[5] = world.eventComplete;
+                    //temp[6] = world.cupRound;
+                    //if (!Enumerable.SequenceEqual(temp, tempPre))
+                    //{
+                    //    Console.WriteLine("world num = " + world.worldNum);
+                    //    Console.WriteLine("room num  = " + world.roomNumber);
+                    //    Console.WriteLine("event id1 = " + world.eventID1);
+                    //    Console.WriteLine("event id2 = " + world.eventID2);
+                    //    Console.WriteLine("event id3 = " + world.eventID3);
+                    //    Console.WriteLine("event cpl = " + world.eventComplete);
+                    //    Console.WriteLine("Cup Round = " + world.cupRound);
+                    //    Console.WriteLine("===========================");
+                    //    tempPre[0] = temp[0];
+                    //    tempPre[1] = temp[1];
+                    //    tempPre[2] = temp[2];
+                    //    tempPre[3] = temp[3];
+                    //    tempPre[4] = temp[4];
+                    //    tempPre[5] = temp[5];
+                    //    tempPre[6] = temp[6];
+                    //}
 
-                //string cntrl = BytesToHex(memory.ReadMemory(0x2A148E8, 1)); //sora controlable
-                //Console.WriteLine(cntrl);
+                    //string cntrl = BytesToHex(memory.ReadMemory(0x2A148E8, 1)); //sora controlable
+                    //Console.WriteLine(cntrl);
 
-                //string tester = BytesToHex(memory.ReadMemory(0x2A22BC0, 4));
-                //Console.WriteLine(tester);
+                    //string tester = BytesToHex(memory.ReadMemory(0x2A22BC0, 4));
+                    //Console.WriteLine(tester);
 
-                //int testint = BitConverter.ToInt32(memory.ReadMemory(0x2A22BC0, 4), 0);
-                //Console.WriteLine(testint);
-                //Console.WriteLine(testint+0x2A22BC0+0x10);
-                #endregion
+                    //int testint = BitConverter.ToInt32(memory.ReadMemory(0x2A22BC0, 4), 0);
+                    //Console.WriteLine(testint);
+                    //Console.WriteLine(testint+0x2A22BC0+0x10);
+                    #endregion
             }
             catch
             {
@@ -800,50 +774,73 @@ namespace KhTracker
 
         public void UpdateSupportingTrackers(string gridCheckName)
         {
-
             // deal with doubled up progression icons
-            string[] checks = { gridCheckName };
+            //string[] checks = { gridCheckName };
+            List<string> checks = new List<string>();
+
+            if (gridCheckName != "Dummy")
+                checks.Add(gridCheckName);
+
             switch (gridCheckName)
             {
                 case "Lords":
-                    checks = new string[] { "BlizzardLord", "VolcanoLord", "Lords" };
+                    checks.AddRange(("BlizzardLord,VolcanoLord,Lords").Split(',').ToList());
                     break;
                 case "SephiDemyx":
-                    checks = new string[] { "Sephiroth", "DataDemyx" };
+                    checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
                     break;
                 case "Marluxia_LingeringWill":
-                    checks = new string[] { "Marluxia", "LingeringWill" };
+                    checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
                     break;
                 case "MarluxiaData_LingeringWill":
-                    checks = new string[] { "MarluxiaData", "LingeringWill" };
+                    checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
                     break;
                 case "FF Team 1":
-                    checks = new string[] { "Leon", "Yuffie" };
+                    checks.AddRange(("Leon,Yuffie").Split(',').ToList());
                     break;
                 case "FF Team 2":
-                    checks = new string[] { "Leon (3)", "Yuffie (3)" };
+                    checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
                     break;
                 case "FF Team 3":
-                    checks = new string[] { "Yuffie (1)", "Tifa" };
+                    checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
                     break;
                 case "FF Team 4":
-                    checks = new string[] { "Cloud", "Tifa" };
+                    checks.AddRange(("Cloud,Tifa").Split(',').ToList());
                     break;
                 case "FF Team 5":
-                    checks = new string[] { "Leon (1)", "Cloud (1)" };
+                    checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
                     break;
                 case "FF Team 6":
-                    checks = new string[] { "Leon (2)", "Cloud (2)", "Yuffie (2)", "Tifa (2)" };
+                    checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
                     break;
                 default:
                     break;
             }
 
+            //drive levels check
+            if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
+                checks.Add("Grid7Drives");
+            if (data.objectiveMode)
+            {
+                if (valor.Level > 1)
+                    checks.Add("Valor" + valor.Level.ToString());
+
+                if (wisdom.Level > 1)
+                    checks.Add("Wisdom" + wisdom.Level.ToString());
+
+                if (limit.Level > 1)
+                    checks.Add("Limit" + limit.Level.ToString());
+
+                if (master.Level > 1)
+                    checks.Add("Master" + master.Level.ToString());
+
+                if (final.Level > 1)
+                    checks.Add("Final" + final.Level.ToString());
+            }
+
+            // boss enemy check
             for (int i = 0; i < checks.Count(); i++)
             {
-
-                // boss enemy check
-
                 if (data.BossRandoFound)
                 {
                     // hint the final fights bosses if Xemnas 1 is defeated
@@ -858,7 +855,6 @@ namespace KhTracker
                                 string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
                                 data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
-                                
                         }
                             
                     }
@@ -910,38 +906,32 @@ namespace KhTracker
                         }
                     }
                 }
-            }
-            // TO DO: Check if the objective tracker is open.
-            // If it is... Check if any of the buttons have the collected objective check.
-            foreach (string checkName in checks)
-            {
-                string tempCheckName = checkName;
 
-                if (data.codes.bossNameConversion.ContainsKey(checkName))
-                    tempCheckName = data.codes.bossNameConversion[checkName];
-
-                string[] checkNames = { tempCheckName, "Grid" + tempCheckName };
-
-                for (int row = 0; row < objWindow.numRows; row++)
+                //objective window tracking
+                if (data.objectiveMode)
                 {
-                    for (int col = 0; col < objWindow.numColumns; col++)
+                    for (int row = 0; row < objWindow.numRows; row++)
                     {
-                        // ensure the cell in the objectives grid has content
-                        if (row * objWindow.numColumns + col < objWindow.assets.Count())
+                        for (int col = 0; col < objWindow.numColumns; col++)
                         {
-                            // check if the original OR objective adjusted check key name is on the grid
-                            if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
+                            // ensure the cell in the objectives grid has content
+                            if (row * objWindow.numColumns + col < objWindow.assets.Count())
                             {
-                                // invoke the appropriate button if the check matches
-                                Application.Current.Dispatcher.Invoke(() =>
+                                // check if the original OR objective adjusted check key name is on the grid
+                                if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
                                 {
-                                    if (!(bool)objWindow.buttons[row, col].IsChecked)
+                                    // invoke the appropriate button if the check matches
+                                    Application.Current.Dispatcher.Invoke(() =>
                                     {
-                                        RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                        objWindow.buttons[row, col].IsChecked = true;
-                                        objWindow.buttons[row, col].RaiseEvent(args);
-                                    }
-                                });
+                                        if (!(bool)objWindow.buttons[row, col].IsChecked)
+                                        {
+                                            RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                            objWindow.buttons[row, col].IsChecked = true;
+                                            objWindow.buttons[row, col].RaiseEvent(args);
+                                            objWindow.checkNeeded();
+                                        }
+                                    });
+                                }
                             }
                         }
                     }
@@ -1085,6 +1075,7 @@ namespace KhTracker
             catch //if item is not from pool (growth) then log the item and return
             {
                 App.logger?.Record(itemName + " tracked");
+                //UpdateSupportingTrackers(itemName);
                 return;
             }
 
@@ -1100,10 +1091,6 @@ namespace KhTracker
                     {
                         world.Add_Item(item);
                         App.logger?.Record(item.Name + " tracked");
-
-                        //moved to end of Add_Item function
-                        //this allows grid to track by manually placing checks on the main window
-                        //UpdateSupportingTrackers(item.Name);
                     }
                 }
                 else //attempt to track to grid tracker anyway
@@ -2358,8 +2345,6 @@ namespace KhTracker
                     }
                 }
             }
-            if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
-                UpdateSupportingTrackers("Grid7Drives");
             TrackQuantities();
         }
 

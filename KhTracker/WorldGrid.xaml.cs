@@ -246,15 +246,6 @@ namespace KhTracker
                 if (ReportHandler(item))
                     Add_Item(item);
             }
-            //else if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            //{
-            //    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            //
-            //    if (System.IO.Path.GetExtension(files[0]).ToUpper() == ".TXT")
-            //        window.LoadHints(files[0]);
-            //    else if (System.IO.Path.GetExtension(files[0]).ToUpper() == ".PNACH")
-            //        window.ParseSeed(files[0]);
-            //}
         }
 
         public void Add_Item(Item item)
@@ -759,6 +750,11 @@ namespace KhTracker
                 Grid ItemRow = VisualTreeHelper.GetParent(item) as Grid;
                 if (ItemRow == null || ItemRow.Parent != window.ItemPool)
                     return true;
+
+                if(data.reportLocations.Count == 0)
+                {
+                    return true;
+                }
 
                 // check for correct report location then run report hint logic based on current hint mode
                 if (data.reportLocations[index] == Name.Substring(0, Name.Length - 4))
