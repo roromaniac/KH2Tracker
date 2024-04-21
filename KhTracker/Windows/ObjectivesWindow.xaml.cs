@@ -278,10 +278,12 @@ namespace KhTracker
         public void GenerateObjGrid(Dictionary<string, object> hintObject)
         {
             //reset banner visibility
-            UpdateGridBanner(true, "Current Objectives", "L");
+            UpdateGridBanner(true, "OBJECTIVES NEEDED");
 
             //get total needed
-            objectivesNeed = 10;//JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
+            objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
+            TotalValue.Text = objectivesNeed.ToString();
+            CollectedValue.Text = "0";
 
             //build asset list
             assets.Clear();
@@ -385,21 +387,21 @@ namespace KhTracker
 
             //Banner Visibility
             if (showBanner)
-                GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
-            else
-                GridTextHeader.Height = new GridLength(100, GridUnitType.Star);
-        }
-
-        private List<string> Asset_Collection()
-        {
-            List<string> imageKeys = new List<string>();
-            //use gridAssetList dictionary in Codes.cs as resource for every valid grid square 
-            foreach (string resourceName in Codes.gridAssetList)
             {
-                    imageKeys.Add(resourceName);
+                GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
+                objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
+                objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
+                CollectionGrid.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                GridTextHeader.Height = new GridLength(100, GridUnitType.Star);
+                objBannerIconL.Width = new GridLength(1, GridUnitType.Star);
+                objBannerIconR.Width = new GridLength(1, GridUnitType.Star);
             }
 
-            return imageKeys;
         }
 
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
@@ -464,6 +466,7 @@ namespace KhTracker
                     }
                 }
 
+                CollectedValue.Text = completeSquares.Count.ToString();
             }
         }
 

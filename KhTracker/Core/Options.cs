@@ -1844,7 +1844,7 @@ namespace KhTracker
                         }
                         else
                         {
-                            objWindow.UpdateGridBanner(true, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
+                            objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
                         }
 
                         reader.Close();
@@ -2820,8 +2820,9 @@ namespace KhTracker
 
             data.BossHomeHinting = false;
 
+            //objective widow stuff
             data.objectiveMode = false;
-            //data.objectivesNeed = 110;
+            objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 
             //prog boss hint stuff
             BossHintTextMiddle.Text = "";

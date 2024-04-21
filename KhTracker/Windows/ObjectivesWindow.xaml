@@ -11,7 +11,7 @@
         Closing="Window_Closing"
         Title="Objectives Window" Height="500" Width="500"
         MinHeight="100" MinWidth="100" Background="#303030">
-    
+
     <Window.Resources>
         <Style x:Key="ColorToggleButton" TargetType="ToggleButton">
             <Setter Property="Background" Value="Gray"/>
@@ -60,18 +60,18 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <!-- Should be 0.1* when enabled -->
-                <RowDefinition x:Name="GridTextHeader" Height="1000*"/>
+                <RowDefinition x:Name="GridTextHeader" Height=".1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition x:Name="objBannerIconL" Width="0.2*"/>
                     <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition x:Name="objBannerIconR" Width="2.3*"/>
                 </Grid.ColumnDefinitions>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="0">
                     <local:OutlinedTextBlock x:Name="OBannerIconL" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
-                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF7F2525" Offset="1"/>
@@ -82,7 +82,7 @@
                 </Viewbox>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1">
                     <local:OutlinedTextBlock x:Name="OBannerMain" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
-                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="NO OBJECTIVES TO LOAD">
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="OBJECTIVES NEEDED">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF5D6677" Offset="1"/>
@@ -93,7 +93,7 @@
                 </Viewbox>
                 <Viewbox HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="2">
                     <local:OutlinedTextBlock x:Name="OBannerIconR" FontFamily="{StaticResource KHIcon}" FontSize="20" FontStretch="Medium" 
-                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text="/">
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="3" Text=" ">
                         <local:OutlinedTextBlock.Fill>
                             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                 <GradientStop Color="#FF7F2525" Offset="1"/>
@@ -102,10 +102,84 @@
                         </local:OutlinedTextBlock.Fill>
                     </local:OutlinedTextBlock>
                 </Viewbox>
+                <Grid Grid.Column="2" x:Name="CollectionGrid" Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.15*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.05*"/>
+                    </Grid.RowDefinitions>
+                    <!-- Collected -->
+                    <Viewbox Grid.Row="1" Grid.Column="1" RenderTransformOrigin="0.5,0.5">
+                        <Viewbox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0" Y="-1"/>
+                            </TransformGroup>
+                        </Viewbox.RenderTransform>
+                        <local:OutlinedTextBlock x:Name="CollectedValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="00">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                    <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <!-- Separator-->
+                    <Viewbox  Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,-1,1,-1" RenderTransformOrigin="0.5,0.5">
+                        <Viewbox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </Viewbox.RenderTransform>
+                        <local:OutlinedTextBlock x:Name="CollectedBar" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" AllowDrop="False" 
+                                                 IsHitTestVisible="False" StrokeThickness="4" Text="|">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                    <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                    <!-- Total -->
+                    <Viewbox  Grid.Row="1" Grid.Column="3" RenderTransformOrigin="0.5,0.5">
+                        <Viewbox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform Y="-1"/>
+                            </TransformGroup>
+                        </Viewbox.RenderTransform>
+                        <local:OutlinedTextBlock x:Name="TotalValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="98">
+                            <local:OutlinedTextBlock.Fill>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                    <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                </LinearGradientBrush>
+                            </local:OutlinedTextBlock.Fill>
+                        </local:OutlinedTextBlock>
+                    </Viewbox>
+                </Grid>
             </Grid>
 
             <Grid x:Name="DynamicGrid" Grid.Row="1">
-                
+
             </Grid>
 
         </Grid>
