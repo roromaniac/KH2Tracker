@@ -80,6 +80,7 @@ namespace KhTracker
         private VisitNew IceCream;
         private VisitNew RikuWep;
         private VisitNew KingsLetter;
+        private VisitNew objMark;
 
         private int AuronWepLevel;
         private int MulanWepLevel;
@@ -94,6 +95,7 @@ namespace KhTracker
         private int RikuWepLevel;
         private int KingsLetterLevel;
 
+        private int objMarkLevel;
 
         private TornPage pages;
         public GridWindow gridWindow;
@@ -596,6 +598,11 @@ namespace KhTracker
             int count = pages != null ? pages.Quantity : 0;
             importantChecks.Add(pages = new TornPage(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
+
+
+            int objItemCount = objMark != null ? objMark.Level : 0;
+            importantChecks.Add(objMark = new VisitNew(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
+            objMark.Level = objItemCount;
 
             #endregion
 
@@ -1237,7 +1244,17 @@ namespace KhTracker
                 newChecks.Add(visitnew);
                 collectedChecks.Add(visitnew);
             }
-
+            
+            //track objective marks number
+            //also track getting end of cor chest
+            while (objMark.Level > objMarkLevel)
+            {
+                ++objMarkLevel;
+                if (world.worldName == "HollowBastion" && world.roomNumber == 24)
+                {
+                    UpdateSupportingTrackers("EndOfCoR");
+                }
+            }
         }
 
         //progression hints level bonus
@@ -1630,6 +1647,32 @@ namespace KhTracker
                             //    return;
                             //}
                             break;
+                        case 13:
+                            if(wID1 == 189)
+                            {
+                                UpdateSupportingTrackers("CupPP");
+                                data.eventLog.Add(eventTuple);
+                                return;
+                            }
+                            if (wID1 == 190)
+                            {
+                                UpdateSupportingTrackers("CupC");
+                                data.eventLog.Add(eventTuple);
+                                return;
+                            }
+                            if (wID1 == 191)
+                            {
+                                UpdateSupportingTrackers("CupT");
+                                data.eventLog.Add(eventTuple);
+                                return;
+                            }
+                            if (wID1 == 192)
+                            {
+                                UpdateSupportingTrackers("CupGoF");
+                                data.eventLog.Add(eventTuple);
+                                return;
+                            }
+                            break;
                         default:
                             updateProgression = false;
                             break;
@@ -1941,6 +1984,14 @@ namespace KhTracker
                 case "HalloweenTown":
                     switch (wRoom)
                     {
+                        case 0:
+                            if (wID1 == 60 && wCom == 1) // Take Back the Presents
+                            {
+                                UpdateSupportingTrackers("ObjectivePresents1");
+                                data.eventLog.Add(eventTuple);
+                                return;
+                            }
+                            break;
                         case 1:
                         case 4:
                             if ((wID3 == 1 || wID3 == 10) && curProg == 0) // Hinterlands (HT1)
@@ -2180,6 +2231,9 @@ namespace KhTracker
             {
                 var progressCheck = data.ProgressKeys[wName][newProg];
                 UpdateSupportingTrackers(progressCheck);
+
+                if(progressCheck == "Presents")
+                    UpdateSupportingTrackers("ObjectivePresents2");
             }
 
             //progression wasn't updated
