@@ -751,11 +751,6 @@ namespace KhTracker
                 if (ItemRow == null || ItemRow.Parent != window.ItemPool)
                     return true;
 
-                if(data.reportLocations.Count == 0)
-                {
-                    return true;
-                }
-
                 // check for correct report location then run report hint logic based on current hint mode
                 if (data.reportLocations[index] == Name.Substring(0, Name.Length - 4))
                 {
@@ -770,20 +765,6 @@ namespace KhTracker
                         window.AddProgressionPoints(data.ReportBonus);
                     }
 
-                    //if (data.UsingProgressionHints && data.mode != Mode.PointsHints && !data.reportLocationsUsed[index])
-                    //{
-                    //    window.AddProgressionPoints(data.ReportBonus);
-                    //}
-                    //else
-                    //{
-                    //    //check if the report was already obtained before giving points
-                    //    if (data.UsingProgressionHints && data.mode == Mode.PointsHints && !data.reportLocationsUsed[index])
-                    //        window.AddProgressionPoints(data.ReportBonus);
-                    //    // show hint text on report hover
-                    //    item.MouseEnter -= item.Report_Hover;
-                    //    item.MouseEnter += item.Report_Hover;
-                    //}
-
                     switch (data.mode)
                     {
                         case Mode.JsmarteeHints:
@@ -792,7 +773,7 @@ namespace KhTracker
                             break;
                         case Mode.ShanHints:
                         case Mode.OpenKHShanHints:
-                            //setup joke logic later
+                            Report_Shan(index, item);
                             break;
                         case Mode.PointsHints:
                             Report_Points(index);
@@ -839,10 +820,37 @@ namespace KhTracker
             }
 
             //prog shan specific
-            if (item.Name.StartsWith("Report") && data.mode == Mode.OpenKHShanHints && data.UsingProgressionHints)
-            {
-                int index = int.Parse(item.Name.Remove(0, 6)) - 1;
+           //if (item.Name.StartsWith("Report") && data.mode == Mode.OpenKHShanHints && data.UsingProgressionHints)
+           //{
+           //    int index = int.Parse(item.Name.Remove(0, 6)) - 1;
+           //
+           //    if (!data.reportLocationsUsed[index])
+           //    {
+           //        window.AddProgressionPoints(data.ReportBonus);
+           //        data.reportLocationsUsed[index] = true;
+           //    }
+           //    else
+           //    {
+           //        //check if the report was already obtained before giving points
+           //        if (!data.reportLocationsUsed[index])
+           //        {
+           //            window.AddProgressionPoints(data.ReportBonus);
+           //            data.reportLocationsUsed[index] = true;
+           //        }
+           //        // show hint text on report hover
+           //        item.MouseEnter -= item.Report_Hover;
+           //        item.MouseEnter += item.Report_Hover;
+           //    }
+           //}
 
+            return true;
+        }
+
+        private void Report_Shan(int index, Item item)
+        {
+            Data data = MainWindow.data;
+            if (data.UsingProgressionHints)
+            {
                 if (!data.reportLocationsUsed[index])
                 {
                     window.AddProgressionPoints(data.ReportBonus);
@@ -862,15 +870,9 @@ namespace KhTracker
                 }
             }
 
-            return true;
-        }
-
-        private void Report_Shan(int index)
-        {
-
-
-
-
+            // resetting fail icons
+            data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
+            data.reportAttempts[index] = 3;
         }
 
         private void Report_Jsmartee(int index)

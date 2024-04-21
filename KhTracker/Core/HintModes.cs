@@ -30,6 +30,18 @@ namespace KhTracker
         {
             data.ShouldResetHash = true;
             var worlds = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["world"].ToString());
+            var reports = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["Reports"].ToString());
+
+            List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
+            reportKeys.Sort();
+
+            foreach (int report in reportKeys)
+            {
+                var location = Codes.ConvertSeedGenName(reports[report.ToString()]["FoundIn"].ToString());
+                data.reportInformation.Add(new Tuple<string, string, int>("", "", -99));
+                data.reportLocations.Add(location);
+            }
+
 
             //Joke JsmarteeHints test
             bool debug = false;
@@ -64,49 +76,6 @@ namespace KhTracker
 
                 //turn reports back on
                 //ReportsToggle(true);
-                data.hintsLoaded = true;
-            }
-
-            //TEMP
-            SortedDictionary<int, string> TEMP = new SortedDictionary<int, string>();
-            foreach (var world in worlds)
-            {
-                foreach (var item in world.Value)
-                {
-                    string nameFix = Codes.ConvertSeedGenName(item, true);
-
-                    if (nameFix.StartsWith("Secret"))
-                    {
-                        int index = int.Parse(nameFix.Remove(0, 21)) - 1;
-                        //Console.WriteLine(index + " - " + Codes.ConvertSeedGenName(world.Key) + " _ " + item);
-                        TEMP.Add(index, Codes.ConvertSeedGenName(world.Key));
-                    }
-                }
-            }
-
-            //fix for using starting reports option
-            if (TEMP.Count < 13 && data.progressionType != "Disabled")
-            {
-                for (int i = 0; i < 13; ++i)
-                {
-                    if (!ShanReportLocationFix(TEMP, i))
-                    {
-                        TEMP.Add(i, "GoA");
-                    }
-
-                    if (TEMP.Count == 13)
-                        break;
-                }
-            }
-
-            if (TEMP.Count == 13 && data.progressionType != "Disabled")
-            {
-                foreach (var item in TEMP)
-                {
-                    Console.WriteLine(item.Value + " | " + item.Key);
-                    data.reportLocations.Add(item.Value);
-                }
-
                 data.hintsLoaded = true;
             }
 

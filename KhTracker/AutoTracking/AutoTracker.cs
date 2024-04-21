@@ -825,24 +825,27 @@ namespace KhTracker
             }
 
             //drive levels check
-            if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
-                checks.Add("Grid7Drives");
-            if (data.objectiveMode)
+            if (aTimer != null)
             {
-                if (valor.Level > 1)
-                    checks.Add("Valor" + valor.Level.ToString());
+                if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
+                    checks.Add("Grid7Drives");
+                if (data.objectiveMode)
+                {
+                    if (valor.Level > 1)
+                        checks.Add("Valor" + valor.Level.ToString());
 
-                if (wisdom.Level > 1)
-                    checks.Add("Wisdom" + wisdom.Level.ToString());
+                    if (wisdom.Level > 1)
+                        checks.Add("Wisdom" + wisdom.Level.ToString());
 
-                if (limit.Level > 1)
-                    checks.Add("Limit" + limit.Level.ToString());
+                    if (limit.Level > 1)
+                        checks.Add("Limit" + limit.Level.ToString());
 
-                if (master.Level > 1)
-                    checks.Add("Master" + master.Level.ToString());
+                    if (master.Level > 1)
+                        checks.Add("Master" + master.Level.ToString());
 
-                if (final.Level > 1)
-                    checks.Add("Final" + final.Level.ToString());
+                    if (final.Level > 1)
+                        checks.Add("Final" + final.Level.ToString());
+                }
             }
 
             // boss enemy check
