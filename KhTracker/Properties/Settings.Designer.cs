@@ -1403,5 +1403,53 @@ namespace KhTracker.Properties {
                 this["GridCustomImages"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ObjectiveWindowHeight {
+            get {
+                return ((double)(this["ObjectiveWindowHeight"]));
+            }
+            set {
+                this["ObjectiveWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ObjectiveWindowWidth {
+            get {
+                return ((double)(this["ObjectiveWindowWidth"]));
+            }
+            set {
+                this["ObjectiveWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ObjectiveWindowX {
+            get {
+                return ((double)(this["ObjectiveWindowX"]));
+            }
+            set {
+                this["ObjectiveWindowX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ObjectiveWindowY {
+            get {
+                return ((double)(this["ObjectiveWindowY"]));
+            }
+            set {
+                this["ObjectiveWindowY"] = value;
+            }
+        }
     }
 }

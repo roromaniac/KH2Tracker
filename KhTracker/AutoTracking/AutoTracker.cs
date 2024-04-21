@@ -97,6 +97,7 @@ namespace KhTracker
 
         private TornPage pages;
         public GridWindow gridWindow;
+        public ObjectivesWindow objWindow;
         private World world;
         private Stats stats;
         private Rewards rewards;

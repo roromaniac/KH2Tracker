@@ -40,7 +40,9 @@ namespace KhTracker
         public bool wasTracking = false;
         public bool firstGridOnSeedLoad = true;
         public Codes codes = new Codes();
-        
+
+        public bool objectiveMode = false;
+        public int objectivesNeed = 110;
 
         //Report stuff      
         public List<Tuple<string, string, int>> reportInformation = new List<Tuple<string, string, int>>();
