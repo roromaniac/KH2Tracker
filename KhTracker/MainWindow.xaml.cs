@@ -628,6 +628,8 @@ namespace KhTracker
 
             objWindow.canClose = true;
             objWindow.Close();
+            objWindow.colorPickerWindow.canClose = true;
+            objWindow.colorPickerWindow.Close();
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

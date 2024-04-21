@@ -25,7 +25,7 @@ namespace KhTracker
     /// <summary>
     /// Interaction logic for ObjectivesWindow.xaml
     /// </summary>
-    public partial class ObjectivesWindow : Window
+    public partial class ObjectivesWindow : Window, IColorableWindow
     {
         public bool canClose = false;
         readonly Data data;
@@ -33,10 +33,11 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] annotationStatus;
-        public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
+        public Dictionary<string, Color> currentColors = GridWindow.GetColorSettings();
         public List<string> assets = new List<string>();
         public int numRows;
         public int numColumns;
+        public ColorPickerWindow colorPickerWindow;
 
         //lookup table for what size the grid should be for certain objective counts
         private Dictionary<int, Tuple<int,int>> objSizeLookup = new Dictionary<int, Tuple<int, int>>()
@@ -228,6 +229,8 @@ namespace KhTracker
 
             data = dataIn;
 
+            colorPickerWindow = new ColorPickerWindow(this, currentColors);
+
             //GenerateObjGrid(hints);
 
             Top = Properties.Settings.Default.ObjectiveWindowY;
@@ -253,6 +256,7 @@ namespace KhTracker
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.Hide();
+            colorPickerWindow.Hide();
             if (!canClose)
             {
                 e.Cancel = true;
@@ -350,7 +354,7 @@ namespace KhTracker
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
-                    button.Background = (SolidColorBrush)FindResource("DefaultRec");
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -399,6 +403,15 @@ namespace KhTracker
         {
             var button = (ToggleButton)sender;
             annotationStatus[i, j] = false;
+
+            if (button.IsChecked ?? false || annotationStatus[i, j])
+            {
+                SetColorForButton(button.Background, currentColors["Marked Color"]);
+            }
+            else
+            {
+                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+            }
         }
 
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
@@ -425,6 +438,35 @@ namespace KhTracker
         public Color GetColorFromButton(Brush buttonBackground)
         {
             return ((SolidColorBrush)buttonBackground).Color;
+        }
+
+        // updates colors upon close
+        private void PickColor_Click(object sender, RoutedEventArgs e)
+        {
+            // prompt user for new colors
+            colorPickerWindow.Show();
+        }
+
+        public void HandleClosing(ColorPickerWindow sender)
+        {
+            //update the new colors on the card
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    // ensure the cell in the objectives grid has content
+                    if (i * numColumns + j < assets.Count())
+                    {
+                        if (annotationStatus[i, j])
+                            SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
+                        else
+                        {
+                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
+                        }
+                    }
+                }
+            }
+            sender.Hide();
         }
     }
 }

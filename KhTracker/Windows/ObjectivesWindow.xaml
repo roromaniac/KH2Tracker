@@ -38,11 +38,9 @@
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <!--MenuItem Header="Options" Focusable="False">
-                <MenuItem Header="Grid Settings" Click="Grid_Options" />
+            <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Color Settings" Click="PickColor_Click" />
-                <MenuItem Header="Regenerate Card" Click="GenerateGrid" />
-            </MenuItem-->
+            </MenuItem>
             <!--MenuItem Header="Image Visuals" Focusable="False">
                 <MenuItem Header="Simple Icon Style"  Click="TelevoIconsToggle"     x:Name="TelevoIconsOption"      IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Game Icons Style"   Click="SonicIconsToggle"      x:Name="SonicIconsOption"       IsCheckable="True" IsChecked="False"/>

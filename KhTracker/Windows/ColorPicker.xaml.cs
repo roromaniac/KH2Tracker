@@ -24,12 +24,12 @@ namespace KhTracker
         public Dictionary<string, Color> ButtonColors;
         private Button LastClickedButton;
         public bool canClose = false;
-        public GridWindow _gridWindow;
+        public IColorableWindow colorableWindow;
 
-        public ColorPickerWindow(GridWindow gridWindow, Dictionary<string, Color> currentColors)
+        public ColorPickerWindow(IColorableWindow window, Dictionary<string, Color> currentColors)
         {
-            _gridWindow = gridWindow;
-            
+            colorableWindow = window;
+
             InitializeComponent();
 
             // Initialize the button colors
@@ -78,43 +78,9 @@ namespace KhTracker
 
         void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //update the new colors on the card
-            for (int i = 0; i < _gridWindow.numRows; i++)
-            {
-                for (int j = 0; j < _gridWindow.numColumns; j++)
-                {
-                    if (_gridWindow.annotationStatus[i, j])
-                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Annotated Color"]);
-                    if (_gridWindow.battleshipLogic)
-                    {
-                        if (_gridWindow.battleshipSunkStatus[i, j])
-                        {
-                            _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, _gridWindow.currentColors["Battleship Sunk Color"]);
-                        }
-                        bool squareIsShip = _gridWindow.placedShips[i, j] != 0;
-                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? (squareIsShip ? _gridWindow.currentColors["Battleship Hit Color"] : _gridWindow.currentColors["Battleship Miss Color"]) : _gridWindow.currentColors["Unmarked Color"]);
-                    }
-                    else
-                    {
-                        _gridWindow.SetColorForButton(_gridWindow.buttons[i, j].Background, (bool)_gridWindow.buttons[i, j].IsChecked ? _gridWindow.currentColors["Marked Color"] : _gridWindow.currentColors["Unmarked Color"]);
-                        if (_gridWindow.bingoLogic)
-                        {
-                            _gridWindow.BingoCheck(i, j);
-                            _gridWindow.UpdateBingoCells();
-                        }
-                    }
-                }
-            }
-            // update the hint color
-            foreach (string key in _gridWindow.bossHintBorders.Keys)
-            {
-                if (_gridWindow.bossHintBorders[key].Background != null)
-                {
-                    _gridWindow.SetColorForButton(_gridWindow.bossHintBorders[key].Background, _gridWindow.currentColors["Hint Color"]);
-                }
-            }
-            this.Hide();
-            this.ColorControls.Visibility = Visibility.Collapsed;
+            colorableWindow.HandleClosing(this);
+            Hide();
+            ColorControls.Visibility = Visibility.Collapsed;
             if (!canClose)
             {
                 e.Cancel = true;
@@ -138,11 +104,10 @@ namespace KhTracker
 
         private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
-            var button = sender as Button;
-            if (button != null)
+            if (sender is Button button)
             {
-                var textBlock = button.Content as TextBlock; // Cast the Content to TextBlock
-                if (textBlock != null)
+                // Cast the Content to TextBlock
+                if (button.Content is TextBlock textBlock)
                 {
                     // sets the background of button to its current color
                     LastClickedButton = button;
@@ -160,7 +125,6 @@ namespace KhTracker
             }
         }
 
-
         private void SelectColor_Click(object sender, RoutedEventArgs e)
         {
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
@@ -169,6 +133,7 @@ namespace KhTracker
             SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
             SetForegroundColor(SelectedColor, LastClickedButton);
         }
+
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
