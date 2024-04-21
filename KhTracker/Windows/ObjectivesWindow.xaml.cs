@@ -275,6 +275,9 @@ namespace KhTracker
             //reset banner visibility
             UpdateGridBanner(true, "Current Objectives", "L");
 
+            //get total needed
+            data.objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
+
             //build asset list
             assets.Clear();
             List<Dictionary<string, object>> objectives = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(hintObject["objective_locations"].ToString());
@@ -340,6 +343,9 @@ namespace KhTracker
             {
                 for (int j = 0; j < numColumns; j++)
                 {
+                    if ((i + 1) * (j + 1) > assets.Count)
+                        continue;
+
                     ToggleButton button = new ToggleButton();
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
 

@@ -2821,6 +2821,7 @@ namespace KhTracker
             data.BossHomeHinting = false;
 
             data.objectiveMode = false;
+            data.objectivesNeed = 110;
 
             //prog boss hint stuff
             BossHintTextMiddle.Text = "";

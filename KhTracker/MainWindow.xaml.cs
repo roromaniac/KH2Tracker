@@ -649,6 +649,9 @@ namespace KhTracker
 
             gridWindow.Width = 500;
             gridWindow.Height = 680;
+
+            objWindow.Width = 500;
+            objWindow.Height = 500;
         }
 
         //openkh path set
