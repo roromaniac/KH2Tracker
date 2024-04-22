@@ -388,7 +388,7 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
+                GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
                 objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
                 objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
                 CollectionGrid.Visibility = Visibility.Visible;

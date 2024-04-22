@@ -60,7 +60,7 @@
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <!-- Should be 0.1* when enabled -->
-                <RowDefinition x:Name="GridTextHeader" Height=".1*"/>
+                <RowDefinition x:Name="GridTextHeader" Height=".15*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
