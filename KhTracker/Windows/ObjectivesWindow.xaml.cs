@@ -346,11 +346,13 @@ namespace KhTracker
                 objGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             }
 
+            int buttonDone = 0;
+
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
                 {
-                    if ((i + 1) * (j + 1) > assets.Count)
+                    if (buttonDone >= assets.Count)
                         continue;
 
                     ToggleButton button = new ToggleButton();
@@ -369,6 +371,8 @@ namespace KhTracker
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
                     objGrid.Children.Add(button);
+
+                    buttonDone++;
                 }
             }
 
