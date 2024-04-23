@@ -33,11 +33,6 @@
 
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="White">
-            <Menu.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <DockPanel HorizontalAlignment="Stretch"/>
-                </ItemsPanelTemplate>
-            </Menu.ItemsPanel>
             <MenuItem Header="Options" Focusable="False">
                 <MenuItem Header="Color Settings" Click="PickColor_Click" />
             </MenuItem>
@@ -46,7 +41,6 @@
                 <MenuItem Header="Game Icons Style"   Click="ObjSonicIconsToggle"      x:Name="ObjSonicIconsOption"       IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Load Custom Icons"  Click="ObjCustomIconsToggle"     x:Name="ObjCustomIconsOption"      IsCheckable="True" IsChecked="False"/>
             </MenuItem>
-            <Separator/>
             <!--MenuItem Header="Image Visuals" Focusable="False">
                 <MenuItem Header="Simple Icon Style"  Click="TelevoIconsToggle"     x:Name="TelevoIconsOption"      IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Game Icons Style"   Click="SonicIconsToggle"      x:Name="SonicIconsOption"       IsCheckable="True" IsChecked="False"/>

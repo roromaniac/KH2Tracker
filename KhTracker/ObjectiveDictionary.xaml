@@ -2,9 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:KhTracker">
 
-    <Image x:Key="Grid_QuestionMark" Source="Images\Grid\Overlays\Numbers\QuestionMark.png" x:Shared="false" ToolTip="Unknown"/>
-    <Image x:Key="Grid_QuestionMark-Custom" Source="pack://application:,,,/CustomImages/Grid/QuestionMark.png" x:Shared="false" ToolTip="Unknown"/>
-
     <!--#region Minimal-->
 
     <!-- Progression -->
@@ -276,7 +273,7 @@
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
     <Image x:Key="Obj_Old-Struggle"            Source="Images\Grid\Progression\Old\simulated_twilight_town\struggle.png"           x:Shared="false" ToolTip="Fight Setzer"/>
-    <Grid x:Key="Obj-Axel" x:Shared="false" ToolTip="Defeat Axel II" >
+    <Grid x:Key="Obj_Old-Axel" x:Shared="false" ToolTip="Defeat Axel II" >
         <Image Source="Images\Grid\Bosses\Old\org_axel.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -383,14 +380,8 @@
     <Image x:Key="Obj_Old-PrisonKeeper"        Source="Images\Grid\Bosses\Old\prisonkeeper.png"                                    x:Shared="false" ToolTip="Defeat Prison Keeper"/>
     <Image x:Key="Obj_Old-OogieBoogie"         Source="Images\Grid\Bosses\Old\oogieboogie.png"                                     x:Shared="false" ToolTip="Defeat Oogie Boogie"/>
     <Image x:Key="Obj_Old-Children"            Source="Images\Grid\Progression\Old\halloween_town\children.png"                    x:Shared="false" ToolTip="Capture Lock Shock and Barrel"/>
-    <Grid x:Key="Obj_Old-ObjectivePresents1" x:Shared="false" ToolTip="Find the stolen presents">
-        <Image Source="Images\Grid\Progression\Old\halloween_town\presents.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Old-ObjectivePresents2" x:Shared="false" ToolTip="Create decoy presents">
-        <Image Source="Images\Grid\Progression\Old\halloween_town\presents.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
-    </Grid>
+    <Image x:Key="Obj_Old-ObjectivePresents1"  Source="Images\Grid\Objectives\Old\Presents.png"                                        x:Shared="false" ToolTip="Find the stolen presents"/>
+    <Image x:Key="Obj_Old-ObjectivePresents2"  Source="Images\Grid\Objectives\Old\DecoyPresents.png"                                   x:Shared="false" ToolTip="Create decoy presents"/>
     <Image x:Key="Obj_Old-Experiment"          Source="Images\Grid\Bosses\Old\experiment.png"                                      x:Shared="false" ToolTip="Defeat the Experiment"/>
     <Grid x:Key="Obj_Old-GridVexen" x:Shared="false" ToolTip="Defeat AS Vexen" >
         <Image Source="Images\Grid\Bosses\Old\org_vexen.png"/>
@@ -663,30 +654,13 @@
     <Image x:Key="Obj_Cus-Final7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"   x:Shared="false" ToolTip="Reach Final Form Level 7"/>
 
     <!--Puzzles-->
-    <Grid x:Key="Obj_Cus-PuzzAwakening" x:Shared="false" ToolTip="Complete the Awakening Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Cus-PuzzHeart" x:Shared="false" ToolTip="Complete the Heart Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Cus-PuzzDuality" x:Shared="false" ToolTip="Complete the Duality Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Cus-PuzzFrontier" x:Shared="false" ToolTip="Complete the Frontier Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Cus-PuzzDaylight" x:Shared="false" ToolTip="Complete the Daylight Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
-    </Grid>
-    <Grid x:Key="Obj_Cus-PuzzSunset" x:Shared="false" ToolTip="Complete the Sunset Puzzle">
-        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
-    </Grid>
+    <Image x:Key="Obj_Cus-PuzzAwakening"    Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Awakening.png"   x:Shared="false" ToolTip="Complete the Awakening Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzHeart"        Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Heart.png"       x:Shared="false" ToolTip="Complete the Heart Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzDuality"      Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Duality.png"     x:Shared="false" ToolTip="Complete the Duality Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzFrontier"     Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Frontier.png"    x:Shared="false" ToolTip="Complete the Frontier Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzDaylight"     Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Daylight.png"    x:Shared="false" ToolTip="Complete the Daylight Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzSunset"       Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Sunset.png"      x:Shared="false" ToolTip="Complete the Sunset Puzzle"/>
+
 
     <!--#endregion-->
 

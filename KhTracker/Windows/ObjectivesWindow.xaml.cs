@@ -273,12 +273,16 @@ namespace KhTracker
             // enable sonic icons
             ObjSonicIconsOption.IsChecked = Properties.Settings.Default.ObjectiveSonic;
             ObjSonicIconsToggle(ObjSonicIconsOption.IsChecked);
+
+            //enable custom icons
+            ObjCustomIconsOption.IsChecked = Properties.Settings.Default.ObjectiveCustom;
+            ObjCustomIconsToggle(ObjCustomIconsOption.IsChecked);
         }
 
         public void GenerateObjGrid(Dictionary<string, object> hintObject)
         {
             //reset banner visibility
-            UpdateGridBanner(true, "OBJECTIVES NEEDED");
+            UpdateGridBanner(true, "OBJECTIVES COMPLETED");
 
             //get total needed
             objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
@@ -306,7 +310,7 @@ namespace KhTracker
                 }
             }
             //fix icon prefix for assets
-            getAsetPrefix(false);
+            getAsetPrefix();
 
             //get grid size
             int objectiveCount = assets.Count;
@@ -349,7 +353,8 @@ namespace KhTracker
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
-                    button.Tag = assets[(i * numColumns) + j].ToString();
+                    string Tag = assets[(i * numColumns) + j].ToString();
+                    button.Tag = Tag.Remove(0,8);
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
                     int current_i = i;
@@ -499,11 +504,12 @@ namespace KhTracker
                     }
                 }
             }
+            checkNeeded();
             sender.Hide();
         }
 
         //Image toggle functions
-        private void getAsetPrefix(bool update)
+        private void getAsetPrefix()
         {
             string style = ObjTelevoIconsOption.IsChecked ? "Obj_Min-" : "Obj_Old-";
 
@@ -519,31 +525,31 @@ namespace KhTracker
             }
         }
 
-        private void Change_Icons()
+        private void updateAssetPrefix(bool usedCustomToggle = false)
         {
-            //entire thing changed to help with changing image styles and custom images
-            //use this after the asset list is created and after switching styles/toggling custom image loading
-
             bool useCustom = ObjCustomIconsOption.IsChecked;
-            string prefix1 = "Grid_Old-";
-            string prefix2 = "Grid_Min-";
+
+            string prefix1 = "Obj_Old-";
+            string prefix2 = "Obj_Min-";
             if (ObjSonicIconsOption.IsChecked)
             {
-                prefix1 = "Grid_Min-";
-                prefix2 = "Grid_Old-";
+                prefix1 = "Obj_Min-";
+                prefix2 = "Obj_Old-";
             }
 
             for (int i = 0; i < assets.Count; i++)
             {
                 //if already a custom prefix then skip
-                if (useCustom && assets[i].StartsWith("Grid_Cus-"))
+                if (useCustom && assets[i].StartsWith("Obj_Cus-"))
                     continue;
 
                 //if custom toggle on then check for and replace normal prefix with custom one
                 if (useCustom)
                 {
-                    string cusCheck = assets[i].Replace(prefix1, "Grid_Cus-");
-                    if (MainWindow.CusGridImagesList.Contains(cusCheck))
+                    string cusCheck = assets[i].Replace(prefix1, "Obj_Cus-");
+                    if (usedCustomToggle)
+                            cusCheck = assets[i].Replace(prefix2, "Obj_Cus-");
+                    if (MainWindow.CusObjImagesList.Contains(cusCheck))
                     {
                         assets[i] = cusCheck;
                         continue;
@@ -551,10 +557,38 @@ namespace KhTracker
                 }
 
                 //if custom toggle is off check if prefix was custom and fix it else replace as normal
-                if (assets[i].StartsWith("Grid_Cus-"))
-                    assets[i] = assets[i].Replace("Grid_Cus-", prefix2);
+                if (assets[i].StartsWith("Obj_Cus-"))
+                    assets[i] = assets[i].Replace("Obj_Cus-", prefix2);
                 else
                     assets[i] = assets[i].Replace(prefix1, prefix2);
+            }
+            Change_Icons();
+        }
+
+        private void Change_Icons()
+        {
+            if (objGrid == null)
+                return;
+
+            string prefix = "Obj_Min-";
+            if (ObjSonicIconsOption.IsChecked)
+                prefix = "Obj_Old-";
+
+            foreach (var child in objGrid.Children)
+            {
+                //check if it's a toggle button
+                if (child is ToggleButton square)
+                {
+                    string squareTag = square.Tag.ToString();
+                    //check 
+                    if (ObjCustomIconsOption.IsChecked && assets.Contains("Obj_Cus-" + squareTag))
+                    {
+                        square.SetResourceReference(ContentProperty, "Obj_Cus-" + squareTag);
+                        continue;
+                    }
+
+                    square.SetResourceReference(ContentProperty, prefix + squareTag);
+                }
             }
         }
 
@@ -567,61 +601,8 @@ namespace KhTracker
             Properties.Settings.Default.ObjectiveTelevo = toggle;
             ObjTelevoIconsOption.IsChecked = toggle;
             ObjSonicIconsOption.IsChecked = !toggle;
-            bool checkCustom = ObjCustomIconsOption.IsChecked;
-            if (objGrid != null)
-            {
-                //don't regen card, just reload resource reference
-                foreach (var child in objGrid.Children)
-                {
-                    //check if it's a toggle button
-                    if (child is ToggleButton square)
-                    {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-                        bool updateTag = false;
 
-                        //if tagname is what we expect, update it
-                        if (squareTag.StartsWith("Grid_Old-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
-                            square.Tag = squareTag;
-                            updateTag = true;
-                        }
-                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Min-");
-                            square.Tag = squareTag;
-                            updateTag = true;
-                        }
-
-                        //just continue to next child if fog of war square or shouldn't update tag
-                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updateTag)
-                        {
-                            continue;
-                        }
-
-                        //update image if tag was updated and image is visible
-                        if (checkCustom)
-                        {
-                            string cusCheck = squareTag.Replace("Grid_Min-", "Grid_Cus-");
-                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
-                            {
-                                square.SetResourceReference(ContentProperty, cusCheck);
-                            }
-                            else
-                                square.SetResourceReference(ContentProperty, squareTag);
-
-                        }
-                        else
-                            square.SetResourceReference(ContentProperty, squareTag);
-                    }
-                }
-
-                //finally update all names in "assets" from grid window
-                Change_Icons();
-            }
+            updateAssetPrefix();
         }
 
         private void ObjSonicIconsToggle(object sender, RoutedEventArgs e)
@@ -633,76 +614,20 @@ namespace KhTracker
             Properties.Settings.Default.ObjectiveSonic = toggle;
             ObjSonicIconsOption.IsChecked = toggle;
             ObjTelevoIconsOption.IsChecked = !toggle;
-            bool checkCustom = ObjCustomIconsOption.IsChecked;
-            if (objGrid != null)
-            {
-                //don't regen card, just reload resource reference
-                foreach (var child in objGrid.Children)
-                {
-                    //check if it's a toggle button
-                    if (child is ToggleButton square)
-                    {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-                        bool updatetag = squareTag.StartsWith("Grid_Min-");
 
-                        //if tagname is what we expect, update it
-                        if (updatetag)
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                            square.Tag = squareTag;
-                        }
-                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Old-");
-                            square.Tag = squareTag;
-                        }
-
-                        //just continue to next child if fog of war square or shouldn't update tag
-                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
-                        {
-                            continue;
-                        }
-
-                        //update image if tag was updated and image is visible
-                        if (checkCustom)
-                        {
-                            string cusCheck = squareTag.Replace("Grid_Old-", "Grid_Cus-");
-                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
-                            {
-                                square.SetResourceReference(ContentProperty, cusCheck);
-                            }
-                            else
-                                square.SetResourceReference(ContentProperty, squareTag);
-
-                        }
-                        else
-                            square.SetResourceReference(ContentProperty, squareTag);
-                    }
-                }
-
-                //finally update all names in "assets" from grid window
-                Change_Icons();
-            }
+            updateAssetPrefix();
         }
 
         private void ObjCustomIconsToggle(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.ObjectiveCustom = ObjCustomIconsOption.IsChecked;
+            ObjCustomIconsToggle(ObjSonicIconsOption.IsChecked);
+        }
 
-            //did this lazily, lol go back and optimize later
-            if (ObjTelevoIconsOption.IsChecked)
-            {
-                ObjSonicIconsToggle(true);
-                ObjTelevoIconsToggle(true);
-            }
-            else
-            {
-                ObjTelevoIconsToggle(true);
-                ObjSonicIconsToggle(true);
-            }
+        private void ObjCustomIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.ObjectiveCustom = toggle;
+
+            updateAssetPrefix(true);
         }
     }
 }
