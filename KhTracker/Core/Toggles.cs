@@ -1801,5 +1801,6 @@ namespace KhTracker
 
             FogIconToggle(FogIconOption.IsChecked);
         }
+
     }
 }

@@ -1451,5 +1451,41 @@ namespace KhTracker.Properties {
                 this["ObjectiveWindowY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ObjectiveTelevo {
+            get {
+                return ((bool)(this["ObjectiveTelevo"]));
+            }
+            set {
+                this["ObjectiveTelevo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ObjectiveSonic {
+            get {
+                return ((bool)(this["ObjectiveSonic"]));
+            }
+            set {
+                this["ObjectiveSonic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ObjectiveCustom {
+            get {
+                return ((bool)(this["ObjectiveCustom"]));
+            }
+            set {
+                this["ObjectiveCustom"] = value;
+            }
+        }
     }
 }

@@ -1520,6 +1520,10 @@ namespace KhTracker
             // enable sonic icons
             SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
             SonicIconsToggle(SonicIconsOption.IsChecked);
+
+            // enable custom images
+            CustomGridIconsOption.IsChecked = Properties.Settings.Default.GridCustomImages;
+            CustomGridIconsToggle(null, null);
         }
     
         private void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "")

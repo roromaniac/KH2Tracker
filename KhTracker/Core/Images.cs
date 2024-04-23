@@ -25,6 +25,7 @@ namespace KhTracker
         private Dictionary<Item, Tuple<string, Item, ContentControl, string>> CusItemCheck;
         private Dictionary<Item, Tuple<string, string>> CusItemCheckG;
         public static List<string> CusGridImagesList = new List<string>();
+        public static List<string> CusObjImagesList = new List<string>();
 
         //handle adding all custom images and such
         public void InitImages()
@@ -268,6 +269,7 @@ namespace KhTracker
 
             //get list of custom images that exist
             GridCustomImageCheck();
+            ObjCustomImageCheck();
         }
 
         private void MainBG_DefToggle(object sender, RoutedEventArgs e)
@@ -791,6 +793,32 @@ namespace KhTracker
 
                     //add key to list of avaiable images
                     CusGridImagesList.Add(entry.Key.ToString());
+                }
+            }
+        }
+
+        public void ObjCustomImageCheck()
+        {
+            if (Directory.Exists("CustomImages/Grid/"))
+            {
+                //build temp dict with only Custom entires from grid dict
+                ResourceDictionary tempDict = new ResourceDictionary
+                {
+                    Source = new Uri("pack://application:,,,/ObjectiveDictionary.xaml")
+                };
+                foreach (DictionaryEntry entry in tempDict)
+                {
+                    var cusImage = entry.Value as Image;
+
+                    //remove non custom entries or entries with custom images that doesn't exist
+                    if (!entry.Key.ToString().StartsWith("Obj_Cus-") || cusImage.Source == null)
+                    {
+                        tempDict.Remove(entry.Key);
+                        continue;
+                    }
+
+                    //add key to list of avaiable images
+                    CusObjImagesList.Add(entry.Key.ToString());
                 }
             }
         }

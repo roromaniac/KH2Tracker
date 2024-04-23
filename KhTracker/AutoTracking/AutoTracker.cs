@@ -779,51 +779,15 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
-        public void UpdateSupportingTrackers(string gridCheckName)
+        public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false)
         {
+
             // deal with doubled up progression icons
-            //string[] checks = { gridCheckName };
             List<string> checks = new List<string>();
 
             if (gridCheckName != "Dummy")
                 checks.Add(gridCheckName);
-
-            switch (gridCheckName)
-            {
-                case "Lords":
-                    checks.AddRange(("BlizzardLord,VolcanoLord,Lords").Split(',').ToList());
-                    break;
-                case "SephiDemyx":
-                    checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
-                    break;
-                case "Marluxia_LingeringWill":
-                    checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
-                    break;
-                case "MarluxiaData_LingeringWill":
-                    checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
-                    break;
-                case "FF Team 1":
-                    checks.AddRange(("Leon,Yuffie").Split(',').ToList());
-                    break;
-                case "FF Team 2":
-                    checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
-                    break;
-                case "FF Team 3":
-                    checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 4":
-                    checks.AddRange(("Cloud,Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 5":
-                    checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
-                    break;
-                case "FF Team 6":
-                    checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
-                    break;
-                default:
-                    break;
-            }
-
+            
             //drive levels check
             if (aTimer != null)
             {
@@ -848,43 +812,85 @@ namespace KhTracker
                 }
             }
 
-            // boss enemy check
-            for (int i = 0; i < checks.Count(); i++)
+            // "GridTrackerOnly" is so that the GetBoss funtion doesn't pass the boss over to the Objective Tracker
+            // the objective tracker only cares about progression and items, never actual bosses or boss rando
+            if (GridTrackerOnly)
             {
-                if (data.BossRandoFound)
+                switch (gridCheckName)
                 {
-                    // hint the final fights bosses if Xemnas 1 is defeated
-                    if (checks[i] == "Xemnas")
+                    case "Lords":
+                        checks.AddRange(("BlizzardLord,VolcanoLord,Lords").Split(',').ToList());
+                        break;
+                    case "SephiDemyx":
+                        checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
+                        break;
+                    case "Marluxia_LingeringWill":
+                        checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
+                        break;
+                    case "MarluxiaData_LingeringWill":
+                        checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
+                        break;
+                    case "FF Team 1":
+                        checks.AddRange(("Leon,Yuffie").Split(',').ToList());
+                        break;
+                    case "FF Team 2":
+                        checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
+                        break;
+                    case "FF Team 3":
+                        checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 4":
+                        checks.AddRange(("Cloud,Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 5":
+                        checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
+                        break;
+                    case "FF Team 6":
+                        checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
+                        break;
+                    default:
+                        break;
+                }
+
+                // boss enemy check
+                for (int i = 0; i < checks.Count(); i++)
+                {
+                    if (data.BossRandoFound)
                     {
-                        string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
-                        foreach (string boss in finalFights)
+                        // hint the final fights bosses if Xemnas 1 is defeated
+                        if (checks[i] == "Xemnas")
                         {
-                            if (data.BossList.ContainsKey(boss) && data.codes.bossNameConversion.ContainsKey(data.BossList[boss]))
+                            string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
+                            foreach (string boss in finalFights)
                             {
-                                string origBoss = data.codes.bossNameConversion[boss];
-                                string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
-                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
+                                if (data.BossList.ContainsKey(boss) && data.codes.bossNameConversion.ContainsKey(data.BossList[boss]))
+                                {
+                                    string origBoss = data.codes.bossNameConversion[boss];
+                                    string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
+                                    data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
+                                }
                             }
+
                         }
-                            
-                    }
 
-                    if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
-                        checks[i] = Codes.mismatchedBossNames[checks[i]];
+                        if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
+                            checks[i] = Codes.mismatchedBossNames[checks[i]];
 
-                    if (data.codes.bossNameConversion.ContainsKey(checks[i]))
-                    {
-                        if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
-                            checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                    }
-                    else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
-                    {
-                        var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
-                        if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
-                            checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
+                        if (data.codes.bossNameConversion.ContainsKey(checks[i]))
+                        {
+                            if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
+                                checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                        }
+                        else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
+                        {
+                            var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
+                            if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
+                                checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
+                        }
                     }
                 }
             }
+
 
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
@@ -918,7 +924,7 @@ namespace KhTracker
                 }
 
                 //objective window tracking
-                if (data.objectiveMode)
+                if (data.objectiveMode && !GridTrackerOnly)
                 {
                     for (int row = 0; row < objWindow.numRows; row++)
                     {
@@ -1532,7 +1538,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
-                                UpdateSupportingTrackers("Fight1");
+                                UpdateSupportingTrackers("Fight1", true);
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1543,7 +1549,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
-                                UpdateSupportingTrackers("Fight2");
+                                UpdateSupportingTrackers("Fight2", true);
                                 return;
                             }
                             break;
@@ -1651,25 +1657,25 @@ namespace KhTracker
                             //}
                             break;
                         case 13:
-                            if(wID1 == 189)
+                            if (wID1 == 180)
                             {
                                 UpdateSupportingTrackers("CupPP");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
-                            if (wID1 == 190)
+                            if (wID1 == 181)
                             {
                                 UpdateSupportingTrackers("CupC");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
-                            if (wID1 == 191)
+                            if (wID1 == 182)
                             {
                                 UpdateSupportingTrackers("CupT");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
-                            if (wID1 == 192)
+                            if (wID1 == 183)
                             {
                                 UpdateSupportingTrackers("CupGoF");
                                 data.eventLog.Add(eventTuple);
@@ -1845,11 +1851,11 @@ namespace KhTracker
                                 newProg = 1;
                             break;
                         case 9:
-                            if (wID1 == 65) // Ursula's Revenge
+                            if (wID1 == 65 && wCom == 1) // Ursula's Revenge
                                 newProg = 2;
                             break;
                         case 4:
-                            if (wID1 == 55) // A New Day is Dawning
+                            if (wID1 == 55 && wCom == 1) // A New Day is Dawning
                                 newProg = 3;
                             break;
                         default:
@@ -2852,7 +2858,7 @@ namespace KhTracker
             App.logger?.Record("Beaten Boss: " + boss);
 
             //update grid tracker
-            UpdateSupportingTrackers(boss);
+            UpdateSupportingTrackers(boss, true);
 
             //get points for boss kills
             if (!data.BossHomeHinting)
