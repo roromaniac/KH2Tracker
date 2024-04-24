@@ -353,8 +353,8 @@ namespace KhTracker
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
-                    string Tag = assets[(i * numColumns) + j].ToString();
-                    button.Tag = Tag.Remove(0,8);
+                    //string Tag = assets[(i * numColumns) + j].ToString();
+                    button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
                     int current_i = i;
@@ -579,7 +579,7 @@ namespace KhTracker
                 //check if it's a toggle button
                 if (child is ToggleButton square)
                 {
-                    string squareTag = square.Tag.ToString();
+                    string squareTag = square.Tag.ToString().Remove(0, 8);
                     //check 
                     if (ObjCustomIconsOption.IsChecked && assets.Contains("Obj_Cus-" + squareTag))
                     {
