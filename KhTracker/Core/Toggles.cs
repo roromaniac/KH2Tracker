@@ -1596,14 +1596,13 @@ namespace KhTracker
             //revert or add the fog squares
             if (grid != null)
             {
-                // add Question Mark Image
-                if (toggle)
+                foreach (var child in grid.Children)
                 {
-                    foreach (var child in grid.Children)
+                    if (child is ToggleButton square)
                     {
-                        if (child is ToggleButton square)
+                        if (toggle)
                         {
-                            if(square.Content == null)
+                            if (square.Content == null || (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")))
                             {
                                 //check for custom
                                 if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
@@ -1618,35 +1617,14 @@ namespace KhTracker
                                 else
                                     square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
                             }
-                            else
-                            {
-                                if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
-                                {
-                                    //check for custom
-                                    if (CustomGridIconsOption.IsChecked && Directory.Exists("CustomImages/Grid/"))
-                                    {
-                                        if (File.Exists("CustomImages/Grid/QuestionMark.png"))
-                                        {
-                                            square.SetResourceReference(ContentProperty, "Grid_QuestionMark-Custom");
-                                        }
-                                    }
-                                    else
-                                        square.SetResourceReference(ContentProperty, "Grid_QuestionMark");
-                                }
-                            }
                         }
-                    }
-                }
-                else // remove image
-                {
-                    foreach (var child in grid.Children)
-                    {
-                        if (child is ToggleButton square)
+                        // remove image
+                        else
                         {
                             if (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png"))
                             {
                                 square.Content = null;
-                            }                   
+                            }
                         }
                     }
                 }
@@ -1662,61 +1640,8 @@ namespace KhTracker
             Properties.Settings.Default.TelevoIcons = toggle;
             TelevoIconsOption.IsChecked = toggle;
             SonicIconsOption.IsChecked = !toggle;
-            bool checkCustom = CustomGridIconsOption.IsChecked;
-            if (grid != null)
-            {
-                //don't regen card, just reload resource reference
-                foreach (var child in grid.Children)
-                {
-                    //check if it's a toggle button
-                    if (child is ToggleButton square)
-                    {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-                        bool updateTag = false;
 
-                        //if tagname is what we expect, update it
-                        if (squareTag.StartsWith("Grid_Old-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Old-", "Grid_Min-");
-                            square.Tag = squareTag;
-                            updateTag = true;
-                        }
-                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Min-");
-                            square.Tag = squareTag;
-                            updateTag = true;
-                        }
-
-                        //just continue to next child if fog of war square or shouldn't update tag
-                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updateTag)
-                        {
-                            continue;
-                        }
-
-                        //update image if tag was updated and image is visible
-                        if(checkCustom)
-                        {
-                            string cusCheck = squareTag.Replace("Grid_Min-", "Grid_Cus-");
-                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
-                            {
-                                square.SetResourceReference(ContentProperty, cusCheck);
-                            }
-                            else
-                                square.SetResourceReference(ContentProperty, squareTag);
-
-                        }
-                        else
-                            square.SetResourceReference(ContentProperty, squareTag);
-                    }
-                }
-
-                //finally update all names in "assets" from grid window
-                Change_Icons();
-            }
+            updateAssetPrefix();
         }
 
         private void SonicIconsToggle(object sender, RoutedEventArgs e)
@@ -1728,79 +1653,23 @@ namespace KhTracker
             Properties.Settings.Default.SonicIcons = toggle;
             SonicIconsOption.IsChecked = toggle;
             TelevoIconsOption.IsChecked = !toggle;
-            bool checkCustom = CustomGridIconsOption.IsChecked;
-            if (grid != null)
-            {
-                //don't regen card, just reload resource reference
-                foreach (var child in grid.Children)
-                {
-                    //check if it's a toggle button
-                    if (child is ToggleButton square)
-                    {
-                        //get the tagname
-                        string squareTag = square.Tag.ToString();
-                        bool updatetag = squareTag.StartsWith("Grid_Min-");
 
-                        //if tagname is what we expect, update it
-                        if (updatetag)
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Min-", "Grid_Old-");
-                            square.Tag = squareTag;
-                        }
-                        if (!checkCustom && squareTag.StartsWith("Grid_Cus-"))
-                        {
-                            //update tag for child
-                            squareTag = squareTag.Replace("Grid_Cus-", "Grid_Old-");
-                            square.Tag = squareTag;
-                        }
-
-                        //just continue to next child if fog of war square or shouldn't update tag
-                        if ((square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")) || square.Content == null || !updatetag)
-                        {
-                            continue;
-                        }
-
-                        //update image if tag was updated and image is visible
-                        if (checkCustom)
-                        {
-                            string cusCheck = squareTag.Replace("Grid_Old-", "Grid_Cus-");
-                            if (MainWindow.CusGridImagesList.Contains(cusCheck))
-                            {
-                                square.SetResourceReference(ContentProperty, cusCheck);
-                            }
-                            else
-                                square.SetResourceReference(ContentProperty, squareTag);
-
-                        }
-                        else
-                            square.SetResourceReference(ContentProperty, squareTag);
-                    }
-                }
-
-                //finally update all names in "assets" from grid window
-                Change_Icons();
-            }
+            updateAssetPrefix();
         }
 
         private void CustomGridIconsToggle(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.GridCustomImages = CustomGridIconsOption.IsChecked;
-
-            //did this lazily, lol go back and optimize later
-            if (TelevoIconsOption.IsChecked)
-            {
-                SonicIconsToggle(true);
-                TelevoIconsToggle(true);
-            }
-            else
-            {
-                TelevoIconsToggle(true);
-                SonicIconsToggle(true);
-            }
-
-            FogIconToggle(FogIconOption.IsChecked);
+            CustomGridIconsToggle(CustomGridIconsOption.IsChecked);
         }
 
+        private void CustomGridIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.GridCustomImages = CustomGridIconsOption.IsChecked;
+
+            updateAssetPrefix(true);
+
+            if (FogIconOption.IsChecked)
+                FogIconToggle(true);
+        }
     }
 }

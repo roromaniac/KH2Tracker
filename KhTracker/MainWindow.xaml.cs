@@ -37,6 +37,12 @@ namespace KhTracker
             InitData();
             InitImages();
 
+            // start the grid tracking logic
+            gridWindow = new GridWindow(data);
+            objWindow = new ObjectivesWindow(data);
+            Grid grid = gridWindow.DynamicGrid;
+            Grid objGrid = objWindow.DynamicGrid;
+
             collectedChecks = new List<ImportantCheck>();
             newChecks = new List<ImportantCheck>();
             previousChecks = new List<ImportantCheck>();
@@ -220,11 +226,6 @@ namespace KhTracker
                 }
             }
 
-            // start the grid tracking logic
-            gridWindow = new GridWindow(data);
-            objWindow = new ObjectivesWindow(data);
-            Grid grid = gridWindow.DynamicGrid;
-            Grid objGrid = objWindow.DynamicGrid;
         }
 
         private void InitOptions()
