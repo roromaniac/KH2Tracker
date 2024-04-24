@@ -693,7 +693,7 @@ namespace KhTracker
                     UpdateSupportingTrackers("Dummy");
 
                 #region For Debugging
-                    ////Modified to only update if any of these actually change instead of updating every tick
+                    //Modified to only update if any of these actually change instead of updating every tick
                     //temp[0] = world.roomNumber;
                     //temp[1] = world.worldNum;
                     //temp[2] = world.eventID1;
@@ -1263,6 +1263,10 @@ namespace KhTracker
                 {
                     UpdateSupportingTrackers("EndOfCoR");
                 }
+                else if (world.worldName == "Atlantica" && world.roomNumber == 4)
+                {
+                    UpdateSupportingTrackers("ObjectiveNewDay");
+                }
             }
         }
 
@@ -1368,6 +1372,7 @@ namespace KhTracker
             int newProg = 99;
             bool updateProgression = true;
             bool updateProgressionPoints = true;
+            bool updategrid = true;
 
             //get current world's new progress key
             switch (wName)
@@ -1480,6 +1485,9 @@ namespace KhTracker
                                     UpdateProgressionPoints(wName, 10);
                                     updateProgressionPoints = false;
                                 }
+
+                                UpdateSupportingTrackers("DataDemyx");
+                                updategrid = false;
                             }
                             break;
                         case 16:
@@ -1502,6 +1510,9 @@ namespace KhTracker
                                     UpdateProgressionPoints(wName, 9);
                                     updateProgressionPoints = false;
                                 }
+
+                                UpdateSupportingTrackers("Sephiroth");
+                                updategrid = false;
                             }
                             break;
                         //CoR
@@ -1663,13 +1674,13 @@ namespace KhTracker
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
-                            if (wID1 == 181)
+                            if (wID1 == 182)
                             {
                                 UpdateSupportingTrackers("CupC");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
-                            if (wID1 == 182)
+                            if (wID1 == 181)
                             {
                                 UpdateSupportingTrackers("CupT");
                                 data.eventLog.Add(eventTuple);
@@ -1850,13 +1861,17 @@ namespace KhTracker
                             if (wID1 == 63) // Tutorial
                                 newProg = 1;
                             break;
-                        case 9:
-                            if (wID1 == 65 && wCom == 1) // Ursula's Revenge
+                        case 7:
+                            if (wID3 == 4) // Ursula's Revenge (
                                 newProg = 2;
                             break;
                         case 4:
-                            if (wID1 == 55 && wCom == 1) // A New Day is Dawning
+                            if (wID3 == 55) // A New Day is Dawning
+                            {
                                 newProg = 3;
+                                UpdateSupportingTrackers("NewDay", true);
+                                updategrid = false;
+                            }
                             break;
                         default:
                             updateProgression = false;
@@ -1888,28 +1903,6 @@ namespace KhTracker
                             if (wID1 == 53 && wCom == 1) // DC Pete finish
                                 newProg = 6;
                             break;
-                        //case 38:
-                        //    if ((wID1 == 145 || wID1 == 150) && wCom == 1) // Marluxia finish
-                        //    {
-                        //        if (curProg == 8)
-                        //            newProg = 9; //marluxia + LW finished
-                        //        else if (curProg != 9)
-                        //            newProg = 7;
-                        //        if(data.UsingProgressionHints) 
-                        //        {
-                        //            if (wID1 == 145)
-                        //                UpdateProgressionPoints(wName, 7); // AS
-                        //            else
-                        //            {
-                        //                UpdateProgressionPoints(wName, 8); // Data
-                        //                data.eventLog.Add(eventTuple);
-                        //                return;
-                        //            }
-                        //
-                        //            updateProgressionPoints = false;
-                        //        }
-                        //    }
-                        //    break;
                         case 38:
                         case 7:
                             if ((wID1 == 145 || wID1 == 150) && wCom == 1) // Marluxia finish
@@ -1919,19 +1912,33 @@ namespace KhTracker
                                 {
                                     //check if as/data
                                     if (wID1 == 145)
+                                    {
                                         newProg = 7;
+                                        UpdateSupportingTrackers("Marluxia");
+                                    }
                                     if (wID1 == 150)
+                                    {
                                         newProg = 8;
+                                        UpdateSupportingTrackers("MarluxiaData");
+                                    }                              
                                 }
                                 //check for LW
                                 else if (curProg == 9 || curProg == 10)
                                 {
                                     //check if as/data
                                     if (wID1 == 145)
+                                    {
                                         newProg = 10;
+                                        UpdateSupportingTrackers("Marluxia");
+                                    }
                                     if (wID1 == 150)
+                                    {
                                         newProg = 11;
+                                        UpdateSupportingTrackers("MarluxiaData");
+                                    }
                                 }
+
+                                updategrid = false;
                                 //progression
                                 if (data.UsingProgressionHints)
                                 {
@@ -1963,6 +1970,9 @@ namespace KhTracker
                                 {
                                     newProg = 11;
                                 }
+                                UpdateSupportingTrackers("LingeringWill");
+                                updategrid = false;
+
                                 //progression
                                 if (data.UsingProgressionHints)
                                 {
@@ -1972,19 +1982,6 @@ namespace KhTracker
 
                             }
                             break;
-                        //if (wID1 == 67 && wCom == 1) // Lingering Will finish
-                        //{
-                        //    if (curProg == 7)
-                        //        newProg = 9; //marluxia + LW finished
-                        //    else if (curProg != 9)
-                        //        newProg = 8;
-                        //    if (data.UsingProgressionHints)
-                        //    {
-                        //        UpdateProgressionPoints(wName, 9);
-                        //        updateProgressionPoints = false;
-                        //    }
-                        //}
-                        //break;
                         default:
                             updateProgression = false;
                             break;
@@ -2022,7 +2019,10 @@ namespace KhTracker
                             if (wID1 == 62 && wCom == 1) // Children Fight
                                 newProg = 5;
                             if (wID1 == 63 && wCom == 1) // Presents minigame
+                            {
                                 newProg = 6;
+                                UpdateSupportingTrackers("ObjectivePresents2");
+                            }
                             break;
                         case 7:
                             if (wID1 == 64 && wCom == 1) // Experiment finish
@@ -2033,13 +2033,6 @@ namespace KhTracker
                                 newProg = 8;
                             if (wID1 == 146 && wCom == 1) // Data Vexen finish
                                 newProg = 9;
-                            //else if (wID1 == 146 && wCom == 1) // Data Vexen finish
-                            //{
-                            //    if(data.UsingProgressionHints)
-                            //        UpdateProgressionPoints(wName, 9);
-                            //    data.eventLog.Add(eventTuple);
-                            //    return;
-                            //}
                             break;
                         default:
                             updateProgression = false;
@@ -2236,13 +2229,10 @@ namespace KhTracker
             }
 
             // mark progression icon on grid tracker if it exists
-            if (newProg < 99)
+            if (newProg < 99 && updategrid)
             {
-                var progressCheck = data.ProgressKeys[wName][newProg];
-                UpdateSupportingTrackers(progressCheck);
-
-                if(progressCheck == "Presents")
-                    UpdateSupportingTrackers("ObjectivePresents2");
+                string progressCheck = data.ProgressKeys[wName][newProg];
+                UpdateSupportingTrackers(progressCheck);               
             }
 
             //progression wasn't updated

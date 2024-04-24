@@ -59,10 +59,10 @@
     <Image x:Key="Obj_Min-Hydra"               Source="Images\Grid\Bosses\Min\hydra.png"                                           x:Shared="false" ToolTip="Defeat Hydra"/>
     <Image x:Key="Obj_Min-AuronStatue"         Source="Images\Grid\Progression\Min\olympus_coliseum\dusks.png"                     x:Shared="false" ToolTip="Defeat the Ambush in Hades Chamber"/>
     <Image x:Key="Obj_Min-Hades"               Source="Images\Grid\Bosses\Min\hades.png"                                           x:Shared="false" ToolTip="Defeat Hades"/>
-    <Image x:Key="Obj_Min-CupPP"	            Source="Images\Grid\Objectives\Min\PainandPanicCup.png"                             x:Shared="false" ToolTip="Win the Pain and Panic Cup"/>
-    <Image x:Key="Obj_Min-CupC"	            Source="Images\Grid\Objectives\Min\CerberusCup.png"                                 x:Shared="false" ToolTip="Win the Cerberus Cup"/>
-    <Image x:Key="Obj_Min-CupT"	            Source="Images\Grid\Objectives\Min\TitanCup.png"                                    x:Shared="false" ToolTip="Win the Titan Cup"/>
-    <Image x:Key="Obj_Min-CupGoF"	            Source="Images\Grid\Objectives\Min\GoddessCup.png"                                  x:Shared="false" ToolTip="Win the Goddess of Fate Cup"/>
+    <Image x:Key="Obj_Min-CupPP"	           Source="Images\Grid\Objectives\Min\PainandPanicCup.png"                             x:Shared="false" ToolTip="Win the Pain and Panic Cup"/>
+    <Image x:Key="Obj_Min-CupC"	               Source="Images\Grid\Objectives\Min\CerberusCup.png"                                 x:Shared="false" ToolTip="Win the Cerberus Cup"/>
+    <Image x:Key="Obj_Min-CupT"	               Source="Images\Grid\Objectives\Min\TitanCup.png"                                    x:Shared="false" ToolTip="Win the Titan Cup"/>
+    <Image x:Key="Obj_Min-CupGoF"	           Source="Images\Grid\Objectives\Min\GoddessCup.png"                                  x:Shared="false" ToolTip="Win the Goddess of Fate Cup"/>
     <Grid x:Key="Obj_Min-GridZexion" x:Shared="false" ToolTip="Defeat AS Zexion" >
         <Image Source="Images\Grid\Bosses\Min\org_zexion.png"/>
         <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
@@ -162,7 +162,7 @@
     <Image x:Key="Obj_Min-Luxord"              Source="Images\Grid\Bosses\Min\Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
     <Image x:Key="Obj_Min-Saix"                Source="Images\Grid\Bosses\Min\Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
     <Image x:Key="Obj_Min-Xemnas1"             Source="Images\Grid\Bosses\Min\org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
-    <Grid x:Key="Obj_Min-GridDataFinalXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
+    <Grid x:Key="Obj_Min-DataXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
         <Image Source="Images\Grid\Bosses\Min\org_finalxemnas.png"/>
         <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
     </Grid>
@@ -172,7 +172,7 @@
     <!--Atlantica-->
     <Image x:Key="Obj_Min-Tutorial"            Source="Images\Grid\Progression\Min\atlantica\tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
     <Image x:Key="Obj_Min-Ursula"              Source="Images\Grid\Progression\Min\atlantica\ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
-    <Image x:Key="Obj_Min-NewDay"              Source="Images\Grid\Progression\Min\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+    <Image x:Key="Obj_Min-ObjectiveNewDay"     Source="Images\Grid\Progression\Min\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
 
     <!--Drive Forms-->
     <Grid x:Key="Obj_Min-Valor3" x:Shared="false" ToolTip="Reach Valor Level 3">
@@ -426,7 +426,7 @@
     <Image x:Key="Obj_Old-Luxord"              Source="Images\Grid\Bosses\Old\Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
     <Image x:Key="Obj_Old-Saix"                Source="Images\Grid\Bosses\Old\Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
     <Image x:Key="Obj_Old-Xemnas1"             Source="Images\Grid\Bosses\Old\org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
-    <Grid x:Key="Obj_Old-GridDataFinalXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
+    <Grid x:Key="Obj_Old-DataXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
         <Image Source="Images\Grid\Bosses\Old\org_finalxemnas.png"/>
         <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
     </Grid>
@@ -436,7 +436,7 @@
     <!--Atlantica-->
     <Image x:Key="Obj_Old-Tutorial"            Source="Images\Grid\Progression\Old\atlantica\tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
     <Image x:Key="Obj_Old-Ursula"              Source="Images\Grid\Progression\Old\atlantica\ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
-    <Image x:Key="Obj_Old-NewDay"              Source="Images\Grid\Progression\Old\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+    <Image x:Key="Obj_Old-ObjectiveNewDay"     Source="Images\Grid\Progression\Old\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
 
     <!--Drive Forms-->
     <Grid x:Key="Obj_Old-Valor3" x:Shared="false" ToolTip="Reach Valor Level 3">
@@ -627,14 +627,14 @@
     <Image x:Key="Obj_Cus-Luxord"               Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
     <Image x:Key="Obj_Cus-Saix"                 Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
     <Image x:Key="Obj_Cus-Xemnas1"              Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
-    <Image x:Key="Obj_Cus-GridDataFinalXemnas"  Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnasfinaldata.png"							 x:Shared="false" ToolTip="Defeat Data Xemnas"/>
+    <Image x:Key="Obj_Cus-DataXemnas"           Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnasfinaldata.png"							 x:Shared="false" ToolTip="Defeat Data Xemnas"/>
     <!--100 Acre Wood-->
     <Image x:Key="Obj_Cus-SpookyCave"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/expotition.png"                   x:Shared="false" ToolTip="Rescue Pooh from the Spooky Cave"/>
     <Image x:Key="Obj_Cus-StarryHill"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/hunny_pot.png"                    x:Shared="false" ToolTip="Help Pooh out of the pot of hunny"/>
     <!--Atlantica-->
     <Image x:Key="Obj_Cus-Tutorial"             Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
     <Image x:Key="Obj_Cus-Ursula"               Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
-    <Image x:Key="Obj_Cus-NewDay"               Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+    <Image x:Key="Obj_Cus-ObjectiveNewDay"      Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
 
     <!--Drive Forms-->
     <Image x:Key="Obj_Cus-Valor3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor3.png"   x:Shared="false" ToolTip="Reach Valor Form Level 3"/>
