@@ -10,6 +10,7 @@
             <FontFamily x:Key="Gummi">pack://application:,,,/Fonts/#KHGummi</FontFamily>
             <FontFamily x:Key="Menu">pack://application:,,,/Fonts/#KHMenu</FontFamily>
             <FontFamily x:Key="KHIcon">pack://application:,,,/Fonts/#KHIcon</FontFamily>
+            <FontFamily x:Key="Data">pack://application:,,,/Fonts/#KHData</FontFamily>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="MainDictionary.xaml" />
                 <ResourceDictionary Source="ItemDictionary.xaml" />
@@ -17,6 +18,7 @@
                 <ResourceDictionary Source="ProgressionDictionary.xaml" />
                 <ResourceDictionary Source="GridDictionary.xaml" />
                 <ResourceDictionary Source="ObjectiveDictionary.xaml" />
+                <ResourceDictionary Source="OneHourDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

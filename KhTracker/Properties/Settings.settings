@@ -356,5 +356,17 @@
     <Setting Name="ObjectiveCustom" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ObjUnmarkedColorButton" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF696969</Value>
+    </Setting>
+    <Setting Name="ObjCollectedColorButton" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF006400</Value>
+    </Setting>
+    <Setting Name="ObjAnnotatedColorButton" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFA500</Value>
+    </Setting>
+    <Setting Name="ObjCompletedColorButton" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFC0CB</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

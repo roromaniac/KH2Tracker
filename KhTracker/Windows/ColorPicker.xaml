@@ -38,6 +38,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -72,6 +73,20 @@
             </Button>
             <Button Grid.Row="1" Grid.Column="3" x:Name="BattleshipSunkColorButton" Click="ColorButton_Click">
                 <TextBlock Text="Battleship Sunk Color" Margin="20,10"/>
+            </Button>
+
+            <!-- First row of buttons -->
+            <Button Grid.Row="2" Grid.Column="0" x:Name="ObjUnmarkedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
+                <TextBlock Text="Uncollected Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="1" x:Name="ObjCollectedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
+                <TextBlock Text="Collected Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="2" x:Name="ObjAnnotatedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
+                <TextBlock Text="Marked Color" Margin="20,10"/>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="3" x:Name="ObjCompletedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
+                <TextBlock Text="Win Condition Met Color" Margin="20,10"/>
             </Button>
 
         </Grid>

@@ -22,18 +22,21 @@ namespace KhTracker
     {
         public Color SelectedColor { get; private set; }
         public Dictionary<string, Color> ButtonColors;
+        public Dictionary<string, Color> ObjButtonColors;
         private Button LastClickedButton;
         public bool canClose = false;
         public IColorableWindow colorableWindow;
 
-        public ColorPickerWindow(IColorableWindow window, Dictionary<string, Color> currentColors)
+        public ColorPickerWindow(IColorableWindow window, Dictionary<string, Color> currentColors, bool objWindow = false)
         {
             colorableWindow = window;
 
             InitializeComponent();
 
-            // Initialize the button colors
-            ButtonColors = currentColors ?? new Dictionary<string, Color>
+            if (!objWindow)
+            {
+                // Initialize the button colors
+                ButtonColors = currentColors ?? new Dictionary<string, Color>
             {
                 { "Unmarked Color", Colors.DimGray },
                 { "Marked Color", Colors.Green },
@@ -45,23 +48,65 @@ namespace KhTracker
                 { "Battleship Sunk Color", Colors.Pink }
             };
 
-            // Set button colors and foreground text colors initially
-            UnmarkedColorButton.Background = new SolidColorBrush(ButtonColors["Unmarked Color"]);
-            SetForegroundColor(ButtonColors["Unmarked Color"], UnmarkedColorButton);
-            MarkedColorButton.Background = new SolidColorBrush(ButtonColors["Marked Color"]);
-            SetForegroundColor(ButtonColors["Marked Color"], MarkedColorButton);
-            AnnotatedColorButton.Background = new SolidColorBrush(ButtonColors["Annotated Color"]);
-            SetForegroundColor(ButtonColors["Annotated Color"], AnnotatedColorButton);
-            BingoColorButton.Background = new SolidColorBrush(ButtonColors["Bingo Color"]);
-            SetForegroundColor(ButtonColors["Bingo Color"], AnnotatedColorButton);
-            HintColorButton.Background = new SolidColorBrush(ButtonColors["Hint Color"]);
-            SetForegroundColor(ButtonColors["Hint Color"], HintColorButton);
-            BattleshipMissColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Miss Color"]);
-            SetForegroundColor(ButtonColors["Battleship Miss Color"], BattleshipMissColorButton);
-            BattleshipHitColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Hit Color"]);
-            SetForegroundColor(ButtonColors["Battleship Hit Color"], BattleshipHitColorButton);
-            BattleshipSunkColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Sunk Color"]);
-            SetForegroundColor(ButtonColors["Battleship Sunk Color"], BattleshipSunkColorButton);
+                // Set button colors and foreground text colors initially
+                UnmarkedColorButton.Background = new SolidColorBrush(ButtonColors["Unmarked Color"]);
+                SetForegroundColor(ButtonColors["Unmarked Color"], UnmarkedColorButton);
+                MarkedColorButton.Background = new SolidColorBrush(ButtonColors["Marked Color"]);
+                SetForegroundColor(ButtonColors["Marked Color"], MarkedColorButton);
+                AnnotatedColorButton.Background = new SolidColorBrush(ButtonColors["Annotated Color"]);
+                SetForegroundColor(ButtonColors["Annotated Color"], AnnotatedColorButton);
+                BingoColorButton.Background = new SolidColorBrush(ButtonColors["Bingo Color"]);
+                SetForegroundColor(ButtonColors["Bingo Color"], AnnotatedColorButton);
+                HintColorButton.Background = new SolidColorBrush(ButtonColors["Hint Color"]);
+                SetForegroundColor(ButtonColors["Hint Color"], HintColorButton);
+                BattleshipMissColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Miss Color"]);
+                SetForegroundColor(ButtonColors["Battleship Miss Color"], BattleshipMissColorButton);
+                BattleshipHitColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Hit Color"]);
+                SetForegroundColor(ButtonColors["Battleship Hit Color"], BattleshipHitColorButton);
+                BattleshipSunkColorButton.Background = new SolidColorBrush(ButtonColors["Battleship Sunk Color"]);
+                SetForegroundColor(ButtonColors["Battleship Sunk Color"], BattleshipSunkColorButton);
+            }
+            else
+            {
+                // Initialize the button colors
+                ObjButtonColors = currentColors ?? new Dictionary<string, Color>
+            {
+                { "Uncollected Color", Colors.DimGray },
+                { "Collected Color", Colors.Green },
+                { "Marked Color", Colors.Orange },
+                { "Win Condition Met Color", Colors.Purple },
+            };
+
+                // Set button colors and foreground text colors initially
+                ObjUnmarkedColorButton.Background = new SolidColorBrush(ObjButtonColors["Uncollected Color"]);
+                SetForegroundColor(ObjButtonColors["Uncollected Color"], UnmarkedColorButton);
+
+                ObjCollectedColorButton.Background = new SolidColorBrush(ObjButtonColors["Collected Color"]);
+                SetForegroundColor(ObjButtonColors["Collected Color"], MarkedColorButton);
+
+                ObjAnnotatedColorButton.Background = new SolidColorBrush(ObjButtonColors["Marked Color"]);
+                SetForegroundColor(ObjButtonColors["Marked Color"], AnnotatedColorButton);
+
+                ObjCompletedColorButton.Background = new SolidColorBrush(ObjButtonColors["Win Condition Met Color"]);
+                SetForegroundColor(ObjButtonColors["Win Condition Met Color"], AnnotatedColorButton);
+
+                UnmarkedColorButton.Visibility = Visibility.Collapsed;
+                MarkedColorButton.Visibility = Visibility.Collapsed;
+                AnnotatedColorButton.Visibility = Visibility.Collapsed;
+                BingoColorButton.Visibility = Visibility.Collapsed;
+                HintColorButton.Visibility = Visibility.Collapsed;
+                BattleshipMissColorButton.Visibility = Visibility.Collapsed;
+                BattleshipHitColorButton.Visibility = Visibility.Collapsed;
+                BattleshipSunkColorButton.Visibility = Visibility.Collapsed;
+
+                ObjUnmarkedColorButton.Visibility = Visibility.Visible;
+                ObjCollectedColorButton.Visibility = Visibility.Visible;
+                ObjAnnotatedColorButton.Visibility = Visibility.Visible;
+                ObjCompletedColorButton.Visibility = Visibility.Visible;
+
+            }
+
+
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -111,7 +156,10 @@ namespace KhTracker
                 {
                     // sets the background of button to its current color
                     LastClickedButton = button;
-                    SelectedColor = ButtonColors[textBlock.Text]; // Use buttonText here
+                    if (button.Name.StartsWith("Obj"))
+                        SelectedColor = ObjButtonColors[textBlock.Text]; // Use buttonText here
+                    else
+                        SelectedColor = ButtonColors[textBlock.Text]; // Use buttonText here
 
                     // update the preview background
                     PreviewBorder.Background = new SolidColorBrush(SelectedColor);
@@ -129,18 +177,26 @@ namespace KhTracker
         {
             LastClickedButton.Background = new SolidColorBrush(SelectedColor);
             var lastClickedTextBlock = LastClickedButton.Content as TextBlock;  
-            ButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
-            SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
+
+            if (LastClickedButton.Name.StartsWith("Obj"))
+            {
+                ObjButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
+                ObjSaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
+            }
+            else
+            {
+                ButtonColors[lastClickedTextBlock.Text] = SelectedColor; // Update the dictionary
+                SaveColorSettings(lastClickedTextBlock.Text, SelectedColor); // Save the dictionary
+            }
+
             SetForegroundColor(SelectedColor, LastClickedButton);
         }
-
 
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
         {
             SelectedColor = e.NewValue ?? Colors.Transparent;
             PreviewBorder.Background = new SolidColorBrush(SelectedColor);
         }
-
 
         private void SaveColorSettings(string colorType, Color newColor)
         {
@@ -169,6 +225,29 @@ namespace KhTracker
                     break;
                 case "Battleship Sunk Color":
                     Properties.Settings.Default.BattleshipSunkColor = newColor;
+                    break;
+
+                default:
+                    Console.WriteLine("Color type not implemented.");
+                    break;
+            }
+        }
+
+        private void ObjSaveColorSettings(string colorType, Color newColor)
+        {
+            switch (colorType)
+            {
+                case "Uncollected Color":
+                    Properties.Settings.Default.ObjUnmarkedColorButton = newColor;
+                    break;
+                case "Collected Color":
+                    Properties.Settings.Default.ObjCollectedColorButton = newColor;
+                    break;
+                case "Marked Color":
+                    Properties.Settings.Default.ObjAnnotatedColorButton = newColor;
+                    break;
+                case "Win Condition Met Color":
+                    Properties.Settings.Default.ObjCompletedColorButton = newColor;
                     break;
                 default:
                     Console.WriteLine("Color type not implemented.");
