@@ -1543,7 +1543,7 @@
     <Image x:Key="Grid_Cus-Final"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final.png"   x:Shared="false" ToolTip="Final Form"/>
     <Image x:Key="Grid_Cus-Anti"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Anti.png"    x:Shared="false" ToolTip="Anti-Form"/>
     <!--Drive Form Levels-->
-    <!--Image x:Key="Grid_Cus-Valor2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor2.png"   x:Shared="false" ToolTip="Valor Form Level 2"/>
+    <Image x:Key="Grid_Cus-Valor2"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor2.png"   x:Shared="false" ToolTip="Valor Form Level 2"/>
     <Image x:Key="Grid_Cus-Valor3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor3.png"   x:Shared="false" ToolTip="Valor Form Level 3"/>
     <Image x:Key="Grid_Cus-Valor4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor4.png"   x:Shared="false" ToolTip="Valor Form Level 4"/>
     <Image x:Key="Grid_Cus-Valor5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor5.png"   x:Shared="false" ToolTip="Valor Form Level 5"/>
@@ -1572,7 +1572,7 @@
     <Image x:Key="Grid_Cus-Final4"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final4.png"   x:Shared="false" ToolTip="Final Form Level 4"/>
     <Image x:Key="Grid_Cus-Final5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final5.png"   x:Shared="false" ToolTip="Final Form Level 5"/>
     <Image x:Key="Grid_Cus-Final6"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final6.png"   x:Shared="false" ToolTip="Final Form Level 6"/>
-    <Image x:Key="Grid_Cus-Final7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"   x:Shared="false" ToolTip="Final Form Level 7"/-->
+    <Image x:Key="Grid_Cus-Final7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"   x:Shared="false" ToolTip="Final Form Level 7"/>
     <!--Summons-->
     <Image x:Key="Grid_Cus-Lamp"	    Source="pack://application:,,,/CustomImages/Grid/Checks/Summon_Genie.png"           x:Shared="false" ToolTip="Lamp Charm"/>
     <Image x:Key="Grid_Cus-Ukulele"		Source="pack://application:,,,/CustomImages/Grid/Checks/Summon_Stitch.png"          x:Shared="false" ToolTip="Ukulele Charm"/>
@@ -1654,6 +1654,28 @@
     <Image x:Key="Grid_Cus-GridMagnet1" 		 Source="pack://application:,,,/CustomImages/Grid/Checks/Magic_Magnet1.png"     x:Shared="false" ToolTip="Magnet"/>
     <Image x:Key="Grid_Cus-GridMagnet2" 		 Source="pack://application:,,,/CustomImages/Grid/Checks/Magic_Magnet2.png"     x:Shared="false" ToolTip="Magnera"/>
     <Image x:Key="Grid_Cus-GridMagnet3" 		 Source="pack://application:,,,/CustomImages/Grid/Checks/Magic_Magnet3.png"     x:Shared="false" ToolTip="Magnega"/>
+    <!--Growth-->
+    <Image x:Key="Grid_Cus-HighJump1" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_HighJump1.png"		x:Shared="false" ToolTip="High Jump lv.1"/>
+    <Image x:Key="Grid_Cus-HighJump2" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_HighJump2.png"		x:Shared="false" ToolTip="High Jump lv.2"/>
+    <Image x:Key="Grid_Cus-HighJump3" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_HighJump3.png"		x:Shared="false" ToolTip="High Jump lv.3"/>
+    <Image x:Key="Grid_Cus-HighJump4" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_HighJump4.png"		x:Shared="false" ToolTip="High Jump lv.Max"/>
+    <Image x:Key="Grid_Cus-QuickRun1" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_QuickRun1.png"		x:Shared="false" ToolTip="Quick Run lv.1"/>
+    <Image x:Key="Grid_Cus-QuickRun2" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_QuickRun2.png"		x:Shared="false" ToolTip="Quick Run lv.2"/>
+    <Image x:Key="Grid_Cus-QuickRun3" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_QuickRun3.png"		x:Shared="false" ToolTip="Quick Run lv.3"/>
+    <Image x:Key="Grid_Cus-QuickRun4" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_QuickRun4.png"		x:Shared="false" ToolTip="Quick Run lv.Max"/>
+    <Image x:Key="Grid_Cus-DodgeRoll1" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_DodgeRoll1.png"		x:Shared="false" ToolTip="Dodge Roll lv.1"/>
+    <Image x:Key="Grid_Cus-DodgeRoll2" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_DodgeRoll2.png"		x:Shared="false" ToolTip="Dodge Roll lv.2"/>
+    <Image x:Key="Grid_Cus-DodgeRoll3" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_DodgeRoll3.png"		x:Shared="false" ToolTip="Dodge Roll lv.3"/>
+    <Image x:Key="Grid_Cus-DodgeRoll4" 	         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_DodgeRoll4.png"		x:Shared="false" ToolTip="Dodge Roll lv.Max"/>
+    <Image x:Key="Grid_Cus-AerialDodge1"         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_AerialDodge1.png"	x:Shared="false" ToolTip="Aerial Dodge lv.1"/>
+    <Image x:Key="Grid_Cus-AerialDodge2"         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_AerialDodge2.png"	x:Shared="false" ToolTip="Aerial Dodge lv.2"/>
+    <Image x:Key="Grid_Cus-AerialDodge3"         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_AerialDodge3.png"	x:Shared="false" ToolTip="Aerial Dodge lv.3"/>
+    <Image x:Key="Grid_Cus-AerialDodge4"         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_AerialDodge4.png"	x:Shared="false" ToolTip="Aerial Dodge lv.Max"/>
+    <Image x:Key="Grid_Cus-Glide1" 		         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_Glide1.png"			x:Shared="false" ToolTip="Glide lv.1"/>
+    <Image x:Key="Grid_Cus-Glide2" 		         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_Glide2.png"			x:Shared="false" ToolTip="Glide lv.2"/>
+    <Image x:Key="Grid_Cus-Glide3" 		         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_Glide3.png"			x:Shared="false" ToolTip="Glide lv.3"/>
+    <Image x:Key="Grid_Cus-Glide4" 		         Source="pack://application:,,,/CustomImages/Grid/Checks/Growth_Glide4.png"			x:Shared="false" ToolTip="Glide lv.Max"/>
+
     <!-- Progression -->
     <!--100 Acre Wood-->
     <Image x:Key="Grid_Cus-Piglet"               Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/blustery_rescue.png"              x:Shared="false" ToolTip="Blustery Rescue (Piglet's Howse)"/>
@@ -1759,11 +1781,11 @@
     <Image x:Key="Grid_Cus-Mansion"              Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/mansion_gate_fight.png"           x:Shared="false" ToolTip="Mansion Gate Forced Fight"/>
     <Image x:Key="Grid_Cus-BetwixtAndBetween"    Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/betwixt_and_between.png"          x:Shared="false" ToolTip="Betwix and Between Forced Fight"/>
     <!--Drive Forms-->
-    <Image x:Key="Grid_Cus-Drive3" Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_1Collected.png"       x:Shared="false" ToolTip="1 Drive Form Collected" />
-    <Image x:Key="Grid_Cus-Drive4" Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_2Collected.png"       x:Shared="false" ToolTip="2 Drive Forms Collected" />
-    <Image x:Key="Grid_Cus-Drive5" Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_3Collected.png"       x:Shared="false" ToolTip="3 Drive Forms Collected" />
-    <Image x:Key="Grid_Cus-Drive6" Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_4Collected.png"       x:Shared="false" ToolTip="4 Drive Forms Collected" />
-    <Image x:Key="Grid_Cus-Drive7" Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_All5Collected.png"    x:Shared="false" ToolTip="All Drive Forms Collected" />
+    <Image x:Key="Grid_Cus-Drive3"              Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_1Collected.png"       x:Shared="false" ToolTip="1 Drive Form Collected" />
+    <Image x:Key="Grid_Cus-Drive4"              Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_2Collected.png"       x:Shared="false" ToolTip="2 Drive Forms Collected" />
+    <Image x:Key="Grid_Cus-Drive5"              Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_3Collected.png"       x:Shared="false" ToolTip="3 Drive Forms Collected" />
+    <Image x:Key="Grid_Cus-Drive6"              Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_4Collected.png"       x:Shared="false" ToolTip="4 Drive Forms Collected" />
+    <Image x:Key="Grid_Cus-Drive7"              Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_All5Collected.png"    x:Shared="false" ToolTip="All Drive Forms Collected" />
 
     <!--Grid Tracker-->
     <Image x:Key="Grid_Cus-Grid7Drives" 		Source="pack://application:,,,/CustomImages/Grid/Checks/DriveForms_AllLevel7.png"	x:Shared="false" ToolTip="All Drive Forms lv.7" />
@@ -1807,19 +1829,10 @@
     <!--#endregion-->
 
     <!-- Objective Specific -->
-    <!--Image x:Key="Grid_Min-EndOfCoR"	Source="Images\Grid\Objectives\Min\EndOfCoR.png"        x:Shared="false" ToolTip="Last Chest of CoR"/>
-    <Image x:Key="Grid_Min-CupPP"	    Source="Images\Grid\Objectives\Min\PainandPanicCup.png" x:Shared="false" ToolTip="Pain and Panic Cup"/>
+    <!--Image x:Key="Grid_Min-CupPP"	    Source="Images\Grid\Objectives\Min\PainandPanicCup.png" x:Shared="false" ToolTip="Pain and Panic Cup"/>
     <Image x:Key="Grid_Min-CupC"	    Source="Images\Grid\Objectives\Min\CerberusCup.png"     x:Shared="false" ToolTip="Cerberus Cup"/>
     <Image x:Key="Grid_Min-CupT"	    Source="Images\Grid\Objectives\Min\TitanCup.png"        x:Shared="false" ToolTip="Titan Cup"/>
     <Image x:Key="Grid_Min-CupGoF"	    Source="Images\Grid\Objectives\Min\GoddessCup.png"      x:Shared="false" ToolTip="Goddess of Fate Cup"/>
-    <Grid x:Key="Grid_Min-ObjectivePresents1" x:Shared="false" ToolTip="Presents">
-        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
-    </Grid>
-    <Grid x:Key="Grid_Min-ObjectivePresents2" x:Shared="false" ToolTip="Create Decoy Presents">
-        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
-        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
-    </Grid>
     <Grid x:Key="Grid_Min-PuzzAwakening" x:Shared="false" ToolTip="Awakening Puzzle Reward">
         <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>

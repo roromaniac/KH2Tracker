@@ -116,13 +116,13 @@ namespace KhTracker
         private int tornPageCount;
         private int munnyPouchCount;
 
-        private CheckEveryCheck checkEveryCheck;
+        //private CheckEveryCheck checkEveryCheck;
 
         private bool pcFilesLoaded = false;
-
         public static bool pcsx2tracking = false; //game version
         private bool onContinue = false; //for death counter
         private bool eventInProgress = false; //boss detection
+        private int pcLoadAttempts = 0;
 
         //private int lastVersion = 0;
 
@@ -310,6 +310,7 @@ namespace KhTracker
 
         public async void InitAutoTracker(bool PCSX2)
         {
+            pcLoadAttempts = 0;
             // PC Address anchors
             int Now = 0x0714DB8;
             int Save = 0x09A70B0;
@@ -350,8 +351,8 @@ namespace KhTracker
                 //this helps ensure that ICs on levels/drives don't mistrack
                 while (!pcFilesLoaded)
                 {
-                    Sys3 = ReadPcPointer(0x2AE3550);
-                    Bt10 = ReadPcPointer(0x2AE3558);
+                    //Sys3 = ReadPcPointer(0x2AE3550);
+                    //Bt10 = ReadPcPointer(0x2AE3558);
                     pcFilesLoaded = CheckPCLoaded(Sys3, Bt10);
                     await Task.Delay(100);
                 }
@@ -433,18 +434,27 @@ namespace KhTracker
             //Testchecks if these files have been loaded into memeory
             string testS = ReadMemString(system3, 3);
             string testB = ReadMemString(battle0, 3);
-
-            //Console.WriteLine("sys: " + testS);
-            //Console.WriteLine("btl: " + testB);
-
-            if (testB == testS && testS == "BAR")
+            string testM = ReadMemString(ReadPcPointer(0x29F0998) + 0x24, 20);
+            if (testM == "menu/eventviewer.2ld")
             {
-                //all important files loaded
+                //files loaded
                 Connect2.Source = data.AD_PC;
                 return true;
             }
+            if (pcLoadAttempts >= 20)
+            {
+                //Console.WriteLine("sys: " + testS);
+                //Console.WriteLine("btl: " + testB);
+                if (testB == testS && testS == "BAR")
+                {
+                    //files loaded
+                    Connect2.Source = data.AD_PC;
+                    return true;
+                }
 
-            //Console.WriteLine("Not yet");
+            }
+
+            pcLoadAttempts++;
             return false;
         }
 
@@ -456,81 +466,96 @@ namespace KhTracker
                 AutoLoadHints();
 
             #region Add ICs
-            importantChecks = new List<ImportantCheck>();
-            importantChecks.Add(highJump = new Ability(memory, Save + 0x25CE, ADDRESS_OFFSET, 93, "HighJump"));
-            importantChecks.Add(quickRun = new Ability(memory, Save + 0x25D0, ADDRESS_OFFSET, 97, "QuickRun"));
-            importantChecks.Add(dodgeRoll = new Ability(memory, Save + 0x25D2, ADDRESS_OFFSET, 563, "DodgeRoll"));
-            importantChecks.Add(aerialDodge = new Ability(memory, Save + 0x25D4, ADDRESS_OFFSET, 101, "AerialDodge"));
-            importantChecks.Add(glide = new Ability(memory, Save + 0x25D6, ADDRESS_OFFSET, 105, "Glide"));
-
-            importantChecks.Add(secondChance = new Ability(memory, Save + 0x2544, ADDRESS_OFFSET, "SecondChance", Save));
-            importantChecks.Add(onceMore = new Ability(memory, Save + 0x2544, ADDRESS_OFFSET, "OnceMore", Save));
-
-            importantChecks.Add(wisdom = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 2, Save + 0x332E, "Wisdom"));
-            importantChecks.Add(limit = new DriveForm(memory, Save + 0x36CA, ADDRESS_OFFSET, 3, Save + 0x3366, "Limit"));
-            importantChecks.Add(master = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 6, Save + 0x339E, "Master"));
-            importantChecks.Add(anti = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 5, Save + 0x340C, "Anti"));
-
-            if (!data.altFinalTracking)
+            importantChecks = new List<ImportantCheck>
             {
-                importantChecks.Add(valor = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 1, Save + 0x32F6, Save + 0x06B2, "Valor"));
-                importantChecks.Add(final = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 4, Save + 0x33D6, "Final"));
-            }
-            else
-            {
-                importantChecks.Add(valor = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 7, Save + 0x32F6, "Valor"));
-                importantChecks.Add(final = new DriveForm(memory, Save + 0x36C2, ADDRESS_OFFSET, 1, Save + 0x33D6, "Final"));
+                (highJump = new Ability(memory, Save + 0x25CE, ADDRESS_OFFSET, 93, "HighJump")),
+                (quickRun = new Ability(memory, Save + 0x25D0, ADDRESS_OFFSET, 97, "QuickRun")),
+                (dodgeRoll = new Ability(memory, Save + 0x25D2, ADDRESS_OFFSET, 563, "DodgeRoll")),
+                (aerialDodge = new Ability(memory, Save + 0x25D4, ADDRESS_OFFSET, 101, "AerialDodge")),
+                (glide = new Ability(memory, Save + 0x25D6, ADDRESS_OFFSET, 105, "Glide")),
+                (secondChance = new Ability(memory, Save + 0x2544, ADDRESS_OFFSET, "SecondChance", Save)),
+                (onceMore = new Ability(memory, Save + 0x2544, ADDRESS_OFFSET, "OnceMore", Save)),
+                (wisdom = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 2, Save + 0x332E, "Wisdom")),
+                (limit = new DriveForm(memory, Save + 0x36CA, ADDRESS_OFFSET, 3, Save + 0x3366, "Limit")),
+                (master = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 6, Save + 0x339E, "Master")),
+                (anti = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 5, Save + 0x340C, "Anti")),
+                //"Dummy" items used for aquiring these forms
+                (valor = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 7, Save + 0x32F6, "Valor")),
+                (final = new DriveForm(memory, Save + 0x36C2, ADDRESS_OFFSET, 1, Save + 0x33D6, "Final")),
+                //The true items for these forms (these ones are no longer placed in randomization
+                //the upper ones are used which then trigger these)
+                (valorReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 1, Save + 0x32F6, "ValorReal")),
+                (finalReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 4, Save + 0x33D6, "FinalReal")),
+                (reportItem = new Report(memory, Save + 0x36C4, ADDRESS_OFFSET, 6, "Report1")),
+                (reportItem = new Report(memory, Save + 0x36C4, ADDRESS_OFFSET, 7, "Report2")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 0, "Report3")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 1, "Report4")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 2, "Report5")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 3, "Report6")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 4, "Report7")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 5, "Report8")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 6, "Report9")),
+                (reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 7, "Report10")),
+                (reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 0, "Report11")),
+                (reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 1, "Report12")),
+                (reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 2, "Report13")),
+                (charmItem = new Summon(memory, Save + 0x36C0, ADDRESS_OFFSET, 3, "Baseball")),
+                (charmItem = new Summon(memory, Save + 0x36C0, ADDRESS_OFFSET, 0, "Ukulele")),
+                (charmItem = new Summon(memory, Save + 0x36C4, ADDRESS_OFFSET, 4, "Lamp")),
+                (charmItem = new Summon(memory, Save + 0x36C4, ADDRESS_OFFSET, 5, "Feather")),
+                (proofItem = new Proof(memory, Save + 0x3694, ADDRESS_OFFSET, "PromiseCharm")),
+                (proofItem = new Proof(memory, Save + 0x36B4, ADDRESS_OFFSET, "Peace")),
+                (proofItem = new Proof(memory, Save + 0x36B3, ADDRESS_OFFSET, "Nonexistence")),
+                (proofItem = new Proof(memory, Save + 0x36B2, ADDRESS_OFFSET, "Connection")),
+                (extraItem = new Extra(memory, Save + 0x3696, ADDRESS_OFFSET, "HadesCup")),
+                (extraItem = new Extra(memory, Save + 0x3644, ADDRESS_OFFSET, "OlympusStone")),
+                (extraItem = new Extra(memory, Save + 0x365F, ADDRESS_OFFSET, "UnknownDisk")),
+                (extraItem = new Extra(memory, Save + 0x363C, ADDRESS_OFFSET, "MunnyPouch1")),
+                (extraItem = new Extra(memory, Save + 0x3695, ADDRESS_OFFSET, "MunnyPouch2")),
+                (extraItem = new Extra(memory, Save + 0x35A2, ADDRESS_OFFSET, "ChestTT")),
+                (extraItem = new Extra(memory, Save + 0x368D, ADDRESS_OFFSET, "ChestSTT")),
+                (extraItem = new Extra(memory, Save + 0x3689, ADDRESS_OFFSET, "ChestHB")),
+                (extraItem = new Extra(memory, Save + 0x3699, ADDRESS_OFFSET, "ChestCoR")),
+                (extraItem = new Extra(memory, Save + 0x3687, ADDRESS_OFFSET, "ChestAG")),
+                (extraItem = new Extra(memory, Save + 0x3685, ADDRESS_OFFSET, "ChestBC")),
+                (extraItem = new Extra(memory, Save + 0x3680, ADDRESS_OFFSET, "ChestDC")),
+                (extraItem = new Extra(memory, Save + 0x3688, ADDRESS_OFFSET, "ChestHT")),
+                (extraItem = new Extra(memory, Save + 0x367C, ADDRESS_OFFSET, "ChestLoD")),
+                (extraItem = new Extra(memory, Save + 0x367F, ADDRESS_OFFSET, "ChestOC")),
+                (extraItem = new Extra(memory, Save + 0x3682, ADDRESS_OFFSET, "ChestPL")),
+                (extraItem = new Extra(memory, Save + 0x3681, ADDRESS_OFFSET, "ChestPR")),
+                (extraItem = new Extra(memory, Save + 0x3683, ADDRESS_OFFSET, "ChestSP")),
+                (extraItem = new Extra(memory, Save + 0x3698, ADDRESS_OFFSET, "ChestTWTNW")),
+                (extraItem = new Extra(memory, Save + 0x368A, ADDRESS_OFFSET, "ChestHAW")),
+                (fire = new Magic(memory, Save + 0x3594, Save + 0x1CF2, ADDRESS_OFFSET, "Fire")),
+                (blizzard = new Magic(memory, Save + 0x3595, Save + 0x1CF3, ADDRESS_OFFSET, "Blizzard")),
+                (thunder = new Magic(memory, Save + 0x3596, Save + 0x1CF4, ADDRESS_OFFSET, "Thunder")),
+                (cure = new Magic(memory, Save + 0x3597, Save + 0x1CF5, ADDRESS_OFFSET, "Cure")),
+                (magnet = new Magic(memory, Save + 0x35CF, Save + 0x1CF6, ADDRESS_OFFSET, "Magnet")),
+                (reflect = new Magic(memory, Save + 0x35D0, Save + 0x1CF7, ADDRESS_OFFSET, "Reflect")),
+                (AuronWep = new VisitNew(memory, Save + 0x35AE, ADDRESS_OFFSET, "AuronWep")),
+                (MulanWep = new VisitNew(memory, Save + 0x35AF, ADDRESS_OFFSET, "MulanWep")),
+                (BeastWep = new VisitNew(memory, Save + 0x35B3, ADDRESS_OFFSET, "BeastWep")),
+                (JackWep = new VisitNew(memory, Save + 0x35B4, ADDRESS_OFFSET, "JackWep")),
+                (SimbaWep = new VisitNew(memory, Save + 0x35B5, ADDRESS_OFFSET, "SimbaWep")),
+                (SparrowWep = new VisitNew(memory, Save + 0x35B6, ADDRESS_OFFSET, "SparrowWep")),
+                (AladdinWep = new VisitNew(memory, Save + 0x35C0, ADDRESS_OFFSET, "AladdinWep")),
+                (TronWep = new VisitNew(memory, Save + 0x35C2, ADDRESS_OFFSET, "TronWep")),
+                (MembershipCard = new VisitNew(memory, Save + 0x3643, ADDRESS_OFFSET, "MembershipCard")),
+                (IceCream = new VisitNew(memory, Save + 0x3649, ADDRESS_OFFSET, "IceCream")),
+                (RikuWep = new VisitNew(memory, Save + 0x35C1, ADDRESS_OFFSET, "RikuWep")),
+                (KingsLetter = new VisitNew(memory, Save + 0x365D, ADDRESS_OFFSET, "KingsLetter")),
+                (visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches"))
+                //importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
+            };
 
-                importantChecks.Add(finalReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 4, Save + 0x33D6, "FinalReal"));
-                importantChecks.Add(valorReal = new DriveForm(memory, Save + 0x36C0, ADDRESS_OFFSET, 1, Save + 0x32F6, Save + 0x06B2, "ValorReal"));
-            }
-
+            //counts for multi type items setup
             int fireCount = fire != null ? fire.Level : 0;
             int blizzardCount = blizzard != null ? blizzard.Level : 0;
             int thunderCount = thunder != null ? thunder.Level : 0;
             int cureCount = cure != null ? cure.Level : 0;
             int magnetCount = magnet != null ? magnet.Level : 0;
             int reflectCount = reflect != null ? reflect.Level : 0;
-
-            importantChecks.Add(fire = new Magic(memory, Save + 0x3594, Save + 0x1CF2, ADDRESS_OFFSET, "Fire"));
-            importantChecks.Add(blizzard = new Magic(memory, Save + 0x3595, Save + 0x1CF3, ADDRESS_OFFSET, "Blizzard"));
-            importantChecks.Add(thunder = new Magic(memory, Save + 0x3596, Save + 0x1CF4, ADDRESS_OFFSET, "Thunder"));
-            importantChecks.Add(cure = new Magic(memory, Save + 0x3597, Save + 0x1CF5, ADDRESS_OFFSET, "Cure"));
-            importantChecks.Add(magnet = new Magic(memory, Save + 0x35CF, Save + 0x1CF6, ADDRESS_OFFSET, "Magnet"));
-            importantChecks.Add(reflect = new Magic(memory, Save + 0x35D0, Save + 0x1CF7, ADDRESS_OFFSET, "Reflect"));
-
-            fire.Level = fireCount;
-            blizzard.Level = blizzardCount;
-            thunder.Level = thunderCount;
-            cure.Level = cureCount;
-            magnet.Level = magnetCount;
-            reflect.Level = reflectCount;
-
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C4, ADDRESS_OFFSET, 6, "Report1"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C4, ADDRESS_OFFSET, 7, "Report2"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 0, "Report3"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 1, "Report4"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 2, "Report5"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 3, "Report6"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 4, "Report7"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 5, "Report8"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 6, "Report9"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C5, ADDRESS_OFFSET, 7, "Report10"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 0, "Report11"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 1, "Report12"));
-            importantChecks.Add(reportItem = new Report(memory, Save + 0x36C6, ADDRESS_OFFSET, 2, "Report13"));
-
-            importantChecks.Add(charmItem = new Summon(memory, Save + 0x36C0, ADDRESS_OFFSET, 3, "Baseball"));
-            importantChecks.Add(charmItem = new Summon(memory, Save + 0x36C0, ADDRESS_OFFSET, 0, "Ukulele"));
-            importantChecks.Add(charmItem = new Summon(memory, Save + 0x36C4, ADDRESS_OFFSET, 4, "Lamp"));
-            importantChecks.Add(charmItem = new Summon(memory, Save + 0x36C4, ADDRESS_OFFSET, 5, "Feather"));
-
-            importantChecks.Add(proofItem = new Proof(memory, Save + 0x3694, ADDRESS_OFFSET, "PromiseCharm"));
-            importantChecks.Add(proofItem = new Proof(memory, Save + 0x36B4, ADDRESS_OFFSET, "Peace"));
-            importantChecks.Add(proofItem = new Proof(memory, Save + 0x36B3, ADDRESS_OFFSET, "Nonexistence"));
-            importantChecks.Add(proofItem = new Proof(memory, Save + 0x36B2, ADDRESS_OFFSET, "Connection"));
-
-
             int AuronWepCount = AuronWep != null ? AuronWep.Level : 0;
             int MulanWepCount = MulanWep != null ? MulanWep.Level : 0;
             int BeastWepCount = BeastWep != null ? BeastWep.Level : 0;
@@ -543,18 +568,12 @@ namespace KhTracker
             int IceCreamCount = IceCream != null ? IceCream.Level : 0;
             int RikuWepCount = RikuWep != null ? RikuWep.Level : 0;
             int KingsLetterCount = KingsLetter != null ? KingsLetter.Level : 0;
-            importantChecks.Add(AuronWep = new VisitNew(memory, Save + 0x35AE, ADDRESS_OFFSET, "AuronWep"));
-            importantChecks.Add(MulanWep = new VisitNew(memory, Save + 0x35AF, ADDRESS_OFFSET, "MulanWep"));
-            importantChecks.Add(BeastWep = new VisitNew(memory, Save + 0x35B3, ADDRESS_OFFSET, "BeastWep"));
-            importantChecks.Add(JackWep = new VisitNew(memory, Save + 0x35B4, ADDRESS_OFFSET, "JackWep"));
-            importantChecks.Add(SimbaWep = new VisitNew(memory, Save + 0x35B5, ADDRESS_OFFSET, "SimbaWep"));
-            importantChecks.Add(SparrowWep = new VisitNew(memory, Save + 0x35B6, ADDRESS_OFFSET, "SparrowWep"));
-            importantChecks.Add(AladdinWep = new VisitNew(memory, Save + 0x35C0, ADDRESS_OFFSET, "AladdinWep"));
-            importantChecks.Add(TronWep = new VisitNew(memory, Save + 0x35C2, ADDRESS_OFFSET, "TronWep"));
-            importantChecks.Add(MembershipCard = new VisitNew(memory, Save + 0x3643, ADDRESS_OFFSET, "MembershipCard"));
-            importantChecks.Add(IceCream = new VisitNew(memory, Save + 0x3649, ADDRESS_OFFSET, "IceCream"));
-            importantChecks.Add(RikuWep = new VisitNew(memory, Save + 0x35C1, ADDRESS_OFFSET, "RikuWep"));
-            importantChecks.Add(KingsLetter = new VisitNew(memory, Save + 0x365D, ADDRESS_OFFSET, "KingsLetter"));
+            fire.Level = fireCount;
+            blizzard.Level = blizzardCount;
+            thunder.Level = thunderCount;
+            cure.Level = cureCount;
+            magnet.Level = magnetCount;
+            reflect.Level = reflectCount;
             AuronWep.Level = AuronWepCount;
             MulanWep.Level = MulanWepCount;
             BeastWep.Level = BeastWepCount;
@@ -567,31 +586,7 @@ namespace KhTracker
             IceCream.Level = IceCreamCount;
             RikuWep.Level = RikuWepCount;
             KingsLetter.Level = KingsLetterCount;
-            importantChecks.Add(visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches"));
-            //importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
 
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3696, ADDRESS_OFFSET, "HadesCup"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3644, ADDRESS_OFFSET, "OlympusStone"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x365F, ADDRESS_OFFSET, "UnknownDisk"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x363C, ADDRESS_OFFSET, "MunnyPouch1"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3695, ADDRESS_OFFSET, "MunnyPouch2"));
-
-
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x35A2, ADDRESS_OFFSET, "ChestTT"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x368D, ADDRESS_OFFSET, "ChestSTT"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3689, ADDRESS_OFFSET, "ChestHB"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3699, ADDRESS_OFFSET, "ChestCoR"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3687, ADDRESS_OFFSET, "ChestAG"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3685, ADDRESS_OFFSET, "ChestBC"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3680, ADDRESS_OFFSET, "ChestDC"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3688, ADDRESS_OFFSET, "ChestHT"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x367C, ADDRESS_OFFSET, "ChestLoD"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x367F, ADDRESS_OFFSET, "ChestOC"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3682, ADDRESS_OFFSET, "ChestPL"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3681, ADDRESS_OFFSET, "ChestPR"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3683, ADDRESS_OFFSET, "ChestSP"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x3698, ADDRESS_OFFSET, "ChestTWTNW"));
-            importantChecks.Add(extraItem = new Extra(memory, Save + 0x368A, ADDRESS_OFFSET, "ChestHAW"));
 
 
             //change this for flag checking to determine amount of pages?
@@ -614,10 +609,6 @@ namespace KhTracker
             stats = new Stats(memory, ADDRESS_OFFSET, Save + 0x24FE, Slot1 + 0x188, Save + 0x3524, Save + 0x3700, NextSlot);
             rewards = new Rewards(memory, ADDRESS_OFFSET, Bt10);
 
-            if (!data.altFinalTracking)
-                checkEveryCheck = new CheckEveryCheck(memory, ADDRESS_OFFSET, Save, Sys3, Bt10, world, stats, rewards, valor, wisdom, limit, master, final);
-
-
             // set stat info visibiliy
             Level.Visibility = Visibility.Visible;
             Strength.Visibility = Visibility.Visible;
@@ -632,7 +623,6 @@ namespace KhTracker
             DeathCounterDisplay();
             SetBindings();
             SetTimer();
-            //OnTimedEvent(null, null);
         }
 
         ///
@@ -689,8 +679,7 @@ namespace KhTracker
                     importantCheck.UpdateMemory();
                 });
 
-                if (data.objectiveMode)
-                    UpdateSupportingTrackers("Dummy");
+                UpdateSupportingTrackers("Dummy");
 
                 #region For Debugging
                     //Modified to only update if any of these actually change instead of updating every tick
@@ -819,7 +808,7 @@ namespace KhTracker
                 switch (gridCheckName)
                 {
                     case "Lords":
-                        checks.AddRange(("BlizzardLord,VolcanoLord,Lords").Split(',').ToList());
+                        checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
                         break;
                     case "SephiDemyx":
                         checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
@@ -1259,6 +1248,50 @@ namespace KhTracker
             while (objMark.Level > objMarkLevel)
             {
                 ++objMarkLevel;
+
+                if (CheckSynthPuzzle())
+                {
+                    string puzzFile = "";
+                    if (pcsx2tracking)
+                    {
+                        puzzFile = ReadMemString(0x038254A, 13);
+                    }
+                    else
+                        puzzFile = ReadMemString(ReadPcPointer(0x29F0998) + 0x24, 28);
+
+                    string puzzName = "Dummy";
+                    switch (puzzFile)
+                    {
+                        case "puzzle020.bin":
+                        case "menu/jm_puzzle/puzzle020.bin":
+                            puzzName = "PuzzAwakening";
+                            break;
+                        case "puzzle040.bin":
+                        case "menu/jm_puzzle/puzzle040.bin":
+                            puzzName = "PuzzHeart";
+                            break;
+                        case "puzzle010.bin":
+                        case "menu/jm_puzzle/puzzle010.bin":
+                            puzzName = "PuzzDuality";
+                            break;
+                        case "puzzle030.bin":
+                        case "menu/jm_puzzle/puzzle030.bin":
+                            puzzName = "PuzzFrontier";
+                            break;
+                        case "puzzle050.bin":
+                        case "menu/jm_puzzle/puzzle050.bin":
+                            puzzName = "PuzzDaylight";
+                            break;
+                        case "puzzle060.bin":
+                        case "menu/jm_puzzle/puzzle060.bin":
+                            puzzName = "PuzzSunset";
+                            break;
+                        default:
+                            return;
+                    }
+                    UpdateSupportingTrackers(puzzName);
+                }
+
                 if (world.worldName == "HollowBastion" && world.roomNumber == 24)
                 {
                     UpdateSupportingTrackers("EndOfCoR");
@@ -2357,23 +2390,19 @@ namespace KhTracker
                 if (check.Obtained && collectedChecks.Contains(check) == false)
                 {
                     // skip auto tracking final if it was forced and valor
-                    if (check.Name == "Valor" && valor.genieFix == true && !data.altFinalTracking)
-                    {
-                        valor.Obtained = false;
-                    }
-                    else if (check.Name == "Final" && !data.altFinalTracking)
+                    if (check.Name == "Final")
                     {
                         // if forced Final, start tracking the Final Form check
                         if (!data.forcedFinal && stats.form == 5)
                         {
                             data.forcedFinal = true;
-                            checkEveryCheck.TrackCheck(0x001D);
+                            //checkEveryCheck.TrackCheck(0x001D);
                             if (gridWindow.gridSettings["ForcingFinalCounts"])
                                 UpdateSupportingTrackers("Final");
                         }
                         // if not forced Final, track Final Form check like normal
                         // else if Final was forced, check the tracked Final Form check
-                        else if (!data.forcedFinal || checkEveryCheck.UpdateTargetMemory())
+                        else if (!data.forcedFinal) //|| checkEveryCheck.UpdateTargetMemory())
                         {
                             collectedChecks.Add(check);
                             newChecks.Add(check);
@@ -3449,17 +3478,9 @@ namespace KhTracker
             BindForm(WisdomM, "Obtained", wisdom);
             BindForm(LimitM, "Obtained", limit);
             BindForm(MasterM, "Obtained", master);
-
-            if (data.altFinalTracking)
-            {
-                BindForm(ValorM, "Obtained", valorReal);
-                BindForm(FinalM, "Obtained", finalReal);
-            }
-            else
-            {
-                BindForm(ValorM, "Obtained", valor);
-                BindForm(FinalM, "Obtained", final);
-            }
+            BindForm(ValorM, "Obtained", valor);
+            //use final's real address so icon can highlight when final is forced
+            BindForm(FinalM, "Obtained", finalReal);
         }
 
         private void BindForm(ContentControl img, string property, object source)
@@ -3499,13 +3520,6 @@ namespace KhTracker
         {
             return world.worldName;
         }
-
-        //public void UpdateUsedPages()
-        //{
-        //
-        //
-        //    data.usedPages++;
-        //}
 
         public int GetUsedPages(int save)
         {
