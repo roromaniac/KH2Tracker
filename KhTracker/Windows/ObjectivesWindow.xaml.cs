@@ -194,12 +194,12 @@ namespace KhTracker
             {"Luxord", new Tuple<string, int>("Item and Stat Bonus", 24)},
             {"Saix", new Tuple<string, int>("Stat Bonus", 25)},
             {"Xemnas1", new Tuple<string, int>("Double Stat Bonus", 26)},
-            {"GridDataFinalXemnas", new Tuple<string, int>("Popup", 554)},
+            {"DataXemnas", new Tuple<string, int>("Popup", 554)},
             {"SpookyCave", new Tuple<string, int>("Popup", 284)},
             {"StarryHill", new Tuple<string, int>("Popup", 285)},
             {"Tutorial", new Tuple<string, int>("Popup", 367)},
             {"Ursula", new Tuple<string, int>("Popup", 287)},
-            {"NewDay", new Tuple<string, int>("Popup", 279)},
+            {"ObjectiveNewDay", new Tuple<string, int>("Popup", 279)},
             {"Valor3", new Tuple<string, int>("Valor Level", 3)},
             {"Valor5", new Tuple<string, int>("Valor Level", 5)},
             {"Valor7", new Tuple<string, int>("Valor Level", 7)},
@@ -266,19 +266,23 @@ namespace KhTracker
 
         private void InitOptions()
         {
-            //// enable televo icons
-            //TelevoIconsOption.IsChecked = Properties.Settings.Default.TelevoIcons;
-            //TelevoIconsToggle(TelevoIconsOption.IsChecked);
-            //
-            //// enable sonic icons
-            //SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
-            //SonicIconsToggle(SonicIconsOption.IsChecked);
+            // enable televo icons
+            ObjTelevoIconsOption.IsChecked = Properties.Settings.Default.ObjectiveTelevo;
+            ObjTelevoIconsToggle(ObjTelevoIconsOption.IsChecked);
+            
+            // enable sonic icons
+            ObjSonicIconsOption.IsChecked = Properties.Settings.Default.ObjectiveSonic;
+            ObjSonicIconsToggle(ObjSonicIconsOption.IsChecked);
+
+            //enable custom icons
+            ObjCustomIconsOption.IsChecked = Properties.Settings.Default.ObjectiveCustom;
+            ObjCustomIconsToggle(ObjCustomIconsOption.IsChecked);
         }
 
         public void GenerateObjGrid(Dictionary<string, object> hintObject)
         {
             //reset banner visibility
-            UpdateGridBanner(true, "OBJECTIVES NEEDED");
+            UpdateGridBanner(true, "OBJECTIVES COMPLETED");
 
             //get total needed
             objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
@@ -305,9 +309,8 @@ namespace KhTracker
                     }
                 }
             }
-            //for now only use simple icons TODO: setup other styles
-            string style = "Grid_Min-"; //TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
-            assets = assets.Select(item => style + item).ToList();
+            //fix icon prefix for assets
+            getAsetPrefix();
 
             //get grid size
             int objectiveCount = assets.Count;
@@ -325,16 +328,6 @@ namespace KhTracker
             originalColors = new Color[numRows, numColumns];
             annotationStatus = new bool[numRows, numColumns];
 
-            // get raw check names
-            //assets = Asset_Collection();
-            // set the content resource reference with style
-            //string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
-            //assets = assets.Select(item => style + item).ToList();
-            //if custom images we need to fix the asset names
-            //if (CustomGridIconsOption.IsChecked)
-            //    Change_Icons();
-
-
             // generate the grid
             for (int i = 0; i < numRows; i++)
             {
@@ -346,11 +339,13 @@ namespace KhTracker
                 objGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
             }
 
+            int buttonDone = 0;
+
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
                 {
-                    if ((i + 1) * (j + 1) > assets.Count)
+                    if (buttonDone >= assets.Count)
                         continue;
 
                     ToggleButton button = new ToggleButton();
@@ -358,6 +353,7 @@ namespace KhTracker
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
+                    //string Tag = assets[(i * numColumns) + j].ToString();
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -369,6 +365,8 @@ namespace KhTracker
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
                     objGrid.Children.Add(button);
+
+                    buttonDone++;
                 }
             }
 
@@ -388,7 +386,7 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                GridTextHeader.Height = new GridLength(0.1, GridUnitType.Star);
+                GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
                 objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
                 objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
                 CollectionGrid.Visibility = Visibility.Visible;
@@ -506,7 +504,130 @@ namespace KhTracker
                     }
                 }
             }
+            checkNeeded();
             sender.Hide();
+        }
+
+        //Image toggle functions
+        private void getAsetPrefix()
+        {
+            string style = ObjTelevoIconsOption.IsChecked ? "Obj_Min-" : "Obj_Old-";
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                if (ObjCustomIconsOption.IsChecked && MainWindow.CusObjImagesList.Contains("Obj_Cus-" + assets[i]))
+                {
+                    assets[i] = "Obj_Cus-" + assets[i];
+                    continue;
+                }
+
+                assets[i] = style + assets[i];
+            }
+        }
+
+        private void updateAssetPrefix(bool usedCustomToggle = false)
+        {
+            bool useCustom = ObjCustomIconsOption.IsChecked;
+
+            string prefix1 = "Obj_Old-";
+            string prefix2 = "Obj_Min-";
+            if (ObjSonicIconsOption.IsChecked)
+            {
+                prefix1 = "Obj_Min-";
+                prefix2 = "Obj_Old-";
+            }
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                //if already a custom prefix then skip
+                if (useCustom && assets[i].StartsWith("Obj_Cus-"))
+                    continue;
+
+                //if custom toggle on then check for and replace normal prefix with custom one
+                if (useCustom)
+                {
+                    string cusCheck = assets[i].Replace(prefix1, "Obj_Cus-");
+                    if (usedCustomToggle)
+                            cusCheck = assets[i].Replace(prefix2, "Obj_Cus-");
+                    if (MainWindow.CusObjImagesList.Contains(cusCheck))
+                    {
+                        assets[i] = cusCheck;
+                        continue;
+                    }
+                }
+
+                //if custom toggle is off check if prefix was custom and fix it else replace as normal
+                if (assets[i].StartsWith("Obj_Cus-"))
+                    assets[i] = assets[i].Replace("Obj_Cus-", prefix2);
+                else
+                    assets[i] = assets[i].Replace(prefix1, prefix2);
+            }
+            Change_Icons();
+        }
+
+        private void Change_Icons()
+        {
+            if (objGrid == null)
+                return;
+
+            string prefix = "Obj_Min-";
+            if (ObjSonicIconsOption.IsChecked)
+                prefix = "Obj_Old-";
+
+            foreach (var child in objGrid.Children)
+            {
+                //check if it's a toggle button
+                if (child is ToggleButton square)
+                {
+                    string squareTag = square.Tag.ToString().Remove(0, 8);
+                    //check 
+                    if (ObjCustomIconsOption.IsChecked && assets.Contains("Obj_Cus-" + squareTag))
+                    {
+                        square.SetResourceReference(ContentProperty, "Obj_Cus-" + squareTag);
+                        continue;
+                    }
+
+                    square.SetResourceReference(ContentProperty, prefix + squareTag);
+                }
+            }
+        }
+
+        private void ObjTelevoIconsToggle(object sender, RoutedEventArgs e)
+        {
+            ObjTelevoIconsToggle(ObjTelevoIconsOption.IsChecked);
+        }
+        private void ObjTelevoIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.ObjectiveTelevo = toggle;
+            ObjTelevoIconsOption.IsChecked = toggle;
+            ObjSonicIconsOption.IsChecked = !toggle;
+
+            updateAssetPrefix();
+        }
+
+        private void ObjSonicIconsToggle(object sender, RoutedEventArgs e)
+        {
+            ObjSonicIconsToggle(ObjSonicIconsOption.IsChecked);
+        }
+        private void ObjSonicIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.ObjectiveSonic = toggle;
+            ObjSonicIconsOption.IsChecked = toggle;
+            ObjTelevoIconsOption.IsChecked = !toggle;
+
+            updateAssetPrefix();
+        }
+
+        private void ObjCustomIconsToggle(object sender, RoutedEventArgs e)
+        {
+            ObjCustomIconsToggle(ObjSonicIconsOption.IsChecked);
+        }
+
+        private void ObjCustomIconsToggle(bool toggle)
+        {
+            Properties.Settings.Default.ObjectiveCustom = toggle;
+
+            updateAssetPrefix(true);
         }
     }
 }

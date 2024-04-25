@@ -1,0 +1,667 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KhTracker">
+
+    <!--#region Minimal-->
+
+    <!-- Progression -->
+    <!--Simulated Twilight Town-->
+    <Image x:Key="Obj_Min-TwilightThorn"       Source="Images\Grid\Bosses\Min\twilightthorn.png"                                   x:Shared="false" ToolTip="Defeat Twilight Thorn"/>
+    <Image x:Key="Obj_Min-Axel1"               Source="Images\Grid\Bosses\Min\org_axelstruggle.png"                                x:Shared="false" ToolTip="Defeat Axel I"/>
+    <Image x:Key="Obj_Min-Struggle"            Source="Images\Grid\Progression\Min\simulated_twilight_town\struggle.png"           x:Shared="false" ToolTip="Fight Setzer"/>
+    <Image x:Key="Obj_Min-Axel"                Source="Images\Grid\Bosses\Min\org_axel.png"                                        x:Shared="false" ToolTip="Defeat Axel II"/>
+    <Grid x:Key="Obj_Min-GridDataRoxas" x:Shared="false" ToolTip="Defeat Data Roxas" >
+        <Image Source="Images\Grid\Bosses\Min\org_roxas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Twilight Town-->
+    <Image x:Key="Obj_Min-MysteriousTower"     Source="Images\Grid\Progression\Min\twilight_town\mysterious_tower.png"             x:Shared="false" ToolTip="Talk to the 3 Fairies"/>
+    <Image x:Key="Obj_Min-Sandlot"             Source="Images\Grid\Progression\Min\twilight_town\berserkers.png"                   x:Shared="false" ToolTip="Defeat Sandlot Berserkers"/>
+    <Image x:Key="Obj_Min-BetwixtAndBetween"   Source="Images\Grid\Progression\Min\twilight_town\betwixt_and_between.png"          x:Shared="false" ToolTip="Fight alongside Axel"/>
+    <Grid x:Key="Obj_Min-GridDataAxel" x:Shared="false" ToolTip="Defeat Data Axel" >
+        <Image Source="Images\Grid\Bosses\Min\org_axel.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Hollow Bastion-->
+    <Image x:Key="Obj_Min-Bailey"              Source="Images\Grid\Progression\Min\hollow_bastion\bailey.png"                      x:Shared="false" ToolTip="Defend the Bailey"/>
+    <Image x:Key="Obj_Min-HBDemyx"             Source="Images\Grid\Bosses\Min\org_demyx.png"                                       x:Shared="false" ToolTip="Defeat Demyx"/>
+    <Image x:Key="Obj_Min-1000Heartless"       Source="Images\Grid\Progression\Min\hollow_bastion\1000_heartless.png"              x:Shared="false" ToolTip="Stop the 1000 Heartless"/>
+    <Image x:Key="Obj_Min-GridSephiroth"       Source="Images\Grid\Bosses\Min\super_sephiroth.png"                                 x:Shared="false" ToolTip="Defeat Sephiroth"/>
+    <Grid x:Key="Obj_Min-GridDataDemyx" x:Shared="false" ToolTip="Defeat Data Demyx" >
+        <Image Source="Images\Grid\Bosses\Min\org_demyx.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Cavern of Rememberance-->
+    <Image x:Key="Obj_Min-EndOfCoR"	        Source="Images\Grid\Objectives\Min\EndOfCoR.png"                                    x:Shared="false" ToolTip="Reach the end of Cavern of Remembrance"/>
+    <Image x:Key="Obj_Min-Transport"           Source="Images\Grid\Progression\Min\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Reach the end of Transport of Remembrance"/>
+    <!--Land of Dragons-->
+    <Image x:Key="Obj_Min-Mountain"            Source="Images\Grid\Progression\Min\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Climb the Mountain Trail"/>
+    <Image x:Key="Obj_Min-Cave"                Source="Images\Grid\Progression\Min\land_of_dragons\village_cave.png"               x:Shared="false" ToolTip="Fight the Enemies in Village Cave"/>
+    <Image x:Key="Obj_Min-ShanYu"              Source="Images\Grid\Bosses\Min\shanyu.png"                                          x:Shared="false" ToolTip="Defeat Shan Yu"/>
+    <Image x:Key="Obj_Min-StormRider"          Source="Images\Grid\Bosses\Min\stormrider.png"                                      x:Shared="false" ToolTip="Defeat Stormrider"/>
+    <Grid x:Key="Obj_Min-GridDataXigbar" x:Shared="false" ToolTip="Defeat Data Xigbar" >
+        <Image Source="Images\Grid\Bosses\Min\org_xigbar.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Beasts Castle-->
+    <Image x:Key="Obj_Min-Thresholder"         Source="Images\Grid\Bosses\min\thresholder.png"                                     x:Shared="false" ToolTip="Defeat Thresholder"/>
+    <Image x:Key="Obj_Min-Beast"               Source="Images\Grid\Bosses\min\beast.png"                                           x:Shared="false" ToolTip="Help Beast"/>
+    <Image x:Key="Obj_Min-DarkThorn"           Source="Images\Grid\Bosses\min\darkthorn.png"                                       x:Shared="false" ToolTip="Defeat Dark Thorn"/>
+    <Image x:Key="Obj_Min-Xaldin"              Source="Images\Grid\Bosses\min\org_xaldin.png"                                      x:Shared="false" ToolTip="Defeat Xaldin"/>
+    <Grid x:Key="Obj_Min-GridDataXaldin" x:Shared="false" ToolTip="Defeat Data Xaldin" >
+        <Image Source="Images\Grid\Bosses\Min\org_xaldin.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Olympus Coliseum-->
+    <Image x:Key="Obj_Min-Cerberus"            Source="Images\Grid\Bosses\Min\cerberus.png"                                        x:Shared="false" ToolTip="Defeat Cerberus"/>
+    <Image x:Key="Obj_Min-Urns"                Source="Images\Grid\Progression\Min\olympus_coliseum\urns.png"                      x:Shared="false" ToolTip="Train with Phil"/>
+    <Image x:Key="Obj_Min-OCPete"              Source="Images\Grid\Progression\Min\olympus_coliseum\the_lock.png"                  x:Shared="false" ToolTip="Defeat Pete at The Lock"/>
+    <Image x:Key="Obj_Min-Hydra"               Source="Images\Grid\Bosses\Min\hydra.png"                                           x:Shared="false" ToolTip="Defeat Hydra"/>
+    <Image x:Key="Obj_Min-AuronStatue"         Source="Images\Grid\Progression\Min\olympus_coliseum\dusks.png"                     x:Shared="false" ToolTip="Defeat the Ambush in Hades Chamber"/>
+    <Image x:Key="Obj_Min-Hades"               Source="Images\Grid\Bosses\Min\hades.png"                                           x:Shared="false" ToolTip="Defeat Hades"/>
+    <Image x:Key="Obj_Min-CupPP"	           Source="Images\Grid\Objectives\Min\PainandPanicCup.png"                             x:Shared="false" ToolTip="Win the Pain and Panic Cup"/>
+    <Image x:Key="Obj_Min-CupC"	               Source="Images\Grid\Objectives\Min\CerberusCup.png"                                 x:Shared="false" ToolTip="Win the Cerberus Cup"/>
+    <Image x:Key="Obj_Min-CupT"	               Source="Images\Grid\Objectives\Min\TitanCup.png"                                    x:Shared="false" ToolTip="Win the Titan Cup"/>
+    <Image x:Key="Obj_Min-CupGoF"	           Source="Images\Grid\Objectives\Min\GoddessCup.png"                                  x:Shared="false" ToolTip="Win the Goddess of Fate Cup"/>
+    <Grid x:Key="Obj_Min-GridZexion" x:Shared="false" ToolTip="Defeat AS Zexion" >
+        <Image Source="Images\Grid\Bosses\Min\org_zexion.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridZexionData" x:Shared="false" ToolTip="Defeat Data Zexion" >
+        <Image Source="Images\Grid\Bosses\Min\org_zexion.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Disney Castle-->
+    <Image x:Key="Obj_Min-Minnie"              Source="Images\Grid\Progression\Min\disney_castle\minnie.png"                       x:Shared="false" ToolTip="Escort Queen Minnie"/>
+    <Image x:Key="Obj_Min-Windows"             Source="Images\Grid\Progression\Min\disney_castle\windows_of_time.png"              x:Shared="false" ToolTip="Fight through Windows of Time"/>
+    <Image x:Key="Obj_Min-BoatPete"            Source="Images\Grid\Progression\Min\disney_castle\steamboat_pete.png"               x:Shared="false" ToolTip="Stop Pete from Escaping"/>
+    <Grid x:Key="Obj_Min-DCPete" x:Shared="false" ToolTip="Defeat Future Pete">
+        <Image Source="Images\Grid\Bosses\Min\pete.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\DisneyCastle.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridMarluxia" x:Shared="false" ToolTip="Defeat AS Marluxia" >
+        <Image Source="Images\Grid\Bosses\Min\org_marluxia.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridMarluxiaData" x:Shared="false" ToolTip="Defeat Data Marluxia" >
+        <Image Source="Images\Grid\Bosses\Min\org_marluxia.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <Image x:Key="Obj_Min-GridLingeringWill"   Source="Images\Grid\Bosses\Min\super_terra.png"                                     x:Shared="false" ToolTip="Defeat Lingering Will"/>
+    <!--Port Royal-->
+    <Image x:Key="Obj_Min-1Minute"             Source="Images\Grid\Progression\Min\port_royal\isla_de_muerta.png"                  x:Shared="false" ToolTip="Stall for time on Isla de Muerta"/>
+    <Image x:Key="Obj_Min-Medallions"          Source="Images\Grid\Progression\Min\port_royal\medallions.png"                      x:Shared="false" ToolTip="Defend the Interceptor from pirates"/>
+    <Image x:Key="Obj_Min-Barrels"             Source="Images\Grid\Progression\Min\port_royal\explosives.png"                      x:Shared="false" ToolTip="Stop the explosive barrels"/>
+    <Image x:Key="Obj_Min-Barbossa"            Source="Images\Grid\Bosses\Min\barbossa.png"                                        x:Shared="false" ToolTip="Defeat Barbossa"/>
+    <Image x:Key="Obj_Min-GrimReaper1"         Source="Images\Grid\Bosses\Min\grimreaper1.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper I"/>
+    <Image x:Key="Obj_Min-GrimReaper"          Source="Images\Grid\Bosses\Min\grimreaper2.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper II"/>
+    <Grid x:Key="Obj_Min-GridDataLuxord" x:Shared="false" ToolTip="Defeat Data Luxord" >
+        <Image Source="Images\Grid\Bosses\Min\org_luxord.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Agrabah-->
+    <Image x:Key="Obj_Min-Abu"                 Source="Images\Grid\Progression\Min\agrabah\abu.png"                                x:Shared="false" ToolTip="Escort Abu"/>
+    <Image x:Key="Obj_Min-TreasureRoom"        Source="Images\Grid\Progression\Min\agrabah\treasure_room.png"                      x:Shared="false" ToolTip="Survive the Treasure Room Ambush"/>
+    <Image x:Key="Obj_Min-Lords"               Source="Images\Grid\Progression\Min\agrabah\elemental_lords.png"                    x:Shared="false" ToolTip="Defeat the Elemental Lords"/>
+    <Image x:Key="Obj_Min-GenieJafar"          Source="Images\Grid\Bosses\Min\jafar.png"                                           x:Shared="false" ToolTip="Defeat Genie Jafar"/>
+    <Grid x:Key="Obj_Min-GridLexaeus" x:Shared="false" ToolTip="Defeat AS Lexaeus" >
+        <Image Source="Images\Grid\Bosses\Min\org_lexaeus.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridLexaeusData" x:Shared="false" ToolTip="Defeat Data Lexaeus" >
+        <Image Source="Images\Grid\Bosses\Min\org_lexaeus.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Halloween Town-->
+    <Image x:Key="Obj_Min-PrisonKeeper"        Source="Images\Grid\Bosses\Min\prisonkeeper.png"                                    x:Shared="false" ToolTip="Defeat Prison Keeper"/>
+    <Image x:Key="Obj_Min-OogieBoogie"         Source="Images\Grid\Bosses\Min\oogieboogie.png"                                     x:Shared="false" ToolTip="Defeat Oogie Boogie"/>
+    <Image x:Key="Obj_Min-Children"            Source="Images\Grid\Progression\Min\halloween_town\children.png"                    x:Shared="false" ToolTip="Capture Lock Shock and Barrel"/>
+    <Grid x:Key="Obj_Min-ObjectivePresents1" x:Shared="false" ToolTip="Find the stolen presents">
+        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-ObjectivePresents2" x:Shared="false" ToolTip="Create decoy presents">
+        <Image Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Image x:Key="Obj_Min-Experiment"          Source="Images\Grid\Bosses\Min\experiment.png"                                      x:Shared="false" ToolTip="Defeat the Experiment"/>
+    <Grid x:Key="Obj_Min-GridVexen" x:Shared="false" ToolTip="Defeat AS Vexen" >
+        <Image Source="Images\Grid\Bosses\Min\org_vexen.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridVexenData" x:Shared="false" ToolTip="Defeat Data Vexen" >
+        <Image Source="Images\Grid\Bosses\Min\org_vexen.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Pride Lands-->
+    <Image x:Key="Obj_Min-Simba"               Source="Images\Grid\Progression\Min\pride_lands\oasis.png"                          x:Shared="false" ToolTip="Reunite with Simba"/>
+    <Image x:Key="Obj_Min-Hyenas1"             Source="Images\Grid\Progression\Min\pride_lands\timon_and_pumba.png"                x:Shared="false" ToolTip="Rescue Timon and Pumbaa"/>
+    <Image x:Key="Obj_Min-Scar"                Source="Images\Grid\Bosses\Min\scar.png"                                            x:Shared="false" ToolTip="Defeat Scar"/>
+    <Image x:Key="Obj_Min-Hyenas2"             Source="Images\Grid\Progression\Min\pride_lands\hyenas.png"                         x:Shared="false" ToolTip="Get info about the ghost of Scar from Hyenas"/>
+    <Image x:Key="Obj_Min-GroundShaker"        Source="Images\Grid\Bosses\Min\groundshaker.png"                                    x:Shared="false" ToolTip="Defeat Groundshaker"/>
+    <Grid x:Key="Obj_Min-GridDataSaix" x:Shared="false" ToolTip="Defeat Data Saix" >
+        <Image Source="Images\Grid\Bosses\Min\org_saix.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Space Paranoids-->
+    <Image x:Key="Obj_Min-Screens"             Source="Images\Grid\Progression\Min\space_paranoids\dataspace.png"                  x:Shared="false" ToolTip="Survive the Dataspace Attack"/>
+    <Image x:Key="Obj_Min-HostileProgram"      Source="Images\Grid\Bosses\Min\hostileprogram.png"                                  x:Shared="false" ToolTip="Defeat Hostile Program"/>
+    <Image x:Key="Obj_Min-SolarSailer"         Source="Images\Grid\Progression\Min\space_paranoids\solar_sailer.png"               x:Shared="false" ToolTip="Ride the Solar Sailor"/>
+    <Image x:Key="Obj_Min-MCP"                 Source="Images\Grid\Progression\Min\space_paranoids\mcp.png"                        x:Shared="false" ToolTip="Defeat MCP"/>
+    <Grid x:Key="Obj_Min-GridLarxene" x:Shared="false" ToolTip="Defeat AS Larxene" >
+        <Image Source="Images\Grid\Bosses\Min\org_larxene.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-GridLarxeneData" x:Shared="false" ToolTip="Defeat Data Larxene" >
+        <Image Source="Images\Grid\Bosses\Min\org_larxene.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--TWTNW-->
+    <Image x:Key="Obj_Min-Roxas"               Source="Images\Grid\Bosses\Min\Org_roxas.png"                                       x:Shared="false" ToolTip="Defeat Roxas"/>
+    <Image x:Key="Obj_Min-Xigbar"              Source="Images\Grid\Bosses\Min\Org_xigbar.png"                                      x:Shared="false" ToolTip="Defeat Xigbar"/>
+    <Image x:Key="Obj_Min-Luxord"              Source="Images\Grid\Bosses\Min\Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
+    <Image x:Key="Obj_Min-Saix"                Source="Images\Grid\Bosses\Min\Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
+    <Image x:Key="Obj_Min-Xemnas1"             Source="Images\Grid\Bosses\Min\org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
+    <Grid x:Key="Obj_Min-DataXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
+        <Image Source="Images\Grid\Bosses\Min\org_finalxemnas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--100 Acre Wood-->
+    <Image x:Key="Obj_Min-SpookyCave"          Source="Images\Grid\Progression\Min\100_acre_wood\expotition.png"                   x:Shared="false" ToolTip="Rescue Pooh from the Spooky Cave"/>
+    <Image x:Key="Obj_Min-StarryHill"          Source="Images\Grid\Progression\Min\100_acre_wood\hunny_pot.png"                    x:Shared="false" ToolTip="Help Pooh out of the pot of hunny"/>
+    <!--Atlantica-->
+    <Image x:Key="Obj_Min-Tutorial"            Source="Images\Grid\Progression\Min\atlantica\tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
+    <Image x:Key="Obj_Min-Ursula"              Source="Images\Grid\Progression\Min\atlantica\ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
+    <Image x:Key="Obj_Min-ObjectiveNewDay"     Source="Images\Grid\Progression\Min\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+
+    <!--Drive Forms-->
+    <Grid x:Key="Obj_Min-Valor3" x:Shared="false" ToolTip="Reach Valor Level 3">
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Valor5" x:Shared="false" ToolTip="Reach Valor Level 5">
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Valor7" x:Shared="false" ToolTip="Reach Valor Level 7">
+        <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Wisdom3" x:Shared="false" ToolTip="Reach Wisdom Level 3">
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Wisdom5" x:Shared="false" ToolTip="Reach Wisdom Level 5">
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Wisdom7" x:Shared="false" ToolTip="Reach Wisdom Level 7">
+        <Image Source="Images\Grid\Checks\Min\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Limit3" x:Shared="false" ToolTip="Reach Limit Level 3">
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Limit5" x:Shared="false" ToolTip="Reach Limit Level 5">
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Limit7" x:Shared="false" ToolTip="Reach Limit Level 7">
+        <Image Source="Images\Grid\Checks\Min\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Master3" x:Shared="false" ToolTip="Reach Master Level 3">
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Master5" x:Shared="false" ToolTip="Reach Master Level 5">
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Master7" x:Shared="false" ToolTip="Reach Master Level 7">
+        <Image Source="Images\Grid\Checks\Min\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Final3" x:Shared="false" ToolTip="Reach Final Level 3">
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Final5" x:Shared="false" ToolTip="Reach Final Level 5">
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-Final7" x:Shared="false" ToolTip="Reach Final Level 7">
+        <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+
+    <!--Puzzles-->
+    <Grid x:Key="Obj_Min-PuzzAwakening" x:Shared="false" ToolTip="Complete the Awakening Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-PuzzHeart" x:Shared="false" ToolTip="Complete the Heart Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-PuzzDuality" x:Shared="false" ToolTip="Complete the Duality Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-PuzzFrontier" x:Shared="false" ToolTip="Complete the Frontier Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-PuzzDaylight" x:Shared="false" ToolTip="Complete the Daylight Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Min-PuzzSunset" x:Shared="false" ToolTip="Complete the Sunset Puzzle">
+        <Image Source="Images\Grid\Objectives\Min\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+
+    <!--#endregion-->
+
+    <!--#region Classic-->
+    <!-- Progression -->
+    <!--Simulated Twilight Town-->
+    <Image x:Key="Obj_Old-TwilightThorn"       Source="Images\Grid\Bosses\Old\twilightthorn.png"                                   x:Shared="false" ToolTip="Defeat Twilight Thorn"/>
+    <Grid x:Key="Obj_Old-Axel1" x:Shared="false" ToolTip="Defeat Axel I" >
+        <Image Source="Images\Grid\Bosses\Old\org_axelstruggle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Image x:Key="Obj_Old-Struggle"            Source="Images\Grid\Progression\Old\simulated_twilight_town\struggle.png"           x:Shared="false" ToolTip="Fight Setzer"/>
+    <Grid x:Key="Obj_Old-Axel" x:Shared="false" ToolTip="Defeat Axel II" >
+        <Image Source="Images\Grid\Bosses\Old\org_axel.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridDataRoxas" x:Shared="false" ToolTip="Defeat Data Roxas" >
+        <Image Source="Images\Grid\Bosses\Old\org_roxas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Twilight Town-->
+    <Image x:Key="Obj_Old-MysteriousTower"     Source="Images\Grid\Progression\Old\twilight_town\mysterious_tower.png"             x:Shared="false" ToolTip="Talk to the 3 Fairies"/>
+    <Image x:Key="Obj_Old-Sandlot"             Source="Images\Grid\Progression\Old\twilight_town\berserkers.png"                   x:Shared="false" ToolTip="Defeat Sandlot Berserkers"/>
+    <Image x:Key="Obj_Old-BetwixtAndBetween"   Source="Images\Grid\Progression\Old\twilight_town\betwixt_and_between.png"          x:Shared="false" ToolTip="Fight alongside Axel"/>
+    <Grid x:Key="Obj_Old-GridDataAxel" x:Shared="false" ToolTip="Defeat Data Axel" >
+        <Image Source="Images\Grid\Bosses\Old\org_axel.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Hollow Bastion-->
+    <Image x:Key="Obj_Old-Bailey"              Source="Images\Grid\Progression\Old\hollow_bastion\bailey.png"                      x:Shared="false" ToolTip="Defend the Bailey"/>
+    <Image x:Key="Obj_Old-HBDemyx"             Source="Images\Grid\Bosses\Old\org_demyx.png"                                       x:Shared="false" ToolTip="Defeat Demyx"/>
+    <Image x:Key="Obj_Old-1000Heartless"       Source="Images\Grid\Progression\Old\hollow_bastion\1000_heartless.png"              x:Shared="false" ToolTip="Stop the 1000 Heartless"/>
+    <Image x:Key="Obj_Old-GridSephiroth"       Source="Images\Grid\Bosses\Old\super_sephiroth.png"                                 x:Shared="false" ToolTip="Defeat Sephiroth"/>
+    <Grid x:Key="Obj_Old-GridDataDemyx" x:Shared="false" ToolTip="Defeat Data Demyx" >
+        <Image Source="Images\Grid\Bosses\Old\org_demyx.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Cavern of Rememberance-->
+    <Image x:Key="Obj_Old-EndOfCoR"	           Source="Images\Grid\Objectives\Old\EndOfCoR.png"                                    x:Shared="false" ToolTip="Reach the end of Cavern of Remembrance"/>
+    <Image x:Key="Obj_Old-Transport"           Source="Images\Grid\Progression\Old\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Reach the end of Transport of Remembrance"/>
+    <!--Land of Dragons-->
+    <Image x:Key="Obj_Old-Mountain"            Source="Images\Grid\Progression\Old\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Climb the Mountain Trail"/>
+    <Image x:Key="Obj_Old-Cave"                Source="Images\Grid\Progression\Old\land_of_dragons\village_cave.png"               x:Shared="false" ToolTip="Fight the Enemies in Village Cave"/>
+    <Image x:Key="Obj_Old-ShanYu"              Source="Images\Grid\Bosses\Old\shanyu.png"                                          x:Shared="false" ToolTip="Defeat Shan Yu"/>
+    <Image x:Key="Obj_Old-StormRider"          Source="Images\Grid\Bosses\Old\stormrider.png"                                      x:Shared="false" ToolTip="Defeat Stormrider"/>
+    <Grid x:Key="Obj_Old-GridDataXigbar" x:Shared="false" ToolTip="Defeat Data Xigbar" >
+        <Image Source="Images\Grid\Bosses\Old\org_xigbar.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Beasts Castle-->
+    <Image x:Key="Obj_Old-Thresholder"         Source="Images\Grid\Bosses\Old\thresholder.png"                                     x:Shared="false" ToolTip="Defeat Thresholder"/>
+    <Image x:Key="Obj_Old-Beast"               Source="Images\Grid\Bosses\Old\beast.png"                                           x:Shared="false" ToolTip="Help Beast"/>
+    <Image x:Key="Obj_Old-DarkThorn"           Source="Images\Grid\Bosses\Old\darkthorn.png"                                       x:Shared="false" ToolTip="Defeat Dark Thorn"/>
+    <Image x:Key="Obj_Old-Xaldin"              Source="Images\Grid\Bosses\Old\org_xaldin.png"                                      x:Shared="false" ToolTip="Defeat Xaldin"/>
+    <Grid x:Key="Obj_Old-GridDataXaldin" x:Shared="false" ToolTip="Defeat Data Xaldin" >
+        <Image Source="Images\Grid\Bosses\Old\org_xaldin.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Olympus Coliseum-->
+    <Image x:Key="Obj_Old-Cerberus"            Source="Images\Grid\Bosses\Old\cerberus.png"                                        x:Shared="false" ToolTip="Defeat Cerberus"/>
+    <Image x:Key="Obj_Old-Urns"                Source="Images\Grid\Progression\Old\olympus_coliseum\urns.png"                      x:Shared="false" ToolTip="Train with Phil"/>
+    <Image x:Key="Obj_Old-OCPete"              Source="Images\Grid\Progression\Old\olympus_coliseum\the_lock.png"                  x:Shared="false" ToolTip="Defeat Pete at The Lock"/>
+    <Image x:Key="Obj_Old-Hydra"               Source="Images\Grid\Bosses\Old\hydra.png"                                           x:Shared="false" ToolTip="Defeat Hydra"/>
+    <Image x:Key="Obj_Old-AuronStatue"         Source="Images\Grid\Progression\Old\olympus_coliseum\dusks.png"                     x:Shared="false" ToolTip="Defeat the Ambush in Hades Chamber"/>
+    <Image x:Key="Obj_Old-Hades"               Source="Images\Grid\Bosses\Old\hades.png"                                           x:Shared="false" ToolTip="Defeat Hades"/>
+    <Image x:Key="Obj_Old-CupPP"	           Source="Images\Grid\Objectives\Old\PainandPanicCup.png"                             x:Shared="false" ToolTip="Win the Pain and Panic Cup"/>
+    <Image x:Key="Obj_Old-CupC"	               Source="Images\Grid\Objectives\Old\CerberusCup.png"                                 x:Shared="false" ToolTip="Win the Cerberus Cup"/>
+    <Image x:Key="Obj_Old-CupT"	               Source="Images\Grid\Objectives\Old\TitanCup.png"                                    x:Shared="false" ToolTip="Win the Titan Cup"/>
+    <Image x:Key="Obj_Old-CupGoF"	           Source="Images\Grid\Objectives\Old\GoddessCup.png"                                  x:Shared="false" ToolTip="Win the Goddess of Fate Cup"/>
+    <Grid x:Key="Obj_Old-GridZexion" x:Shared="false" ToolTip="Defeat AS Zexion" >
+        <Image Source="Images\Grid\Bosses\Old\org_zexion.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridZexionData" x:Shared="false" ToolTip="Defeat Data Zexion" >
+        <Image Source="Images\Grid\Bosses\Old\org_zexion.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Disney Castle-->
+    <Image x:Key="Obj_Old-Minnie"              Source="Images\Grid\Progression\Old\disney_castle\minnie.png"                       x:Shared="false" ToolTip="Escort Queen Minnie"/>
+    <Image x:Key="Obj_Old-Windows"             Source="Images\Grid\Progression\Old\disney_castle\windows_of_time.png"              x:Shared="false" ToolTip="Fight through Windows of Time"/>
+    <Image x:Key="Obj_Old-BoatPete"            Source="Images\Grid\Progression\Old\disney_castle\steamboat_pete.png"               x:Shared="false" ToolTip="Stop Pete from Escaping"/>
+    <Image x:Key="Obj_Old-DCPete"              Source="Images\Grid\Bosses\Old\peteTR.png"                                          x:Shared="false" ToolTip="Defeat Future Pete"/>
+    <Grid x:Key="Obj_Old-GridMarluxia" x:Shared="false" ToolTip="Defeat AS Marluxia" >
+        <Image Source="Images\Grid\Bosses\Old\org_marluxia.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridMarluxiaData" x:Shared="false" ToolTip="Defeat Data Marluxia" >
+        <Image Source="Images\Grid\Bosses\Old\org_marluxia.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <Image x:Key="Obj_Old-GridLingeringWill"   Source="Images\Grid\Bosses\Old\super_terra.png"                                     x:Shared="false" ToolTip="Defeat Lingering Will"/>
+    <!--Port Royal-->
+    <Image x:Key="Obj_Old-1Minute"             Source="Images\Grid\Progression\Old\port_royal\isla_de_muerta.png"                  x:Shared="false" ToolTip="Stall for time on Isla de Muerta"/>
+    <Image x:Key="Obj_Old-Medallions"          Source="Images\Grid\Progression\Old\port_royal\medallions.png"                      x:Shared="false" ToolTip="Defend the Interceptor from pirates"/>
+    <Image x:Key="Obj_Old-Barrels"             Source="Images\Grid\Progression\Old\port_royal\explosives.png"                      x:Shared="false" ToolTip="Stop the explosive barrels"/>
+    <Image x:Key="Obj_Old-Barbossa"            Source="Images\Grid\Bosses\Old\barbossa.png"                                        x:Shared="false" ToolTip="Defeat Barbossa"/>
+    <Image x:Key="Obj_Old-GrimReaper1"         Source="Images\Grid\Bosses\Old\grimreaper1.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper I"/>
+    <Image x:Key="Obj_Old-GrimReaper"          Source="Images\Grid\Bosses\Old\grimreaper2.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper II"/>
+    <Grid x:Key="Obj_Old-GridDataLuxord" x:Shared="false" ToolTip="Defeat Data Luxord" >
+        <Image Source="Images\Grid\Bosses\Old\org_luxord.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Agrabah-->
+    <Image x:Key="Obj_Old-Abu"                 Source="Images\Grid\Progression\Old\agrabah\abu.png"                                x:Shared="false" ToolTip="Escort Abu"/>
+    <Image x:Key="Obj_Old-TreasureRoom"        Source="Images\Grid\Progression\Old\agrabah\treasure_room.png"                      x:Shared="false" ToolTip="Survive the Treasure Room Ambush"/>
+    <Image x:Key="Obj_Old-Lords"               Source="Images\Grid\Progression\Old\agrabah\elemental_lords.png"                    x:Shared="false" ToolTip="Defeat the Elemental Lords"/>
+    <Image x:Key="Obj_Old-GenieJafar"          Source="Images\Grid\Bosses\Old\jafar.png"                                           x:Shared="false" ToolTip="Defeat Genie Jafar"/>
+    <Grid x:Key="Obj_Old-GridLexaeus" x:Shared="false" ToolTip="Defeat AS Lexaeus" >
+        <Image Source="Images\Grid\Bosses\Old\org_lexaeus.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridLexaeusData" x:Shared="false" ToolTip="Defeat Data Lexaeus" >
+        <Image Source="Images\Grid\Bosses\Old\org_lexaeus.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Halloween Town-->
+    <Image x:Key="Obj_Old-PrisonKeeper"        Source="Images\Grid\Bosses\Old\prisonkeeper.png"                                    x:Shared="false" ToolTip="Defeat Prison Keeper"/>
+    <Image x:Key="Obj_Old-OogieBoogie"         Source="Images\Grid\Bosses\Old\oogieboogie.png"                                     x:Shared="false" ToolTip="Defeat Oogie Boogie"/>
+    <Image x:Key="Obj_Old-Children"            Source="Images\Grid\Progression\Old\halloween_town\children.png"                    x:Shared="false" ToolTip="Capture Lock Shock and Barrel"/>
+    <Image x:Key="Obj_Old-ObjectivePresents1"  Source="Images\Grid\Objectives\Old\Presents.png"                                        x:Shared="false" ToolTip="Find the stolen presents"/>
+    <Image x:Key="Obj_Old-ObjectivePresents2"  Source="Images\Grid\Objectives\Old\DecoyPresents.png"                                   x:Shared="false" ToolTip="Create decoy presents"/>
+    <Image x:Key="Obj_Old-Experiment"          Source="Images\Grid\Bosses\Old\experiment.png"                                      x:Shared="false" ToolTip="Defeat the Experiment"/>
+    <Grid x:Key="Obj_Old-GridVexen" x:Shared="false" ToolTip="Defeat AS Vexen" >
+        <Image Source="Images\Grid\Bosses\Old\org_vexen.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridVexenData" x:Shared="false" ToolTip="Defeat Data Vexen" >
+        <Image Source="Images\Grid\Bosses\Old\org_vexen.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Pride Lands-->
+    <Image x:Key="Obj_Old-Simba"               Source="Images\Grid\Progression\Old\pride_lands\oasis.png"                          x:Shared="false" ToolTip="Reunite with Simba"/>
+    <Grid x:Key="Obj_Old-Hyenas1" x:Shared="false" ToolTip="Rescue Timon and Pumbaa" >
+        <Image Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Image x:Key="Obj_Old-Scar"                Source="Images\Grid\Bosses\Old\scar.png"                                            x:Shared="false" ToolTip="Defeat Scar"/>
+    <Grid x:Key="Obj_Old-Hyenas2" x:Shared="false" ToolTip="Get info about the ghost of Scar from Hyenas" >
+        <Image Source="Images\Grid\Progression\Old\pride_lands\hyenas.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Image x:Key="Obj_Old-GroundShaker"        Source="Images\Grid\Bosses\Old\groundshaker.png"                                    x:Shared="false" ToolTip="Defeat Groundshaker"/>
+    <Grid x:Key="Obj_Old-GridDataSaix" x:Shared="false" ToolTip="Defeat Data Saix" >
+        <Image Source="Images\Grid\Bosses\Old\org_saix.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--Space Paranoids-->
+    <Image x:Key="Obj_Old-Screens"             Source="Images\Grid\Progression\Old\space_paranoids\dataspace.png"                  x:Shared="false" ToolTip="Survive the Dataspace Attack"/>
+    <Image x:Key="Obj_Old-HostileProgram"      Source="Images\Grid\Bosses\Old\hostileprogram.png"                                  x:Shared="false" ToolTip="Defeat Hostile Program"/>
+    <Image x:Key="Obj_Old-SolarSailer"         Source="Images\Grid\Progression\Old\space_paranoids\solar_sailer.png"               x:Shared="false" ToolTip="Ride the Solar Sailor"/>
+    <Image x:Key="Obj_Old-MCP"                 Source="Images\Grid\Progression\Old\space_paranoids\mcp.png"                        x:Shared="false" ToolTip="Defeat MCP"/>
+    <Grid x:Key="Obj_Old-GridLarxene" x:Shared="false" ToolTip="Defeat AS Larxene" >
+        <Image Source="Images\Grid\Bosses\Old\org_larxene.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\absent.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-GridLarxeneData" x:Shared="false" ToolTip="Defeat Data Larxene" >
+        <Image Source="Images\Grid\Bosses\Old\org_larxene.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--TWTNW-->
+    <Image x:Key="Obj_Old-Roxas"               Source="Images\Grid\Bosses\Old\Org_roxas.png"                                       x:Shared="false" ToolTip="Defeat Roxas"/>
+    <Image x:Key="Obj_Old-Xigbar"              Source="Images\Grid\Bosses\Old\Org_xigbar.png"                                      x:Shared="false" ToolTip="Defeat Xigbar"/>
+    <Image x:Key="Obj_Old-Luxord"              Source="Images\Grid\Bosses\Old\Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
+    <Image x:Key="Obj_Old-Saix"                Source="Images\Grid\Bosses\Old\Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
+    <Image x:Key="Obj_Old-Xemnas1"             Source="Images\Grid\Bosses\Old\org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
+    <Grid x:Key="Obj_Old-DataXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas" >
+        <Image Source="Images\Grid\Bosses\Old\org_finalxemnas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+    </Grid>
+    <!--100 Acre Wood-->
+    <Image x:Key="Obj_Old-SpookyCave"          Source="Images\Grid\Progression\Old\100_acre_wood\expotition.png"                   x:Shared="false" ToolTip="Rescue Pooh from the Spooky Cave"/>
+    <Image x:Key="Obj_Old-StarryHill"          Source="Images\Grid\Progression\Old\100_acre_wood\hunny_pot.png"                    x:Shared="false" ToolTip="Help Pooh out of the pot of hunny"/>
+    <!--Atlantica-->
+    <Image x:Key="Obj_Old-Tutorial"            Source="Images\Grid\Progression\Old\atlantica\tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
+    <Image x:Key="Obj_Old-Ursula"              Source="Images\Grid\Progression\Old\atlantica\ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
+    <Image x:Key="Obj_Old-ObjectiveNewDay"     Source="Images\Grid\Progression\Old\atlantica\concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+
+    <!--Drive Forms-->
+    <Grid x:Key="Obj_Old-Valor3" x:Shared="false" ToolTip="Reach Valor Level 3">
+        <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Valor5" x:Shared="false" ToolTip="Reach Valor Level 5">
+        <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Valor7" x:Shared="false" ToolTip="Reach Valor Level 7">
+        <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Wisdom3" x:Shared="false" ToolTip="Reach Wisdom Level 3">
+        <Image Source="Images\Grid\Checks\Old\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Wisdom5" x:Shared="false" ToolTip="Reach Wisdom Level 5">
+        <Image Source="Images\Grid\Checks\Old\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Wisdom7" x:Shared="false" ToolTip="Reach Wisdom Level 7">
+        <Image Source="Images\Grid\Checks\Old\form_wisdom.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Limit3" x:Shared="false" ToolTip="Reach Limit Level 3">
+        <Image Source="Images\Grid\Checks\Old\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Limit5" x:Shared="false" ToolTip="Reach Limit Level 5">
+        <Image Source="Images\Grid\Checks\Old\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Limit7" x:Shared="false" ToolTip="Reach Limit Level 7">
+        <Image Source="Images\Grid\Checks\Old\form_Limit.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Master3" x:Shared="false" ToolTip="Reach Master Level 3">
+        <Image Source="Images\Grid\Checks\Old\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Master5" x:Shared="false" ToolTip="Reach Master Level 5">
+        <Image Source="Images\Grid\Checks\Old\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Master7" x:Shared="false" ToolTip="Reach Master Level 7">
+        <Image Source="Images\Grid\Checks\Old\form_Master.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Final3" x:Shared="false" ToolTip="Reach Final Level 3">
+        <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Final5" x:Shared="false" ToolTip="Reach Final Level 5">
+        <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-Final7" x:Shared="false" ToolTip="Reach Final Level 7">
+        <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
+    </Grid>
+
+    <!--Puzzles-->
+    <Grid x:Key="Obj_Old-PuzzAwakening" x:Shared="false" ToolTip="Complete the Awakening Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-PuzzHeart" x:Shared="false" ToolTip="Complete the Heart Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-PuzzDuality" x:Shared="false" ToolTip="Complete the Duality Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-PuzzFrontier" x:Shared="false" ToolTip="Complete the Frontier Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-PuzzDaylight" x:Shared="false" ToolTip="Complete the Daylight Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
+    </Grid>
+    <Grid x:Key="Obj_Old-PuzzSunset" x:Shared="false" ToolTip="Complete the Sunset Puzzle">
+        <Image Source="Images\Grid\Objectives\Old\Puzzle.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
+    </Grid>
+
+    <!--#endregion-->
+
+    <!--#region Custom-->
+    <!-- Progression -->
+    <!--Simulated Twilight Town-->
+    <Image x:Key="Obj_Cus-TwilightThorn"        Source="pack://application:,,,/CustomImages/Grid/Bosses/twilightthorn.png"                                   x:Shared="false" ToolTip="Defeat Twilight Thorn"/>
+    <Image x:Key="Obj_Cus-Axel1"                Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axelstruggle.png"                                x:Shared="false" ToolTip="Defeat Axel I"/>
+    <Image x:Key="Obj_Cus-Struggle"             Source="pack://application:,,,/CustomImages/Grid/Progression/simulated_twilight_town/struggle_finish.png"    x:Shared="false" ToolTip="Fight Setzer"/>
+    <Image x:Key="Obj_Cus-Axel"                 Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axel.png"                                        x:Shared="false" ToolTip="Defeat Axel II"/>
+    <Image x:Key="Obj_Cus-GridDataRoxas" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_roxasdata.png"								     x:Shared="false" ToolTip="Defeat Data Roxas"/>
+    <!--Twilight Town-->
+    <Image x:Key="Obj_Cus-MysteriousTower"      Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/mysterious_tower.png"             x:Shared="false" ToolTip="Talk to the 3 Fairies"/>
+    <Image x:Key="Obj_Cus-Sandlot"              Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/sandlot_fight_berserkers.png"     x:Shared="false" ToolTip="Defeat Sandlot Berserkers"/>
+    <Image x:Key="Obj_Cus-BetwixtAndBetween"    Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/betwixt_and_between.png"          x:Shared="false" ToolTip="Fight alongside Axel"/>
+    <Image x:Key="Obj_Cus-GridDataAxel" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axeldata.png"									 x:Shared="false" ToolTip="Defeat Data Axel"/>
+    <!--Hollow Bastion-->
+    <Image x:Key="Obj_Cus-Bailey"               Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/bailey_fight.png"                x:Shared="false" ToolTip="Defend the Bailey"/>
+    <Image x:Key="Obj_Cus-HBDemyx"              Source="pack://application:,,,/CustomImages/Grid/Bosses/org_demyx.png"                                       x:Shared="false" ToolTip="Defeat Demyx"/>
+    <Image x:Key="Obj_Cus-1000Heartless"        Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/1000_heartless.png"              x:Shared="false" ToolTip="Stop the 1000 Heartless"/>
+    <Image x:Key="Obj_Cus-GridSephiroth"        Source="pack://application:,,,/CustomImages/Grid/Bosses/super_sephiroth.png"                                 x:Shared="false" ToolTip="Defeat Sephiroth"/>
+    <Image x:Key="Obj_Cus-GridDataDemyx" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_demyxdata.png" 									 x:Shared="false" ToolTip="Defeat Data Demyx"/>
+    <!--Cavern of Rememberance-->
+    <Image x:Key="Obj_Cus-EndOfCoR"	         	Source="pack://application:,,,/CustomImages/Grid/Objectives/EndOfCoR.png"                                    x:Shared="false" ToolTip="Reach the end of Cavern of Remembrance"/>
+    <Image x:Key="Obj_Cus-Transport"            Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"   x:Shared="false" ToolTip="Reach the end of Transport of Remembrance"/>
+    <!--Land of Dragons-->
+    <Image x:Key="Obj_Cus-Mountain"             Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/mountain_climb.png"             x:Shared="false" ToolTip="Climb the Mountain Trail"/>
+    <Image x:Key="Obj_Cus-Cave"                 Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/village_cave.png"               x:Shared="false" ToolTip="Fight the Enemies in Village Cave"/>
+    <Image x:Key="Obj_Cus-ShanYu"               Source="pack://application:,,,/CustomImages/Grid/Bosses/shanyu.png"                                          x:Shared="false" ToolTip="Defeat Shan Yu"/>
+    <Image x:Key="Obj_Cus-StormRider"           Source="pack://application:,,,/CustomImages/Grid/Bosses/stormrider.png"                                      x:Shared="false" ToolTip="Defeat Stormrider"/>
+    <Image x:Key="Obj_Cus-GridDataXigbar" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xigbardata.png" 								 x:Shared="false" ToolTip="Defeat Data Xigbar"/>
+    <!--Beasts Castle-->
+    <Image x:Key="Obj_Cus-Thresholder"          Source="pack://application:,,,/CustomImages/Grid/Bosses/thresholder.png"                                     x:Shared="false" ToolTip="Defeat Thresholder"/>
+    <Image x:Key="Obj_Cus-Beast"                Source="pack://application:,,,/CustomImages/Grid/Bosses/beast.png"                                           x:Shared="false" ToolTip="Help Beast"/>
+    <Image x:Key="Obj_Cus-DarkThorn"            Source="pack://application:,,,/CustomImages/Grid/Bosses/darkthorn.png"                                       x:Shared="false" ToolTip="Defeat Dark Thorn"/>
+    <Image x:Key="Obj_Cus-Xaldin"               Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xaldin.png"                                      x:Shared="false" ToolTip="Defeat Xaldin"/>
+    <Image x:Key="Obj_Cus-GridDataXaldin" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xaldindata.png" 								 x:Shared="false" ToolTip="Defeat Data Xaldin"/>
+    <!--Olympus Coliseum-->
+    <Image x:Key="Obj_Cus-Cerberus"             Source="pack://application:,,,/CustomImages/Grid/Bosses/cerberus.png"                                        x:Shared="false" ToolTip="Defeat Cerberus"/>
+    <Image x:Key="Obj_Cus-Urns"                 Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/phils_training.png"            x:Shared="false" ToolTip="Train with Phil"/>
+    <Image x:Key="Obj_Cus-OCPete"               Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/the_lock_fight.png"            x:Shared="false" ToolTip="Defeat Pete at The Lock"/>
+    <Image x:Key="Obj_Cus-Hydra"                Source="pack://application:,,,/CustomImages/Grid/Bosses/hydra.png"                                           x:Shared="false" ToolTip="Defeat Hydra"/>
+    <Image x:Key="Obj_Cus-AuronStatue"          Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/hades_chamber_dusks.png"       x:Shared="false" ToolTip="Defeat the Ambush in Hades Chamber"/>
+    <Image x:Key="Obj_Cus-Hades"                Source="pack://application:,,,/CustomImages/Grid/Bosses/hades.png"                                           x:Shared="false" ToolTip="Defeat Hades"/>
+    <Image x:Key="Obj_Cus-CupPP"	            Source="pack://application:,,,/CustomImages/Grid/Objectives/PainandPanicCup.png"                             x:Shared="false" ToolTip="Win the Pain and Panic Cup"/>
+    <Image x:Key="Obj_Cus-CupC"	             	Source="pack://application:,,,/CustomImages/Grid/Objectives/CerberusCup.png"                                 x:Shared="false" ToolTip="Win the Cerberus Cup"/>
+    <Image x:Key="Obj_Cus-CupT"	             	Source="pack://application:,,,/CustomImages/Grid/Objectives/TitanCup.png"                                    x:Shared="false" ToolTip="Win the Titan Cup"/>
+    <Image x:Key="Obj_Cus-CupGoF"	            Source="pack://application:,,,/CustomImages/Grid/Objectives/GoddessCup.png"                                  x:Shared="false" ToolTip="Win the Goddess of Fate Cup"/>
+    <Image x:Key="Obj_Cus-GridZexion" 			Source="pack://application:,,,/CustomImages/Grid/Bosses/org_zexion.png"										 x:Shared="false" ToolTip="Defeat AS Zexion"/>
+    <Image x:Key="Obj_Cus-GridZexionData" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_zexiondata.png"									 x:Shared="false" ToolTip="Defeat Data Zexion"/>
+    <!--Disney Castle-->
+    <Image x:Key="Obj_Cus-Minnie"               Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/minnie_escort.png"                x:Shared="false" ToolTip="Escort Queen Minnie"/>
+    <Image x:Key="Obj_Cus-Windows"              Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/windows_of_time.png"              x:Shared="false" ToolTip="Fight through Windows of Time"/>
+    <Image x:Key="Obj_Cus-BoatPete"             Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/steamboat_pete.png"               x:Shared="false" ToolTip="Stop Pete from Escaping"/>
+    <Image x:Key="Obj_Cus-DCPete" 				Source="pack://application:,,,/CustomImages/Grid/Bosses/PeteTR.png"											 x:Shared="false" ToolTip="Defeat Future Pete"/>
+    <Image x:Key="Obj_Cus-GridMarluxia" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_marluxia.png"									 x:Shared="false" ToolTip="Defeat AS Marluxia"/>
+    <Image x:Key="Obj_Cus-GridMarluxiaData" 	Source="pack://application:,,,/CustomImages/Grid/Bosses/org_marluxiadata.png" 								 x:Shared="false" ToolTip="Defeat Data Marluxia"/>
+    <Image x:Key="Obj_Cus-GridLingeringWill"    Source="pack://application:,,,/CustomImages/Grid/Bosses/super_terra.png"                                     x:Shared="false" ToolTip="Defeat Lingering Will"/>
+    <!--Port Royal-->
+    <Image x:Key="Obj_Cus-1Minute"              Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/isla_de_muerta.png"                  x:Shared="false" ToolTip="Stall for time on Isla de Muerta"/>
+    <Image x:Key="Obj_Cus-Medallions"           Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/medallion_defence.png"               x:Shared="false" ToolTip="Defend the Interceptor from pirates"/>
+    <Image x:Key="Obj_Cus-Barrels"              Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/explosive_barrels.png"               x:Shared="false" ToolTip="Stop the explosive barrels"/>
+    <Image x:Key="Obj_Cus-Barbossa"             Source="pack://application:,,,/CustomImages/Grid/Bosses/barbossa.png"                                        x:Shared="false" ToolTip="Defeat Barbossa"/>
+    <Image x:Key="Obj_Cus-GrimReaper1"          Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper1.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper I"/>
+    <Image x:Key="Obj_Cus-GrimReaper"           Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper2.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper II"/>
+    <Image x:Key="Obj_Cus-GridDataLuxord" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxenedata.png"								 x:Shared="false" ToolTip="Defeat Data Luxord"/>
+    <!--Agrabah-->
+    <Image x:Key="Obj_Cus-Abu"                  Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/abu_escort.png"                         x:Shared="false" ToolTip="Escort Abu"/>
+    <Image x:Key="Obj_Cus-TreasureRoom"         Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/treasure_room.png"                      x:Shared="false" ToolTip="Survive the Treasure Room Ambush"/>
+    <Image x:Key="Obj_Cus-Lords"                Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/elemental_lords.png"                    x:Shared="false" ToolTip="Defeat the Elemental Lords"/>
+    <Image x:Key="Obj_Cus-GenieJafar"           Source="pack://application:,,,/CustomImages/Grid/Bosses/jafar.png"                                           x:Shared="false" ToolTip="Defeat Genie Jafar"/>
+    <Image x:Key="Obj_Cus-GridLexaeus" 			Source="pack://application:,,,/CustomImages/Grid/Bosses/org_lexaeus.png"									 x:Shared="false" ToolTip="Defeat AS Lexaeus"/>
+    <Image x:Key="Obj_Cus-GridLexaeusData" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_lexaeusdata.png"								 x:Shared="false" ToolTip="Defeat Data Lexaeus"/>
+    <!--Halloween Town-->
+    <Image x:Key="Obj_Cus-PrisonKeeper"         Source="pack://application:,,,/CustomImages/Grid/Bosses/prisonkeeper.png"                                    x:Shared="false" ToolTip="Defeat Prison Keeper"/>
+    <Image x:Key="Obj_Cus-OogieBoogie"          Source="pack://application:,,,/CustomImages/Grid/Bosses/oogieboogie.png"                                     x:Shared="false" ToolTip="Defeat Oogie Boogie"/>
+    <Image x:Key="Obj_Cus-Children"             Source="pack://application:,,,/CustomImages/Grid/Progression/halloween_town/children.png"                    x:Shared="false" ToolTip="Capture Lock Shock and Barrel"/>
+    <Image x:Key="Obj_Cus-ObjectivePresents1" 	Source="pack://application:,,,/CustomImages/Grid/Objectives/Presents.png" 									 x:Shared="false" ToolTip="Find the stolen presents"/>
+    <Image x:Key="Obj_Cus-ObjectivePresents2" 	Source="pack://application:,,,/CustomImages/Grid/Objectives/DecoyPresents.png" 								 x:Shared="false" ToolTip="Create decoy presents"/>
+    <Image x:Key="Obj_Cus-Experiment"           Source="pack://application:,,,/CustomImages/Grid/Bosses/experiment.png"                                      x:Shared="false" ToolTip="Defeat the Experiment"/>
+    <Image x:Key="Obj_Cus-GridVexen" 			Source="pack://application:,,,/CustomImages/Grid/Bosses/org_vexen.png"										 x:Shared="false" ToolTip="Defeat AS Vexen"/>
+    <Image x:Key="Obj_Cus-GridVexenData" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_vexendata.png"									 x:Shared="false" ToolTip="Defeat Data Vexen"/>
+    <!--Pride Lands-->
+    <Image x:Key="Obj_Cus-Simba"                Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/oasis.png"                          x:Shared="false" ToolTip="Reunite with Simba"/>
+    <Image x:Key="Obj_Cus-Hyenas1"              Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/hyenas_fight1.png"                	 x:Shared="false" ToolTip="Rescue Timon and Pumbaa"/>
+    <Image x:Key="Obj_Cus-Scar"                 Source="pack://application:,,,/CustomImages/Grid/Bosses/scar.png"                                            x:Shared="false" ToolTip="Defeat Scar"/>
+    <Image x:Key="Obj_Cus-Hyenas2"              Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/hyenas_fight2.png"                  x:Shared="false" ToolTip="Get info about the ghost of Scar from Hyenas"/>
+    <Image x:Key="Obj_Cus-GroundShaker"         Source="pack://application:,,,/CustomImages/Grid/Bosses/groundshaker.png"                                    x:Shared="false" ToolTip="Defeat Groundshaker"/>
+    <Image x:Key="Obj_Cus-GridDataSaix" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_saixdata.png"									 x:Shared="false" ToolTip="Defeat Data Saix"/>
+    <!--Space Paranoids-->
+    <Image x:Key="Obj_Cus-Screens"              Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/dataspace_fight.png"            x:Shared="false" ToolTip="Survive the Dataspace Attack"/>
+    <Image x:Key="Obj_Cus-HostileProgram"       Source="pack://application:,,,/CustomImages/Grid/Bosses/hostileprogram.png"                                  x:Shared="false" ToolTip="Defeat Hostile Program"/>
+    <Image x:Key="Obj_Cus-SolarSailer"          Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/solar_sailer.png"               x:Shared="false" ToolTip="Ride the Solar Sailor"/>
+    <Image x:Key="Obj_Cus-MCP"                  Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/mcp.png"                        x:Shared="false" ToolTip="Defeat MCP"/>
+    <Image x:Key="Obj_Cus-GridLarxene" 			Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxene.png"									 x:Shared="false" ToolTip="Defeat AS Larxene"/>
+    <Image x:Key="Obj_Cus-GridLarxeneData" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxenedata.png"								 x:Shared="false" ToolTip="Defeat Data Larxene"/>
+    <!--TWTNW-->
+    <Image x:Key="Obj_Cus-Roxas"                Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_roxas.png"                                       x:Shared="false" ToolTip="Defeat Roxas"/>
+    <Image x:Key="Obj_Cus-Xigbar"               Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_xigbar.png"                                      x:Shared="false" ToolTip="Defeat Xigbar"/>
+    <Image x:Key="Obj_Cus-Luxord"               Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_luxord.png"                                      x:Shared="false" ToolTip="Defeat Luxord"/>
+    <Image x:Key="Obj_Cus-Saix"                 Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_saix.png"                                        x:Shared="false" ToolTip="Defeat Saix"/>
+    <Image x:Key="Obj_Cus-Xemnas1"              Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnas.png"                                      x:Shared="false" ToolTip="Defeat Xemnas"/>
+    <Image x:Key="Obj_Cus-DataXemnas"           Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnasfinaldata.png"							 x:Shared="false" ToolTip="Defeat Data Xemnas"/>
+    <!--100 Acre Wood-->
+    <Image x:Key="Obj_Cus-SpookyCave"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/expotition.png"                   x:Shared="false" ToolTip="Rescue Pooh from the Spooky Cave"/>
+    <Image x:Key="Obj_Cus-StarryHill"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/hunny_pot.png"                    x:Shared="false" ToolTip="Help Pooh out of the pot of hunny"/>
+    <!--Atlantica-->
+    <Image x:Key="Obj_Cus-Tutorial"             Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/tutorial.png"                         x:Shared="false" ToolTip="Relearn to swim"/>
+    <Image x:Key="Obj_Cus-Ursula"               Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/ursula.png"                           x:Shared="false" ToolTip="Defeat Ursula"/>
+    <Image x:Key="Obj_Cus-ObjectiveNewDay"      Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/concert.png"                          x:Shared="false" ToolTip="Participate the New Day Musical"/>
+
+    <!--Drive Forms-->
+    <Image x:Key="Obj_Cus-Valor3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor3.png"   x:Shared="false" ToolTip="Reach Valor Form Level 3"/>
+    <Image x:Key="Obj_Cus-Valor5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor5.png"   x:Shared="false" ToolTip="Reach Valor Form Level 5"/>
+    <Image x:Key="Obj_Cus-Valor7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor7.png"   x:Shared="false" ToolTip="Reach Valor Form Level 7"/>
+    <Image x:Key="Obj_Cus-Wisdom3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom3.png"  x:Shared="false" ToolTip="Reach Wisdom Form Level 3"/>
+    <Image x:Key="Obj_Cus-Wisdom5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom5.png"  x:Shared="false" ToolTip="Reach Wisdom Form Level 5"/>
+    <Image x:Key="Obj_Cus-Wisdom7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom7.png"  x:Shared="false" ToolTip="Reach Wisdom Form Level 7"/>
+    <Image x:Key="Obj_Cus-Limit3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit3.png"   x:Shared="false" ToolTip="Reach Limit Form Level 3"/>
+    <Image x:Key="Obj_Cus-Limit5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit5.png"   x:Shared="false" ToolTip="Reach Limit Form Level 5"/>
+    <Image x:Key="Obj_Cus-Limit7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit7.png"   x:Shared="false" ToolTip="Reach Limit Form Level 7"/>
+    <Image x:Key="Obj_Cus-Master3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master3.png"  x:Shared="false" ToolTip="Reach Master Form Level 3"/>
+    <Image x:Key="Obj_Cus-Master5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master5.png"  x:Shared="false" ToolTip="Reach Master Form Level 5"/>
+    <Image x:Key="Obj_Cus-Master7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master7.png"  x:Shared="false" ToolTip="Reach Master Form Level 7"/>
+    <Image x:Key="Obj_Cus-Final3"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final3.png"   x:Shared="false" ToolTip="Reach Final Form Level 3"/>
+    <Image x:Key="Obj_Cus-Final5"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final5.png"   x:Shared="false" ToolTip="Reach Final Form Level 5"/>
+    <Image x:Key="Obj_Cus-Final7"	Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"   x:Shared="false" ToolTip="Reach Final Form Level 7"/>
+
+    <!--Puzzles-->
+    <Image x:Key="Obj_Cus-PuzzAwakening"    Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Awakening.png"   x:Shared="false" ToolTip="Complete the Awakening Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzHeart"        Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Heart.png"       x:Shared="false" ToolTip="Complete the Heart Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzDuality"      Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Duality.png"     x:Shared="false" ToolTip="Complete the Duality Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzFrontier"     Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Frontier.png"    x:Shared="false" ToolTip="Complete the Frontier Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzDaylight"     Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Daylight.png"    x:Shared="false" ToolTip="Complete the Daylight Puzzle"/>
+    <Image x:Key="Obj_Cus-PuzzSunset"       Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Sunset.png"      x:Shared="false" ToolTip="Complete the Sunset Puzzle"/>
+
+
+    <!--#endregion-->
+
+</ResourceDictionary>

@@ -155,6 +155,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ObjectiveDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProgressionDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -487,10 +491,40 @@
     <Content Include="CustomImages\Grid\Checks\DriveForms_AllLevel7.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Anti.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Final.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final2.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final3.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final4.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final5.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final6.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Final7.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Limit.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit2.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit3.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit4.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit5.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit6.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Limit7.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Master.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master2.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master3.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master4.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master5.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master6.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Master7.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Valor.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor2.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor3.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor4.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor5.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor6.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Valor7.png" />
     <Content Include="CustomImages\Grid\Checks\Drives_Wisdom.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom2.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom3.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom4.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom5.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom6.png" />
+    <Content Include="CustomImages\Grid\Checks\Drives_Wisdom7.png" />
     <Content Include="CustomImages\Grid\Checks\Extra_HadesCup.png" />
     <Content Include="CustomImages\Grid\Checks\Extra_MunnyPouch1.png" />
     <Content Include="CustomImages\Grid\Checks\Extra_MunnyPouch2.png" />
@@ -553,6 +587,19 @@
     <Content Include="CustomImages\Grid\Checks\VisitLock_TwilightTown1.png" />
     <Content Include="CustomImages\Grid\Checks\VisitLock_TwilightTown2.png" />
     <Content Include="CustomImages\Grid\Checks\VisitLock_TwilightTown3.png" />
+    <Content Include="CustomImages\Grid\Objectives\CerberusCup.png" />
+    <Content Include="CustomImages\Grid\Objectives\EndOfCoR.png" />
+    <Content Include="CustomImages\Grid\Objectives\GoddessCup.png" />
+    <Content Include="CustomImages\Grid\Objectives\PainandPanicCup.png" />
+    <Content Include="CustomImages\Grid\Objectives\DecoyPresents.png" />
+    <Content Include="CustomImages\Grid\Objectives\Presents.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Awakening.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Daylight.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Duality.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Frontier.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Heart.png" />
+    <Content Include="CustomImages\Grid\Objectives\Puzzle_Sunset.png" />
+    <Content Include="CustomImages\Grid\Objectives\TitanCup.png" />
     <Content Include="CustomImages\Grid\Progression\100_acre_wood\balloon_bounce.png" />
     <Content Include="CustomImages\Grid\Progression\100_acre_wood\blustery_rescue.png" />
     <Content Include="CustomImages\Grid\Progression\100_acre_wood\expotition.png" />
@@ -621,6 +668,14 @@
     <Content Include="CustomImages\Progression\agrabah\elemental_lords.png" />
     <Content Include="CustomImages\Progression\agrabah\jafar.png" />
     <Content Include="CustomImages\Progression\agrabah\lexaeus.png" />
+    <Resource Include="Images\Grid\Objectives\Old\DecoyPresents.png" />
+    <Resource Include="Images\Grid\Objectives\Old\Presents.png" />
+    <Resource Include="Images\Grid\Objectives\Old\Puzzle.png" />
+    <Resource Include="Images\Grid\Objectives\Old\PainandPanicCup.png" />
+    <Resource Include="Images\Grid\Objectives\Old\GoddessCup.png" />
+    <Resource Include="Images\Grid\Objectives\Old\EndOfCoR.png" />
+    <Resource Include="Images\Grid\Objectives\Old\CerberusCup.png" />
+    <Resource Include="Images\Grid\Objectives\Old\TitanCup.png" />
     <Resource Include="Images\Grid\Objectives\Min\Puzzle.png" />
     <Resource Include="Images\Grid\Objectives\Min\CerberusCup.png" />
     <Resource Include="Images\Grid\Objectives\Min\GoddessCup.png" />

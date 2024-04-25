@@ -356,16 +356,30 @@ namespace KhTracker
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
-        {
-       
+        { 
             gridOptionsWindow.Show();
-
         }
 
-        private void Change_Icons()
+        private void getAsetPrefix()
         {
-            //entire thing changed to help with changing image styles and custom images
-            //use this after the asset list is created and after switching styles/toggling custom image loading
+            string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                if (CustomGridIconsOption.IsChecked && MainWindow.CusGridImagesList.Contains("Grid_Cus-" + assets[i]))
+                {
+                    assets[i] = "Grid_Cus-" + assets[i];
+                    continue;
+                }
+
+                assets[i] = style + assets[i];
+            }
+        }
+
+        private void updateAssetPrefix(bool usedCustomToggle = false)
+        {
+            if (assets == null || assets.Count == 0)
+                return;
 
             bool useCustom = CustomGridIconsOption.IsChecked;
             string prefix1 = "Grid_Old-";
@@ -379,13 +393,15 @@ namespace KhTracker
             for (int i = 0; i < assets.Count; i++)
             {
                 //if already a custom prefix then skip
-                if(useCustom && assets[i].StartsWith("Grid_Cus-"))
+                if (useCustom && assets[i].StartsWith("Grid_Cus-"))
                     continue;
 
                 //if custom toggle on then check for and replace normal prefix with custom one
                 if (useCustom)
                 {
                     string cusCheck = assets[i].Replace(prefix1, "Grid_Cus-");
+                    if (usedCustomToggle)
+                        cusCheck = assets[i].Replace(prefix2, "Grid_Cus-");
                     if (MainWindow.CusGridImagesList.Contains(cusCheck))
                     {
                         assets[i] = cusCheck;
@@ -398,6 +414,47 @@ namespace KhTracker
                     assets[i] = assets[i].Replace("Grid_Cus-", prefix2);
                 else
                     assets[i] = assets[i].Replace(prefix1, prefix2);
+            }
+
+            Change_Icons();
+        }
+
+        private void Change_Icons()
+        {
+            if (grid == null)
+                return;
+
+            foreach (var child in grid.Children)
+            {
+                string prefix = "Grid_Min-";
+                if (SonicIconsOption.IsChecked)
+                    prefix = "Grid_Old-";
+
+                //check if it's a toggle button
+                if (child is ToggleButton square)
+                {
+                    string squareTag = square.Tag.ToString().Remove(0, 9);
+
+                    if (CustomGridIconsOption.IsChecked && assets.Contains("Grid_Cus-" + squareTag))
+                    {
+                        prefix = "Grid_Cus-";
+                    }
+
+                    //only edit fog of war squares tag
+                    if (fogOfWar)
+                    {
+                        if (square.Content == null || (square.Content is Image test && test.Source.ToString().EndsWith("QuestionMark.png")))
+                        {
+                            square.Tag = prefix + squareTag;
+                            continue;
+                        }
+                    }
+
+                    //check 
+                    square.SetResourceReference(ContentProperty, prefix + squareTag);
+                    square.Tag = prefix + squareTag;
+
+                }
             }
         }
 
@@ -430,12 +487,8 @@ namespace KhTracker
             foreach (string resourceName in Codes.gridAssetList)
             {
                 // add the item to the grid settings dictionary if it doesn't exist already (IN ACCORDANCE WITH USER SETTINGS)
-
-                // since we now use a dictinary with only valid names,
-                // if a name doesn't exist add it, but set it as false
-                // (assume we added a new option, but not the means to use it yet so ignore adding it) 
                 if (!gridSettings.ContainsKey(resourceName))
-                    gridSettings[resourceName] = false;
+                    gridSettings[resourceName] = true;
                 //if setting exists add it to list if true
                 if (gridSettings[resourceName])
                     imageKeys.Add(resourceName);
@@ -692,12 +745,7 @@ namespace KhTracker
             // get raw check names
             assets = Asset_Collection(seed);
             // set the content resource reference with style
-            string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
-            assets = assets.Select(item => style + item).ToList();
-
-            //if custom images we need to fix the asset names
-            if (CustomGridIconsOption.IsChecked)
-                Change_Icons();
+            getAsetPrefix();
 
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numChecks = assets.Count;
@@ -758,7 +806,6 @@ namespace KhTracker
                             else
                                 button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
                         }
-                            
                     }
                         
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
@@ -773,15 +820,10 @@ namespace KhTracker
                     button.MouseLeave += (sender, e) => Button_ExitHover(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
-                    //if (iconChange)
-                    //{
-                    //    button.Background = buttons[i, j].Background;
-                    //    button.IsChecked = buttons[i, j].IsChecked;
-                    //}
                     buttons[i, j] = button;
                     grid.Children.Add(button);
-                    if (!fogOfWar)
-                        button.ToolTip = ((string)button.Tag).Split('-')[1];
+                    //if (!fogOfWar)
+                    //    button.ToolTip = ((string)button.Tag).Split('-')[1];
                 }
             }
 
@@ -1526,6 +1568,10 @@ namespace KhTracker
             // enable sonic icons
             SonicIconsOption.IsChecked = Properties.Settings.Default.SonicIcons;
             SonicIconsToggle(SonicIconsOption.IsChecked);
+
+            // enable custom images
+            CustomGridIconsOption.IsChecked = Properties.Settings.Default.GridCustomImages;
+            CustomGridIconsToggle(CustomGridIconsOption.IsChecked);
         }
     
         private void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "")
