@@ -74,6 +74,7 @@ namespace KhTracker
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
         public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
         public List<string> assets;
+        public ToggleButton lastTrackedButton;
 
         // battleship specific
         private Random random;
@@ -527,6 +528,18 @@ namespace KhTracker
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
+            if (lastTrackedButton != null)
+            {
+                lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+                lastTrackedButton.BorderThickness = new Thickness(0.1);  // Adjust thickness as needed
+            }
+
+            lastTrackedButton = button;
+            if (lastTrackedButton != null)
+            {
+                lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Yellow);
+                lastTrackedButton.BorderThickness = new Thickness(5.5);  // Adjust thickness as needed
+            }
             annotationStatus[i, j] = false;
             if (battleshipLogic)
             {
@@ -807,7 +820,7 @@ namespace KhTracker
                                 button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
                         }
                     }
-                        
+
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");

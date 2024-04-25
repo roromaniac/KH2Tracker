@@ -471,7 +471,20 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.CheckBox, Description = "Drives", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor") || _gridWindow.gridSettings["Valor"]).ToString() },
-                                new Option { Type = OptionType.CheckBox, Description = "Light & Darkness Counts as Final", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("ForcingFinalCounts") || _gridWindow.gridSettings["ForcingFinalCounts"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Anti Form", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Anti") || _gridWindow.gridSettings["Anti"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Forcing Final Counts", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("ForcingFinalCounts") || _gridWindow.gridSettings["ForcingFinalCounts"]).ToString() },
+                            }
+                        },
+                        new SubCategory {
+                            SubCategoryName = "Drive Specific Levels",
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 2", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor2") || _gridWindow.gridSettings["Valor2"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 3", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor3") || _gridWindow.gridSettings["Valor3"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 4", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor4") || _gridWindow.gridSettings["Valor4"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 5", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor5") || _gridWindow.gridSettings["Valor5"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 6", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor6") || _gridWindow.gridSettings["Valor6"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Drives Level 7", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("Valor7") || _gridWindow.gridSettings["Valor7"]).ToString() },
                             }
                         },
                         new SubCategory {
@@ -521,6 +534,17 @@ namespace KhTracker
                             Options = new List<Option>
                             {
                                 new Option { Type = OptionType.TextBox, Description = "Max Visit Unlocks", DefaultValue = (Properties.Settings.Default.GridWindowNumUnlocks).ToString() },
+                            }
+                        },
+                        new SubCategory
+                        {
+                            SubCategoryName = "Movement Upgrades",
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.CheckBox, Description = "Level 1 Movement", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("HighJump1") || _gridWindow.gridSettings["HighJump1"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Level 2 Movement", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("HighJump2") || _gridWindow.gridSettings["HighJump2"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Level 3 Movement", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("HighJump3") || _gridWindow.gridSettings["HighJump3"]).ToString() },
+                                new Option { Type = OptionType.CheckBox, Description = "Level 4 Movement", DefaultValue = (!_gridWindow.gridSettings.ContainsKey("HighJump4") || _gridWindow.gridSettings["HighJump4"]).ToString() },
                             }
                         },
                         new SubCategory {
@@ -975,8 +999,41 @@ namespace KhTracker
             bool includeDrives = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Drives")?.DefaultValue);
             foreach (var drive in driveNames)
                 _gridWindow.gridSettings[$"{drive}"] = includeDrives;
-            bool ForcingFinalCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Light & Darkness Counts as Final")?.DefaultValue);
+            bool includeAntiForm = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Anti Form")?.DefaultValue);
+            _gridWindow.gridSettings["Anti"] = includeAntiForm;
+            bool ForcingFinalCounts = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drives")?.Options.FirstOrDefault(o => o.Description == "Forcing Final Counts")?.DefaultValue);
             _gridWindow.gridSettings["ForcingFinalCounts"] = ForcingFinalCounts;
+        }
+
+        private void UpdateDriveLevels()
+        {
+            // update drive levels
+            var driveNames = new[] { "Valor", "Wisdom", "Limit", "Master", "Final" };
+            
+            bool drivesLevel2 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 2")?.DefaultValue);
+            bool drivesLevel3 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 3")?.DefaultValue);
+            bool drivesLevel4 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 4")?.DefaultValue);
+            bool drivesLevel5 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 5")?.DefaultValue);
+            bool drivesLevel6 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 6")?.DefaultValue);
+            bool drivesLevel7 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Drive Specific Levels")?.Options.FirstOrDefault(o => o.Description == "Drives Level 7")?.DefaultValue);
+
+            var driveLevels= new List<(int Level, bool Value)>
+            {
+                (2, drivesLevel2),
+                (3, drivesLevel3),
+                (4, drivesLevel4),
+                (5, drivesLevel5),
+                (6, drivesLevel6),
+                (7, drivesLevel7)
+            };
+
+            foreach (var driveName in driveNames)
+            {
+                foreach (var (levelNumber, includeDriveLevel) in driveLevels)
+                {
+                    _gridWindow.gridSettings[$"{driveName}{levelNumber}"] = includeDriveLevel;
+                }
+            }
         }
 
         private void UpdateProofs()
@@ -1009,6 +1066,31 @@ namespace KhTracker
             {
                 bool includeTP = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Torn Pages")?.Options.FirstOrDefault(o => o.Description == $"Torn Page {i}")?.DefaultValue);
                 _gridWindow.gridSettings[$"GridTornPage{i}"] = includeTP;
+            }
+        }
+
+        private void UpdateMovement()
+        {
+            var movementNames = new[] { "HighJump", "QuickRun", "DodgeRoll", "AerialDodge", "Glide" };
+            bool movementLevel1 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Movement Upgrades")?.Options.FirstOrDefault(o => o.Description == "Level 1 Movement")?.DefaultValue);
+            bool movementLevel2 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Movement Upgrades")?.Options.FirstOrDefault(o => o.Description == "Level 2 Movement")?.DefaultValue);
+            bool movementLevel3 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Movement Upgrades")?.Options.FirstOrDefault(o => o.Description == "Level 3 Movement")?.DefaultValue);
+            bool movementLevel4 = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Allowed Checks")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Movement Upgrades")?.Options.FirstOrDefault(o => o.Description == "Level 4 Movement")?.DefaultValue);
+
+            var movementLevels = new List<(int Level, bool Value)>
+            {
+                (1, movementLevel1),
+                (2, movementLevel2),
+                (3, movementLevel3),
+                (4, movementLevel4),
+            };
+
+            foreach (var movementName in movementNames)
+            {
+                foreach (var (levelNumber, includeMovementLevel) in movementLevels)
+                {
+                    _gridWindow.gridSettings[$"{movementName}{levelNumber}"] = includeMovementLevel;
+                }
             }
         }
 
@@ -1080,9 +1162,11 @@ namespace KhTracker
             UpdateMagics();
             UpdateSummons();
             UpdateDrives();
+            UpdateDriveLevels();
             UpdateProofs();
             UpdateSCOM();
             UpdateTornPages();
+            UpdateMovement();
             UpdateWorldChestLocks(overwrite);
             UpdateUnlocks(overwrite);
             UpdateReports(overwrite);
