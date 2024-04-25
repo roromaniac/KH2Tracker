@@ -89,7 +89,7 @@
     <Image x:Key="Grid_Min-Final"	Source="Images\Grid\Checks\Min\form_final.png"  x:Shared="false" ToolTip="Final Form"/>
     <Image x:Key="Grid_Min-Anti"	Source="Images\Grid\Checks\Min\form_anti.png"   x:Shared="false" ToolTip="Anti-Form"/>
     <!--Drive Form Levels-->
-    <!--Grid x:Key="Grid_Min-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
+    <Grid x:Key="Grid_Min-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
         <Image Source="Images\Grid\Checks\Min\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -208,7 +208,7 @@
     <Grid x:Key="Grid_Min-Final7" x:Shared="false" ToolTip="Final Form Level 7">
         <Image Source="Images\Grid\Checks\Min\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <!--Summons-->
     <Image x:Key="Grid_Min-Lamp"            Source="Images\Grid\Checks\Min\summon_genie.png"            x:Shared="false" ToolTip="Lamp Charm"/>
     <Image x:Key="Grid_Min-Ukulele"         Source="Images\Grid\Checks\Min\summon_stitch.png"           x:Shared="false" ToolTip="Ukulele Charm"/>
@@ -426,7 +426,7 @@
         <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
     </Grid>
     <!--Growth-->
-    <!--Grid x:Key="Grid_Min-HighJump1" x:Shared="false" ToolTip="High Jump lv.1" >
+    <Grid x:Key="Grid_Min-HighJump1" x:Shared="false" ToolTip="High Jump lv.1" >
         <Image Source="Images\Grid\Checks\Min\Growth_HighJump.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
@@ -505,7 +505,7 @@
     <Grid x:Key="Grid_Min-Glide4" x:Shared="false" ToolTip="Glide lv.Max" >
         <Image Source="Images\Grid\Checks\Min\Growth_Glide.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\max.png"/>
-    </Grid-->
+    </Grid>
 
     
     <!-- Progression -->
@@ -835,7 +835,7 @@
     <Image x:Key="Grid_Old-Final"	Source="Images\Grid\Checks\Old\form_final.png"  x:Shared="false" ToolTip="Final Form"/>
     <Image x:Key="Grid_Old-Anti"	Source="Images\Grid\Checks\Old\form_anti.png"   x:Shared="false" ToolTip="Anti-Form"/>
     <!--Drive Form Levels-->
-    <!--Grid x:Key="Grid_Old-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
+    <Grid x:Key="Grid_Old-Valor2" x:Shared="false" ToolTip="Valor Form Level 2">
         <Image Source="Images\Grid\Checks\Old\form_valor.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
@@ -954,7 +954,7 @@
     <Grid x:Key="Grid_Old-Final7" x:Shared="false" ToolTip="Final Form Level 7">
         <Image Source="Images\Grid\Checks\Old\form_Final.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
-    </Grid-->
+    </Grid>
     <!--Summons-->
     <Image x:Key="Grid_Old-Lamp"            Source="Images\Grid\Checks\Old\summon_genie.png"            x:Shared="false" ToolTip="Lamp Charm"/>
     <Image x:Key="Grid_Old-Ukulele"         Source="Images\Grid\Checks\Old\summon_stitch.png"           x:Shared="false" ToolTip="Ukulele Charm"/>
@@ -1172,7 +1172,7 @@
         <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
     </Grid>
     <!--Growth-->
-    <!--Grid x:Key="Grid_Old-HighJump1" x:Shared="false" ToolTip="High Jump lv.1" >
+    <Grid x:Key="Grid_Old-HighJump1" x:Shared="false" ToolTip="High Jump lv.1" >
         <Image Source="Images\Grid\Checks\Old\Growth_HighJump.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
@@ -1251,7 +1251,7 @@
     <Grid x:Key="Grid_Old-Glide4" x:Shared="false" ToolTip="Glide lv.Max" >
         <Image Source="Images\Grid\Checks\Old\Growth_Glide.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\max.png"/>
-    </Grid-->
+    </Grid>
 
     <!-- Progression -->
     <!--100 Acre Wood-->

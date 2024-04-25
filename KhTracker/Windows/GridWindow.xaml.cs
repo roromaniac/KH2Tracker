@@ -74,6 +74,7 @@ namespace KhTracker
         public Dictionary<string, ContentControl> bossHintContentControls = new Dictionary<string, ContentControl>();
         public Dictionary<string, Border> bossHintBorders = new Dictionary<string, Border>();
         public List<string> assets;
+        public ToggleButton lastTrackedButton;
 
         // battleship specific
         private Random random;
@@ -85,7 +86,6 @@ namespace KhTracker
         public int minShipCount = 5;
         public int maxShipCount = 5;
         private List<int> sampledShipSizes = new List<int>();
-
 
         public GridWindow(Data dataIn)
         {
@@ -528,6 +528,18 @@ namespace KhTracker
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
+            if (lastTrackedButton != null)
+            {
+                lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Gray);
+                lastTrackedButton.BorderThickness = new Thickness(0.1);  // Adjust thickness as needed
+            }
+
+            lastTrackedButton = button;
+            if (lastTrackedButton != null)
+            {
+                lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Yellow);
+                lastTrackedButton.BorderThickness = new Thickness(5.5);  // Adjust thickness as needed
+            }
             annotationStatus[i, j] = false;
             if (battleshipLogic)
             {
@@ -543,6 +555,7 @@ namespace KhTracker
                 }
                 else
                 {
+                    originalColors[i, j] = currentColors["Unmarked Color"];
                     SetColorForButton(button.Background, currentColors["Unmarked Color"]);
                 }
             }
@@ -550,10 +563,12 @@ namespace KhTracker
             {
                 if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
+                    originalColors[i, j] = currentColors["Marked Color"];
                     SetColorForButton(button.Background, currentColors["Marked Color"]);
                 }
                 else
                 {
+                    originalColors[i, j] = currentColors["Unmarked Color"];
                     SetColorForButton(button.Background, currentColors["Unmarked Color"]);
                 }
                 if (bingoLogic)
@@ -583,7 +598,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i, j - west];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j - west)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                         
                 }
@@ -594,7 +608,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i, j + east];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j + east)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // north check
@@ -604,7 +617,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - north, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - north) * numColumns) + j]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // south check
@@ -614,7 +626,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + south, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }    
                 }
                 // northwest check
@@ -624,7 +635,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northwest, j - northwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northwest) * numColumns) + (j - northwest)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     } 
                 }
                 // northeast check
@@ -634,7 +644,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northeast, j + northeast];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northeast) * numColumns) + (j + northeast)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // southwest check
@@ -644,7 +653,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + southwest, j - southwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + southwest) * numColumns) + (j - southwest)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
                 // southeast check
@@ -654,7 +662,6 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + southeast, j + southeast];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + southeast) * numColumns) + (j + southeast)]);
-                        //currentButton.ToolTip = ((string)currentButton.Tag).Split('-')[1];
                     }
                 }
             }
@@ -670,10 +677,21 @@ namespace KhTracker
             }
             else
             {
-                originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
+        }
+
+        public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
+        {
+            var button = (ToggleButton)sender;
+            SetColorForButton(button.Background, Colors.Silver);
+        }
+
+        public void Button_ExitHover(object sender, RoutedEventArgs e, int i, int j)
+        {
+            var button = (ToggleButton)sender;
+            SetColorForButton(button.Background, annotationStatus[i, j] ? currentColors["Annotated Color"] : originalColors[i, j]);
         }
 
         public void GenerateGrid(object sender, RoutedEventArgs e)
@@ -705,8 +723,17 @@ namespace KhTracker
             grid = new Grid();
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
+
             buttons = new ToggleButton[rows, columns];
+            // ensure that the cells all start with the unmarked color as their original colors
             originalColors = new Color[rows, columns];
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    originalColors[i, j] = currentColors["Unmarked Color"];
+                }
+            }
             bingoStatus = new bool[rows, columns];
             battleshipSunkStatus = new bool[rows, columns];
             annotationStatus = new bool[rows, columns];
@@ -726,6 +753,7 @@ namespace KhTracker
                 seed = seedName.GetHashCode();
             }
             Seedname.Header = "Seed: " + seedName;
+            Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
 
             // get raw check names
             assets = Asset_Collection(seed);
@@ -792,7 +820,7 @@ namespace KhTracker
                                 button.SetResourceReference(ContentProperty, "Grid_QuestionMark");
                         }
                     }
-                        
+
                     button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -801,6 +829,8 @@ namespace KhTracker
                     int current_j = j;
                     button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
                     button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
+                    button.MouseEnter += (sender, e) => Button_Hover(sender, e, current_i, current_j);
+                    button.MouseLeave += (sender, e) => Button_ExitHover(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
@@ -1387,28 +1417,31 @@ namespace KhTracker
             int shipId = placedShips[hitRow, hitColumn];
 
             // Iterate over the entire grid to check if any part of the ship is not hit
-            for (int row = 0; row < numRows; row++)
+            if (shipId > 0)
             {
-                for (int column = 0; column < numColumns; column++)
+                for (int row = 0; row < numRows; row++)
                 {
-                    // If we find a part of the ship that has not been hit, return false
-                    if (placedShips[row, column] == shipId && !(buttons[row, column].IsChecked ?? false))
+                    for (int column = 0; column < numColumns; column++)
                     {
-                        shipSunk = false;
+                        // If we find a part of the ship that has not been hit, return false
+                        if (placedShips[row, column] == shipId && !(buttons[row, column].IsChecked ?? false))
+                        {
+                            shipSunk = false;
+                        }
+                        if (!shipSunk)
+                            break;
                     }
                     if (!shipSunk)
                         break;
                 }
-                if (!shipSunk)
-                    break;
-            }
-            for (int row = 0; row < numRows; row++)
-            {
-                for (int column = 0; column < numColumns; column++)
+                for (int row = 0; row < numRows; row++)
                 {
-                    if (placedShips[row, column] == shipId)
+                    for (int column = 0; column < numColumns; column++)
                     {
-                        battleshipSunkStatus[row, column] = shipSunk;
+                        if (placedShips[row, column] == shipId)
+                        {
+                            battleshipSunkStatus[row, column] = shipSunk;
+                        }
                     }
                 }
             }
@@ -1439,6 +1472,10 @@ namespace KhTracker
                     {
                         SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                    }
+                    if (annotationStatus[row, column])
+                    {
+                        SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
                     }
                 }
             }
