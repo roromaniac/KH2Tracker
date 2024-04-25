@@ -351,8 +351,8 @@ namespace KhTracker
                 //this helps ensure that ICs on levels/drives don't mistrack
                 while (!pcFilesLoaded)
                 {
-                    //Sys3 = ReadPcPointer(0x2AE3550);
-                    //Bt10 = ReadPcPointer(0x2AE3558);
+                    Sys3 = ReadPcPointer(0x2AE3550);
+                    Bt10 = ReadPcPointer(0x2AE3558);
                     pcFilesLoaded = CheckPCLoaded(Sys3, Bt10);
                     await Task.Delay(100);
                 }
