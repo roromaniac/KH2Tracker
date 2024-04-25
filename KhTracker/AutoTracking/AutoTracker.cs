@@ -451,7 +451,6 @@ namespace KhTracker
                     Connect2.Source = data.AD_PC;
                     return true;
                 }
-
             }
 
             pcLoadAttempts++;
@@ -777,27 +776,32 @@ namespace KhTracker
             if (gridCheckName != "Dummy")
                 checks.Add(gridCheckName);
             
-            //drive levels check
+            //drive/growth levels check
             if (aTimer != null)
             {
                 if (valor.Level == 7 && wisdom.Level == 7 && limit.Level == 7 && master.Level == 7 && final.Level == 7)
                     checks.Add("Grid7Drives");
-                if (data.objectiveMode)
+
+                Dictionary<string, int> levels = new Dictionary<string, int>()
                 {
-                    if (valor.Level > 1)
-                        checks.Add("Valor" + valor.Level.ToString());
+                    {"Valor", valor.Level},
+                    {"Wisdom", wisdom.Level},
+                    {"Limit", limit.Level},
+                    {"Master", master.Level},
+                    {"Final", final.Level},
+                    {"HighJump", highJump.Level},
+                    {"QuickRun", quickRun.Level},
+                    {"DodgeRoll", dodgeRoll.Level},
+                    {"AerialDodge", aerialDodge.Level},
+                    {"Glide", glide.Level},
+                };
 
-                    if (wisdom.Level > 1)
-                        checks.Add("Wisdom" + wisdom.Level.ToString());
-
-                    if (limit.Level > 1)
-                        checks.Add("Limit" + limit.Level.ToString());
-
-                    if (master.Level > 1)
-                        checks.Add("Master" + master.Level.ToString());
-
-                    if (final.Level > 1)
-                        checks.Add("Final" + final.Level.ToString());
+                foreach (KeyValuePair<string, int> level in levels)
+                {
+                    for (int i = 1; i <= level.Value; ++i)
+                    {
+                        checks.Add(level.Key + i.ToString());
+                    }
                 }
             }
 
@@ -842,9 +846,9 @@ namespace KhTracker
                 }
 
                 // boss enemy check
-                for (int i = 0; i < checks.Count(); i++)
+                if (data.BossRandoFound)
                 {
-                    if (data.BossRandoFound)
+                    for (int i = 0; i < checks.Count(); i++)
                     {
                         // hint the final fights bosses if Xemnas 1 is defeated
                         if (checks[i] == "Xemnas")
@@ -859,7 +863,6 @@ namespace KhTracker
                                     data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                                 }
                             }
-
                         }
 
                         if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))

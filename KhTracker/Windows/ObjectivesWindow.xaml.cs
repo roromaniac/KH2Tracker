@@ -297,8 +297,6 @@ namespace KhTracker
             //build asset list
             assets.Clear();
             List<Dictionary<string, object>> objectives = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(hintObject["objective_locations"].ToString());
-            //sort the assets gathered
-            //List<string> assetsSorted = assetLookup.Keys.ToList();
 
             foreach (var objective in objectives) 
             { 
@@ -318,7 +316,7 @@ namespace KhTracker
                     }
                 }
             }
-
+            //sort the assets gathered
             assets = assets.OrderBy(d => assetLookup.Keys.ToList().IndexOf(d)).ToList();
 
             //fix icon prefix for assets
@@ -333,7 +331,6 @@ namespace KhTracker
             }
             numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
             numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
-
 
             objGrid = new Grid();
             buttons = new ToggleButton[numRows, numColumns];
@@ -352,7 +349,6 @@ namespace KhTracker
             }
 
             int buttonDone = 0;
-
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
@@ -362,10 +358,8 @@ namespace KhTracker
 
                     ToggleButton button = new ToggleButton();
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
-
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
-                    //string Tag = assets[(i * numColumns) + j].ToString();
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -381,7 +375,6 @@ namespace KhTracker
                     buttonDone++;
                 }
             }
-
             // Add grid to the window or other container
             DynamicGrid.Children.Add(objGrid);
         }
