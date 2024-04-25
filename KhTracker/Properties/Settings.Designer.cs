@@ -1487,5 +1487,53 @@ namespace KhTracker.Properties {
                 this["ObjectiveCustom"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF696969")]
+        public global::System.Windows.Media.Color ObjUnmarkedColorButton {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ObjUnmarkedColorButton"]));
+            }
+            set {
+                this["ObjUnmarkedColorButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF006400")]
+        public global::System.Windows.Media.Color ObjCollectedColorButton {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ObjCollectedColorButton"]));
+            }
+            set {
+                this["ObjCollectedColorButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFA500")]
+        public global::System.Windows.Media.Color ObjAnnotatedColorButton {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ObjAnnotatedColorButton"]));
+            }
+            set {
+                this["ObjAnnotatedColorButton"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFC0CB")]
+        public global::System.Windows.Media.Color ObjCompletedColorButton {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ObjCompletedColorButton"]));
+            }
+            set {
+                this["ObjCompletedColorButton"] = value;
+            }
+        }
     }
 }

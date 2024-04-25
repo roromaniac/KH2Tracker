@@ -25,6 +25,7 @@ namespace KhTracker
     /// <summary>
     /// Interaction logic for ObjectivesWindow.xaml
     /// </summary>
+
     public partial class ObjectivesWindow : Window, IColorableWindow
     {
         public bool canClose = false;
@@ -33,7 +34,7 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] annotationStatus;
-        public Dictionary<string, Color> currentColors = GridWindow.GetColorSettings();
+        public Dictionary<string, Color> currentColors = GetColorSettings();
         public List<string> assets = new List<string>();
         public int numRows;
         public int numColumns;
@@ -230,7 +231,7 @@ namespace KhTracker
 
             data = dataIn;
 
-            colorPickerWindow = new ColorPickerWindow(this, currentColors);
+            colorPickerWindow = new ColorPickerWindow(this, currentColors, true);
 
             //GenerateObjGrid(hints);
 
@@ -352,7 +353,7 @@ namespace KhTracker
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
 
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
-                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
+                    button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
                     //string Tag = assets[(i * numColumns) + j].ToString();
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -409,11 +410,11 @@ namespace KhTracker
 
             if (button.IsChecked ?? false || annotationStatus[i, j])
             {
-                SetColorForButton(button.Background, currentColors["Marked Color"]);
+                SetColorForButton(button.Background, currentColors["Collected Color"]);
             }
             else
             {
-                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                SetColorForButton(button.Background, currentColors["Uncollected Color"]);
             }
 
             checkNeeded();
@@ -431,7 +432,7 @@ namespace KhTracker
             {
                 originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
-                SetColorForButton(button.Background, currentColors["Annotated Color"]);
+                SetColorForButton(button.Background, currentColors["Marked Color"]);
             }
         }
 
@@ -453,14 +454,14 @@ namespace KhTracker
                 {
                     foreach (ToggleButton square in completeSquares)
                     {
-                        SetColorForButton(square.Background, currentColors["Battleship Sunk Color"]);
+                        SetColorForButton(square.Background, currentColors["Win Condition Met Color"]);
                     }
                 }
                 else
                 {
                     foreach (ToggleButton square in completeSquares)
                     {
-                        SetColorForButton(square.Background, currentColors["Marked Color"]);
+                        SetColorForButton(square.Background, currentColors["Collected Color"]);
                     }
                 }
 
@@ -485,6 +486,23 @@ namespace KhTracker
             colorPickerWindow.Show();
         }
 
+        public static Dictionary<string, Color> GetColorSettings()
+        {
+
+            var unmarkedColor = Properties.Settings.Default.ObjUnmarkedColorButton;
+            var markedColor = Properties.Settings.Default.ObjCollectedColorButton;
+            var annotatedColor = Properties.Settings.Default.ObjAnnotatedColorButton;
+            var bingoColor = Properties.Settings.Default.ObjCompletedColorButton;
+
+            return new Dictionary<string, Color>()
+            {
+                { "Uncollected Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
+                { "Collected Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
+                { "Marked Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
+                { "Win Condition Met Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) },
+            };
+        }
+
         public void HandleClosing(ColorPickerWindow sender)
         {
             //update the new colors on the card
@@ -496,10 +514,10 @@ namespace KhTracker
                     if (i * numColumns + j < assets.Count())
                     {
                         if (annotationStatus[i, j])
-                            SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
+                            SetColorForButton(buttons[i, j].Background, currentColors["Marked Color"]);
                         else
                         {
-                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
+                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Collected Color"] : currentColors["Uncollected Color"]);
                         }
                     }
                 }
