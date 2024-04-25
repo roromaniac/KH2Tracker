@@ -330,10 +330,10 @@ namespace KhTracker
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
                                 new Option { Type = OptionType.CheckBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
-                                new Option { Type = OptionType.TextBox, Description = "West Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("W") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
-                                new Option { Type = OptionType.TextBox, Description = "East Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("E") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "West Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("W") ? newFogOfWarSpan["W"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "East Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("E") ? newFogOfWarSpan["E"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                                 new Option { Type = OptionType.TextBox, Description = "North Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("N") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
-                                new Option { Type = OptionType.TextBox, Description = "South Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("S") ? newFogOfWarSpan["N"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
+                                new Option { Type = OptionType.TextBox, Description = "South Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("S") ? newFogOfWarSpan["S"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                                 new Option { Type = OptionType.TextBox, Description = "NorthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NW") ? newFogOfWarSpan["NW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                                 new Option { Type = OptionType.TextBox, Description = "NorthEast Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("NE") ? newFogOfWarSpan["NE"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
                                 new Option { Type = OptionType.TextBox, Description = "SouthWest Hint Span", DefaultValue = $"{(newFogOfWarSpan.ContainsKey("SW") ? newFogOfWarSpan["SW"] : 1)}", Visibility = (newFogOfWar ? Visibility.Visible : Visibility.Collapsed) },
@@ -580,7 +580,7 @@ namespace KhTracker
 
             if (option.Description == "Max World Chest Locks")
             {
-                int maxChestLocks = MainWindow.data.VisitLocks.ConvertAll<string>(x => x.ToString()).Count;
+                int maxChestLocks = MainWindow.data.ChestLocks.ConvertAll<string>(x => x.ToString()).Count;
                 if (int.Parse(textBox.Text) > maxChestLocks)
                 {
                     textBox.Text = maxChestLocks.ToString();
@@ -589,7 +589,7 @@ namespace KhTracker
 
             if (option.Description == "Max Reports")
             {
-                int maxReports = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList().Count;
+                int maxReports = (MainWindow.data.Reports.Select(item => item.Name)).ToList().Count;
                 if (int.Parse(textBox.Text) > maxReports)
                 {
                     textBox.Text = maxReports.ToString();

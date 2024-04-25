@@ -1362,28 +1362,31 @@ namespace KhTracker
             int shipId = placedShips[hitRow, hitColumn];
 
             // Iterate over the entire grid to check if any part of the ship is not hit
-            for (int row = 0; row < numRows; row++)
+            if (shipId > 0)
             {
-                for (int column = 0; column < numColumns; column++)
+                for (int row = 0; row < numRows; row++)
                 {
-                    // If we find a part of the ship that has not been hit, return false
-                    if (placedShips[row, column] == shipId && !(buttons[row, column].IsChecked ?? false))
+                    for (int column = 0; column < numColumns; column++)
                     {
-                        shipSunk = false;
+                        // If we find a part of the ship that has not been hit, return false
+                        if (placedShips[row, column] == shipId && !(buttons[row, column].IsChecked ?? false))
+                        {
+                            shipSunk = false;
+                        }
+                        if (!shipSunk)
+                            break;
                     }
                     if (!shipSunk)
                         break;
                 }
-                if (!shipSunk)
-                    break;
-            }
-            for (int row = 0; row < numRows; row++)
-            {
-                for (int column = 0; column < numColumns; column++)
+                for (int row = 0; row < numRows; row++)
                 {
-                    if (placedShips[row, column] == shipId)
+                    for (int column = 0; column < numColumns; column++)
                     {
-                        battleshipSunkStatus[row, column] = shipSunk;
+                        if (placedShips[row, column] == shipId)
+                        {
+                            battleshipSunkStatus[row, column] = shipSunk;
+                        }
                     }
                 }
             }
