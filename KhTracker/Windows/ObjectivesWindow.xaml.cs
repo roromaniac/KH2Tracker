@@ -116,91 +116,89 @@ namespace KhTracker
             {"Axel1", new Tuple < string, int >("Item Bonus", 73)},
             {"Struggle", new Tuple<string, int>("Popup", 519)},
             {"Axel", new Tuple<string, int>("Stat Bonus", 34)},
-            {"GridDataRoxas", new Tuple<string, int>("Popup", 558)},
             {"MysteriousTower", new Tuple<string, int>("Popup", 286)},
             {"Sandlot", new Tuple<string, int>("Popup", 294)},
             {"BetwixtAndBetween", new Tuple<string, int>("Item Bonus", 63)},
-            {"GridDataAxel", new Tuple<string, int>("Popup", 561)},
             {"Bailey", new Tuple<string, int>("Item Bonus", 47)},
             {"HBDemyx", new Tuple<string, int>("Item and Stat Bonus", 28)},
             {"1000Heartless", new Tuple<string, int>("Item Bonus", 60)},
-            {"GridSephiroth", new Tuple<string, int>("Stat Bonus", 35)},
-            {"GridDataDemyx", new Tuple<string, int>("Popup", 560)},
             {"EndOfCoR", new Tuple<string, int>("Chest", 579)},
             {"Transport", new Tuple<string, int>("Stat Bonus", 72)},
             {"Mountain", new Tuple<string, int>("Popup", 495)},
             {"Cave", new Tuple<string, int>("Item Bonus", 43)},
             {"ShanYu", new Tuple<string, int>("Item and Stat Bonus", 9)},
             {"StormRider", new Tuple<string, int>("Item Bonus", 10)},
-            {"GridDataXigbar", new Tuple<string, int>("Popup", 555)},
             {"Thresholder", new Tuple<string, int>("Item Bonus", 2)},
             {"Beast", new Tuple<string, int>("Stat Bonus", 12)},
             {"DarkThorn", new Tuple<string, int>("Item and Stat Bonus", 3)},
             {"Xaldin", new Tuple<string, int>("Item and Stat Bonus", 4)},
-            {"GridDataXaldin", new Tuple<string, int>("Popup", 559)},
             {"Cerberus", new Tuple<string, int>("Item Bonus", 5)},
             {"Urns", new Tuple<string, int>("Item Bonus", 57)},
             {"OCPete", new Tuple<string, int>("Item Bonus", 6)},
             {"Hydra", new Tuple<string, int>("Item and Stat Bonus", 7)},
             {"AuronStatue", new Tuple<string, int>("Popup", 295)},
             {"Hades", new Tuple<string, int>("Item and Stat Bonus", 8)},
-            {"CupPP", new Tuple<string, int>("Popup", 513)},
-            {"CupC", new Tuple<string, int>("Popup", 515)},
-            {"CupT", new Tuple<string, int>("Popup", 514)},
-            {"CupGoF", new Tuple<string, int>("Popup", 516)},
-            {"GridZexion", new Tuple<string, int>("Stat Bonus", 66)},
-            {"GridZexionData", new Tuple<string, int>("Popup", 551)},
             {"Minnie", new Tuple<string, int>("Item and Stat Bonus", 38)},
             {"Windows", new Tuple<string, int>("Popup", 368)},
             {"BoatPete", new Tuple<string, int>("Item Bonus", 16)},
             {"DCPete", new Tuple<string, int>("Item and Stat Bonus", 17)},
-            {"GridMarluxia", new Tuple<string, int>("Stat Bonus", 67)},
-            {"GridMarluxiaData", new Tuple<string, int>("Popup", 553)},
-            {"GridLingeringWill", new Tuple<string, int>("Stat Bonus", 70)},
             {"1Minute", new Tuple<string, int>("Popup", 329)},
             {"Medallions", new Tuple<string, int>("Item Bonus", 62)},
             {"Barrels", new Tuple<string, int>("Stat Bonus", 39)},
             {"Barbossa", new Tuple<string, int>("Item and Stat Bonus", 21)},
             {"GrimReaper1", new Tuple<string, int>("Item Bonus", 59)},
             {"GrimReaper", new Tuple<string, int>("Item Bonus", 22)},
-            {"GridDataLuxord", new Tuple<string, int>("Popup", 557)},
             {"Abu", new Tuple<string, int>("Item Bonus", 42)},
             {"TreasureRoom", new Tuple<string, int>("Stat Bonus", 46)},
             {"Lords", new Tuple<string, int>("Item Bonus", 37)},
             {"GenieJafar", new Tuple<string, int>("Item Bonus", 15)},
-            {"GridLexaeus", new Tuple<string, int>("Stat Bonus", 65)},
-            {"GridLexaeusData", new Tuple<string, int>("Popup", 550)},
             {"PrisonKeeper", new Tuple<string, int>("Item and Stat Bonus", 18)},
             {"OogieBoogie", new Tuple<string, int>("Stat Bonus", 19)},
             {"Children", new Tuple<string, int>("Stat Bonus", 40)},
             {"ObjectivePresents1", new Tuple<string, int>("Popup", 297)},
             {"ObjectivePresents2", new Tuple<string, int>("Popup", 298)},
             {"Experiment", new Tuple<string, int>("Stat Bonus", 20)},
-            {"GridVexen", new Tuple<string, int>("Stat Bonus", 64)},
-            {"GridVexenData", new Tuple<string, int>("Popup", 549)},
             {"Simba", new Tuple<string, int>("Popup", 264)},
             {"Hyenas1", new Tuple<string, int>("Stat Bonus", 49)},
             {"Scar", new Tuple<string, int>("Stat Bonus", 29)},
             {"Hyenas2", new Tuple<string, int>("Stat Bonus", 50)},
             {"GroundShaker", new Tuple<string, int>("Item and Stat Bonus", 30)},
-            {"GridDataSaix", new Tuple<string, int>("Popup", 556)},
             {"Screens", new Tuple<string, int>("Stat Bonus", 45)},
             {"HostileProgram", new Tuple<string, int>("Item and Stat Bonus", 31)},
             {"SolarSailer", new Tuple<string, int>("Item Bonus", 61)},
             {"MCP", new Tuple<string, int>("Item and Stat Bonus", 32)},
-            {"GridLarxene", new Tuple<string, int>("Stat Bonus", 68)},
-            {"GridLarxeneData", new Tuple<string, int>("Popup", 552)},
             {"Roxas", new Tuple<string, int>("Item and Stat Bonus", 69)},
             {"Xigbar", new Tuple<string, int>("Stat Bonus", 23)},
             {"Luxord", new Tuple<string, int>("Item and Stat Bonus", 24)},
             {"Saix", new Tuple<string, int>("Stat Bonus", 25)},
             {"Xemnas1", new Tuple<string, int>("Double Stat Bonus", 26)},
-            {"DataXemnas", new Tuple<string, int>("Popup", 554)},
             {"SpookyCave", new Tuple<string, int>("Popup", 284)},
             {"StarryHill", new Tuple<string, int>("Popup", 285)},
             {"Tutorial", new Tuple<string, int>("Popup", 367)},
             {"Ursula", new Tuple<string, int>("Popup", 287)},
             {"ObjectiveNewDay", new Tuple<string, int>("Popup", 279)},
+            //Super bosses	
+            {"GridDataAxel", new Tuple<string, int>("Popup", 561)},
+            {"GridDataDemyx", new Tuple<string, int>("Popup", 560)},
+            {"GridDataXaldin", new Tuple<string, int>("Popup", 559)},
+            {"GridDataRoxas", new Tuple<string, int>("Popup", 558)},
+            {"GridDataXigbar", new Tuple<string, int>("Popup", 555)},
+            {"GridDataLuxord", new Tuple<string, int>("Popup", 557)},
+            {"GridDataSaix", new Tuple<string, int>("Popup", 556)},
+            {"DataXemnas", new Tuple<string, int>("Popup", 554)},
+            {"GridLarxene", new Tuple<string, int>("Stat Bonus", 68)},
+            {"GridLarxeneData", new Tuple<string, int>("Popup", 552)},
+            {"GridMarluxia", new Tuple<string, int>("Stat Bonus", 67)},
+            {"GridMarluxiaData", new Tuple<string, int>("Popup", 553)},
+            {"GridLexaeus", new Tuple<string, int>("Stat Bonus", 65)},
+            {"GridLexaeusData", new Tuple<string, int>("Popup", 550)},
+            {"GridVexen", new Tuple<string, int>("Stat Bonus", 64)},
+            {"GridVexenData", new Tuple<string, int>("Popup", 549)},
+            {"GridZexion", new Tuple<string, int>("Stat Bonus", 66)},
+            {"GridZexionData", new Tuple<string, int>("Popup", 551)},
+            {"GridSephiroth", new Tuple<string, int>("Stat Bonus", 35)},
+            {"GridLingeringWill", new Tuple<string, int>("Stat Bonus", 70)},
+            //forms
             {"Valor3", new Tuple<string, int>("Valor Level", 3)},
             {"Valor5", new Tuple<string, int>("Valor Level", 5)},
             {"Valor7", new Tuple<string, int>("Valor Level", 7)},
@@ -216,6 +214,12 @@ namespace KhTracker
             {"Final3", new Tuple<string, int>("Final Level", 3)},
             {"Final5", new Tuple<string, int>("Final Level", 5)},
             {"Final7", new Tuple<string, int>("Final Level", 7)},
+            //cups
+            {"CupPP", new Tuple<string, int>("Popup", 513)},
+            {"CupC", new Tuple<string, int>("Popup", 515)},
+            {"CupT", new Tuple<string, int>("Popup", 514)},
+            {"CupGoF", new Tuple<string, int>("Popup", 516)},
+            //puzzles
             {"PuzzAwakening", new Tuple<string, int>("Creation", 0)},
             {"PuzzHeart", new Tuple<string, int>("Creation", 1)},
             {"PuzzDuality", new Tuple<string, int>("Creation", 2)},
@@ -293,6 +297,9 @@ namespace KhTracker
             //build asset list
             assets.Clear();
             List<Dictionary<string, object>> objectives = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(hintObject["objective_locations"].ToString());
+            //sort the assets gathered
+            //List<string> assetsSorted = assetLookup.Keys.ToList();
+
             foreach (var objective in objectives) 
             { 
                 string type = objective["category"].ToString();
@@ -300,6 +307,7 @@ namespace KhTracker
 
                 foreach (string asset in assetLookup.Keys)
                 {
+                    //skip dupes (shouldn't happen anymore, but kept just in case)
                     if (assets.Contains(asset))
                     {
                         continue;
@@ -310,6 +318,9 @@ namespace KhTracker
                     }
                 }
             }
+
+            assets = assets.OrderBy(d => assetLookup.Keys.ToList().IndexOf(d)).ToList();
+
             //fix icon prefix for assets
             getAsetPrefix();
 
