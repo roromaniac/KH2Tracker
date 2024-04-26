@@ -50,8 +50,9 @@
                 <MenuItem Header="Reset Tracker" 	    Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	    Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Drag and Drop" 	    Click="DragDropToggle" x:Name="DragAndDropOption" IsCheckable="True" IsChecked="True"/>
+                <Separator/>
                 <MenuItem Header="Grid Tracker"         Click="GridWindow_Open"/>
-                <MenuItem Header="Objectives Tracker"   Click="objWindow_Open"/>
+                <MenuItem Header="Objective Tracker"   Click="objWindow_Open"/>
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>
