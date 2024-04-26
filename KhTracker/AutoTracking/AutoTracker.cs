@@ -884,7 +884,6 @@ namespace KhTracker
                 }
             }
 
-
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
             foreach (string checkName in checks)
