@@ -123,7 +123,7 @@ namespace KhTracker
         private bool onContinue = false; //for death counter
         private bool eventInProgress = false; //boss detection
         private int pcLoadAttempts = 0;
-
+        private int save = 0;
         //private int lastVersion = 0;
 
         private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -617,6 +617,7 @@ namespace KhTracker
             if (FormsGrowthOption.IsChecked)
                 FormRow.Height = new GridLength(0.5, GridUnitType.Star);
 
+            save = Save;
             //levelcheck visibility
             NextLevelDisplay();
             DeathCounterDisplay();
@@ -681,43 +682,43 @@ namespace KhTracker
                 UpdateSupportingTrackers("Dummy");
 
                 #region For Debugging
-                    //Modified to only update if any of these actually change instead of updating every tick
-                    //temp[0] = world.roomNumber;
-                    //temp[1] = world.worldNum;
-                    //temp[2] = world.eventID1;
-                    //temp[3] = world.eventID2;
-                    //temp[4] = world.eventID3;
-                    //temp[5] = world.eventComplete;
-                    //temp[6] = world.cupRound;
-                    //if (!Enumerable.SequenceEqual(temp, tempPre))
-                    //{
-                    //    Console.WriteLine("world num = " + world.worldNum);
-                    //    Console.WriteLine("room num  = " + world.roomNumber);
-                    //    Console.WriteLine("event id1 = " + world.eventID1);
-                    //    Console.WriteLine("event id2 = " + world.eventID2);
-                    //    Console.WriteLine("event id3 = " + world.eventID3);
-                    //    Console.WriteLine("event cpl = " + world.eventComplete);
-                    //    Console.WriteLine("Cup Round = " + world.cupRound);
-                    //    Console.WriteLine("===========================");
-                    //    tempPre[0] = temp[0];
-                    //    tempPre[1] = temp[1];
-                    //    tempPre[2] = temp[2];
-                    //    tempPre[3] = temp[3];
-                    //    tempPre[4] = temp[4];
-                    //    tempPre[5] = temp[5];
-                    //    tempPre[6] = temp[6];
-                    //}
+                //Modified to only update if any of these actually change instead of updating every tick
+                temp[0] = world.roomNumber;
+                temp[1] = world.worldNum;
+                temp[2] = world.eventID1;
+                temp[3] = world.eventID2;
+                temp[4] = world.eventID3;
+                temp[5] = world.eventComplete;
+                temp[6] = world.cupRound;
+                if (!Enumerable.SequenceEqual(temp, tempPre))
+                {
+                    Console.WriteLine("world num = " + world.worldNum);
+                    Console.WriteLine("room num  = " + world.roomNumber);
+                    Console.WriteLine("event id1 = " + world.eventID1);
+                    Console.WriteLine("event id2 = " + world.eventID2);
+                    Console.WriteLine("event id3 = " + world.eventID3);
+                    Console.WriteLine("event cpl = " + world.eventComplete);
+                    Console.WriteLine("Cup Round = " + world.cupRound);
+                    Console.WriteLine("===========================");
+                    tempPre[0] = temp[0];
+                    tempPre[1] = temp[1];
+                    tempPre[2] = temp[2];
+                    tempPre[3] = temp[3];
+                    tempPre[4] = temp[4];
+                    tempPre[5] = temp[5];
+                    tempPre[6] = temp[6];
+                }
 
-                    //string cntrl = BytesToHex(memory.ReadMemory(0x2A148E8, 1)); //sora controlable
-                    //Console.WriteLine(cntrl);
+                //string cntrl = BytesToHex(memory.ReadMemory(0x2A148E8, 1)); //sora controlable
+                //Console.WriteLine(cntrl);
 
-                    //string tester = BytesToHex(memory.ReadMemory(0x2A22BC0, 4));
-                    //Console.WriteLine(tester);
+                //string tester = BytesToHex(memory.ReadMemory(0x2A22BC0, 4));
+                //Console.WriteLine(tester);
 
-                    //int testint = BitConverter.ToInt32(memory.ReadMemory(0x2A22BC0, 4), 0);
-                    //Console.WriteLine(testint);
-                    //Console.WriteLine(testint+0x2A22BC0+0x10);
-                    #endregion
+                //int testint = BitConverter.ToInt32(memory.ReadMemory(0x2A22BC0, 4), 0);
+                //Console.WriteLine(testint);
+                //Console.WriteLine(testint+0x2A22BC0+0x10);
+                #endregion
             }
             catch
             {
@@ -1246,14 +1247,17 @@ namespace KhTracker
                 collectedChecks.Add(visitnew);
             }
             
-            //track objective marks number
-            //also track getting end of cor chest
+            //track objective marks
+            //unfortunately, tracking for end of CoR, puzzles, and A New Day (atlantica)
+            //will break if you have 99 objective marks
             while (objMark.Level > objMarkLevel)
             {
                 ++objMarkLevel;
 
+                //check if in puzzle menu
                 if (CheckSynthPuzzle())
                 {
+                    //memory values being read is from pointer to most recent file that has been loaded
                     string puzzFile = "";
                     if (pcsx2tracking)
                     {
@@ -1262,6 +1266,7 @@ namespace KhTracker
                     else
                         puzzFile = ReadMemString(ReadPcPointer(0x29F0998) + 0x24, 28);
 
+                    //check what file name currently is
                     string puzzName = "Dummy";
                     switch (puzzFile)
                     {
@@ -1292,13 +1297,22 @@ namespace KhTracker
                         default:
                             return;
                     }
-                    UpdateSupportingTrackers(puzzName);
-                }
 
+                    //if a puzzle was loaded and objective mark gotten then track it
+                    if (puzzName != "Dummy")
+                        UpdateSupportingTrackers(puzzName);
+                }
+                //check CoR Mineshaft
                 if (world.worldName == "HollowBastion" && world.roomNumber == 24)
                 {
-                    UpdateSupportingTrackers("EndOfCoR");
+                    // check is last CoR Chest was opened
+                    if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3]) 
+                    {
+                        UpdateSupportingTrackers("EndOfCoR");
+                    }
                 }
+                //A New Day check does not have an event/cutscene aduring/after it
+                //so check world and room sonf takes place in for when a completion mark was obtained 
                 else if (world.worldName == "Atlantica" && world.roomNumber == 4)
                 {
                     UpdateSupportingTrackers("ObjectiveNewDay");
@@ -1458,8 +1472,8 @@ namespace KhTracker
                             if (wID3 == 108 && wCom == 1) // Station Nobodies
                                 newProg = 2;
                             break;
-                        case 27:
-                            if (wID3 == 4) // Yen Sid after new clothes
+                        case 28:
+                            if (wID3 == 3) // A Gift From the Fairies
                                 newProg = 3;
                             break;
                         case 4:
