@@ -679,7 +679,7 @@ namespace KhTracker
                     importantCheck.UpdateMemory();
                 });
 
-                UpdateSupportingTrackers("Dummy");
+                //UpdateSupportingTrackers("Dummy");
 
                 #region For Debugging
                 //Modified to only update if any of these actually change instead of updating every tick
@@ -808,44 +808,44 @@ namespace KhTracker
 
             // "GridTrackerOnly" is so that the GetBoss funtion doesn't pass the boss over to the Objective Tracker
             // the objective tracker only cares about progression and items, never actual bosses or boss rando
+            switch (gridCheckName)
+            {
+                case "Lords":
+                    checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
+                    break;
+                case "SephiDemyx":
+                    checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
+                    break;
+                case "Marluxia_LingeringWill":
+                    checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
+                    break;
+                case "MarluxiaData_LingeringWill":
+                    checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
+                    break;
+                case "FF Team 1":
+                    checks.AddRange(("Leon,Yuffie").Split(',').ToList());
+                    break;
+                case "FF Team 2":
+                    checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
+                    break;
+                case "FF Team 3":
+                    checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
+                    break;
+                case "FF Team 4":
+                    checks.AddRange(("Cloud,Tifa").Split(',').ToList());
+                    break;
+                case "FF Team 5":
+                    checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
+                    break;
+                case "FF Team 6":
+                    checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
+                    break;
+                default:
+                    break;
+            }
+
             if (GridTrackerOnly)
             {
-                switch (gridCheckName)
-                {
-                    case "Lords":
-                        checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
-                        break;
-                    case "SephiDemyx":
-                        checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
-                        break;
-                    case "Marluxia_LingeringWill":
-                        checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
-                        break;
-                    case "MarluxiaData_LingeringWill":
-                        checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
-                        break;
-                    case "FF Team 1":
-                        checks.AddRange(("Leon,Yuffie").Split(',').ToList());
-                        break;
-                    case "FF Team 2":
-                        checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
-                        break;
-                    case "FF Team 3":
-                        checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
-                        break;
-                    case "FF Team 4":
-                        checks.AddRange(("Cloud,Tifa").Split(',').ToList());
-                        break;
-                    case "FF Team 5":
-                        checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
-                        break;
-                    case "FF Team 6":
-                        checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
-                        break;
-                    default:
-                        break;
-                }
-
                 // boss enemy check
                 if (data.BossRandoFound)
                 {
