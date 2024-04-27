@@ -2836,12 +2836,13 @@ namespace KhTracker
             data.seedLoaded = false;
             data.saveFileLoaded = false;
             data.firstGridOnSeedLoad = true;
-
             data.BossHomeHinting = false;
+
 
             //objective widow stuff
             data.objectiveMode = false;
             data.oneHourMode = false;
+            data.earlyThroneRoom = true;
             objWindow.endCorChest = false;
             objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 

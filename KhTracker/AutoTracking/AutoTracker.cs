@@ -1817,7 +1817,11 @@ namespace KhTracker
                             break;
                         case 1:
                             if (wID1 == 0 && wID2 == 0 && wID3 == 15) // All 3 missions finished
+                            {
                                 newProg = 2;
+                                if (data.oneHourMode)
+                                    UpdatePointScore(15);
+                            }
                             break;
                         case 3:
                             if (wID1 == 71 && wCom == 1) // Mountain Climb finish
@@ -1829,7 +1833,11 @@ namespace KhTracker
                             break;
                         case 7:
                             if (wID1 == 73 && wCom == 1) // Summit finish
+                            {
                                 newProg = 5;
+                                if (data.oneHourMode)
+                                    UpdatePointScore(10);
+                            }
                             break;
                         case 9:
                             if (wID1 == 75 && wCom == 1) // Shan Yu finish
@@ -1837,7 +1845,20 @@ namespace KhTracker
                             break;
                         case 10:
                             if (wID1 == 78 && wCom == 1) // Antechamber fight finish
+                            {
                                 newProg = 7;
+                                data.earlyThroneRoom = false;
+                            }
+                            break;
+                        case 11:
+                            if (data.earlyThroneRoom)
+                            {
+                                UpdatePointScore(30); //throne room normallr
+                            }
+                            else
+                            {
+                                UpdatePointScore(15); //did early throne room skip
+                            }
                             break;
                         case 8:
                             if (wID1 == 79 && wCom == 1) // Storm Rider finish
@@ -2117,7 +2138,11 @@ namespace KhTracker
                             break;
                         case 9:
                             if (wID1 == 59 && wCom == 1) // 1min pirates finish
+                            {
                                 newProg = 3;
+                                if (data.oneHourMode)
+                                    UpdatePointScore(10);
+                            }                        
                             break;
                         case 7:
                             if (wID1 == 58 && wCom == 1) // Medalion fight finish

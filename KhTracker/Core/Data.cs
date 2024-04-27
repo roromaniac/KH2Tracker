@@ -43,6 +43,7 @@ namespace KhTracker
 
         public bool objectiveMode = false;
         public bool oneHourMode = false;
+        public bool earlyThroneRoom = true;
 
         //Report stuff      
         public List<Tuple<string, string, int>> reportInformation = new List<Tuple<string, string, int>>();
