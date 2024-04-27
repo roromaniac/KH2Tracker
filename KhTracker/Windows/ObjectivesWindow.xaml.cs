@@ -40,6 +40,7 @@ namespace KhTracker
         public int numColumns;
         public ColorPickerWindow colorPickerWindow;
         private int objectivesNeed = 0;
+        private bool oneHourMode = false;
 
         //lookup table for what size the grid should be for certain objective counts
         private Dictionary<int, Tuple<int,int>> objSizeLookup = new Dictionary<int, Tuple<int, int>>()
@@ -288,6 +289,7 @@ namespace KhTracker
         {
             //reset banner visibility
             UpdateGridBanner(true, "OBJECTIVES COMPLETED");
+            oneHourMode = false;
 
             //get total needed
             objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
@@ -379,6 +381,203 @@ namespace KhTracker
             DynamicGrid.Children.Add(objGrid);
         }
 
+        public void GenerateOneHourObjGrid()
+        {
+            //reset banner visibility
+            UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
+            oneHourMode = true;
+
+            //build asset list
+            assets.Clear();
+            Random rng = new Random(data.convertedSeedHash);
+            assets = Codes.oneHourAssets.Keys.ToList();
+            //decide which of the CO org members to keep
+            if (rng.Next(2) == 0)
+            {
+                assets.Remove("Zexion");
+            }
+            else
+            {
+                assets.Remove("ZexionData");
+            }
+            if (rng.Next(2) == 0)
+            {
+                assets.Remove("Marluxia");
+            }
+            else
+            {
+                assets.Remove("MarluxiaData");
+            }
+            if (rng.Next(2) == 0)
+            {
+                assets.Remove("Lexaeus");
+            }   
+            else
+            {
+                assets.Remove("LexaeusData");
+            }
+            if (rng.Next(2) == 0)
+            {
+                assets.Remove("Vexen");
+            }
+            else
+            {
+                assets.Remove("VexenData");
+            }
+            if (rng.Next(2) == 0)
+            {
+                assets.Remove("Larxene");
+            }
+            else
+            {
+                assets.Remove("LarxeneData");
+            }
+            //for each form, remove two of the 3 objectives
+            int valor = rng.Next(3);
+            int wisdom = rng.Next(3);
+            int limit = rng.Next(3);
+            int master = rng.Next(3);
+            int final = rng.Next(3);
+            if (valor == 0)
+            {
+                assets.Remove("Valor5");
+                assets.Remove("Valor7");
+            }
+            else if (valor == 1)
+            {
+                assets.Remove("Valor3");
+                assets.Remove("Valor7");
+            }
+            else
+            {
+                assets.Remove("Valor3");
+                assets.Remove("Valor5");
+            }
+            if (wisdom == 0)
+            {
+                assets.Remove("Wisdom5");
+                assets.Remove("Wisdom7");
+            }
+            else if (wisdom == 1)
+            {
+                assets.Remove("Wisdom3");
+                assets.Remove("Wisdom7");
+            }
+            else
+            {
+                assets.Remove("Wisdom3");
+                assets.Remove("Wisdom5");
+            }
+            if (limit == 0)
+            {
+                assets.Remove("Limit5");
+                assets.Remove("Limit7");
+            }
+            else if (limit == 1)
+            {
+                assets.Remove("Limit3");
+                assets.Remove("Limit7");
+            }
+            else
+            {
+                assets.Remove("Limit3");
+                assets.Remove("Limit5");
+            }
+            if (master == 0)
+            {
+                assets.Remove("Master5");
+                assets.Remove("Master7");
+            }
+            else if (master == 1)
+            {
+                assets.Remove("Master3");
+                assets.Remove("Master7");
+            }
+            else
+            {
+                assets.Remove("Master3");
+                assets.Remove("Master5");
+            }
+            if (final == 0)
+            {
+                assets.Remove("Final5");
+                assets.Remove("Final7");
+            }
+            else if (final == 1)
+            {
+                assets.Remove("Final3");
+                assets.Remove("Final7");
+            }
+            else
+            {
+                assets.Remove("Final3");
+                assets.Remove("Final5");
+            }
+
+            // take 7 random objectives to use
+            assets = assets.OrderBy(x => rng.Next()).Take(7).ToList();
+
+            //fix icon prefix for assets
+            getAsetPrefixOneHour();
+
+            //get grid size
+            int objectiveCount = assets.Count;
+            int blankSquares = 0;
+            while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
+            {
+                blankSquares++;
+            }
+            numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
+            numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+
+            objGrid = new Grid();
+            buttons = new ToggleButton[numRows, numColumns];
+            originalColors = new Color[numRows, numColumns];
+            annotationStatus = new bool[numRows, numColumns];
+
+            // generate the grid
+            for (int i = 0; i < numRows; i++)
+            {
+                objGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            for (int j = 0; j < numColumns; j++)
+            {
+                objGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            int buttonDone = 0;
+            for (int i = 0; i < numRows; i++)
+            {
+                for (int j = 0; j < numColumns; j++)
+                {
+                    if (buttonDone >= assets.Count)
+                        continue;
+
+                    ToggleButton button = new ToggleButton();
+                    bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
+                    button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
+                    button.Tag = assets[(i * numColumns) + j].ToString();
+                    button.Style = (Style)FindResource("ColorToggleButton");
+                    // keep i and j static for the button
+                    int current_i = i;
+                    int current_j = j;
+                    button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
+                    button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
+                    Grid.SetRow(button, i);
+                    Grid.SetColumn(button, j);
+                    buttons[i, j] = button;
+                    objGrid.Children.Add(button);
+
+                    buttonDone++;
+                }
+            }
+            // Add grid to the window or other container
+            DynamicGrid.Children.Add(objGrid);
+        }
+
+
         public void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "", string iconColor = "Banner_Gold")
         {
             //Update Text
@@ -391,11 +590,22 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
-                objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
-                objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
-                CollectionGrid.Visibility = Visibility.Visible;
-
+                if (textIcon == "1HROVERRIDE")
+                {
+                    GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
+                    objBannerIconL.Width = new GridLength(0.5, GridUnitType.Star);
+                    objBannerIconR.Width = new GridLength(0.5, GridUnitType.Star);
+                    CollectionGrid.Visibility = Visibility.Collapsed;
+                    OBannerIconL.Text = "";
+                    OBannerIconR.Text = "";
+                }
+                else
+                {
+                    GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
+                    objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
+                    objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
+                    CollectionGrid.Visibility = Visibility.Visible;
+                }
             }
             else
             {
@@ -404,7 +614,6 @@ namespace KhTracker
                 objBannerIconL.Width = new GridLength(1, GridUnitType.Star);
                 objBannerIconR.Width = new GridLength(1, GridUnitType.Star);
             }
-
         }
 
         public void Button_Click(object sender, RoutedEventArgs e, int i, int j)
@@ -614,6 +823,89 @@ namespace KhTracker
             }
         }
 
+        private void getAsetPrefixOneHour()
+        {
+            string style = ObjTelevoIconsOption.IsChecked ? "1HR_Min-" : "1HR_Old-";
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                //if (ObjCustomIconsOption.IsChecked && MainWindow.CusObjImagesList.Contains("1HR_Cus-" + assets[i]))
+                //{
+                //    assets[i] = "1HR_Cus-" + assets[i];
+                //    continue;
+                //}
+
+                assets[i] = style + assets[i];
+            }
+        }
+
+        private void updateAssetPrefixOneHour(bool usedCustomToggle = false)
+        {
+            bool useCustom = ObjCustomIconsOption.IsChecked;
+
+            string prefix1 = "1HR_Old-";
+            string prefix2 = "1HR_Min-";
+            if (ObjSonicIconsOption.IsChecked)
+            {
+                prefix1 = "1HR_Min-";
+                prefix2 = "1HR_Old-";
+            }
+
+            for (int i = 0; i < assets.Count; i++)
+            {
+                //if already a custom prefix then skip
+                //if (useCustom && assets[i].StartsWith("1HR_Cus-"))
+                //    continue;
+
+                //if custom toggle on then check for and replace normal prefix with custom one
+                //if (useCustom)
+                //{
+                //    string cusCheck = assets[i].Replace(prefix1, "1HR_Cus-");
+                //    if (usedCustomToggle)
+                //        cusCheck = assets[i].Replace(prefix2, "1HR_Cus-");
+                //    if (MainWindow.CusObjImagesList.Contains(cusCheck))
+                //    {
+                //        assets[i] = cusCheck;
+                //        continue;
+                //    }
+                //}
+
+                //if custom toggle is off check if prefix was custom and fix it else replace as normal
+                //if (assets[i].StartsWith("1HR_Cus-"))
+                //    assets[i] = assets[i].Replace("1HR_Cus-", prefix2);
+                //else
+                assets[i] = assets[i].Replace(prefix1, prefix2);
+            }
+            Change_IconsOneHour();
+        }
+
+        private void Change_IconsOneHour()
+        {
+            if (objGrid == null)
+                return;
+
+            string prefix = "1HR_Min-";
+            if (ObjSonicIconsOption.IsChecked)
+                prefix = "1HR_Old-";
+
+            foreach (var child in objGrid.Children)
+            {
+                //check if it's a toggle button
+                if (child is ToggleButton square)
+                {
+                    string squareTag = square.Tag.ToString().Remove(0, 8);
+                    //check 
+                    //if (ObjCustomIconsOption.IsChecked && assets.Contains("1HR_Cus-" + squareTag))
+                    //{
+                    //    square.SetResourceReference(ContentProperty, "1HR_Cus-" + squareTag);
+                    //    continue;
+                    //}
+
+                    square.SetResourceReference(ContentProperty, prefix + squareTag);
+                }
+            }
+        }
+
         private void ObjTelevoIconsToggle(object sender, RoutedEventArgs e)
         {
             ObjTelevoIconsToggle(ObjTelevoIconsOption.IsChecked);
@@ -624,7 +916,10 @@ namespace KhTracker
             ObjTelevoIconsOption.IsChecked = toggle;
             ObjSonicIconsOption.IsChecked = !toggle;
 
-            updateAssetPrefix();
+            if (oneHourMode)
+                updateAssetPrefixOneHour();
+            else
+                updateAssetPrefix();
         }
 
         private void ObjSonicIconsToggle(object sender, RoutedEventArgs e)
@@ -637,7 +932,10 @@ namespace KhTracker
             ObjSonicIconsOption.IsChecked = toggle;
             ObjTelevoIconsOption.IsChecked = !toggle;
 
-            updateAssetPrefix();
+            if (oneHourMode)
+                updateAssetPrefixOneHour();
+            else
+                updateAssetPrefix();
         }
 
         private void ObjCustomIconsToggle(object sender, RoutedEventArgs e)
@@ -649,7 +947,10 @@ namespace KhTracker
         {
             Properties.Settings.Default.ObjectiveCustom = toggle;
 
-            updateAssetPrefix(true);
+            if (oneHourMode)
+                updateAssetPrefixOneHour(true);
+            else
+                updateAssetPrefix(true);
         }
     }
 }

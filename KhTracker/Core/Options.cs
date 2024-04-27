@@ -1354,6 +1354,8 @@ namespace KhTracker
                         //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
                         //}
 
+                        bool oneHour = false;
+
                         if (hintObject.ContainsKey("settings"))
                         {
                             settings = JsonSerializer.Deserialize<List<string>>(hintObject["settings"].ToString());
@@ -1647,6 +1649,9 @@ namespace KhTracker
                                     case "objectives":
                                         data.objectiveMode = true;
                                         break;
+                                    case "OneHour":
+                                        oneHour = true;
+                                        break;
                                 }
                             }
 
@@ -1838,9 +1843,17 @@ namespace KhTracker
                         //gen objective window grid
                         if (objWindow.objGrid != null)
                             objWindow.objGrid.Children.Clear();
+
+                        //DEBUG!!
+                        //oneHour = true;
+
                         if (data.objectiveMode)
                         {
                             objWindow.GenerateObjGrid(hintObject);
+                        }
+                        else if (oneHour)
+                        {
+                            objWindow.GenerateOneHourObjGrid();
                         }
                         else
                         {
@@ -2505,6 +2518,17 @@ namespace KhTracker
                     }
 
                     data.hintsLoaded = true;
+                    //gen objective window grid
+                    if (objWindow.objGrid != null)
+                        objWindow.objGrid.Children.Clear();
+                    if (data.objectiveMode)
+                    {
+                        objWindow.GenerateObjGrid(hintObject);
+                    }
+                    else
+                    {
+                        objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
+                    }
 
                     reader.Close();
                 }
