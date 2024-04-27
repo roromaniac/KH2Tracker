@@ -1,24 +1,11 @@
-﻿using Microsoft.Win32;
-using Microsoft.VisualBasic;
-
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Data.Common;
-using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using System.Windows.Shapes;
-using System.IO;
-using System.Windows.Markup;
 
 namespace KhTracker
 {
@@ -28,6 +15,8 @@ namespace KhTracker
 
     public partial class ObjectivesWindow : Window, IColorableWindow
     {
+        MainWindow window = (MainWindow)App.Current.MainWindow;
+
         public bool canClose = false;
         readonly Data data;
         public Grid objGrid;
@@ -40,7 +29,8 @@ namespace KhTracker
         public int numColumns;
         public ColorPickerWindow colorPickerWindow;
         private int objectivesNeed = 0;
-        private bool oneHourMode = false;
+        public int oneHourPoints = 0;
+        public bool endCorChest = false;
 
         //lookup table for what size the grid should be for certain objective counts
         private Dictionary<int, Tuple<int,int>> objSizeLookup = new Dictionary<int, Tuple<int, int>>()
@@ -232,20 +222,18 @@ namespace KhTracker
         public ObjectivesWindow(Data dataIn)
         {
             InitializeComponent();
-            InitOptions();
 
             data = dataIn;
 
-            colorPickerWindow = new ColorPickerWindow(this, currentColors, true);
+            InitOptions();
 
-            //GenerateObjGrid(hints);
+            colorPickerWindow = new ColorPickerWindow(this, currentColors, true);
 
             Top = Properties.Settings.Default.ObjectiveWindowY;
             Left = Properties.Settings.Default.ObjectiveWindowX;
 
             Width = Properties.Settings.Default.ObjectiveWindowWidth;
             Height = Properties.Settings.Default.ObjectiveWindowHeight;
-
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -289,7 +277,6 @@ namespace KhTracker
         {
             //reset banner visibility
             UpdateGridBanner(true, "OBJECTIVES COMPLETED");
-            oneHourMode = false;
 
             //get total needed
             objectivesNeed = JsonSerializer.Deserialize<int>(hintObject["num_objectives_needed"].ToString());
@@ -385,7 +372,6 @@ namespace KhTracker
         {
             //reset banner visibility
             UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
-            oneHourMode = true;
 
             //build asset list
             assets.Clear();
@@ -573,10 +559,10 @@ namespace KhTracker
                     buttonDone++;
                 }
             }
+            
             // Add grid to the window or other container
             DynamicGrid.Children.Add(objGrid);
         }
-
 
         public void UpdateGridBanner(bool showBanner, string textMain = "", string textIcon = "", string iconColor = "Banner_Gold")
         {
@@ -661,7 +647,6 @@ namespace KhTracker
                         if (button.IsChecked == true)
                             completeSquares.Add(button);
                     }
-
                 }
                 if (completeSquares.Count >= objectivesNeed)
                 {
@@ -679,6 +664,22 @@ namespace KhTracker
                 }
 
                 CollectedValue.Text = completeSquares.Count.ToString();
+            }
+            else
+            {
+                int testPoints = 0;
+
+                List<ToggleButton> completeSquares = new List<ToggleButton>();
+                foreach (var square in objGrid.Children)
+                {
+                    if (square is ToggleButton button && button.IsChecked == true)
+                    {
+                        testPoints += Codes.oneHourAssets[button.Tag.ToString().Remove(0, 8)];
+                    }
+                }
+
+                oneHourPoints = testPoints;
+                window.UpdatePointScore(0);
             }
         }
 
@@ -916,7 +917,7 @@ namespace KhTracker
             ObjTelevoIconsOption.IsChecked = toggle;
             ObjSonicIconsOption.IsChecked = !toggle;
 
-            if (oneHourMode)
+            if (data.oneHourMode)
                 updateAssetPrefixOneHour();
             else
                 updateAssetPrefix();
@@ -932,7 +933,7 @@ namespace KhTracker
             ObjSonicIconsOption.IsChecked = toggle;
             ObjTelevoIconsOption.IsChecked = !toggle;
 
-            if (oneHourMode)
+            if (data.oneHourMode)
                 updateAssetPrefixOneHour();
             else
                 updateAssetPrefix();
@@ -947,7 +948,7 @@ namespace KhTracker
         {
             Properties.Settings.Default.ObjectiveCustom = toggle;
 
-            if (oneHourMode)
+            if (data.oneHourMode)
                 updateAssetPrefixOneHour(true);
             else
                 updateAssetPrefix(true);

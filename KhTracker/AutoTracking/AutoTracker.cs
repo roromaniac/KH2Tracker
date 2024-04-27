@@ -679,7 +679,17 @@ namespace KhTracker
                     importantCheck.UpdateMemory();
                 });
 
-                //UpdateSupportingTrackers("Dummy");
+                UpdateSupportingTrackers("Dummy");
+
+                if (data.oneHourMode && !objWindow.endCorChest)
+                {
+                    // check is last CoR Chest was opened
+                    if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3])
+                    {
+                        UpdateSupportingTrackers("EndOfCoR");
+                        objWindow.endCorChest = true;
+                    }
+                }
 
                 #region For Debugging
                 //Modified to only update if any of these actually change instead of updating every tick

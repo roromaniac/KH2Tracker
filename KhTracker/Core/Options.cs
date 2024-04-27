@@ -16,9 +16,6 @@ using KhTracker.Hotkeys;
 using System.Windows.Input;
 using MessageForm = System.Windows.Forms;
 
-//using System.Text.Json.Serialization;
-//using YamlDotNet.Serialization;
-
 namespace KhTracker
 {
     public partial class MainWindow : Window
@@ -1354,8 +1351,6 @@ namespace KhTracker
                         //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
                         //}
 
-                        bool oneHour = false;
-
                         if (hintObject.ContainsKey("settings"))
                         {
                             settings = JsonSerializer.Deserialize<List<string>>(hintObject["settings"].ToString());
@@ -1650,7 +1645,7 @@ namespace KhTracker
                                         data.objectiveMode = true;
                                         break;
                                     case "OneHour":
-                                        oneHour = true;
+                                        data.oneHourMode = true;
                                         break;
                                 }
                             }
@@ -1845,13 +1840,13 @@ namespace KhTracker
                             objWindow.objGrid.Children.Clear();
 
                         //DEBUG!!
-                        //oneHour = true;
+                        //data.oneHourMode= true;
 
                         if (data.objectiveMode)
                         {
                             objWindow.GenerateObjGrid(hintObject);
                         }
-                        else if (oneHour)
+                        else if (data.oneHourMode)
                         {
                             objWindow.GenerateOneHourObjGrid();
                         }
@@ -2846,6 +2841,8 @@ namespace KhTracker
 
             //objective widow stuff
             data.objectiveMode = false;
+            data.oneHourMode = false;
+            objWindow.endCorChest = false;
             objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 
             //prog boss hint stuff

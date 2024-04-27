@@ -764,7 +764,89 @@
         </Viewbox>
     </Grid>
 
+    <Grid x:Key="1HR_Min-Roxas" x:Shared="false" ToolTip="Defeat Roxas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\Org_roxas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="15 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Min-Xigbar" x:Shared="false" ToolTip="Defeat Xigbar's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\Org_xigbar.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="20 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Min-Luxord" x:Shared="false" ToolTip="Defeat Luxord's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\Org_luxord.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="25 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Min-Saix" x:Shared="false" ToolTip="Defeat Saix's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\Org_saix.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="20 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Min-Xemnas1" x:Shared="false" ToolTip="Defeat Xemnas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\org_xemnas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="25 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+
     <!--Super Bosses-->
+    <Grid x:Key="1HR_Min-DataAxel" x:Shared="false" ToolTip="Defeat Data Axel's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\org_axel.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Min-DataRoxas" x:Shared="false" ToolTip="Defeat Data Roxas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Min\org_roxas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>    
+
     <Grid x:Key="1HR_Min-DataDemyx" x:Shared="false" ToolTip="Defeat Data Demyx's Replacement">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -822,7 +904,7 @@
         <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
-            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="30 Points" Fill="{StaticResource Banner_Gold}"/>
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
         </Viewbox>
     </Grid>
     <Grid x:Key="1HR_Min-DataFinalXemnas" x:Shared="false" ToolTip="Final Xemnas (Data)'s Replacement">
@@ -1741,7 +1823,87 @@
         </Viewbox>
     </Grid>
 
+    <Grid x:Key="1HR_Old-Roxas" x:Shared="false" ToolTip="Defeat Roxas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\Org_roxas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="15 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Old-Xigbar" x:Shared="false" ToolTip="Defeat Xigbar's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\Org_xigbar.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="20 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Old-Luxord" x:Shared="false" ToolTip="Defeat Luxord's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\Org_luxord.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="25 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Old-Saix" x:Shared="false" ToolTip="Defeat Saix's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\Org_saix.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="20 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Old-Xemnas1" x:Shared="false" ToolTip="Defeat Xemnas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\org_xemnas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="25 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
     <!--Super Bosses-->
+    <Grid x:Key="1HR_Old-DataAxel" x:Shared="false" ToolTip="Defeat Data Axel's Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\org_axel.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+    <Grid x:Key="1HR_Old-DataRoxas" x:Shared="false" ToolTip="Defeat Data Roxas' Replacement">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Source="Images\Grid\Bosses\Old\org_roxas.png"/>
+        <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
     <Grid x:Key="1HR_Old-DataDemyx" x:Shared="false" ToolTip="Defeat Data Demyx's Replacement">
         <Grid.RowDefinitions>
             <RowDefinition/>

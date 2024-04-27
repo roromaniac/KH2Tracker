@@ -897,6 +897,9 @@ namespace KhTracker
                     num += data.PointsDatanew["collection_report"];
             }
 
+            if (data.oneHourMode)
+                num += objWindow.oneHourPoints;
+
             ScoreValue.Text = num.ToString();
         }
 
