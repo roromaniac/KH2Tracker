@@ -2440,34 +2440,26 @@ namespace KhTracker
 
                 if (check.Obtained && collectedChecks.Contains(check) == false)
                 {
-                    // skip auto tracking final if it was forced and valor
-                    if (check.Name == "Final")
+                    // final form specific stuff
+                    if (check.Name == "Final" || check.Name == "FinalReal")
                     {
-                        // if forced Final, start tracking the Final Form check
-                        if (!data.forcedFinal && stats.form == 5)
+                        //real final should always track before "fake" final
+                        //if fake final isn't in collected checks then assume forced
+                        if (collectedChecks.Contains(final) && !collectedChecks.Contains(finalReal))
+                        {
+                            data.forcedFinal = false;
+                        }
+                        if (!collectedChecks.Contains(final) && collectedChecks.Contains(finalReal))
                         {
                             data.forcedFinal = true;
-                            //checkEveryCheck.TrackCheck(0x001D);
-                            if (gridWindow.gridSettings["ForcingFinalCounts"])
-                                UpdateSupportingTrackers("Final");
                         }
-                        // if not forced Final, track Final Form check like normal
-                        // else if Final was forced, check the tracked Final Form check
-                        else if (!data.forcedFinal) //|| checkEveryCheck.UpdateTargetMemory())
+
+                        //track final on grid tracker if setting for counting forced is on
+                        if (data.forcedFinal && gridWindow.gridSettings["ForcingFinalCounts"])
                         {
-                            collectedChecks.Add(check);
-                            newChecks.Add(check);
-                        }
-                    }
-                    else if (check.Name == "FinalReal")
-                    {
-                        if (gridWindow.gridSettings["ForcingFinalCounts"])
                             UpdateSupportingTrackers("Final");
-                    }
-                    else if (check.Name.StartsWith("MunnyPouch"))
-                    {
-                        munnyPouchCount++;
-                        check.Name = $"MunnyPouch{munnyPouchCount}";
+                        }
+
                         collectedChecks.Add(check);
                         newChecks.Add(check);
                     }
