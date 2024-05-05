@@ -9,12 +9,16 @@ namespace KhTracker
     public class MemoryReader
     {
         const int PROCESS_WM_READ = 0x0010;
+        //const int PROCESS_WM_WRITE = 0x0030;
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
         [DllImport("kernel32.dll")]
         public static extern bool ReadProcessMemory(int hProcess, Int64 lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
 
         Process process;
         IntPtr processHandle;
@@ -57,6 +61,17 @@ namespace KhTracker
 
             return buffer;
         }
+
+        //public static void WriteMem(Process p, int address, long v)
+        //{
+        //    var hProc = OpenProcess(PROCESS_WM_WRITE, false, (int)p.Id);
+        //    var val = new byte[] { (byte)v };
+        //
+        //    int wtf = 0;
+        //    WriteProcessMemory(hProc, new IntPtr(address), val, (UInt32)val.LongLength, out wtf);
+        //
+        //    CloseHandle(hProc);
+        //}
 
         public long GetBaseAddress()
         {

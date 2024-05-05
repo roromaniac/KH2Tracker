@@ -97,7 +97,7 @@ namespace KhTracker
 
         private int objMarkLevel;
 
-        private TornPage pages;
+        private TornPageNew pages;
         public GridWindow gridWindow;
         public ObjectivesWindow objWindow;
         private World world;
@@ -567,6 +567,7 @@ namespace KhTracker
             int IceCreamCount = IceCream != null ? IceCream.Level : 0;
             int RikuWepCount = RikuWep != null ? RikuWep.Level : 0;
             int KingsLetterCount = KingsLetter != null ? KingsLetter.Level : 0;
+
             fire.Level = fireCount;
             blizzard.Level = blizzardCount;
             thunder.Level = thunderCount;
@@ -586,13 +587,10 @@ namespace KhTracker
             RikuWep.Level = RikuWepCount;
             KingsLetter.Level = KingsLetterCount;
 
-
-
             //change this for flag checking to determine amount of pages?
             int count = pages != null ? pages.Quantity : 0;
-            importantChecks.Add(pages = new TornPage(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
+            importantChecks.Add(pages = new TornPageNew(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
-
 
             int objItemCount = objMark != null ? objMark.Level : 0;
             importantChecks.Add(objMark = new VisitNew(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
@@ -926,7 +924,10 @@ namespace KhTracker
                 }
 
                 //objective window tracking
-                if (data.objectiveMode && !GridTrackerOnly)
+                if (GridTrackerOnly && !data.oneHourMode)
+                    return;
+
+                if (data.objectiveMode || data.oneHourMode)
                 {
                     for (int row = 0; row < objWindow.numRows; row++)
                     {
@@ -1820,7 +1821,12 @@ namespace KhTracker
                             {
                                 newProg = 2;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(15);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                    else
+                                        UpdatePointScore(15);
+                                }
                             }
                             break;
                         case 3:
@@ -1836,7 +1842,12 @@ namespace KhTracker
                             {
                                 newProg = 5;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(10);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["summitBonus"]);
+                                    else
+                                        UpdatePointScore(10);
+                                }
                             }
                             break;
                         case 9:
@@ -1853,13 +1864,27 @@ namespace KhTracker
                         case 11:
                             if (data.earlyThroneRoom)
                             {
-                                UpdatePointScore(30); //throne room normallr
+                                //throne room normally
+
+                                if (objWindow.oneHourCustom)
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                else
+                                    UpdatePointScore(30);
+
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
                             else
                             {
-                                UpdatePointScore(15); //did early throne room skip
+                                //did early throne room skip
+                                if (objWindow.oneHourCustom)
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                else
+                                    UpdatePointScore(15);
+
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
-                            break;
                         case 8:
                             if (wID1 == 79 && wCom == 1) // Storm Rider finish
                                 newProg = 8;
@@ -2141,7 +2166,12 @@ namespace KhTracker
                             {
                                 newProg = 3;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(10);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["pirateMinuteFightBonus"]);
+                                    else
+                                        UpdatePointScore(10);
+                                }
                             }                        
                             break;
                         case 7:
@@ -3449,20 +3479,51 @@ namespace KhTracker
 
                     //add extra points for bosses in special arenas
                     int bonuspoints = 0;
-                    switch (bossType)
+                    if (!objWindow.oneHourCustom)
                     {
-                        case "boss_as":
-                        case "boss_datas":
-                        case "boss_sephi":
-                        case "boss_terra":
-                            //case "boss_final":
-                            bonuspoints += data.PointsDatanew[bossType];
-                            break;
-                        case "boss_other":
-                            if (boss == "Final Xemnas")
-                                bonuspoints += data.PointsDatanew["boss_final"];
-                            break;
+                        switch (bossType)
+                        {
+                            case "boss_as":
+                            case "boss_datas":
+                            case "boss_sephi":
+                            case "boss_terra":
+                                //case "boss_final":
+                                bonuspoints += data.PointsDatanew[bossType];
+                                break;
+                            case "boss_other":
+                                if (boss == "Final Xemnas")
+                                    bonuspoints += data.PointsDatanew["boss_final"];
+                                break;
+                        }
                     }
+                    else
+                    {
+                        switch (bossType)
+                        {
+                            case "boss_as":
+                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                break;
+                            case "boss_datas":
+                                if (boss.Contains("Final Xemnas"))
+                                {
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                }
+                                else
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                break;
+                            case "boss_sephi":
+                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                break;
+                            case "boss_terra":
+                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                break;
+                            case "boss_other":
+                                if (boss == "Final Xemnas")
+                                    bonuspoints = data.PointsDatanew["boss_final"];
+                                break;
+                        }
+                    }
+
 
                     points += bonuspoints;
                 }
@@ -3566,29 +3627,32 @@ namespace KhTracker
 
         public int GetUsedPages(int save)
         {
-            save = save - 0x3598;
-            int used = 0;
-            bool PigFlag = new BitArray(memory.ReadMemory(save + 0x1DB0, 1))[1];
-            bool Page1Flag = new BitArray(memory.ReadMemory(save + 0x1DB1, 1))[1];
-            bool Page2Flag = new BitArray(memory.ReadMemory(save + 0x1DB2, 1))[1];
-            bool Page3Flag = new BitArray(memory.ReadMemory(save + 0x1DB3, 1))[1];
-            bool Page4Flag = new BitArray(memory.ReadMemory(save + 0x1DB4, 1))[1];
-            bool Page5Flag = new BitArray(memory.ReadMemory(save + 0x1DB5, 1))[0];
+            //save = save - 0x3598;
+            //int used = 0;
+            //bool PigFlag = new BitArray(memory.ReadMemory(save + 0x1DB0, 1))[1];
+            //bool Page1Flag = new BitArray(memory.ReadMemory(save + 0x1DB1, 1))[1];
+            //bool Page2Flag = new BitArray(memory.ReadMemory(save + 0x1DB2, 1))[1];
+            //bool Page3Flag = new BitArray(memory.ReadMemory(save + 0x1DB3, 1))[1];
+            //bool Page4Flag = new BitArray(memory.ReadMemory(save + 0x1DB4, 1))[1];
+            //bool Page5Flag = new BitArray(memory.ReadMemory(save + 0x1DB5, 1))[0];
+            //
+            //if (PigFlag && Page5Flag)
+            //{
+            //    data.usedPages = 5;
+            //    return data.usedPages;
+            //}
+            //
+            //if (Page1Flag) used++;
+            //if (Page2Flag) used++;
+            //if (Page3Flag) used++;
+            //if (Page4Flag) used++;
+            //
+            //data.usedPages = used;
+            //
+            //return data.usedPages;
 
-            if (PigFlag && Page5Flag)
-            {
-                data.usedPages = 5;
-                return data.usedPages;
-            }
 
-            if (Page1Flag) used++;
-            if (Page2Flag) used++;
-            if (Page3Flag) used++;
-            if (Page4Flag) used++;
-
-            data.usedPages = used;
-
-            return data.usedPages;
+            return 0;
         }
 
         public void UpdateFormProgression()
