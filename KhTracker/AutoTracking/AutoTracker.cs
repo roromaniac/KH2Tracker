@@ -1167,7 +1167,7 @@ namespace KhTracker
             while (pages.Quantity > tornPageCount)
             {
                 ++tornPageCount;
-                TornPage page = new TornPage(null, 0, 0, "TornPage" + tornPageCount.ToString());
+                TornPageNew page = new TornPageNew(null, 0, 0, "TornPage" + tornPageCount.ToString());
                 newChecks.Add(page);
                 collectedChecks.Add(page);
             }
@@ -2423,7 +2423,7 @@ namespace KhTracker
             {
                 string count = "";
                 // remove magic and torn page count for comparison with item codes and readd to track specific ui copies
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPageNew) || check.GetType() == typeof(VisitNew))
                 {
                     count = check.Name.Substring(check.Name.Length - 1);
                     check.Name = check.Name.Substring(0, check.Name.Length - 1);
@@ -2465,7 +2465,7 @@ namespace KhTracker
             foreach (ImportantCheck check in importantChecks)
             {
                 // handle these separately due to the way they are stored in memory
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPageNew) || check.GetType() == typeof(VisitNew))
                     continue;
 
                 if (check.Obtained && collectedChecks.Contains(check) == false)
