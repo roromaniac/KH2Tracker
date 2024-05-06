@@ -35,11 +35,6 @@ namespace KhTracker
     public partial class GridWindow : Window, IColorableWindow
     {
         public bool canClose = false;
-        //Dictionary<string, int> worlds = new Dictionary<string, int>();
-        //Dictionary<string, int> others = new Dictionary<string, int>();
-        //Dictionary<string, int> totals = new Dictionary<string, int>();
-        //Dictionary<string, int> important = new Dictionary<string, int>();
-        //Dictionary<string, ContentControl> Progression = new Dictionary<string, ContentControl>();
         readonly Data data;
         public GridOptionsWindow gridOptionsWindow;
         public ColorPickerWindow colorPickerWindow;
@@ -49,6 +44,7 @@ namespace KhTracker
         public string seedName;
         public bool bingoLogic;
         public bool battleshipLogic;
+        public bool bunterLogic;
         public bool fogOfWar;
         public Dictionary<string, int> fogOfWarSpan = new Dictionary<string, int>()
         {
@@ -66,8 +62,6 @@ namespace KhTracker
         public ToggleButton[,] buttons;
         public Color[,] originalColors;
         public bool[,] bingoStatus;
-        public bool[,] battleshipSunkStatus;
-        public bool battleshipRandomCount;
         public bool[,] annotationStatus;
         public Dictionary<string, bool> gridSettings = new Dictionary<string, bool>();
         public Dictionary<string, Color> currentColors = new Dictionary<string, Color>();
@@ -86,9 +80,13 @@ namespace KhTracker
         public int minShipCount = 5;
         public int maxShipCount = 5;
         private List<int> sampledShipSizes = new List<int>();
+        public bool[,] battleshipSunkStatus;
+        public bool battleshipRandomCount;
 
         public GridWindow(Data dataIn)
         {
+            data = dataIn;
+
             InitializeComponent();
             InitOptions();
 
@@ -105,30 +103,30 @@ namespace KhTracker
             numRows = Properties.Settings.Default.GridWindowRows;
             numColumns = Properties.Settings.Default.GridWindowColumns;
 
-            bingoLogic = Properties.Settings.Default.GridWindowBingoLogic;
-            battleshipLogic = Properties.Settings.Default.GridWindowBattleshipLogic;
-            battleshipRandomCount = Properties.Settings.Default.BattleshipRandomCount;
-            minShipCount = Properties.Settings.Default.MinShipCount;
-            maxShipCount = Properties.Settings.Default.MaxShipCount;
+            bingoLogic = Properties.Settings.Default.GridBingoLogic;
+            battleshipLogic = Properties.Settings.Default.GridBattleshipLogic;
+            bunterLogic = Properties.Settings.Default.GridBunterLogic;
+            battleshipRandomCount = Properties.Settings.Default.GridBattleshipRandomCount;
+            minShipCount = Properties.Settings.Default.GridMinShipCount;
+            maxShipCount = Properties.Settings.Default.GridMaxShipCount;
             try
             {
-                shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
+                shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes);
             }
             catch (JsonException)
             {
                 MessageBox.Show("Ships file did not deserialize correctly.");
                 shipSizes = new List<int>{ 1, 1 };
             }
-            fogOfWar = Properties.Settings.Default.FogOfWar;
+            fogOfWar = Properties.Settings.Default.GridFogOfWar;
             try
             {
-                fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
+                fogOfWarSpan = JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.GridFogOfWarSpan);
             }
             catch (JsonException)
             {
                 MessageBox.Show("Fog of war dictionary had an error loading. Please try again.");
             }
-            data = dataIn;
             gridOptionsWindow = new GridOptionsWindow(this, data);
             colorPickerWindow = new ColorPickerWindow(this, currentColors);
 
@@ -178,6 +176,7 @@ namespace KhTracker
                 {
                     battleshipLogic,
                     battleshipRandomCount,
+                    bunterLogic,
                     bingoLogic,
                     fogOfWar,
                     fogOfWarSpan,
@@ -219,24 +218,28 @@ namespace KhTracker
 
                         battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
                             ? battleshipLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridWindowBattleshipLogic;
+                            : Properties.Settings.Default.GridBattleshipLogic;
 
                         battleshipRandomCount = root.TryGetProperty("battleshipRandomCount", out JsonElement battleshipRandomCountElement)
                             ? battleshipRandomCountElement.GetBoolean()
-                            : Properties.Settings.Default.BattleshipRandomCount;
+                            : Properties.Settings.Default.GridBattleshipRandomCount;
 
                         bingoLogic = root.TryGetProperty("bingoLogic", out JsonElement bingoLogicElement)
                             ? bingoLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridWindowBingoLogic;
+                            : Properties.Settings.Default.GridBingoLogic;
+
+                        bunterLogic = root.TryGetProperty("bunterLogic", out JsonElement bunterLogicElement)
+                            ? bunterLogicElement.GetBoolean()
+                            : Properties.Settings.Default.GridBunterLogic;
 
                         fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
                             ? fogOfWarElement.GetBoolean()
-                            : Properties.Settings.Default.FogOfWar;
+                            : Properties.Settings.Default.GridFogOfWar;
 
                         // Deserialize with a default value if key is missing
                         fogOfWarSpan = root.TryGetProperty("fogOfWarSpan", out JsonElement fogOfWarSpanElement)
                             ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
-                            : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
+                            : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.GridFogOfWarSpan);
 
                         gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
                             ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
@@ -244,11 +247,11 @@ namespace KhTracker
 
                         maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
                             ? maxShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.MaxShipCount;
+                            : Properties.Settings.Default.GridMaxShipCount;
 
                         minShipCount = root.TryGetProperty("minShipCount", out JsonElement minShipCountLogicElement)
                             ? minShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.MinShipCount;
+                            : Properties.Settings.Default.GridMinShipCount;
 
                         numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
                             ? numColumnsElement.GetInt32()
@@ -264,7 +267,7 @@ namespace KhTracker
 
                         shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                             ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
-                            : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes); 
+                            : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes); 
                     }
                 }
                 catch (JsonException)
@@ -327,14 +330,14 @@ namespace KhTracker
                     Properties.Settings.Default.GridWindowRows = numRows;
                     Properties.Settings.Default.GridWindowColumns = numColumns;
                     Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
-                    Properties.Settings.Default.GridWindowBingoLogic = bingoLogic;
-                    Properties.Settings.Default.GridWindowBattleshipLogic = battleshipLogic;
-                    Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(shipSizes);
-                    Properties.Settings.Default.BattleshipRandomCount = battleshipRandomCount;
-                    Properties.Settings.Default.FogOfWar = fogOfWar;
-                    Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
-                    Properties.Settings.Default.MaxShipCount = maxShipCount;
-                    Properties.Settings.Default.MinShipCount = minShipCount;
+                    Properties.Settings.Default.GridBingoLogic = bingoLogic;
+                    Properties.Settings.Default.GridBattleshipLogic = battleshipLogic;
+                    Properties.Settings.Default.GridShipSizes = JsonSerializer.Serialize(shipSizes);
+                    Properties.Settings.Default.GridBattleshipRandomCount = battleshipRandomCount;
+                    Properties.Settings.Default.GridFogOfWar = fogOfWar;
+                    Properties.Settings.Default.GridFogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
+                    Properties.Settings.Default.GridMaxShipCount = maxShipCount;
+                    Properties.Settings.Default.GridMinShipCount = minShipCount;
                     Properties.Settings.Default.GridWindowNumReports = numReports;
                     Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
                     Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
@@ -361,7 +364,7 @@ namespace KhTracker
             gridOptionsWindow.Show();
         }
 
-        private void getAsetPrefix()
+        private void getAssetPrefix()
         {
             string style = TelevoIconsOption.IsChecked ? "Grid_Min-" : "Grid_Old-";
 
@@ -742,7 +745,8 @@ namespace KhTracker
 
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
-                seed = data.convertedSeedHash;
+                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{data.convertedSeedHash}";
+                seed = settingsString.GetHashCode();
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
@@ -758,7 +762,7 @@ namespace KhTracker
             // get raw check names
             assets = Asset_Collection(seed);
             // set the content resource reference with style
-            getAsetPrefix();
+            getAssetPrefix();
 
             // if there aren't enough assets to fit the grid, get the grid closest to the user input that can contain all assets
             int numChecks = assets.Count;
@@ -863,70 +867,73 @@ namespace KhTracker
             }
 
             // generate the boss hints
-            bossHintContentControls = new Dictionary<string, ContentControl>();
-            bossHintBorders = new Dictionary<string, Border>();
-            for (int i = 0; i < numRows; i++)
+            if (data.BossRandoFound)
             {
-                for (int j = 0; j < numColumns; j++)
+                bossHintContentControls = new Dictionary<string, ContentControl>();
+                bossHintBorders = new Dictionary<string, Border>();
+                for (int i = 0; i < numRows; i++)
                 {
-                    // Create a new Grid as a container for the ContentControl
-                    Grid hintContainer = new Grid
+                    for (int j = 0; j < numColumns; j++)
                     {
-                        // Set the container to fill the grid cell
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch
-                    };
+                        // Create a new Grid as a container for the ContentControl
+                        Grid hintContainer = new Grid
+                        {
+                            // Set the container to fill the grid cell
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalAlignment = VerticalAlignment.Stretch
+                        };
 
-                    // Define row definitions for the hintContainer grid
-                    int coveragePercentage = 32;
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
-                    hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
-                    hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+                        // Define row definitions for the hintContainer grid
+                        int coveragePercentage = 32;
+                        hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
+                        hintContainer.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                        hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100 - coveragePercentage, GridUnitType.Star) }); // 100 - coveragePercentage remains empty
+                        hintContainer.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(coveragePercentage, GridUnitType.Star) }); // coveragePercentage for the hint
 
-                    // Create a Border with a white background for the top right cell
-                    //Border whiteBackground = new Border
-                    //{
-                    //    Background = new SolidColorBrush(Colors.Transparent), // Make the inside of the border transparent
-                    //    BorderBrush = new SolidColorBrush(Colors.White), // Set the color of the border edges
-                    //    BorderThickness = new Thickness(3), // Set the thickness of the edges
-                    //                                        // The rest of the properties remain the same
-                    //};
-                    Border whiteBackground = new Border
-                    {
-                        // this will be the background when a boss hint is acquired
-                        //Background = new SolidColorBrush(Colors.White),
-                    };
+                        // Create a Border with a white background for the top right cell
+                        //Border whiteBackground = new Border
+                        //{
+                        //    Background = new SolidColorBrush(Colors.Transparent), // Make the inside of the border transparent
+                        //    BorderBrush = new SolidColorBrush(Colors.White), // Set the color of the border edges
+                        //    BorderThickness = new Thickness(3), // Set the thickness of the edges
+                        //                                        // The rest of the properties remain the same
+                        //};
+                        Border whiteBackground = new Border
+                        {
+                            // this will be the background when a boss hint is acquired
+                            //Background = new SolidColorBrush(Colors.White),
+                        };
 
-                    string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
-                    bossHintBorders[bossName] = whiteBackground;
+                        string bossName = ((string)buttons[i, j].Tag).Split('-')[1];
+                        bossHintBorders[bossName] = whiteBackground;
 
-                    // Set the Border to occupy the top 35% and the right 35% of the hintContainer
-                    Grid.SetRow(whiteBackground, 0);
-                    Grid.SetColumn(whiteBackground, 1);
-                    hintContainer.Children.Add(whiteBackground);
+                        // Set the Border to occupy the top 35% and the right 35% of the hintContainer
+                        Grid.SetRow(whiteBackground, 0);
+                        Grid.SetColumn(whiteBackground, 1);
+                        hintContainer.Children.Add(whiteBackground);
 
-                    // Create the ContentControl with desired properties
-                    ContentControl contentControl = new ContentControl
-                    {
-                        HorizontalAlignment = HorizontalAlignment.Stretch,
-                        VerticalAlignment = VerticalAlignment.Stretch,
-                    };
+                        // Create the ContentControl with desired properties
+                        ContentControl contentControl = new ContentControl
+                        {
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                        };
 
-                    // Naming the ContentControl using its grid position
-                    bossHintContentControls[bossName] = contentControl;
+                        // Naming the ContentControl using its grid position
+                        bossHintContentControls[bossName] = contentControl;
 
-                    // Add the ContentControl to the first row of the hintContainer
-                    Grid.SetRow(contentControl, 0); // Place it in the top 35% row
-                    Grid.SetColumn(contentControl, 1); // Place it in the right 35% column
-                    hintContainer.Children.Add(contentControl);
+                        // Add the ContentControl to the first row of the hintContainer
+                        Grid.SetRow(contentControl, 0); // Place it in the top 35% row
+                        Grid.SetColumn(contentControl, 1); // Place it in the right 35% column
+                        hintContainer.Children.Add(contentControl);
 
-                    // Set the hintContainer to be in the specific cell of the main grid
-                    Grid.SetRow(hintContainer, i);
-                    Grid.SetColumn(hintContainer, j);
+                        // Set the hintContainer to be in the specific cell of the main grid
+                        Grid.SetRow(hintContainer, i);
+                        Grid.SetColumn(hintContainer, j);
 
-                    // Add the hintContainer to the main grid, instead of directly adding the contentControl
-                    grid.Children.Add(hintContainer);
+                        // Add the hintContainer to the main grid, instead of directly adding the contentControl
+                        grid.Children.Add(hintContainer);
+                    }
                 }
             }
             // Add grid to the window or other container

@@ -309,7 +309,7 @@ namespace KhTracker
             assets = assets.OrderBy(d => assetLookup.Keys.ToList().IndexOf(d)).ToList();
 
             //fix icon prefix for assets
-            getAsetPrefix();
+            getAssetPrefix();
 
             //get grid size
             int objectiveCount = assets.Count;
@@ -504,7 +504,7 @@ namespace KhTracker
             assets = assets.OrderBy(x => rng.Next()).Take(7).ToList();
 
             //fix icon prefix for assets
-            getAsetPrefixOneHour();
+            getAssetPrefixOneHour();
 
             //get grid size
             int objectiveCount = assets.Count;
@@ -741,7 +741,7 @@ namespace KhTracker
         }
 
         //Image toggle functions
-        private void getAsetPrefix()
+        private void getAssetPrefix()
         {
             string style = ObjTelevoIconsOption.IsChecked ? "Obj_Min-" : "Obj_Old-";
 
@@ -824,7 +824,7 @@ namespace KhTracker
             }
         }
 
-        private void getAsetPrefixOneHour()
+        private void getAssetPrefixOneHour()
         {
             string style = ObjTelevoIconsOption.IsChecked ? "1HR_Min-" : "1HR_Old-";
 

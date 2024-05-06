@@ -219,6 +219,7 @@ namespace KhTracker
         int newNumColumns;
         bool newBingoLogic;
         bool newBattleshipLogic;
+        bool newBunterLogic;
         bool newBattleshipRandomCount;
         int newMaxShipCount;
         int newMinShipCount;
@@ -240,6 +241,7 @@ namespace KhTracker
             newBattleshipLogic = gridWindow.battleshipLogic;
             newBattleshipRandomCount = gridWindow.battleshipRandomCount;
             newBingoLogic = gridWindow.bingoLogic;
+            newBunterLogic = gridWindow.bunterLogic;
             newFogOfWar = gridWindow.fogOfWar;
             newFogOfWarSpan = gridWindow.fogOfWarSpan;
             newGridSettings = gridWindow.gridSettings;
@@ -255,14 +257,15 @@ namespace KhTracker
                 Properties.Settings.Default.GridWindowRows = newNumRows;
                 Properties.Settings.Default.GridWindowColumns = newNumColumns;
                 Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(newGridSettings);
-                Properties.Settings.Default.GridWindowBingoLogic = newBingoLogic;
-                Properties.Settings.Default.GridWindowBattleshipLogic = newBattleshipLogic;
-                Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(newShipSizes);
-                Properties.Settings.Default.BattleshipRandomCount = newBattleshipRandomCount;
-                Properties.Settings.Default.FogOfWar = newFogOfWar;
-                Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(newFogOfWarSpan);
-                Properties.Settings.Default.MaxShipCount = newMaxShipCount;
-                Properties.Settings.Default.MinShipCount = newMinShipCount;
+                Properties.Settings.Default.GridBingoLogic = newBingoLogic;
+                Properties.Settings.Default.GridBattleshipLogic = newBattleshipLogic;
+                Properties.Settings.Default.GridShipSizes = JsonSerializer.Serialize(newShipSizes);
+                Properties.Settings.Default.GridBattleshipRandomCount = newBattleshipRandomCount;
+                Properties.Settings.Default.GridFogOfWar = newFogOfWar;
+                Properties.Settings.Default.GridFogOfWarSpan = JsonSerializer.Serialize(newFogOfWarSpan);
+                Properties.Settings.Default.GridMaxShipCount = newMaxShipCount;
+                Properties.Settings.Default.GridMinShipCount = newMinShipCount;
+                Properties.Settings.Default.GridBunterLogic = newBunterLogic;
             }
 
             originalSettings = new
@@ -278,7 +281,8 @@ namespace KhTracker
                 _gridWindow.gridSettings,
                 _gridWindow.minShipCount,
                 _gridWindow.maxShipCount,
-                _gridWindow.battleshipRandomCount
+                _gridWindow.battleshipRandomCount,
+                _gridWindow.bunterLogic
             };
 
             OnPropertyChanged(nameof(TrueChecksCount));
@@ -320,6 +324,13 @@ namespace KhTracker
                                 new Option { Type = OptionType.TextBox, Description = "Min Ship Count", DefaultValue = $"{newMinShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
                                 new Option { Type = OptionType.TextBox, Description = "Max Ship Count", DefaultValue = $"{newMaxShipCount}", Visibility = newBattleshipRandomCount ? Visibility.Visible : Visibility.Collapsed},
                                 new Option { Type = OptionType.TextBox, Description = "", DefaultValue = $"", Visibility = Visibility.Collapsed},
+                            }
+                        },
+                        new SubCategory {
+                            SubCategoryName = "Bunter Logic",
+                            Options = new List<Option>
+                            {
+                                new Option { Type = OptionType.CheckBox, Description = "Include Bunter Logic", DefaultValue = $"{newBunterLogic}"  },
                             }
                         },
                         new SubCategory {
@@ -563,7 +574,7 @@ namespace KhTracker
                 },
             };
             DataContext = categories;
-            string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous" };
+            string[] selectAllCategories = { "Bosses", "Superbosses", "Progression", "Magics", "Proofs", "Torn Pages", "Miscellaneous", "Drive Specific Levels", "Movement Upgrades", "Drives" };
             foreach (Category category in categories)
             {
                 List<SubCategory> subcategories = category.SubCategories;
@@ -811,6 +822,10 @@ namespace KhTracker
             bool includeGlobalBattleshipLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Include Battleship Logic")?.DefaultValue);
             _gridWindow.battleshipLogic = includeGlobalBattleshipLogic;
 
+            // update bunter logic
+            bool includeGlobalBunterLogic = bool.Parse(categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Bunter Logic")?.Options.FirstOrDefault(o => o.Description == "Include Bunter Logic")?.DefaultValue);
+            _gridWindow.bunterLogic = includeGlobalBunterLogic;
+
             var shipSizesOptionList = (categories.FirstOrDefault(c => c.CategoryName == "Tracker Settings")?.SubCategories.FirstOrDefault(sc => sc.SubCategoryName == "Battleship Logic")?.Options.FirstOrDefault(o => o.Description == "Ship Sizes")?.DefaultValue);
             // text boxes are strings so we need to convert string to list if we are updating from the options window instead of uploading a card
             if (shipSizesOptionList.GetType() == typeof(string))
@@ -855,14 +870,15 @@ namespace KhTracker
 
             if (overwrite)
             {
-                Properties.Settings.Default.GridWindowBingoLogic = includeGlobalBingoLogic;
-                Properties.Settings.Default.GridWindowBattleshipLogic = includeGlobalBattleshipLogic;
-                Properties.Settings.Default.BattleshipRandomCount = randomShipCount;
-                Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
-                Properties.Settings.Default.MinShipCount = minNumShips;
-                Properties.Settings.Default.MaxShipCount = maxNumShips;
-                Properties.Settings.Default.FogOfWar = includeFogOfWar;
-                Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
+                Properties.Settings.Default.GridBingoLogic = includeGlobalBingoLogic;
+                Properties.Settings.Default.GridBattleshipLogic = includeGlobalBattleshipLogic;
+                Properties.Settings.Default.GridBunterLogic = includeGlobalBunterLogic;
+                Properties.Settings.Default.GridBattleshipRandomCount = randomShipCount;
+                Properties.Settings.Default.GridShipSizes = JsonSerializer.Serialize(_gridWindow.shipSizes);
+                Properties.Settings.Default.GridMinShipCount = minNumShips;
+                Properties.Settings.Default.GridMaxShipCount = maxNumShips;
+                Properties.Settings.Default.GridFogOfWar = includeFogOfWar;
+                Properties.Settings.Default.GridFogOfWarSpan = JsonSerializer.Serialize(_gridWindow.fogOfWarSpan);
             }
         }
 
@@ -1195,6 +1211,7 @@ namespace KhTracker
                     _gridWindow.numColumns,
                     _gridWindow.bingoLogic,
                     _gridWindow.battleshipLogic,
+                    _gridWindow.bunterLogic,
                     _gridWindow.seedName,
                     _gridWindow.shipSizes,
                     _gridWindow.fogOfWar,
