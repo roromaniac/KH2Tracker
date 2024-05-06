@@ -218,7 +218,7 @@ namespace KhTracker
         public bool containsGhost;  //contains ghost item?
         public int visitLocks;      //visit lock progress
 
-        public List<string> checkCount = new List<string>();
+        public List<string> hintedItemList = new List<string>();
 
         public Grid top;
         public Button world;

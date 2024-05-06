@@ -1037,7 +1037,7 @@ namespace KhTracker
             //
             //    foreach (string world in data.WorldsData.Keys.ToList())
             //    {
-            //        data.WorldsData[world].checkCount.Clear();
+            //        data.WorldsData[world].hintedItemList.Clear();
             //    }
             //
             //    bool check1 = false;
@@ -1064,7 +1064,7 @@ namespace KhTracker
             //                continue;
             //
             //            string item = data.codes.itemCodes[Convert.ToInt32(codes[4], 16)];
-            //            data.WorldsData[world].checkCount.Add(item);
+            //            data.WorldsData[world].hintedItemList.Add(item);
             //        }
             //        else if (codes.Length == 1)
             //        {
@@ -1084,7 +1084,7 @@ namespace KhTracker
             //    {
             //        foreach (string world in data.WorldsData.Keys.ToList())
             //        {
-            //            data.WorldsData[world].checkCount.Clear();
+            //            data.WorldsData[world].hintedItemList.Clear();
             //        }
             //    }
             //
@@ -3019,7 +3019,7 @@ namespace KhTracker
             foreach (var key in data.WorldsData.Keys.ToList())
             {
                 data.WorldsData[key].complete = false;
-                data.WorldsData[key].checkCount.Clear();
+                data.WorldsData[key].hintedItemList.Clear();
                 data.WorldsData[key].progress = 0;
 
                 //world cross reset

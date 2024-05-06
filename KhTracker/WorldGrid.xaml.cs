@@ -1447,7 +1447,7 @@ namespace KhTracker
 
             //create temp list of what a world should have
             List<string> tempWorldItems = new List<string>();
-            tempWorldItems.AddRange(data.WorldsData[worldname].checkCount);
+            tempWorldItems.AddRange(data.WorldsData[worldname].hintedItemList);
             char[] numbers = { '1', '2', '3', '4', '5' };
 
             //Get list of items we should track. we don't want to place more ghosts than is needed
@@ -1455,7 +1455,7 @@ namespace KhTracker
             WorldGrid worldGrid = data.WorldsData[worldname].worldGrid;
             foreach (Item item in worldGrid.Children)
             {
-                //just skip if item is a ghost. checkCount should never contain ghosts anyway
+                //just skip if item is a ghost. hintedItemList should never contain ghosts anyway
                 if (item.Name.StartsWith("Ghost_"))
                     continue;
 
@@ -1983,7 +1983,7 @@ namespace KhTracker
 
             //create a temp list for what checks a world should have
             List<string> tempItems = new List<string>();
-            tempItems.AddRange(data.WorldsData[worldName].checkCount);
+            tempItems.AddRange(data.WorldsData[worldName].hintedItemList);
 
             //for each item currently tracked to worldgrid we remove it from the temp list
             char[] numbers = { '1', '2', '3', '4', '5' };
@@ -1991,7 +1991,7 @@ namespace KhTracker
             {
                 Item item = child as Item;
 
-                //just skip if item is a ghost. checkCount should never contain ghosts anyway
+                //just skip if item is a ghost. hintedItemList should never contain ghosts anyway
                 if (item.Name.StartsWith("Ghost_"))
                     continue;
 
