@@ -1080,6 +1080,13 @@ namespace KhTracker
         public void ProgBossHint(int index)
         {
             Data data = MainWindow.data;
+
+            if (data.BossHomeHinting)
+            {
+                window.SetHintTextRow2(data.HintRevealsStored[index].Item1, data.HintRevealsStored[index].Item2, data.HintRevealsStored[index].Item3);
+                return;
+            }              
+
             string originalBoss = data.progBossInformation[index].Item1;
             string middle = data.progBossInformation[index].Item2;
             string newBoss = data.progBossInformation[index].Item3;

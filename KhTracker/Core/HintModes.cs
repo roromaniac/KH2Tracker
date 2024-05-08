@@ -814,9 +814,6 @@ namespace KhTracker
             //fix later so if a specific variable/value from hint file was passed
             if (data.progressionType == "Bosses")
             {
-                //ProgressionCollectedValue.Text = data.ProgressionPoints.ToString();
-                //ProgressionTotalValue.Text = data.HintCosts[0].ToString();
-
                 BossTextRow.Height = new GridLength(1, GridUnitType.Star);
 
                 if (data.mode != Mode.OpenKHShanHints && data.mode != Mode.SpoilerHints)
@@ -845,7 +842,8 @@ namespace KhTracker
 
                 ProgressionBossHints();
 
-                //return;
+                if (data.BossHomeHinting)
+                    return;
             }
 
             //Per Hint Mode Changes
@@ -938,9 +936,12 @@ namespace KhTracker
             }
         }
 
-        public void AddProgressionPoints(int points)
+        public void AddProgressionPoints(int points, bool fromBoss = false)
         {
             if (!data.UsingProgressionHints)
+                return;
+
+            if (data.BossHomeHinting && !fromBoss)
                 return;
 
             if (data.WorldsEnabled == 0)
@@ -1407,7 +1408,7 @@ namespace KhTracker
         public void BossHomeHinting()
         {
             data.progBossInformation.Clear();
-            int TempCost = data.HintCosts[0];
+            int TempCost = 1;
             data.HintCosts = new List<int>();
             data.WorldsEnabled = data.BossList.Count + 1;
 

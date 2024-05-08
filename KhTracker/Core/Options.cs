@@ -1797,6 +1797,23 @@ namespace KhTracker
                             ProgressionTotalValue.Text = data.HintCosts[0].ToString();
                         }
 
+                        //gen objective window grid
+                        if (objWindow.objGrid != null)
+                            objWindow.objGrid.Children.Clear();
+
+                        //DEBUG!!
+                        if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
+                        {
+                            data.oneHourMode= true;
+                        }
+
+                        if (data.objectiveMode)
+                            objWindow.GenerateObjGrid(hintObject);
+                        else if (data.oneHourMode)
+                            objWindow.GenerateOneHourObjGrid();
+                        else
+                            objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
+
                         switch (hintObject["hintsType"].ToString())
                         {
                             case "Shananas":
@@ -1834,29 +1851,6 @@ namespace KhTracker
                         }
 
                         data.hintsLoaded = true;
-
-                        //gen objective window grid
-                        if (objWindow.objGrid != null)
-                            objWindow.objGrid.Children.Clear();
-
-                        //DEBUG!!
-                        if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
-                        {
-                            data.oneHourMode= true;
-                        }
-
-                        if (data.objectiveMode)
-                        {
-                            objWindow.GenerateObjGrid(hintObject);
-                        }
-                        else if (data.oneHourMode)
-                        {
-                            objWindow.GenerateOneHourObjGrid();
-                        }
-                        else
-                        {
-                            objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
-                        }
 
                         reader.Close();
                     }
@@ -2544,6 +2538,11 @@ namespace KhTracker
 
         private void SetMode(Mode mode)
         {
+            if (!data.UsingProgressionHints)
+            {
+                data.BossHomeHinting = false;
+            }
+
             if (mode == Mode.ShanHints || mode == Mode.OpenKHShanHints)
             {
                 ModeDisplay.Header = "Shan Hints";
@@ -2590,7 +2589,11 @@ namespace KhTracker
 
             if (data.UsingProgressionHints)
             {
-                if (data.progressionType == "Reports")
+                if (data.BossHomeHinting)
+                {
+                    ModeDisplay.Header += " | Bosses Hint Home";
+                }
+                else if (data.progressionType == "Reports")
                 {
                     CollectionGrid.Visibility = Visibility.Collapsed;
                     ScoreGrid.Visibility = Visibility.Collapsed;
@@ -2605,8 +2608,7 @@ namespace KhTracker
                     ProgressionCollectionGrid.Visibility = Visibility.Visible;
                     ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
                     ModeDisplay.Header += " | Prog. Bosses";
-                }
-                    
+                }                
             }
         }
 

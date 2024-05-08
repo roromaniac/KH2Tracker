@@ -505,6 +505,11 @@ namespace KhTracker
                     oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
                     oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
 
+                    if(overrideObject.ContainsKey("bossHintingHome"))
+                    {
+                        data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
+                    }
+
                     overrideFile.Close();
                 }
 

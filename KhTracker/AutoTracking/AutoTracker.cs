@@ -2966,6 +2966,7 @@ namespace KhTracker
                     if (data.BossList["Blizzard Lord"] == "Blizzard Lord" || data.BossList["Blizzard Lord"] == "Blizzard Lord (Cups)")
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>("Blizzard Lord", "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Blizzard Lord", "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -2974,12 +2975,14 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                         }
                     }
                     //Volcano Lord
                     if (data.BossList["Volcano Lord"] == "Volcano Lord" || data.BossList["Volcano Lord"] == "Volcano Lord (Cups)")
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>("Volcano Lord", "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Volcano Lord", "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -2988,6 +2991,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                         }
                     }
                 }
@@ -3008,6 +3012,7 @@ namespace KhTracker
                             data.BossList["Leon (2)"] == "Leon (2)" || data.BossList["Leon (2)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3016,6 +3021,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Cloud
@@ -3023,6 +3029,7 @@ namespace KhTracker
                             data.BossList["Cloud (2)"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3031,6 +3038,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3038,6 +3046,7 @@ namespace KhTracker
                             data.BossList["Yuffie (2)"] == "Yuffie (2)" || data.BossList["Yuffie (2)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3046,6 +3055,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3053,6 +3063,7 @@ namespace KhTracker
                             data.BossList["Tifa (2)"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3061,6 +3072,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3070,6 +3082,7 @@ namespace KhTracker
                             data.BossList["Leon"] == "Leon (2)" || data.BossList["Leon"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3078,6 +3091,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3085,6 +3099,7 @@ namespace KhTracker
                             data.BossList["Yuffie"] == "Yuffie (2)" || data.BossList["Yuffie"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3093,6 +3108,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
 
@@ -3104,6 +3120,7 @@ namespace KhTracker
                             data.BossList["Leon (3)"] == "Leon (2)" || data.BossList["Leon (3)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3112,6 +3129,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3119,6 +3137,7 @@ namespace KhTracker
                             data.BossList["Yuffie (3)"] == "Yuffie (2)" || data.BossList["Yuffie (3)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3127,6 +3146,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3137,6 +3157,7 @@ namespace KhTracker
                             data.BossList["Yuffie (1)"] == "Yuffie (2)" || data.BossList["Yuffie (1)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3145,6 +3166,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3152,6 +3174,7 @@ namespace KhTracker
                             data.BossList["Tifa"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3160,6 +3183,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
 
@@ -3171,6 +3195,7 @@ namespace KhTracker
                             data.BossList["Cloud"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3179,6 +3204,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3186,6 +3212,7 @@ namespace KhTracker
                             data.BossList["Tifa (1)"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3194,6 +3221,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3204,6 +3232,7 @@ namespace KhTracker
                             data.BossList["Leon (1)"] == "Leon (2)" || data.BossList["Leon (1)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3212,6 +3241,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Cloud
@@ -3219,6 +3249,7 @@ namespace KhTracker
                             data.BossList["Cloud (1)"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3227,6 +3258,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3239,6 +3271,7 @@ namespace KhTracker
                     if (boss == data.BossList[boss])
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>(boss, "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(boss, "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -3249,10 +3282,11 @@ namespace KhTracker
 
                         string bossHome = data.BossList[bossReplacemnt];
                         data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                     }
                 }
 
-                AddProgressionPoints(PPoints);
+                AddProgressionPoints(PPoints, true);
             }
             //add to log
             data.bossEventLog.Add(eventTuple);

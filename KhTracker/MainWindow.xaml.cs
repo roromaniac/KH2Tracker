@@ -749,7 +749,11 @@ namespace KhTracker
                 {
                     Tuple<string, string, string, bool, bool, bool> temp = data.HintRevealsStored[num - 1];
 
-                    if (data.progressionType == "Bosses")
+                    if (data.BossHomeHinting && data.mode != Mode.SpoilerHints)
+                    {
+                        SetHintText(temp.Item1, temp.Item2, temp.Item3, false, false, false, true);
+                    }
+                    else if (data.progressionType == "Bosses")
                         SetHintTextRow2(temp.Item1, temp.Item2, temp.Item3);
                     else
                     {
