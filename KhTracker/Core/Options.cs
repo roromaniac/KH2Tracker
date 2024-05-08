@@ -2599,7 +2599,14 @@ namespace KhTracker
                     ModeDisplay.Header += " | Progression";
                 }
                 else if (data.progressionType == "Bosses")
+                {
+                    CollectionGrid.Visibility = Visibility.Collapsed;
+                    ScoreGrid.Visibility = Visibility.Collapsed;
+                    ProgressionCollectionGrid.Visibility = Visibility.Visible;
+                    ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
                     ModeDisplay.Header += " | Prog. Bosses";
+                }
+                    
             }
         }
 
@@ -3028,6 +3035,7 @@ namespace KhTracker
                 if (data.WorldsData[key].top.FindName(crossname) is Image Cross)
                 {
                     Cross.Visibility = Visibility.Collapsed;
+                    //Console.WriteLine(crossname);
                 }
 
                 //reset highlighted world
@@ -3375,12 +3383,14 @@ namespace KhTracker
                 data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Star);                
             
                 var pathgrid = (Grid)data.WorldsData[key].top.FindName(key + "Path");
-                pathgrid.Visibility = Visibility.Hidden;
+
+                pathgrid.Visibility = Visibility.Collapsed;
                 foreach (Image child in pathgrid.Children)
                 {
-                    if (child.Name.Contains(key + "Path_Non") && child.Source.ToString().Contains("cross.png")) //reset non icon to default image
+                    if (child.Name.Contains(key + "Path_Non")) //reset non icon to default image
                         child.Source = new BitmapImage(new Uri("Images/Checks/Simple/proof_of_nonexistence.png", UriKind.Relative));
-                    child.Visibility = Visibility.Hidden;
+                    
+                    child.Visibility = Visibility.Collapsed;
                 }
             }
 

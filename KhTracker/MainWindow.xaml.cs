@@ -838,7 +838,7 @@ namespace KhTracker
         }
 
         //full
-        public void SetHintText(string textBeg, string textMid, string textEnd, bool Color1, bool Color2, bool Color3)
+        public void SetHintText(string textBeg, string textMid, string textEnd, bool Color1, bool Color2, bool Color3, bool bossHint = false)
         {
             if (data.SeedHashLoaded && HashGrid.Visibility == Visibility.Visible)
             {
@@ -851,12 +851,20 @@ namespace KhTracker
 
             if (ColorHintOption.IsChecked)
             {
-                if (Color1)
-                    colorBeg = Codes.GetTextColor(textBeg);
-                if (Color2)
-                    colorMid = Codes.GetTextColor(textMid);
-                if (Color3)
-                    colorEnd = Codes.GetTextColor(textEnd);
+                if (bossHint)
+                {
+                    colorBeg = "LightBlue";
+                    colorEnd = "Orange";
+                }
+                else
+                {
+                    if (Color1)
+                        colorBeg = Codes.GetTextColor(textBeg);
+                    if (Color2)
+                        colorMid = Codes.GetTextColor(textMid);
+                    if (Color3)
+                        colorEnd = Codes.GetTextColor(textEnd);
+                }
             }
 
             HintTextBegin.Text = textBeg;

@@ -849,6 +849,7 @@ namespace KhTracker
         private void Report_Shan(int index, Item item)
         {
             Data data = MainWindow.data;
+
             if (data.UsingProgressionHints)
             {
                 if (!data.reportLocationsUsed[index])
@@ -875,18 +876,32 @@ namespace KhTracker
             data.reportAttempts[index] = 3;
         }
 
-        private void Report_Jsmartee(int index)
+        public void Report_Jsmartee(int index, bool fromProgression = false)
         {
             Data data = MainWindow.data;
-            if (data.UsingProgressionHints && data.progressionType == "Reports")
-                return;
 
-            // hint text
-            window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true);
+            if(fromProgression)
+            {
+                // hint text
+                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true));
+                window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true);
+
+                // auto update world important check number
+                window.SetWorldValue(data.WorldsData[data.reportInformation[index].Item2].value, data.reportInformation[index].Item3);
+
+                return;
+            }
 
             // resetting fail icons
             data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
             data.reportAttempts[index] = 3;
+
+            //return because reports shouldn't give hints themselves with proggression hints
+            if (data.UsingProgressionHints && data.progressionType == "Reports")
+                return;
+                
+            // hint text
+            window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true);
 
             // set world report hints to as hinted then checks if the report location was hinted to set if its a hinted hint
             data.WorldsData[data.reportInformation[index].Item2].hinted = true;
@@ -920,27 +935,10 @@ namespace KhTracker
             //}
         }
 
-        public void ProgressionReport_Jsmartee(int index)
-        {
-            Data data = MainWindow.data;
-            // hint text
-            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true));
-            window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item2), "has", data.reportInformation[index].Item3 + " important checks", true, false, true);
-
-            // resetting fail icons
-            if (index < 13)
-            {
-                data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
-                data.reportAttempts[index] = 3;
-            }
-
-            // auto update world important check number
-            window.SetWorldValue(data.WorldsData[data.reportInformation[index].Item2].value, data.reportInformation[index].Item3);
-        }
-
         private void Report_Points(int index)
         {
             Data data = MainWindow.data;
+
             // hint text
             window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1), "has", Codes.FindShortName(data.reportInformation[index].Item2), true, false, true);
             CheckGhost(data.reportInformation[index].Item1, data.reportInformation[index].Item2, "Report" + index);
@@ -950,46 +948,44 @@ namespace KhTracker
             data.reportAttempts[index] = 3;
         }
 
-        private void Report_Path(int index)
+        public void Report_Path(int index, bool fromProgression = false)
         {
             Data data = MainWindow.data;
-            if (data.UsingProgressionHints && data.progressionType == "Reports")
-                return;
+
+            if(!fromProgression)
+            {
+                // resetting fail icons
+                data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
+                data.reportAttempts[index] = 3;
+
+                //return because reports shouldn't give hints themselves with proggression hints
+                if (data.UsingProgressionHints && data.progressionType == "Reports")
+                    return;
+            }
+            else 
+            {
+                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(data.reportInformation[index].Item1), "", "", false, false, false));
+            }
 
             // hint text and proof icon display
             window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1));
             PathProofToggle(data.reportInformation[index].Item2, data.reportInformation[index].Item3);
-
-            // resetting fail icons
-            data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
-            data.reportAttempts[index] = 3;
         }
 
-        public void ProgressionReport_Path(int index)
+        public void Report_Spoiler(int index, bool fromProgression = false)
         {
             Data data = MainWindow.data;
 
-            Console.WriteLine("INDEX = " + index);
-            Console.WriteLine("data.reportInformation[index].Item1 = " + data.reportInformation[index].Item1);
-
-            // hint text and proof icon display
-            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(data.reportInformation[index].Item1), "", "", false, false, false));
-            window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1));
-            PathProofToggle(data.reportInformation[index].Item2, data.reportInformation[index].Item3);
-
             // resetting fail icons
-            if (index < 13)
+            if (!fromProgression)
             {
                 data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
                 data.reportAttempts[index] = 3;
-            }
-        }
 
-        private void Report_Spoiler(int index)
-        {
-            Data data = MainWindow.data;
-            if (data.UsingProgressionHints && data.progressionType == "Reports")
-                return;
+                //return because reports shouldn't give hints themselves with proggression hints
+                if (data.UsingProgressionHints && data.progressionType == "Reports")
+                    return;
+            }
 
             // hint text
             if (data.reportInformation[index].Item1 == "Empty") //normal reports
@@ -1006,7 +1002,19 @@ namespace KhTracker
                 }
                 else if (data.reportInformation[index].Item3 == -12345)
                 {
-                    window.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
+                    if (data.UsingProgressionHints)
+                        window.SetHintTextRow2(data.reportInformation[index].Item1, "became", data.reportInformation[index].Item2);
+                    else
+                        window.SetHintText(data.reportInformation[index].Item1, "became", data.reportInformation[index].Item2, false, false, false, true);
+                }
+                else if (data.reportInformation[index].Item3 == -12346)
+                {
+                    if (data.UsingProgressionHints)
+                    {
+                        window.SetHintTextRow2(data.reportInformation[index].Item1, data.reportInformation[index].Item2, "");
+                    }
+                    else
+                        window.SetHintText(data.reportInformation[index].Item1, data.reportInformation[index].Item2, "", false, false, false, true);
                 }
                 else if (data.reportInformation[index].Item3 == -999)
                 {
@@ -1017,59 +1025,6 @@ namespace KhTracker
                     window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1), "has been revealed!", "", true, false, false);
                     SpoilerWorldReveal(data.reportInformation[index].Item1, "Report" + index);
                 }
-            }
-
-            // resetting fail icons
-            data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
-            data.reportAttempts[index] = 3;
-
-            //change hinted world to use green numbers
-            //(we do this here instead of using SetWorldGhost cause we want world numbers to stay green until they are actually complete)
-            if (data.SpoilerReportMode && data.reportInformation[index].Item1 != "Empty")
-            {
-                data.WorldsData[data.reportInformation[index].Item1].containsGhost = true;
-
-                if (data.WorldsData[data.reportInformation[index].Item1].containsGhost)
-                    window.SetWorldValue(data.WorldsData[data.reportInformation[index].Item1].value, int.Parse(data.WorldsData[data.reportInformation[index].Item1].value.Text));
-            }
-        }
-
-        public void ProgressionReport_Spoiler(int index)
-        {
-            Data data = MainWindow.data;
-            // hint text
-            if (data.reportInformation[index].Item1 == "Empty") //normal reports
-            {
-                window.SetHintText("This report reveals nothing...");
-            }
-            else
-            {
-                //set alt text for a hinted world that has 0 checks
-                //(for when a world is toggled on, but happens to contain nothing)
-                if (data.reportInformation[index].Item3 == -1)
-                {
-                    window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1), "has no Important Checks", "", true, false, false);
-                }
-                else if (data.reportInformation[index].Item3 == -12345)
-                {
-                    window.SetHintText(data.reportInformation[index].Item1, "", "", false, false, false);
-                }
-                else if (data.reportInformation[index].Item3 == -999)
-                {
-                    //nothing...
-                }
-                else
-                {
-                    window.SetHintText(Codes.GetHintTextName(data.reportInformation[index].Item1), "has been revealed!", "", true, false, false);
-                    SpoilerWorldReveal(data.reportInformation[index].Item1, "Report" + index);
-                }
-            }
-
-            // resetting fail icons for the actual reports
-            if (index < 13)
-            {
-                data.ReportAttemptVisual[index].SetResourceReference(ContentControl.ContentProperty, "Fail0");
-                data.reportAttempts[index] = 3;
             }
 
             //change hinted world to use green numbers
@@ -1163,24 +1118,6 @@ namespace KhTracker
         /// world value handling
         ///
 
-        //public void Updatenumbers_spoil(WorldData worldData)
-        //{
-        //    if (worldData.complete || worldData.containsGhost == false)
-        //        return;
-        //
-        //    if (worldData.value != null)
-        //    {
-        //        int WorldNumber = -1;
-        //
-        //        if (worldData.value.Text != "?")
-        //            WorldNumber = int.Parse(worldData.hint.Text);
-        //
-        //        MainW.SetWorldNumber(worldData.hint, WorldNumber, "G");
-        //    }
-        //    else
-        //        return;
-        //}
-
         private int TableReturn(string nameButton)
         {
             Data data = MainWindow.data;
@@ -1190,8 +1127,6 @@ namespace KhTracker
                 return nameButton.StartsWith("Ghost_") && !window.GhostMathOption.IsChecked ? 0 : data.PointsDatanew[type];
             }
             return 0;
-
-            //else if (MainWindow.data.PointsDatanew.Keys.Contains(type))
         }
 
         ///

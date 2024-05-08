@@ -126,9 +126,9 @@ namespace KhTracker
             }
 
             int index = (int)GetValue(Grid.ColumnProperty);
-            var repStr1 = data.reportInformation[index].Item1;
-            var repStr2 = data.reportInformation[index].Item2;
-            var repInt = data.reportInformation[index].Item3;
+            string repStr1 = data.reportInformation[index].Item1;
+            string repStr2 = data.reportInformation[index].Item2;
+            int repInt = data.reportInformation[index].Item3;
 
             switch (data.mode)
             {
@@ -151,7 +151,11 @@ namespace KhTracker
                         }
                         else if (repInt == -12345)
                         {
-                            MainW.SetHintTextRow2(data.progBossInformation[index].Item1, data.progBossInformation[index].Item2, data.progBossInformation[index].Item3);
+                            MainW.SetHintText(repStr1, "became", repStr2, false, false, false, true);
+                        }
+                        else if (repInt == -12346)
+                        {
+                            MainW.SetHintText(repStr1, repStr2, "", false, false, false, true);
                         }
                         else if (repInt == -999)
                         {
