@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Windows;
@@ -218,6 +219,106 @@ namespace KhTracker
             {"PuzzDaylight", new Tuple<string, int>("Creation", 4)},
             {"PuzzSunset", new Tuple<string, int>("Creation", 5)},
         };
+        //1hour objectives
+        public  Dictionary<string, int> oneHourAssets = new Dictionary<string, int>()
+        {
+            {"Bailey", 10},
+            {"Corridor", 15},
+            {"1000Heartless", 30},
+            {"EndOfCoR", 30},
+            {"Transport", 60},
+            {"Missions", 10},
+            {"Mountain", 10},
+            {"Cave", 15},
+            {"StormRider", 30},
+            {"Beast", 10},
+            {"Minnie", 15},
+            {"Windows", 20},
+            {"BoatPete", 20},
+            {"Medallions", 15},
+            {"Barrels", 15},
+            {"TreasureRoom", 20},
+            {"GenieJafar", 30},
+            {"OogieBoogie", 20},
+            {"Children", 15},
+            {"ObjectivePresents1", 15},
+            {"ObjectivePresents2", 15},
+            {"Hyenas1", 10},
+            {"Hyenas2", 20},
+            {"GroundShaker", 30},
+            {"Screens", 15},
+            {"SolarSailer", 20},
+            {"MCP", 30},
+            {"Urns", 10},
+            {"AuronStatue", 20},
+            {"Valor3", 10},
+            {"Valor5", 15},
+            {"Valor7", 20},
+            {"Wisdom3", 10},
+            {"Wisdom5", 15},
+            {"Wisdom7", 20},
+            {"Limit3", 10},
+            {"Limit5", 15},
+            {"Limit7", 20},
+            {"Master3", 10},
+            {"Master5", 15},
+            {"Master7", 20},
+            {"Final3", 10},
+            {"Final5", 15},
+            {"Final7", 20},
+            {"Cerberus", 10},
+            {"OCPete", 20},
+            {"Hydra", 20},
+            {"Hades", 30},
+            {"OldPete", 10},
+            {"DCPete", 30},
+            {"Thresholder", 10},
+            {"ShadowStalker", 15},
+            {"DarkThorn", 30},
+            {"Xaldin", 30},
+            {"ShanYu", 20},
+            {"Riku", 25},
+            {"HBDemyx", 20},
+            {"Barbossa", 20},
+            {"GrimReaper1", 20},
+            {"GrimReaper", 30},
+            {"Lords", 25},
+            {"PrisonKeeper", 10},
+            {"Experiment", 30},
+            {"Scar", 20},
+            {"HostileProgram", 20},
+            {"Roxas", 15},
+            {"Xigbar", 20},
+            {"Luxord", 25},
+            {"Saix", 20},
+            {"Xemnas1", 25},
+            {"DataAxel", 40},
+            {"DataRoxas", 40},
+            {"DataDemyx", 40},
+            {"DataXigbar", 40},
+            {"DataXaldin", 40},
+            {"DataLuxord", 40},
+            {"DataSaix", 30},
+            {"DataFinalXemnas", 40},
+            {"Zexion", 30},
+            {"ZexionData", 40},
+            {"Marluxia", 30},
+            {"MarluxiaData", 40},
+            {"Lexaeus", 30},
+            {"LexaeusData", 40},
+            {"Vexen", 30},
+            {"VexenData", 40},
+            {"Larxene", 30},
+            {"LarxeneData", 40},
+            {"Sephiroth", 40},
+            {"LingeringWill", 40},
+        };
+        //override 1hour objectives
+        public bool oneHourCustom = false;
+        public Dictionary<string, int> oneHourOverrideAssets = new Dictionary<string, int>();
+        public Dictionary<string, int> oneHourOverrideBonus = new Dictionary<string, int>();
+        public Dictionary<string, double> oneHourOverrideMulti = new Dictionary<string, double>();
+
 
         public ObjectivesWindow(Data dataIn)
         {
@@ -373,11 +474,58 @@ namespace KhTracker
             //reset banner visibility
             UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
 
+            //override setup
+            oneHourOverrideAssets.Clear();
+            oneHourOverrideBonus.Clear();
+            oneHourOverrideMulti.Clear();
+            if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
+            {
+                using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
+                {
+                    var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
+
+                    oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
+                    
+                    oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
+
+                    oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
+                    oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
+                    oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
+                    oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
+                    oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
+
+                    oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
+                    oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
+                    oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
+
+                    oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
+                    oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
+
+                    if(overrideObject.ContainsKey("bossHintingHome"))
+                    {
+                        data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
+                    }
+
+                    overrideFile.Close();
+                }
+
+                oneHourCustom = true;
+            }
+
+
             //build asset list
             assets.Clear();
             Random rng = new Random(data.convertedSeedHash);
-            assets = Codes.oneHourAssets.Keys.ToList();
-            //decide which of the CO org members to keep
+            if (oneHourCustom)
+                assets = oneHourOverrideAssets.Keys.ToList();
+            else
+                assets = oneHourAssets.Keys.ToList();
+
+            //decide which of the CO org members fights to keep (AS vs Data)
             if (rng.Next(2) == 0)
             {
                 assets.Remove("Zexion");
@@ -500,21 +648,46 @@ namespace KhTracker
                 assets.Remove("Final5");
             }
 
-            // take 7 random objectives to use
-            assets = assets.OrderBy(x => rng.Next()).Take(7).ToList();
+            // number of objectives to use (7 is defaut)
+            if (oneHourCustom)
+                assets = assets.OrderBy(x => rng.Next()).Take(oneHourOverrideBonus["objectiveCount"]).ToList();
+            else
+                assets = assets.OrderBy(x => rng.Next()).Take(7).ToList();
 
             //fix icon prefix for assets
             getAssetPrefixOneHour();
 
             //get grid size
-            int objectiveCount = assets.Count;
-            int blankSquares = 0;
-            while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
+            if (oneHourCustom)
             {
-                blankSquares++;
+                numRows = oneHourOverrideBonus["gridHeight"];
+                numColumns = oneHourOverrideBonus["gridWidth"];
+
+                //if these values are not set up properly for number of objectives then default to 
+                //looking for grid size in size lookup table
+                if (numRows * numColumns >= oneHourOverrideBonus["objectiveCount"])
+                {
+                    int objectiveCount = assets.Count;
+                    int blankSquares = 0;
+                    while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
+                    {
+                        blankSquares++;
+                    }
+                    numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
+                    numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+                }
             }
-            numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
-            numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+            else
+            {
+                int objectiveCount = assets.Count;
+                int blankSquares = 0;
+                while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
+                {
+                    blankSquares++;
+                }
+                numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
+                numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+            }
 
             objGrid = new Grid();
             buttons = new ToggleButton[numRows, numColumns];
@@ -540,9 +713,25 @@ namespace KhTracker
                     if (buttonDone >= assets.Count)
                         continue;
 
+                    Grid squareContent = (Grid)FindResource(assets[buttonDone]);
+                    
+                    //fix point value display for squares when using override
+                    if (oneHourCustom)
+                    {
+                        foreach (var item in squareContent.Children)
+                        {
+                            if (item is Viewbox box)
+                            {
+                                OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                                textbox.Text = oneHourOverrideAssets[assets[buttonDone].Remove(0, 8)].ToString() + " Points";
+                            }
+                        }
+                    }
+
                     ToggleButton button = new ToggleButton();
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
-                    button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    //button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
+                    button.Content = squareContent;
                     button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
@@ -667,14 +856,19 @@ namespace KhTracker
             }
             else
             {
-                int testPoints = 0;
+                if (objGrid == null)
+                    return;
 
+                int testPoints = 0;
                 List<ToggleButton> completeSquares = new List<ToggleButton>();
                 foreach (var square in objGrid.Children)
                 {
                     if (square is ToggleButton button && button.IsChecked == true)
                     {
-                        testPoints += Codes.oneHourAssets[button.Tag.ToString().Remove(0, 8)];
+                        if (!oneHourCustom)
+                            testPoints += oneHourAssets[button.Tag.ToString().Remove(0, 8)];
+                        else
+                            testPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
                     }
                 }
 
@@ -895,6 +1089,20 @@ namespace KhTracker
                 if (child is ToggleButton square)
                 {
                     string squareTag = square.Tag.ToString().Remove(0, 8);
+                    Grid squareContent = (Grid)FindResource(prefix + squareTag);
+
+                    if (oneHourCustom)
+                    {
+                        foreach (var item in squareContent.Children)
+                        {
+                            if (item is Viewbox box)
+                            {
+                                OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                                textbox.Text = oneHourOverrideAssets[squareTag].ToString() + " Points";
+                            }
+                        }
+                    }
+
                     //check 
                     //if (ObjCustomIconsOption.IsChecked && assets.Contains("1HR_Cus-" + squareTag))
                     //{
@@ -902,7 +1110,8 @@ namespace KhTracker
                     //    continue;
                     //}
 
-                    square.SetResourceReference(ContentProperty, prefix + squareTag);
+                    //square.SetResourceReference(ContentProperty, prefix + squareTag);
+                    square.Content = squareContent;
                 }
             }
         }

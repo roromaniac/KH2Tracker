@@ -368,6 +368,9 @@
     <Setting Name="ObjCompletedColorButton" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFC0CB</Value>
     </Setting>
+    <Setting Name="WorldVisitLock2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="GridBunterLogic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>

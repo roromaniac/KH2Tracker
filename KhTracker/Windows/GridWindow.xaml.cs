@@ -1,22 +1,13 @@
 ﻿using Microsoft.Win32;
-using Microsoft.VisualBasic;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Data.Common;
-using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace KhTracker
@@ -30,7 +21,6 @@ namespace KhTracker
     {
         void HandleClosing(ColorPickerWindow sender);
     }
-
 
     public partial class GridWindow : Window, IColorableWindow
     {
@@ -172,6 +162,28 @@ namespace KhTracker
             };
             if (saveFileDialog.ShowDialog() == true)
             {
+                string jsonString = DownloadCardSetting();
+                System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
+            }
+        }
+
+        public string DownloadCardSetting()
+        {
+            var combinedSettings = new
+            {
+                battleshipLogic,
+                battleshipRandomCount,
+                bingoLogic,
+                fogOfWar,
+                fogOfWarSpan,
+                gridSettings,
+                maxShipCount,
+                minShipCount,
+                numColumns,
+                numRows,
+                seedName,
+                shipSizes,
+            };
                 var combinedSettings = new
                 {
                     battleshipLogic,
@@ -189,14 +201,12 @@ namespace KhTracker
                     shipSizes,
                 };
 
-                var jsonString = JsonSerializer.Serialize(combinedSettings);
-                System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
-            }
+            string jsonString = JsonSerializer.Serialize(combinedSettings);
+            return jsonString;
         }
 
         private void UploadCardSetting(object sender, RoutedEventArgs e)
         {
-
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 DefaultExt = ".json",
@@ -204,17 +214,26 @@ namespace KhTracker
                 Title = "Select Grid Settings File",
             };
 
-
             if (openFileDialog.ShowDialog() == true)
             {
-
                 try
                 {
-                    var jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    
-                    using (JsonDocument doc = JsonDocument.Parse(jsonString))
-                    {
-                        var root = doc.RootElement;
+                    string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    UploadCardSetting(jsonString);
+                }
+                catch (JsonException)
+                {
+                    Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
+                    return;
+                }
+            }
+        }
+
+        public void UploadCardSetting(string jsonString)
+        {
+            using (JsonDocument doc = JsonDocument.Parse(jsonString))
+            {
+                var root = doc.RootElement;
 
                         battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
                             ? battleshipLogicElement.GetBoolean()
@@ -241,9 +260,9 @@ namespace KhTracker
                             ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
                             : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.GridFogOfWarSpan);
 
-                        gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
-                            ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
-                            : JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+                gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
+                    : JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
 
                         maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
                             ? maxShipCountLogicElement.GetInt32()
@@ -253,17 +272,17 @@ namespace KhTracker
                             ? minShipCountLogicElement.GetInt32()
                             : Properties.Settings.Default.GridMinShipCount;
 
-                        numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
-                            ? numColumnsElement.GetInt32()
-                            : Properties.Settings.Default.GridWindowColumns;
+                numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
+                    ? numColumnsElement.GetInt32()
+                    : Properties.Settings.Default.GridWindowColumns;
 
-                        numRows = root.TryGetProperty("numRows", out JsonElement numRowsElement)
-                            ? numRowsElement.GetInt32()
-                            : Properties.Settings.Default.GridWindowRows;
+                numRows = root.TryGetProperty("numRows", out JsonElement numRowsElement)
+                    ? numRowsElement.GetInt32()
+                    : Properties.Settings.Default.GridWindowRows;
 
-                        seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
-                            ? seedNameElement.GetString()
-                            : RandomSeedName(8, seed);
+                seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
+                    ? seedNameElement.GetString()
+                    : RandomSeedName(8, seed);
 
                         shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                             ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
@@ -276,54 +295,54 @@ namespace KhTracker
                     return;
                 }
 
-                // ensure all of the grid settings keys are present
-                var defaultSettingsJson = Properties.Settings.Default.Properties["GridSettings"].DefaultValue;
-                var defaultSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>((string)defaultSettingsJson);
+            // ensure all of the grid settings keys are present
+            var defaultSettingsJson = Properties.Settings.Default.Properties["GridSettings"].DefaultValue;
+            var defaultSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>((string)defaultSettingsJson);
 
-                // find the keys that should be removed
-                var keysToRemove = gridSettings.Keys.Where(key => !defaultSettings.ContainsKey(key)).ToList();
+            // find the keys that should be removed
+            var keysToRemove = gridSettings.Keys.Where(key => !defaultSettings.ContainsKey(key)).ToList();
 
-                // remove these keys
-                foreach (var key in keysToRemove)
+            // remove these keys
+            foreach (var key in keysToRemove)
+            {
+                if (gridSettings.ContainsKey(key))
+                    gridSettings.Remove(key);
+            }
+
+            // Add missing required keys with their default values
+            foreach (var key in defaultSettings.Keys)
+            {
+                if (!gridSettings.ContainsKey(key))
                 {
-                    if (gridSettings.ContainsKey(key))
-                        gridSettings.Remove(key);
+                    gridSettings.Add(key, defaultSettings[key]);
                 }
+            }
 
-                // Add missing required keys with their default values
-                foreach (var key in defaultSettings.Keys)
-                {
-                    if (!gridSettings.ContainsKey(key))
-                    {
-                        gridSettings.Add(key, defaultSettings[key]);
-                    }
-                }
+            // update number of reports
+            int numReports = 0;
+            for (int i = 1; i <= 13; i++)
+            {
+                if (gridSettings[$"Report{i}"])
+                    numReports++;
+            }
 
-                // update number of reports
-                int numReports = 0;
-                for (int i = 1; i <= 13; i++)
-                {
-                    if (gridSettings[$"Report{i}"])
-                        numReports++;
-                }
+            // update number of unlocks
+            List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
+            int numUnlocks = 0;
+            foreach (string unlock in unlockNames)
+            {
+                if (gridSettings[unlock])
+                    numUnlocks++;
+            }
 
-                // update number of unlocks
-                List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
-                int numUnlocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numUnlocks++;
-                }
-
-                // update number of chest locks
-                List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
-                int numChestLocks = 0;
-                foreach (string chestLock in worldChestLockNames)
-                {
-                    if (gridSettings[chestLock])
-                        numChestLocks++;
-                }
+            // update number of chest locks
+            List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
+            int numChestLocks = 0;
+            foreach (string chestLock in worldChestLockNames)
+            {
+                if (gridSettings[chestLock])
+                    numChestLocks++;
+            }
 
                 if (SavePreviousGridSettingsOption.IsChecked)
                 {

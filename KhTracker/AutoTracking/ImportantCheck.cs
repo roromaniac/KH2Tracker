@@ -22,14 +22,14 @@ namespace KhTracker
             set
             {
                 obtained = value;
-                if (App.logger != null)
-                    App.logger.Record(this.Name + " obtained");
+                App.logger?.Record(this.Name + " obtained");
                 OnPropertyChanged("Obtained");
             }
         }
         public int ADDRESS_OFFSET;
 
         public MemoryReader memory;
+        public MainWindow window = (App.Current.MainWindow as MainWindow);
 
         public ImportantCheck(MemoryReader mem, int address, int offset, string name)
         {

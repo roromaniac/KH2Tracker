@@ -30,10 +30,7 @@ namespace KhTracker
         public bool SpoilerReportMode = false;
         public string openKHHintText = "None";
         public string openKHBossText = "None";
-        public string[] hintFileText = new string[3];
-        public bool legacyJsmartee = false;
-        public bool legacyShan = false;
-        public string[] shanHintFileText = null;
+
         public bool saveFileLoaded = false;
         public bool seedLoaded = false;
         public int lastVersion = 0;
@@ -205,6 +202,7 @@ namespace KhTracker
 
         //BossHomeHinting TEST
         public bool BossHomeHinting = false;
+
     }
 
     public class WorldData
@@ -218,7 +216,7 @@ namespace KhTracker
         public bool containsGhost;  //contains ghost item?
         public int visitLocks;      //visit lock progress
 
-        public List<string> checkCount = new List<string>();
+        public List<string> hintedItemList = new List<string>();
 
         public Grid top;
         public Button world;

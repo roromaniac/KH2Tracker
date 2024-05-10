@@ -64,8 +64,8 @@
                 <MenuItem Header="Once More / Second Chance" Click="AbilitiesToggle" 	x:Name="AbilitiesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Anti Form" 				 Click="AntiFormToggle"		x:Name="AntiFormOption"     IsCheckable="True" IsChecked="False"/>
                 <Separator/>
-                <MenuItem Header="World Visit Locks"            Click="VisitLockToggle"	    x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
-                <!--MenuItem Header="Remove 1st World Visit Locks" Click="VisitLockToggle2"	x:Name="VisitLockOption2"   IsCheckable="True" IsChecked="True"/-->
+                <MenuItem Header="World Visit Locks"       Click="VisitLockToggle"	x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
+                <!--MenuItem Header="World Visit Locks (No 1st)"    Click="VisitLockToggle2"	x:Name="VisitLockOption2"   IsCheckable="True" IsChecked="False"/-->
                 <Separator/>
                 <MenuItem Header="World Chest Locks"         Click="ChestLockToggle"	x:Name="ChestLockOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Extra Important Checks" 	 Click="ExtraChecksToggle"	x:Name="ExtraChecksOption"  IsCheckable="True" IsChecked="True"/>

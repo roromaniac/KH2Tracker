@@ -98,7 +98,7 @@ namespace KhTracker
 
         private int objMarkLevel;
 
-        private TornPage pages;
+        private TornPageNew pages;
         public GridWindow gridWindow;
         public ObjectivesWindow objWindow;
         private World world;
@@ -568,6 +568,7 @@ namespace KhTracker
             int IceCreamCount = IceCream != null ? IceCream.Level : 0;
             int RikuWepCount = RikuWep != null ? RikuWep.Level : 0;
             int KingsLetterCount = KingsLetter != null ? KingsLetter.Level : 0;
+
             fire.Level = fireCount;
             blizzard.Level = blizzardCount;
             thunder.Level = thunderCount;
@@ -587,13 +588,10 @@ namespace KhTracker
             RikuWep.Level = RikuWepCount;
             KingsLetter.Level = KingsLetterCount;
 
-
-
             //change this for flag checking to determine amount of pages?
             int count = pages != null ? pages.Quantity : 0;
-            importantChecks.Add(pages = new TornPage(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
+            importantChecks.Add(pages = new TornPageNew(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
-
 
             int objItemCount = objMark != null ? objMark.Level : 0;
             importantChecks.Add(objMark = new VisitNew(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
@@ -991,7 +989,10 @@ namespace KhTracker
                 }
 
                 //objective window tracking
-                if (data.objectiveMode && !GridTrackerOnly)
+                if (GridTrackerOnly && !data.oneHourMode)
+                    return;
+
+                if (data.objectiveMode || data.oneHourMode)
                 {
                     for (int row = 0; row < objWindow.numRows; row++)
                     {
@@ -1231,7 +1232,7 @@ namespace KhTracker
             while (pages.Quantity > tornPageCount)
             {
                 ++tornPageCount;
-                TornPage page = new TornPage(null, 0, 0, "TornPage" + tornPageCount.ToString());
+                TornPageNew page = new TornPageNew(null, 0, 0, "TornPage" + tornPageCount.ToString());
                 newChecks.Add(page);
                 collectedChecks.Add(page);
             }
@@ -1885,7 +1886,12 @@ namespace KhTracker
                             {
                                 newProg = 2;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(15);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                    else
+                                        UpdatePointScore(15);
+                                }
                             }
                             break;
                         case 3:
@@ -1901,7 +1907,12 @@ namespace KhTracker
                             {
                                 newProg = 5;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(10);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["summitBonus"]);
+                                    else
+                                        UpdatePointScore(10);
+                                }
                             }
                             break;
                         case 9:
@@ -1918,13 +1929,27 @@ namespace KhTracker
                         case 11:
                             if (data.earlyThroneRoom)
                             {
-                                UpdatePointScore(30); //throne room normallr
+                                //throne room normally
+
+                                if (objWindow.oneHourCustom)
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                else
+                                    UpdatePointScore(30);
+
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
                             else
                             {
-                                UpdatePointScore(15); //did early throne room skip
+                                //did early throne room skip
+                                if (objWindow.oneHourCustom)
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                else
+                                    UpdatePointScore(15);
+
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
-                            break;
                         case 8:
                             if (wID1 == 79 && wCom == 1) // Storm Rider finish
                                 newProg = 8;
@@ -2206,7 +2231,12 @@ namespace KhTracker
                             {
                                 newProg = 3;
                                 if (data.oneHourMode)
-                                    UpdatePointScore(10);
+                                {
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["pirateMinuteFightBonus"]);
+                                    else
+                                        UpdatePointScore(10);
+                                }
                             }                        
                             break;
                         case 7:
@@ -2458,7 +2488,7 @@ namespace KhTracker
             {
                 string count = "";
                 // remove magic and torn page count for comparison with item codes and readd to track specific ui copies
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPageNew) || check.GetType() == typeof(VisitNew))
                 {
                     count = check.Name.Substring(check.Name.Length - 1);
                     check.Name = check.Name.Substring(0, check.Name.Length - 1);
@@ -2500,7 +2530,7 @@ namespace KhTracker
             foreach (ImportantCheck check in importantChecks)
             {
                 // handle these separately due to the way they are stored in memory
-                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPage) || check.GetType() == typeof(VisitNew))
+                if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPageNew) || check.GetType() == typeof(VisitNew))
                     continue;
 
                 if (check.Obtained && collectedChecks.Contains(check) == false)
@@ -3006,6 +3036,7 @@ namespace KhTracker
                     if (data.BossList["Blizzard Lord"] == "Blizzard Lord" || data.BossList["Blizzard Lord"] == "Blizzard Lord (Cups)")
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>("Blizzard Lord", "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Blizzard Lord", "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -3014,12 +3045,14 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                         }
                     }
                     //Volcano Lord
                     if (data.BossList["Volcano Lord"] == "Volcano Lord" || data.BossList["Volcano Lord"] == "Volcano Lord (Cups)")
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>("Volcano Lord", "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Volcano Lord", "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -3028,6 +3061,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                         }
                     }
                 }
@@ -3048,6 +3082,7 @@ namespace KhTracker
                             data.BossList["Leon (2)"] == "Leon (2)" || data.BossList["Leon (2)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3056,6 +3091,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Cloud
@@ -3063,6 +3099,7 @@ namespace KhTracker
                             data.BossList["Cloud (2)"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3071,6 +3108,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3078,6 +3116,7 @@ namespace KhTracker
                             data.BossList["Yuffie (2)"] == "Yuffie (2)" || data.BossList["Yuffie (2)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3086,6 +3125,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3093,6 +3133,7 @@ namespace KhTracker
                             data.BossList["Tifa (2)"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3101,6 +3142,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3110,6 +3152,7 @@ namespace KhTracker
                             data.BossList["Leon"] == "Leon (2)" || data.BossList["Leon"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3118,6 +3161,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3125,6 +3169,7 @@ namespace KhTracker
                             data.BossList["Yuffie"] == "Yuffie (2)" || data.BossList["Yuffie"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3133,6 +3178,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
 
@@ -3144,6 +3190,7 @@ namespace KhTracker
                             data.BossList["Leon (3)"] == "Leon (2)" || data.BossList["Leon (3)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3152,6 +3199,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Yuffie
@@ -3159,6 +3207,7 @@ namespace KhTracker
                             data.BossList["Yuffie (3)"] == "Yuffie (2)" || data.BossList["Yuffie (3)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3167,6 +3216,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3177,6 +3227,7 @@ namespace KhTracker
                             data.BossList["Yuffie (1)"] == "Yuffie (2)" || data.BossList["Yuffie (1)"] == "Yuffie (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3185,6 +3236,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3192,6 +3244,7 @@ namespace KhTracker
                             data.BossList["Tifa"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3200,6 +3253,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
 
@@ -3211,6 +3265,7 @@ namespace KhTracker
                             data.BossList["Cloud"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3219,6 +3274,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Tifa
@@ -3226,6 +3282,7 @@ namespace KhTracker
                             data.BossList["Tifa (1)"] == "Tifa (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3234,6 +3291,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3244,6 +3302,7 @@ namespace KhTracker
                             data.BossList["Leon (1)"] == "Leon (2)" || data.BossList["Leon (1)"] == "Leon (3)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3252,6 +3311,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                         //Cloud
@@ -3259,6 +3319,7 @@ namespace KhTracker
                             data.BossList["Cloud (1)"] == "Cloud (2)")
                         {
                             data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
                         }
                         else
                         {
@@ -3267,6 +3328,7 @@ namespace KhTracker
                             {
                                 string bossHome = data.BossList[bossReplacemnt];
                                 data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                             }
                         }
                     }
@@ -3279,6 +3341,7 @@ namespace KhTracker
                     if (boss == data.BossList[boss])
                     {
                         data.progBossInformation.Add(new Tuple<string, string, string>(boss, "is unchanged", ""));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(boss, "is unchanged", "", false, false, false));
                     }
                     else
                     {
@@ -3289,10 +3352,11 @@ namespace KhTracker
 
                         string bossHome = data.BossList[bossReplacemnt];
                         data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
                     }
                 }
 
-                AddProgressionPoints(PPoints);
+                AddProgressionPoints(PPoints, true);
             }
             //add to log
             data.bossEventLog.Add(eventTuple);
@@ -3519,20 +3583,51 @@ namespace KhTracker
 
                     //add extra points for bosses in special arenas
                     int bonuspoints = 0;
-                    switch (bossType)
+                    if (!objWindow.oneHourCustom)
                     {
-                        case "boss_as":
-                        case "boss_datas":
-                        case "boss_sephi":
-                        case "boss_terra":
-                            //case "boss_final":
-                            bonuspoints += data.PointsDatanew[bossType];
-                            break;
-                        case "boss_other":
-                            if (boss == "Final Xemnas")
-                                bonuspoints += data.PointsDatanew["boss_final"];
-                            break;
+                        switch (bossType)
+                        {
+                            case "boss_as":
+                            case "boss_datas":
+                            case "boss_sephi":
+                            case "boss_terra":
+                                //case "boss_final":
+                                bonuspoints += data.PointsDatanew[bossType];
+                                break;
+                            case "boss_other":
+                                if (boss == "Final Xemnas")
+                                    bonuspoints += data.PointsDatanew["boss_final"];
+                                break;
+                        }
                     }
+                    else
+                    {
+                        switch (bossType)
+                        {
+                            case "boss_as":
+                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                break;
+                            case "boss_datas":
+                                if (boss.Contains("Final Xemnas"))
+                                {
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                }
+                                else
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                break;
+                            case "boss_sephi":
+                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                break;
+                            case "boss_terra":
+                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                break;
+                            case "boss_other":
+                                if (boss == "Final Xemnas")
+                                    bonuspoints = data.PointsDatanew["boss_final"];
+                                break;
+                        }
+                    }
+
 
                     points += bonuspoints;
                 }
@@ -3636,29 +3731,32 @@ namespace KhTracker
 
         public int GetUsedPages(int save)
         {
-            save = save - 0x3598;
-            int used = 0;
-            bool PigFlag = new BitArray(memory.ReadMemory(save + 0x1DB0, 1))[1];
-            bool Page1Flag = new BitArray(memory.ReadMemory(save + 0x1DB1, 1))[1];
-            bool Page2Flag = new BitArray(memory.ReadMemory(save + 0x1DB2, 1))[1];
-            bool Page3Flag = new BitArray(memory.ReadMemory(save + 0x1DB3, 1))[1];
-            bool Page4Flag = new BitArray(memory.ReadMemory(save + 0x1DB4, 1))[1];
-            bool Page5Flag = new BitArray(memory.ReadMemory(save + 0x1DB5, 1))[0];
+            //save = save - 0x3598;
+            //int used = 0;
+            //bool PigFlag = new BitArray(memory.ReadMemory(save + 0x1DB0, 1))[1];
+            //bool Page1Flag = new BitArray(memory.ReadMemory(save + 0x1DB1, 1))[1];
+            //bool Page2Flag = new BitArray(memory.ReadMemory(save + 0x1DB2, 1))[1];
+            //bool Page3Flag = new BitArray(memory.ReadMemory(save + 0x1DB3, 1))[1];
+            //bool Page4Flag = new BitArray(memory.ReadMemory(save + 0x1DB4, 1))[1];
+            //bool Page5Flag = new BitArray(memory.ReadMemory(save + 0x1DB5, 1))[0];
+            //
+            //if (PigFlag && Page5Flag)
+            //{
+            //    data.usedPages = 5;
+            //    return data.usedPages;
+            //}
+            //
+            //if (Page1Flag) used++;
+            //if (Page2Flag) used++;
+            //if (Page3Flag) used++;
+            //if (Page4Flag) used++;
+            //
+            //data.usedPages = used;
+            //
+            //return data.usedPages;
 
-            if (PigFlag && Page5Flag)
-            {
-                data.usedPages = 5;
-                return data.usedPages;
-            }
 
-            if (Page1Flag) used++;
-            if (Page2Flag) used++;
-            if (Page3Flag) used++;
-            if (Page4Flag) used++;
-
-            data.usedPages = used;
-
-            return data.usedPages;
+            return 0;
         }
 
         public void UpdateFormProgression()
