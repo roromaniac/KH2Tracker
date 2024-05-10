@@ -169,10 +169,12 @@ namespace KhTracker
 
         public string DownloadCardSetting()
         {
+
             var combinedSettings = new
             {
                 battleshipLogic,
                 battleshipRandomCount,
+                bunterLogic,
                 bingoLogic,
                 fogOfWar,
                 fogOfWarSpan,
@@ -184,22 +186,6 @@ namespace KhTracker
                 seedName,
                 shipSizes,
             };
-                var combinedSettings = new
-                {
-                    battleshipLogic,
-                    battleshipRandomCount,
-                    bunterLogic,
-                    bingoLogic,
-                    fogOfWar,
-                    fogOfWarSpan,
-                    gridSettings,
-                    maxShipCount,
-                    minShipCount,
-                    numColumns,
-                    numRows,
-                    seedName,
-                    shipSizes,
-                };
 
             string jsonString = JsonSerializer.Serialize(combinedSettings);
             return jsonString;
@@ -235,42 +221,42 @@ namespace KhTracker
             {
                 var root = doc.RootElement;
 
-                        battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
-                            ? battleshipLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridBattleshipLogic;
+                battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
+                    ? battleshipLogicElement.GetBoolean()
+                    : Properties.Settings.Default.GridBattleshipLogic;
 
-                        battleshipRandomCount = root.TryGetProperty("battleshipRandomCount", out JsonElement battleshipRandomCountElement)
-                            ? battleshipRandomCountElement.GetBoolean()
-                            : Properties.Settings.Default.GridBattleshipRandomCount;
+                battleshipRandomCount = root.TryGetProperty("battleshipRandomCount", out JsonElement battleshipRandomCountElement)
+                    ? battleshipRandomCountElement.GetBoolean()
+                    : Properties.Settings.Default.GridBattleshipRandomCount;
 
-                        bingoLogic = root.TryGetProperty("bingoLogic", out JsonElement bingoLogicElement)
-                            ? bingoLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridBingoLogic;
+                bingoLogic = root.TryGetProperty("bingoLogic", out JsonElement bingoLogicElement)
+                    ? bingoLogicElement.GetBoolean()
+                    : Properties.Settings.Default.GridBingoLogic;
 
-                        bunterLogic = root.TryGetProperty("bunterLogic", out JsonElement bunterLogicElement)
-                            ? bunterLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridBunterLogic;
+                bunterLogic = root.TryGetProperty("bunterLogic", out JsonElement bunterLogicElement)
+                    ? bunterLogicElement.GetBoolean()
+                    : Properties.Settings.Default.GridBunterLogic;
 
-                        fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
-                            ? fogOfWarElement.GetBoolean()
-                            : Properties.Settings.Default.GridFogOfWar;
+                fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
+                    ? fogOfWarElement.GetBoolean()
+                    : Properties.Settings.Default.GridFogOfWar;
 
-                        // Deserialize with a default value if key is missing
-                        fogOfWarSpan = root.TryGetProperty("fogOfWarSpan", out JsonElement fogOfWarSpanElement)
-                            ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
-                            : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.GridFogOfWarSpan);
+                // Deserialize with a default value if key is missing
+                fogOfWarSpan = root.TryGetProperty("fogOfWarSpan", out JsonElement fogOfWarSpanElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
+                    : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.GridFogOfWarSpan);
 
                 gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
                     ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
                     : JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
 
-                        maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
-                            ? maxShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.GridMaxShipCount;
+                maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
+                    ? maxShipCountLogicElement.GetInt32()
+                    : Properties.Settings.Default.GridMaxShipCount;
 
-                        minShipCount = root.TryGetProperty("minShipCount", out JsonElement minShipCountLogicElement)
-                            ? minShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.GridMinShipCount;
+                minShipCount = root.TryGetProperty("minShipCount", out JsonElement minShipCountLogicElement)
+                    ? minShipCountLogicElement.GetInt32()
+                    : Properties.Settings.Default.GridMinShipCount;
 
                 numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
                     ? numColumnsElement.GetInt32()
@@ -284,16 +270,10 @@ namespace KhTracker
                     ? seedNameElement.GetString()
                     : RandomSeedName(8, seed);
 
-                        shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
-                            ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
-                            : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes); 
-                    }
-                }
-                catch (JsonException)
-                {
-                    Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
-                    return;
-                }
+                shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
+                    ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
+                    : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes);
+            }
 
             // ensure all of the grid settings keys are present
             var defaultSettingsJson = Properties.Settings.Default.Properties["GridSettings"].DefaultValue;
@@ -344,23 +324,22 @@ namespace KhTracker
                     numChestLocks++;
             }
 
-                if (SavePreviousGridSettingsOption.IsChecked)
-                {
-                    Properties.Settings.Default.GridWindowRows = numRows;
-                    Properties.Settings.Default.GridWindowColumns = numColumns;
-                    Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
-                    Properties.Settings.Default.GridBingoLogic = bingoLogic;
-                    Properties.Settings.Default.GridBattleshipLogic = battleshipLogic;
-                    Properties.Settings.Default.GridShipSizes = JsonSerializer.Serialize(shipSizes);
-                    Properties.Settings.Default.GridBattleshipRandomCount = battleshipRandomCount;
-                    Properties.Settings.Default.GridFogOfWar = fogOfWar;
-                    Properties.Settings.Default.GridFogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
-                    Properties.Settings.Default.GridMaxShipCount = maxShipCount;
-                    Properties.Settings.Default.GridMinShipCount = minShipCount;
-                    Properties.Settings.Default.GridWindowNumReports = numReports;
-                    Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
-                    Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
-                }
+            if (SavePreviousGridSettingsOption.IsChecked)
+            {
+                Properties.Settings.Default.GridWindowRows = numRows;
+                Properties.Settings.Default.GridWindowColumns = numColumns;
+                Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
+                Properties.Settings.Default.GridBingoLogic = bingoLogic;
+                Properties.Settings.Default.GridBattleshipLogic = battleshipLogic;
+                Properties.Settings.Default.GridShipSizes = JsonSerializer.Serialize(shipSizes);
+                Properties.Settings.Default.GridBattleshipRandomCount = battleshipRandomCount;
+                Properties.Settings.Default.GridFogOfWar = fogOfWar;
+                Properties.Settings.Default.GridFogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
+                Properties.Settings.Default.GridMaxShipCount = maxShipCount;
+                Properties.Settings.Default.GridMinShipCount = minShipCount;
+                Properties.Settings.Default.GridWindowNumReports = numReports;
+                Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+                Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
             }
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);

@@ -2796,17 +2796,16 @@ namespace KhTracker
                     bool valueBossesEqual1 = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" (Cups)", "")]]; // check if the converted names of the new bosses are not the same
                     bool sameBossCheck1 = (nonCupsVersionExists1 && cupsKeyExists1 && newBossKeyExists1 && valueBossesEqual1);
 
-                        bool nonCupsVersionExists2 = data.BossList.ContainsKey(bossOrig.Replace(" Cups", "")); // non-cups version exists
-                        bool cupsKeyExists2 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
-                        bool newBossKeyExists2 = nonCupsVersionExists2 && data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" Cups", "")); // ensure the new boss name can be converted
-                        bool sameBossCheck2 = (nonCupsVersionExists2 && cupsKeyExists2 && newBossKeyExists2 && (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" Cups", "")]]));
-                        if (sameBossCheck1 || sameBossCheck2)
-                        {
-                            if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
-                                gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
-                            else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
-                                gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
-                        }
+                    bool nonCupsVersionExists2 = data.BossList.ContainsKey(bossOrig.Replace(" Cups", "")); // non-cups version exists
+                    bool cupsKeyExists2 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
+                    bool newBossKeyExists2 = nonCupsVersionExists2 && data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" Cups", "")); // ensure the new boss name can be converted
+                    bool sameBossCheck2 = (nonCupsVersionExists2 && cupsKeyExists2 && newBossKeyExists2 && (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" Cups", "")]]));
+                    if (sameBossCheck1 || sameBossCheck2)
+                    {
+                        if (gridWindow.gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridWindow.gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridWindow.gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridWindow.gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
                     }
                 }
 
