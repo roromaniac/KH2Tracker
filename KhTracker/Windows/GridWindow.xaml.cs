@@ -1,22 +1,13 @@
 ﻿using Microsoft.Win32;
-using Microsoft.VisualBasic;
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.Security.Cryptography;
-using System.Threading;
-using System.Data.Common;
-using System.Windows.Input;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace KhTracker
@@ -30,7 +21,6 @@ namespace KhTracker
     {
         void HandleClosing(ColorPickerWindow sender);
     }
-
 
     public partial class GridWindow : Window, IColorableWindow
     {
@@ -174,30 +164,35 @@ namespace KhTracker
             };
             if (saveFileDialog.ShowDialog() == true)
             {
-                var combinedSettings = new
-                {
-                    battleshipLogic,
-                    battleshipRandomCount,
-                    bingoLogic,
-                    fogOfWar,
-                    fogOfWarSpan,
-                    gridSettings,
-                    maxShipCount,
-                    minShipCount,
-                    numColumns,
-                    numRows,
-                    seedName,
-                    shipSizes,
-                };
-
-                var jsonString = JsonSerializer.Serialize(combinedSettings);
+                string jsonString = DownloadCardSetting();
                 System.IO.File.WriteAllText(saveFileDialog.FileName, jsonString);
             }
         }
 
+        public string DownloadCardSetting()
+        {
+            var combinedSettings = new
+            {
+                battleshipLogic,
+                battleshipRandomCount,
+                bingoLogic,
+                fogOfWar,
+                fogOfWarSpan,
+                gridSettings,
+                maxShipCount,
+                minShipCount,
+                numColumns,
+                numRows,
+                seedName,
+                shipSizes,
+            };
+
+            string jsonString = JsonSerializer.Serialize(combinedSettings);
+            return jsonString;
+        }
+
         private void UploadCardSetting(object sender, RoutedEventArgs e)
         {
-
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 DefaultExt = ".json",
@@ -205,141 +200,144 @@ namespace KhTracker
                 Title = "Select Grid Settings File",
             };
 
-
             if (openFileDialog.ShowDialog() == true)
             {
-
                 try
                 {
-                    var jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
-                    
-                    using (JsonDocument doc = JsonDocument.Parse(jsonString))
-                    {
-                        var root = doc.RootElement;
-
-                        battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
-                            ? battleshipLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridWindowBattleshipLogic;
-
-                        battleshipRandomCount = root.TryGetProperty("battleshipRandomCount", out JsonElement battleshipRandomCountElement)
-                            ? battleshipRandomCountElement.GetBoolean()
-                            : Properties.Settings.Default.BattleshipRandomCount;
-
-                        bingoLogic = root.TryGetProperty("bingoLogic", out JsonElement bingoLogicElement)
-                            ? bingoLogicElement.GetBoolean()
-                            : Properties.Settings.Default.GridWindowBingoLogic;
-
-                        fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
-                            ? fogOfWarElement.GetBoolean()
-                            : Properties.Settings.Default.FogOfWar;
-
-                        // Deserialize with a default value if key is missing
-                        fogOfWarSpan = root.TryGetProperty("fogOfWarSpan", out JsonElement fogOfWarSpanElement)
-                            ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
-                            : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
-
-                        gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
-                            ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
-                            : JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
-
-                        maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
-                            ? maxShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.MaxShipCount;
-
-                        minShipCount = root.TryGetProperty("minShipCount", out JsonElement minShipCountLogicElement)
-                            ? minShipCountLogicElement.GetInt32()
-                            : Properties.Settings.Default.MinShipCount;
-
-                        numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
-                            ? numColumnsElement.GetInt32()
-                            : Properties.Settings.Default.GridWindowColumns;
-
-                        numRows = root.TryGetProperty("numRows", out JsonElement numRowsElement)
-                            ? numRowsElement.GetInt32()
-                            : Properties.Settings.Default.GridWindowRows;
-
-                        seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
-                            ? seedNameElement.GetString()
-                            : RandomSeedName(8, seed);
-
-                        shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
-                            ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
-                            : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes); 
-                    }
+                    string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    UploadCardSetting(jsonString);
                 }
                 catch (JsonException)
                 {
                     Console.WriteLine("Card setting file did not read correctly. Please try editing it and try again. If the issue persists, please report it to #tracker-discussion.");
                     return;
                 }
+            }
+        }
 
-                // ensure all of the grid settings keys are present
-                var defaultSettingsJson = Properties.Settings.Default.Properties["GridSettings"].DefaultValue;
-                var defaultSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>((string)defaultSettingsJson);
+        public void UploadCardSetting(string jsonString)
+        {
+            using (JsonDocument doc = JsonDocument.Parse(jsonString))
+            {
+                var root = doc.RootElement;
 
-                // find the keys that should be removed
-                var keysToRemove = gridSettings.Keys.Where(key => !defaultSettings.ContainsKey(key)).ToList();
+                battleshipLogic = root.TryGetProperty("battleshipLogic", out JsonElement battleshipLogicElement)
+                    ? battleshipLogicElement.GetBoolean()
+                    : Properties.Settings.Default.GridWindowBattleshipLogic;
 
-                // remove these keys
-                foreach (var key in keysToRemove)
+                battleshipRandomCount = root.TryGetProperty("battleshipRandomCount", out JsonElement battleshipRandomCountElement)
+                    ? battleshipRandomCountElement.GetBoolean()
+                    : Properties.Settings.Default.BattleshipRandomCount;
+
+                bingoLogic = root.TryGetProperty("bingoLogic", out JsonElement bingoLogicElement)
+                    ? bingoLogicElement.GetBoolean()
+                    : Properties.Settings.Default.GridWindowBingoLogic;
+
+                fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
+                    ? fogOfWarElement.GetBoolean()
+                    : Properties.Settings.Default.FogOfWar;
+
+                // Deserialize with a default value if key is missing
+                fogOfWarSpan = root.TryGetProperty("fogOfWarSpan", out JsonElement fogOfWarSpanElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, int>>(fogOfWarSpanElement.GetRawText())
+                    : JsonSerializer.Deserialize<Dictionary<string, int>>(Properties.Settings.Default.FogOfWarSpan);
+
+                gridSettings = root.TryGetProperty("gridSettings", out JsonElement gridSettingsElement)
+                    ? JsonSerializer.Deserialize<Dictionary<string, bool>>(gridSettingsElement.GetRawText())
+                    : JsonSerializer.Deserialize<Dictionary<string, bool>>(Properties.Settings.Default.GridSettings);
+
+                maxShipCount = root.TryGetProperty("maxShipCount", out JsonElement maxShipCountLogicElement)
+                    ? maxShipCountLogicElement.GetInt32()
+                    : Properties.Settings.Default.MaxShipCount;
+
+                minShipCount = root.TryGetProperty("minShipCount", out JsonElement minShipCountLogicElement)
+                    ? minShipCountLogicElement.GetInt32()
+                    : Properties.Settings.Default.MinShipCount;
+
+                numColumns = root.TryGetProperty("numColumns", out JsonElement numColumnsElement)
+                    ? numColumnsElement.GetInt32()
+                    : Properties.Settings.Default.GridWindowColumns;
+
+                numRows = root.TryGetProperty("numRows", out JsonElement numRowsElement)
+                    ? numRowsElement.GetInt32()
+                    : Properties.Settings.Default.GridWindowRows;
+
+                seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
+                    ? seedNameElement.GetString()
+                    : RandomSeedName(8, seed);
+
+                shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
+                    ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
+                    : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.ShipSizes);
+            }
+
+            // ensure all of the grid settings keys are present
+            var defaultSettingsJson = Properties.Settings.Default.Properties["GridSettings"].DefaultValue;
+            var defaultSettings = JsonSerializer.Deserialize<Dictionary<string, bool>>((string)defaultSettingsJson);
+
+            // find the keys that should be removed
+            var keysToRemove = gridSettings.Keys.Where(key => !defaultSettings.ContainsKey(key)).ToList();
+
+            // remove these keys
+            foreach (var key in keysToRemove)
+            {
+                if (gridSettings.ContainsKey(key))
+                    gridSettings.Remove(key);
+            }
+
+            // Add missing required keys with their default values
+            foreach (var key in defaultSettings.Keys)
+            {
+                if (!gridSettings.ContainsKey(key))
                 {
-                    if (gridSettings.ContainsKey(key))
-                        gridSettings.Remove(key);
-                }
-
-                // Add missing required keys with their default values
-                foreach (var key in defaultSettings.Keys)
-                {
-                    if (!gridSettings.ContainsKey(key))
-                    {
-                        gridSettings.Add(key, defaultSettings[key]);
-                    }
-                }
-
-                // update number of reports
-                int numReports = 0;
-                for (int i = 1; i <= 13; i++)
-                {
-                    if (gridSettings[$"Report{i}"])
-                        numReports++;
-                }
-
-                // update number of unlocks
-                List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
-                int numUnlocks = 0;
-                foreach (string unlock in unlockNames)
-                {
-                    if (gridSettings[unlock])
-                        numUnlocks++;
-                }
-
-                // update number of chest locks
-                List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
-                int numChestLocks = 0;
-                foreach (string chestLock in worldChestLockNames)
-                {
-                    if (gridSettings[chestLock])
-                        numChestLocks++;
-                }
-
-                if (SavePreviousGridSettingsOption.IsChecked)
-                {
-                    Properties.Settings.Default.GridWindowRows = numRows;
-                    Properties.Settings.Default.GridWindowColumns = numColumns;
-                    Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
-                    Properties.Settings.Default.GridWindowBingoLogic = bingoLogic;
-                    Properties.Settings.Default.GridWindowBattleshipLogic = battleshipLogic;
-                    Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(shipSizes);
-                    Properties.Settings.Default.BattleshipRandomCount = battleshipRandomCount;
-                    Properties.Settings.Default.FogOfWar = fogOfWar;
-                    Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
-                    Properties.Settings.Default.MaxShipCount = maxShipCount;
-                    Properties.Settings.Default.MinShipCount = minShipCount;
-                    Properties.Settings.Default.GridWindowNumReports = numReports;
-                    Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
-                    Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
+                    gridSettings.Add(key, defaultSettings[key]);
                 }
             }
+
+            // update number of reports
+            int numReports = 0;
+            for (int i = 1; i <= 13; i++)
+            {
+                if (gridSettings[$"Report{i}"])
+                    numReports++;
+            }
+
+            // update number of unlocks
+            List<string> unlockNames = (MainWindow.data.VisitLocks.Select(item => item.Name)).ToList();
+            int numUnlocks = 0;
+            foreach (string unlock in unlockNames)
+            {
+                if (gridSettings[unlock])
+                    numUnlocks++;
+            }
+
+            // update number of chest locks
+            List<string> worldChestLockNames = (MainWindow.data.ChestLocks.Select(item => item.Name)).ToList();
+            int numChestLocks = 0;
+            foreach (string chestLock in worldChestLockNames)
+            {
+                if (gridSettings[chestLock])
+                    numChestLocks++;
+            }
+
+            if (SavePreviousGridSettingsOption.IsChecked)
+            {
+                Properties.Settings.Default.GridWindowRows = numRows;
+                Properties.Settings.Default.GridWindowColumns = numColumns;
+                Properties.Settings.Default.GridSettings = JsonSerializer.Serialize(gridSettings);
+                Properties.Settings.Default.GridWindowBingoLogic = bingoLogic;
+                Properties.Settings.Default.GridWindowBattleshipLogic = battleshipLogic;
+                Properties.Settings.Default.ShipSizes = JsonSerializer.Serialize(shipSizes);
+                Properties.Settings.Default.BattleshipRandomCount = battleshipRandomCount;
+                Properties.Settings.Default.FogOfWar = fogOfWar;
+                Properties.Settings.Default.FogOfWarSpan = JsonSerializer.Serialize(fogOfWarSpan);
+                Properties.Settings.Default.MaxShipCount = maxShipCount;
+                Properties.Settings.Default.MinShipCount = minShipCount;
+                Properties.Settings.Default.GridWindowNumReports = numReports;
+                Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
+                Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
+            }
+
             grid.Children.Clear();
             GenerateGrid(numRows, numColumns, seedName);
             gridOptionsWindow.InitializeData(this, data);

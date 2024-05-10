@@ -67,7 +67,6 @@ namespace KhTracker
             settingInfo[7] = SoraLevel01Option.IsChecked;
             settingInfo[8] = SoraLevel50Option.IsChecked;
             settingInfo[9] = SoraLevel99Option.IsChecked;
-            settingInfo[10] = ChestLockOption.IsChecked;
             //World toggles
             settingInfo[10] = SoraHeartOption.IsChecked;
             settingInfo[11] = DrivesOption.IsChecked;
@@ -88,9 +87,9 @@ namespace KhTracker
             settingInfo[26] = AtlanticaOption.IsChecked;
             settingInfo[27] = SynthOption.IsChecked;
             settingInfo[28] = PuzzleOption.IsChecked;
-            //other
-            settingInfo[29] = GhostItemOption.IsChecked;
-            settingInfo[30] = GhostMathOption.IsChecked;
+            //new
+            settingInfo[29] = ChestLockOption.IsChecked;
+
             #endregion
 
             #region ReportInfo
@@ -137,10 +136,8 @@ namespace KhTracker
             counterInfo[2] = data.DriveLevels[2];
             counterInfo[3] = data.DriveLevels[3];
             counterInfo[4] = data.DriveLevels[4];
-            if (stats != null)
-                counterInfo[5] = stats.Level;
-            counterInfo[6] = DeathCounter;
-            counterInfo[7] = data.usedPages;
+            counterInfo[5] = DeathCounter;
+            counterInfo[6] = data.usedPages;
             #endregion
 
             FileStream file = File.Create(filename);
@@ -155,15 +152,14 @@ namespace KhTracker
                 RandomSeed = data.convertedSeedHash,
                 Worlds = worldvalueInfo,
                 Reports = data.reportInformation,
+                ReportLoc = data.reportLocations,
+                ProgBossInfo = data.progBossInformation,
                 Attemps = attempsInfo,
                 Counters = counterInfo,
                 ForcedFinal = data.forcedFinal,
                 Events = data.eventLog,
                 BossEvents = data.bossEventLog,
-                LegacyJsmartee = data.legacyJsmartee,
-                LegacyJHints = data.hintFileText,
-                LegacyShan = data.legacyShan,
-                LegacySHints = data.shanHintFileText
+                BoardSettings = gridWindow.DownloadCardSetting(),
             };
 
             var saveFinal = JsonSerializer.Serialize(saveInfo);
@@ -250,7 +246,7 @@ namespace KhTracker
                 AbilitiesToggle(setting[3]);
                 AntiFormToggle(setting[4]);
                 VisitLockToggle(setting[5]);
-                ChestLockToggle(setting[10]);
+                ChestLockToggle(setting[29]);
                 ExtraChecksToggle(setting[6]);
                 if (setting[7])
                     SoraLevel01Toggle(true);
@@ -278,9 +274,6 @@ namespace KhTracker
                 AtlanticaToggle(setting[26]);
                 SynthToggle(setting[27]);
                 PuzzleToggle(setting[28]);
-                ////other
-                //settingInfo[29] = GhostItemOption.IsChecked;
-                //settingInfo[30] = GhostMathOption.IsChecked;
             }
 
             //check if enemy rando data exists
@@ -333,111 +326,17 @@ namespace KhTracker
                     var hintText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHHintText));
                     var hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
                     var settings = new List<string>();
-                    var hintableItems = new List<string>();
-                    //fallback for older seeds
-                    try
-                    {
-                        hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
-                    }
-                    catch
-                    {
-                        App.logger?.Record("Older seed. no reveal list. (This is probably fine)");
-                    }
+                    var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
 
                     data.ShouldResetHash = false;
-
-                    //if (hintObject.ContainsKey("generatorVersion"))
-                    //{
-                    //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
-                    //}
-
-                    //if (hintObject.ContainsKey("dummy_forms"))
-                    //{
-                    //    if (hintObject["dummy_forms"].ToString() == "true")
-                    //        data.altFinalTracking = true;
-                    //}
 
                     if (hintObject.ContainsKey("settings"))
                     {
                         settings = JsonSerializer.Deserialize<List<string>>(hintObject["settings"].ToString());
 
-                        #region Settings
-
-                        if (hintableItems.Contains("report"))
-                            ReportsToggle(true);
-                        else
-                            ReportsToggle(false);
-
-                        if (hintableItems.Contains("page"))
-                            TornPagesToggle(true);
-                        else
-                            TornPagesToggle(false);
-
-                        if (hintableItems.Contains("ability"))
-                            AbilitiesToggle(true);
-                        else
-                            AbilitiesToggle(false);
-
-                        if (hintableItems.Count == 0)
-                        {
-                            ReportsToggle(true);
-                            TornPagesToggle(true);
-                            AbilitiesToggle(true);
-                        }
-
-                        //item settings
-                        PromiseCharmToggle(false);
-                        //AbilitiesToggle(false);
-                        VisitLockToggle(false);
-                        ExtraChecksToggle(false);
-                        AntiFormToggle(false);
-
-                        //world settings
-                        SoraHeartToggle(true);
-                        DrivesToggle(false);
-                        SimulatedToggle(false);
-                        TwilightTownToggle(false);
-                        HollowBastionToggle(false);
-                        BeastCastleToggle(false);
-                        OlympusToggle(false);
-                        AgrabahToggle(false);
-                        LandofDragonsToggle(false);
-                        DisneyCastleToggle(false);
-                        PrideLandsToggle(false);
-                        PortRoyalToggle(false);
-                        HalloweenTownToggle(false);
-                        SpaceParanoidsToggle(false);
-                        TWTNWToggle(false);
-                        HundredAcreWoodToggle(false);
-                        AtlanticaToggle(false);
-                        PuzzleToggle(false);
-                        SynthToggle(false);
-
-                        //progression hints GoA Current Hint Count
-                        data.WorldsData["GoA"].value.Visibility = Visibility.Hidden;
-
                         //settings visuals
                         SettingRow.Height = new GridLength(0.5, GridUnitType.Star);
-                        Setting_BetterSTT.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Level_01.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Level_50.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Level_99.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Absent.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Absent_Split.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Datas.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Sephiroth.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Terra.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Cups.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_HadesCup.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Cavern.Width = new GridLength(0, GridUnitType.Star);
-                        Setting_Transport.Width = new GridLength(0, GridUnitType.Star);
                         Double SpacerValue = 10;
-                        #endregion
-
-                        //to be safe about this i guess
-                        //bool abilitiesOn = true;
-                        bool puzzleOn = false;
-                        //bool synthOn = false;
 
                         //load settings from hints
                         foreach (string setting in settings)
@@ -446,130 +345,86 @@ namespace KhTracker
 
                             switch (setting)
                             {
-                                //items
-                                case "PromiseCharm":
-                                    PromiseCharmToggle(true);
-                                    break;
-                                //case "Level1Mode":
-                                //    abilitiesOn = false;
-                                //    break;
-                                case "visit_locking":
-                                    VisitLockToggle(true);
-                                    break;
-                                case "extra_ics":
-                                    ExtraChecksToggle(true);
-                                    break;
-                                case "Anti-Form":
-                                    AntiFormToggle(true);
-                                    break;
-                                //worlds
                                 case "Level":
-                                    SoraHeartToggle(false);
-                                    SoraLevel01Toggle(true);
-                                    AbilitiesToggle(true);
                                     Setting_Level_01.Width = new GridLength(1.5, GridUnitType.Star);
                                     SpacerValue--;
                                     break;
                                 case "ExcludeFrom50":
-                                    SoraLevel50Toggle(true);
-                                    AbilitiesToggle(true);
                                     Setting_Level_50.Width = new GridLength(1.5, GridUnitType.Star);
                                     SpacerValue--;
                                     data.HintRevealOrder.Add("SorasHeart");
                                     break;
                                 case "ExcludeFrom99":
-                                    SoraLevel99Toggle(true);
-                                    AbilitiesToggle(true);
                                     Setting_Level_99.Width = new GridLength(1.5, GridUnitType.Star);
                                     SpacerValue--;
                                     data.HintRevealOrder.Add("SorasHeart");
                                     break;
                                 case "Simulated Twilight Town":
-                                    SimulatedToggle(true);
                                     data.enabledWorlds.Add("STT");
                                     data.HintRevealOrder.Add("SimulatedTwilightTown");
                                     break;
                                 case "Hundred Acre Wood":
-                                    HundredAcreWoodToggle(true);
                                     data.enabledWorlds.Add("HundredAcreWood");
                                     data.HintRevealOrder.Add("HundredAcreWood");
                                     break;
                                 case "Atlantica":
-                                    AtlanticaToggle(true);
                                     data.enabledWorlds.Add("Atlantica");
                                     data.HintRevealOrder.Add("Atlantica");
                                     break;
                                 case "Puzzle":
-                                    PuzzleToggle(true);
-                                    puzzleOn = true;
                                     data.puzzlesOn = true;
                                     break;
                                 case "Synthesis":
-                                    SynthToggle(true);
-                                    //synthOn = true;
                                     data.synthOn = true;
                                     break;
                                 case "Form Levels":
-                                    DrivesToggle(true);
                                     data.HintRevealOrder.Add("DriveForms");
                                     break;
                                 case "Land of Dragons":
-                                    LandofDragonsToggle(true);
                                     data.enabledWorlds.Add("LoD");
                                     data.HintRevealOrder.Add("LandofDragons");
                                     break;
                                 case "Beast's Castle":
-                                    BeastCastleToggle(true);
                                     data.enabledWorlds.Add("BC");
                                     data.HintRevealOrder.Add("BeastsCastle");
                                     break;
                                 case "Hollow Bastion":
-                                    HollowBastionToggle(true);
                                     data.enabledWorlds.Add("HB");
                                     data.HintRevealOrder.Add("HollowBastion");
                                     break;
                                 case "Twilight Town":
-                                    TwilightTownToggle(true);
                                     data.enabledWorlds.Add("TT");
                                     data.HintRevealOrder.Add("TwilightTown");
                                     break;
                                 case "The World That Never Was":
-                                    TWTNWToggle(true);
                                     data.enabledWorlds.Add("TWTNW");
                                     data.HintRevealOrder.Add("TWTNW");
                                     break;
                                 case "Space Paranoids":
-                                    SpaceParanoidsToggle(true);
                                     data.enabledWorlds.Add("SP");
                                     data.HintRevealOrder.Add("SpaceParanoids");
                                     break;
                                 case "Port Royal":
-                                    PortRoyalToggle(true);
                                     data.enabledWorlds.Add("PR");
                                     data.HintRevealOrder.Add("PortRoyal");
                                     break;
                                 case "Olympus Coliseum":
-                                    OlympusToggle(true);
                                     data.enabledWorlds.Add("OC");
                                     data.HintRevealOrder.Add("OlympusColiseum");
                                     break;
                                 case "Agrabah":
-                                    AgrabahToggle(true);
                                     data.enabledWorlds.Add("AG");
                                     data.HintRevealOrder.Add("Agrabah");
                                     break;
                                 case "Halloween Town":
-                                    HalloweenTownToggle(true);
                                     data.enabledWorlds.Add("HT");
                                     data.HintRevealOrder.Add("HalloweenTown");
                                     break;
                                 case "Pride Lands":
-                                    PrideLandsToggle(true);
                                     data.enabledWorlds.Add("PL");
                                     data.HintRevealOrder.Add("PrideLands");
                                     break;
                                 case "Disney Castle / Timeless River":
-                                    DisneyCastleToggle(true);
                                     data.enabledWorlds.Add("DC");
                                     data.HintRevealOrder.Add("DisneyCastle");
                                     break;
@@ -583,6 +438,7 @@ namespace KhTracker
                                     SpacerValue--;
                                     break;
                                 case "Data Split":
+                                    Setting_Absent.Width = new GridLength(0, GridUnitType.Star);
                                     Setting_Absent_Split.Width = new GridLength(1, GridUnitType.Star);
                                     SpacerValue--;
                                     data.dataSplit = true;
@@ -626,26 +482,20 @@ namespace KhTracker
                                     data.UsingProgressionHints = true;
                                     data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
                                     data.WorldsData["GoA"].value.Text = "0";
-                                    //Console.WriteLine("ENABLING PROGRESSION HINTS");
                                     break;
-                                case "dummy_forms":
-                                    data.altFinalTracking = true;
+                                default:
                                     break;
                             }
                         }
 
-                        //if (abilitiesOn == false)
-                        //    AbilitiesToggle(false);
-
                         //prevent creations hinting twice for progression
-                        if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
+                        if ((data.puzzlesOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
                         {
                             data.HintRevealOrder.Add("PuzzSynth");
                         }
 
                         Setting_Spacer.Width = new GridLength(SpacerValue, GridUnitType.Star);
                         SettingsText.Text = "Settings:";
-
                     }
 
                     if (hintObject.ContainsKey("ProgressionType"))
@@ -662,8 +512,6 @@ namespace KhTracker
 
                         foreach (var setting in progressionSettings)
                         {
-                            //Console.WriteLine("progression setting found = " + setting.Key);
-
                             switch (setting.Key)
                             {
                                 case "HintCosts":
@@ -816,16 +664,26 @@ namespace KhTracker
                         default:
                             break;
                     }
-
                 }
             }
 
             //replace the hint text with the one in the save
             //why? i dunno might be important incase the way i gen boss hints changes or somethin
-            if (Savefile.ContainsKey("Reports"))
+            //if (Savefile.ContainsKey("Reports"))
             {
-                var reportInfo = JsonSerializer.Deserialize<List<Tuple<string, string, int>>>(Savefile["Reports"].ToString());
-                data.reportInformation = reportInfo;
+                data.reportInformation = JsonSerializer.Deserialize<List<Tuple<string, string, int>>>(Savefile["Reports"].ToString());
+                data.reportLocations = JsonSerializer.Deserialize<List<string>>(Savefile["ReportLoc"].ToString());
+                data.progBossInformation = JsonSerializer.Deserialize<List<Tuple<string, string, string>>>(Savefile["ProgBossInfo"].ToString());
+
+                //fix reports attempts
+                var attempts = JsonSerializer.Deserialize<int[]>(Savefile["Attemps"].ToString());
+                string[] failNames = new string[4] { "Fail3", "Fail2", "Fail1", "Fail0" };
+
+                for (int i = 0; i < 13; ++i)
+                {
+                    data.ReportAttemptVisual[i].SetResourceReference(ContentControl.ContentProperty, failNames[attempts[i]]);
+                    data.reportAttempts[i] = attempts[i];
+                }
             }
 
             //forced final check (unsure if this will actually help with it not mistracking)
@@ -836,6 +694,12 @@ namespace KhTracker
                     data.forcedFinal = true;
                 else
                     data.forcedFinal = false;
+            }
+
+            //Update grid tracker with settings from save
+            if (Savefile.ContainsKey("BoardSettings"))
+            {
+                gridWindow.UploadCardSetting(Savefile["BoardSettings"].ToString());
             }
 
             //track obtained items
@@ -898,21 +762,8 @@ namespace KhTracker
                         }
                     }
                 }
-                DeathCounter = counters[6];
-                data.usedPages = counters[7];
-            }
-
-            //fix reports attempts
-            if (Savefile.ContainsKey("Attemps"))
-            {
-                var attempts = JsonSerializer.Deserialize<int[]>(Savefile["Attemps"].ToString());
-                string[] failNames = new string[4] { "Fail3", "Fail2", "Fail1", "Fail0" };
-
-                for (int i = 0; i < 13; ++i)
-                {
-                    data.ReportAttemptVisual[i].SetResourceReference(ContentControl.ContentProperty, failNames[attempts[i]]);
-                    data.reportAttempts[i] = attempts[i];
-                }
+                DeathCounter = counters[5];
+                data.usedPages = counters[6];
             }
 
             //check hash
@@ -1885,10 +1736,6 @@ namespace KhTracker
             data.eventLog.Clear();
             data.openKHHintText = "None";
             data.openKHBossText = "None";
-            data.legacyJsmartee = false;
-            data.hintFileText = null;
-            data.legacyShan = false;
-            data.shanHintFileText = null;
             data.hintsLoaded = false;
             data.seedLoaded = false;
             data.saveFileLoaded = false;
