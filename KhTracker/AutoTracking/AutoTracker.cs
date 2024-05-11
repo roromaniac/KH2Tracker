@@ -21,6 +21,7 @@ using System.Collections;
 using System.Security.Cryptography;
 using System.IO;
 using System.Reflection;
+using System.Diagnostics.Eventing.Reader;
 //using System.IO;
 
 namespace KhTracker
@@ -776,7 +777,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
-        public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false)
+        public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
         {
 
             // deal with doubled up progression icons
@@ -852,45 +853,101 @@ namespace KhTracker
                     break;
             }
 
-            if (GridTrackerOnly)
+            if (gridWindow.bunterLogic && data.BossRandoFound)
             {
-                // boss enemy check
-                if (data.BossRandoFound)
+                switch (gridCheckName)
                 {
-                    for (int i = 0; i < checks.Count(); i++)
+                    case "Pete OC II":
+                        checks.AddRange(("Pete OC II,Pete TR").Split(',').ToList());
+                        break;
+                    case "Pete TR":
+                        checks.AddRange(("Pete OC II,Pete TR").Split(',').ToList());
+                        break;
+                    case "Luxord":
+                        checks.AddRange(("Luxord,Luxord (Data)").Split(',').ToList());
+                        break;
+                    case "Luxord (Data)":
+                        checks.AddRange(("Luxord,Luxord (Data)").Split(',').ToList());
+                        break;
+                    case "Final Xemnas":
+                        checks.AddRange(("Final Xemnas,Final Xemnas (Data)").Split(',').ToList());
+                        break;
+                    case "Final Xemnas (Data)":
+                        checks.AddRange(("Final Xemnas,Final Xemnas (Data)").Split(',').ToList());
+                        break;
+                    case "Xigbar":
+                        checks.AddRange(("Xigbar,Xigbar (Data)").Split(',').ToList());
+                        break;
+                    case "Xigbar (Data)":
+                        checks.AddRange(("Xigbar,Xigbar (Data)").Split(',').ToList());
+                        break;
+                    case "Saix":
+                        checks.AddRange(("Saix,Saix (Data)").Split(',').ToList());
+                        break;
+                    case "Saix (Data)":
+                        checks.AddRange(("Saix,Saix (Data)").Split(',').ToList());
+                        break;
+                    case "Roxas":
+                        checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
+                        break;
+                    case "Roxas (Data)":
+                        checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
+                        break;
+                    case "Demyx":
+                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
+                        break;
+                    case "Demyx (Data)":
+                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
+                        break;
+                    case "Xaldin":
+                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
+                        break;
+                    case "Xaldin (Data)":
+                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+            // boss enemy check
+            if (data.BossRandoFound)
+            {
+                for (int i = 0; i < checks.Count(); i++)
+                {
+                    // hint the final fights bosses if Xemnas 1 is defeated
+                    if (checks[i] == "Xemnas")
                     {
-                        // hint the final fights bosses if Xemnas 1 is defeated
-                        if (checks[i] == "Xemnas")
+                        string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
+                        foreach (string boss in finalFights)
                         {
-                            string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
-                            foreach (string boss in finalFights)
+                            if (data.BossList.ContainsKey(boss) && data.codes.bossNameConversion.ContainsKey(data.BossList[boss]))
                             {
-                                if (data.BossList.ContainsKey(boss) && data.codes.bossNameConversion.ContainsKey(data.BossList[boss]))
-                                {
-                                    string origBoss = data.codes.bossNameConversion[boss];
-                                    string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
-                                    data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
-                                }
+                                string origBoss = data.codes.bossNameConversion[boss];
+                                string newBoss = data.codes.bossNameConversion[data.BossList[boss]];
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
                         }
+                    }
 
-                        if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
-                            checks[i] = Codes.mismatchedBossNames[checks[i]];
+                    if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
+                        checks[i] = Codes.mismatchedBossNames[checks[i]];
 
-                        if (data.codes.bossNameConversion.ContainsKey(checks[i]))
-                        {
-                            if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
-                                checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                        }
-                        else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
-                        {
-                            var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
-                            if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
-                                checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
-                        }
+                    if (data.codes.bossNameConversion.ContainsKey(checks[i]))
+                    {
+                        if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                    }
+                    else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
+                    {
+                        var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
+                        if (data.BossList.ContainsKey(originalBoss) && data.codes.bossNameConversion.ContainsKey(data.BossList[originalBoss]))
+                            checks[i] = data.codes.bossNameConversion[data.BossList[originalBoss]];
                     }
                 }
             }
+
 
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
@@ -911,14 +968,22 @@ namespace KhTracker
                         if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
                         {
                             // invoke the appropriate button if the check matches
-                            Application.Current.Dispatcher.Invoke(() => {
-                                if (!(bool)gridWindow.buttons[row, col].IsChecked)
-                                {
-                                    RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                    gridWindow.buttons[row, col].IsChecked = true;
-                                    gridWindow.buttons[row, col].RaiseEvent(args);
-                                }
-                            });
+                            if (highlightBoss && (data.codes.bossNameConversion.ContainsKey(checkName) || data.codes.bossNameConversion.ContainsValue(checkName)))
+                            {
+                                if (gridWindow.buttons[row, col].Content != null)
+                                    gridWindow.buttons[row, col].BorderBrush = new SolidColorBrush(Colors.Blue);
+                                    gridWindow.buttons[row, col].BorderThickness = new Thickness(5.5);  // Adjust thickness as needed
+                            }
+                            else {
+                                Application.Current.Dispatcher.Invoke(() => {
+                                    if (!(bool)gridWindow.buttons[row, col].IsChecked)
+                                    {
+                                        RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                        gridWindow.buttons[row, col].IsChecked = true;
+                                        gridWindow.buttons[row, col].RaiseEvent(args);
+                                    }
+                                });
+                            }
                         }
                     }
                 }
@@ -2940,7 +3005,12 @@ namespace KhTracker
                 if (world.eventComplete == 1)
                     eventInProgress = true;
                 else
+                {
+                    // only highlight bosses if their event is not completed
+                    if (data.codes.bossNameConversion.ContainsKey(boss))
+                        UpdateSupportingTrackers(boss, false, true);
                     return;
+                }
             }
 
             //return if no boss beaten found

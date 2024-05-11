@@ -1048,15 +1048,15 @@ namespace KhTracker
             if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
             {
                 window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(hintColor);
-                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null) 
+                if (window.TryFindResource($"Grid_{iconStyle}-Grid{gridOriginalBoss}") != null) 
                 { 
                     // Try to set the resource reference with the "Grid" prefix
-                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-Grid{gridOriginalBoss}");
                 }
-                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
+                else if (window.TryFindResource($"Grid_{iconStyle}-{gridOriginalBoss}") != null)
                 {
                     // If the "Grid" key doesn't exist, try with the base key
-                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-{gridOriginalBoss}");
 
                 }
             }
@@ -1064,15 +1064,15 @@ namespace KhTracker
             else if (window.gridWindow.bossHintContentControls.Keys.Contains($"Grid{gridNewBoss}"))
             {
                 window.gridWindow.bossHintBorders[$"Grid{gridNewBoss}"].Background = new SolidColorBrush(hintColor);
-                if (window.TryFindResource($"{iconStyle}-Grid{gridOriginalBoss}") != null)
+                if (window.TryFindResource($"Grid_{iconStyle}-Grid{gridOriginalBoss}") != null)
                 {
                     // Try to set the resource reference with the "Grid" prefix
-                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-Grid{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-Grid{gridOriginalBoss}");
                 }
-                else if (window.TryFindResource($"{iconStyle}-{gridOriginalBoss}") != null)
+                else if (window.TryFindResource($"Grid_{iconStyle}-{gridOriginalBoss}") != null)
                 {
                     // If the "Grid" key doesn't exist, try with the base key
-                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"{iconStyle}-{gridOriginalBoss}");
+                    window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-{gridOriginalBoss}");
                 }
             }
         }

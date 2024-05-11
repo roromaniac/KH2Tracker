@@ -12,7 +12,7 @@ namespace KhTracker.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -998,7 +998,17 @@ namespace KhTracker.Properties {
             ":true,\"TronWep2\":true,\"BeastWep2\":true,\"ChestCoR\":true,\"KingsLetter2\":true,\"Ches" +
             "tLoD\":true,\"ChestPL\":true,\"TronWep1\":true,\"IceCream2\":true,\"IceCream3\":true,\"Che" +
             "stPR\":true,\"IceCream1\":true,\"JackWep1\":true,\"ChestSTT\":true,\"ChestTWTNW\":true,\"F" +
-            "orcingFinalCounts\":false}")]
+            "orcingFinalCounts\":false,\"Glide4\":false,\"Glide3\":false,\"Glide2\":false,\"Glide1\":f" +
+            "alse,\"AerialDodge4\":false,\"AerialDodge3\":false,\"AerialDodge2\":false,\"AerialDodge" +
+            "1\":false,\"DodgeRoll4\":false,\"DodgeRoll3\":false,\"DodgeRoll2\":false,\"DodgeRoll1\":f" +
+            "alse,\"QuickRun4\":false,\"QuickRun3\":false,\"QuickRun2\":false,\"QuickRun1\":false,\"Hi" +
+            "ghJump4\":false,\"HighJump3\":false,\"HighJump2\":false,\"HighJump1\":false,\"Anti\":fals" +
+            "e,\"Final7\":false,\"Final6\":false,\"Final5\":false,\"Final4\":false,\"Final3\":false,\"Fi" +
+            "nal2\":false,\"Master7\":false,\"Master6\":false,\"Master5\":false,\"Master4\":false,\"Mas" +
+            "ter3\":false,\"Master2\":false,\"Limit7\":false,\"Limit6\":false,\"Limit5\":false,\"Limit4" +
+            "\":false,\"Limit3\":false,\"Limit2\":false,\"Wisdom7\":false,\"Wisdom6\":false,\"Wisdom5\":" +
+            "false,\"Wisdom4\":false,\"Wisdom3\":false,\"Wisdom2\":false,\"Valor7\":false,\"Valor6\":fa" +
+            "lse,\"Valor5\":false,\"Valor4\":false,\"Valor3\":false,\"Valor2\":false}")]
         public string GridSettings {
             get {
                 return ((string)(this["GridSettings"]));
@@ -1095,24 +1105,24 @@ namespace KhTracker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool GridWindowBingoLogic {
+        public bool GridBingoLogic {
             get {
-                return ((bool)(this["GridWindowBingoLogic"]));
+                return ((bool)(this["GridBingoLogic"]));
             }
             set {
-                this["GridWindowBingoLogic"] = value;
+                this["GridBingoLogic"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool GridWindowBattleshipLogic {
+        public bool GridBattleshipLogic {
             get {
-                return ((bool)(this["GridWindowBattleshipLogic"]));
+                return ((bool)(this["GridBattleshipLogic"]));
             }
             set {
-                this["GridWindowBattleshipLogic"] = value;
+                this["GridBattleshipLogic"] = value;
             }
         }
         
@@ -1311,72 +1321,72 @@ namespace KhTracker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool FogOfWar {
+        public bool GridFogOfWar {
             get {
-                return ((bool)(this["FogOfWar"]));
+                return ((bool)(this["GridFogOfWar"]));
             }
             set {
-                this["FogOfWar"] = value;
+                this["GridFogOfWar"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool BattleshipRandomCount {
+        public bool GridBattleshipRandomCount {
             get {
-                return ((bool)(this["BattleshipRandomCount"]));
+                return ((bool)(this["GridBattleshipRandomCount"]));
             }
             set {
-                this["BattleshipRandomCount"] = value;
+                this["GridBattleshipRandomCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("{\"W\": 1, \"E\": 1, \"N\": 1, \"S\": 1, \"NW\": 0, \"NE\": 0, \"SW\": 0, \"SE\": 0}")]
-        public string FogOfWarSpan {
+        public string GridFogOfWarSpan {
             get {
-                return ((string)(this["FogOfWarSpan"]));
+                return ((string)(this["GridFogOfWarSpan"]));
             }
             set {
-                this["FogOfWarSpan"] = value;
+                this["GridFogOfWarSpan"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("[2, 3, 3, 4, 5]")]
-        public string ShipSizes {
+        public string GridShipSizes {
             get {
-                return ((string)(this["ShipSizes"]));
+                return ((string)(this["GridShipSizes"]));
             }
             set {
-                this["ShipSizes"] = value;
+                this["GridShipSizes"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int MaxShipCount {
+        public int GridMaxShipCount {
             get {
-                return ((int)(this["MaxShipCount"]));
+                return ((int)(this["GridMaxShipCount"]));
             }
             set {
-                this["MaxShipCount"] = value;
+                this["GridMaxShipCount"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int MinShipCount {
+        public int GridMinShipCount {
             get {
-                return ((int)(this["MinShipCount"]));
+                return ((int)(this["GridMinShipCount"]));
             }
             set {
-                this["MinShipCount"] = value;
+                this["GridMinShipCount"] = value;
             }
         }
         
@@ -1545,6 +1555,18 @@ namespace KhTracker.Properties {
             }
             set {
                 this["WorldVisitLock2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GridBunterLogic {
+            get {
+                return ((bool)(this["GridBunterLogic"]));
+            }
+            set {
+                this["GridBunterLogic"] = value;
             }
         }
     }
