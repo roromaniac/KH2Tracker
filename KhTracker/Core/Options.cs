@@ -967,12 +967,40 @@ namespace KhTracker
                 }
             }
 
+            //Quick Check for Generator version used
+            if (hintsfile != null)
+                reader = new StreamReader(hintsfile.Open());
+            else if (hintsfileEx != null)
+                reader = new StreamReader(hintsfileEx);
+            else
+                reader = null;
+
+            if (reader != null)
+            {
+                string hintText = Encoding.UTF8.GetString(Convert.FromBase64String(reader.ReadToEnd()));
+                Dictionary<string, object> hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
+                string version = "";
+                reader.Close();
+
+                if (hintObject.ContainsKey("generatorVersion"))
+                {
+                    version = hintObject["generatorVersion"].ToString();
+                }
+
+                if (version == "" || version.StartsWith("3.0"))
+                {
+                    MessageBox.Show("Update KH2 Randomizer Seed Gen to version 3.1 or above or use an older Tracker version to load this seed.", "Unsupported Seed!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
 
             //load seed hash
             if (hashfile != null)
                 reader = new StreamReader(hashfile.Open());
             else if (hashfileEx != null)
                 reader = new StreamReader(hashfileEx);
+            else
+                reader = null;
 
             if (reader != null)
             {
@@ -1002,12 +1030,13 @@ namespace KhTracker
                 HashToSeed(hash);
             }
 
-
             //load boss enemy files
             if (enemyfile != null)
                 reader = new StreamReader(enemyfile.Open());
             else if (enemyfileEx != null)
                 reader = new StreamReader(enemyfileEx);
+            else
+                reader = null;
 
             if (reader != null)
             {
@@ -1039,12 +1068,13 @@ namespace KhTracker
                 reader.Close();
             }
 
-
             //load hints file
             if (hintsfile != null)
                 reader = new StreamReader(hintsfile.Open());
             else if (hintsfileEx != null)
                 reader = new StreamReader(hintsfileEx);
+            else
+                reader = null;
 
             if (reader != null)
             {
@@ -1055,11 +1085,6 @@ namespace KhTracker
                 var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
 
                 data.ShouldResetHash = false;
-
-                //if (hintObject.ContainsKey("generatorVersion"))
-                //{
-                //    data.seedgenVersion = hintObject["generatorVersion"].ToString();
-                //}
 
                 if (hintObject.ContainsKey("settings"))
                 {
@@ -1731,7 +1756,7 @@ namespace KhTracker
             data.bossEventLog.Clear();
             data.convertedSeedHash = 0;
             data.enabledWorlds.Clear();
-            data.seedgenVersion = "";
+            //data.seedgenVersion = "";
             data.altFinalTracking = false;
             data.eventLog.Clear();
             data.openKHHintText = "None";
