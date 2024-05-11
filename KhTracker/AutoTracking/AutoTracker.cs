@@ -910,7 +910,6 @@ namespace KhTracker
                 }
             }
 
-
             // boss enemy check
             if (data.BossRandoFound)
             {
@@ -947,7 +946,6 @@ namespace KhTracker
                     }
                 }
             }
-
 
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
@@ -989,10 +987,9 @@ namespace KhTracker
                 }
 
                 //objective window tracking
-                if (GridTrackerOnly && !data.oneHourMode)
+                if (GridTrackerOnly)
                     return;
-
-                if (data.objectiveMode || data.oneHourMode)
+                else
                 {
                     for (int row = 0; row < objWindow.numRows; row++)
                     {
@@ -3008,7 +3005,7 @@ namespace KhTracker
                 {
                     // only highlight bosses if their event is not completed
                     if (data.codes.bossNameConversion.ContainsKey(boss))
-                        UpdateSupportingTrackers(boss, false, true);
+                        UpdateSupportingTrackers(boss, true, true);
                     return;
                 }
             }
