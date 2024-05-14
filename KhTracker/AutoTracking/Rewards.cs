@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Xaml.Schema;
 
 namespace KhTracker
 {
@@ -32,7 +33,6 @@ namespace KhTracker
         {
             ADDRESS_OFFSET = offset;
             memory = mem;
-            //Bt10 = bt10;
             Lvup = GetSubOffset(bt10, 5);
             Fmlv = GetSubOffset(bt10, 16);
             swordChecks = new List<Tuple<int, string>>();
@@ -49,27 +49,12 @@ namespace KhTracker
         // populate reward lists
         private void ReadRewards()
         {
-            //level array
-            // lv99 checks only (31, 33, 47, 49, 53, 59, 65, 73, 85, 99)
-            int[] soraLevels = {2, 4, 7, 9, 10, 12, 14, 15, 17, 20, 23, 25, 28, 30, 31, 
-                32, 33, 34, 36, 39, 41, 44, 46, 47, 48, 49, 50, 53, 59, 65, 73, 85, 99};
-
-            // if sword
-            foreach (int level in soraLevels)
+            //just read all levels and do all at once
+            for (int i = 0; i < 99; ++i)
             {
-                ReadReward(Lvup + (level * 0x10), 2, swordChecks, level);
-            }
-
-            // if shield
-            foreach (int level in soraLevels)
-            {
-                ReadReward(Lvup + (level * 0x10) + 0x2, 2, shieldChecks, level);
-            }
-
-            // if staff
-            foreach (int level in soraLevels)
-            {
-                ReadReward(Lvup + (level * 0x10) + 0x4, 2, shieldChecks, level);
+                ReadReward(Lvup + (i * 0x10) + 0x8, 2, swordChecks, i);
+                ReadReward(Lvup + (i * 0x10) + 0xA, 2, shieldChecks, i);
+                ReadReward(Lvup + (i * 0x10) + 0xC, 2, staffChecks, i);
             }
 
             //forms
@@ -163,7 +148,7 @@ namespace KhTracker
                 //double check correct subfile name
                 if (ReadMemString(offset + 0x4) == "lvup")
                 {
-                    return GetAddress(baseAddress, offset) + 0x3C;
+                    return GetAddress(baseAddress, offset) + 0x44;
                 }
                 else
                     return 0;
