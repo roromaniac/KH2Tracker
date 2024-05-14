@@ -1086,6 +1086,13 @@ namespace KhTracker
 
                 data.ShouldResetHash = false;
 
+                if (hintObject.ContainsKey("emblems"))
+                {
+                    data.EmblemMode = true;
+                    Dictionary<string, int> emblemValues = new Dictionary<string, int>(JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["emblems"].ToString()));
+                    EmblemTotalValue.Text = emblemValues["num_emblems_needed"].ToString();
+                }
+
                 if (hintObject.ContainsKey("settings"))
                 {
                     settings = JsonSerializer.Deserialize<List<string>>(hintObject["settings"].ToString());
@@ -1132,9 +1139,6 @@ namespace KhTracker
 
                     //item settings
                     PromiseCharmToggle(false);
-                    //AbilitiesToggle(false);
-                    //VisitLockToggle(false);
-                    //ExtraChecksToggle(false);
                     AntiFormToggle(false);
 
                     //world settings
@@ -1180,30 +1184,18 @@ namespace KhTracker
                     #endregion
 
                     //to be safe about this i guess
-                    //bool abilitiesOn = true;
                     bool puzzleOn = false;
-                    //bool synthOn = false;
 
                     //load settings from hints
                     foreach (string setting in settings)
                     {
-                        Console.WriteLine("setting found = " + setting);
-
+                        //Console.WriteLine("setting found = " + setting);
                         switch (setting)
                         {
                             //items
                             case "PromiseCharm":
                                 PromiseCharmToggle(true);
                                 break;
-                            //case "Level1Mode":
-                            //    abilitiesOn = false;
-                            //    break;
-                            case "visit_locking":
-                                VisitLockToggle(true);
-                                break;
-                            //case "extra_ics":
-                            //    ExtraChecksToggle(true);
-                            //    break;
                             case "Anti-Form":
                                 AntiFormToggle(true);
                                 break;
@@ -1373,9 +1365,6 @@ namespace KhTracker
                                 data.WorldsData["GoA"].value.Text = "0";
                                 //Console.WriteLine("ENABLING PROGRESSION HINTS");
                                 break;
-                            case "dummy_forms":
-                                data.altFinalTracking = true;
-                                break;
                             case "objectives":
                                 data.objectiveMode = true;
                                 break;
@@ -1384,9 +1373,6 @@ namespace KhTracker
                                 break;
                         }
                     }
-
-                    //if (abilitiesOn == false)
-                    //    AbilitiesToggle(false);
 
                     //prevent creations hinting twice for progression
                     if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
@@ -1680,6 +1666,11 @@ namespace KhTracker
                     ModeDisplay.Header += " | Prog. Bosses";
                 }                
             }
+        
+            if (data.EmblemMode)
+            {
+                ShowEmblemCountToggle(EmblemCountOption.IsChecked);
+            }
         }
 
         //Turns the zip seed icon hash to a numerical based seed
@@ -1757,7 +1748,7 @@ namespace KhTracker
             data.convertedSeedHash = 0;
             data.enabledWorlds.Clear();
             //data.seedgenVersion = "";
-            data.altFinalTracking = false;
+            //data.altFinalTracking = false;
             data.eventLog.Clear();
             data.openKHHintText = "None";
             data.openKHBossText = "None";
@@ -1767,6 +1758,11 @@ namespace KhTracker
             data.firstGridOnSeedLoad = true;
             data.BossHomeHinting = false;
 
+
+            //emblems
+            EmblemGrid.Visibility = Visibility.Collapsed;
+            EmblemCollectedValue.Text = "0";
+            data.EmblemMode = false;
 
             //objective widow stuff
             data.objectiveMode = false;
@@ -2016,7 +2012,7 @@ namespace KhTracker
             reflectLevel = 0;
             magnetLevel = 0;
             tornPageCount = 0;
-            munnyPouchCount = 0;
+            //munnyPouchCount = 0;
 
             AuronWepLevel = 0;
             MulanWepLevel = 0;

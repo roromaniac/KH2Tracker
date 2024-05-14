@@ -95,6 +95,7 @@
     <Compile Include="AutoTracking\AutoTracker.cs" />
     <Compile Include="AutoTracking\CheckEveryCheck.cs" />
     <Compile Include="AutoTracking\Extra.cs" />
+    <Compile Include="AutoTracking\Marks.cs" />
     <Compile Include="AutoTracking\TornPageNew.cs" />
     <Compile Include="AutoTracking\Visit.cs" />
     <Compile Include="AutoTracking\VisitNew.cs" />

@@ -17,6 +17,7 @@ namespace KhTracker
         public Button selected = null;
         public bool dragDrop = true;
         public bool ScoreMode = false;
+        public bool EmblemMode = false;
         public int usedPages = 0;
         public bool forcedFinal;
         public bool dataSplit = false;

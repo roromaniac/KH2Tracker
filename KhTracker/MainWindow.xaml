@@ -78,9 +78,10 @@
                 <MenuItem Header="Highlight Current World"      Click="WorldHighlightToggle" x:Name="WorldHighlightOption"  IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Highlight Hinted World (Progression Hints)" Click="WorldHintHighlightToggle" x:Name="WorldHintHighlightOption"  IsCheckable="True" IsChecked="False"/>
                 <Separator/>
-                <MenuItem Header="Track Ghost Items" 	                Click="GhostItemToggle"		  x:Name="GhostItemOption"	IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Ghost Item Auto-Math (Points Hints)"  Click="GhostMathToggle" 	  x:Name="GhostMathOption"	IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Show Check Count (Points/Score Mode)" Click="ShowCheckCountToggle"  x:Name="CheckCountOption"	IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Track Ghost Items" 	                Click="GhostItemToggle"		  x:Name="GhostItemOption"	    IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Ghost Item Auto-Math (Points Hints)"  Click="GhostMathToggle" 	  x:Name="GhostMathOption"	    IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Show Emblem Counter (Emblem Mode)"    Click="ShowEmblemCountToggle" x:Name="EmblemCountOption"	IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Show Check Count (Points/Score Mode)" Click="ShowCheckCountToggle"  x:Name="CheckCountOption"	    IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Show Next Level Check Display" Click="NextLevelCheckToggle" x:Name="NextLevelCheckOption" IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Level 1 Checks"                Click="SoraLevel01Toggle"    x:Name="SoraLevel01Option"    IsCheckable="True" IsChecked="False"/>
@@ -2253,6 +2254,79 @@
                         <Viewbox HorizontalAlignment="Right" VerticalAlignment="Stretch">
                             <local:OutlinedTextBlock x:Name="ScoreValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
                                                      AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="0">
+                                <local:OutlinedTextBlock.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                        <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                    </LinearGradientBrush>
+                                </local:OutlinedTextBlock.Fill>
+                            </local:OutlinedTextBlock>
+                        </Viewbox>
+                    </Grid>
+                    <!-- Emblem Count -->
+                    <Grid Grid.Column="11" x:Name="EmblemGrid" Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition Width="1.15*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.15*"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="0.05*"/>
+                        </Grid.RowDefinitions>
+                        <!-- Collected -->
+                        <Viewbox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,0,0,3">
+                            <Viewbox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0" X="-2"/>
+                                </TransformGroup>
+                            </Viewbox.RenderTransform>
+                            <local:OutlinedTextBlock x:Name="EmblemCollectedValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="00">
+                                <local:OutlinedTextBlock.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                        <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                    </LinearGradientBrush>
+                                </local:OutlinedTextBlock.Fill>
+                            </local:OutlinedTextBlock>
+                        </Viewbox>
+                        <!-- Separator-->
+                        <Viewbox  Grid.Row="1"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2,-1,1,-1" RenderTransformOrigin="0.5,0.5">
+                            <Viewbox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.75" ScaleY="1.25"/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="8"/>
+                                    <TranslateTransform X="0" Y="-2"/>
+                                </TransformGroup>
+                            </Viewbox.RenderTransform>
+                            <local:OutlinedTextBlock FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="|">
+                                <local:OutlinedTextBlock.Fill>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FFE47606" Offset="0.836"/>
+                                        <GradientStop Color="#FFFFE435" Offset="0.237"/>
+                                    </LinearGradientBrush>
+                                </local:OutlinedTextBlock.Fill>
+                            </local:OutlinedTextBlock>
+                        </Viewbox>
+                        <!-- Total -->
+                        <Viewbox  Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,0,0,3">
+                            <Viewbox.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform Y="0" X="2"/>
+                                </TransformGroup>
+                            </Viewbox.RenderTransform>
+                            <local:OutlinedTextBlock x:Name="EmblemTotalValue" FontFamily="{StaticResource Gummi}" FontSize="20" FontStretch="Medium" 
+                                                     AllowDrop="False" IsHitTestVisible="False" StrokeThickness="1" Text="98">
                                 <local:OutlinedTextBlock.Fill>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FFE47606" Offset="0.836"/>

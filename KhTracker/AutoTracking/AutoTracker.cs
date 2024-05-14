@@ -71,7 +71,7 @@ namespace KhTracker
         private VisitNew IceCream;
         private VisitNew RikuWep;
         private VisitNew KingsLetter;
-        private VisitNew objMark;
+        private Marks objMark;
 
         private int AuronWepLevel;
         private int MulanWepLevel;
@@ -105,7 +105,7 @@ namespace KhTracker
         private int reflectLevel;
         private int magnetLevel;
         private int tornPageCount;
-        private int munnyPouchCount;
+        //private int munnyPouchCount;
 
         //private CheckEveryCheck checkEveryCheck;
 
@@ -583,9 +583,9 @@ namespace KhTracker
             importantChecks.Add(pages = new TornPageNew(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
 
-            int objItemCount = objMark != null ? objMark.Level : 0;
-            importantChecks.Add(objMark = new VisitNew(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
-            objMark.Level = objItemCount;
+            int objItemCount = objMark != null ? objMark.Count : 0;
+            importantChecks.Add(objMark = new Marks(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
+            objMark.Count = objItemCount;
 
             #endregion
 
@@ -670,14 +670,19 @@ namespace KhTracker
 
                 UpdateSupportingTrackers("Dummy");
 
-                if (data.oneHourMode && !objWindow.endCorChest)
+                if ((data.objectiveMode || data.oneHourMode) && !objWindow.endCorChest)
                 {
-                    // check is last CoR Chest was opened
+                    // check if last CoR Chest was opened
                     if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3])
                     {
                         UpdateSupportingTrackers("EndOfCoR");
                         objWindow.endCorChest = true;
                     }
+                }
+
+                if (data.EmblemMode)
+                {
+                    EmblemCollectedValue.Text = objMark.Count.ToString();
                 }
 
                 #region For Debugging
@@ -1308,11 +1313,15 @@ namespace KhTracker
                 newChecks.Add(visitnew);
                 collectedChecks.Add(visitnew);
             }
-            
+
+            //don't do mark check if in emblem mode
+            if (data.EmblemMode)
+                return;
+
             //track objective marks
             //unfortunately, tracking for end of CoR, puzzles, and A New Day (atlantica)
             //will break if you have 99 objective marks
-            while (objMark.Level > objMarkLevel)
+            while (objMark.Count > objMarkLevel)
             {
                 ++objMarkLevel;
 
