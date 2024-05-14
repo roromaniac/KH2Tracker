@@ -7,22 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Timers;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.Security.Cryptography;
 using System.IO;
-using System.Reflection;
-using System.Diagnostics.Eventing.Reader;
-//using System.IO;
 
 namespace KhTracker
 {
@@ -3752,8 +3742,17 @@ namespace KhTracker
             //
             //return data.usedPages;
 
+            return data.usedPages;
+        }
 
-            return 0;
+        public void UpdateUsedPages()
+        {
+            data.usedPages++;
+        }
+
+        public int GetUsedPages()
+        {
+            return data.usedPages;
         }
 
         public void UpdateFormProgression()
