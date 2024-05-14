@@ -25,20 +25,21 @@ namespace KhTracker
         public override byte[] UpdateMemory()
         {
             byte[] data = base.UpdateMemory();
+            int quant = data[0] + window.GetUsedPages();
             string world = window.GetWorld();
 
-            if (world == "HundredAcreWood" && Quantity > data[0])
+            if (world == "HundredAcreWood" && Quantity > quant)
             {
-                MainWindow.data.usedPages++;
+                window.UpdateUsedPages();
             }
 
-            int used = MainWindow.data.usedPages; //(App.Current.MainWindow as MainWindow).GetUsedPages(Address);
-            int total = used + data[0];
+            int total = window.GetUsedPages() + data[0];
             if (Quantity < total)
             {
                 Quantity = total;
                 App.logger?.Record(Quantity.ToString() + " torn pages obtained");
             }
+
             return null;
         }
     }

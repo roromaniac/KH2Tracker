@@ -677,7 +677,11 @@ namespace KhTracker
                 return;
 
             //don't do anything if progression hints
-            if (data.UsingProgressionHints && data.progressionType == "Reports")
+            if (data.UsingProgressionHints && data.progressionType != "Bosses")
+                return;
+
+            //don't do anything if emblem count is on
+            if (data.EmblemMode && EmblemCountOption.IsChecked)
                 return;
 
             //if check count should be shown and replace the score IN POINTS MODE
@@ -697,6 +701,62 @@ namespace KhTracker
                 ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
 
                 ChestIcon.SetResourceReference(ContentProperty, "Score");
+            }
+        }
+
+        private void ShowEmblemCountToggle(object sender, RoutedEventArgs e)
+        {
+            ShowEmblemCountToggle(EmblemCountOption.IsChecked);
+        }
+
+        private void ShowEmblemCountToggle(bool toggle)
+        {
+            Properties.Settings.Default.EmblemCount = toggle;
+            EmblemCountOption.IsChecked = toggle;
+
+            //don't do anything if not in emblem mode
+            if (!data.EmblemMode)
+                return;
+
+            //emblem count should be shown
+            if (toggle)
+            {
+                //disable other counter grids
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+
+                //change icon and enable emblem counter grid
+                ChestIcon.SetResourceReference(ContentProperty, "Emblem");
+                EmblemGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                //disable emblem counter
+                EmblemGrid.Visibility = Visibility.Collapsed;
+
+                //restore correct counter
+                //progression
+                if (data.UsingProgressionHints && data.progressionType != "Bosses")
+                {
+                    CollectionGrid.Visibility = Visibility.Collapsed;
+                    ScoreGrid.Visibility = Visibility.Collapsed;
+                    ProgressionCollectionGrid.Visibility = Visibility.Visible;
+                    ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
+                }
+                //score/points
+                else if (data.mode == Mode.PointsHints || data.ScoreMode)
+                {
+                    ShowCheckCountToggle(CheckCountOption.IsChecked);
+                }
+                //default
+                else
+                {
+                    CollectionGrid.Visibility = Visibility.Visible;
+                    ScoreGrid.Visibility = Visibility.Collapsed;
+                    ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                    ChestIcon.SetResourceReference(ContentProperty, "Chest");
+                }
             }
         }
 

@@ -7,22 +7,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Timers;
 using System.Windows.Threading;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.Security.Cryptography;
 using System.IO;
-using System.Reflection;
-using System.Diagnostics.Eventing.Reader;
-//using System.IO;
 
 namespace KhTracker
 {
@@ -81,7 +71,7 @@ namespace KhTracker
         private VisitNew IceCream;
         private VisitNew RikuWep;
         private VisitNew KingsLetter;
-        private VisitNew objMark;
+        private Marks objMark;
 
         private int AuronWepLevel;
         private int MulanWepLevel;
@@ -115,7 +105,7 @@ namespace KhTracker
         private int reflectLevel;
         private int magnetLevel;
         private int tornPageCount;
-        private int munnyPouchCount;
+        //private int munnyPouchCount;
 
         //private CheckEveryCheck checkEveryCheck;
 
@@ -593,9 +583,9 @@ namespace KhTracker
             importantChecks.Add(pages = new TornPageNew(memory, Save + 0x3598, ADDRESS_OFFSET, "TornPage"));
             pages.Quantity = count;
 
-            int objItemCount = objMark != null ? objMark.Level : 0;
-            importantChecks.Add(objMark = new VisitNew(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
-            objMark.Level = objItemCount;
+            int objItemCount = objMark != null ? objMark.Count : 0;
+            importantChecks.Add(objMark = new Marks(memory, Save + 0x363D, ADDRESS_OFFSET, "CompletionMark"));
+            objMark.Count = objItemCount;
 
             #endregion
 
@@ -680,14 +670,19 @@ namespace KhTracker
 
                 UpdateSupportingTrackers("Dummy");
 
-                if (data.oneHourMode && !objWindow.endCorChest)
+                if ((data.objectiveMode || data.oneHourMode) && !objWindow.endCorChest)
                 {
-                    // check is last CoR Chest was opened
+                    // check if last CoR Chest was opened
                     if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3])
                     {
                         UpdateSupportingTrackers("EndOfCoR");
                         objWindow.endCorChest = true;
                     }
+                }
+
+                if (data.EmblemMode)
+                {
+                    EmblemCollectedValue.Text = objMark.Count.ToString();
                 }
 
                 #region For Debugging
@@ -900,7 +895,6 @@ namespace KhTracker
                 }
             }
 
-
             // boss enemy check
             if (data.BossRandoFound)
             {
@@ -963,7 +957,6 @@ namespace KhTracker
                 }
             }
 
-
             // TO DO: Check if the grid tracker is open.
             // If it is... Check if any of the buttons have the collected grid check.
             foreach (string checkName in checks)
@@ -1008,10 +1001,9 @@ namespace KhTracker
                 }
 
                 //objective window tracking
-                if (GridTrackerOnly && !data.oneHourMode)
+                if (GridTrackerOnly)
                     return;
-
-                if (data.objectiveMode || data.oneHourMode)
+                else
                 {
                     for (int row = 0; row < objWindow.numRows; row++)
                     {
@@ -1340,11 +1332,15 @@ namespace KhTracker
                 newChecks.Add(visitnew);
                 collectedChecks.Add(visitnew);
             }
-            
+
+            //don't do mark check if in emblem mode
+            if (data.EmblemMode)
+                return;
+
             //track objective marks
             //unfortunately, tracking for end of CoR, puzzles, and A New Day (atlantica)
             //will break if you have 99 objective marks
-            while (objMark.Level > objMarkLevel)
+            while (objMark.Count > objMarkLevel)
             {
                 ++objMarkLevel;
 
@@ -3024,7 +3020,7 @@ namespace KhTracker
                 {
                     // only highlight bosses if their event is not completed
                     if (data.codes.bossNameConversion.ContainsKey(boss))
-                        UpdateSupportingTrackers(boss, false, true);
+                        UpdateSupportingTrackers(boss, true, true);
                     return;
                 }
             }
@@ -3771,8 +3767,17 @@ namespace KhTracker
             //
             //return data.usedPages;
 
+            return data.usedPages;
+        }
 
-            return 0;
+        public void UpdateUsedPages()
+        {
+            data.usedPages++;
+        }
+
+        public int GetUsedPages()
+        {
+            return data.usedPages;
         }
 
         public void UpdateFormProgression()
