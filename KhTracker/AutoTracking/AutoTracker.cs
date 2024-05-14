@@ -895,18 +895,6 @@ namespace KhTracker
                     case "Roxas (Data)":
                         checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
                         break;
-                    case "Demyx":
-                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
-                        break;
-                    case "Demyx (Data)":
-                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
-                        break;
-                    case "Xaldin":
-                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
-                        break;
-                    case "Xaldin (Data)":
-                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
-                        break;
                     default:
                         break;
                 }
