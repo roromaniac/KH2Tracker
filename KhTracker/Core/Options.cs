@@ -2303,8 +2303,8 @@ namespace KhTracker
                 foreach (Image child in pathgrid.Children)
                 {
                     if (child.Name.Contains(key + "Path_Non")) //reset non icon to default image
-                        child.Source = new BitmapImage(new Uri("Images/Checks/Simple/proof_of_nonexistence.png", UriKind.Relative));
-                    
+                        child.Source = new BitmapImage(new Uri("Images/System/proof_nonexistence.png", UriKind.Relative));
+
                     child.Visibility = Visibility.Collapsed;
                 }
             }
