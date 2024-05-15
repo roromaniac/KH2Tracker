@@ -52,9 +52,9 @@ namespace KhTracker
             //just read all levels and do all at once
             for (int i = 0; i < 99; ++i)
             {
-                ReadReward(Lvup + (i * 0x10) + 0x8, 2, swordChecks, i);
-                ReadReward(Lvup + (i * 0x10) + 0xA, 2, shieldChecks, i);
-                ReadReward(Lvup + (i * 0x10) + 0xC, 2, staffChecks, i);
+                ReadReward(Lvup + (i * 0x10) + 0x8, 2, swordChecks, i+1);
+                ReadReward(Lvup + (i * 0x10) + 0xA, 2, shieldChecks, i+1);
+                ReadReward(Lvup + (i * 0x10) + 0xC, 2, staffChecks, i+1);
             }
 
             //forms
