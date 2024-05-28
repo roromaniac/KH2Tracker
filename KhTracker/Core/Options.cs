@@ -1645,11 +1645,7 @@ namespace KhTracker
 
             if (data.UsingProgressionHints)
             {
-                if (data.BossHomeHinting)
-                {
-                    ModeDisplay.Header += " | Bosses Hint Home";
-                }
-                else if (data.progressionType == "Reports")
+                if (data.progressionType == "Reports")
                 {
                     CollectionGrid.Visibility = Visibility.Collapsed;
                     ScoreGrid.Visibility = Visibility.Collapsed;
@@ -1666,7 +1662,12 @@ namespace KhTracker
                     ModeDisplay.Header += " | Prog. Bosses";
                 }                
             }
-        
+
+            if (data.BossHomeHinting)
+            {
+                ModeDisplay.Header += " | Bosses Hint Home";
+            }
+
             if (data.EmblemMode)
             {
                 ShowEmblemCountToggle(EmblemCountOption.IsChecked);

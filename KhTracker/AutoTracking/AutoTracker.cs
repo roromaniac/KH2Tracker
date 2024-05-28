@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections;
 using System.IO;
+using System.Net;
 
 namespace KhTracker
 {
@@ -772,6 +773,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
+        //TODO: split this funtion into two parts (objective and grid tracker) for easier editing.
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
         {
 
@@ -812,43 +814,47 @@ namespace KhTracker
 
             // "GridTrackerOnly" is so that the GetBoss funtion doesn't pass the boss over to the Objective Tracker
             // the objective tracker only cares about progression and items, never actual bosses or boss rando
-            switch (gridCheckName)
+            if (!data.oneHourMode)
             {
-                case "Lords":
-                    checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
-                    break;
-                case "SephiDemyx":
-                    checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
-                    break;
-                case "Marluxia_LingeringWill":
-                    checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
-                    break;
-                case "MarluxiaData_LingeringWill":
-                    checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
-                    break;
-                case "FF Team 1":
-                    checks.AddRange(("Leon,Yuffie").Split(',').ToList());
-                    break;
-                case "FF Team 2":
-                    checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
-                    break;
-                case "FF Team 3":
-                    checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 4":
-                    checks.AddRange(("Cloud,Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 5":
-                    checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
-                    break;
-                case "FF Team 6":
-                    checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
-                    break;
-                default:
-                    break;
+                switch (gridCheckName)
+                {
+                    case "Lords":
+                        checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
+                        break;
+                    case "SephiDemyx":
+                        checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
+                        break;
+                    case "Marluxia_LingeringWill":
+                        checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
+                        break;
+                    case "MarluxiaData_LingeringWill":
+                        checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
+                        break;
+                    case "FF Team 1":
+                        checks.AddRange(("Leon,Yuffie").Split(',').ToList());
+                        break;
+                    case "FF Team 2":
+                        checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
+                        break;
+                    case "FF Team 3":
+                        checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 4":
+                        checks.AddRange(("Cloud,Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 5":
+                        checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
+                        break;
+                    case "FF Team 6":
+                        checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
-            if (gridWindow.bunterLogic && data.BossRandoFound)
+            if (gridWindow.bunterLogic && data.BossRandoFound && GridTrackerOnly)
             {
                 switch (gridCheckName)
                 {
@@ -906,7 +912,7 @@ namespace KhTracker
             }
 
             // boss enemy check
-            if (data.BossRandoFound)
+            if (data.BossRandoFound && GridTrackerOnly)
             {
                 for (int i = 0; i < checks.Count(); i++)
                 {
@@ -1923,29 +1929,32 @@ namespace KhTracker
                             }
                             break;
                         case 11:
-                            if (data.earlyThroneRoom)
+                            if (data.oneHourMode)
                             {
-                                //throne room normally
+                                if (!data.earlyThroneRoom)
+                                {
+                                    //throne room normally
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    else
+                                        UpdatePointScore(30);
 
-                                if (objWindow.oneHourCustom)
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
                                 else
-                                    UpdatePointScore(30);
+                                {
+                                    //did early throne room skip
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                    else
+                                        UpdatePointScore(15);
 
-                                data.eventLog.Add(eventTuple);
-                                return;
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
                             }
-                            else
-                            {
-                                //did early throne room skip
-                                if (objWindow.oneHourCustom)
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
-                                else
-                                    UpdatePointScore(15);
-
-                                data.eventLog.Add(eventTuple);
-                                return;
-                            }
+                            break;
                         case 8:
                             if (wID1 == 79 && wCom == 1) // Storm Rider finish
                                 newProg = 8;
@@ -3839,6 +3848,15 @@ namespace KhTracker
             long baseAddress = memory.GetBaseAddress();
             long result = origAddress - baseAddress;
             return (int)result;
+        }
+
+        public void SetOneHourMarks(int marks)
+        {
+            if (!data.oneHourMode)
+                return;
+
+            int address = (save + 0x363D) + ADDRESS_OFFSET;
+            memory.WriteMem(address, marks);
         }
 
         //progression hints - compare last saved progression point

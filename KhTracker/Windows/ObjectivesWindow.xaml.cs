@@ -525,6 +525,8 @@ namespace KhTracker
             else
                 assets = oneHourAssets.Keys.ToList();
 
+            #region Random Coices
+
             //decide which of the CO org members fights to keep (AS vs Data)
             if (rng.Next(2) == 0)
             {
@@ -647,6 +649,8 @@ namespace KhTracker
                 assets.Remove("Final3");
                 assets.Remove("Final5");
             }
+
+            #endregion
 
             // number of objectives to use (7 is defaut)
             if (oneHourCustom)
@@ -860,7 +864,7 @@ namespace KhTracker
                     return;
 
                 int testPoints = 0;
-                List<ToggleButton> completeSquares = new List<ToggleButton>();
+                int marksTotal = 0;
                 foreach (var square in objGrid.Children)
                 {
                     if (square is ToggleButton button && button.IsChecked == true)
@@ -869,11 +873,15 @@ namespace KhTracker
                             testPoints += oneHourAssets[button.Tag.ToString().Remove(0, 8)];
                         else
                             testPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+
+                        marksTotal++;
                     }
                 }
 
                 oneHourPoints = testPoints;
                 window.UpdatePointScore(0);
+                Console.WriteLine("writing marks to game | " + marksTotal);
+                window.SetOneHourMarks(marksTotal);
             }
         }
 
