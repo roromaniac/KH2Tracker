@@ -1581,5 +1581,41 @@ namespace KhTracker.Properties {
                 this["EmblemCount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GridTrackerStartup {
+            get {
+                return ((bool)(this["GridTrackerStartup"]));
+            }
+            set {
+                this["GridTrackerStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ObjTrackerStartup {
+            get {
+                return ((bool)(this["ObjTrackerStartup"]));
+            }
+            set {
+                this["ObjTrackerStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool OneHourModeToggle {
+            get {
+                return ((bool)(this["OneHourModeToggle"]));
+            }
+            set {
+                this["OneHourModeToggle"] = value;
+            }
+        }
     }
 }

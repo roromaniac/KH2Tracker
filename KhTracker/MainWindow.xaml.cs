@@ -65,6 +65,18 @@ namespace KhTracker
                 SettingRow.Height = new GridLength(0.5, GridUnitType.Star);
                 InitTracker(null, null);
             }
+
+            //open windows
+            GTStartupOption.IsChecked = Properties.Settings.Default.GridTrackerStartup;
+            if (GTStartupOption.IsChecked)
+                gridWindow.Show();
+
+            OTStartupOption.IsChecked = Properties.Settings.Default.ObjTrackerStartup;
+            if (OTStartupOption.IsChecked)
+                objWindow.Show();
+
+            //one hour mode toggle
+            OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
         }
 
         private void InitData()

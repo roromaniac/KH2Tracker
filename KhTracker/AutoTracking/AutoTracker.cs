@@ -1896,13 +1896,15 @@ namespace KhTracker
                             if (wID1 == 0 && wID2 == 0 && wID3 == 15) // All 3 missions finished
                             {
                                 newProg = 2;
-                                if (data.oneHourMode)
-                                {
-                                    if (objWindow.oneHourCustom)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
-                                    else
-                                        UpdatePointScore(15);
-                                }
+
+                                //no longer should give points
+                                //if (data.oneHourMode)
+                                //{
+                                //    if (objWindow.oneHourCustom)
+                                //        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                //    else
+                                //        UpdatePointScore(15);
+                                //}
                             }
                             break;
                         case 3:
@@ -3274,7 +3276,7 @@ namespace KhTracker
 
                     //add extra points for bosses in special arenas
                     int bonuspoints = 0;
-                    if (!objWindow.oneHourCustom)
+                    if (!data.oneHourMode)
                     {
                         switch (bossType)
                         {
@@ -3296,21 +3298,21 @@ namespace KhTracker
                         switch (bossType)
                         {
                             case "boss_as":
-                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                bonuspoints = 15; // objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
                                 break;
                             case "boss_datas":
                                 if (boss.Contains("Final Xemnas"))
                                 {
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                    bonuspoints = 40; // objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
                                 }
                                 else
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                    bonuspoints = 20; // objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
                                 break;
                             case "boss_sephi":
-                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                bonuspoints = 30; // objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
                                 break;
                             case "boss_terra":
-                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                bonuspoints = 50; // objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
                                 break;
                             case "boss_other":
                                 if (boss == "Final Xemnas")
