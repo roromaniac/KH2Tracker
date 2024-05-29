@@ -1758,6 +1758,30 @@ namespace KhTracker
 
             archive?.Dispose();
 
+            //show icecream and sketches in 1hour mode
+            if (data.oneHourMode)
+            {
+                Grid VisitRow2 = ItemPool.Children[5] as Grid;
+                double[] resetList = {
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.0,
+                    0.0, 1.0};
+                for (int i = 10; i < VisitRow2.ColumnDefinitions.Count; i++)
+                {
+                    if (i <= 13)
+                        VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
+                }
+
+                HandleItemToggle(true, data.VisitLocks[24], false);
+                HandleItemToggle(true, data.VisitLocks[25], false);
+            }
+
             if (data.wasTracking)
             {
                 InitTracker();
