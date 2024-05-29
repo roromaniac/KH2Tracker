@@ -120,6 +120,8 @@ namespace KhTracker
         public bool BossRandoFound = false;
         public Dictionary<string, string> BossList = new Dictionary<string, string>();
         public List<string> enabledWorlds = new List<string>();
+        public List<Tuple<string, string>> bossHomeHintInformation = new List<Tuple<string, string>>();
+        public List<Tuple<string, string, string, bool, bool, bool>> bossHomeRevealsStored = new List<Tuple<string, string, string, bool, bool, bool>>();
         //for boss rando progression
         public string progressionType = "Disabled";
         public List<Tuple<string, string, string>> progBossInformation = new List<Tuple<string, string, string>>();

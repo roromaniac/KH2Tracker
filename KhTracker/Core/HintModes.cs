@@ -6,6 +6,8 @@ using System.Windows.Media;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Shapes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Reflection;
 
 namespace KhTracker
 {
@@ -90,7 +92,12 @@ namespace KhTracker
                 }
             }
 
-            SetProgressionHints(data.UsingProgressionHints);
+            if (data.BossHomeHinting && !data.UsingProgressionHints)
+            {
+                BossHomeHintingSetup();
+            }
+            else
+                SetProgressionHints(data.UsingProgressionHints);
         }
 
         private void JsmarteeHints(Dictionary<string, object> hintObject)
@@ -128,7 +135,12 @@ namespace KhTracker
 
             data.hintsLoaded = true;
 
-            SetProgressionHints(data.UsingProgressionHints);
+            if (data.BossHomeHinting && !data.UsingProgressionHints)
+            {
+                BossHomeHintingSetup();
+            }
+            else
+                SetProgressionHints(data.UsingProgressionHints);
         }
 
         private void PathHints(Dictionary<string, object> hintObject)
@@ -240,7 +252,14 @@ namespace KhTracker
             data.hintsLoaded = true;
 
             if (data.progressionType != "Reports")
-                SetProgressionHints(data.UsingProgressionHints);
+            {
+                if (data.BossHomeHinting && !data.UsingProgressionHints)
+                {
+                    BossHomeHintingSetup();
+                }
+                else
+                    SetProgressionHints(data.UsingProgressionHints);
+            }
         }
 
         private void SpoilerHints(Dictionary<string, object> hintObject)
@@ -485,7 +504,12 @@ namespace KhTracker
             if (data.ScoreMode)
                 ScoreModifier(hintObject);
 
-            SetProgressionHints(data.UsingProgressionHints);
+            if (data.BossHomeHinting && !data.UsingProgressionHints)
+            {
+                BossHomeHintingSetup();
+            }
+            else
+                SetProgressionHints(data.UsingProgressionHints);
         }
 
         //Modifier to use when using Hi-Score Mode with any of the above hint modes
@@ -652,7 +676,13 @@ namespace KhTracker
             data.hintsLoaded = true;
 
             WorldPoints_c = WorldPoints;
-            SetProgressionHints(data.UsingProgressionHints);
+
+            if (data.BossHomeHinting && !data.UsingProgressionHints)
+            {
+                BossHomeHintingSetup();
+            }
+            else
+                SetProgressionHints(data.UsingProgressionHints);
         }
 
         public int GetPoints(string worldName)
@@ -677,7 +707,7 @@ namespace KhTracker
 
         public void UpdatePointScore(int points)
         {
-            if (data.mode != Mode.PointsHints && !data.ScoreMode || data.BossHomeHinting)
+            if (data.mode != Mode.PointsHints && !data.ScoreMode)
                 return;
 
             int WorldBlue = 0;
@@ -841,9 +871,6 @@ namespace KhTracker
                 }
 
                 ProgressionBossHints();
-
-                if (data.BossHomeHinting)
-                    return;
             }
 
             //Per Hint Mode Changes
@@ -1264,12 +1291,6 @@ namespace KhTracker
 
         public void ProgressionBossHints()
         {
-            if (data.BossHomeHinting)
-            {
-                BossHomeHinting();
-                return;
-            }
-
             data.progBossInformation.Clear();
             int TempCost = data.HintCosts[0];
 
@@ -1405,9 +1426,21 @@ namespace KhTracker
         }
 
         //Testing and other stuff
-        public void BossHomeHinting()
+        public void BossHomeHintingSetup()
         {
-            data.progBossInformation.Clear();
+            if (!data.BossHomeHinting || data.UsingProgressionHints)
+                return;
+
+            BossTextRow.Height = new GridLength(1, GridUnitType.Star);
+            InfoRow.Height = new GridLength(1.2, GridUnitType.Star);
+            InfoTextRow.Height = new GridLength(2, GridUnitType.Star);
+            HashBossSpacer.Height = new GridLength(1.2, GridUnitType.Star);
+            DC_Row1.Height = new GridLength(1, GridUnitType.Star);
+            TextRowSpacer.Height = new GridLength(0.05, GridUnitType.Star);
+            Grid.SetColumnSpan(MainTextVB, 2);
+
+
+            data.bossHomeHintInformation.Clear();
             int TempCost = 1;
             data.HintCosts = new List<int>();
             data.WorldsEnabled = data.BossList.Count + 1;
@@ -1482,7 +1515,409 @@ namespace KhTracker
             {
                 data.TWTNW_ProgressionValues[i] = 0;
             }
+        }
 
+        public void SetBossHomeHint(string boss, bool reverse = false)
+        {
+            //when boss is beaten then trigger hint for what replaced that boss
+            //ex: Beat Shan-Yu to get a hint about what replaced him in his original location
+            //
+            //reverse is the opposite, beat a boss to get a hint about where the original boss is
+            //ex: Beat the boss in Shan-Yu's arena (not shan-yu himself) to get a hint about where shan-yu is.
+
+
+            //don't do anythig if progression hints are currently used or not one hour mode
+            //(will fix later)
+            if (data.UsingProgressionHints) //|| !data.oneHourMode)
+                return;
+
+            int PPoints = 1;
+
+            if (boss == "Twin Lords")
+            {
+                PPoints = 2;
+                //Blizzard Lord
+                if (data.BossList["Blizzard Lord"] == "Blizzard Lord" || data.BossList["Blizzard Lord"] == "Blizzard Lord (Cups)")
+                {
+                    data.bossHomeHintInformation.Add(new Tuple<string, string>("Blizzard Lord", "is unchanged"));
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Blizzard Lord", "is unchanged", "", false, false, false));
+                }
+                else
+                {
+                    string bossReplacemnt = data.BossList["Blizzard Lord"];
+                    if (data.BossList.ContainsKey(bossReplacemnt))
+                    {
+                        string bossHome = data.BossList[bossReplacemnt];
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                    }
+                }
+                //Volcano Lord
+                if (data.BossList["Volcano Lord"] == "Volcano Lord" || data.BossList["Volcano Lord"] == "Volcano Lord (Cups)")
+                {
+                    data.bossHomeHintInformation.Add(new Tuple<string, string>("Volcano Lord", "is unchanged"));
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Volcano Lord", "is unchanged", "", false, false, false));
+                }
+                else
+                {
+                    string bossReplacemnt = data.BossList["Volcano Lord"];
+                    if (data.BossList.ContainsKey(bossReplacemnt))
+                    {
+                        string bossHome = data.BossList[bossReplacemnt];
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                    }
+                }
+            }
+            else if (boss.StartsWith("FF Team"))
+            {
+                //check leon for if cups bosses are on
+                if (!data.BossList.ContainsKey("Leon"))
+                {
+                    return;
+                }
+
+                PPoints = 2;
+                if (boss == "FF Team 6")
+                {
+                    PPoints = 4;
+                    //Leon
+                    if (data.BossList["Leon (2)"] == "Leon" || data.BossList["Leon (2)"] == "Leon (1)" ||
+                        data.BossList["Leon (2)"] == "Leon (2)" || data.BossList["Leon (2)"] == "Leon (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Leon", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Leon (2)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Cloud
+                    if (data.BossList["Cloud (2)"] == "Cloud" || data.BossList["Cloud (2)"] == "Cloud (1)" ||
+                        data.BossList["Cloud (2)"] == "Cloud (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Cloud", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Cloud (2)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Yuffie
+                    if (data.BossList["Yuffie (2)"] == "Yuffie" || data.BossList["Yuffie (2)"] == "Yuffie (1)" ||
+                        data.BossList["Yuffie (2)"] == "Yuffie (2)" || data.BossList["Yuffie (2)"] == "Yuffie (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Yuffie", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Yuffie (2)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Tifa
+                    if (data.BossList["Tifa (2)"] == "Tifa" || data.BossList["Tifa (2)"] == "Tifa (1)" ||
+                        data.BossList["Tifa (2)"] == "Tifa (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Tifa", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Tifa (2)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                }
+                if (boss == "FF Team 1")
+                {
+                    if (data.BossList["Leon"] == "Leon" || data.BossList["Leon"] == "Leon (1)" ||
+                        data.BossList["Leon"] == "Leon (2)" || data.BossList["Leon"] == "Leon (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Leon", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Leon"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Yuffie
+                    if (data.BossList["Yuffie"] == "Yuffie" || data.BossList["Yuffie"] == "Yuffie (1)" ||
+                        data.BossList["Yuffie"] == "Yuffie (2)" || data.BossList["Yuffie"] == "Yuffie (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Yuffie", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Yuffie"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+
+                }
+                if (boss == "FF Team 2")
+                {
+                    //Leon
+                    if (data.BossList["Leon (3)"] == "Leon" || data.BossList["Leon (3)"] == "Leon (1)" ||
+                        data.BossList["Leon (3)"] == "Leon (2)" || data.BossList["Leon (3)"] == "Leon (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Leon", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Leon (3)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Yuffie
+                    if (data.BossList["Yuffie (3)"] == "Yuffie" || data.BossList["Yuffie (3)"] == "Yuffie (1)" ||
+                        data.BossList["Yuffie (3)"] == "Yuffie (2)" || data.BossList["Yuffie (3)"] == "Yuffie (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Yuffie", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Yuffie (3)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                }
+                if (boss == "FF Team 3")
+                {
+                    //Yuffie
+                    if (data.BossList["Yuffie (1)"] == "Yuffie" || data.BossList["Yuffie (1)"] == "Yuffie (1)" ||
+                        data.BossList["Yuffie (1)"] == "Yuffie (2)" || data.BossList["Yuffie (1)"] == "Yuffie (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Yuffie", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Yuffie (1)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Tifa
+                    if (data.BossList["Tifa"] == "Tifa" || data.BossList["Tifa"] == "Tifa (1)" ||
+                        data.BossList["Tifa"] == "Tifa (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Tifa", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Tifa"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+
+                }
+                if (boss == "FF Team 4")
+                {
+                    //Cloud
+                    if (data.BossList["Cloud"] == "Cloud" || data.BossList["Cloud"] == "Cloud (1)" ||
+                        data.BossList["Cloud"] == "Cloud (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Cloud", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Cloud"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Tifa
+                    if (data.BossList["Tifa (1)"] == "Tifa" || data.BossList["Tifa (1)"] == "Tifa (1)" ||
+                        data.BossList["Tifa (1)"] == "Tifa (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Tifa", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Tifa (1)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                }
+                if (boss == "FF Team 5")
+                {
+                    //Leon
+                    if (data.BossList["Leon (1)"] == "Leon" || data.BossList["Leon (1)"] == "Leon (1)" ||
+                        data.BossList["Leon (1)"] == "Leon (2)" || data.BossList["Leon (1)"] == "Leon (3)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Leon", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Leon (1)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                    //Cloud
+                    if (data.BossList["Cloud (1)"] == "Cloud" || data.BossList["Cloud (1)"] == "Cloud (1)" ||
+                        data.BossList["Cloud (1)"] == "Cloud (2)")
+                    {
+                        data.bossHomeHintInformation.Add(new Tuple<string, string>("Cloud", "is unchanged"));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
+                    }
+                    else
+                    {
+                        string bossReplacemnt = data.BossList["Cloud (1)"];
+                        if (data.BossList.ContainsKey(bossReplacemnt))
+                        {
+                            string bossHome = data.BossList[bossReplacemnt];
+                            data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //one hour mode specific swaps
+                if (data.oneHourMode)
+                {
+                    if (boss == "Jafar")
+                    {
+                        boss = "Cloud";
+                    }
+                    if (boss == "Shadow Stalker")
+                    {
+                        boss = "Tifa";
+                    }
+                    if (boss == "Hydra")
+                    {
+                        boss = "Hercules";
+                    }
+                    if ( boss == "Grim Reaper II")
+                    {
+                        boss = "Leon";
+                    }
+                    if (boss == "Storm Rider")
+                    {
+                        boss = "Yuffie";
+                    }
+                }
+
+
+                if (!data.BossList.ContainsKey(boss))
+                    return;
+
+                if (boss == data.BossList[boss])
+                {
+                    data.bossHomeHintInformation.Add(new Tuple<string, string>(boss, "is unchanged"));
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(boss, "is unchanged", "", false, false, false));
+                }
+                else
+                {
+                    string bossReplacemnt = data.BossList[boss];
+
+                    if (!data.BossList.ContainsKey(bossReplacemnt))
+                        return;
+
+                    string bossHome = data.BossList[bossReplacemnt];
+                    data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                }
+            }
+
+            GetBossHomeHint(PPoints);
+        }
+
+        public void GetBossHomeHint(int points)
+        {
+            if (data.WorldsEnabled == 0)
+                data.WorldsEnabled = data.HintRevealOrder.Count;
+
+            //reveal logic
+            List<string> worldsRevealed = new List<string>();
+
+
+            data.ProgressionPoints += points;
+            data.TotalProgressionPoints += points;
+
+            //loop in the event that one progression point rewards a lot
+            while (data.ProgressionPoints >= data.HintCosts[data.ProgressionCurrentHint] && data.ProgressionCurrentHint < data.HintCosts.Count && data.ProgressionCurrentHint < data.WorldsEnabled)
+            {
+
+                data.ProgressionPoints -= data.HintCosts[data.ProgressionCurrentHint];
+                data.ProgressionCurrentHint++;
+
+                //reveal hints/world
+                data.WorldsData["GoA"].worldGrid.ProgBossHint(data.ProgressionCurrentHint - 1);
+                worldsRevealed.Add("");
+
+                if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 || data.ProgressionCurrentHint == data.HintCosts.Count ||
+                    data.ProgressionCurrentHint == data.WorldsEnabled) //revealed last hint
+                    break;
+            }
+
+            data.WorldsData["GoA"].value.Text = data.ProgressionCurrentHint.ToString();
         }
 
         public List<string> JokeHints = new List<string>

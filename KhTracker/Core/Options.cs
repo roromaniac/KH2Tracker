@@ -1594,7 +1594,7 @@ namespace KhTracker
 
         private void SetMode(Mode mode)
         {
-            if (!data.UsingProgressionHints)
+            if (data.UsingProgressionHints)
             {
                 data.BossHomeHinting = false;
             }
@@ -1666,6 +1666,8 @@ namespace KhTracker
             if (data.BossHomeHinting)
             {
                 ModeDisplay.Header += " | Bosses Hint Home";
+                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
+                data.WorldsData["GoA"].value.Text = "0";
             }
 
             if (data.EmblemMode)
@@ -1758,6 +1760,7 @@ namespace KhTracker
             data.saveFileLoaded = false;
             data.firstGridOnSeedLoad = true;
             data.BossHomeHinting = false;
+            data.bossHomeHintInformation.Clear();
 
 
             //emblems
