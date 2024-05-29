@@ -738,7 +738,7 @@
     <Image x:Key="Grid_Min-GridCloud"           Source="Images\Grid\Bosses\Min\cloud.png"           x:Shared="false" ToolTip="Cloud (Boss)"/>
     <Image x:Key="Grid_Min-GridHayner"          Source="Images\Grid\Bosses\Min\Hayner.png"          x:Shared="false" ToolTip="Hayner (Struggle)"/>
     <Image x:Key="Grid_Min-GridHercules"        Source="Images\Grid\Bosses\Min\hercules.png"        x:Shared="false" ToolTip="Hercules (Boss)"/>
-    <Image x:Key="Grid_Min-GridLeon"            Source="Images\Grid\Bosses\Min\leon.png"            x:Shared="false" ToolTip="Leion (boss)"/>
+    <Image x:Key="Grid_Min-GridLeon"            Source="Images\Grid\Bosses\Min\leon.png"            x:Shared="false" ToolTip="Leon (boss)"/>
     <Image x:Key="Grid_Min-GridRiku"            Source="Images\Grid\Bosses\Min\Riku.png"            x:Shared="false" ToolTip="Riku (Boss)"/>
     <Image x:Key="Grid_Min-GridSeifer"          Source="Images\Grid\Bosses\Min\Seifer.png"          x:Shared="false" ToolTip="Seifer (Struggle)"/>
     <Image x:Key="Grid_Min-GridSetzer"          Source="Images\Grid\Bosses\Min\Setzer.png"          x:Shared="false" ToolTip="Setzer (Struggle)"/>
