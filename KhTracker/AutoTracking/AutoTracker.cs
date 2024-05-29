@@ -13,7 +13,6 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections;
 using System.IO;
-using System.Net;
 
 namespace KhTracker
 {
@@ -1726,6 +1725,16 @@ namespace KhTracker
                                 newProg = 3;
                             break;
                         case 5:
+                            if (wID1 == 78 && wCom == 1) // Dark Thorn finish
+                            {
+                                if (data.oneHourMode)
+                                {
+                                    UpdateSupportingTrackers("Shadow Stalker");
+
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                            }
                             if (wID1 == 79 && wCom == 1) // Dark Thorn finish
                                 newProg = 4;
                             break;
