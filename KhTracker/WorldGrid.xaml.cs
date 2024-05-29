@@ -1092,48 +1092,48 @@ namespace KhTracker
                 {
                     if (text1.Contains("Cloud"))
                     {
-                        text1 = "Jafar";
-                        if (text2 == "is unchanged")
-                        {
-                            text2 = "became";
-                            text3 = "Cloud";
-                        }
+                        text1 = "Jafar (Cloud)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Cloud";
+                        //}
                     }
                     if (text1.Contains("Tifa"))
                     {
-                        text1 = "Shadow Stalker";
-                        if (text2 == "is unchanged")
-                        {
-                            text2 = "became";
-                            text3 = "Tifa";
-                        }
+                        text1 = "Shadow Stalker (Tifa)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Tifa";
+                        //}
                     }
                     if (text1.Contains("Hercules"))
                     {
-                        text1 = "Hydra";
-                        if (text2 == "is unchanged")
-                        {
-                            text2 = "became";
-                            text3 = "Hercules";
-                        }
+                        text1 = "Hydra (Hercules)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Hercules";
+                        //}
                     }
                     if (text1.Contains("Leon"))
                     {
-                        text1 = "Grim Reaper II";
-                        if (text2 == "is unchanged")
-                        {
-                            text2 = "became";
-                            text3 = "Leon";
-                        }
+                        text1 = "Grim Reaper II (Leon)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Leon";
+                        //}
                     }
                     if (text1.Contains("Yuffie"))
                     {
-                        text1 = "Storm Rider";
-                        if (text2 == "is unchanged")
-                        {
-                            text2 = "became";
-                            text3 = "Yuffie";
-                        }
+                        text1 = "Storm Rider (Yuffie)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Yuffie";
+                        //}
                     }
                 }
 

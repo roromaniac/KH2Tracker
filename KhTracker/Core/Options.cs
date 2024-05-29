@@ -326,7 +326,7 @@ namespace KhTracker
                     var hintText = Encoding.UTF8.GetString(Convert.FromBase64String(data.openKHHintText));
                     var hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
                     var settings = new List<string>();
-                    var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["reveal"].ToString()));
+                    var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
 
                     data.ShouldResetHash = false;
 
