@@ -1549,7 +1549,7 @@ namespace KhTracker
                     {
                         string bossHome = data.BossList[bossReplacemnt];
                         data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                     }
                 }
                 //Volcano Lord
@@ -1565,7 +1565,7 @@ namespace KhTracker
                     {
                         string bossHome = data.BossList[bossReplacemnt];
                         data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                     }
                 }
             }
@@ -1595,7 +1595,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Cloud
@@ -1612,7 +1612,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Yuffie
@@ -1629,7 +1629,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Tifa
@@ -1646,7 +1646,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                 }
@@ -1665,7 +1665,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Yuffie
@@ -1682,7 +1682,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
 
@@ -1703,7 +1703,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Yuffie
@@ -1720,7 +1720,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                 }
@@ -1740,7 +1740,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Tifa
@@ -1757,7 +1757,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
 
@@ -1778,7 +1778,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Tifa
@@ -1795,7 +1795,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                 }
@@ -1815,7 +1815,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                     //Cloud
@@ -1832,7 +1832,7 @@ namespace KhTracker
                         {
                             string bossHome = data.BossList[bossReplacemnt];
                             data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                         }
                     }
                 }
@@ -1882,7 +1882,7 @@ namespace KhTracker
 
                     string bossHome = data.BossList[bossReplacemnt];
                     data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
-                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "became", bossHome, false, false, false));
                 }
             }
 

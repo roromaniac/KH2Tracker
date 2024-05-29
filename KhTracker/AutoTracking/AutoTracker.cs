@@ -1925,6 +1925,16 @@ namespace KhTracker
                                         UpdatePointScore(10);
                                 }
                             }
+                            if (wID1 == 76 && wCom == 1) // Riku
+                            {
+                                if (data.oneHourMode)
+                                {
+                                    UpdateSupportingTrackers("Riku");
+
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                            }
                             break;
                         case 9:
                             if (wID1 == 75 && wCom == 1) // Shan Yu finish
@@ -3034,12 +3044,11 @@ namespace KhTracker
             UpdateSupportingTrackers(boss, true);
 
             //get points for boss kills
-            if (!data.BossHomeHinting)
+            if (data.mode == Mode.PointsHints || data.ScoreMode)
                 GetBossPoints(boss);
-            else if (data.BossRandoFound)
-            {
+            if (data.BossHomeHinting)
                 SetBossHomeHint(boss);
-            }
+
             //add to log
             data.bossEventLog.Add(eventTuple);
 

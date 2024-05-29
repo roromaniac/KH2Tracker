@@ -211,6 +211,7 @@
     <Image x:Key="Limit" 		        Source="Images\System\drive_growth\Limit.png"        x:Shared="false"/>
     <Image x:Key="Master" 		        Source="Images\System\drive_growth\Master.png"       x:Shared="false"/>
     <Image x:Key="Final" 			    Source="Images\System\drive_growth\Final.png"        x:Shared="false"/>
+    <Image x:Key="OneHour" 			    Source="Images\System\clock.png"        x:Shared="false"/>
 
     <!--Custom Stat UI-->
     <Image x:Key="Cus-LevelIcon"  		Source="pack://application:,,,/CustomImages/System/stats/level.png"    x:Shared="false"/>

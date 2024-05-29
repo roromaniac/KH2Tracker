@@ -1668,6 +1668,7 @@ namespace KhTracker
                 ModeDisplay.Header += " | Bosses Hint Home";
                 data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
                 data.WorldsData["GoA"].value.Text = "0";
+                GoA.SetResourceReference(ContentProperty, "OneHour");
             }
 
             if (data.EmblemMode)
@@ -2342,6 +2343,8 @@ namespace KhTracker
             PPSep.Width = new GridLength(0.3, GridUnitType.Star);
 
             ResetHints();
+
+            SetWorldImage();
 
             if (data.wasTracking && sender != null)
                 InitTracker();

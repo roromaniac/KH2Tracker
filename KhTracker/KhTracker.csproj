@@ -694,6 +694,7 @@
     <Content Include="CustomImages\Progression\agrabah\elemental_lords.png" />
     <Content Include="CustomImages\Progression\agrabah\jafar.png" />
     <Content Include="CustomImages\Progression\agrabah\lexaeus.png" />
+    <Resource Include="Images\System\clock.png" />
     <Resource Include="Images\Grid\Objectives\Old\DecoyPresents.png" />
     <Resource Include="Images\Grid\Objectives\Old\Presents.png" />
     <Resource Include="Images\Grid\Objectives\Old\Puzzle.png" />

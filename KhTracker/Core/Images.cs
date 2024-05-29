@@ -626,7 +626,8 @@ namespace KhTracker
                 }
                 if (File.Exists("CustomImages/Worlds/replica_data.png"))
                 {
-                    GoA.SetResourceReference(ContentProperty, "Cus-GardenofAssemblageImage");
+                    if (!data.oneHourMode)
+                        GoA.SetResourceReference(ContentProperty, "Cus-GardenofAssemblageImage");
                 }
                 if (File.Exists("CustomImages/Worlds/level.png"))
                 {
@@ -743,7 +744,6 @@ namespace KhTracker
             PrideLands.SetResourceReference(ContentProperty, type + "PrideLandsImage");
             HalloweenTown.SetResourceReference(ContentProperty, type + "HalloweenTownImage");
             SpaceParanoids.SetResourceReference(ContentProperty, type + "SpaceParanoidsImage");
-            GoA.SetResourceReference(ContentProperty, type + "GardenofAssemblageImage");
             DriveForms.SetResourceReference(ContentProperty, type + "DriveFormsImage");
             TwilightTown.SetResourceReference(ContentProperty, type + "TwilightTownImage");
             BeastsCastle.SetResourceReference(ContentProperty, type + "BeastCastleImage");
@@ -753,6 +753,9 @@ namespace KhTracker
             TWTNW.SetResourceReference(ContentProperty, type + "TWTNWImage");
             Atlantica.SetResourceReference(ContentProperty, type + "AtlanticaImage");
             DisneyCastle.SetResourceReference(ContentProperty, type + "DisneyCastleImage");
+
+            if (!data.oneHourMode)
+                GoA.SetResourceReference(ContentProperty, type + "GardenofAssemblageImage");
 
             //puzzle/synth display
             if (PuzzleOption.IsChecked && SynthOption.IsChecked) //both on
