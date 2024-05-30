@@ -1761,6 +1761,8 @@ namespace KhTracker
             //show icecream and sketches in 1hour mode
             if (data.oneHourMode)
             {
+                VisitLockToggle(false);
+
                 Grid VisitRow2 = ItemPool.Children[5] as Grid;
                 double[] resetList = {
                     0.6, 1.0,
