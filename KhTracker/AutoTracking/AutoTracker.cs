@@ -778,8 +778,7 @@ namespace KhTracker
 
             // deal with doubled up progression icons
             List<string> checks = new List<string>();
-
-            if (!new List<string> { "Dummy", "Seifer (2)" }.Contains(gridCheckName))
+            if (gridCheckName != "Dummy")
             {
                 checks.Add(gridCheckName);
             }
@@ -905,11 +904,9 @@ namespace KhTracker
             {
                 for (int i = 0; i < checks.Count(); i++)
                 {
-
                     // reveal the boss hint of the current arena
                     if (highlightBoss)
                     {
-
                         for (int row = 0; row < gridWindow.numRows; row++)
                         {
                             for (int col = 0; col < gridWindow.numColumns; col++)
@@ -2672,14 +2669,12 @@ namespace KhTracker
                                 boss = "Seifer";
                             break;
                         case 4:
-                            //Tutorial Seifer 2 is always shadow roxas
-                            //if (wID1 == 78) // Seifer I Battle
-                            //    boss = "Seifer (2)";
                             //Tutorial Seifer shouldn't give points: handled in GetBossPoints
                             if (wID1 == 77) // Tutorial 4 - Fighting
                                 boss = "Seifer (1)";
-                            if (wID1 == 78) // Seifer I Battle
-                                boss = "Seifer (2)";
+                            //Tutorial Seifer 2 is always shadow roxas
+                            //if (wID1 == 78) // Seifer I Battle
+                            //    boss = "Seifer (2)";
                             break;
                         case 5:
                             if (wID1 == 84) // Hayner Struggle
