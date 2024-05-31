@@ -1378,10 +1378,10 @@
     <Image x:Key="Grid_Old-Mansion"             Source="Images\Grid\Progression\Old\twilight_town\mickey.png"                       x:Shared="false" ToolTip="Mansion Gate Forced Fight"/>
     <Image x:Key="Grid_Old-BetwixtAndBetween"   Source="Images\Grid\Progression\Old\twilight_town\betwixt_and_between.png"          x:Shared="false" ToolTip="Betwix and Between Forced Fight"/>
     <!--Drive Forms-->
-    <Grid x:Key="Grid_Old-Drive2" x:Shared="false" ToolTip="No Drive Forms Collected" >
+    <!--<Grid x:Key="Grid_Old-Drive2" x:Shared="false" ToolTip="No Drive Forms Collected" >
         <Image Source="Images\Grid\Checks\Old\DriveForm.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\0.png"/>
-    </Grid>
+    </Grid>-->
     <Grid x:Key="Grid_Old-Drive3" x:Shared="false" ToolTip="1 Drive Form Collected" >
         <Image Source="Images\Grid\Checks\Old\DriveForm.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>

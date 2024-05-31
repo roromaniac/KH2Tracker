@@ -779,9 +779,11 @@ namespace KhTracker
             // deal with doubled up progression icons
             List<string> checks = new List<string>();
 
-            if (gridCheckName != "Dummy")
+            if (!new List<string> { "Dummy", "Seifer (2)" }.Contains(gridCheckName))
+            {
                 checks.Add(gridCheckName);
-            
+            }
+
             //drive/growth levels check
             if (aTimer != null)
             {
@@ -893,18 +895,6 @@ namespace KhTracker
                     case "Roxas (Data)":
                         checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
                         break;
-                    case "Demyx":
-                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
-                        break;
-                    case "Demyx (Data)":
-                        checks.AddRange(("Demyx,Demyx (Data)").Split(',').ToList());
-                        break;
-                    case "Xaldin":
-                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
-                        break;
-                    case "Xaldin (Data)":
-                        checks.AddRange(("Xaldin,Xaldin (Data)").Split(',').ToList());
-                        break;
                     default:
                         break;
                 }
@@ -915,8 +905,31 @@ namespace KhTracker
             {
                 for (int i = 0; i < checks.Count(); i++)
                 {
+
+                    // reveal the boss hint of the current arena
+                    if (highlightBoss)
+                    {
+
+                        for (int row = 0; row < gridWindow.numRows; row++)
+                        {
+                            for (int col = 0; col < gridWindow.numColumns; col++)
+                            {
+                                // reveal the current arena's boss hint
+                                if (data.BossRandoFound)
+                                {
+                                    if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
+                                    {
+                                        string origBoss = data.codes.bossNameConversion[checks[i]];
+                                        string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                                        data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     // hint the final fights bosses if Xemnas 1 is defeated
-                    if (checks[i] == "Xemnas")
+                    if (checks[i] == "Xemnas" && !highlightBoss)
                     {
                         string[] finalFights = { "Armor Xemnas I", "Armor Xemnas II", "Final Xemnas" };
                         foreach (string boss in finalFights)
@@ -933,11 +946,13 @@ namespace KhTracker
                     if (Codes.mismatchedBossNames.Keys.Contains(checks[i]))
                         checks[i] = Codes.mismatchedBossNames[checks[i]];
 
+                    // if boss is in spaced format, get the boss replacement
                     if (data.codes.bossNameConversion.ContainsKey(checks[i]))
                     {
                         if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                             checks[i] = data.codes.bossNameConversion[data.BossList[checks[i]]];
                     }
+                    // if boss is in tracker format, convert it to spaced format and then get the boss replacement
                     else if (data.codes.bossNameConversion.ContainsValue(checks[i]))
                     {
                         var originalBoss = data.codes.bossNameConversion.FirstOrDefault(x => x.Value == checks[i]).Key;
@@ -965,14 +980,18 @@ namespace KhTracker
                         // check if the original OR grid adjusted check key name is on the grid
                         if (checkNames.Contains(((string)gridWindow.buttons[row, col].Tag).Split('-')[1]))
                         {
-                            // invoke the appropriate button if the check matches
+                            // locate the boss on the grid and make player aware they found it
                             if (highlightBoss && (data.codes.bossNameConversion.ContainsKey(checkName) || data.codes.bossNameConversion.ContainsValue(checkName)))
                             {
                                 if (gridWindow.buttons[row, col].Content != null)
+                                {
                                     gridWindow.buttons[row, col].BorderBrush = new SolidColorBrush(Colors.Blue);
                                     gridWindow.buttons[row, col].BorderThickness = new Thickness(5.5);  // Adjust thickness as needed
+                                }
                             }
-                            else {
+                            // invoke the appropriate button if the check matches
+                            else
+                            {
                                 Application.Current.Dispatcher.Invoke(() => {
                                     if (!(bool)gridWindow.buttons[row, col].IsChecked)
                                     {
@@ -2653,9 +2672,6 @@ namespace KhTracker
                                 boss = "Seifer";
                             break;
                         case 4:
-                            //Tutorial Seifer shouldn't give points
-                            if (wID1 == 77) // Tutorial 4 - Fighting
-                                boss = "Seifer (1)";
                             //Tutorial Seifer 2 is always shadow roxas
                             //if (wID1 == 78) // Seifer I Battle
                             //    boss = "Seifer (2)";

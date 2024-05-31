@@ -536,6 +536,7 @@ namespace KhTracker
             }
 
             lastTrackedButton = button;
+            // is this null check even needed?
             if (lastTrackedButton != null)
             {
                 lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Yellow);
@@ -1531,6 +1532,7 @@ namespace KhTracker
 
         public void HandleClosing(ColorPickerWindow sender)
         {
+
             //update the new colors on the card
             for (int i = 0; i < numRows; i++)
             {
@@ -1556,6 +1558,9 @@ namespace KhTracker
                             UpdateBingoCells();
                         }
                     }
+
+                    // update what the original colors on the grid are
+                    originalColors[i, j] = ((SolidColorBrush)buttons[i, j].Background).Color;
                 }
             }
             // update the hint color
