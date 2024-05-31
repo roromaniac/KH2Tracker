@@ -265,6 +265,8 @@ namespace KhTracker
 
             if (toggle)
             {
+                VisitLockOption2.IsEnabled = true;
+
                 foreach (string worldName in data.WorldsData.Keys.ToList())
                 {
                     data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0.08, GridUnitType.Star);
@@ -282,7 +284,8 @@ namespace KhTracker
                     0.1, 
                     0.6, 1.0, 
                     0.0, 
-                    0.0, 1.0};
+                    0.0, 1.0
+                };
                 for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
                 {
                     if (i <= 13)
@@ -292,9 +295,7 @@ namespace KhTracker
             }
             else
             {
-                //TODO give each visit number/sep/item a name in mainwindow.xml
-                //we then have a if or case statement for setting width of everything automatically like below
-                //we can then also use it for removing numbers and such for first visit locking being off
+                VisitLockOption2.IsEnabled = false;
 
                 foreach (string worldName in data.WorldsData.Keys.ToList())
                 {
@@ -328,80 +329,110 @@ namespace KhTracker
             VisitLockCheck(true);
         }
 
-        //private void VisitLockToggle2(object sender, RoutedEventArgs e)
-        //{
-        //    VisitLockToggle2(VisitLockOption2.IsChecked);
-        //}
-        //
-        //private void VisitLockToggle2(bool toggle)
-        //{
-        //    Properties.Settings.Default.WorldVisitLock2 = toggle;
-        //    VisitLockOption2.IsChecked = toggle;
-        //
-        //    if (toggle)
-        //    {
-        //        foreach (string worldName in data.WorldsData.Keys.ToList())
-        //        {
-        //            data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0.08, GridUnitType.Star);
-        //        }
-        //
-        //        VisitsRow.Height = new GridLength(1, GridUnitType.Star);
-        //
-        //        Grid VisitRow2 = ItemPool.Children[5] as Grid;
-        //        double[] resetList = {
-        //            0.6, 1.0,
-        //            0.1,
-        //            0.6, 1.0,
-        //            0.1,
-        //            0.6, 1.0,
-        //            0.1,
-        //            0.6, 1.0,
-        //            0.0,
-        //            0.0, 1.0};
-        //        for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
-        //        {
-        //            if (i <= 13)
-        //                VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
-        //        }
-        //        VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
-        //    }
-        //    else
-        //    {
-        //        //TODO give each visit number/sep/item a name in mainwindow.xml
-        //        //we then have a if or case statement for setting width of everything automatically like below
-        //        //we can then also use it for removing numbers and such for first visit locking being off
-        //
-        //        foreach (string worldName in data.WorldsData.Keys.ToList())
-        //        {
-        //            data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Star);
-        //        }
-        //
-        //        if (ExtraChecksOption.IsChecked)
-        //        {
-        //            VisitsRow.Height = new GridLength(0, GridUnitType.Star);
-        //
-        //            Grid VisitRow2 = ItemPool.Children[5] as Grid;
-        //            foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
-        //            {
-        //                if (Vlock.Name != "HadesCupCol" && Vlock.Name != "OlympusStoneCol" && Vlock.Name != "UnknownDiskCol")
-        //                    Vlock.Width = new GridLength(0, GridUnitType.Star);
-        //            }
-        //            VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
-        //        }
-        //        else
-        //        {
-        //            VisitsRow.Height = new GridLength(0, GridUnitType.Star);
-        //            VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
-        //        }
-        //    }
-        //
-        //    for (int i = 0; i < data.VisitLocks.Count; ++i)
-        //    {
-        //        HandleItemToggle(toggle, data.VisitLocks[i], false);
-        //    }
-        //
-        //    VisitLockCheck(true);
-        //}
+        private void VisitLockToggle2(object sender, RoutedEventArgs e)
+        {
+            VisitLockToggle2(VisitLockOption2.IsChecked);
+        }
+        
+        private void VisitLockToggle2(bool toggle)
+        {
+            Properties.Settings.Default.WorldVisitLock2 = toggle;
+            VisitLockOption2.IsChecked = toggle;
+            Grid VisitRow1 = ItemPool.Children[4] as Grid;
+            Grid VisitRow2 = ItemPool.Children[5] as Grid;
+            double[] resetList1 = {
+                    0.6, 1.0,  // Number, BC
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, HT
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, PL
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, OC
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, LoD
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, PR
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, AG
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, SP
+            };
+            double[] resetList2 = {
+                    0.6, 1.0,  // Number, TWTNW
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, HB
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, DC
+                    0.1,       // Spacer
+                    0.6, 1.0,  // Number, TT
+                    0.0,       // Spacer
+                    0.0, 1.0   // blank, STT
+            };
+
+            //remove extra stuff if toggle is on
+            if (toggle)
+            {
+                resetList1 = new double []{
+                    0.0, 1.0,  // Number, BC
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, HT
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, PL
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, OC
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, LoD
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, PR
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, AG
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, SP
+                };
+                resetList2 = new double[]{
+                    0.0, 1.0,  // Number, TWTNW
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, HB
+                    0.0,       // Spacer
+                    0.0, 1.0,  // Number, DC
+                    0.0,       // Spacer
+                    0.6, 1.0,  // Number, TT
+                    0.0,       // Spacer
+                    0.0, 0.0   // blank, STT
+                };
+
+                //fix ice cream number
+                TTCount.Text = "2";
+            }
+            else
+                TTCount.Text = "3";
+
+            //set new widths
+            for (int i = 0; i < VisitRow1.ColumnDefinitions.Count; i++)
+            {
+                if (i <= 22)
+                    VisitRow1.ColumnDefinitions[i].Width = new GridLength(resetList1[i], GridUnitType.Star);
+            }
+            for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
+            {
+                if (i <= 13)
+                    VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList2[i], GridUnitType.Star);
+            }
+
+            //remove/restore 1st visit locks
+            for (int i = 0; i < data.VisitLocks.Count; ++i)
+            {
+                if (data.VisitLocks[i].Name.EndsWith("1") || data.VisitLocks[i].Name == "Sketches")
+                {
+                    //use !toggle cause we want to do the inverse when this toggle is on
+                    //(take away items when on and add them back when off)
+                    HandleItemToggle(!toggle, data.VisitLocks[i], false);
+                }
+                    
+            }
+
+            //VisitLockCheck(true);
+        }
 
         private void ChestLockToggle(object sender, RoutedEventArgs e)
         {

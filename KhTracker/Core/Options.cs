@@ -1698,7 +1698,7 @@ namespace KhTracker
                     data.oneHourMode = true;
                     data.BossHomeHinting = true;
                 }
-                    
+
 
                 if (data.objectiveMode)
                     objWindow.GenerateObjGrid(hintObject);
@@ -1858,7 +1858,7 @@ namespace KhTracker
                     ProgressionCollectionGrid.Visibility = Visibility.Visible;
                     ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
                     ModeDisplay.Header += " | Prog. Bosses";
-                }                
+                }
             }
 
             if (data.BossHomeHinting)
@@ -2498,8 +2498,8 @@ namespace KhTracker
             //reset pathhints edits
             foreach (string key in data.WorldsData.Keys.ToList())
             {
-                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Star);                
-            
+                data.WorldsData[key].top.ColumnDefinitions[2].Width = new GridLength(0, GridUnitType.Star);
+
                 var pathgrid = (Grid)data.WorldsData[key].top.FindName(key + "Path");
 
                 pathgrid.Visibility = Visibility.Collapsed;
@@ -2650,6 +2650,11 @@ namespace KhTracker
             SoraLevel99Option.IsEnabled = clickable;
 
             WorldToggleMenuItem.IsEnabled = clickable;
+        }
+
+        private void VisitLockCheck()
+        {
+
         }
 
         /// 

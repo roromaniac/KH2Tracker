@@ -2617,6 +2617,7 @@ namespace KhTracker
         {
             //temp values
             string boss = "None";
+            string oneHourBoss = "None";
             string wName;
             int wRoom;
             int wID1;
@@ -2655,7 +2656,6 @@ namespace KhTracker
             var eventTuple = new Tuple<string, int, int, int, int, int>(wName, wRoom, wID1, wID2, wID3, wCup);
             if (data.bossEventLog.Contains(eventTuple))
                 return;
-
 
             //boss beaten events (taken mostly from progression code)
             switch (wName)
@@ -2750,7 +2750,12 @@ namespace KhTracker
                             break;
                         case 5:
                             if (wID1 == 78) // Shadow Stalker
+                            {
                                 boss = "Shadow Stalker";
+                                if (data.oneHourMode)
+                                    oneHourBoss = "Tifa";
+                                break;
+                            }
                             if (wID1 == 79) // Dark Thorn finish
                                 boss = "Dark Thorn";
                             break;
@@ -2777,7 +2782,11 @@ namespace KhTracker
                             break;
                         case 18:
                             if (wID1 == 171) // Hydra finish
+                            {
                                 boss = "Hydra";
+                                if (data.oneHourMode)
+                                    oneHourBoss = "Hercules";
+                            }
                             break;
                         case 19:
                             if (wID1 == 202) // Hades finish
@@ -2840,7 +2849,11 @@ namespace KhTracker
                             break;
                         case 5:
                             if (wID1 == 62) // Genie Jafar finish
+                            {
                                 boss = "Jafar";
+                                if (data.oneHourMode)
+                                    oneHourBoss = "Cloud";
+                            }
                             break;
                         case 33:
                             if (wID1 == 142) // Lexaeus finish
@@ -2865,7 +2878,11 @@ namespace KhTracker
                             break;
                         case 8:
                             if (wID1 == 79) // Storm Rider finish
+                            {
                                 boss = "Storm Rider";
+                                if (data.oneHourMode)
+                                    oneHourBoss = "Yuffie";
+                            }
                             break;
                         default:
                             break;
@@ -2953,7 +2970,11 @@ namespace KhTracker
                             break;
                         case 1:
                             if (wID1 == 54) // Grim Reaper 2 finish
+                            {
                                 boss = "Grim Reaper II";
+                                if (data.oneHourMode)
+                                    oneHourBoss = "Leon";
+                            }
                             break;
                         default:
                             break;
@@ -3063,7 +3084,13 @@ namespace KhTracker
 
             //get points for boss kills
             if (data.mode == Mode.PointsHints || data.ScoreMode)
-                GetBossPoints(boss);
+            {
+                if (oneHourBoss != "None")
+                    GetBossPoints(oneHourBoss);
+                else
+                    GetBossPoints(boss);
+            }
+                
             if (data.BossHomeHinting)
                 SetBossHomeHint(boss);
 
@@ -3314,7 +3341,7 @@ namespace KhTracker
                         switch (bossType)
                         {
                             case "boss_as":
-                                bonuspoints = 15; // objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                bonuspoints = 10; // objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
                                 break;
                             case "boss_datas":
                                 if (boss.Contains("Final Xemnas"))

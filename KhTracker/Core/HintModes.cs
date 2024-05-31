@@ -6,8 +6,6 @@ using System.Windows.Media;
 using System.Linq;
 using System.Text.Json;
 using System.Windows.Shapes;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.Reflection;
 
 namespace KhTracker
 {
