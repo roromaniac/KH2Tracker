@@ -222,96 +222,96 @@ namespace KhTracker
         //1hour objectives
         public  Dictionary<string, int> oneHourAssets = new Dictionary<string, int>()
         {
-            {"Bailey", 10},
-            {"Corridor", 15},
-            {"1000Heartless", 30},
-            {"EndOfCoR", 30},
-            {"Transport", 60},
-            {"Missions", 10},
-            {"Mountain", 10},
-            {"Cave", 15},
-            {"StormRider", 30},
-            {"Beast", 10},
-            {"Minnie", 15},
-            {"Windows", 20},
-            {"BoatPete", 20},
-            {"Medallions", 15},
-            {"Barrels", 15},
-            {"TreasureRoom", 20},
-            {"GenieJafar", 30},
-            {"OogieBoogie", 20},
-            {"Children", 15},
-            {"ObjectivePresents1", 15},
-            {"ObjectivePresents2", 15},
-            {"Hyenas1", 10},
-            {"Hyenas2", 20},
-            {"GroundShaker", 30},
-            {"Screens", 15},
-            {"SolarSailer", 20},
-            {"MCP", 30},
-            {"Urns", 10},
-            {"AuronStatue", 20},
-            {"Valor3", 10},
-            {"Valor5", 15},
-            {"Valor7", 20},
-            {"Wisdom3", 10},
-            {"Wisdom5", 15},
-            {"Wisdom7", 20},
-            {"Limit3", 10},
-            {"Limit5", 15},
-            {"Limit7", 20},
-            {"Master3", 10},
-            {"Master5", 15},
-            {"Master7", 20},
-            {"Final3", 10},
-            {"Final5", 15},
-            {"Final7", 20},
-            {"Cerberus", 10},
-            {"OCPete", 20},
-            {"Hydra", 20},
-            {"Hades", 30},
-            {"OldPete", 10},
-            {"DCPete", 30},
-            {"Thresholder", 10},
-            {"ShadowStalker", 15},
-            {"DarkThorn", 30},
-            {"Xaldin", 30},
-            {"ShanYu", 20},
-            {"Riku", 25},
-            {"HBDemyx", 20},
-            {"Barbossa", 20},
-            {"GrimReaper1", 20},
-            {"GrimReaper", 30},
-            {"Lords", 25},
-            {"PrisonKeeper", 10},
-            {"Experiment", 30},
-            {"Scar", 20},
-            {"HostileProgram", 20},
-            {"Roxas", 15},
-            {"Xigbar", 20},
-            {"Luxord", 25},
-            {"Saix", 20},
-            {"Xemnas1", 25},
-            {"DataAxel", 40},
-            {"DataRoxas", 40},
-            {"DataDemyx", 40},
-            {"DataXigbar", 40},
-            {"DataXaldin", 40},
-            {"DataLuxord", 40},
-            {"DataSaix", 30},
-            {"DataFinalXemnas", 40},
-            {"Zexion", 30},
-            {"ZexionData", 40},
-            {"Marluxia", 30},
-            {"MarluxiaData", 40},
-            {"Lexaeus", 30},
-            {"LexaeusData", 40},
-            {"Vexen", 30},
-            {"VexenData", 40},
-            {"Larxene", 30},
-            {"LarxeneData", 40},
-            {"Sephiroth", 40},
-            {"LingeringWill", 40},
+	            {"Bailey", 10},
+	            {"Corridor", 15},
+	            {"1000Heartless", 30},
+	            {"EndOfCoR", 30},
+	            {"Transport", 60},
+	            {"Missions", 10},
+	            {"Mountain", 10},
+	            {"Cave", 15},
+	            {"StormRider", 30},
+	            {"Beast", 10},
+	            {"Minnie", 10},
+	            {"Windows", 20},
+	            {"BoatPete", 20},
+	            {"Medallions", 15},
+	            {"Barrels", 15},
+	            {"TreasureRoom", 20},
+	            {"GenieJafar", 30},
+	            {"OogieBoogie", 20},
+	            {"Children", 15},
+	            {"ObjectivePresents1", 15},
+	            {"ObjectivePresents2", 15},
+	            {"Hyenas1", 10},
+	            {"Hyenas2", 20},
+	            {"GroundShaker", 30},
+	            {"Screens", 15},
+	            {"SolarSailer", 20},
+	            {"MCP", 30},
+	            {"Urns", 10},
+	            {"AuronStatue", 20},
+	            {"Valor3", 10},
+	            {"Valor5", 15},
+	            {"Valor7", 20},
+	            {"Wisdom3", 10},
+	            {"Wisdom5", 15},
+	            {"Wisdom7", 20},
+	            {"Limit3", 10},
+	            {"Limit5", 15},
+	            {"Limit7", 20},
+	            {"Master3", 10},
+	            {"Master5", 15},
+	            {"Master7", 20},
+	            {"Final3", 10},
+	            {"Final5", 15},
+	            {"Final7", 20},
+	            {"Cerberus", 10},
+	            {"OCPete", 20},
+	            {"Hydra", 20},
+	            {"Hades", 30},
+	            {"OldPete", 10},
+	            {"DCPete", 30},
+	            {"Thresholder", 10},
+	            {"ShadowStalker", 15},
+	            {"DarkThorn", 30},
+	            {"Xaldin", 30},
+	            {"ShanYu", 20},
+	            {"Riku", 25},
+	            {"HBDemyx", 20},
+	            {"Barbossa", 20},
+	            {"GrimReaper1", 20},
+	            {"GrimReaper", 30},
+	            {"Lords", 25},
+	            {"PrisonKeeper", 10},
+	            {"Experiment", 30},
+	            {"Scar", 20},
+	            {"HostileProgram", 20},
+	            {"Roxas", 15},
+	            {"Xigbar", 20},
+	            {"Luxord", 25},
+	            {"Saix", 20},
+	            {"Xemnas1", 25},
+	            {"DataAxel", 40},
+	            {"DataRoxas", 40},
+	            {"DataDemyx", 40},
+	            {"DataXigbar", 40},
+	            {"DataXaldin", 40},
+	            {"DataLuxord", 40},
+	            {"DataSaix", 40},
+	            {"DataFinalXemnas", 40},
+	            {"Zexion", 30},
+	            {"ZexionData", 40},
+	            {"Marluxia", 30},
+	            {"MarluxiaData", 40},
+	            {"Lexaeus", 30},
+	            {"LexaeusData", 40},
+	            {"Vexen", 30},
+	            {"VexenData", 40},
+	            {"Larxene", 30},
+	            {"LarxeneData", 40},
+	            {"Sephiroth", 40},
+	            {"LingeringWill", 40},
         };
         //override 1hour objectives
         public bool oneHourCustom = false;
@@ -478,43 +478,43 @@ namespace KhTracker
             oneHourOverrideAssets.Clear();
             oneHourOverrideBonus.Clear();
             oneHourOverrideMulti.Clear();
-            if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
-            {
-                using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
-                {
-                    var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
-
-                    oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
-                    
-                    oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
-
-                    oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
-                    oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
-                    oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
-                    oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
-                    oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
-
-                    oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
-                    oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
-                    oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
-
-                    oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
-                    oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
-
-                    if(overrideObject.ContainsKey("bossHintingHome"))
-                    {
-                        data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
-                    }
-
-                    overrideFile.Close();
-                }
-
-                oneHourCustom = true;
-            }
+            //if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
+            //{
+            //    using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
+            //    {
+            //        var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
+            //
+            //        oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
+            //        
+            //        oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
+            //        oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
+            //        oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
+            //        oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
+            //        oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
+            //
+            //        oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
+            //        oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
+            //        oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
+            //        oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
+            //        oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
+            //
+            //        oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
+            //        oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
+            //        oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
+            //
+            //        oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
+            //        oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
+            //
+            //        if(overrideObject.ContainsKey("bossHintingHome"))
+            //        {
+            //            data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
+            //        }
+            //
+            //        overrideFile.Close();
+            //    }
+            //
+            //    oneHourCustom = false;
+            //}
 
 
             //build asset list
@@ -524,6 +524,8 @@ namespace KhTracker
                 assets = oneHourOverrideAssets.Keys.ToList();
             else
                 assets = oneHourAssets.Keys.ToList();
+
+            #region Random Coices
 
             //decide which of the CO org members fights to keep (AS vs Data)
             if (rng.Next(2) == 0)
@@ -647,6 +649,8 @@ namespace KhTracker
                 assets.Remove("Final3");
                 assets.Remove("Final5");
             }
+
+            #endregion
 
             // number of objectives to use (7 is defaut)
             if (oneHourCustom)
@@ -860,7 +864,7 @@ namespace KhTracker
                     return;
 
                 int testPoints = 0;
-                List<ToggleButton> completeSquares = new List<ToggleButton>();
+                int marksTotal = 0;
                 foreach (var square in objGrid.Children)
                 {
                     if (square is ToggleButton button && button.IsChecked == true)
@@ -869,11 +873,15 @@ namespace KhTracker
                             testPoints += oneHourAssets[button.Tag.ToString().Remove(0, 8)];
                         else
                             testPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+
+                        marksTotal++;
                     }
                 }
 
                 oneHourPoints = testPoints;
                 window.UpdatePointScore(0);
+                Console.WriteLine("writing marks to game | " + marksTotal);
+                window.SetOneHourMarks(marksTotal);
             }
         }
 

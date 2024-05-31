@@ -1083,7 +1083,61 @@ namespace KhTracker
 
             if (data.BossHomeHinting)
             {
-                window.SetHintTextRow2(data.HintRevealsStored[index].Item1, data.HintRevealsStored[index].Item2, data.HintRevealsStored[index].Item3);
+                string text1 = data.HintRevealsStored[index].Item1;
+                string text2 = data.HintRevealsStored[index].Item2;
+                string text3 = data.HintRevealsStored[index].Item3;
+
+                //change names for these bosses only for 1hr mode
+                if (data.oneHourMode)
+                {
+                    if (text1.Contains("Cloud"))
+                    {
+                        text1 = "Jafar (Cloud)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Cloud";
+                        //}
+                    }
+                    if (text1.Contains("Tifa"))
+                    {
+                        text1 = "Shadow Stalker (Tifa)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Tifa";
+                        //}
+                    }
+                    if (text1.Contains("Hercules"))
+                    {
+                        text1 = "Hydra (Hercules)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Hercules";
+                        //}
+                    }
+                    if (text1.Contains("Leon"))
+                    {
+                        text1 = "Grim Reaper II (Leon)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Leon";
+                        //}
+                    }
+                    if (text1.Contains("Yuffie"))
+                    {
+                        text1 = "Storm Rider (Yuffie)";
+                        //if (text2 == "is unchanged")
+                        //{
+                        //    text2 = "became";
+                        //    text3 = "Yuffie";
+                        //}
+                    }
+                }
+
+                window.SetHintTextRow2(text1, text2, text3);
                 return;
             }              
 

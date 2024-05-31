@@ -8,8 +8,9 @@ namespace KhTracker
 {
     public class MemoryReader
     {
-        const int PROCESS_WM_READ = 0x0010;
+        //const int PROCESS_WM_READ = 0x0010;
         //const int PROCESS_WM_WRITE = 0x0030;
+        const int PROCESS_WM_RW = 0x1F0FFF;
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
@@ -17,8 +18,8 @@ namespace KhTracker
         [DllImport("kernel32.dll")]
         public static extern bool ReadProcessMemory(int hProcess, Int64 lpBaseAddress, byte[] lpBuffer, int dwSize, ref int lpNumberOfBytesRead);
 
-        //[DllImport("kernel32.dll", SetLastError = true)]
-        //static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out int lpNumberOfBytesWritten);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool WriteProcessMemory(int hProcess, Int64 lpBaseAddress, byte[] lpBuffer, int nSize, ref int lpNumberOfBytesWritten);
 
         Process process;
         IntPtr processHandle;
@@ -33,7 +34,7 @@ namespace KhTracker
                     process = Process.GetProcessesByName("pcsx2")[0];
                 else
                     process = Process.GetProcessesByName("KINGDOM HEARTS II FINAL MIX")[0];
-                processHandle = OpenProcess(PROCESS_WM_READ, false, process.Id);
+                processHandle = OpenProcess(PROCESS_WM_RW, false, process.Id);
             }
             catch (IndexOutOfRangeException)
             {
@@ -62,16 +63,23 @@ namespace KhTracker
             return buffer;
         }
 
-        //public static void WriteMem(Process p, int address, long v)
-        //{
-        //    var hProc = OpenProcess(PROCESS_WM_WRITE, false, (int)p.Id);
-        //    var val = new byte[] { (byte)v };
-        //
-        //    int wtf = 0;
-        //    WriteProcessMemory(hProc, new IntPtr(address), val, (UInt32)val.LongLength, out wtf);
-        //
-        //    CloseHandle(hProc);
-        //}
+        public void WriteMem(Int32 address, int valueToWrite)
+        {
+            if (process.HasExited)
+            {
+                throw new Exception();
+            }
+            int bytesWritten = 0;
+            //byte[] val = new byte[] { (byte)valueToWrite };
+            byte[] buffer = new byte[] { (byte)valueToWrite };
+
+            ProcessModule processModule = process.MainModule;
+
+            if (PCSX2)
+                WriteProcessMemory((int)processHandle, address, buffer, 1, ref bytesWritten);
+            else
+                WriteProcessMemory((int)processHandle, processModule.BaseAddress.ToInt64() + address, buffer, 1, ref bytesWritten);
+        }
 
         public long GetBaseAddress()
         {

@@ -53,6 +53,10 @@
                 <Separator/>
                 <MenuItem Header="Grid Tracker"         Click="GridWindow_Open"/>
                 <MenuItem Header="Objective Tracker"   Click="objWindow_Open"/>
+                <MenuItem Header="Open Grid Tracker on Startup" 	    Click="GTStartupToggle"  x:Name="GTStartupOption"     IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Open Objective Tracker on Startup" 	Click="OTStartupToggle"  x:Name="OTStartupOption"     IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Enable 1Hour Mode Changes" 	        Click="OneHourToggle"  x:Name="OneHourOption"     IsCheckable="True" IsChecked="False"
+                          ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>       
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>

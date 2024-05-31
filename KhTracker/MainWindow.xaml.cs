@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using KhTracker.Hotkeys;
 using System.Text;
+using System.Reflection;
 
 namespace KhTracker
 {
@@ -64,6 +65,18 @@ namespace KhTracker
                 SettingRow.Height = new GridLength(0.5, GridUnitType.Star);
                 InitTracker(null, null);
             }
+
+            //open windows
+            GTStartupOption.IsChecked = Properties.Settings.Default.GridTrackerStartup;
+            if (GTStartupOption.IsChecked)
+                gridWindow.Show();
+
+            OTStartupOption.IsChecked = Properties.Settings.Default.ObjTrackerStartup;
+            if (OTStartupOption.IsChecked)
+                objWindow.Show();
+
+            //one hour mode toggle
+            OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
         }
 
         private void InitData()
@@ -730,7 +743,7 @@ namespace KhTracker
             else
                 --num;
 
-            if (data.UsingProgressionHints)
+            if (data.UsingProgressionHints || data.BossHomeHinting)
             {
                 if (num <= 0 && data.ProgressionCurrentHint >= 0 && Hint.Name.Contains("GoA"))
                 {
@@ -749,9 +762,63 @@ namespace KhTracker
                 {
                     Tuple<string, string, string, bool, bool, bool> temp = data.HintRevealsStored[num - 1];
 
-                    if (data.BossHomeHinting && data.mode != Mode.SpoilerHints)
+                    if (data.BossHomeHinting)
                     {
-                        SetHintText(temp.Item1, temp.Item2, temp.Item3, false, false, false, true);
+                        string text1 = temp.Item1;
+                        string text2 = temp.Item2;
+                        string text3 = temp.Item3;
+
+                        //change names for these bosses only for 1hr mode
+                        if (data.oneHourMode)
+                        {
+                            if (text1.Contains("Cloud"))
+                            {
+                                text1 = "Jafar (Cloud)";
+                                //if (text2 == "is unchanged")
+                                //{
+                                //    text2 = "became";
+                                //    text3 = "Cloud";
+                                //}
+                            }
+                            if (text1.Contains("Tifa"))
+                            {
+                                text1 = "Shadow Stalker (Tifa)";
+                                //if (text2 == "is unchanged")
+                                //{
+                                //    text2 = "became";
+                                //    text3 = "Tifa";
+                                //}
+                            }
+                            if (text1.Contains("Hercules"))
+                            {
+                                text1 = "Hydra (Hercules)";
+                                //if (text2 == "is unchanged")
+                                //{
+                                //    text2 = "became";
+                                //    text3 = "Hercules";
+                                //}
+                            }
+                            if (text1.Contains("Leon"))
+                            {
+                                text1 = "Grim Reaper II (Leon)";
+                                //if (text2 == "is unchanged")
+                                //{
+                                //    text2 = "became";
+                                //    text3 = "Leon";
+                                //}
+                            }
+                            if (text1.Contains("Yuffie"))
+                            {
+                                text1 = "Storm Rider (Yuffie)";
+                                //if (text2 == "is unchanged")
+                                //{
+                                //    text2 = "became";
+                                //    text3 = "Yuffie";
+                                //}
+                            }
+                        }
+
+                        SetHintTextRow2(text1, text2, text3);
                     }
                     else if (data.progressionType == "Bosses")
                         SetHintTextRow2(temp.Item1, temp.Item2, temp.Item3);

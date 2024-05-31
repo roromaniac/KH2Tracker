@@ -1608,6 +1608,8 @@ namespace KhTracker
         }
 
 
+
+
         //AutoLoadHints
         private void AutoLoadHintsToggle(object sender, RoutedEventArgs e)
         {

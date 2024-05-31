@@ -772,6 +772,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
+        //TODO: split this funtion into two parts (objective and grid tracker) for easier editing.
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
         {
 
@@ -814,43 +815,47 @@ namespace KhTracker
 
             // "GridTrackerOnly" is so that the GetBoss funtion doesn't pass the boss over to the Objective Tracker
             // the objective tracker only cares about progression and items, never actual bosses or boss rando
-            switch (gridCheckName)
+            if (!data.oneHourMode)
             {
-                case "Lords":
-                    checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
-                    break;
-                case "SephiDemyx":
-                    checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
-                    break;
-                case "Marluxia_LingeringWill":
-                    checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
-                    break;
-                case "MarluxiaData_LingeringWill":
-                    checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
-                    break;
-                case "FF Team 1":
-                    checks.AddRange(("Leon,Yuffie").Split(',').ToList());
-                    break;
-                case "FF Team 2":
-                    checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
-                    break;
-                case "FF Team 3":
-                    checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 4":
-                    checks.AddRange(("Cloud,Tifa").Split(',').ToList());
-                    break;
-                case "FF Team 5":
-                    checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
-                    break;
-                case "FF Team 6":
-                    checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
-                    break;
-                default:
-                    break;
+                switch (gridCheckName)
+                {
+                    case "Lords":
+                        checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
+                        break;
+                    case "SephiDemyx":
+                        checks.AddRange(("Sephiroth,DataDemyx").Split(',').ToList());
+                        break;
+                    case "Marluxia_LingeringWill":
+                        checks.AddRange(("Marluxia,LingeringWill").Split(',').ToList());
+                        break;
+                    case "MarluxiaData_LingeringWill":
+                        checks.AddRange(("MarluxiaData,LingeringWill").Split(',').ToList());
+                        break;
+                    case "FF Team 1":
+                        checks.AddRange(("Leon,Yuffie").Split(',').ToList());
+                        break;
+                    case "FF Team 2":
+                        checks.AddRange(("Leon (3),Yuffie (3)").Split(',').ToList());
+                        break;
+                    case "FF Team 3":
+                        checks.AddRange(("Yuffie (1),Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 4":
+                        checks.AddRange(("Cloud,Tifa").Split(',').ToList());
+                        break;
+                    case "FF Team 5":
+                        checks.AddRange(("Leon (1),Cloud (1)").Split(',').ToList());
+                        break;
+                    case "FF Team 6":
+                        checks.AddRange(("Leon (2),Cloud (2),Yuffie (2),Tifa (2)").Split(',').ToList());
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
-            if (gridWindow.bunterLogic && data.BossRandoFound)
+            if (gridWindow.bunterLogic && data.BossRandoFound && GridTrackerOnly)
             {
                 switch (gridCheckName)
                 {
@@ -896,7 +901,7 @@ namespace KhTracker
             }
 
             // boss enemy check
-            if (data.BossRandoFound)
+            if (data.BossRandoFound && GridTrackerOnly)
             {
                 for (int i = 0; i < checks.Count(); i++)
                 {
@@ -1739,6 +1744,16 @@ namespace KhTracker
                                 newProg = 3;
                             break;
                         case 5:
+                            if (wID1 == 78 && wCom == 1) // Dark Thorn finish
+                            {
+                                if (data.oneHourMode)
+                                {
+                                    UpdateSupportingTrackers("ShadowStalker");
+
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                            }
                             if (wID1 == 79 && wCom == 1) // Dark Thorn finish
                                 newProg = 4;
                             break;
@@ -1900,13 +1915,15 @@ namespace KhTracker
                             if (wID1 == 0 && wID2 == 0 && wID3 == 15) // All 3 missions finished
                             {
                                 newProg = 2;
-                                if (data.oneHourMode)
-                                {
-                                    if (objWindow.oneHourCustom)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
-                                    else
-                                        UpdatePointScore(15);
-                                }
+
+                                //no longer should give points
+                                //if (data.oneHourMode)
+                                //{
+                                //    if (objWindow.oneHourCustom)
+                                //        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                //    else
+                                //        UpdatePointScore(15);
+                                //}
                             }
                             break;
                         case 3:
@@ -1929,6 +1946,16 @@ namespace KhTracker
                                         UpdatePointScore(10);
                                 }
                             }
+                            if (wID1 == 76 && wCom == 1) // Riku
+                            {
+                                if (data.oneHourMode)
+                                {
+                                    UpdateSupportingTrackers("Riku");
+
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                            }
                             break;
                         case 9:
                             if (wID1 == 75 && wCom == 1) // Shan Yu finish
@@ -1942,29 +1969,32 @@ namespace KhTracker
                             }
                             break;
                         case 11:
-                            if (data.earlyThroneRoom)
+                            if (data.oneHourMode)
                             {
-                                //throne room normally
+                                if (!data.earlyThroneRoom)
+                                {
+                                    //throne room normally
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    else
+                                        UpdatePointScore(30);
 
-                                if (objWindow.oneHourCustom)
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
                                 else
-                                    UpdatePointScore(30);
+                                {
+                                    //did early throne room skip
+                                    if (objWindow.oneHourCustom)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                    else
+                                        UpdatePointScore(15);
 
-                                data.eventLog.Add(eventTuple);
-                                return;
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
                             }
-                            else
-                            {
-                                //did early throne room skip
-                                if (objWindow.oneHourCustom)
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
-                                else
-                                    UpdatePointScore(15);
-
-                                data.eventLog.Add(eventTuple);
-                                return;
-                            }
+                            break;
                         case 8:
                             if (wID1 == 79 && wCom == 1) // Storm Rider finish
                                 newProg = 8;
@@ -3007,9 +3037,6 @@ namespace KhTracker
                     break;
             }
 
-            //return if bo boss beaten found
-
-
             if (!usingSave)
             {
                 //if the boss was found and beaten then set flag
@@ -3035,341 +3062,11 @@ namespace KhTracker
             UpdateSupportingTrackers(boss, true);
 
             //get points for boss kills
-            if (!data.BossHomeHinting)
+            if (data.mode == Mode.PointsHints || data.ScoreMode)
                 GetBossPoints(boss);
-            else if (data.BossRandoFound)
-            {
-                int PPoints = 1;
+            if (data.BossHomeHinting)
+                SetBossHomeHint(boss);
 
-                if (boss == "Twin Lords")
-                {
-                    PPoints = 2;
-                    //Blizzard Lord
-                    if (data.BossList["Blizzard Lord"] == "Blizzard Lord" || data.BossList["Blizzard Lord"] == "Blizzard Lord (Cups)")
-                    {
-                        data.progBossInformation.Add(new Tuple<string, string, string>("Blizzard Lord", "is unchanged", ""));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Blizzard Lord", "is unchanged", "", false, false, false));
-                    }
-                    else
-                    {
-                        string bossReplacemnt = data.BossList["Blizzard Lord"];
-                        if (data.BossList.ContainsKey(bossReplacemnt))
-                        {
-                            string bossHome = data.BossList[bossReplacemnt];
-                            data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                        }
-                    }
-                    //Volcano Lord
-                    if (data.BossList["Volcano Lord"] == "Volcano Lord" || data.BossList["Volcano Lord"] == "Volcano Lord (Cups)")
-                    {
-                        data.progBossInformation.Add(new Tuple<string, string, string>("Volcano Lord", "is unchanged", ""));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Volcano Lord", "is unchanged", "", false, false, false));
-                    }
-                    else
-                    {
-                        string bossReplacemnt = data.BossList["Volcano Lord"];
-                        if (data.BossList.ContainsKey(bossReplacemnt))
-                        {
-                            string bossHome = data.BossList[bossReplacemnt];
-                            data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                        }
-                    }
-                }
-                else if (boss.StartsWith("FF Team"))
-                {
-                    //check leon for if cups bosses are on
-                    if (!data.BossList.ContainsKey("Leon"))
-                    {
-                        return;
-                    }
-
-                    PPoints = 2;
-                    if (boss == "FF Team 6")
-                    {
-                        PPoints = 4;
-                        //Leon
-                        if (data.BossList["Leon (2)"] == "Leon" || data.BossList["Leon (2)"] == "Leon (1)" ||
-                            data.BossList["Leon (2)"] == "Leon (2)" || data.BossList["Leon (2)"] == "Leon (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Leon (2)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Cloud
-                        if (data.BossList["Cloud (2)"] == "Cloud" || data.BossList["Cloud (2)"] == "Cloud (1)" ||
-                            data.BossList["Cloud (2)"] == "Cloud (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Cloud (2)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Yuffie
-                        if (data.BossList["Yuffie (2)"] == "Yuffie" || data.BossList["Yuffie (2)"] == "Yuffie (1)" ||
-                            data.BossList["Yuffie (2)"] == "Yuffie (2)" || data.BossList["Yuffie (2)"] == "Yuffie (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Yuffie (2)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Tifa
-                        if (data.BossList["Tifa (2)"] == "Tifa" || data.BossList["Tifa (2)"] == "Tifa (1)" ||
-                            data.BossList["Tifa (2)"] == "Tifa (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Tifa (2)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                    }
-                    if (boss == "FF Team 1")
-                    {
-                        if (data.BossList["Leon"] == "Leon" || data.BossList["Leon"] == "Leon (1)" ||
-                            data.BossList["Leon"] == "Leon (2)" || data.BossList["Leon"] == "Leon (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Leon"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Yuffie
-                        if (data.BossList["Yuffie"] == "Yuffie" || data.BossList["Yuffie"] == "Yuffie (1)" ||
-                            data.BossList["Yuffie"] == "Yuffie (2)" || data.BossList["Yuffie"] == "Yuffie (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Yuffie"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-
-                    }
-                    if (boss == "FF Team 2")
-                    {
-                        //Leon
-                        if (data.BossList["Leon (3)"] == "Leon" || data.BossList["Leon (3)"] == "Leon (1)" ||
-                            data.BossList["Leon (3)"] == "Leon (2)" || data.BossList["Leon (3)"] == "Leon (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Leon (3)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Yuffie
-                        if (data.BossList["Yuffie (3)"] == "Yuffie" || data.BossList["Yuffie (3)"] == "Yuffie (1)" ||
-                            data.BossList["Yuffie (3)"] == "Yuffie (2)" || data.BossList["Yuffie (3)"] == "Yuffie (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Yuffie (3)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                    }
-                    if (boss == "FF Team 3")
-                    {
-                        //Yuffie
-                        if (data.BossList["Yuffie (1)"] == "Yuffie" || data.BossList["Yuffie (1)"] == "Yuffie (1)" ||
-                            data.BossList["Yuffie (1)"] == "Yuffie (2)" || data.BossList["Yuffie (1)"] == "Yuffie (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Yuffie", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Yuffie", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Yuffie (1)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Tifa
-                        if (data.BossList["Tifa"] == "Tifa" || data.BossList["Tifa"] == "Tifa (1)" ||
-                            data.BossList["Tifa"] == "Tifa (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Tifa"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-
-                    }
-                    if (boss == "FF Team 4")
-                    {
-                        //Cloud
-                        if (data.BossList["Cloud"] == "Cloud" || data.BossList["Cloud"] == "Cloud (1)" ||
-                            data.BossList["Cloud"] == "Cloud (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Cloud"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Tifa
-                        if (data.BossList["Tifa (1)"] == "Tifa" || data.BossList["Tifa (1)"] == "Tifa (1)" ||
-                            data.BossList["Tifa (1)"] == "Tifa (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Tifa", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Tifa", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Tifa (1)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                    }
-                    if (boss == "FF Team 5")
-                    {
-                        //Leon
-                        if (data.BossList["Leon (1)"] == "Leon" || data.BossList["Leon (1)"] == "Leon (1)" ||
-                            data.BossList["Leon (1)"] == "Leon (2)" || data.BossList["Leon (1)"] == "Leon (3)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Leon", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Leon", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Leon (1)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                        //Cloud
-                        if (data.BossList["Cloud (1)"] == "Cloud" || data.BossList["Cloud (1)"] == "Cloud (1)" ||
-                            data.BossList["Cloud (1)"] == "Cloud (2)")
-                        {
-                            data.progBossInformation.Add(new Tuple<string, string, string>("Cloud", "is unchanged", ""));
-                            data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>("Cloud", "is unchanged", "", false, false, false));
-                        }
-                        else
-                        {
-                            string bossReplacemnt = data.BossList["Cloud (1)"];
-                            if (data.BossList.ContainsKey(bossReplacemnt))
-                            {
-                                string bossHome = data.BossList[bossReplacemnt];
-                                data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (!data.BossList.ContainsKey(boss))
-                        return;
-
-                    if (boss == data.BossList[boss])
-                    {
-                        data.progBossInformation.Add(new Tuple<string, string, string>(boss, "is unchanged", ""));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(boss, "is unchanged", "", false, false, false));
-                    }
-                    else
-                    {
-                        string bossReplacemnt = data.BossList[boss];
-
-                        if (!data.BossList.ContainsKey(bossReplacemnt))
-                            return;
-
-                        string bossHome = data.BossList[bossReplacemnt];
-                        data.progBossInformation.Add(new Tuple<string, string, string>(bossReplacemnt, "become", bossHome));
-                        data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(bossReplacemnt, "become", bossHome, false, false, false));
-                    }
-                }
-
-                AddProgressionPoints(PPoints, true);
-            }
             //add to log
             data.bossEventLog.Add(eventTuple);
 
@@ -3595,7 +3292,7 @@ namespace KhTracker
 
                     //add extra points for bosses in special arenas
                     int bonuspoints = 0;
-                    if (!objWindow.oneHourCustom)
+                    if (!data.oneHourMode)
                     {
                         switch (bossType)
                         {
@@ -3617,21 +3314,21 @@ namespace KhTracker
                         switch (bossType)
                         {
                             case "boss_as":
-                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                bonuspoints = 15; // objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
                                 break;
                             case "boss_datas":
                                 if (boss.Contains("Final Xemnas"))
                                 {
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                    bonuspoints = 40; // objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
                                 }
                                 else
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                    bonuspoints = 20; // objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
                                 break;
                             case "boss_sephi":
-                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                bonuspoints = 30; // objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
                                 break;
                             case "boss_terra":
-                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                bonuspoints = 50; // objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
                                 break;
                             case "boss_other":
                                 if (boss == "Final Xemnas")
@@ -3855,6 +3552,16 @@ namespace KhTracker
             long baseAddress = memory.GetBaseAddress();
             long result = origAddress - baseAddress;
             return (int)result;
+        }
+
+
+        public void SetOneHourMarks(int marks)
+        {
+            if (!data.oneHourMode || memory == null)
+                return;
+
+            int address = (save + 0x363D) + ADDRESS_OFFSET;
+            memory.WriteMem(address, marks);
         }
 
         //progression hints - compare last saved progression point
