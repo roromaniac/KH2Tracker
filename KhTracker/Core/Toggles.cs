@@ -102,6 +102,8 @@ namespace KhTracker
         private void TopMostToggle(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.TopMost = TopMostOption.IsChecked;
+            gridWindow.Topmost = TopMostOption.IsChecked;
+            objWindow.Topmost = TopMostOption.IsChecked;
             Topmost = TopMostOption.IsChecked;
         }
 
