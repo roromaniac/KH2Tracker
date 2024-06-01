@@ -3475,24 +3475,25 @@
                 <!-- Row 6 (world locks 2) -->
                 <Grid Grid.Row="5" Grid.Column="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="1*"/>
-
-                        <ColumnDefinition Width="0.1*"/>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="1*"/>
-
-                        <ColumnDefinition Width="0.1*"/>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="1*"/>
-
-                        <ColumnDefinition Width="0.1*"/>
-                        <ColumnDefinition Width="0.6*"/>
-                        <ColumnDefinition Width="1*"/>
-
-                        <ColumnDefinition Width="0.*"/>
+                        <ColumnDefinition x:Name="VisitSpacerL" Width="03.*"/>
                         <ColumnDefinition Width="0.0*"/>
-                        <ColumnDefinition x:Name="SketchesCol" Width="1*"/>
+                        <ColumnDefinition Width="0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0*"/>
+
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="SketchesCol" Width="0*"/>
 
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition Width="0.0*"/>
@@ -3505,10 +3506,11 @@
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition x:Name="UnknownDiskCol" Width="1.0*"/>
+                        <ColumnDefinition x:Name="VisitSpacerR" Width="03.*"/>
                     </Grid.ColumnDefinitions>
 
                     <!-- Numbers -->
-                    <Viewbox Grid.Column="0" MaxHeight="70">
+                    <Viewbox Grid.Column="1" MaxHeight="70">
                         <local:OutlinedTextBlock x:Name="TWTNWCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
                             <local:OutlinedTextBlock.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -3518,7 +3520,7 @@
                             </local:OutlinedTextBlock.Fill>
                         </local:OutlinedTextBlock>
                     </Viewbox>
-                    <Viewbox Grid.Column="3" MaxHeight="70">
+                    <Viewbox Grid.Column="4" MaxHeight="70">
                         <local:OutlinedTextBlock x:Name="HBCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
                             <local:OutlinedTextBlock.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -3528,7 +3530,7 @@
                             </local:OutlinedTextBlock.Fill>
                         </local:OutlinedTextBlock>
                     </Viewbox>
-                    <Viewbox Grid.Column="6" MaxHeight="70">
+                    <Viewbox Grid.Column="7" MaxHeight="70">
                         <local:OutlinedTextBlock x:Name="DCCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="2">
                             <local:OutlinedTextBlock.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -3538,7 +3540,7 @@
                             </local:OutlinedTextBlock.Fill>
                         </local:OutlinedTextBlock>
                     </Viewbox>
-                    <Viewbox Grid.Column="9" MaxHeight="70">
+                    <Viewbox Grid.Column="10" MaxHeight="70">
                         <local:OutlinedTextBlock x:Name="TTCount" FontFamily="{StaticResource Gummi}" TextAlignment="Center" Margin="0,7,0,7" FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="4" Text="3">
                             <local:OutlinedTextBlock.Fill>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -3550,65 +3552,65 @@
                     </Viewbox>
 
 
-                    <local:Item x:Name="RikuWep1"           Content="{DynamicResource Min-RikuWep1}"        Grid.Column="1"  ToolTip="Way to the Dawn"/>
-                    <local:Item x:Name="RikuWep2"           Content="{DynamicResource Min-RikuWep2}"        Grid.Column="1"  ToolTip="Way to the Dawn"/>
-                    <local:Item x:Name="MembershipCard1"    Content="{DynamicResource Min-MembershipCard1}" Grid.Column="4"  ToolTip="Membership Card"/>
-                    <local:Item x:Name="MembershipCard2"    Content="{DynamicResource Min-MembershipCard2}" Grid.Column="4"  ToolTip="Membership Card"/>
-                    <local:Item x:Name="KingsLetter1"       Content="{DynamicResource Min-KingsLetter1}"    Grid.Column="7"  ToolTip="Disney Castle Key"/>
-                    <local:Item x:Name="KingsLetter2"       Content="{DynamicResource Min-KingsLetter2}"    Grid.Column="7"  ToolTip="Disney Castle Key"/>
-                    <local:Item x:Name="IceCream1"          Content="{DynamicResource Min-IceCream1}"       Grid.Column="10" ToolTip="Ice Cream"/>
-                    <local:Item x:Name="IceCream2"          Content="{DynamicResource Min-IceCream2}"       Grid.Column="10" ToolTip="Ice Cream"/>
-                    <local:Item x:Name="IceCream3"          Content="{DynamicResource Min-IceCream3}"       Grid.Column="10" ToolTip="Ice Cream"/>
-                    <local:Item x:Name="Sketches"           Content="{DynamicResource Min-Sketches}"        Grid.Column="13" ToolTip="Namine's Sketches"/>
-                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="16" ToolTip="Hades Cup Trophy"/>
-                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="19" ToolTip="Olympus Stone"/>
-                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="22" ToolTip="Unknown Disk"/>
+                    <local:Item x:Name="RikuWep1"           Content="{DynamicResource Min-RikuWep1}"        Grid.Column="2"  ToolTip="Way to the Dawn"/>
+                    <local:Item x:Name="RikuWep2"           Content="{DynamicResource Min-RikuWep2}"        Grid.Column="2"  ToolTip="Way to the Dawn"/>
+                    <local:Item x:Name="MembershipCard1"    Content="{DynamicResource Min-MembershipCard1}" Grid.Column="5"  ToolTip="Membership Card"/>
+                    <local:Item x:Name="MembershipCard2"    Content="{DynamicResource Min-MembershipCard2}" Grid.Column="5"  ToolTip="Membership Card"/>
+                    <local:Item x:Name="KingsLetter1"       Content="{DynamicResource Min-KingsLetter1}"    Grid.Column="8"  ToolTip="Disney Castle Key"/>
+                    <local:Item x:Name="KingsLetter2"       Content="{DynamicResource Min-KingsLetter2}"    Grid.Column="8"  ToolTip="Disney Castle Key"/>
+                    <local:Item x:Name="IceCream1"          Content="{DynamicResource Min-IceCream1}"       Grid.Column="11" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="IceCream2"          Content="{DynamicResource Min-IceCream2}"       Grid.Column="11" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="IceCream3"          Content="{DynamicResource Min-IceCream3}"       Grid.Column="11" ToolTip="Ice Cream"/>
+                    <local:Item x:Name="Sketches"           Content="{DynamicResource Min-Sketches}"        Grid.Column="14" ToolTip="Namine's Sketches"/>
+                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="17" ToolTip="Hades Cup Trophy"/>
+                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="20" ToolTip="Olympus Stone"/>
+                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="23" ToolTip="Unknown Disk"/>
 
 
                     <!-- silhouettes -->
-                    <ContentControl x:Name="S_RikuWep" Content="{DynamicResource Min-RikuWep}"                   Grid.Column="1" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_RikuWep" Content="{DynamicResource Min-RikuWep}"                   Grid.Column="2" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_MembershipCard" Content="{DynamicResource Min-MembershipCard}"           Grid.Column="4" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_MembershipCard" Content="{DynamicResource Min-MembershipCard}"           Grid.Column="5" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_KingsLetter" Content="{DynamicResource Min-KingsLetter}"             Grid.Column="7" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_KingsLetter" Content="{DynamicResource Min-KingsLetter}"             Grid.Column="8" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_IceCream" Content="{DynamicResource Min-IceCream}"                   Grid.Column="10" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_IceCream" Content="{DynamicResource Min-IceCream}"                   Grid.Column="11" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_Sketches" Content="{DynamicResource Min-Sketches}"             Grid.Column="13" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_Sketches" Content="{DynamicResource Min-Sketches}"             Grid.Column="14" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"               Grid.Column="16" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"               Grid.Column="17" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"           Grid.Column="19" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"           Grid.Column="20" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_UnknownDisk" Content="{DynamicResource Min-UnknownDisk}"        Grid.Column="22" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_UnknownDisk" Content="{DynamicResource Min-UnknownDisk}"        Grid.Column="23" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
 
                     <!-- Ghost Nums -->
-                    <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="1" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -3623,7 +3625,7 @@
                                                  FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
                         </Viewbox>
                     </Grid>
-                    <Grid Grid.Column="3" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="4" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -3638,7 +3640,7 @@
                                                  FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
                         </Viewbox>
                     </Grid>
-                    <Grid Grid.Column="6" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="7" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -3653,7 +3655,7 @@
                                                  FontSize="20pt" AllowDrop="False" IsHitTestVisible="False" StrokeThickness="5" Text="3" Fill="#FF097B00" Stroke="#FFFFECEC"/>
                         </Viewbox>
                     </Grid>
-                    <Grid Grid.Column="9" Grid.ColumnSpan="2">
+                    <Grid Grid.Column="10" Grid.ColumnSpan="2">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>

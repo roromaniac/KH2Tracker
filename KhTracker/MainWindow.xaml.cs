@@ -271,6 +271,9 @@ namespace KhTracker
             AntiFormOption.IsChecked = Properties.Settings.Default.AntiForm;
             AntiFormToggle(AntiFormOption.IsChecked);
 
+            VisitLockOption2.IsChecked = Properties.Settings.Default.WorldVisitLock2;
+            VisitLockToggle2(VisitLockOption2.IsChecked);
+
             VisitLockOption.IsChecked = Properties.Settings.Default.WorldVisitLock;
             VisitLockToggle(VisitLockOption.IsChecked);
 
@@ -279,6 +282,9 @@ namespace KhTracker
 
             ExtraChecksOption.IsChecked = Properties.Settings.Default.ExtraChecks;
             ExtraChecksToggle(ExtraChecksOption.IsChecked);
+
+            ChestLockOption.IsChecked = Properties.Settings.Default.WorldChestLock;
+            ChestLockToggle(ChestLockOption.IsChecked);
 
             //Visual
             SeedHashOption.IsChecked = Properties.Settings.Default.SeedHash;
@@ -1028,6 +1034,20 @@ namespace KhTracker
             //we use this to check the current lock state and set lock visuals as needed while doing so
             foreach (string worldName in data.WorldsData.Keys.ToList())
             {
+                //get lock status
+                Visibility[] lockStatus = { Visibility.Visible, Visibility.Visible, Visibility.Visible };
+
+                if (reset && data.WorldsData[worldName].visitLocks >= 0)
+                {
+                    if (VisitLockOption2.IsChecked)
+                    {
+                        lockStatus[0] = Visibility.Collapsed;
+                        data.WorldsData[worldName].visitLocks = 1;
+                    }
+                    else
+                        data.WorldsData[worldName].visitLocks = 0;
+                }
+
                 //check if world has any locks (worlds without any will be -1)
                 int worldLockValue = data.WorldsData[worldName].visitLocks;
                 if (worldLockValue < 0)
@@ -1036,8 +1056,6 @@ namespace KhTracker
                 string lockName = worldName + "Locks";
                 Grid worldLocks = data.WorldsData[worldName].top.FindName(lockName) as Grid;
 
-                //get lock status
-                Visibility[] lockStatus = { Visibility.Visible, Visibility.Visible, Visibility.Visible };
                 while(worldLockValue > 0 && !reset)
                 {
                     if (worldLockValue >= 100)
@@ -1072,8 +1090,6 @@ namespace KhTracker
                 if (lock3 != null)
                     lock3.Visibility = lockStatus[2];
 
-                if (reset)
-                    data.WorldsData[worldName].visitLocks = 0;
             }
         }
 

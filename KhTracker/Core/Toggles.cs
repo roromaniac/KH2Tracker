@@ -262,41 +262,67 @@ namespace KhTracker
         {
             Properties.Settings.Default.WorldVisitLock = toggle;
             VisitLockOption.IsChecked = toggle;
+            //VisitLockOption2.IsEnabled = toggle;
+            Grid VisitRow2 = ItemPool.Children[5] as Grid;
+            double[] resetList = {
+                    0.0,
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.1,
+                    0.6, 1.0,
+                    0.0,
+                    0.0, 1.0,
+                    0.0};
 
             if (toggle)
             {
-                VisitLockOption2.IsEnabled = true;
+                if (!ExtraChecksOption.IsChecked)
+                {
+                    if(VisitLockOption2.IsChecked)
+                    {
+                        VisitSpacerL.Width = new GridLength(3.0, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(3.0, GridUnitType.Star);
+                    }
+                    else
+                    {
+                        VisitSpacerL.Width = new GridLength(2, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(2, GridUnitType.Star);
+                    }
+                }
+                else
+                {
+                    if (VisitLockOption2.IsChecked)
+                    {
+                        VisitSpacerL.Width = new GridLength(1.5, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(1.5, GridUnitType.Star);
+                    }
+                    else
+                    {
+                        VisitSpacerL.Width = new GridLength(0, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(0, GridUnitType.Star);
+                    }
+                }
 
                 foreach (string worldName in data.WorldsData.Keys.ToList())
                 {
                     data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0.08, GridUnitType.Star);
                 }
-
-                VisitsRow.Height = new GridLength(1, GridUnitType.Star);
-
-                Grid VisitRow2 = ItemPool.Children[5] as Grid;
-                double[] resetList = {
-                    0.6, 1.0, 
-                    0.1, 
-                    0.6, 1.0, 
-                    0.1, 
-                    0.6, 1.0, 
-                    0.1, 
-                    0.6, 1.0, 
-                    0.0, 
-                    0.0, 1.0
-                };
-                for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
+                
+                for (int i = 1; i < VisitRow2.ColumnDefinitions.Count; i++)
                 {
-                    if (i <= 13)
+                    if (i <= 14)
                         VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
                 }
+
+                VisitsRow.Height = new GridLength(1, GridUnitType.Star);
                 VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+
             }
             else
             {
-                VisitLockOption2.IsEnabled = false;
-
                 foreach (string worldName in data.WorldsData.Keys.ToList())
                 {
                     data.WorldsData[worldName].top.ColumnDefinitions[0].Width = new GridLength(0, GridUnitType.Star);
@@ -306,18 +332,27 @@ namespace KhTracker
                 {
                     VisitsRow.Height = new GridLength(0, GridUnitType.Star);
 
-                    Grid VisitRow2 = ItemPool.Children[5] as Grid;
+
                     foreach (ColumnDefinition Vlock in VisitRow2.ColumnDefinitions)
                     {
                         if (Vlock.Name != "HadesCupCol" && Vlock.Name != "OlympusStoneCol" && Vlock.Name != "UnknownDiskCol")
                             Vlock.Width = new GridLength(0, GridUnitType.Star);
                     }
                     VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                    VisitSpacerL.Width = new GridLength(3, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(3, GridUnitType.Star);
                 }
                 else 
                 {
+                    for (int i = 1; i < VisitRow2.ColumnDefinitions.Count; i++)
+                    {
+                        if (i <= 14)
+                            VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
+                    }
                     VisitsRow.Height = new GridLength(0, GridUnitType.Star);
                     VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
+                    VisitSpacerL.Width = new GridLength(0, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(0, GridUnitType.Star);
                 }
             }
 
@@ -327,6 +362,9 @@ namespace KhTracker
             }
 
             VisitLockCheck(true);
+
+            if (toggle)
+                VisitLockToggle2(VisitLockOption2.IsChecked);
         }
 
         private void VisitLockToggle2(object sender, RoutedEventArgs e)
@@ -338,6 +376,11 @@ namespace KhTracker
         {
             Properties.Settings.Default.WorldVisitLock2 = toggle;
             VisitLockOption2.IsChecked = toggle;
+
+            //don't do anything else if visit locks are off
+            if (!VisitLockOption.IsChecked)
+                return;
+
             Grid VisitRow1 = ItemPool.Children[4] as Grid;
             Grid VisitRow2 = ItemPool.Children[5] as Grid;
             double[] resetList1 = {
@@ -358,6 +401,7 @@ namespace KhTracker
                     0.6, 1.0,  // Number, SP
             };
             double[] resetList2 = {
+                    0.0,
                     0.6, 1.0,  // Number, TWTNW
                     0.1,       // Spacer
                     0.6, 1.0,  // Number, HB
@@ -390,6 +434,7 @@ namespace KhTracker
                     0.0, 1.0,  // Number, SP
                 };
                 resetList2 = new double[]{
+                    0.0,
                     0.0, 1.0,  // Number, TWTNW
                     0.0,       // Spacer
                     0.0, 1.0,  // Number, HB
@@ -403,9 +448,61 @@ namespace KhTracker
 
                 //fix ice cream number
                 TTCount.Text = "2";
+
+                //fix real values
+                WorldGrid.Real_AuronWep++;
+                WorldGrid.Real_MulanWep++;
+                WorldGrid.Real_BeastWep++;
+                WorldGrid.Real_JackWep++;
+                WorldGrid.Real_SimbaWep++;
+                WorldGrid.Real_SparrowWep++;
+                WorldGrid.Real_AladdinWep++;
+                WorldGrid.Real_TronWep++;
+                WorldGrid.Real_MembershipCard++;
+                WorldGrid.Real_IceCream++;
+                WorldGrid.Real_RikuWep++;
+                WorldGrid.Real_KingsLetter++;
+
+                //set correct spacer widths
+                if (ExtraChecksOption.IsChecked)
+                {
+                    VisitSpacerL.Width = new GridLength(1.5, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(1.5, GridUnitType.Star);
+                }
+                else
+                {
+                    VisitSpacerL.Width = new GridLength(3, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(3, GridUnitType.Star);
+                }
             }
             else
+            {
                 TTCount.Text = "3";
+                //fix real values
+                WorldGrid.Real_AuronWep--;
+                WorldGrid.Real_MulanWep--;
+                WorldGrid.Real_BeastWep--;
+                WorldGrid.Real_JackWep--;
+                WorldGrid.Real_SimbaWep--;
+                WorldGrid.Real_SparrowWep--;
+                WorldGrid.Real_AladdinWep--;
+                WorldGrid.Real_TronWep--;
+                WorldGrid.Real_MembershipCard--;
+                WorldGrid.Real_IceCream--;
+                WorldGrid.Real_RikuWep--;
+                WorldGrid.Real_KingsLetter--;
+
+                if (ExtraChecksOption.IsChecked)
+                {
+                    VisitSpacerL.Width = new GridLength(0, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(0, GridUnitType.Star);
+                }
+                else
+                {
+                    VisitSpacerL.Width = new GridLength(2.5, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(2.5, GridUnitType.Star);
+                }
+            }
 
             //set new widths
             for (int i = 0; i < VisitRow1.ColumnDefinitions.Count; i++)
@@ -413,9 +510,9 @@ namespace KhTracker
                 if (i <= 22)
                     VisitRow1.ColumnDefinitions[i].Width = new GridLength(resetList1[i], GridUnitType.Star);
             }
-            for (int i = 0; i < VisitRow2.ColumnDefinitions.Count; i++)
+            for (int i = 1; i < VisitRow2.ColumnDefinitions.Count; i++)
             {
-                if (i <= 13)
+                if (i <= 14)
                     VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList2[i], GridUnitType.Star);
             }
 
@@ -428,10 +525,9 @@ namespace KhTracker
                     //(take away items when on and add them back when off)
                     HandleItemToggle(!toggle, data.VisitLocks[i], false);
                 }
-                    
             }
 
-            //VisitLockCheck(true);
+            VisitLockCheck(true);
         }
 
         private void ChestLockToggle(object sender, RoutedEventArgs e)
@@ -516,9 +612,22 @@ namespace KhTracker
                             Vlock.Width = new GridLength(0, GridUnitType.Star);
                     }
                     VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                    VisitSpacerL.Width = new GridLength(3, GridUnitType.Star);
+                    VisitSpacerR.Width = new GridLength(3, GridUnitType.Star);
                 }
-                //else
-                //    VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+                else
+                {
+                    if (VisitLockOption2.IsChecked)
+                    {
+                        VisitSpacerL.Width = new GridLength(1.5, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(1.5, GridUnitType.Star);
+                    }
+                    else
+                    {
+                        VisitSpacerL.Width = new GridLength(0.0, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(0.0, GridUnitType.Star);
+                    }
+                }
             }
             else
             {
@@ -539,9 +648,22 @@ namespace KhTracker
                             Vlock.Width = new GridLength(0, GridUnitType.Star);
                     }
                     VisitsRow2.Height = new GridLength(1, GridUnitType.Star);
+
+                    if (VisitLockOption2.IsChecked)
+                    {
+                        VisitSpacerL.Width = new GridLength(3.0, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(3.0, GridUnitType.Star);
+                    }
+                    else
+                    {
+                        VisitSpacerL.Width = new GridLength(2, GridUnitType.Star);
+                        VisitSpacerR.Width = new GridLength(2, GridUnitType.Star);
+                    }
                 }
                 else
+                {
                     VisitsRow2.Height = new GridLength(0, GridUnitType.Star);
+                }                  
             }
 
             HandleItemToggle(toggle, HadesCup, false);

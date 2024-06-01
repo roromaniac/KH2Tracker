@@ -1248,6 +1248,7 @@ namespace KhTracker
                 var hintObject = JsonSerializer.Deserialize<Dictionary<string, object>>(hintText);
                 var settings = new List<string>();
                 var hintableItems = new List<string>(JsonSerializer.Deserialize<List<string>>(hintObject["hintableItems"].ToString()));
+                var startingItems = new List<int>(JsonSerializer.Deserialize<List<int>>(hintObject["startingInventory"].ToString()));
 
                 data.ShouldResetHash = false;
 
@@ -1539,6 +1540,10 @@ namespace KhTracker
                         }
                     }
 
+                    //adjust based on starting items
+                    //TODO: first visit locks only, maybe do things with aux checks or potentially every item
+                    VisitLockCheck(startingItems);
+
                     //prevent creations hinting twice for progression
                     if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
                     {
@@ -1762,9 +1767,11 @@ namespace KhTracker
             if (data.oneHourMode)
             {
                 VisitLockToggle(false);
+                VisitLockToggle2(false);
 
                 Grid VisitRow2 = ItemPool.Children[5] as Grid;
                 double[] resetList = {
+                    0.0,
                     0.6, 1.0,
                     0.1,
                     0.6, 1.0,
@@ -1774,9 +1781,9 @@ namespace KhTracker
                     0.6, 1.0,
                     0.0,
                     0.0, 1.0};
-                for (int i = 10; i < VisitRow2.ColumnDefinitions.Count; i++)
+                for (int i = 11; i < VisitRow2.ColumnDefinitions.Count; i++)
                 {
-                    if (i <= 13)
+                    if (i <= 14)
                         VisitRow2.ColumnDefinitions[i].Width = new GridLength(resetList[i], GridUnitType.Star);
                 }
 
@@ -2643,6 +2650,7 @@ namespace KhTracker
             AbilitiesOption.IsEnabled = clickable;
             AntiFormOption.IsEnabled = clickable;
             VisitLockOption.IsEnabled = clickable;
+            VisitLockOption2.IsEnabled = clickable;
             ChestLockOption.IsEnabled = clickable;
             ExtraChecksOption.IsEnabled = clickable;
             SoraLevel01Option.IsEnabled = clickable;
@@ -2652,9 +2660,128 @@ namespace KhTracker
             WorldToggleMenuItem.IsEnabled = clickable;
         }
 
-        private void VisitLockCheck()
+        private void VisitLockCheck(List<int> startingItems)
         {
+            //Check all starting items to see if at least 1 of every visit lock item is in the inventory.
+            //if so then assume first visit locks are off and diabe them from the itempool
+            bool stt_Lock = false;
+            bool lod_Lock = false;
+            bool tt_Lock = false;
+            bool hb_Lock = false;
+            bool bc_Lock = false;
+            bool oc_Lock = false;
+            bool dc_Lock = false;
+            bool pr_Lock = false;
+            bool ag_Lock = false;
+            bool ht_Lock = false;
+            bool pl_Lock = false;
+            bool sp_Lock = false;
+            bool twtnw_Lock = false;
 
+            int total = 0;
+
+            foreach (int check in startingItems)
+            {
+                switch(check)
+                {
+                    case 54:
+                        if(!oc_Lock)
+                        {
+                            oc_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 55:
+                        if (!lod_Lock)
+                        {
+                            lod_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 59:
+                        if (!bc_Lock)
+                        {
+                            bc_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 60:
+                        if (!ht_Lock)
+                        {
+                            ht_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 61:
+                        if (!pl_Lock)
+                        {
+                            pl_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 62:
+                        if (!pr_Lock)
+                        {
+                            pr_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 72:
+                        if (!ag_Lock)
+                        {
+                            ag_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 73:
+                        if (!twtnw_Lock)
+                        {
+                            twtnw_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 74:
+                        if (!sp_Lock)
+                        {
+                            sp_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 368:
+                        if (!stt_Lock)
+                        {
+                            stt_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 369:
+                        if (!hb_Lock)
+                        {
+                            hb_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 375:
+                        if (!tt_Lock)
+                        {
+                            tt_Lock = true;
+                            total++;
+                        }
+                        break;
+                    case 460:
+                        if (!dc_Lock)
+                        {
+                            dc_Lock = true;
+                            total++;
+                        }
+                        break;
+                }
+            }
+
+            if(total == 13)
+            {
+                VisitLockToggle2(true);
+            }
         }
 
         /// 
