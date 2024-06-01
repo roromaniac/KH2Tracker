@@ -363,8 +363,8 @@ namespace KhTracker
 
             VisitLockCheck(true);
 
-            if (toggle)
-                VisitLockToggle2(VisitLockOption2.IsChecked);
+            //if (toggle)
+            //    VisitLockToggle2(VisitLockOption2.IsChecked);
         }
 
         private void VisitLockToggle2(object sender, RoutedEventArgs e)

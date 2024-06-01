@@ -1767,7 +1767,7 @@ namespace KhTracker
             if (data.oneHourMode)
             {
                 VisitLockToggle(false);
-                VisitLockToggle2(false);
+                //VisitLockToggle2(false);
 
                 Grid VisitRow2 = ItemPool.Children[5] as Grid;
                 double[] resetList = {
