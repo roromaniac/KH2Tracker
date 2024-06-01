@@ -1542,7 +1542,7 @@ namespace KhTracker
 
                     //adjust based on starting items
                     //TODO: first visit locks only, maybe do things with aux checks or potentially every item
-                    VisitLockCheck(startingItems);
+                    //VisitLockCheck(startingItems);
 
                     //prevent creations hinting twice for progression
                     if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))

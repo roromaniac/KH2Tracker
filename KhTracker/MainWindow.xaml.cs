@@ -271,8 +271,8 @@ namespace KhTracker
             AntiFormOption.IsChecked = Properties.Settings.Default.AntiForm;
             AntiFormToggle(AntiFormOption.IsChecked);
 
-            VisitLockOption2.IsChecked = Properties.Settings.Default.WorldVisitLock2;
-            VisitLockToggle2(VisitLockOption2.IsChecked);
+            //VisitLockOption2.IsChecked = Properties.Settings.Default.WorldVisitLock2;
+            //VisitLockToggle2(VisitLockOption2.IsChecked);
 
             VisitLockOption.IsChecked = Properties.Settings.Default.WorldVisitLock;
             VisitLockToggle(VisitLockOption.IsChecked);
