@@ -157,26 +157,30 @@ namespace KhTracker
             //needed for worlds to turn blue after collecting all the ICs the world has
             foreach (var world in worlds)
             {
-                //do nothing for these two
                 if (world.Key == "Critical Bonuses" || world.Key == "Garden of Assemblage")
                 {
                     continue;
                 }
                 foreach (var item in world.Value)
                 {
-                    //add item to world hinted list
                     data.WorldsData[Codes.ConvertSeedGenName(world.Key)].hintedItemList.Add(Codes.ConvertSeedGenName(item));
                 }
-
-                //set world to be blue if needed (has 0 checks)
-                data.WorldsData[Codes.ConvertSeedGenName(world.Key)].worldGrid.WorldComplete();
-                SetWorldValue(data.WorldsData[Codes.ConvertSeedGenName(world.Key)].value, 0);
             }
 
+            //done here for timing
             if (data.progressionType == "Reports")
             {
-                //done here for timing
+                
                 SetProgressionHints(data.UsingProgressionHints);
+            }
+
+            foreach (var key in data.WorldsData.Keys.ToList())
+            {
+                if (key == "GoA")
+                    continue;
+
+                data.WorldsData[key].worldGrid.WorldComplete();
+                SetWorldValue(data.WorldsData[key].value, 0);
             }
 
             //set report info
@@ -247,7 +251,7 @@ namespace KhTracker
             if (data.ScoreMode)
                 ScoreModifier(hintObject);
 
-            data.hintsLoaded = true;
+            //data.hintsLoaded = true;
 
             if (data.progressionType != "Reports")
             {
@@ -322,11 +326,17 @@ namespace KhTracker
                             grid.Add_Ghost(data.GhostItems["Ghost_" + checkname]);
                     }
                 }
+            }
 
-                //set world to be blue if needed (has 0 checks)
+            //apparently can't be combined with the above or world values don't update correctly
+            foreach (var key in data.WorldsData.Keys.ToList())
+            {
+                if (key == "GoA")
+                    continue;
+
                 if (data.SpoilerWorldCompletion)
-                    data.WorldsData[Codes.ConvertSeedGenName(world.Key)].worldGrid.WorldComplete();
-                SetWorldValue(data.WorldsData[Codes.ConvertSeedGenName(world.Key)].value, 0);
+                    data.WorldsData[key].worldGrid.WorldComplete();
+                SetWorldValue(data.WorldsData[key].value, 0);
             }
 
             // report hints reveal all checks in a world
