@@ -2,22 +2,15 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Linq;
 using System.IO;
-using Microsoft.Win32;
-using System.Windows.Documents;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
-using System.Windows.Forms;
 using Button = System.Windows.Controls.Button;
 using KhTracker.Hotkeys;
 using System.Text;
-using System.Reflection;
 
 namespace KhTracker
 {
@@ -31,6 +24,17 @@ namespace KhTracker
         private int total;
         public static int PointTotal = 0;
         public int DeathCounter = 0;
+
+        private Dictionary<int, string> overlays = new Dictionary<int, string>()
+        {
+            { 0, ""},
+            { 1, "Over_Cross"},
+            { 2, "Over_Question"},
+            { 3, "Over_PP"},
+            { 4, "Over_PN"},
+            { 5, "Over_PC"},
+
+        };
 
         public MainWindow()
         {
@@ -535,47 +539,57 @@ namespace KhTracker
                     }
                     break;
                 case MouseButton.Right: //for setting world cross icon
-                    if (data.WorldsData.ContainsKey(button.Name))
+                    if (data.WorldsData.ContainsKey(button.Name) && !button.Name.Contains("GoA"))
                     {
-                        //string crossname = button.Name + "Cross";
-                        //
-                        //if (data.WorldsData[button.Name].top.FindName(crossname) is Image Cross)
-                        //{
-                        //    if (Cross.Visibility == Visibility.Collapsed)
-                        //        Cross.Visibility = Visibility.Visible;
-                        //    else
-                        //        Cross.Visibility = Visibility.Collapsed;
-                        //}
-
                         string crossname = button.Name + "Cross";
-                        string questionname = button.Name + "Question";
-
-                        if (data.WorldsData[button.Name].top.FindName(crossname) is Image Cross
-                            && data.WorldsData[button.Name].top.FindName(questionname) is Image Question)
+                        //check if icon that can have cross image
+                        if (data.WorldsData[button.Name].top.FindName(crossname) is Image Cross)
                         {
-                            //if it's nothing, set to the cross
-                            if (Cross.Visibility == Visibility.Collapsed && Question.Visibility == Visibility.Collapsed)
+                            //set default value if not in list
+                            if (!data.WorldOverlay.ContainsKey(button.Name))
                             {
+                                data.WorldOverlay.Add(button.Name, 1);
                                 Cross.Visibility = Visibility.Visible;
-                                Question.Visibility = Visibility.Collapsed;
-                            }
-                            else if (Cross.Visibility == Visibility.Visible && Question.Visibility == Visibility.Collapsed)
-                            {
-                                Question.Visibility = Visibility.Visible;
-                                Cross.Visibility = Visibility.Collapsed;
                             }
                             else
                             {
-                                Cross.Visibility = Visibility.Collapsed;
-                                Question.Visibility = Visibility.Collapsed;
+                                //set back to zero if 5 (last image)
+                                if (data.WorldOverlay[button.Name] == 5)
+                                {
+                                    data.WorldOverlay[button.Name] = 0;
+                                    Cross.Visibility = Visibility.Collapsed;
+                                    return;
+                                }
+                                //increase number
+                                else
+                                {
+                                    data.WorldOverlay[button.Name]++;
+                                    Cross.Visibility = Visibility.Visible;
+                                }
                             }
+
+                            //set new overlay image based on number
+                            Image _test = (Image)TryFindResource(overlays[data.WorldOverlay[button.Name]]) as Image;
+                            Cross.Source = _test.Source;
                         }
                     }
                     break;
-                case MouseButton.Middle: //setting world value back to "?" if not using any hints
-                    if (data.WorldsData.ContainsKey(button.Name) && data.WorldsData[button.Name].value != null && data.mode == Mode.None)
+                case MouseButton.Middle: 
+                    if (data.WorldsData.ContainsKey(button.Name))
                     {
-                        data.WorldsData[button.Name].value.Text = "?";
+                        //setting world value back to "?" if not using any hints
+                        if (data.mode == Mode.None && data.WorldsData[button.Name].value != null)
+                        {
+                            data.WorldsData[button.Name].value.Text = "?";
+                        }
+
+                        //middle click will reset overlay
+                        string crossname = button.Name + "Cross";
+                        if (data.WorldsData[button.Name].top.FindName(crossname) is Image Cross)
+                        {
+                            data.WorldOverlay[button.Name] = 0;
+                            Cross.Visibility = Visibility.Collapsed;
+                        }
                     }
                     break;
                 default:
@@ -590,6 +604,55 @@ namespace KhTracker
             if (data.WorldsData.ContainsKey(button.Name) && data.WorldsData[button.Name].value != null)
             {
                 ManualWorldValue(data.WorldsData[button.Name].value, e.Delta);
+            }
+
+            int num = 0;
+            //scroll overylay icons 
+            if (data.WorldsData.ContainsKey(button.Name) && !button.Name.Contains("GoA"))
+            {
+                string crossname = button.Name + "Cross";
+                if (data.WorldsData[button.Name].top.FindName(crossname) is Image Cross)
+                {
+                    //set default value if not in list
+                    if (!data.WorldOverlay.ContainsKey(button.Name))
+                    {
+                        data.WorldOverlay.Add(button.Name, 0);
+                    }
+
+                    //get delta
+                    if (e.Delta > 0)
+                        ++num;
+                    else
+                        --num;
+
+                    //get correct icon number based on scroll
+                    num += data.WorldOverlay[button.Name];
+
+                    //reset back to blank image 0 if over 5
+                    if (num > 5)
+                    {
+                        num = 0;
+                    }
+                    //set to 5 if less than 0
+                    else if(num < 0)
+                    {
+                        num = 5;
+                    }
+
+                    data.WorldOverlay[button.Name] = num;
+
+                    //hide image and return if zero
+                    if (num == 0)
+                    {
+                        Cross.Visibility = Visibility.Collapsed;
+                        return;
+                    }
+
+                    //set new overlay image based on number
+                    Cross.Visibility = Visibility.Visible;
+                    Image _test = (Image)TryFindResource(overlays[data.WorldOverlay[button.Name]]) as Image;
+                    Cross.Source = _test.Source;
+                }
             }
         }
 
@@ -851,7 +914,7 @@ namespace KhTracker
             if (data.WorldsData[location].containsGhost) //turn green if it conains ghost item
                 Color = (SolidColorBrush)FindResource("GhostHint");
 
-            if (worldValue.Name.Contains("GoA"))
+            if (worldValue.Name.Contains("GoA") && !data.UsingProgressionHints)
             {
                 worldValue.Fill = (SolidColorBrush)FindResource("ClassicYellow");
 

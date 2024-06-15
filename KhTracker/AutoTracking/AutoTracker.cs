@@ -2422,11 +2422,13 @@ namespace KhTracker
                             if (wID1 == 98 && wCom == 1) // Data Xemnas finish
                             {
                                 newProg = 7;
+                                UpdateSupportingTrackers("Final Xemnas (Data)");
                             }
-                            else if (wID1 == 74 && wCom == 1 && data.revealFinalXemnas) // Regular Final Xemnas finish
+                            else if (wID1 == 74 && wCom == 1) // Regular Final Xemnas finish
                             {
-                                if (data.UsingProgressionHints)
+                                if (data.UsingProgressionHints && data.revealFinalXemnas)
                                     UpdateProgressionPointsTWTNW(wName);
+
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }

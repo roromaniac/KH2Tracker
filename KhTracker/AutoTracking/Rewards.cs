@@ -43,7 +43,20 @@ namespace KhTracker
             limitChecks = new List<Tuple<int, string>>();
             masterChecks = new List<Tuple<int, string>>();
             finalChecks = new List<Tuple<int, string>>();
-            ReadRewards();
+
+            if (MainWindow.data.seedLevelChecks)
+            {
+                swordChecks = MainWindow.data.seedswordChecks;
+                shieldChecks = MainWindow.data.seedshieldChecks;
+                staffChecks = MainWindow.data.seedstaffChecks;
+                valorChecks = MainWindow.data.seedvalorChecks;
+                wisdomChecks = MainWindow.data.seedwisdomChecks;
+                limitChecks = MainWindow.data.seedlimitChecks;
+                masterChecks = MainWindow.data.seedmasterChecks;
+                finalChecks = MainWindow.data.seedfinalChecks;
+            }
+            else
+                ReadRewards();
         }
 
         // populate reward lists

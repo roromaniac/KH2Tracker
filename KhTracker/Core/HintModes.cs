@@ -355,17 +355,19 @@ namespace KhTracker
                         worldstring = worldstring.Remove(0, 8);
                         dummyvalue = -1;
                     }
+
+                    //creations will be hinted again now
                     //prog specific
-                    if (data.UsingProgressionHints && report <= 13)
-                    {
-                        if (worldstring.Contains("Creations"))
-                        {
-                            //still need to get and add location for report to track to correct world
-                            //we can't just skip everything if creations was set to be hinted
-                            data.reportLocations.Add(location);
-                            continue;
-                        }
-                    }
+                    //if (data.UsingProgressionHints && report <= 13)
+                    //{
+                    //    if (worldstring.Contains("Creations"))
+                    //    {
+                    //        //still need to get and add location for report to track to correct world
+                    //        //we can't just skip everything if creations was set to be hinted
+                    //        data.reportLocations.Add(location);
+                    //        continue;
+                    //    }
+                    //}
 
                     data.reportInformation.Add(new Tuple<string, string, int>(Codes.ConvertSeedGenName(worldstring), null, dummyvalue));
                     data.reportLocations.Add(location);
@@ -673,8 +675,24 @@ namespace KhTracker
             {
                 foreach (var reportP in reportKeysP)
                 {
+                    int itemID;
+                    string itemName;
+
+                    //try getting item name from number
+                    try
+                    {
+                        itemID = int.Parse(reportsP[reportP.ToString()]["check"].ToString());
+                        itemName = Codes.ConvertSeedGenName(itemID, true);
+                    }
+                    //just get name as is
+                    catch
+                    {
+                        itemName = reportsP[reportP.ToString()]["check"].ToString();
+                    }
+
                     var worldP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["World"].ToString());
-                    var checkP = reportsP[reportP.ToString()]["check"].ToString();
+                    //var checkP = reportsP[reportP.ToString()]["check"].ToString();
+                    var checkP = itemName;
                     var locationP = Codes.ConvertSeedGenName(reportsP[reportP.ToString()]["Location"].ToString());
 
                     data.reportInformation.Add(new Tuple<string, string, int>(worldP, checkP, 0));
@@ -839,15 +857,15 @@ namespace KhTracker
                 return;
 
             //creations specific changes
-            if (!data.puzzlesOn && data.synthOn && data.progressionType == "Reports")
-            {
-                //data.WorldsData["PuzzSynth"].value.Text = "";
-                //let's just make the value invisible
-                if (data.WorldsData["PuzzSynth"].value.Visibility == Visibility.Visible)
-                {
-                    data.WorldsData["PuzzSynth"].value.Visibility = Visibility.Hidden;
-                }
-            }
+            //if (!data.puzzlesOn && data.synthOn && data.progressionType == "Reports")
+            //{
+            //    //data.WorldsData["PuzzSynth"].value.Text = "";
+            //    //let's just make the value invisible
+            //    if (data.WorldsData["PuzzSynth"].value.Visibility == Visibility.Visible)
+            //    {
+            //        data.WorldsData["PuzzSynth"].value.Visibility = Visibility.Hidden;
+            //    }
+            //}
 
             //fix later so if a specific variable/value from hint file was passed
             if (data.progressionType == "Bosses")
@@ -998,6 +1016,8 @@ namespace KhTracker
             data.TotalProgressionPoints += points;
             data.calulating = true;
 
+            int previousHint = data.ProgressionCurrentHint;
+
             if (data.ProgressionCurrentHint >= data.HintCosts.Count - 1 ||
                 data.ProgressionCurrentHint == data.HintCosts.Count || data.ProgressionCurrentHint == data.WorldsEnabled)
             {
@@ -1020,6 +1040,8 @@ namespace KhTracker
                 //update points and current hint
                 #endregion
                 data.ProgressionPoints -= data.HintCosts[data.ProgressionCurrentHint];
+
+                //do not let progression hint number exceed enabled worlds count (unless boss home hinting)
                 data.ProgressionCurrentHint++;
 
                 //reveal hints/world
@@ -1047,7 +1069,9 @@ namespace KhTracker
                 ProgressionCollectedValue.Text = data.ProgressionPoints.ToString();
                 ProgressionTotalValue.Text = data.HintCosts[data.ProgressionCurrentHint].ToString();
             }
-            data.WorldsData["GoA"].value.Text = data.ProgressionCurrentHint.ToString();
+
+            if (previousHint < data.ProgressionCurrentHint)
+                data.WorldsData["GoA"].value.Text = data.ProgressionCurrentHint.ToString();
 
             if (worldsRevealed.Count > 0)
                 HighlightProgHintedWorlds(worldsRevealed);
@@ -1061,78 +1085,87 @@ namespace KhTracker
             if (!data.UsingProgressionHints || data.mode == Mode.JsmarteeHints || data.mode == Mode.ShanHints)
                 return "";
 
-            //fix later so if a specific variable/value from hint file was passed 
-            if (data.progressionType == "Bosses")
+            try
             {
-                data.WorldsData["GoA"].worldGrid.ProgBossHint(hintNum);
-
-                return "";
-            }
-
-            if (data.mode == Mode.OpenKHJsmarteeHints) //jsmartee
-            {
-                RealWorldName = data.reportInformation[hintNum].Item2;
-                //Console.WriteLine("Jsmartee Revealing " + RealWorldName);
-                data.WorldsData[RealWorldName].hintedProgression = true;
-
-                data.WorldsData[RealWorldName].worldGrid.Report_Jsmartee(hintNum, true);
-            }
-            else if (data.mode == Mode.OpenKHShanHints) //shans
-            {
-                //Console.WriteLine("data.reportInformation.count = " + data.HintRevealOrder.Count);
-                //Console.WriteLine("hintNum = " + hintNum);
-                RealWorldName = data.HintRevealOrder[hintNum];
-                //Console.WriteLine("Shananas Revealing " + RealWorldName);
-                data.WorldsData[RealWorldName].hintedProgression = true;
-
-                data.WorldsData[RealWorldName].worldGrid.WorldComplete();
-                SetWorldValue(data.WorldsData[RealWorldName].value, data.WorldsData[RealWorldName].worldGrid.Children.Count);
-
-                string codesRealWorldName = Codes.GetHintTextName(RealWorldName);
-                SetHintText(codesRealWorldName, "is now unhidden!", "", true, false, false);
-                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(codesRealWorldName, "is now unhidden!", "", true, false, false));
-                //Console.WriteLine("SOME CHECK COUNT THING = " + data.WorldsData[RealWorldName].worldGrid.Children.Count);
-            }
-            else if (data.mode == Mode.PointsHints) //points
-            {
-                //potential problem
-                RealWorldName = data.HintRevealOrder[hintNum];
-                //Console.WriteLine("Points Revealing " + RealWorldName);
-                data.WorldsData[RealWorldName].hintedProgression = true;
-
-                data.WorldsData[RealWorldName].worldGrid.WorldComplete();
-
-                if (WorldPoints.Keys.Contains(RealWorldName))
+                //fix later so if a specific variable/value from hint file was passed 
+                if (data.progressionType == "Bosses")
                 {
-                    SetWorldValue(data.WorldsData[RealWorldName].value, WorldPoints[RealWorldName]);
+                    data.WorldsData["GoA"].worldGrid.ProgBossHint(hintNum);
+
+                    return "";
                 }
-                //else
-                //{
-                //    Console.WriteLine($"Something went wrong in setting world point numbers. error: {RealWorldName}");
-                //}
 
-                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false));
-                SetHintText(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false);
+                if (data.mode == Mode.OpenKHJsmarteeHints) //jsmartee
+                {
+                    RealWorldName = data.reportInformation[hintNum].Item2;
+                    //Console.WriteLine("Jsmartee Revealing " + RealWorldName);
+                    data.WorldsData[RealWorldName].hintedProgression = true;
+
+                    data.WorldsData[RealWorldName].worldGrid.Report_Jsmartee(hintNum, true);
+                }
+                else if (data.mode == Mode.OpenKHShanHints) //shans
+                {
+                    //Console.WriteLine("data.reportInformation.count = " + data.HintRevealOrder.Count);
+                    //Console.WriteLine("hintNum = " + hintNum);
+                    RealWorldName = data.HintRevealOrder[hintNum];
+                    //Console.WriteLine("Shananas Revealing " + RealWorldName);
+                    data.WorldsData[RealWorldName].hintedProgression = true;
+
+                    data.WorldsData[RealWorldName].worldGrid.WorldComplete();
+                    SetWorldValue(data.WorldsData[RealWorldName].value, data.WorldsData[RealWorldName].worldGrid.Children.Count);
+
+                    string codesRealWorldName = Codes.GetHintTextName(RealWorldName);
+                    SetHintText(codesRealWorldName, "is now unhidden!", "", true, false, false);
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(codesRealWorldName, "is now unhidden!", "", true, false, false));
+                    //Console.WriteLine("SOME CHECK COUNT THING = " + data.WorldsData[RealWorldName].worldGrid.Children.Count);
+                }
+                else if (data.mode == Mode.PointsHints) //points
+                {
+                    //potential problem
+                    RealWorldName = data.HintRevealOrder[hintNum];
+                    //Console.WriteLine("Points Revealing " + RealWorldName);
+                    data.WorldsData[RealWorldName].hintedProgression = true;
+
+                    data.WorldsData[RealWorldName].worldGrid.WorldComplete();
+
+                    if (WorldPoints.Keys.Contains(RealWorldName))
+                    {
+                        SetWorldValue(data.WorldsData[RealWorldName].value, WorldPoints[RealWorldName]);
+                    }
+                    //else
+                    //{
+                    //    Console.WriteLine($"Something went wrong in setting world point numbers. error: {RealWorldName}");
+                    //}
+
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false));
+                    SetHintText(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false);
+                }
+                else if (data.mode == Mode.PathHints) //path
+                {
+                    RealWorldName = data.reportInformation[hintNum].Item2;
+                    //Console.WriteLine("Path Revealing " + RealWorldName);
+                    data.WorldsData[RealWorldName].hintedProgression = true;
+
+                    data.WorldsData[RealWorldName].worldGrid.Report_Path(hintNum, true);
+                }
+                else if (data.mode == Mode.SpoilerHints && data.SpoilerReportMode && data.hintsLoaded) //spoiler
+                {
+                    RealWorldName = data.reportInformation[hintNum].Item1;
+
+                    //Console.WriteLine("Spoiler Revealing " + RealWorldName);
+                    data.WorldsData[RealWorldName].hintedProgression = true;
+
+                    SetWorldValue(data.WorldsData[RealWorldName].value, data.WorldsData[RealWorldName].worldGrid.Children.Count);
+                    data.WorldsData[RealWorldName].worldGrid.Report_Spoiler(hintNum, true);
+
+                    data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false));
+                    SetHintText(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false);
+                }
+
             }
-            else if (data.mode == Mode.PathHints) //path
-            {
-                RealWorldName = data.reportInformation[hintNum].Item2;
-                //Console.WriteLine("Path Revealing " + RealWorldName);
-                data.WorldsData[RealWorldName].hintedProgression = true;
-
-                data.WorldsData[RealWorldName].worldGrid.Report_Path(hintNum, true);
-            }
-            else if (data.mode == Mode.SpoilerHints && data.SpoilerReportMode && data.hintsLoaded) //spoiler
-            {
-                RealWorldName = data.reportInformation[hintNum].Item1;
-                //Console.WriteLine("Spoiler Revealing " + RealWorldName);
-                data.WorldsData[RealWorldName].hintedProgression = true;
-
-                SetWorldValue(data.WorldsData[RealWorldName].value, data.WorldsData[RealWorldName].worldGrid.Children.Count);
-                data.WorldsData[RealWorldName].worldGrid.Report_Spoiler(hintNum, true);
-
-                data.HintRevealsStored.Add(new Tuple<string, string, string, bool, bool, bool>(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false));
-                SetHintText(Codes.GetHintTextName(RealWorldName), "has been revealed!", "", true, false, false);
+            catch
+            { 
+                return RealWorldName; 
             }
 
             return RealWorldName;
