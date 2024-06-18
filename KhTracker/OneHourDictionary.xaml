@@ -741,7 +741,7 @@
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="30 Points" Fill="{StaticResource Banner_Gold}"/>
         </Viewbox>
     </Grid>
-    <Grid x:Key="1HR_Min-Scar" x:Shared="false" ToolTip="Defeat The Experiment's Replacement">
+    <Grid x:Key="1HR_Min-Scar" x:Shared="false" ToolTip="Defeat Scar's Replacement">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0.3*"/>
