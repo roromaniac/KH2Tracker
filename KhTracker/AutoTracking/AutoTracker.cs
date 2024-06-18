@@ -116,6 +116,7 @@ namespace KhTracker
         private int pcLoadAttempts = 0;
         private int save = 0;
         //private int lastVersion = 0;
+        public string pcVersion = "";
 
         private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         private int[] tempPre = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -299,17 +300,55 @@ namespace KhTracker
             return 0;
         }
 
+        public string CheckPcVersion()
+        {
+            //true = egs | false = steam
+            string testEgs = ReadMemString(0x9A70B0, 4);
+            string testStm = ReadMemString(0x9A9830, 4);
+            if (testStm == "KH2J")
+            {
+               return "steam";
+            }
+            else if (testEgs == "KH2J")
+            {
+                return "epic";
+            }
+
+            return "unknown";
+        }
+
         public async void InitAutoTracker(bool PCSX2)
         {
             pcLoadAttempts = 0;
-            // PC Address anchors
-            int Now = 0x0714DB8;
-            int Save = 0x09A70B0;
-            int Sys3 = 0x0; //old base address 0x2A59DF0;
-            int Bt10 = 0x0; //old base address 0x2A74880;
-            int BtlEnd = 0x2A0D3E0;
-            int Slot1 = 0x2A20C98;
+            int Now = 0x0;
+            int Save = 0x0;
+            int Sys3 = 0x0;
+            int Bt10 = 0x0;
+            int BtlEnd = 0x0;
+            int Slot1 = 0x0;
             int NextSlot = 0x278;
+
+            pcVersion = CheckPcVersion();
+
+            if (pcVersion == "epic")
+            {
+                // PC Address anchors OLD
+                Now = 0x0714DB8;
+                Save = 0x09A70B0;
+                BtlEnd = 0x2A0D3E0;
+                Slot1 = 0x2A20C98;
+            }
+            else if (pcVersion == "steam")
+            {
+                Now = 0x0717008;
+                Save = 0x9A9830;
+                BtlEnd = 0x2A0FC60;
+                Slot1 = 0x2A23518;
+            }           
+            else if (pcVersion == "unknown")
+            {
+                return;
+            }
 
             if (!PCSX2)
             {
@@ -340,11 +379,22 @@ namespace KhTracker
                 //Connect2.Visibility = Visibility.Visible;
                 //check for if the system files are loaded
                 //this helps ensure that ICs on levels/drives don't mistrack
+                int file = 0x0;
                 while (!pcFilesLoaded)
                 {
-                    Sys3 = ReadPcPointer(0x2AE3550);
-                    Bt10 = ReadPcPointer(0x2AE3558);
-                    pcFilesLoaded = CheckPCLoaded(Sys3, Bt10);
+                    if (pcVersion == "epic")
+                    {
+                        Sys3 = ReadPcPointer(0x2AE3550);
+                        Bt10 = ReadPcPointer(0x2AE3558);
+                        file = 0x29F0998;
+                    }
+                    else
+                    {
+                        Sys3 = ReadPcPointer(0x2AE5DD0);
+                        Bt10 = ReadPcPointer(0x2AE5DD8);
+                        file = 0x29F33D8;
+                    }
+                    pcFilesLoaded = CheckPCLoaded(Sys3, Bt10, file);
                     await Task.Delay(100);
                 }
 
@@ -411,7 +461,13 @@ namespace KhTracker
 
         private void CheckPCOffset()
         {
-            Int32 testAddr = 0x009AA376 - 0x1000;
+            int testoff = 0x009AA376;
+            if (pcVersion == "steam")
+            {
+                testoff = 0x009ACAF6;
+            }
+
+            Int32 testAddr = testoff - 0x1000;
             string good = "F680";
             string tester = BytesToHex(memory.ReadMemory(testAddr, 2));
             if (tester == good)
@@ -420,12 +476,13 @@ namespace KhTracker
             }
         }
 
-        private bool CheckPCLoaded(int system3, int battle0)
+        private bool CheckPCLoaded(int system3, int battle0, int menu)
         {
             //Testchecks if these files have been loaded into memeory
             string testS = ReadMemString(system3, 3);
             string testB = ReadMemString(battle0, 3);
-            string testM = ReadMemString(ReadPcPointer(0x29F0998) + 0x24, 20);
+
+            string testM = ReadMemString(ReadPcPointer(menu) + 0x24, 20);
             if (testM == "menu/eventviewer.2ld")
             {
                 //files loaded
@@ -2422,11 +2479,13 @@ namespace KhTracker
                             if (wID1 == 98 && wCom == 1) // Data Xemnas finish
                             {
                                 newProg = 7;
+                                UpdateSupportingTrackers("Final Xemnas (Data)");
                             }
-                            else if (wID1 == 74 && wCom == 1 && data.revealFinalXemnas) // Regular Final Xemnas finish
+                            else if (wID1 == 74 && wCom == 1) // Regular Final Xemnas finish
                             {
-                                if (data.UsingProgressionHints)
+                                if (data.UsingProgressionHints && data.revealFinalXemnas)
                                     UpdateProgressionPointsTWTNW(wName);
+
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }

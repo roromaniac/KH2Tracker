@@ -15,6 +15,9 @@ using Path = System.IO.Path;
 using KhTracker.Hotkeys;
 using System.Windows.Input;
 using MessageForm = System.Windows.Forms;
+using System.Xml.Linq;
+using System.Windows.Documents;
+using System.Text.Json.Serialization;
 
 namespace KhTracker
 {
@@ -445,9 +448,6 @@ namespace KhTracker
                         Double SpacerValue = 10;
                         #endregion
 
-                        //to be safe about this i guess
-                        bool puzzleOn = false;
-
                         //load settings from hints
                         foreach (string setting in settings)
                         {
@@ -500,13 +500,15 @@ namespace KhTracker
                                     break;
                                 case "Puzzle":
                                     PuzzleToggle(true);
-                                    puzzleOn = true;
+                                    if (!data.HintRevealOrder.Contains("PuzzSynth"))
+                                        data.HintRevealOrder.Add("PuzzSynth");
                                     data.puzzlesOn = true;
                                     break;
                                 case "Synthesis":
                                     SynthToggle(true);
-                                    //synthOn = true;
-                                    data.synthOn = true;
+                                    if (!data.HintRevealOrder.Contains("PuzzSynth"))
+                                        data.HintRevealOrder.Add("PuzzSynth");
+                                    //data.synthOn = true;
                                     break;
                                 case "Form Levels":
                                     DrivesToggle(true);
@@ -620,12 +622,8 @@ namespace KhTracker
                                 case "ScoreMode":
                                     data.ScoreMode = true;
                                     break;
-                                //progression hints
                                 case "ProgressionHints":
                                     data.UsingProgressionHints = true;
-                                    data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
-                                    data.WorldsData["GoA"].value.Text = "0";
-                                    //Console.WriteLine("ENABLING PROGRESSION HINTS");
                                     break;
                                 case "objectives":
                                     data.objectiveMode = true;
@@ -637,10 +635,10 @@ namespace KhTracker
                         }
 
                         //prevent creations hinting twice for progression
-                        if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
-                        {
-                            data.HintRevealOrder.Add("PuzzSynth");
-                        }
+                        //if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
+                        //{
+                        //    data.HintRevealOrder.Add("PuzzSynth");
+                        //}
 
                         Setting_Spacer.Width = new GridLength(SpacerValue, GridUnitType.Star);
                         SettingsText.Text = "Settings:";
@@ -1349,9 +1347,6 @@ namespace KhTracker
                     Double SpacerValue = 10;
                     #endregion
 
-                    //to be safe about this i guess
-                    bool puzzleOn = false;
-
                     //load settings from hints
                     foreach (string setting in settings)
                     {
@@ -1404,13 +1399,15 @@ namespace KhTracker
                                 break;
                             case "Puzzle":
                                 PuzzleToggle(true);
-                                puzzleOn = true;
+                                if (!data.HintRevealOrder.Contains("PuzzSynth"))
+                                    data.HintRevealOrder.Add("PuzzSynth");
                                 data.puzzlesOn = true;
                                 break;
                             case "Synthesis":
                                 SynthToggle(true);
-                                //synthOn = true;
-                                data.synthOn = true;
+                                if (!data.HintRevealOrder.Contains("PuzzSynth"))
+                                    data.HintRevealOrder.Add("PuzzSynth");
+                                //data.synthOn = true;
                                 break;
                             case "Form Levels":
                                 DrivesToggle(true);
@@ -1524,12 +1521,8 @@ namespace KhTracker
                             case "ScoreMode":
                                 data.ScoreMode = true;
                                 break;
-                            //progression hints
                             case "ProgressionHints":
                                 data.UsingProgressionHints = true;
-                                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
-                                data.WorldsData["GoA"].value.Text = "0";
-                                //Console.WriteLine("ENABLING PROGRESSION HINTS");
                                 break;
                             case "objectives":
                                 data.objectiveMode = true;
@@ -1545,10 +1538,10 @@ namespace KhTracker
                     //VisitLockCheck(startingItems);
 
                     //prevent creations hinting twice for progression
-                    if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
-                    {
-                        data.HintRevealOrder.Add("PuzzSynth");
-                    }
+                    //if ((puzzleOn || hintObject["hintsType"].ToString() == "Path") && !data.HintRevealOrder.Contains("PuzzSynth"))
+                    //{
+                    //    data.HintRevealOrder.Add("PuzzSynth");
+                    //}
 
                     Setting_Spacer.Width = new GridLength(SpacerValue, GridUnitType.Star);
                     SettingsText.Text = "Settings:";
@@ -1687,23 +1680,83 @@ namespace KhTracker
                     ProgressionCollectedValue.Text = "0";
                     ProgressionTotalValue.Text = data.HintCosts[0].ToString();
                 }
+                
+                if (hintObject.ContainsKey("level_data"))
+                {
+                    var levelData = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, object>>>(hintObject["level_data"].ToString());
+
+                    try
+                    {
+                        foreach (var list in levelData)
+                        {
+                            if (list.Key == "Valor Level")
+                            {
+                                levelListHelper(list.Value, data.seedvalorChecks);
+                                continue;
+                            }
+                            if (list.Key == "Wisdom Level")
+                            {
+                                levelListHelper(list.Value, data.seedwisdomChecks);
+                                continue;
+                            }
+                            if (list.Key == "Limit Level")
+                            {
+                                levelListHelper(list.Value, data.seedlimitChecks);
+                                continue;
+                            }
+                            if (list.Key == "Master Level")
+                            {
+                                levelListHelper(list.Value, data.seedmasterChecks);
+                                continue;
+                            }
+                            if (list.Key == "Final Level")
+                            {
+                                levelListHelper(list.Value, data.seedfinalChecks);
+                                continue;
+                            }
+                            if (list.Key == "Level")
+                            {
+                                foreach (string weapon in list.Value.Keys)
+                                {
+                                    var levelList = JsonSerializer.Deserialize<Dictionary<string, object>>(list.Value[weapon].ToString());
+
+                                    if (weapon == "Sword")
+                                    {
+                                        levelListHelper(levelList, data.seedswordChecks);
+                                        continue;
+                                    }
+                                    if (weapon == "Staff")
+                                    {
+                                        levelListHelper(levelList, data.seedstaffChecks);
+                                        continue;
+                                    }
+                                    if (weapon == "Shield")
+                                    {
+                                        levelListHelper(levelList, data.seedshieldChecks);
+                                        continue;
+                                    }
+                                }
+                            }
+
+                            data.seedLevelChecks = true;
+                        }
+                    }
+                    catch
+                    {
+                        //Console.WriteLine("Level list not as expected, will fall back to ram loading");
+                        data.seedLevelChecks = false;
+                    }
+                }
 
                 //gen objective window grid
                 if (objWindow.objGrid != null)
                     objWindow.objGrid.Children.Clear();
-
-                //DEBUG!!
-                //if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
-                //{
-                //    data.oneHourMode = true;
-                //}
 
                 if (OneHourOption.IsChecked)
                 {
                     data.oneHourMode = true;
                     data.BossHomeHinting = true;
                 }
-
 
                 if (data.objectiveMode)
                     objWindow.GenerateObjGrid(hintObject);
@@ -1797,6 +1850,20 @@ namespace KhTracker
             }
         }
 
+        //here to prevent a lot of redundancy
+        private void levelListHelper (Dictionary<string, object> seedList, List<Tuple<int, string>> dataList)
+        {
+            foreach (var entry in seedList)
+            {
+                int level = int.Parse(entry.Key);
+                int item = int.Parse(entry.Value.ToString());
+                if (data.codes.itemCodes.ContainsKey(item))
+                {
+                    dataList.Add(new Tuple<int, string>(level, data.codes.itemCodes[item]));
+                }
+            }
+        }
+
         private void SetMode(Mode mode)
         {
             if (data.UsingProgressionHints)
@@ -1850,6 +1917,8 @@ namespace KhTracker
 
             if (data.UsingProgressionHints)
             {
+                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
+                data.WorldsData["GoA"].value.Text = "0";
                 if (data.progressionType == "Reports")
                 {
                     CollectionGrid.Visibility = Visibility.Collapsed;
@@ -1967,6 +2036,18 @@ namespace KhTracker
             data.firstGridOnSeedLoad = true;
             data.BossHomeHinting = false;
             data.bossHomeHintInformation.Clear();
+
+            data.WorldOverlay.Clear();
+
+            data.seedLevelChecks = false;
+            data.seedswordChecks.Clear();
+            data.seedshieldChecks.Clear();
+            data.seedstaffChecks.Clear();
+            data.seedvalorChecks.Clear();
+            data.seedwisdomChecks.Clear();
+            data.seedlimitChecks.Clear();
+            data.seedmasterChecks.Clear();
+            data.seedfinalChecks.Clear();
 
             //emblems
             EmblemGrid.Visibility = Visibility.Collapsed;
@@ -2160,7 +2241,6 @@ namespace KhTracker
                 if (data.WorldsData[key].top.FindName(crossname) is Image Cross)
                 {
                     Cross.Visibility = Visibility.Collapsed;
-                    //Console.WriteLine(crossname);
                 }
 
                 //reset highlighted world

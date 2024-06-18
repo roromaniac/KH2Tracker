@@ -43,6 +43,20 @@ namespace KhTracker
         public bool oneHourMode = false;
         public bool earlyThroneRoom = true;
 
+        //new cross visial data
+        public Dictionary<string, int> WorldOverlay = new Dictionary<string, int>();
+
+        //for loading level important checks from .hints
+        public bool seedLevelChecks = false;
+        public List<Tuple<int, string>> seedswordChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedshieldChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedstaffChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedvalorChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedwisdomChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedlimitChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedmasterChecks = new List<Tuple<int, string>>();
+        public List<Tuple<int, string>> seedfinalChecks = new List<Tuple<int, string>>();
+
         //Report stuff      
         public List<Tuple<string, string, int>> reportInformation = new List<Tuple<string, string, int>>();
         public List<string> reportLocations = new List<string>();
@@ -139,7 +153,7 @@ namespace KhTracker
         public int ProgressionCurrentHint = 0;
         public List<string> HintRevealOrder = new List<string>();
         public List<Tuple<string, string, string, bool, bool, bool>> HintRevealsStored = new List<Tuple<string, string, string, bool, bool, bool>>();
-        public bool synthOn = false;
+        //public bool synthOn = false;
         public bool puzzlesOn = false;
         public bool calulating = false;
         public List<string> previousWorldsHinted = new List<string>();

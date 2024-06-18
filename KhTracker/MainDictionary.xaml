@@ -212,6 +212,13 @@
     <Image x:Key="Master" 		        Source="Images\System\drive_growth\Master.png"       x:Shared="false"/>
     <Image x:Key="Final" 			    Source="Images\System\drive_growth\Final.png"        x:Shared="false"/>
     <Image x:Key="OneHour" 			    Source="Images\System\clock.png"        x:Shared="false"/>
+    
+    <!--Image x:Key="Over_None" 			Source="Images\System\clock.png"        x:Shared="false"/-->
+    <Image x:Key="Over_Cross" 			Source="Images\System\crossworld.png"           x:Shared="false"/>
+    <Image x:Key="Over_Question" 	    Source="Images\System\question.png"             x:Shared="false"/>
+    <Image x:Key="Over_PP" 			    Source="Images\System\over_peace.png"          x:Shared="false"/>
+    <Image x:Key="Over_PC" 			    Source="Images\System\over_connection.png"     x:Shared="false"/>
+    <Image x:Key="Over_PN" 			    Source="Images\System\over_nonexistence.png"   x:Shared="false"/>
 
     <!--Custom Stat UI-->
     <Image x:Key="Cus-LevelIcon"  		Source="pack://application:,,,/CustomImages/System/stats/level.png"    x:Shared="false"/>
