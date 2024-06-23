@@ -726,6 +726,7 @@ namespace KhTracker
                 });
 
                 UpdateSupportingTrackers("Dummy");
+                UpdateObjectiveTracker("Dummy");
 
                 if ((data.objectiveMode || data.oneHourMode) && !objWindow.endCorChest)
                 {
@@ -733,6 +734,7 @@ namespace KhTracker
                     if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3])
                     {
                         UpdateSupportingTrackers("EndOfCoR");
+                        UpdateObjectiveTracker("EndOfCoR");
                         objWindow.endCorChest = true;
                     }
                 }
@@ -869,8 +871,6 @@ namespace KhTracker
                 }
             }
 
-            // "GridTrackerOnly" is so that the GetBoss funtion doesn't pass the boss over to the Objective Tracker
-            // the objective tracker only cares about progression and items, never actual bosses or boss rando
             if (!data.oneHourMode)
             {
                 switch (gridCheckName)
@@ -908,10 +908,9 @@ namespace KhTracker
                     default:
                         break;
                 }
-
             }
 
-            if (gridWindow.bunterLogic && data.BossRandoFound && GridTrackerOnly)
+            if (gridWindow.bunterLogic && data.BossRandoFound)
             {
                 switch (gridCheckName)
                 {
@@ -957,7 +956,7 @@ namespace KhTracker
             }
 
             // boss enemy check
-            if (data.BossRandoFound && GridTrackerOnly)
+            if (data.BossRandoFound)
             {
                 for (int i = 0; i < checks.Count(); i++)
                 {
@@ -1058,34 +1057,68 @@ namespace KhTracker
                         }
                     }
                 }
+            }
+        }
 
-                //objective window tracking
-                if (GridTrackerOnly)
-                    return;
-                else
+        public void UpdateObjectiveTracker(string gridCheckName)
+        {
+            List<string> checks = new List<string>();
+            if (gridCheckName != "Dummy")
+            {
+                checks.Add(gridCheckName);
+            }
+
+            //drive/growth levels check
+            if (aTimer != null)
+            {
+                Dictionary<string, int> levels = new Dictionary<string, int>()
                 {
-                    for (int row = 0; row < objWindow.numRows; row++)
+                    {"Valor", valor.Level},
+                    {"Wisdom", wisdom.Level},
+                    {"Limit", limit.Level},
+                    {"Master", master.Level},
+                    {"Final", final.Level},
+                };
+
+                foreach (KeyValuePair<string, int> level in levels)
+                {
+                    for (int i = 1; i <= level.Value; ++i)
                     {
-                        for (int col = 0; col < objWindow.numColumns; col++)
+                        checks.Add(level.Key + i.ToString());
+                    }
+                }
+            }
+
+            foreach (string checkName in checks)
+            {
+                string tempName = checkName;
+
+                if (data.codes.bossNameConversion.ContainsKey(checkName))
+                {
+                    tempName = data.codes.bossNameConversion[checkName];
+                }
+
+                for (int row = 0; row < objWindow.numRows; row++)
+                {
+                    for (int col = 0; col < objWindow.numColumns; col++)
+                    {
+                        // ensure the cell in the objectives grid has content
+                        if (row * objWindow.numColumns + col < objWindow.assets.Count())
                         {
-                            // ensure the cell in the objectives grid has content
-                            if (row * objWindow.numColumns + col < objWindow.assets.Count())
+                            // check if the original OR objective adjusted check key name is on the grid
+                            if (tempName.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
                             {
-                                // check if the original OR objective adjusted check key name is on the grid
-                                if (checkNames.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
+                                // invoke the appropriate button if the check matches
+                                Application.Current.Dispatcher.Invoke(() =>
                                 {
-                                    // invoke the appropriate button if the check matches
-                                    Application.Current.Dispatcher.Invoke(() =>
+                                    if (!(bool)objWindow.buttons[row, col].IsChecked)
                                     {
-                                        if (!(bool)objWindow.buttons[row, col].IsChecked)
-                                        {
-                                            RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
-                                            objWindow.buttons[row, col].IsChecked = true;
-                                            objWindow.buttons[row, col].RaiseEvent(args);
-                                            objWindow.checkNeeded();
-                                        }
-                                    });
-                                }
+                                        RoutedEventArgs args = new RoutedEventArgs(ButtonBase.ClickEvent);
+                                        objWindow.buttons[row, col].IsChecked = true;
+                                        objWindow.buttons[row, col].RaiseEvent(args);
+                                        objWindow.checkNeeded();
+                                    }
+                                });
                             }
                         }
                     }
@@ -1449,7 +1482,10 @@ namespace KhTracker
 
                     //if a puzzle was loaded and objective mark gotten then track it
                     if (puzzName != "Dummy")
+                    {
                         UpdateSupportingTrackers(puzzName);
+                        UpdateObjectiveTracker(puzzName);
+                    }
                 }
                 //check CoR Mineshaft
                 if (world.worldName == "HollowBastion" && world.roomNumber == 24)
@@ -1458,13 +1494,16 @@ namespace KhTracker
                     if (new BitArray(memory.ReadMemory((save + 0x23DE) + ADDRESS_OFFSET, 1))[3]) 
                     {
                         UpdateSupportingTrackers("EndOfCoR");
+                        UpdateObjectiveTracker("EndOfCoR");
+
                     }
                 }
                 //A New Day check does not have an event/cutscene aduring/after it
                 //so check world and room sonf takes place in for when a completion mark was obtained 
                 else if (world.worldName == "Atlantica" && world.roomNumber == 4)
                 {
-                    UpdateSupportingTrackers("ObjectiveNewDay");
+                    //UpdateSupportingTrackers("ObjectiveNewDay");
+                    UpdateObjectiveTracker("ObjectiveNewDay");
                 }
             }
         }
@@ -1686,6 +1725,7 @@ namespace KhTracker
                                 }
 
                                 UpdateSupportingTrackers("DataDemyx");
+                                UpdateObjectiveTracker("DataDemyx");
                                 updategrid = false;
                             }
                             break;
@@ -1711,6 +1751,7 @@ namespace KhTracker
                                 }
 
                                 UpdateSupportingTrackers("Sephiroth");
+                                UpdateObjectiveTracker("Sephiroth");
                                 updategrid = false;
                             }
                             break;
@@ -1748,7 +1789,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
-                                UpdateSupportingTrackers("Fight1", true);
+                                UpdateSupportingTrackers("Fight1");
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1759,7 +1800,7 @@ namespace KhTracker
                                 if (data.UsingProgressionHints)
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
-                                UpdateSupportingTrackers("Fight2", true);
+                                UpdateSupportingTrackers("Fight2");
                                 return;
                             }
                             break;
@@ -1773,6 +1814,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("CavernofRemembrance", 5);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("Transport");
+                                UpdateObjectiveTracker("Transport");
                                 return;
                             }
                             break;
@@ -1803,7 +1845,7 @@ namespace KhTracker
                                 if (data.oneHourMode)
                                 {
                                     UpdateSupportingTrackers("ShadowStalker");
-
+                                    UpdateObjectiveTracker("ShadowStalker");
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
@@ -1880,24 +1922,28 @@ namespace KhTracker
                             if (wID1 == 180)
                             {
                                 UpdateSupportingTrackers("CupPP");
+                                UpdateObjectiveTracker("CupPP");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
                             if (wID1 == 182)
                             {
                                 UpdateSupportingTrackers("CupC");
+                                UpdateObjectiveTracker("CupC");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
                             if (wID1 == 181)
                             {
                                 UpdateSupportingTrackers("CupT");
+                                UpdateObjectiveTracker("CupT");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
                             if (wID1 == 183)
                             {
                                 UpdateSupportingTrackers("CupGoF");
+                                UpdateObjectiveTracker("CupGoF");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
@@ -2005,7 +2051,7 @@ namespace KhTracker
                                 if (data.oneHourMode)
                                 {
                                     UpdateSupportingTrackers("Riku");
-
+                                    UpdateObjectiveTracker("Riku");
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
@@ -2138,7 +2184,7 @@ namespace KhTracker
                             if (wID3 == 55) // A New Day is Dawning
                             {
                                 newProg = 3;
-                                UpdateSupportingTrackers("NewDay", true);
+                                UpdateSupportingTrackers("NewDay");
                                 updategrid = false;
                             }
                             break;
@@ -2184,11 +2230,13 @@ namespace KhTracker
                                     {
                                         newProg = 7;
                                         UpdateSupportingTrackers("Marluxia");
+                                        UpdateObjectiveTracker("Marluxia");
                                     }
                                     if (wID1 == 150)
                                     {
                                         newProg = 8;
                                         UpdateSupportingTrackers("MarluxiaData");
+                                        UpdateObjectiveTracker("MarluxiaData");
                                     }                              
                                 }
                                 //check for LW
@@ -2199,11 +2247,13 @@ namespace KhTracker
                                     {
                                         newProg = 10;
                                         UpdateSupportingTrackers("Marluxia");
+                                        UpdateObjectiveTracker("Marluxia");
                                     }
                                     if (wID1 == 150)
                                     {
                                         newProg = 11;
                                         UpdateSupportingTrackers("MarluxiaData");
+                                        UpdateObjectiveTracker("MarluxiaData");
                                     }
                                 }
 
@@ -2240,6 +2290,7 @@ namespace KhTracker
                                     newProg = 11;
                                 }
                                 UpdateSupportingTrackers("LingeringWill");
+                                UpdateObjectiveTracker("LingeringWill");
                                 updategrid = false;
 
                                 //progression
@@ -2262,7 +2313,8 @@ namespace KhTracker
                         case 0:
                             if (wID1 == 60 && wCom == 1) // Take Back the Presents
                             {
-                                UpdateSupportingTrackers("ObjectivePresents1");
+                                //UpdateSupportingTrackers("ObjectivePresents1");
+                                UpdateObjectiveTracker("ObjectivePresents1");
                                 data.eventLog.Add(eventTuple);
                                 return;
                             }
@@ -2290,7 +2342,8 @@ namespace KhTracker
                             if (wID1 == 63 && wCom == 1) // Presents minigame
                             {
                                 newProg = 6;
-                                UpdateSupportingTrackers("ObjectivePresents2");
+                                //UpdateSupportingTrackers("ObjectivePresents2");
+                                UpdateObjectiveTracker("ObjectivePresents2");
                             }
                             break;
                         case 7:
@@ -2423,6 +2476,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("SimulatedTwilightTown", 8);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("DataRoxas");
+                                UpdateObjectiveTracker("DataRoxas");
                                 return;
                             }
                             break;
@@ -2438,6 +2492,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("LandofDragons", 9);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("DataXigbar");
+                                UpdateObjectiveTracker("DataXigbar");
                                 return;
                             }
                             break;
@@ -2453,6 +2508,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("PortRoyal", 10);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("DataLuxord");
+                                UpdateObjectiveTracker("DataLuxord");
                                 return;
                             }
                             break;
@@ -2468,6 +2524,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("PrideLands", 7);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("DataSaix");
+                                UpdateObjectiveTracker("DataSaix");
                                 return;
                             }
                             break;
@@ -2480,6 +2537,7 @@ namespace KhTracker
                             {
                                 newProg = 7;
                                 UpdateSupportingTrackers("Final Xemnas (Data)");
+                                UpdateObjectiveTracker("DataXemnas");
                             }
                             else if (wID1 == 74 && wCom == 1) // Regular Final Xemnas finish
                             {
@@ -2512,7 +2570,8 @@ namespace KhTracker
             if (newProg < 99 && updategrid)
             {
                 string progressCheck = data.ProgressKeys[wName][newProg];
-                UpdateSupportingTrackers(progressCheck);               
+                UpdateSupportingTrackers(progressCheck);
+                UpdateObjectiveTracker(progressCheck);
             }
 
             //progression wasn't updated
