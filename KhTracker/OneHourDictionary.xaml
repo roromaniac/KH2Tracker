@@ -741,7 +741,7 @@
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="30 Points" Fill="{StaticResource Banner_Gold}"/>
         </Viewbox>
     </Grid>
-    <Grid x:Key="1HR_Min-Scar" x:Shared="false" ToolTip="Defeat The Experiment's Replacement">
+    <Grid x:Key="1HR_Min-Scar" x:Shared="false" ToolTip="Defeat Scar's Replacement">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0.3*"/>
@@ -1961,7 +1961,7 @@
         <Image Source="Images\Grid\Overlays\Worlds\data.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
-            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="30 Points" Fill="{StaticResource Banner_Gold}"/>
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu"  FontSize="15" StrokeThickness="3" Text="40 Points" Fill="{StaticResource Banner_Gold}"/>
         </Viewbox>
     </Grid>
     <Grid x:Key="1HR_Old-DataFinalXemnas" x:Shared="false" ToolTip="Final Xemnas (Data)'s Replacement">

@@ -832,8 +832,8 @@ namespace KhTracker
         //TODO: split this funtion into two parts (objective and grid tracker) for easier editing.
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
         {
-
             // deal with doubled up progression icons
+            GridTrackerOnly = true;
             List<string> checks = new List<string>();
             if (gridCheckName != "Dummy")
             {
@@ -3123,6 +3123,13 @@ namespace KhTracker
                     // only highlight bosses if their event is not completed
                     if (data.codes.bossNameConversion.ContainsKey(boss))
                         UpdateSupportingTrackers(boss, true, true);
+                    // the above sanity check for boss name conversion prevents unknown key errors
+                    // twin lords is weird since it's two bosses
+                    else if (boss == "Twin Lords")
+                    {
+                        UpdateSupportingTrackers("Volcano Lord", true, true);
+                        UpdateSupportingTrackers("Blizzard Lord", true, true);
+                    }
                     return;
                 }
             }

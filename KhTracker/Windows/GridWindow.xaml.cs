@@ -1273,6 +1273,10 @@ namespace KhTracker
                         SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                     }
+                    if (annotationStatus[row, column])
+                    {
+                        SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
+                    }
                 }
             }
         }
@@ -1467,7 +1471,7 @@ namespace KhTracker
                     }
                     else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
                     {
-                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? ((placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]) : currentColors["Unmarked Color"];
+                        originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"];
                     }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
