@@ -141,7 +141,7 @@ namespace KhTracker
             0x2AE3558, //Bt10
             0x2A0F720, //BtlEnd
             0x2A20C98, //Slot1
-            0x0741230, //Journal/synth
+            0x0741230, //Menu | Journal = Menu - 0xf0
             0x0AB9078, //Death
             0x29F0998, //file Pointer
         };
@@ -154,7 +154,7 @@ namespace KhTracker
             0x2AE5898, //Bt10
             0x2A0D3E0, //BtlEnd
             0x2A22FD8, //Slot1
-            0x0743260, //Journal/synth
+            0x0743260, //Menu | Journal = Menu - 0xf0
             0x0ABB2B8, //Death
             0x29F2CD8, //file Pointer
         };
@@ -167,7 +167,7 @@ namespace KhTracker
             0x2AE5DD8, //Bt10
             0x2A0FC60, //BtlEnd
             0x2A23518, //Slot1
-            0x07434E0, //Journal/synth
+            0x07434E0, //Menu | Journal = Menu - 0xf0
             0x0ABB7F8, //Death
             0x29F33D8, //file Pointer
         };
