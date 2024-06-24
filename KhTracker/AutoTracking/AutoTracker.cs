@@ -116,7 +116,7 @@ namespace KhTracker
         private int pcLoadAttempts = 0;
         private int save = 0;
         //private int lastVersion = 0;
-        public string pcVersion = "";
+        public string pcVersion = "unknown";
 
         private int[] temp = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         private int[] tempPre = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -131,6 +131,49 @@ namespace KhTracker
             {"Drive6", false},
             {"Drive7", false}
         };
+
+        //hold addresses for each pc version here
+        private List<int> EpicOff = new List<int>()
+        {
+            0x0714DB8, //Now
+            0x09A70B0, //Save
+            0x2AE3550, //Sys3
+            0x2AE3558, //Bt10
+            0x2A0F720, //BtlEnd
+            0x2A20C98, //Slot1
+            0x0741230, //Journal/synth
+            0x0AB9078, //Death
+            0x29F0998, //file Pointer
+        };
+
+        private List<int> EpicOffUp1 = new List<int>()
+        {
+            0x0716DF8, //Now
+            0x09A92F0, //Save
+            0x2AE5890, //Sys3
+            0x2AE5898, //Bt10
+            0x2A0D3E0, //BtlEnd
+            0x2A22FD8, //Slot1
+            0x0743260, //Journal/synth
+            0x0ABB2B8, //Death
+            0x29F2CD8, //file Pointer
+        };
+
+        private List<int> SteamOff = new List<int>()
+        {
+            0x0717008, //Now
+            0x09A9830, //Save
+            0x2AE5DD0, //Sys3
+            0x2AE5DD8, //Bt10
+            0x2A0FC60, //BtlEnd
+            0x2A23518, //Slot1
+            0x07434E0, //Journal/synth
+            0x0ABB7F8, //Death
+            0x29F33D8, //file Pointer
+        };
+
+        //use this when referenceing a pc offset from above
+        private List<int> PcOffsets = new List<int>();
 
         ///
         /// Autotracking Startup
@@ -300,21 +343,32 @@ namespace KhTracker
             return 0;
         }
 
-        public string CheckPcVersion()
+        public void CheckPcVersion()
         {
-            //true = egs | false = steam
-            string testEgs = ReadMemString(0x9A70B0, 4);
-            string testStm = ReadMemString(0x9A9830, 4);
+            string testEgs = ReadMemString(EpicOff[1], 4);
+            string testEgs2 = ReadMemString(EpicOffUp1[1], 4);
+            string testStm = ReadMemString(SteamOff[1], 4);
+
             if (testStm == "KH2J")
             {
-               return "steam";
-            }
-            else if (testEgs == "KH2J")
-            {
-                return "epic";
+                pcVersion = "steam";
+                PcOffsets = SteamOff;
+                return;
             }
 
-            return "unknown";
+            if (testEgs == "KH2J")
+            {
+                pcVersion = "epic";
+                PcOffsets= EpicOff;
+                return;
+            }
+
+            if (testEgs2 == "KH2J")
+            {
+                pcVersion = "epicupdate1";
+                PcOffsets = EpicOffUp1;
+                return;
+            }
         }
 
         public async void InitAutoTracker(bool PCSX2)
@@ -327,36 +381,22 @@ namespace KhTracker
             int BtlEnd = 0x0;
             int Slot1 = 0x0;
             int NextSlot = 0x278;
-
-            pcVersion = CheckPcVersion();
-
-            if (pcVersion == "epic")
-            {
-                // PC Address anchors OLD
-                Now = 0x0714DB8;
-                Save = 0x09A70B0;
-                BtlEnd = 0x2A0D3E0;
-                Slot1 = 0x2A20C98;
-            }
-            else if (pcVersion == "steam")
-            {
-                Now = 0x0717008;
-                Save = 0x9A9830;
-                BtlEnd = 0x2A0FC60;
-                Slot1 = 0x2A23518;
-            }           
-            else if (pcVersion == "unknown")
-            {
-                return;
-            }
-
+         
             if (!PCSX2)
             {
                 Connect2.Source = data.AD_PCred;
 
                 try
                 {
-                    CheckPCOffset();
+                    //CheckPCOffset();
+                    CheckPcVersion();
+                    if (pcVersion == "unknown")
+                    {
+                        memory = null;
+                        Connect2.Source = data.AD_Cross;
+                        MessageBox.Show("Unable to access KH2FM try running KHTracker as admin");
+                        return;
+                    }
                 }
                 catch (Win32Exception)
                 {
@@ -373,28 +413,22 @@ namespace KhTracker
                     return;
                 }
 
+                Now = PcOffsets[0];
+                Save = PcOffsets[1];
+                Sys3 = ReadPcPointer(PcOffsets[2]);
+                Bt10 = ReadPcPointer(PcOffsets[3]);
+                BtlEnd = PcOffsets[4];
+                Slot1 = PcOffsets[5];
 
                 //Connect2.Source = data.AD_PCred;
                 //Connect.Visibility = Visibility.Collapsed;
                 //Connect2.Visibility = Visibility.Visible;
+
                 //check for if the system files are loaded
                 //this helps ensure that ICs on levels/drives don't mistrack
-                int file = 0x0;
                 while (!pcFilesLoaded)
                 {
-                    if (pcVersion == "epic")
-                    {
-                        Sys3 = ReadPcPointer(0x2AE3550);
-                        Bt10 = ReadPcPointer(0x2AE3558);
-                        file = 0x29F0998;
-                    }
-                    else
-                    {
-                        Sys3 = ReadPcPointer(0x2AE5DD0);
-                        Bt10 = ReadPcPointer(0x2AE5DD8);
-                        file = 0x29F33D8;
-                    }
-                    pcFilesLoaded = CheckPCLoaded(Sys3, Bt10, file);
+                    pcFilesLoaded = CheckPCLoaded(Sys3, Bt10, PcOffsets[8]);
                     await Task.Delay(100);
                 }
 
@@ -459,22 +493,22 @@ namespace KhTracker
             ADDRESS_OFFSET = offset;
         }
 
-        private void CheckPCOffset()
-        {
-            int testoff = 0x009AA376;
-            if (pcVersion == "steam")
-            {
-                testoff = 0x009ACAF6;
-            }
-
-            Int32 testAddr = testoff - 0x1000;
-            string good = "F680";
-            string tester = BytesToHex(memory.ReadMemory(testAddr, 2));
-            if (tester == good)
-            {
-                ADDRESS_OFFSET = -0x1000;
-            }
-        }
+        //private void CheckPCOffset()
+        //{
+        //    int testoff = 0x009AA376;
+        //    if (pcVersion == "steam")
+        //    {
+        //        testoff = 0x009ACAF6;
+        //    }
+        //
+        //    Int32 testAddr = testoff - 0x1000;
+        //    string good = "F680";
+        //    string tester = BytesToHex(memory.ReadMemory(testAddr, 2));
+        //    if (tester == good)
+        //    {
+        //        ADDRESS_OFFSET = -0x1000;
+        //    }
+        //}
 
         private bool CheckPCLoaded(int system3, int battle0, int menu)
         {
@@ -489,6 +523,7 @@ namespace KhTracker
                 Connect2.Source = data.AD_PC;
                 return true;
             }
+
             if (pcLoadAttempts >= 20)
             {
                 //Console.WriteLine("sys: " + testS);
@@ -831,7 +866,7 @@ namespace KhTracker
             DetermineItemLocations();
         }
 
-        //TODO: split this funtion into two parts (objective and grid tracker) for easier editing.
+        //this is now only used for the grid tracker
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
         {
             // deal with doubled up progression icons
@@ -1143,9 +1178,9 @@ namespace KhTracker
             }
             else
             {
-                string Jounal = BytesToHex(memory.ReadMemory(0x741230, 2)); //in journal
+                string Jounal = BytesToHex(memory.ReadMemory((PcOffsets[6] - 0xF0), 2)); //in journal
                 //reminder: FF = none | 01 = save menu | 03 = load menu | 05 = moogle | 07 = item popup | 08 = pause menu (cutscene/fight) | 0A = pause Menu (normal)
-                string menu = BytesToHex(memory.ReadMemory(0x741320, 2)); //in a menu
+                string menu = BytesToHex(memory.ReadMemory(PcOffsets[6], 2)); //in a menu
 
                 if ((Jounal == "FFFF" && menu == "0500") || (Jounal != "FFFF" && menu == "0A00")) // in moogle shop / in puzzle menu
                 {
@@ -1195,7 +1230,7 @@ namespace KhTracker
             //note: if i try tracking a death when pausecheck is "0400" then that should give a
             //more accurate death count in the event that continue is selected too fast (i hope)
 
-            string PauseCheck;
+            string PauseCheck = "";
 
             if (pcsx2tracking)
             {
@@ -1203,7 +1238,7 @@ namespace KhTracker
             }
             else
             {
-                PauseCheck = BytesToHex(memory.ReadMemory(0xAB9078, 2));
+                PauseCheck = BytesToHex(memory.ReadMemory(PcOffsets[7], 2));
             }
 
             //if oncontinue is true then we want to check if the values for sora is currently dying or on continue screen.
@@ -1446,7 +1481,7 @@ namespace KhTracker
                         puzzFile = ReadMemString(0x038254A, 13);
                     }
                     else
-                        puzzFile = ReadMemString(ReadPcPointer(0x29F0998) + 0x24, 28);
+                        puzzFile = ReadMemString(ReadPcPointer(PcOffsets[8]) + 0x24, 28);
 
                     //check what file name currently is
                     string puzzName = "Dummy";
@@ -3700,7 +3735,6 @@ namespace KhTracker
             long result = origAddress - baseAddress;
             return (int)result;
         }
-
 
         public void SetOneHourMarks(int marks)
         {
