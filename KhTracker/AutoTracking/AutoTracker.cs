@@ -1141,7 +1141,7 @@ namespace KhTracker
                         if (row * objWindow.numColumns + col < objWindow.assets.Count())
                         {
                             // check if the original OR objective adjusted check key name is on the grid
-                            if (tempName.Contains(((string)objWindow.buttons[row, col].Tag).Split('-')[1]))
+                            if (tempName == ((string)objWindow.buttons[row, col].Tag).Split('-')[1])
                             {
                                 // invoke the appropriate button if the check matches
                                 Application.Current.Dispatcher.Invoke(() =>
