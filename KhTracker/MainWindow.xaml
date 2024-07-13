@@ -80,11 +80,11 @@
                 <MenuItem Header="Highlight Current World"      Click="WorldHighlightToggle" x:Name="WorldHighlightOption"  IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Highlight Hinted World (Progression Hints)" Click="WorldHintHighlightToggle" x:Name="WorldHintHighlightOption"  IsCheckable="True" IsChecked="False"/>
                 <Separator/>
-                <MenuItem Header="Classic World IC Row Size (5 per row)" Click="ClassicRowSize"	    x:Name="GhostItemOption"	    IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Track Ghost Items" 	                 Click="GhostItemToggle"	   x:Name="GhostItemOption"	    IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Ghost Item Auto-Math (Points Hints)"   Click="GhostMathToggle" 	   x:Name="GhostMathOption"	    IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Show Emblem Counter (Emblem Mode)"     Click="ShowEmblemCountToggle" x:Name="EmblemCountOption"	IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Show Check Count (Points/Score Mode)"  Click="ShowCheckCountToggle"  x:Name="CheckCountOption"	IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Classic World Row Size (NEEDS RESTART)" Click="ClassicRowSizeToggle"	x:Name="ClassicRowSizeOption"  IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Track Ghost Items" 	                  Click="GhostItemToggle"	    x:Name="GhostItemOption"	   IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Ghost Item Auto-Math (Points Hints)"    Click="GhostMathToggle" 	    x:Name="GhostMathOption"	   IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Show Emblem Counter (Emblem Mode)"      Click="ShowEmblemCountToggle" x:Name="EmblemCountOption"	   IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Show Check Count (Points/Score Mode)"   Click="ShowCheckCountToggle"  x:Name="CheckCountOption"	   IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Show Next Level Check Display" Click="NextLevelCheckToggle" x:Name="NextLevelCheckOption" IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Level 1 Checks"                Click="SoraLevel01Toggle"    x:Name="SoraLevel01Option"    IsCheckable="True" IsChecked="False"/>

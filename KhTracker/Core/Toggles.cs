@@ -81,6 +81,11 @@ namespace KhTracker
             }
         }
 
+        private void ClassicRowSizeToggle (object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.ClassicRowSize = ClassicRowSizeOption.IsChecked;
+        }
+
         ///
         /// Options
         ///

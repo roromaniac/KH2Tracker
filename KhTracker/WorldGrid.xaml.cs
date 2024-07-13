@@ -98,9 +98,17 @@ namespace KhTracker
         //A single spot to have referenced for the opacity of the ghost checks idk where to put this
         public static double universalOpacity = 0.5;
 
+        private int worldRowSize = 7;
+
         public WorldGrid()
         {
             InitializeComponent();
+
+            if (Properties.Settings.Default.ClassicRowSize)
+            {
+                this.Columns = 5;
+                worldRowSize = 5;
+            }
         }
 
         public void Handle_WorldGrid(Item button, bool add)
@@ -146,14 +154,14 @@ namespace KhTracker
             UpdateMulti(button, add);
 
             int gridremainder = 0;
-            if (Children.Count % 7 != 0)
+            if (Children.Count % worldRowSize != 0)
                 gridremainder = 1;
 
-            int gridnum = Math.Max((Children.Count / 7) + gridremainder, 1);
+            int gridnum = Math.Max((Children.Count / worldRowSize) + gridremainder, 1);
             Rows = gridnum;
 
             // default 1, add .5 for every row
-            double length = 1 + ((Children.Count - 1) / 7) / 2.0;
+            double length = 1 + ((Children.Count - 1) / worldRowSize) / 2.0;
             Grid outerGrid = (Parent as Grid).Parent as Grid;
             int row = (int)Parent.GetValue(Grid.RowProperty);
             outerGrid.RowDefinitions[row].Height = new GridLength(length, GridUnitType.Star);
