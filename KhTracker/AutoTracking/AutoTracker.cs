@@ -348,11 +348,32 @@ namespace KhTracker
             string testEgs = ReadMemString(EpicOff[1], 4);
             string testEgs2 = ReadMemString(EpicOffUp1[1], 4);
             string testStm = ReadMemString(SteamOff[1], 4);
+            string testStmJP = ReadMemString((SteamOff[1] - 0x1000), 4); 
 
             if (testStm == "KH2J")
             {
                 pcVersion = "steam";
                 PcOffsets = SteamOff;
+                return;
+            }
+
+            if (testStmJP == "KH2J")
+            {
+                pcVersion = "steamJP";
+                PcOffsets = SteamOff;
+
+                //all jp offsets seem to be -0x1000, so lets do that
+                //unknown if the custom offsets i use (last 3) are the same though...
+                PcOffsets[0] = PcOffsets[0] - 0x1000;
+                PcOffsets[1] = PcOffsets[1] - 0x1000;
+                PcOffsets[2] = PcOffsets[2] - 0x1000;
+                PcOffsets[3] = PcOffsets[3] - 0x1000;
+                PcOffsets[4] = PcOffsets[4] - 0x1000;
+                PcOffsets[5] = PcOffsets[5] - 0x1000;
+                PcOffsets[6] = PcOffsets[6] - 0x1000;
+                PcOffsets[7] = PcOffsets[7] - 0x1000;
+                PcOffsets[8] = PcOffsets[8] - 0x1000;
+
                 return;
             }
 
