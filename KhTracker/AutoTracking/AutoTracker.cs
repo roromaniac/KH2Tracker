@@ -139,7 +139,7 @@ namespace KhTracker
             0x09A70B0, //Save
             0x2AE3550, //Sys3
             0x2AE3558, //Bt10
-            0x2A0F720, //BtlEnd
+            0x2A0D3E0, //BtlEnd
             0x2A20C98, //Slot1
             0x0741230, //Menu | Journal = Menu - 0xf0
             0x0AB9078, //Death
@@ -152,7 +152,7 @@ namespace KhTracker
             0x09A92F0, //Save
             0x2AE5890, //Sys3
             0x2AE5898, //Bt10
-            0x2A0D3E0, //BtlEnd
+            0x2A0F720, //BtlEnd
             0x2A22FD8, //Slot1
             0x0743260, //Menu | Journal = Menu - 0xf0
             0x0ABB2B8, //Death
