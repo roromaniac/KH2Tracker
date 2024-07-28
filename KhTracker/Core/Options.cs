@@ -2058,7 +2058,7 @@ namespace KhTracker
             data.objectiveMode = false;
             data.oneHourMode = false;
             objWindow.oneHourPoints = 0;
-            data.earlyThroneRoom = true;
+            data.earlyThroneRoom = 0;
             objWindow.endCorChest = false;
             objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 

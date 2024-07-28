@@ -2121,13 +2121,16 @@ namespace KhTracker
                             if (wID1 == 78 && wCom == 1) // Antechamber fight finish
                             {
                                 newProg = 7;
-                                data.earlyThroneRoom = false;
+
+                                //was the skip done at all before?
+                                if (data.earlyThroneRoom == 0)
+                                    data.earlyThroneRoom = 1;
                             }
                             break;
                         case 11:
                             if (data.oneHourMode)
                             {
-                                if (!data.earlyThroneRoom)
+                                if (data.earlyThroneRoom == 1)
                                 {
                                     //throne room normally
                                     if (objWindow.oneHourCustom)
@@ -2135,10 +2138,11 @@ namespace KhTracker
                                     else
                                         UpdatePointScore(30);
 
+                                    data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
-                                else
+                                else if (data.earlyThroneRoom == 0)
                                 {
                                     //did early throne room skip
                                     if (objWindow.oneHourCustom)
@@ -2146,6 +2150,7 @@ namespace KhTracker
                                     else
                                         UpdatePointScore(15);
 
+                                    data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
@@ -3524,8 +3529,12 @@ namespace KhTracker
                                 {
                                     bonuspoints = 40; // objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
                                 }
-                                else
-                                    bonuspoints = 20; // objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                else if (boss != "Xemnas (Data)")
+                                {
+                                    bonuspoints = 20;
+                                }
+                                //else
+                                //    bonuspoints = 20; // objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
                                 break;
                             case "boss_sephi":
                                 bonuspoints = 30; // objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
