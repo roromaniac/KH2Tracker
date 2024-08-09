@@ -1264,7 +1264,6 @@ namespace KhTracker
                     _gridWindow.bingoLogic,
                     _gridWindow.battleshipLogic,
                     _gridWindow.bunterLogic,
-                    _gridWindow.seedName,
                     _gridWindow.shipSizes,
                     _gridWindow.fogOfWar,
                     _gridWindow.fogOfWarSpan,
@@ -1282,7 +1281,6 @@ namespace KhTracker
             _gridWindow.numColumns = originalSettings.numColumns;
             _gridWindow.bingoLogic = originalSettings.bingoLogic;
             _gridWindow.battleshipLogic = originalSettings.battleshipLogic;
-            _gridWindow.seedName = originalSettings.seedName;
             _gridWindow.shipSizes = originalSettings.shipSizes;
             _gridWindow.fogOfWar = originalSettings.fogOfWar;
             _gridWindow.fogOfWarSpan = originalSettings.fogOfWarSpan;

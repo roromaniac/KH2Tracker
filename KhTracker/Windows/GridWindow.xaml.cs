@@ -38,6 +38,7 @@ namespace KhTracker
         public bool bingoLogic;
         public bool battleshipLogic;
         public bool bunterLogic;
+        public List<Dictionary<string, object>> bunterBosses;
         public bool fogOfWar;
         public Dictionary<string, int> fogOfWarSpan = new Dictionary<string, int>()
         {
@@ -116,7 +117,7 @@ namespace KhTracker
             catch (JsonException)
             {
                 MessageBox.Show("Ships file did not deserialize correctly.");
-                shipSizes = new List<int>{ 1, 1 };
+                shipSizes = new List<int> { 1, 1 };
             }
             fogOfWar = Properties.Settings.Default.GridFogOfWar;
             try
@@ -286,10 +287,6 @@ namespace KhTracker
                     ? numRowsElement.GetInt32()
                     : Properties.Settings.Default.GridWindowRows;
 
-                seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
-                    ? seedNameElement.GetString()
-                    : RandomSeedName(8, seed);
-
                 shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                     ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
                     : JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes);
@@ -362,7 +359,7 @@ namespace KhTracker
                 Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
             }
             grid.Children.Clear();
-            GenerateGrid(numRows, numColumns, seedName);
+            GenerateGrid(numRows, numColumns, null, true, true);
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
         }
@@ -378,7 +375,7 @@ namespace KhTracker
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
-        { 
+        {
             gridOptionsWindow.Show();
         }
 
@@ -621,7 +618,7 @@ namespace KhTracker
                         var currentButton = buttons[i, j - west];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j - west)]);
                     }
-                        
+
                 }
                 // east check
                 for (int east = 1; east <= eastRange; east++)
@@ -648,7 +645,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + south, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
-                    }    
+                    }
                 }
                 // northwest check
                 for (int northwest = 1; northwest <= northwestRange; northwest++)
@@ -657,7 +654,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northwest, j - northwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northwest) * numColumns) + (j - northwest)]);
-                    } 
+                    }
                 }
                 // northeast check
                 for (int northeast = 1; northeast <= northeastRange; northeast++)
@@ -730,7 +727,7 @@ namespace KhTracker
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool userTrigger = true)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool userTrigger = true, bool presetUpload = false)
         {
             //reset banner visibility
             UpdateGridBanner(false);
@@ -766,7 +763,7 @@ namespace KhTracker
 
             seedName = seedString;
 
-            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
+            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
                 string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
                 seed = settingsString.GetHashCode();
@@ -782,6 +779,9 @@ namespace KhTracker
             Seedname.Header = "Seed: " + seedName;
             Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
 
+            // handle bunter checks
+            if (data.BossRandoFound)
+                bunterCheck(bunterBosses);
             // get raw check names
             assets = Asset_Collection(seed);
             // set the content resource reference with style
@@ -1298,6 +1298,193 @@ namespace KhTracker
                         SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
                     }
                 }
+            }
+        }
+        
+        public void bunterCheck(List<Dictionary<string, object>> bosses)
+        {
+            // update valid bosses for grid tracker
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                // string bossRepl = bosspair["new"].ToString();
+
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridSettings[data.codes.bossNameConversion[bossOrig]] = false;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] = false;
+                }
+            }
+
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                // disable bosses not in the values of the boss enemy dict
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                    {
+                        var convertedBossName = data.codes.bossNameConversion[bossOrig];
+                        gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(bossOrig);
+                    }
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                    {
+                        var convertedBossName = "Grid" + data.codes.bossNameConversion[bossOrig];
+                        gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(bossOrig);
+                    }
+                }
+            }
+
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                //Special case, check axel first or it'll crash
+                // if STT is off, ensure only the Data Axel replacement is eligible
+                if (bossOrig == "Axel II")
+                {
+                    if (!data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+                // if STT is on, ensure only the Axel II replacement is eligible
+                else if (bossOrig == "Axel (Data)")
+                {
+                    if (data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig.Replace("(Data)", "II"));
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("(Data)", "II")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("(Data)", "II")]]);
+                        if (dataAxelKeyExists && axelTwoKeyExists && dataAxelReplacementKeyExists && axelTwoReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+                // disable bosses in data arenas
+                else if (bossOrig.Contains("(Data)"))
+                {
+                    bool nonDataVersionExists = data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")); // non-data version exists
+                    bool dataKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the data version of the new boss name can be converted
+                    bool newBossKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace(" (Data)", "")]); // ensure the new boss name can be converted
+                    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" (Data)", "")]]; // check if the converted names of the new bosses are not the same
+                    if (nonDataVersionExists && dataKeyExists && newBossKeyExists && valueBossesEqual)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+                // disable cups replacements
+                else if (bossOrig.Contains("Cups"))
+                {
+                    if (bossOrig == "Hades Cups" || bossOrig == "Pete Cups")
+                        continue;
+
+                    bool nonCupsVersionExists1 = data.BossList.ContainsKey(bossOrig.Replace(" (Cups)", "")); // non-cups version exists
+                    bool cupsKeyExists1 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
+                    bool newBossKeyExists1 = data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" (Cups)", "")); // ensure the new boss name can be converted
+                    bool valueBossesEqual1 = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" (Cups)", "")]]; // check if the converted names of the new bosses are not the same
+                    bool sameBossCheck1 = (nonCupsVersionExists1 && cupsKeyExists1 && newBossKeyExists1 && valueBossesEqual1);
+
+                    bool nonCupsVersionExists2 = data.BossList.ContainsKey(bossOrig.Replace(" Cups", "")); // non-cups version exists
+                    bool cupsKeyExists2 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
+                    bool newBossKeyExists2 = nonCupsVersionExists2 && data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" Cups", "")); // ensure the new boss name can be converted
+                    bool sameBossCheck2 = (nonCupsVersionExists2 && cupsKeyExists2 && newBossKeyExists2 && (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" Cups", "")]]));
+                    if (sameBossCheck1 || sameBossCheck2)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+
+                // if Hades is an org member, ensure it's the right one
+                else if (bossOrig == "Hades II")
+                {
+                    bool hadesTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                    bool hadesTwoOneKeyExists = data.BossList.ContainsKey(bossOrig + " (1)");
+                    bool hadesTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                    bool hadesTwoOneReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig + " (1)"]);
+                    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig + " (1)"]];
+                    if (hadesTwoKeyExists && hadesTwoOneKeyExists && hadesTwoReplacementKeyExists && hadesTwoOneReplacementKeyExists && valueBossesEqual)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+
+                // if STT is off, ensure only the Data Axel replacement is eligible
+                if (bossOrig == "Axel II")
+                {
+                    if (!data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+
+                // if STT is on, ensure only the Axel II replacement is eligible
+                if (bossOrig == "Axel (Data)")
+                {
+                    if (data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig.Replace("(Data)", "II"));
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("(Data)", "II")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("(Data)", "II")]]);
+                        if (dataAxelKeyExists && axelTwoKeyExists && dataAxelReplacementKeyExists && axelTwoReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+            }
+            // remove Pete OC replacement if technically they are different
+            if (bunterLogic)
+            {
+                if (data.BossList["Pete OC II"] != data.BossList["Pete TR"])
+                    gridSettings[data.codes.bossNameConversion[data.BossList["Pete OC II"]]] = false;
             }
         }
 
