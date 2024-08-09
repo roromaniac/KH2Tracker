@@ -1121,8 +1121,10 @@ namespace KhTracker
             }
 
             OldWorldLayoutOption.IsChecked = false;
+            GOAWorldLayoutOption.IsChecked = false;
             Properties.Settings.Default.NewWorldLayout = NewWorldLayoutOption.IsChecked;
             Properties.Settings.Default.OldWorldLayout = OldWorldLayoutOption.IsChecked;
+            Properties.Settings.Default.GOAWorldLayout = GOAWorldLayoutOption.IsChecked;
 
             if (NewWorldLayoutOption.IsChecked)
             {
@@ -1207,8 +1209,10 @@ namespace KhTracker
             }
 
             NewWorldLayoutOption.IsChecked = false;
+            GOAWorldLayoutOption.IsChecked = false;
             Properties.Settings.Default.NewWorldLayout = NewWorldLayoutOption.IsChecked;
             Properties.Settings.Default.OldWorldLayout = OldWorldLayoutOption.IsChecked;
+            Properties.Settings.Default.GOAWorldLayout = GOAWorldLayoutOption.IsChecked;
 
             if (OldWorldLayoutOption.IsChecked)
             {
@@ -1275,6 +1279,94 @@ namespace KhTracker
                 Grid.SetRow(TWTNWTop, 7);
                 WorldsRight.Children.Add(AtlanticaTop);
                 Grid.SetRow(AtlanticaTop, 8);
+                WorldsRight.Children.Add(PuzzSynthTop);
+                Grid.SetRow(PuzzSynthTop, 9);
+
+                ReloadWorlds(TempWorldState);
+            }
+        }
+
+        private void GOAWorldLayoutToggle(object sender, RoutedEventArgs e)
+        {
+            // Mimicing radio buttons so you cant toggle a button off
+            if (GOAWorldLayoutOption.IsChecked == false)
+            {
+                GOAWorldLayoutOption.IsChecked = true;
+                return;
+            }
+
+            OldWorldLayoutOption.IsChecked = false;
+            NewWorldLayoutOption.IsChecked = false;
+            Properties.Settings.Default.NewWorldLayout = NewWorldLayoutOption.IsChecked;
+            Properties.Settings.Default.OldWorldLayout = OldWorldLayoutOption.IsChecked;
+            Properties.Settings.Default.GOAWorldLayout = GOAWorldLayoutOption.IsChecked;
+
+            if (GOAWorldLayoutOption.IsChecked)
+            {
+                bool[] TempWorldState = new bool[19];
+                TempWorldState[0] = Properties.Settings.Default.SoraHeart;
+                TempWorldState[1] = Properties.Settings.Default.Drives;
+                TempWorldState[2] = Properties.Settings.Default.Simulated;
+                TempWorldState[3] = Properties.Settings.Default.TwilightTown;
+                TempWorldState[4] = Properties.Settings.Default.HollowBastion;
+                TempWorldState[5] = Properties.Settings.Default.BeastCastle;
+                TempWorldState[6] = Properties.Settings.Default.Olympus;
+                TempWorldState[7] = Properties.Settings.Default.Agrabah;
+                TempWorldState[8] = Properties.Settings.Default.LandofDragons;
+                TempWorldState[9] = Properties.Settings.Default.DisneyCastle;
+                TempWorldState[10] = Properties.Settings.Default.PrideLands;
+                TempWorldState[11] = Properties.Settings.Default.PortRoyal;
+                TempWorldState[12] = Properties.Settings.Default.HalloweenTown;
+                TempWorldState[13] = Properties.Settings.Default.SpaceParanoids;
+                TempWorldState[14] = Properties.Settings.Default.TWTNW;
+                TempWorldState[15] = Properties.Settings.Default.HundredAcre;
+                TempWorldState[16] = Properties.Settings.Default.Atlantica;
+                TempWorldState[17] = Properties.Settings.Default.Puzzle;
+                TempWorldState[18] = Properties.Settings.Default.Synth;
+
+                ReloadWorlds(null);
+
+                WorldsLeft.Children.Clear();
+                WorldsRight.Children.Clear();
+
+                WorldsLeft.Children.Add(SorasHeartTop);
+                Grid.SetRow(SorasHeartTop, 0);
+                WorldsLeft.Children.Add(TWTNWTop);
+                Grid.SetRow(TWTNWTop, 1);
+                WorldsLeft.Children.Add(LandofDragonsTop);
+                Grid.SetRow(LandofDragonsTop, 2);
+                WorldsLeft.Children.Add(HalloweenTownTop);
+                Grid.SetRow(HalloweenTownTop, 3);
+                WorldsLeft.Children.Add(OlympusColiseumTop);
+                Grid.SetRow(OlympusColiseumTop, 4);
+                WorldsLeft.Children.Add(TwilightTownTop);
+                Grid.SetRow(TwilightTownTop, 5);
+                WorldsLeft.Children.Add(PortRoyalTop);
+                Grid.SetRow(PortRoyalTop, 6);
+                WorldsLeft.Children.Add(SpaceParanoidsTop);
+                Grid.SetRow(SpaceParanoidsTop, 7);
+                WorldsLeft.Children.Add(GoATop);
+                Grid.SetRow(GoATop, 8);
+
+
+                WorldsRight.Children.Add(DriveFormsTop);
+                Grid.SetRow(DriveFormsTop, 0);
+                WorldsRight.Children.Add(AtlanticaTop);
+                Grid.SetRow(AtlanticaTop, 1);
+                WorldsRight.Children.Add(BeastsCastleTop);
+                Grid.SetRow(BeastsCastleTop, 2);
+                WorldsRight.Children.Add(AgrabahTop);
+                Grid.SetRow(AgrabahTop, 3);
+                WorldsRight.Children.Add(PrideLandsTop);
+                Grid.SetRow(PrideLandsTop, 4);
+                WorldsRight.Children.Add(HollowBastionTop);
+                Grid.SetRow(HollowBastionTop, 5);
+                WorldsRight.Children.Add(DisneyCastleTop);
+                Grid.SetRow(DisneyCastleTop, 6);
+                WorldsRight.Children.Add(SimulatedTwilightTownTop);
+                Grid.SetRow(SimulatedTwilightTownTop, 7);
+                WorldsRight.Children.Add(HundredAcreWoodTop);
+                Grid.SetRow(HundredAcreWoodTop, 8);
                 WorldsRight.Children.Add(PuzzSynthTop);
                 Grid.SetRow(PuzzSynthTop, 9);
 

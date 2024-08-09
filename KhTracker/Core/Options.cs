@@ -1812,7 +1812,7 @@ namespace KhTracker
 
             // regenerate the grid tracker
             gridWindow.grid.Children.Clear();
-            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns);
+            gridWindow.GenerateGrid(gridWindow.numRows, gridWindow.numColumns, null, false);
 
             archive?.Dispose();
 

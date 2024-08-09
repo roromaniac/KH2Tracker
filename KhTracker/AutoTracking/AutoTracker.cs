@@ -25,7 +25,7 @@ namespace KhTracker
         MemoryReader memory;//, testMemory;
 
         private Int32 ADDRESS_OFFSET;
-        private static DispatcherTimer aTimer, checkTimer;
+        private static DispatcherTimer aTimer, checkTimer, autosaveTimer;
         private List<ImportantCheck> importantChecks;
         private Ability highJump;
         private Ability quickRun;
@@ -207,6 +207,10 @@ namespace KhTracker
             if (checkTimer != null && checkTimer.IsEnabled)
                 return;
 
+            //autosaaving timer already running!
+            if (autosaveTimer != null && autosaveTimer.IsEnabled)
+                return;
+
             //reset timer if already running
             aTimer?.Stop();
 
@@ -215,6 +219,12 @@ namespace KhTracker
             checkTimer.Tick += InitSearch;
             checkTimer.Interval = new TimeSpan(0, 0, 0, 2, 5);
             checkTimer.Start();
+
+            // start timer for autosaving
+            autosaveTimer = new DispatcherTimer();
+            autosaveTimer.Tick += InitSearch;
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 15, 0);
+            autosaveTimer.Start();
         }
 
         public void InitSearch(object sender, EventArgs e)
@@ -800,6 +810,15 @@ namespace KhTracker
                     EmblemCollectedValue.Text = objMark.Count.ToString();
                 }
 
+                // timed autosave event
+                if (AutoSaveProgress2Option.IsChecked)
+                {
+                    if (!Directory.Exists("KhTrackerAutoSaves"))
+                    {
+                        Directory.CreateDirectory("KhTrackerAutoSaves\\");
+                    }
+                    Save("KhTrackerAutoSaves\\" + "Timed-Autosave.tsv");
+                }
                 #region For Debugging
                 //Modified to only update if any of these actually change instead of updating every tick
                 //temp[0] = world.roomNumber;
@@ -843,6 +862,7 @@ namespace KhTracker
             {
 
                 aTimer.Stop();
+                autosaveTimer.Stop();
                 //aTimer = null;
                 pcFilesLoaded = false;
 
@@ -1019,20 +1039,14 @@ namespace KhTracker
                     // reveal the boss hint of the current arena
                     if (highlightBoss)
                     {
-                        for (int row = 0; row < gridWindow.numRows; row++)
+                        // reveal the current arena's boss hint
+                        if (data.BossRandoFound)
                         {
-                            for (int col = 0; col < gridWindow.numColumns; col++)
+                            if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                             {
-                                // reveal the current arena's boss hint
-                                if (data.BossRandoFound)
-                                {
-                                    if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
-                                    {
-                                        string origBoss = data.codes.bossNameConversion[checks[i]];
-                                        string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                                        data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
-                                    }
-                                }
+                                string origBoss = data.codes.bossNameConversion[checks[i]];
+                                string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
                         }
                     }
@@ -1071,8 +1085,7 @@ namespace KhTracker
                 }
             }
 
-            // TO DO: Check if the grid tracker is open.
-            // If it is... Check if any of the buttons have the collected grid check.
+            // Check if any of the buttons on the grid tracker have the collected check.
             foreach (string checkName in checks)
             {
                 string tempCheckName = checkName;

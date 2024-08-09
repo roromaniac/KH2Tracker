@@ -354,6 +354,10 @@ namespace KhTracker
             if (OldWorldLayoutOption.IsChecked)
                 OldWorldLayoutToggle(null, null);
 
+            GOAWorldLayoutOption.IsChecked = Properties.Settings.Default.GOAWorldLayout;
+            if (GOAWorldLayoutOption.IsChecked)
+                GOAWorldLayoutToggle(null, null);
+
             MinWorldOption.IsChecked = Properties.Settings.Default.MinWorld;
             if (MinWorldOption.IsChecked)
                 MinWorldToggle(null, null);

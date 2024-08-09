@@ -36,17 +36,18 @@ namespace KhTracker
             if (!objWindow)
             {
                 // Initialize the button colors
+                // NOTE: This will make the ButtonColors tied to currentColors with the exact same memory 
                 ButtonColors = currentColors ?? new Dictionary<string, Color>
-            {
-                { "Unmarked Color", Colors.DimGray },
-                { "Marked Color", Colors.Green },
-                { "Annotated Color", Colors.Orange },
-                { "Bingo Color", Colors.Purple },
-                { "Hint Color", Colors.White },
-                { "Battleship Miss Color", Colors.DeepSkyBlue },
-                { "Battleship Hit Color", Colors.Red },
-                { "Battleship Sunk Color", Colors.Pink }
-            };
+                {
+                    { "Unmarked Color", Colors.DimGray },
+                    { "Marked Color", Colors.Green },
+                    { "Annotated Color", Colors.Orange },
+                    { "Bingo Color", Colors.Purple },
+                    { "Hint Color", Colors.White },
+                    { "Battleship Miss Color", Colors.DeepSkyBlue },
+                    { "Battleship Hit Color", Colors.Red },
+                    { "Battleship Sunk Color", Colors.Pink }
+                };
 
                 // Set button colors and foreground text colors initially
                 UnmarkedColorButton.Background = new SolidColorBrush(ButtonColors["Unmarked Color"]);
@@ -70,12 +71,12 @@ namespace KhTracker
             {
                 // Initialize the button colors
                 ObjButtonColors = currentColors ?? new Dictionary<string, Color>
-            {
-                { "Uncollected Color", Colors.DimGray },
-                { "Collected Color", Colors.Green },
-                { "Marked Color", Colors.Orange },
-                { "Win Condition Met Color", Colors.Purple },
-            };
+                {
+                    { "Uncollected Color", Colors.DimGray },
+                    { "Collected Color", Colors.Green },
+                    { "Marked Color", Colors.Orange },
+                    { "Win Condition Met Color", Colors.Purple },
+                };
 
                 // Set button colors and foreground text colors initially
                 ObjUnmarkedColorButton.Background = new SolidColorBrush(ObjButtonColors["Uncollected Color"]);
@@ -103,10 +104,7 @@ namespace KhTracker
                 ObjCollectedColorButton.Visibility = Visibility.Visible;
                 ObjAnnotatedColorButton.Visibility = Visibility.Visible;
                 ObjCompletedColorButton.Visibility = Visibility.Visible;
-
             }
-
-
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)

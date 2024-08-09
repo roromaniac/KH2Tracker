@@ -9,6 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Diagnostics.Eventing.Reader;
+using System.Data.Common;
 
 namespace KhTracker
 {
@@ -71,7 +74,10 @@ namespace KhTracker
         public int maxShipCount = 5;
         private List<int> sampledShipSizes = new List<int>();
         public bool[,] battleshipSunkStatus;
-        public bool battleshipRandomCount;
+        public bool battleshipRandomCount = false;
+        public bool coloredHints = false;
+        public int coloredHintsDistance = 1;
+        public List<Color> coloredHintsColors;
 
         public GridWindow(Data dataIn)
         {
@@ -99,6 +105,10 @@ namespace KhTracker
             battleshipRandomCount = Properties.Settings.Default.GridBattleshipRandomCount;
             minShipCount = Properties.Settings.Default.GridMinShipCount;
             maxShipCount = Properties.Settings.Default.GridMaxShipCount;
+            coloredHints = Properties.Settings.Default.GridColoredHints;
+            coloredHintsDistance = Properties.Settings.Default.GridColoredHintsDistance;
+            // +1 is becuase you need coloredHintsDistance colors for the misses and 1 color for the hit.
+            coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
             try
             {
                 shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes);
@@ -176,6 +186,8 @@ namespace KhTracker
                 battleshipRandomCount,
                 bunterLogic,
                 bingoLogic,
+                coloredHints,
+                coloredHintsDistance,
                 fogOfWar,
                 fogOfWarSpan,
                 gridSettings,
@@ -236,6 +248,14 @@ namespace KhTracker
                 bunterLogic = root.TryGetProperty("bunterLogic", out JsonElement bunterLogicElement)
                     ? bunterLogicElement.GetBoolean()
                     : Properties.Settings.Default.GridBunterLogic;
+
+                coloredHints = root.TryGetProperty("coloredHints", out JsonElement coloredHintsElement)
+                    ? coloredHintsElement.GetBoolean()
+                    : Properties.Settings.Default.GridColoredHints;
+
+                coloredHintsDistance = root.TryGetProperty("coloredHintsDistance", out JsonElement coloredHintsDistanceElement)
+                    ? coloredHintsElement.GetInt32()
+                    : Properties.Settings.Default.GridColoredHintsDistance;
 
                 fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
                     ? fogOfWarElement.GetBoolean()
@@ -710,7 +730,7 @@ namespace KhTracker
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool userTrigger = true)
         {
             //reset banner visibility
             UpdateGridBanner(false);
@@ -723,8 +743,12 @@ namespace KhTracker
             }
 
             grid = new Grid();
-            gridOptionsWindow.InitializeData(this, data);
-            gridOptionsWindow.UpdateGridOptionsUI();
+            // only trigger the options updates if the grid is changed by the user and not an automated check (e.g. bunterCheck)
+            if (userTrigger)
+            {
+                gridOptionsWindow.InitializeData(this, data);
+                gridOptionsWindow.UpdateGridOptionsUI();
+            }
 
             buttons = new ToggleButton[rows, columns];
             // ensure that the cells all start with the unmarked color as their original colors
@@ -744,7 +768,7 @@ namespace KhTracker
 
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
             {
-                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{data.convertedSeedHash}";
+                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
                 seed = settingsString.GetHashCode();
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
@@ -779,9 +803,6 @@ namespace KhTracker
                 }
                 numRows = rows;
                 numColumns = columns;
-                // update the row and column values
-                gridOptionsWindow.InitializeData(this, data);
-                gridOptionsWindow.UpdateGridOptionsUI();
                 MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
             }
 
@@ -862,6 +883,8 @@ namespace KhTracker
                 }
                 else
                     sampledShipSizes = shipSizes;
+                if (coloredHints)
+                    coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
                 placedShips = GenerateSameBoard(numRows, numColumns);
             }
 
@@ -1259,14 +1282,11 @@ namespace KhTracker
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         annotationStatus[row, column] = false;
                     }
-                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
-                    {
-                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
-                    }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
+                        if (annotationStatus[row, column])
+                            SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
                     }
                     else
                     {
@@ -1463,20 +1483,18 @@ namespace KhTracker
             {
                 for (int column = 0; column < numColumns; column++)
                 {
+                    Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"];
                     if (battleshipSunkStatus[row, column] && placedShips.Cast<int>().Max() > 0)
                     {
                         SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         annotationStatus[row, column] = false;
                     }
-                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
-                    {
-                        originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"];
-                    }
                     else if (buttons[row, column].IsChecked ?? false)
-                    {
-                        SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                    {    
+                        originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor;
+                        if (!annotationStatus[row, column])
+                            SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor);
                     }
                     else
                     {
@@ -1517,14 +1535,52 @@ namespace KhTracker
                         if (!buttons[row, column].IsChecked ?? false)
                         {
                             buttons[row, column].SetResourceReference(ContentProperty, assets[(row * numColumns) + column]);
-                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Miss Color"]);
+                            SetColorForButton(buttons[row, column].Background, coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"]);
                             originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         }
                     }
                 }
-                //MessageBox.Show("Congrats! You sunk all ships!");
                 UpdateGridBanner(true, "SUNK ALL SHIPS!", "H");
             }
+        }
+
+        public int DistanceToNearestShip(int i, int j)
+        {
+            int distanceToNearestShip = coloredHintsDistance;
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    if (placedShips[row, column] > 0)
+                    {
+                        int currentDistance = Math.Abs(row - i) + Math.Abs(column - j);
+                        if (currentDistance < distanceToNearestShip)
+                            distanceToNearestShip = currentDistance;
+                    }
+                }
+            }
+            return distanceToNearestShip;
+        }
+
+        public static List<Color> GenerateGradient(Color colorA, Color colorB, int steps, double dropOffIntensity = 1.0)
+        {
+            List<Color> gradient = new List<Color>();
+
+            for (int i = 0; i < steps; i++)
+            {
+                double ratio = (double)i / (steps - 1);
+                double dropOff = (i > 0 ? 1.0 : 0.0);
+                byte r = (byte)(dropOffIntensity * dropOff * colorA.R + ratio * (colorB.R - dropOffIntensity * dropOff * colorA.R));
+                byte g = (byte)(dropOffIntensity * dropOff * colorA.G + ratio * (colorB.G - dropOffIntensity * dropOff * colorA.G));
+                byte b = (byte)(dropOffIntensity * dropOff * colorA.B + ratio * (colorB.B - dropOffIntensity * dropOff * colorA.B));
+                //byte r = (byte)(colorA.R + ratio * (colorB.R - colorA.R));
+                //byte g = (byte)(colorA.G + ratio * (colorB.G - colorA.G));
+                //byte b = (byte)(colorA.B + ratio * (colorB.B - colorA.B));
+
+                gradient.Add(Color.FromRgb(r, g, b));
+            }
+
+            return gradient;
         }
 
         // updates colors upon close
@@ -1537,11 +1593,13 @@ namespace KhTracker
         public void HandleClosing(ColorPickerWindow sender)
         {
 
+            coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
             //update the new colors on the card
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
                 {
+                    Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(i, j)] : currentColors["Battleship Miss Color"];
                     if (annotationStatus[i, j])
                         SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
                     if (battleshipLogic)
@@ -1550,8 +1608,11 @@ namespace KhTracker
                         {
                             SetColorForButton(buttons[i, j].Background, currentColors["Battleship Sunk Color"]);
                         }
-                        bool squareIsShip = placedShips[i, j] != 0;
-                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]) : currentColors["Unmarked Color"]);
+                        else
+                        {
+                            bool squareIsShip = placedShips[i, j] != 0;
+                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : missColor) : currentColors["Unmarked Color"]);
+                        }
                     }
                     else
                     {
