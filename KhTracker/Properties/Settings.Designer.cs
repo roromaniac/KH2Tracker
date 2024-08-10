@@ -1665,5 +1665,17 @@ namespace KhTracker.Properties {
                 this["GridColoredHintsDistance"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveProgress3 {
+            get {
+                return ((bool)(this["AutoSaveProgress3"]));
+            }
+            set {
+                this["AutoSaveProgress3"] = value;
+            }
+        }
     }
 }

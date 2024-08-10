@@ -214,17 +214,14 @@ namespace KhTracker
             //reset timer if already running
             aTimer?.Stop();
 
+            //reset autosave timer if already running
+            autosaveTimer?.Stop();
+
             //start timer for checking game version
             checkTimer = new DispatcherTimer();
             checkTimer.Tick += InitSearch;
             checkTimer.Interval = new TimeSpan(0, 0, 0, 2, 5);
             checkTimer.Start();
-
-            // start timer for autosaving
-            autosaveTimer = new DispatcherTimer();
-            autosaveTimer.Tick += InitSearch;
-            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 15, 0);
-            autosaveTimer.Start();
         }
 
         public void InitSearch(object sender, EventArgs e)
@@ -750,8 +747,14 @@ namespace KhTracker
             aTimer.Start();
 
             data.wasTracking = true;
-        }
 
+            //start timer for autosaving
+            autosaveTimer?.Stop();
+            autosaveTimer = new DispatcherTimer();
+            autosaveTimer.Tick += AutoSave;
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 15, 0);
+            autosaveTimer.Start();
+        }
         private void OnTimedEvent(object sender, EventArgs e)
         {
             previousChecks.Clear();
@@ -809,16 +812,6 @@ namespace KhTracker
                 {
                     EmblemCollectedValue.Text = objMark.Count.ToString();
                 }
-
-                // timed autosave event
-                if (AutoSaveProgress2Option.IsChecked)
-                {
-                    if (!Directory.Exists("KhTrackerAutoSaves"))
-                    {
-                        Directory.CreateDirectory("KhTrackerAutoSaves\\");
-                    }
-                    Save("KhTrackerAutoSaves\\" + "Timed-Autosave.tsv");
-                }
                 #region For Debugging
                 //Modified to only update if any of these actually change instead of updating every tick
                 //temp[0] = world.roomNumber;
@@ -862,7 +855,6 @@ namespace KhTracker
             {
 
                 aTimer.Stop();
-                autosaveTimer.Stop();
                 //aTimer = null;
                 pcFilesLoaded = false;
 
@@ -906,6 +898,27 @@ namespace KhTracker
             UpdateCollectedItems();
             DetermineItemLocations();
         }
+
+        private void AutoSave(object sender, EventArgs e)
+        {
+            try
+            {
+                // timed autosave event
+                if (AutoSaveProgress3Option.IsChecked)
+                {
+                    if (!Directory.Exists("KhTrackerAutoSaves"))
+                    {
+                        Directory.CreateDirectory("KhTrackerAutoSaves\\");
+                    }
+                    Save("KhTrackerAutoSaves\\" + "Timed-Autosave.tsv");
+                }
+            }
+            catch
+            {
+                autosaveTimer.Stop();
+            }
+        }
+
 
         //this is now only used for the grid tracker
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)

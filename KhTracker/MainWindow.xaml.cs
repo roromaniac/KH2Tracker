@@ -259,7 +259,8 @@ namespace KhTracker
             DragDropToggle(null, null);
 
             AutoSaveProgressOption.IsChecked = Properties.Settings.Default.AutoSaveProgress;
-            AutoSaveProgress2Option.IsChecked = Properties.Settings.Default.AutoSaveProgress;
+            AutoSaveProgress2Option.IsChecked = Properties.Settings.Default.AutoSaveProgress2;
+            AutoSaveProgress3Option.IsChecked = Properties.Settings.Default.AutoSaveProgress3;
 
             #endregion
 

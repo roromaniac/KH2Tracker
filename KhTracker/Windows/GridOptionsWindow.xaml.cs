@@ -639,7 +639,7 @@ namespace KhTracker
                 }
             }
 
-            if (option != null && textBox.Text != "")
+            if (option != null)
             {
                 option.DefaultValue = textBox.Text;
                 UpdateGridSettings(_data, _gridWindow.SavePreviousGridSettingsOption.IsChecked);
