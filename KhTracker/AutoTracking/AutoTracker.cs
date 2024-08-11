@@ -752,7 +752,7 @@ namespace KhTracker
             autosaveTimer?.Stop();
             autosaveTimer = new DispatcherTimer();
             autosaveTimer.Tick += AutoSave;
-            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 15, 0);
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             autosaveTimer.Start();
         }
         private void OnTimedEvent(object sender, EventArgs e)
@@ -855,6 +855,7 @@ namespace KhTracker
             {
 
                 aTimer.Stop();
+                autosaveTimer.Stop();
                 //aTimer = null;
                 pcFilesLoaded = false;
 
@@ -904,6 +905,7 @@ namespace KhTracker
             try
             {
                 // timed autosave event
+                Console.WriteLine($"AutoSave is happening!! {AutoSaveProgress3Option.IsChecked}");
                 if (AutoSaveProgress3Option.IsChecked)
                 {
                     if (!Directory.Exists("KhTrackerAutoSaves"))

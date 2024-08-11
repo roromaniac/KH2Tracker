@@ -18,6 +18,7 @@ using MessageForm = System.Windows.Forms;
 using System.Xml.Linq;
 using System.Windows.Documents;
 using System.Text.Json.Serialization;
+using System.Security.Policy;
 
 namespace KhTracker
 {
@@ -163,6 +164,7 @@ namespace KhTracker
                 Events = data.eventLog,
                 BossEvents = data.bossEventLog,
                 BoardSettings = gridWindow.DownloadCardSetting(),
+                BunterBosses = gridWindow.bunterBosses,
                 OneHourMode = data.oneHourMode,
             };
 
@@ -319,6 +321,12 @@ namespace KhTracker
                     var seednumber = JsonSerializer.Deserialize<int>(Savefile["RandomSeed"].ToString());
                     data.convertedSeedHash = seednumber;
                 }
+            }
+
+            //identify relevant bosses from save
+            if (Savefile.ContainsKey("BunterBosses"))
+            {
+                gridWindow.bunterBosses = Savefile["BunterBosses"] != null ? JsonSerializer.Deserialize<List<Dictionary<string, object>>>(Savefile["BunterBosses"].ToString()) : null;
             }
 
             //check one hour toggle

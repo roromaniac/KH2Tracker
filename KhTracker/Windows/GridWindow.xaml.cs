@@ -255,7 +255,7 @@ namespace KhTracker
                     : Properties.Settings.Default.GridColoredHints;
 
                 coloredHintsDistance = root.TryGetProperty("coloredHintsDistance", out JsonElement coloredHintsDistanceElement)
-                    ? coloredHintsElement.GetInt32()
+                    ? coloredHintsDistanceElement.GetInt32()
                     : Properties.Settings.Default.GridColoredHintsDistance;
 
                 fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
@@ -1303,6 +1303,9 @@ namespace KhTracker
         
         public void bunterCheck(List<Dictionary<string, object>> bosses)
         {
+            //don't bother performing the check if bosses is null
+            if (bosses == null)
+                return;
             // update valid bosses for grid tracker
             foreach (var bosspair in bosses)
             {
