@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections;
 using System.IO;
+using System.Xml.Linq;
 
 namespace KhTracker
 {
@@ -25,7 +26,7 @@ namespace KhTracker
         MemoryReader memory;//, testMemory;
 
         private Int32 ADDRESS_OFFSET;
-        private static DispatcherTimer aTimer, checkTimer;
+        private static DispatcherTimer aTimer, checkTimer, autosaveTimer;
         private List<ImportantCheck> importantChecks;
         private Ability highJump;
         private Ability quickRun;
@@ -207,8 +208,15 @@ namespace KhTracker
             if (checkTimer != null && checkTimer.IsEnabled)
                 return;
 
+            //autosaaving timer already running!
+            if (autosaveTimer != null && autosaveTimer.IsEnabled)
+                return;
+
             //reset timer if already running
             aTimer?.Stop();
+
+            //reset autosave timer if already running
+            autosaveTimer?.Stop();
 
             //start timer for checking game version
             checkTimer = new DispatcherTimer();
@@ -740,8 +748,14 @@ namespace KhTracker
             aTimer.Start();
 
             data.wasTracking = true;
-        }
 
+            //start timer for autosaving
+            autosaveTimer?.Stop();
+            autosaveTimer = new DispatcherTimer();
+            autosaveTimer.Tick += AutoSave;
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            autosaveTimer.Start();
+        }
         private void OnTimedEvent(object sender, EventArgs e)
         {
             previousChecks.Clear();
@@ -799,7 +813,6 @@ namespace KhTracker
                 {
                     EmblemCollectedValue.Text = objMark.Count.ToString();
                 }
-
                 #region For Debugging
                 //Modified to only update if any of these actually change instead of updating every tick
                 //temp[0] = world.roomNumber;
@@ -843,6 +856,7 @@ namespace KhTracker
             {
 
                 aTimer.Stop();
+                autosaveTimer.Stop();
                 //aTimer = null;
                 pcFilesLoaded = false;
 
@@ -886,6 +900,28 @@ namespace KhTracker
             UpdateCollectedItems();
             DetermineItemLocations();
         }
+
+        private void AutoSave(object sender, EventArgs e)
+        {
+            try
+            {
+                // timed autosave event
+                Console.WriteLine($"AutoSave is happening!! {AutoSaveProgress3Option.IsChecked}");
+                if (AutoSaveProgress3Option.IsChecked)
+                {
+                    if (!Directory.Exists("KhTrackerAutoSaves"))
+                    {
+                        Directory.CreateDirectory("KhTrackerAutoSaves\\");
+                    }
+                    Save("KhTrackerAutoSaves\\" + "Timed-Autosave.tsv");
+                }
+            }
+            catch
+            {
+                autosaveTimer.Stop();
+            }
+        }
+
 
         //this is now only used for the grid tracker
         public void UpdateSupportingTrackers(string gridCheckName, bool GridTrackerOnly = false, bool highlightBoss = false)
@@ -1019,20 +1055,14 @@ namespace KhTracker
                     // reveal the boss hint of the current arena
                     if (highlightBoss)
                     {
-                        for (int row = 0; row < gridWindow.numRows; row++)
+                        // reveal the current arena's boss hint
+                        if (data.BossRandoFound)
                         {
-                            for (int col = 0; col < gridWindow.numColumns; col++)
+                            if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                             {
-                                // reveal the current arena's boss hint
-                                if (data.BossRandoFound)
-                                {
-                                    if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
-                                    {
-                                        string origBoss = data.codes.bossNameConversion[checks[i]];
-                                        string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                                        data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
-                                    }
-                                }
+                                string origBoss = data.codes.bossNameConversion[checks[i]];
+                                string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                             }
                         }
                     }
@@ -1071,8 +1101,7 @@ namespace KhTracker
                 }
             }
 
-            // TO DO: Check if the grid tracker is open.
-            // If it is... Check if any of the buttons have the collected grid check.
+            // Check if any of the buttons on the grid tracker have the collected check.
             foreach (string checkName in checks)
             {
                 string tempCheckName = checkName;

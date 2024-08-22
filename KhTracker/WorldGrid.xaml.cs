@@ -1056,8 +1056,8 @@ namespace KhTracker
             if (window.gridWindow.bossHintContentControls.Keys.Contains(gridNewBoss))
             {
                 window.gridWindow.bossHintBorders[gridNewBoss].Background = new SolidColorBrush(hintColor);
-                if (window.TryFindResource($"Grid_{iconStyle}-Grid{gridOriginalBoss}") != null) 
-                { 
+                if (window.TryFindResource($"Grid_{iconStyle}-Grid{gridOriginalBoss}") != null)
+                {
                     // Try to set the resource reference with the "Grid" prefix
                     window.gridWindow.bossHintContentControls[gridNewBoss].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-Grid{gridOriginalBoss}");
                 }
@@ -1081,6 +1081,29 @@ namespace KhTracker
                 {
                     // If the "Grid" key doesn't exist, try with the base key
                     window.gridWindow.bossHintContentControls[$"Grid{gridNewBoss}"].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-{gridOriginalBoss}");
+                }
+            }
+
+            for (int row = 0; row < window.gridWindow.numRows; row++)
+            {
+                for (int col = 0; col < window.gridWindow.numColumns; col++)
+                {
+                    foreach (var checkName in new[] { gridNewBoss, $"Grid{gridNewBoss}" })
+                    {
+                        if ((string)window.gridWindow.buttons[row, col].Tag == checkName)
+                        {
+                            if (window.TryFindResource($"Grid_{iconStyle}-Grid{gridNewBoss}") != null)
+                            {
+                                // Try to set the resource reference with the "Grid" prefix
+                                window.gridWindow.buttons[row, col].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-Grid{gridNewBoss}");
+                            }
+                            else if (window.TryFindResource($"Grid_{iconStyle}-{gridNewBoss}") != null)
+                            {
+                                // If the "Grid" key doesn't exist, try with the base key
+                                window.gridWindow.buttons[row, col].SetResourceReference(ContentControl.ContentProperty, $"Grid_{iconStyle}-{gridNewBoss}");
+                            }
+                        }
+                    }
                 }
             }
         }
