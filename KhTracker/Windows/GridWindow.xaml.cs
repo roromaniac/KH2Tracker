@@ -1752,7 +1752,7 @@ namespace KhTracker
             return distanceToNearestShip;
         }
 
-        public static List<Color> GenerateGradient(Color colorA, Color colorB, int steps, double dropOffIntensity = 1.0)
+        public static List<Color> GenerateGradient(Color colorA, Color colorB, int steps, double dropOffIntensity = 0.67)
         {
             List<Color> gradient = new List<Color>();
 
