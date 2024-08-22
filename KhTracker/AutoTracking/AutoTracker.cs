@@ -13,6 +13,7 @@ using System.Windows.Threading;
 using System.ComponentModel;
 using System.Collections;
 using System.IO;
+using System.Xml.Linq;
 
 namespace KhTracker
 {
