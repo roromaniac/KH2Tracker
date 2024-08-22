@@ -1270,7 +1270,9 @@ namespace KhTracker
                     _gridWindow.gridSettings,
                     _gridWindow.minShipCount,
                     _gridWindow.maxShipCount,
-                    _gridWindow.battleshipRandomCount
+                    _gridWindow.battleshipRandomCount,
+                    _gridWindow.coloredHints,
+                    _gridWindow.coloredHintsDistance,
                 };
 
                 var jsonString = JsonSerializer.Serialize(combinedSettings);
@@ -1288,6 +1290,8 @@ namespace KhTracker
             _gridWindow.minShipCount = originalSettings.minShipCount;
             _gridWindow.maxShipCount = originalSettings.maxShipCount;                 
             _gridWindow.battleshipRandomCount = originalSettings.battleshipRandomCount;
+            _gridWindow.coloredHints = originalSettings.coloredHints;
+            _gridWindow.coloredHintsDistance = originalSettings.coloredHintsDistance;
         }
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
