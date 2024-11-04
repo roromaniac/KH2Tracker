@@ -154,9 +154,22 @@ namespace KhTracker
             0x2AE5898, //Bt10
             0x2A0F720, //BtlEnd
             0x2A22FD8, //Slot1
-            0x0743260, //Menu | Journal = Menu - 0xf0
+            0x0743350, //Menu | Journal = Menu - 0xf0
             0x0ABB2B8, //Death
             0x29F2CD8, //file Pointer
+        };
+
+        private List<int> EpicOffUp2 = new List<int>()
+        {
+            0x0716DF8, //Now
+            0x09A9330, //Save
+            0x2AE58D0, //Sys3
+            0x2AE58D8, //Bt10
+            0x2A0F760, //BtlEnd
+            0x2A22318, //Slot1
+            0x0743350, //Menu | Journal = Menu - 0xf0
+            0x0ABB2F8, //Death
+            0x29F2D18, //file Pointer
         };
 
         private List<int> SteamOff = new List<int>()
@@ -167,9 +180,22 @@ namespace KhTracker
             0x2AE5DD8, //Bt10
             0x2A0FC60, //BtlEnd
             0x2A23518, //Slot1
-            0x07434E0, //Menu | Journal = Menu - 0xf0
+            0x07435D0, //Menu | Journal = Menu - 0xf0
             0x0ABB7F8, //Death
             0x29F33D8, //file Pointer
+        };
+
+        private List<int> SteamOffUp1 = new List<int>()
+        {
+            0x0717008, //Now
+            0x09A98B0, //Save
+            0x2AE5E50, //Sys3
+            0x2AE5E58, //Bt10
+            0x2A0FCE0, //BtlEnd
+            0x2A23598, //Slot1
+            0x07435D0, //Menu | Journal = Menu - 0xf0
+            0x0ABB878, //Death
+            0x29F3458, //file Pointer
         };
 
         //use this when referenceing a pc offset from above
@@ -347,8 +373,14 @@ namespace KhTracker
         {
             string testEgs = ReadMemString(EpicOff[1], 4);
             string testEgs2 = ReadMemString(EpicOffUp1[1], 4);
+            string testEgs3 = ReadMemString(EpicOffUp2[1], 4);
+
             string testStm = ReadMemString(SteamOff[1], 4);
-            string testStmJP = ReadMemString((SteamOff[1] - 0x1000), 4); 
+            string testStm2 = ReadMemString(SteamOffUp1[1], 4);
+
+            //I really have no way of testing JP offsets, i'm just going off of old code for it 
+            string testStmJP = ReadMemString((SteamOff[1] - 0x1000), 4);
+            string testStm2JP = ReadMemString((SteamOffUp1[1] - 0x1000), 4);
 
             if (testStm == "KH2J")
             {
@@ -357,10 +389,37 @@ namespace KhTracker
                 return;
             }
 
+            if (testStm2 == "KH2J")
+            {
+                pcVersion = "steamupdate1";
+                PcOffsets = SteamOffUp1;
+                return;
+            }
+
             if (testStmJP == "KH2J")
             {
                 pcVersion = "steamJP";
                 PcOffsets = SteamOff;
+
+                //all jp offsets seem to be -0x1000, so lets do that
+                //unknown if the custom offsets i use (last 3) are the same though...
+                PcOffsets[0] = PcOffsets[0] - 0x1000;
+                PcOffsets[1] = PcOffsets[1] - 0x1000;
+                PcOffsets[2] = PcOffsets[2] - 0x1000;
+                PcOffsets[3] = PcOffsets[3] - 0x1000;
+                PcOffsets[4] = PcOffsets[4] - 0x1000;
+                PcOffsets[5] = PcOffsets[5] - 0x1000;
+                PcOffsets[6] = PcOffsets[6] - 0x1000;
+                PcOffsets[7] = PcOffsets[7] - 0x1000;
+                PcOffsets[8] = PcOffsets[8] - 0x1000;
+
+                return;
+            }
+
+            if (testStm2JP == "KH2J")
+            {
+                pcVersion = "steamJPupdate1";
+                PcOffsets = SteamOffUp1;
 
                 //all jp offsets seem to be -0x1000, so lets do that
                 //unknown if the custom offsets i use (last 3) are the same though...
@@ -390,6 +449,13 @@ namespace KhTracker
                 PcOffsets = EpicOffUp1;
                 return;
             }
+
+            if (testEgs3 == "KH2J")
+            {
+                pcVersion = "epicupdate2";
+                PcOffsets = EpicOffUp2;
+                return;
+            }
         }
 
         public async void InitAutoTracker(bool PCSX2)
@@ -415,7 +481,7 @@ namespace KhTracker
                     {
                         memory = null;
                         Connect2.Source = data.AD_Cross;
-                        MessageBox.Show("Unable to access KH2FM try running KHTracker as admin");
+                        MessageBox.Show("Unknown PC game version! Cannot start autotracking.");
                         return;
                     }
                 }
@@ -423,7 +489,7 @@ namespace KhTracker
                 {
                     memory = null;
                     Connect2.Source = data.AD_Cross;
-                    MessageBox.Show("Unable to access KH2FM try running KHTracker as admin");
+                    MessageBox.Show("Unable to access KH2FM. Try running KHTracker as admin");
                     return;
                 }
                 catch
