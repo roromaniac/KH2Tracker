@@ -166,7 +166,7 @@ namespace KhTracker
             0x2AE58D0, //Sys3
             0x2AE58D8, //Bt10
             0x2A0F760, //BtlEnd
-            0x2A22318, //Slot1
+            0x2A23018, //Slot1
             0x0743350, //Menu | Journal = Menu - 0xf0
             0x0ABB2F8, //Death
             0x29F2D18, //file Pointer
@@ -199,6 +199,10 @@ namespace KhTracker
         };
 
         //use this when referenceing a pc offset from above
+        //CheckPcVersion will check which version the game is
+        //then set this to equal one of the above.
+        //this helps not needing to update like almost every function
+        //that calls upon a pc address, and instead just that one function.
         private List<int> PcOffsets = new List<int>();
 
         ///
