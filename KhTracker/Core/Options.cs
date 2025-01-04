@@ -2061,6 +2061,7 @@ namespace KhTracker
             EmblemGrid.Visibility = Visibility.Collapsed;
             EmblemCollectedValue.Text = "0";
             data.EmblemMode = false;
+            objMark.Count = 0;
 
             //objective widow stuff
             data.objectiveMode = false;
