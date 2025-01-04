@@ -2912,6 +2912,8 @@ namespace KhTracker
                         case 34:
                             if (wID1 == 157) // Twilight Thorn finish
                                 boss = "Twilight Thorn";
+                            if (data.oneHourMode)
+                                oneHourBoss = "Leon";
                             break;
                         case 3:
                             if (wID1 == 180) // Seifer Battle (Day 4)
@@ -3216,8 +3218,8 @@ namespace KhTracker
                             if (wID1 == 54) // Grim Reaper 2 finish
                             {
                                 boss = "Grim Reaper II";
-                                if (data.oneHourMode)
-                                    oneHourBoss = "Leon";
+                                //if (data.oneHourMode)
+                                //    oneHourBoss = "Leon";
                             }
                             break;
                         default:

@@ -8,55 +8,55 @@
 <!--#region Minimal-->
     <!-- Items -->
     <!--Reports-->
-    <Grid x:Key="Grid_Min-Report1" x:Shared="false" ToolTip="Ansem Reprot 1">
+    <Grid x:Key="Grid_Min-Report1" x:Shared="false" ToolTip="Ansem Report 1">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report2" x:Shared="false" ToolTip="Ansem Reprot 2">
+    <Grid x:Key="Grid_Min-Report2" x:Shared="false" ToolTip="Ansem Report 2">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report3" x:Shared="false" ToolTip="Ansem Reprot 3">
+    <Grid x:Key="Grid_Min-Report3" x:Shared="false" ToolTip="Ansem Report 3">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report4" x:Shared="false" ToolTip="Ansem Reprot 4">
+    <Grid x:Key="Grid_Min-Report4" x:Shared="false" ToolTip="Ansem Report 4">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report5" x:Shared="false" ToolTip="Ansem Reprot 5">
+    <Grid x:Key="Grid_Min-Report5" x:Shared="false" ToolTip="Ansem Report 5">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report6" x:Shared="false" ToolTip="Ansem Reprot 6">
+    <Grid x:Key="Grid_Min-Report6" x:Shared="false" ToolTip="Ansem Report 6">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report7" x:Shared="false" ToolTip="Ansem Reprot 7">
+    <Grid x:Key="Grid_Min-Report7" x:Shared="false" ToolTip="Ansem Report 7">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report8" x:Shared="false" ToolTip="Ansem Reprot 8">
+    <Grid x:Key="Grid_Min-Report8" x:Shared="false" ToolTip="Ansem Report 8">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\8.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report9" x:Shared="false" ToolTip="Ansem Reprot 9">
+    <Grid x:Key="Grid_Min-Report9" x:Shared="false" ToolTip="Ansem Report 9">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\9.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report10" x:Shared="false" ToolTip="Ansem Reprot 10">
+    <Grid x:Key="Grid_Min-Report10" x:Shared="false" ToolTip="Ansem Report 10">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\10.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report11" x:Shared="false" ToolTip="Ansem Reprot 11">
+    <Grid x:Key="Grid_Min-Report11" x:Shared="false" ToolTip="Ansem Report 11">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\11.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report12" x:Shared="false" ToolTip="Ansem Reprot 12">
+    <Grid x:Key="Grid_Min-Report12" x:Shared="false" ToolTip="Ansem Report 12">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\12.png"/>
     </Grid>
-    <Grid x:Key="Grid_Min-Report13" x:Shared="false" ToolTip="Ansem Reprot 13">
+    <Grid x:Key="Grid_Min-Report13" x:Shared="false" ToolTip="Ansem Report 13">
         <Image Source="Images\Grid\Checks\Min\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\13.png"/>
     </Grid>
@@ -558,7 +558,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Min-Fight1"              Source="Images\Grid\Progression\Min\hollow_bastion\first_fight.png"                 x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Min-Fight2"              Source="Images\Grid\Progression\Min\hollow_bastion\second_fight.png"                x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Min-Transport"           Source="Images\Grid\Progression\Min\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Min-Transport"           Source="Images\Grid\Progression\Min\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Min-Missions"            Source="Images\Grid\Progression\Min\land_of_dragons\missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Min-Mountain"            Source="Images\Grid\Progression\Min\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
@@ -754,55 +754,55 @@
 <!--#region Classic-->
     <!-- Items -->
     <!--Reports-->
-    <Grid x:Key="Grid_Old-Report1" x:Shared="false" ToolTip="Ansem Reprot 1">
+    <Grid x:Key="Grid_Old-Report1" x:Shared="false" ToolTip="Ansem Report 1">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report2" x:Shared="false" ToolTip="Ansem Reprot 2">
+    <Grid x:Key="Grid_Old-Report2" x:Shared="false" ToolTip="Ansem Report 2">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report3" x:Shared="false" ToolTip="Ansem Reprot 3">
+    <Grid x:Key="Grid_Old-Report3" x:Shared="false" ToolTip="Ansem Report 3">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\3.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report4" x:Shared="false" ToolTip="Ansem Reprot 4">
+    <Grid x:Key="Grid_Old-Report4" x:Shared="false" ToolTip="Ansem Report 4">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\4.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report5" x:Shared="false" ToolTip="Ansem Reprot 5">
+    <Grid x:Key="Grid_Old-Report5" x:Shared="false" ToolTip="Ansem Report 5">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\5.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report6" x:Shared="false" ToolTip="Ansem Reprot 6">
+    <Grid x:Key="Grid_Old-Report6" x:Shared="false" ToolTip="Ansem Report 6">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\6.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report7" x:Shared="false" ToolTip="Ansem Reprot 7">
+    <Grid x:Key="Grid_Old-Report7" x:Shared="false" ToolTip="Ansem Report 7">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\7.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report8" x:Shared="false" ToolTip="Ansem Reprot 8">
+    <Grid x:Key="Grid_Old-Report8" x:Shared="false" ToolTip="Ansem Report 8">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\8.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report9" x:Shared="false" ToolTip="Ansem Reprot 9">
+    <Grid x:Key="Grid_Old-Report9" x:Shared="false" ToolTip="Ansem Report 9">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\9.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report10" x:Shared="false" ToolTip="Ansem Reprot 10">
+    <Grid x:Key="Grid_Old-Report10" x:Shared="false" ToolTip="Ansem Report 10">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\10.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report11" x:Shared="false" ToolTip="Ansem Reprot 11">
+    <Grid x:Key="Grid_Old-Report11" x:Shared="false" ToolTip="Ansem Report 11">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\11.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report12" x:Shared="false" ToolTip="Ansem Reprot 12">
+    <Grid x:Key="Grid_Old-Report12" x:Shared="false" ToolTip="Ansem Report 12">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\12.png"/>
     </Grid>
-    <Grid x:Key="Grid_Old-Report13" x:Shared="false" ToolTip="Ansem Reprot 13">
+    <Grid x:Key="Grid_Old-Report13" x:Shared="false" ToolTip="Ansem Report 13">
         <Image Source="Images\Grid\Checks\Old\ansemreport.png"/>
         <Image Source="Images\Grid\Overlays\Numbers\13.png"/>
     </Grid>
@@ -1304,7 +1304,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Old-Fight1"              Source="Images\Grid\Progression\Old\hollow_bastion\first_fight.png"                 x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Old-Fight2"              Source="Images\Grid\Progression\Old\hollow_bastion\second_fight.png"                x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Old-Transport"           Source="Images\Grid\Progression\Old\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Old-Transport"           Source="Images\Grid\Progression\Old\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Old-Missions"            Source="Images\Grid\Progression\Old\land_of_dragons\missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Old-Mountain"            Source="Images\Grid\Progression\Old\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
@@ -1516,19 +1516,19 @@
 <!--#region Custom-->
     <!-- Items -->
     <!--Reports-->
-    <Image x:Key="Grid_Cus-Report1"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport1.png"  x:Shared="false" ToolTip="Ansem Reprot 1"/>
-    <Image x:Key="Grid_Cus-Report2"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport2.png"  x:Shared="false" ToolTip="Ansem Reprot 2"/>
-    <Image x:Key="Grid_Cus-Report3"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport3.png"  x:Shared="false" ToolTip="Ansem Reprot 3"/>
-    <Image x:Key="Grid_Cus-Report4"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport4.png"  x:Shared="false" ToolTip="Ansem Reprot 4"/>
-    <Image x:Key="Grid_Cus-Report5"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport5.png"  x:Shared="false" ToolTip="Ansem Reprot 5"/>
-    <Image x:Key="Grid_Cus-Report6"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport6.png"  x:Shared="false" ToolTip="Ansem Reprot 6"/>
-    <Image x:Key="Grid_Cus-Report7"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport7.png"  x:Shared="false" ToolTip="Ansem Reprot 7"/>
-    <Image x:Key="Grid_Cus-Report8"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport8.png"  x:Shared="false" ToolTip="Ansem Reprot 8"/>
-    <Image x:Key="Grid_Cus-Report9"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport9.png"  x:Shared="false" ToolTip="Ansem Reprot 9"/>
-    <Image x:Key="Grid_Cus-Report10"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport10.png" x:Shared="false" ToolTip="Ansem Reprot 10"/>
-    <Image x:Key="Grid_Cus-Report11"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport11.png" x:Shared="false" ToolTip="Ansem Reprot 11"/>
-    <Image x:Key="Grid_Cus-Report12"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport12.png" x:Shared="false" ToolTip="Ansem Reprot 12"/>
-    <Image x:Key="Grid_Cus-Report13"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport13.png" x:Shared="false" ToolTip="Ansem Reprot 13"/>
+    <Image x:Key="Grid_Cus-Report1"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport1.png"  x:Shared="false" ToolTip="Ansem Report 1"/>
+    <Image x:Key="Grid_Cus-Report2"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport2.png"  x:Shared="false" ToolTip="Ansem Report 2"/>
+    <Image x:Key="Grid_Cus-Report3"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport3.png"  x:Shared="false" ToolTip="Ansem Report 3"/>
+    <Image x:Key="Grid_Cus-Report4"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport4.png"  x:Shared="false" ToolTip="Ansem Report 4"/>
+    <Image x:Key="Grid_Cus-Report5"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport5.png"  x:Shared="false" ToolTip="Ansem Report 5"/>
+    <Image x:Key="Grid_Cus-Report6"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport6.png"  x:Shared="false" ToolTip="Ansem Report 6"/>
+    <Image x:Key="Grid_Cus-Report7"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport7.png"  x:Shared="false" ToolTip="Ansem Report 7"/>
+    <Image x:Key="Grid_Cus-Report8"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport8.png"  x:Shared="false" ToolTip="Ansem Report 8"/>
+    <Image x:Key="Grid_Cus-Report9"   Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport9.png"  x:Shared="false" ToolTip="Ansem Report 9"/>
+    <Image x:Key="Grid_Cus-Report10"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport10.png" x:Shared="false" ToolTip="Ansem Report 10"/>
+    <Image x:Key="Grid_Cus-Report11"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport11.png" x:Shared="false" ToolTip="Ansem Report 11"/>
+    <Image x:Key="Grid_Cus-Report12"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport12.png" x:Shared="false" ToolTip="Ansem Report 12"/>
+    <Image x:Key="Grid_Cus-Report13"  Source="pack://application:,,,/CustomImages/Grid/Checks/AnsemReport13.png" x:Shared="false" ToolTip="Ansem Report 13"/>
     <!--TornPagesd-->
     <Image x:Key="Grid_Cus-GridTornPage1" Source="pack://application:,,,/CustomImages/Grid/Checks/TornPage1.png" x:Shared="false" ToolTip="Torn Page 1"/>
     <Image x:Key="Grid_Cus-GridTornPage2" Source="pack://application:,,,/CustomImages/Grid/Checks/TornPage2.png" x:Shared="false" ToolTip="Torn Page 2"/>
@@ -1723,7 +1723,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Cus-Fight1"               Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/cor_first_fight.png"             x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Cus-Fight2"               Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/cor_second_fight.png"            x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Cus-Transport"            Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Cus-Transport"            Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Cus-Missions"             Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Cus-Mountain"             Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
