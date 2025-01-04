@@ -259,7 +259,8 @@ namespace KhTracker
             DragDropToggle(null, null);
 
             AutoSaveProgressOption.IsChecked = Properties.Settings.Default.AutoSaveProgress;
-            AutoSaveProgress2Option.IsChecked = Properties.Settings.Default.AutoSaveProgress;
+            AutoSaveProgress2Option.IsChecked = Properties.Settings.Default.AutoSaveProgress2;
+            AutoSaveProgress3Option.IsChecked = Properties.Settings.Default.AutoSaveProgress3;
 
             #endregion
 
@@ -353,6 +354,10 @@ namespace KhTracker
             OldWorldLayoutOption.IsChecked = Properties.Settings.Default.OldWorldLayout;
             if (OldWorldLayoutOption.IsChecked)
                 OldWorldLayoutToggle(null, null);
+
+            GOAWorldLayoutOption.IsChecked = Properties.Settings.Default.GOAWorldLayout;
+            if (GOAWorldLayoutOption.IsChecked)
+                GOAWorldLayoutToggle(null, null);
 
             MinWorldOption.IsChecked = Properties.Settings.Default.MinWorld;
             if (MinWorldOption.IsChecked)

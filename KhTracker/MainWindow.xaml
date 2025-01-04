@@ -46,6 +46,7 @@
                 <MenuItem Header="Load Tracker Progress" Click="LoadProgress"/>
                 <MenuItem Header="Auto-Save Tracker Progress on Tracker Exit" Click="AutoSaveProgressToggle" x:Name="AutoSaveProgressOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Auto-Save Tracker Progress on Connection Loss" Click="AutoSaveProgress2Toggle" x:Name="AutoSaveProgress2Option" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Auto-Save Tracker Progress Perpetually" Click="AutoSaveProgress3Toggle" x:Name="AutoSaveProgress3Option" IsCheckable="True" IsChecked="True"/>
                 <Separator/>
                 <MenuItem Header="Reset Tracker" 	    Click="OnReset"/>
                 <MenuItem Header="Always on Top" 	    Click="TopMostToggle"  x:Name="TopMostOption"     IsCheckable="True" IsChecked="False"/>
@@ -92,12 +93,13 @@
                 <MenuItem Header="Level 99 Checks"               Click="SoraLevel99Toggle"    x:Name="SoraLevel99Option"    IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem Header="Image Visuals" Focusable="False">
-                <!-- eventually add an ption that pulls up settings window... -->
+                <!-- eventually add an option that pulls up settings window... -->
                 <!--MenuItem Header="Simple Stat/UI Icons" Click="MinStatToggle" x:Name="MinStatOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Game Stat/UI Icons"   Click="OldStatToggle" x:Name="OldStatOption" IsCheckable="True" IsChecked="False"/>
                 <Separator/-->
                 <MenuItem Header="New World Layout"     Click="NewWorldLayoutToggle" x:Name="NewWorldLayoutOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Classic World Layout" Click="OldWorldLayoutToggle" x:Name="OldWorldLayoutOption" IsCheckable="True" IsChecked="False"/>
+				<MenuItem Header="GOA World Layout"     Click="GOAWorldLayoutToggle" x:Name="GOAWorldLayoutOption" IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Colorful Hint Text" Click="ColorHintToggle" x:Name="ColorHintOption" IsCheckable="True" IsChecked="True"/>
                 <Separator/>

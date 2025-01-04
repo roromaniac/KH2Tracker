@@ -9,6 +9,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.IO;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Diagnostics.Eventing.Reader;
+using System.Data.Common;
 
 namespace KhTracker
 {
@@ -35,6 +38,7 @@ namespace KhTracker
         public bool bingoLogic;
         public bool battleshipLogic;
         public bool bunterLogic;
+        public List<Dictionary<string, object>> bunterBosses;
         public bool fogOfWar;
         public Dictionary<string, int> fogOfWarSpan = new Dictionary<string, int>()
         {
@@ -71,7 +75,10 @@ namespace KhTracker
         public int maxShipCount = 5;
         private List<int> sampledShipSizes = new List<int>();
         public bool[,] battleshipSunkStatus;
-        public bool battleshipRandomCount;
+        public bool battleshipRandomCount = false;
+        public bool coloredHints = false;
+        public int coloredHintsDistance = 1;
+        public List<Color> coloredHintsColors;
 
         public GridWindow(Data dataIn)
         {
@@ -99,6 +106,10 @@ namespace KhTracker
             battleshipRandomCount = Properties.Settings.Default.GridBattleshipRandomCount;
             minShipCount = Properties.Settings.Default.GridMinShipCount;
             maxShipCount = Properties.Settings.Default.GridMaxShipCount;
+            coloredHints = Properties.Settings.Default.GridColoredHints;
+            coloredHintsDistance = Properties.Settings.Default.GridColoredHintsDistance;
+            // +1 is becuase you need coloredHintsDistance colors for the misses and 1 color for the hit.
+            coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
             try
             {
                 shipSizes = JsonSerializer.Deserialize<List<int>>(Properties.Settings.Default.GridShipSizes);
@@ -106,7 +117,7 @@ namespace KhTracker
             catch (JsonException)
             {
                 MessageBox.Show("Ships file did not deserialize correctly.");
-                shipSizes = new List<int>{ 1, 1 };
+                shipSizes = new List<int> { 1, 1 };
             }
             fogOfWar = Properties.Settings.Default.GridFogOfWar;
             try
@@ -176,6 +187,8 @@ namespace KhTracker
                 battleshipRandomCount,
                 bunterLogic,
                 bingoLogic,
+                coloredHints,
+                coloredHintsDistance,
                 fogOfWar,
                 fogOfWarSpan,
                 gridSettings,
@@ -237,6 +250,14 @@ namespace KhTracker
                     ? bunterLogicElement.GetBoolean()
                     : Properties.Settings.Default.GridBunterLogic;
 
+                coloredHints = root.TryGetProperty("coloredHints", out JsonElement coloredHintsElement)
+                    ? coloredHintsElement.GetBoolean()
+                    : Properties.Settings.Default.GridColoredHints;
+
+                coloredHintsDistance = root.TryGetProperty("coloredHintsDistance", out JsonElement coloredHintsDistanceElement)
+                    ? coloredHintsDistanceElement.GetInt32()
+                    : Properties.Settings.Default.GridColoredHintsDistance;
+
                 fogOfWar = root.TryGetProperty("fogOfWar", out JsonElement fogOfWarElement)
                     ? fogOfWarElement.GetBoolean()
                     : Properties.Settings.Default.GridFogOfWar;
@@ -265,10 +286,6 @@ namespace KhTracker
                 numRows = root.TryGetProperty("numRows", out JsonElement numRowsElement)
                     ? numRowsElement.GetInt32()
                     : Properties.Settings.Default.GridWindowRows;
-
-                seedName = root.TryGetProperty("seedName", out JsonElement seedNameElement)
-                    ? seedNameElement.GetString()
-                    : RandomSeedName(8, seed);
 
                 shipSizes = root.TryGetProperty("shipSizes", out JsonElement shipSizesElement)
                     ? JsonSerializer.Deserialize<List<int>>(shipSizesElement.GetRawText())
@@ -342,7 +359,7 @@ namespace KhTracker
                 Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
             }
             grid.Children.Clear();
-            GenerateGrid(numRows, numColumns, seedName);
+            GenerateGrid(numRows, numColumns, null, true, true);
             gridOptionsWindow.InitializeData(this, data);
             gridOptionsWindow.UpdateGridOptionsUI();
         }
@@ -358,7 +375,7 @@ namespace KhTracker
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
-        { 
+        {
             gridOptionsWindow.Show();
         }
 
@@ -601,7 +618,7 @@ namespace KhTracker
                         var currentButton = buttons[i, j - west];
                         currentButton.SetResourceReference(ContentProperty, assets[(i * numColumns) + (j - west)]);
                     }
-                        
+
                 }
                 // east check
                 for (int east = 1; east <= eastRange; east++)
@@ -628,7 +645,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i + south, j];
                         currentButton.SetResourceReference(ContentProperty, assets[((i + south) * numColumns) + j]);
-                    }    
+                    }
                 }
                 // northwest check
                 for (int northwest = 1; northwest <= northwestRange; northwest++)
@@ -637,7 +654,7 @@ namespace KhTracker
                     {
                         var currentButton = buttons[i - northwest, j - northwest];
                         currentButton.SetResourceReference(ContentProperty, assets[((i - northwest) * numColumns) + (j - northwest)]);
-                    } 
+                    }
                 }
                 // northeast check
                 for (int northeast = 1; northeast <= northeastRange; northeast++)
@@ -710,7 +727,7 @@ namespace KhTracker
               .Select(s => s[randValue.Next(s.Length)]).ToArray());
         }
 
-        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null)
+        public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool userTrigger = true, bool presetUpload = false)
         {
             //reset banner visibility
             UpdateGridBanner(false);
@@ -723,8 +740,12 @@ namespace KhTracker
             }
 
             grid = new Grid();
-            gridOptionsWindow.InitializeData(this, data);
-            gridOptionsWindow.UpdateGridOptionsUI();
+            // only trigger the options updates if the grid is changed by the user and not an automated check (e.g. bunterCheck)
+            if (userTrigger)
+            {
+                gridOptionsWindow.InitializeData(this, data);
+                gridOptionsWindow.UpdateGridOptionsUI();
+            }
 
             buttons = new ToggleButton[rows, columns];
             // ensure that the cells all start with the unmarked color as their original colors
@@ -742,9 +763,9 @@ namespace KhTracker
 
             seedName = seedString;
 
-            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && data.firstGridOnSeedLoad)
+            if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
-                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{data.convertedSeedHash}";
+                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
                 seed = settingsString.GetHashCode();
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
@@ -758,6 +779,9 @@ namespace KhTracker
             Seedname.Header = "Seed: " + seedName;
             Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
 
+            // handle bunter checks
+            if (data.BossRandoFound)
+                bunterCheck(bunterBosses);
             // get raw check names
             assets = Asset_Collection(seed);
             // set the content resource reference with style
@@ -779,9 +803,6 @@ namespace KhTracker
                 }
                 numRows = rows;
                 numColumns = columns;
-                // update the row and column values
-                gridOptionsWindow.InitializeData(this, data);
-                gridOptionsWindow.UpdateGridOptionsUI();
                 MessageBox.Show($"NOTE: Your original request for a grid of size {originalNumRows} x {originalNumColumns} is not possible with only {numChecks} allowed checks. Grid has been reduced to size of {numRows} x {numColumns}");
             }
 
@@ -862,6 +883,8 @@ namespace KhTracker
                 }
                 else
                     sampledShipSizes = shipSizes;
+                if (coloredHints)
+                    coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
                 placedShips = GenerateSameBoard(numRows, numColumns);
             }
 
@@ -1259,14 +1282,11 @@ namespace KhTracker
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         annotationStatus[row, column] = false;
                     }
-                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
-                    {
-                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
-                    }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
+                        if (annotationStatus[row, column])
+                            SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
                     }
                     else
                     {
@@ -1278,6 +1298,196 @@ namespace KhTracker
                         SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
                     }
                 }
+            }
+        }
+        
+        public void bunterCheck(List<Dictionary<string, object>> bosses)
+        {
+            //don't bother performing the check if bosses is null
+            if (bosses == null)
+                return;
+            // update valid bosses for grid tracker
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                // string bossRepl = bosspair["new"].ToString();
+
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridSettings[data.codes.bossNameConversion[bossOrig]] = false;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] = false;
+                }
+            }
+
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                // disable bosses not in the values of the boss enemy dict
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                    {
+                        var convertedBossName = data.codes.bossNameConversion[bossOrig];
+                        gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(bossOrig);
+                    }
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                    {
+                        var convertedBossName = "Grid" + data.codes.bossNameConversion[bossOrig];
+                        gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(bossOrig);
+                    }
+                }
+            }
+
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                string bossRepl = bosspair["new"].ToString();
+
+                //Special case, check axel first or it'll crash
+                // if STT is off, ensure only the Data Axel replacement is eligible
+                if (bossOrig == "Axel II")
+                {
+                    if (!data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+                // if STT is on, ensure only the Axel II replacement is eligible
+                else if (bossOrig == "Axel (Data)")
+                {
+                    if (data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig.Replace("(Data)", "II"));
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("(Data)", "II")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("(Data)", "II")]]);
+                        if (dataAxelKeyExists && axelTwoKeyExists && dataAxelReplacementKeyExists && axelTwoReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+                // disable bosses in data arenas
+                else if (bossOrig.Contains("(Data)"))
+                {
+                    bool nonDataVersionExists = data.BossList.ContainsKey(bossOrig.Replace(" (Data)", "")); // non-data version exists
+                    bool dataKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the data version of the new boss name can be converted
+                    bool newBossKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace(" (Data)", "")]); // ensure the new boss name can be converted
+                    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" (Data)", "")]]; // check if the converted names of the new bosses are not the same
+                    if (nonDataVersionExists && dataKeyExists && newBossKeyExists && valueBossesEqual)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+                // disable cups replacements
+                else if (bossOrig.Contains("Cups"))
+                {
+                    if (bossOrig == "Hades Cups" || bossOrig == "Pete Cups")
+                        continue;
+
+                    bool nonCupsVersionExists1 = data.BossList.ContainsKey(bossOrig.Replace(" (Cups)", "")); // non-cups version exists
+                    bool cupsKeyExists1 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
+                    bool newBossKeyExists1 = data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" (Cups)", "")); // ensure the new boss name can be converted
+                    bool valueBossesEqual1 = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" (Cups)", "")]]; // check if the converted names of the new bosses are not the same
+                    bool sameBossCheck1 = (nonCupsVersionExists1 && cupsKeyExists1 && newBossKeyExists1 && valueBossesEqual1);
+
+                    bool nonCupsVersionExists2 = data.BossList.ContainsKey(bossOrig.Replace(" Cups", "")); // non-cups version exists
+                    bool cupsKeyExists2 = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]); // ensure the cups version of the new boss name can be converted
+                    bool newBossKeyExists2 = nonCupsVersionExists2 && data.codes.bossNameConversion.ContainsKey(bossOrig.Replace(" Cups", "")); // ensure the new boss name can be converted
+                    bool sameBossCheck2 = (nonCupsVersionExists2 && cupsKeyExists2 && newBossKeyExists2 && (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace(" Cups", "")]]));
+                    if (sameBossCheck1 || sameBossCheck2)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+
+                // if Hades is an org member, ensure it's the right one
+                else if (bossOrig == "Hades II")
+                {
+                    bool hadesTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                    bool hadesTwoOneKeyExists = data.BossList.ContainsKey(bossOrig + " (1)");
+                    bool hadesTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                    bool hadesTwoOneReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig + " (1)"]);
+                    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig + " (1)"]];
+                    if (hadesTwoKeyExists && hadesTwoOneKeyExists && hadesTwoReplacementKeyExists && hadesTwoOneReplacementKeyExists && valueBossesEqual)
+                    {
+                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    }
+                }
+
+                // if STT is off, ensure only the Data Axel replacement is eligible
+                if (bossOrig == "Axel II")
+                {
+                    if (!data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+
+                // if STT is on, ensure only the Axel II replacement is eligible
+                if (bossOrig == "Axel (Data)")
+                {
+                    if (data.BossList.ContainsKey("Axel I"))
+                    {
+                        bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig);
+                        bool axelTwoKeyExists = data.BossList.ContainsKey(bossOrig.Replace("(Data)", "II"));
+                        bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                        bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("(Data)", "II")]);
+                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("(Data)", "II")]]);
+                        if (dataAxelKeyExists && axelTwoKeyExists && dataAxelReplacementKeyExists && axelTwoReplacementKeyExists && valueBossesEqual)
+                        {
+                            if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                                gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                            else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                        }
+                    }
+                }
+            }
+            // remove Pete OC replacement if technically they are different
+            if (bunterLogic)
+            {
+                if (data.BossList["Pete OC II"] != data.BossList["Pete TR"])
+                    gridSettings[data.codes.bossNameConversion[data.BossList["Pete OC II"]]] = false;
             }
         }
 
@@ -1463,20 +1673,18 @@ namespace KhTracker
             {
                 for (int column = 0; column < numColumns; column++)
                 {
+                    Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"];
                     if (battleshipSunkStatus[row, column] && placedShips.Cast<int>().Max() > 0)
                     {
                         SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
                         originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         annotationStatus[row, column] = false;
                     }
-                    else if ((buttons[row, column].IsChecked ?? false) && annotationStatus[row, column])
-                    {
-                        originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"];
-                    }
                     else if (buttons[row, column].IsChecked ?? false)
-                    {
-                        SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                    {    
+                        originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor;
+                        if (!annotationStatus[row, column])
+                            SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor);
                     }
                     else
                     {
@@ -1517,14 +1725,52 @@ namespace KhTracker
                         if (!buttons[row, column].IsChecked ?? false)
                         {
                             buttons[row, column].SetResourceReference(ContentProperty, assets[(row * numColumns) + column]);
-                            SetColorForButton(buttons[row, column].Background, currentColors["Battleship Miss Color"]);
+                            SetColorForButton(buttons[row, column].Background, coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"]);
                             originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
                         }
                     }
                 }
-                //MessageBox.Show("Congrats! You sunk all ships!");
                 UpdateGridBanner(true, "SUNK ALL SHIPS!", "H");
             }
+        }
+
+        public int DistanceToNearestShip(int i, int j)
+        {
+            int distanceToNearestShip = coloredHintsDistance;
+            for (int row = 0; row < numRows; row++)
+            {
+                for (int column = 0; column < numColumns; column++)
+                {
+                    if (placedShips[row, column] > 0)
+                    {
+                        int currentDistance = Math.Abs(row - i) + Math.Abs(column - j);
+                        if (currentDistance < distanceToNearestShip)
+                            distanceToNearestShip = currentDistance;
+                    }
+                }
+            }
+            return distanceToNearestShip;
+        }
+
+        public static List<Color> GenerateGradient(Color colorA, Color colorB, int steps, double dropOffIntensity = 0.67)
+        {
+            List<Color> gradient = new List<Color>();
+
+            for (int i = 0; i < steps; i++)
+            {
+                double ratio = (double)i / (steps - 1);
+                double dropOff = (i > 0 ? 1.0 : 0.0);
+                byte r = (byte)(dropOffIntensity * dropOff * colorA.R + ratio * (colorB.R - dropOffIntensity * dropOff * colorA.R));
+                byte g = (byte)(dropOffIntensity * dropOff * colorA.G + ratio * (colorB.G - dropOffIntensity * dropOff * colorA.G));
+                byte b = (byte)(dropOffIntensity * dropOff * colorA.B + ratio * (colorB.B - dropOffIntensity * dropOff * colorA.B));
+                //byte r = (byte)(colorA.R + ratio * (colorB.R - colorA.R));
+                //byte g = (byte)(colorA.G + ratio * (colorB.G - colorA.G));
+                //byte b = (byte)(colorA.B + ratio * (colorB.B - colorA.B));
+
+                gradient.Add(Color.FromRgb(r, g, b));
+            }
+
+            return gradient;
         }
 
         // updates colors upon close
@@ -1537,11 +1783,13 @@ namespace KhTracker
         public void HandleClosing(ColorPickerWindow sender)
         {
 
+            coloredHintsColors = GenerateGradient(currentColors["Battleship Hit Color"], currentColors["Battleship Miss Color"], coloredHintsDistance + 1);
             //update the new colors on the card
             for (int i = 0; i < numRows; i++)
             {
                 for (int j = 0; j < numColumns; j++)
                 {
+                    Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(i, j)] : currentColors["Battleship Miss Color"];
                     if (annotationStatus[i, j])
                         SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
                     if (battleshipLogic)
@@ -1550,8 +1798,11 @@ namespace KhTracker
                         {
                             SetColorForButton(buttons[i, j].Background, currentColors["Battleship Sunk Color"]);
                         }
-                        bool squareIsShip = placedShips[i, j] != 0;
-                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : currentColors["Battleship Miss Color"]) : currentColors["Unmarked Color"]);
+                        else
+                        {
+                            bool squareIsShip = placedShips[i, j] != 0;
+                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : missColor) : currentColors["Unmarked Color"]);
+                        }
                     }
                     else
                     {
