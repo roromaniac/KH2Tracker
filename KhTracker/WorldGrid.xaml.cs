@@ -1150,7 +1150,7 @@ namespace KhTracker
                     }
                     if (text1.Contains("Leon"))
                     {
-                        text1 = "Grim Reaper II (Leon)";
+                        text1 = "Twilight Thorn (Leon)";
                         //if (text2 == "is unchanged")
                         //{
                         //    text2 = "became";

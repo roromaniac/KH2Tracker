@@ -1895,7 +1895,7 @@ namespace KhTracker
                     {
                         boss = "Hercules";
                     }
-                    if ( boss == "Grim Reaper II")
+                    if ( boss == "Twilight Thorn")
                     {
                         boss = "Leon";
                     }
@@ -1920,6 +1920,8 @@ namespace KhTracker
 
                     if (!data.BossList.ContainsKey(bossReplacemnt))
                         return;
+
+                    //bossReplacemnt = "Leon (3)";
 
                     string bossHome = data.BossList[bossReplacemnt];
                     data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));

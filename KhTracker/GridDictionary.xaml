@@ -558,7 +558,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Min-Fight1"              Source="Images\Grid\Progression\Min\hollow_bastion\first_fight.png"                 x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Min-Fight2"              Source="Images\Grid\Progression\Min\hollow_bastion\second_fight.png"                x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Min-Transport"           Source="Images\Grid\Progression\Min\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Min-Transport"           Source="Images\Grid\Progression\Min\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Min-Missions"            Source="Images\Grid\Progression\Min\land_of_dragons\missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Min-Mountain"            Source="Images\Grid\Progression\Min\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
@@ -1304,7 +1304,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Old-Fight1"              Source="Images\Grid\Progression\Old\hollow_bastion\first_fight.png"                 x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Old-Fight2"              Source="Images\Grid\Progression\Old\hollow_bastion\second_fight.png"                x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Old-Transport"           Source="Images\Grid\Progression\Old\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Old-Transport"           Source="Images\Grid\Progression\Old\hollow_bastion\transport.png"                   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Old-Missions"            Source="Images\Grid\Progression\Old\land_of_dragons\missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Old-Mountain"            Source="Images\Grid\Progression\Old\land_of_dragons\mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
@@ -1723,7 +1723,7 @@
     <!--Cavern of Rememberance-->
     <Image x:Key="Grid_Cus-Fight1"               Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/cor_first_fight.png"             x:Shared="false" ToolTip="CoR First Fight"/>
     <Image x:Key="Grid_Cus-Fight2"               Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/cor_second_fight.png"            x:Shared="false" ToolTip="CoR Second Fight"/>
-    <Image x:Key="Grid_Cus-Transport"            Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"   x:Shared="false" ToolTip="Transport to Rememberance"/>
+    <Image x:Key="Grid_Cus-Transport"            Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"   x:Shared="false" ToolTip="Transport to Remembrance"/>
     <!--Land of Dragons-->
     <Image x:Key="Grid_Cus-Missions"             Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/missions.png"                   x:Shared="false" ToolTip="Land of Dragons Missons"/>
     <Image x:Key="Grid_Cus-Mountain"             Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/mountain_climb.png"             x:Shared="false" ToolTip="Mountain Climb"/>
