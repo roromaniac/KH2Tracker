@@ -1921,7 +1921,7 @@ namespace KhTracker
                     if (!data.BossList.ContainsKey(bossReplacemnt))
                         return;
 
-                    bossReplacemnt = "Leon (3)";
+                    //bossReplacemnt = "Leon (3)";
 
                     string bossHome = data.BossList[bossReplacemnt];
                     data.bossHomeHintInformation.Add(new Tuple<string, string>(bossReplacemnt, bossHome));
