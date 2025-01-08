@@ -976,7 +976,7 @@ namespace KhTracker
             try
             {
                 // timed autosave event
-                Console.WriteLine($"AutoSave is happening!! {AutoSaveProgress3Option.IsChecked}");
+                //Console.WriteLine($"AutoSave is happening!! {AutoSaveProgress3Option.IsChecked}");
                 if (AutoSaveProgress3Option.IsChecked)
                 {
                     if (!Directory.Exists("KhTrackerAutoSaves"))
@@ -1072,6 +1072,30 @@ namespace KhTracker
                 }
             }
 
+            else
+            {
+                switch (gridCheckName)
+                {
+                    case "Hydra":
+                        checks.AddRange(($"Hydra,{data.codes.oneHourReplacements["Hydra"]}").Split(',').ToList());
+                        break;
+                    case "Jafar":
+                        checks.AddRange(($"Jafar,{data.codes.oneHourReplacements["Jafar"]}").Split(',').ToList());
+                        break;
+                    case "Shadow Stalker":
+                        checks.AddRange(($"Shadow Stalker,{data.codes.oneHourReplacements["Shadow Stalker"]}").Split(',').ToList());
+                        break;
+                    case "Storm Rider":
+                        checks.AddRange(($"Storm Rider,{data.codes.oneHourReplacements["Storm Rider"]}").Split(',').ToList());
+                        break;
+                    case "Twilight Thorn":
+                        checks.AddRange(($"Twilight Thorn,{data.codes.oneHourReplacements["Twilight Thorn"]}").Split(',').ToList());
+                        break;
+                    default:
+                        break;
+                }
+            }
+
             if (gridWindow.bunterLogic && data.BossRandoFound)
             {
                 switch (gridCheckName)
@@ -1125,15 +1149,11 @@ namespace KhTracker
                     // reveal the boss hint of the current arena
                     if (highlightBoss)
                     {
-                        // reveal the current arena's boss hint
-                        if (data.BossRandoFound)
+                        if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
                         {
-                            if (data.BossList.ContainsKey(checks[i]) && data.codes.bossNameConversion.ContainsKey(data.BossList[checks[i]]))
-                            {
-                                string origBoss = data.codes.bossNameConversion[checks[i]];
-                                string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
-                                data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
-                            }
+                            string origBoss = data.codes.bossNameConversion[checks[i]];
+                            string newBoss = data.codes.bossNameConversion[data.BossList[checks[i]]];
+                            data.WorldsData["GoA"].worldGrid.Handle_GridTrackerHints_BE(origBoss, newBoss, gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
                         }
                     }
 
