@@ -1093,6 +1093,9 @@ namespace KhTracker
                         break;
                     default:
                         break;
+                    case "Twin Lords":
+                        checks.AddRange(("BlizzardLord,VolcanoLord").Split(',').ToList());
+                        break;
                 }
             }
 
