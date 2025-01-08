@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -1048,6 +1049,17 @@ namespace KhTracker
 
         public void Handle_GridTrackerHints_BE(string gridOriginalBoss, string gridNewBoss, string iconStyle = "Min")
         {
+
+            Data data = MainWindow.data;
+
+            // handle 1 hour hinting: use the original boss image for arena hints
+            if (data.oneHourMode && data.codes.oneHourReplacements.ContainsValue(gridOriginalBoss))
+            {
+                var origBossKey = data.codes.oneHourReplacements
+                                    .FirstOrDefault(pair => pair.Value.Equals(gridOriginalBoss))
+                                    .Key;
+                gridOriginalBoss = data.codes.bossNameConversion[origBossKey];
+            }
 
             // get the hint color
             Color hintColor = window.gridWindow.currentColors["Hint Color"];

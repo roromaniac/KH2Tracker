@@ -1077,19 +1077,19 @@ namespace KhTracker
                 switch (gridCheckName)
                 {
                     case "Hydra":
-                        checks.AddRange(("Hydra,Hercules").Split(',').ToList());
+                        checks.AddRange(($"Hydra,{data.codes.oneHourReplacements["Hydra"]}").Split(',').ToList());
                         break;
                     case "Jafar":
-                        checks.AddRange(("Jafar,Cloud").Split(',').ToList());
+                        checks.AddRange(($"Jafar,{data.codes.oneHourReplacements["Jafar"]}").Split(',').ToList());
                         break;
                     case "Shadow Stalker":
-                        checks.AddRange(("Shadow Stalker,Tifa").Split(',').ToList());
+                        checks.AddRange(($"Shadow Stalker,{data.codes.oneHourReplacements["Shadow Stalker"]}").Split(',').ToList());
                         break;
                     case "Storm Rider":
-                        checks.AddRange(("Storm Rider,Yuffie").Split(',').ToList());
+                        checks.AddRange(($"Storm Rider,{data.codes.oneHourReplacements["Storm Rider"]}").Split(',').ToList());
                         break;
                     case "Twilight Thorn":
-                        checks.AddRange(("Twilight Thorn,Leon").Split(',').ToList());
+                        checks.AddRange(($"Twilight Thorn,{data.codes.oneHourReplacements["Twilight Thorn"]}").Split(',').ToList());
                         break;
                     default:
                         break;

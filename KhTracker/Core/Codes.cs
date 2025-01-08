@@ -1486,7 +1486,6 @@ namespace KhTracker
             {"Leon (1)", "Leon"},
             {"Leon (2)", "Leon"},
             {"Leon (3)", "Leon"},
-            {"Twilight Thorn (Leon)", "Leon"},
             {"Lexaeus", "Lexaeus"},
             {"Lexaeus (Data)", "LexaeusData"},
             {"Luxord", "Luxord"},
@@ -1516,8 +1515,10 @@ namespace KhTracker
             {"Sephiroth", "Sephiroth"},
             {"Setzer", "Setzer"},
             {"Shadow Stalker", "ShadowStalker"},
+            {"Shadow Stalker (Tifa)", "Tifa"},
             {"Shan-Yu", "ShanYu"},
             {"Storm Rider", "StormRider"},
+            {"Storm Rider (Yuffie)", "Yuffie"},
             {"Terra", "LingeringWill"},
             {"The Beast", "Beast"},
             {"The Experiment", "Experiment"},
@@ -1525,8 +1526,8 @@ namespace KhTracker
             {"Tifa", "Tifa"},
             {"Tifa (1)", "Tifa"},
             {"Tifa (2)", "Tifa"},
-            {"Shadow Stalker (Tifa)", "Tifa"},
             {"Twilight Thorn", "TwilightThorn"},
+            {"Twilight Thorn (Leon)", "Leon"},
             {"Vexen", "Vexen"},
             {"Vexen (Data)", "VexenData"},
             {"Vivi", "Vivi"},
@@ -1542,7 +1543,6 @@ namespace KhTracker
             {"Yuffie (1)", "Yuffie"},
             {"Yuffie (2)", "Yuffie"},
             {"Yuffie (3)", "Yuffie"},
-            {"Storm Rider (Yuffie)", "Yuffie"},
             {"Zexion", "Zexion"},
             {"Zexion (Data)", "ZexionData"},
         };
@@ -1554,6 +1554,15 @@ namespace KhTracker
             { "Hades", "Hades II (1)" },
             { "DCPete", "Pete TR" },
             { "OCPete", "Pete OC II" }
+        };
+
+        public Dictionary<string, string> oneHourReplacements = new Dictionary<string, string>()
+        {
+            { "Hydra", "Hercules" },
+            { "Jafar", "Cloud" },
+            { "Shadow Stalker", "Tifa" },
+            { "Storm Rider", "Yuffie" },
+            { "Twilight Thorn", "Leon" }
         };
     }
 }
