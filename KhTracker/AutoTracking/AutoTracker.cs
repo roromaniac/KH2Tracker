@@ -1099,45 +1099,37 @@ namespace KhTracker
                 }
             }
 
-            if (gridWindow.bunterLogic && data.BossRandoFound)
+            if (data.BossRandoFound && gridWindow.bunterLogic)
             {
+                // special cases
                 switch (gridCheckName)
                 {
                     case "Pete OC II":
-                        checks.AddRange(("Pete OC II,Pete TR").Split(',').ToList());
-                        break;
                     case "Pete TR":
                         checks.AddRange(("Pete OC II,Pete TR").Split(',').ToList());
                         break;
-                    case "Luxord":
-                        checks.AddRange(("Luxord,Luxord (Data)").Split(',').ToList());
+                    case "Axel II":
+                    case "Axel (Data)":
+                        checks.AddRange(("Axel II,Axel (Data)").Split(',').ToList());
                         break;
-                    case "Luxord (Data)":
-                        checks.AddRange(("Luxord,Luxord (Data)").Split(',').ToList());
-                        break;
+                }
+                // org members
+                var baseName = gridCheckName.Replace(" (Data)", "").Replace("Data", "");
+                switch (baseName) {
+                    case "Demyx":
                     case "Final Xemnas":
-                        checks.AddRange(("Final Xemnas,Final Xemnas (Data)").Split(',').ToList());
-                        break;
-                    case "Final Xemnas (Data)":
-                        checks.AddRange(("Final Xemnas,Final Xemnas (Data)").Split(',').ToList());
-                        break;
-                    case "Xigbar":
-                        checks.AddRange(("Xigbar,Xigbar (Data)").Split(',').ToList());
-                        break;
-                    case "Xigbar (Data)":
-                        checks.AddRange(("Xigbar,Xigbar (Data)").Split(',').ToList());
-                        break;
-                    case "Saix":
-                        checks.AddRange(("Saix,Saix (Data)").Split(',').ToList());
-                        break;
-                    case "Saix (Data)":
-                        checks.AddRange(("Saix,Saix (Data)").Split(',').ToList());
-                        break;
+                    case "Larxene":
+                    case "Lexaeus":
+                    case "Luxord":
+                    case "Marluxia":
                     case "Roxas":
-                        checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
-                        break;
-                    case "Roxas (Data)":
-                        checks.AddRange(("Roxas,Roxas (Data)").Split(',').ToList());
+                    case "Saix":
+                    case "Vexen":
+                    case "Xaldin":
+                    case "Xemnas":
+                    case "Xigbar":
+                    case "Zexion":
+                        checks.AddRange(($"{baseName},{baseName} (Data)").Split(',').ToList());
                         break;
                     default:
                         break;

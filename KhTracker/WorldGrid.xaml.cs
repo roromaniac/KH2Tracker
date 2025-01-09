@@ -1219,6 +1219,25 @@ namespace KhTracker
 
                 // handle boss hint on grid tracker
                 Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss, window.gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
+
+                // handle boss hint home for data org members
+                if (data.BossRandoFound && window.gridWindow.bunterLogic)
+                {
+                    gridOriginalBoss = gridOriginalBoss.Replace("Data", "").Replace("Axel", "Axel II");
+
+                    if (data.BossList.ContainsKey(gridOriginalBoss)
+                        && data.codes.bossNameConversion.ContainsKey(data.BossList[gridOriginalBoss]))
+                    {
+                        gridNewBoss = data.codes.bossNameConversion[data.BossList[gridOriginalBoss]];
+                        Console.WriteLine($"{gridOriginalBoss}, {gridNewBoss}");
+
+                        Handle_GridTrackerHints_BE(
+                            gridOriginalBoss,
+                            gridNewBoss,
+                            window.gridWindow.TelevoIconsOption?.IsChecked == true ? "Min" : "Old"
+                        );
+                    }
+                }
             }
 
         }
