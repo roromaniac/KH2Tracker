@@ -1303,6 +1303,7 @@ namespace KhTracker
         
         public void bunterCheck(List<Dictionary<string, object>> bosses)
         {
+            string properHadesReplacement = "";
             //don't bother performing the check if bosses is null
             if (bosses == null)
                 return;
@@ -1325,6 +1326,12 @@ namespace KhTracker
             {
                 string bossOrig = bosspair["original"].ToString();
                 string bossRepl = bosspair["new"].ToString();
+
+                // handle Hades bunter logic
+                if (bossOrig == "Hades II (1)")
+                {
+                    properHadesReplacement = bossRepl;
+                }
 
                 // disable bosses not in the values of the boss enemy dict
                 if (data.codes.bossNameConversion.ContainsKey(bossOrig))
@@ -1426,22 +1433,39 @@ namespace KhTracker
                     }
                 }
 
+                // THIS IS OLD CODE THAT MAY PROVE USEFUL
                 // if Hades is an org member, ensure it's the right one
-                else if (bossOrig == "Hades II")
+                //else if (bossOrig == "Hades II")
+                //{
+                //    bool hadesTwoKeyExists = data.BossList.ContainsKey(bossOrig);
+                //    bool hadesTwoOneKeyExists = data.BossList.ContainsKey(bossOrig + " (1)");
+                //    bool hadesTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
+                //    bool hadesTwoOneReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig + " (1)"]);
+                //    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig + " (1)"]];
+                //    if (hadesTwoKeyExists && hadesTwoOneKeyExists && hadesTwoReplacementKeyExists && hadesTwoOneReplacementKeyExists && valueBossesEqual)
+                //    {
+                //        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                //            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                //        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                //            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                //    }
+                //}
+
+                // only allow Hades II (1) to exist
+                else if (bossOrig == "Hades Escape" || bossOrig == "Hades I" || bossOrig == "Hades II")
                 {
-                    bool hadesTwoKeyExists = data.BossList.ContainsKey(bossOrig);
-                    bool hadesTwoOneKeyExists = data.BossList.ContainsKey(bossOrig + " (1)");
-                    bool hadesTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
-                    bool hadesTwoOneReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig + " (1)"]);
-                    bool valueBossesEqual = data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig + " (1)"]];
-                    if (hadesTwoKeyExists && hadesTwoOneKeyExists && hadesTwoReplacementKeyExists && hadesTwoOneReplacementKeyExists && valueBossesEqual)
-                    {
-                        if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
-                            gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
-                        else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
-                            gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
-                    }
+                    // disable the wrong Hades version
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
+                        gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossRepl]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[bossRepl]] = false;
+                    // re-enable the right Hades version
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[properHadesReplacement]))
+                        gridSettings[data.codes.bossNameConversion[properHadesReplacement]] = true;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[properHadesReplacement]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[properHadesReplacement]] = true;
                 }
+
 
                 // if STT is off, ensure only the Data Axel replacement is eligible
                 if (bossOrig == "Axel II")
