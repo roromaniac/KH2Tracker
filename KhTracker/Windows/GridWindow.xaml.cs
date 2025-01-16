@@ -1511,7 +1511,21 @@ namespace KhTracker
             if (bunterLogic)
             {
                 if (data.BossList["Pete OC II"] != data.BossList["Pete TR"])
-                    gridSettings[data.codes.bossNameConversion[data.BossList["Pete OC II"]]] = false;
+                {
+                    var removedPeteArena = data.BossList["Pete OC II"];
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[removedPeteArena]))
+                        gridSettings[data.codes.bossNameConversion[removedPeteArena]] = false;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[removedPeteArena]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[removedPeteArena]] = false;
+                }
+                if (data.BossList["Pete Cups"] != data.BossList["Pete TR"])
+                {
+                    var removedPeteArena = data.BossList["Pete Cups"];
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[removedPeteArena]))
+                        gridSettings[data.codes.bossNameConversion[removedPeteArena]] = false;
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[removedPeteArena]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[removedPeteArena]] = false;
+                }
             }
         }
 
