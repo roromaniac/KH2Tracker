@@ -947,18 +947,22 @@ namespace KhTracker
                 return;
             }
 
-            if (data.WorldsData[location].complete) //turn blue if it's marked as hinted hint or complete
-                Color = (SolidColorBrush)FindResource("HintedHint");
-
-            if (data.WorldsData[location].hintedHint) //turn blue if it's marked as hinted hint or complete
-                Color = (SolidColorBrush)FindResource("ClassicYellow");
-
             if (value == -999999)
             {
                 worldValue.Text = "?";
             }
             else
                 worldValue.Text = value.ToString();
+
+            if (data.WorldsData[location].complete) //turn blue if it's complete
+                Color = (SolidColorBrush)FindResource("Complete");
+
+            if (data.WorldsData[location].hintedHint) //turn neon red if it's a hinted hint
+            {
+                Color = (SolidColorBrush)FindResource("HintedHint");
+                worldValue.Text += "*";
+            }
+            
 
             worldValue.Fill = Color;
         }
