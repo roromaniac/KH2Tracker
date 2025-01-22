@@ -104,7 +104,7 @@
     <!--Classic-->
     <SolidColorBrush x:Key="ClassicYellow" Color="#FFE500"/>
     <!--Hinted Hint-->
-    <SolidColorBrush x:Key="HintedHint" Color="#bc13fe"/>
+    <SolidColorBrush x:Key="HintedHint" Color="#FF3131"/>
     <!--Complete-->
     <SolidColorBrush x:Key="Complete" Color="#29F"/>
     <!--Ghosted Hints-->
