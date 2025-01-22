@@ -1220,7 +1220,7 @@ namespace KhTracker
                 // handle boss hint on grid tracker
                 Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss, window.gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");
 
-                // handle boss hint home for data org members
+                // handle boss hint home for data org members by checking their non data arena
                 if (data.BossRandoFound && window.gridWindow.bunterLogic)
                 {
                     gridOriginalBoss = gridOriginalBoss.Replace("Data", "").Replace("Axel", "Axel II");
@@ -1231,8 +1231,9 @@ namespace KhTracker
                         gridNewBoss = data.codes.bossNameConversion[data.BossList[gridOriginalBoss]];
                         Console.WriteLine($"{gridOriginalBoss}, {gridNewBoss}");
 
+                        // handle the hint (and correcting the demyx key in the process)
                         Handle_GridTrackerHints_BE(
-                            gridOriginalBoss,
+                            gridOriginalBoss.Replace("Demyx", "HBDemyx"),
                             gridNewBoss,
                             window.gridWindow.TelevoIconsOption?.IsChecked == true ? "Min" : "Old"
                         );
