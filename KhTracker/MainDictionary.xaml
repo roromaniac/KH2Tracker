@@ -103,8 +103,10 @@
 
     <!--Classic-->
     <SolidColorBrush x:Key="ClassicYellow" Color="#FFE500"/>
-    <!--Hinted Hints-->
-    <SolidColorBrush x:Key="HintedHint" Color="#29F"/>
+    <!--Hinted Hint-->
+    <SolidColorBrush x:Key="HintedHint" Color="#FF3131"/>
+    <!--Complete-->
+    <SolidColorBrush x:Key="Complete" Color="#29F"/>
     <!--Ghosted Hints-->
     <SolidColorBrush x:Key="GhostHint" Color="#6D3"/>
     <!--Progression Hinted-->
