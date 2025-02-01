@@ -1825,6 +1825,8 @@ namespace KhTracker
                         case 9:
                             if (wID3 == 117 && curProg == 0) // Roxas' Room (Day 1)
                                 newProg = 1;
+                            if (wID3 == 118) // Sonic's Cutscene Skipper: Station Nobodies
+                                newProg = 2;
                             break;
                         case 8:
                             if (wID3 == 108 && wCom == 1) // Station Nobodies
@@ -2319,6 +2321,10 @@ namespace KhTracker
                             if ((wID3 == 1 || wID3 == 10) && curProg == 0) // Wildebeest Valley (PL1)
                                 newProg = 1;
                             break;
+                        case 9:
+                            if (wID3 == 4) // Sonic's Cutscene Skipper: Oasis after talking to Simba
+                                newProg = 2;
+                            break;
                         case 12:
                             if (wID3 == 1) // Oasis after talking to Simba
                                 newProg = 2;
@@ -2352,7 +2358,11 @@ namespace KhTracker
                                 newProg = 1;
                             break;
                         case 7:
-                            if (wID3 == 4) // Ursula's Revenge (
+                            if (wID3 == 4) // Ursula's Revenge 
+                                newProg = 2;
+                            break;
+                        case 9:
+                            if (wID3 == 65) // Sonic's Cutscene Skipper: Ursula's Revenge 
                                 newProg = 2;
                             break;
                         case 4:
@@ -2384,6 +2394,10 @@ namespace KhTracker
                                 newProg = 1;
                             else if (wID1 == 58 && wCom == 1) // Old Pete finish
                                 newProg = 3;
+                            break;
+                        case 8:
+                            if (wID1 == 4) // Sonic's Cutscene Skipper: Windows popup (Audience Chamber has no Evt 0x06)
+                                newProg = 4;
                             break;
                         case 2:
                             if (wID1 == 52 && wCom == 1) // Boat Pete finish
