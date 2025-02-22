@@ -739,6 +739,13 @@ namespace KhTracker
             int WorldBlue = 0;
             int num = PointTotal + points; //get new point total
             PointTotal = num; //set new point total
+            
+            if (data.oneHourMode)
+            {
+                num += objWindow.oneHourPoints;
+                ScoreValue.Text = num.ToString();
+                return;
+            }
 
             //adjust point score based on bonus and form levels
             //do this after setting new PointTotal value to avoid score
@@ -752,21 +759,21 @@ namespace KhTracker
                 int Masterlv = (master.VisualLevel - 1) * data.PointsDatanew["formlv"];
                 int Finallv = (final.VisualLevel - 1) * data.PointsDatanew["formlv"];
                 int Deaths = DeathCounter * data.PointsDatanew["deaths"];
-
+            
                 num += BonusTotal + Valorlv + Wisdomlv + Limitlv + Masterlv + Finallv + Deaths;
             }
-
+            
             //add bonus points for completeing a world
             foreach (var key in data.WorldsData.Keys.ToList())
             {
                 if (key == "GoA")
                     continue;
-
+            
                 if (data.WorldsData[key].complete && data.WorldsData[key].hintedItemList.Count != 0)
                     WorldBlue += data.PointsDatanew["complete"];
             }
             num += WorldBlue;
-
+            
             //add bonus points for collecting all multis in a set
             if (data.PointsDatanew["collection_magic"] > 0)
             {

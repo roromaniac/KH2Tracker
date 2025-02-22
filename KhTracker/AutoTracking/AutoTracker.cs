@@ -472,6 +472,8 @@ namespace KhTracker
 
         public async void InitAutoTracker(bool PCSX2)
         {
+            await Task.Delay(1000);
+
             pcLoadAttempts = 0;
             int Now = 0x0;
             int Save = 0x0;
@@ -803,6 +805,7 @@ namespace KhTracker
             DeathCounterDisplay();
             SetBindings();
             SetTimer();
+            SetTimerStuff();
         }
 
         ///
@@ -3884,6 +3887,7 @@ namespace KhTracker
 
         public void SetOneHourMarks(int marks)
         {
+            return;
             if (!data.oneHourMode || memory == null)
                 return;
 

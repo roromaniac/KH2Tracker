@@ -472,49 +472,49 @@ namespace KhTracker
         public void GenerateOneHourObjGrid()
         {
             //reset banner visibility
-            UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
+            UpdateGridBanner(true, "DARTS OBJECTIVES", "1HROVERRIDE");
 
             //override setup
             oneHourOverrideAssets.Clear();
             oneHourOverrideBonus.Clear();
             oneHourOverrideMulti.Clear();
-            //if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
-            //{
-            //    using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
-            //    {
-            //        var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
-            //
-            //        oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
-            //        
-            //        oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
-            //        oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
-            //        oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
-            //        oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
-            //        oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
-            //
-            //        oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
-            //        oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
-            //        oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
-            //        oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
-            //        oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
-            //
-            //        oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
-            //        oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
-            //        oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
-            //
-            //        oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
-            //        oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
-            //
-            //        if(overrideObject.ContainsKey("bossHintingHome"))
-            //        {
-            //            data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
-            //        }
-            //
-            //        overrideFile.Close();
-            //    }
-            //
-            //    oneHourCustom = false;
-            //}
+            if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
+            {
+                using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
+                {
+                    var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
+            
+                    oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
+                    
+                    oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
+                    oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
+            
+                    oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
+                    oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
+                    oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
+                    oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
+                    oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
+            
+                    oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
+                    oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
+                    oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
+            
+                    oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
+                    oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
+            
+                    //if(overrideObject.ContainsKey("bossHintingHome"))
+                    //{
+                    //    data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
+                    //}
+            
+                    overrideFile.Close();
+                }
+            
+                oneHourCustom = true;
+            }
 
 
             //build asset list
@@ -581,12 +581,12 @@ namespace KhTracker
             }
             else if (valor == 1)
             {
-                assets.Remove("Valor3");
+                assets.Remove("Valor6");
                 assets.Remove("Valor7");
             }
             else
             {
-                assets.Remove("Valor3");
+                assets.Remove("Valor6");
                 assets.Remove("Valor5");
             }
             if (wisdom == 0)
@@ -596,12 +596,12 @@ namespace KhTracker
             }
             else if (wisdom == 1)
             {
-                assets.Remove("Wisdom3");
+                assets.Remove("Wisdom6");
                 assets.Remove("Wisdom7");
             }
             else
             {
-                assets.Remove("Wisdom3");
+                assets.Remove("Wisdom6");
                 assets.Remove("Wisdom5");
             }
             if (limit == 0)
@@ -611,12 +611,12 @@ namespace KhTracker
             }
             else if (limit == 1)
             {
-                assets.Remove("Limit3");
+                assets.Remove("Limit6");
                 assets.Remove("Limit7");
             }
             else
             {
-                assets.Remove("Limit3");
+                assets.Remove("Limit6");
                 assets.Remove("Limit5");
             }
             if (master == 0)
@@ -626,12 +626,12 @@ namespace KhTracker
             }
             else if (master == 1)
             {
-                assets.Remove("Master3");
+                assets.Remove("Master6");
                 assets.Remove("Master7");
             }
             else
             {
-                assets.Remove("Master3");
+                assets.Remove("Master6");
                 assets.Remove("Master5");
             }
             if (final == 0)
@@ -641,12 +641,12 @@ namespace KhTracker
             }
             else if (final == 1)
             {
-                assets.Remove("Final3");
+                assets.Remove("Final6");
                 assets.Remove("Final7");
             }
             else
             {
-                assets.Remove("Final3");
+                assets.Remove("Final6");
                 assets.Remove("Final5");
             }
 
@@ -881,7 +881,7 @@ namespace KhTracker
                 oneHourPoints = testPoints;
                 window.UpdatePointScore(0);
                 Console.WriteLine("writing marks to game | " + marksTotal);
-                window.SetOneHourMarks(marksTotal);
+                //window.SetOneHourMarks(marksTotal);
             }
         }
 
@@ -1056,11 +1056,11 @@ namespace KhTracker
 
             for (int i = 0; i < assets.Count; i++)
             {
-                //if already a custom prefix then skip
+                ////if already a custom prefix then skip
                 //if (useCustom && assets[i].StartsWith("1HR_Cus-"))
                 //    continue;
-
-                //if custom toggle on then check for and replace normal prefix with custom one
+                //
+                ////if custom toggle on then check for and replace normal prefix with custom one
                 //if (useCustom)
                 //{
                 //    string cusCheck = assets[i].Replace(prefix1, "1HR_Cus-");
@@ -1072,12 +1072,12 @@ namespace KhTracker
                 //        continue;
                 //    }
                 //}
-
-                //if custom toggle is off check if prefix was custom and fix it else replace as normal
+                //
+                ////if custom toggle is off check if prefix was custom and fix it else replace as normal
                 //if (assets[i].StartsWith("1HR_Cus-"))
                 //    assets[i] = assets[i].Replace("1HR_Cus-", prefix2);
                 //else
-                assets[i] = assets[i].Replace(prefix1, prefix2);
+                //assets[i] = assets[i].Replace(prefix1, prefix2);
             }
             Change_IconsOneHour();
         }
@@ -1117,7 +1117,7 @@ namespace KhTracker
                     //    square.SetResourceReference(ContentProperty, "1HR_Cus-" + squareTag);
                     //    continue;
                     //}
-
+                    //
                     //square.SetResourceReference(ContentProperty, prefix + squareTag);
                     square.Content = squareContent;
                 }

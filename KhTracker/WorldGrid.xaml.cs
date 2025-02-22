@@ -204,7 +204,7 @@ namespace KhTracker
                         Remove_Ghost(worldName, button);
                     }
 
-                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    //window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
 

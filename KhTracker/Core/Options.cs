@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using System.Windows.Documents;
 using System.Text.Json.Serialization;
 using System.Security.Policy;
+using System.Windows.Threading;
 
 namespace KhTracker
 {
@@ -364,6 +365,7 @@ namespace KhTracker
                         data.EmblemMode = true;
                         Dictionary<string, int> emblemValues = new Dictionary<string, int>(JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["emblems"].ToString()));
                         EmblemTotalValue.Text = emblemValues["num_emblems_needed"].ToString();
+                        displays.Add("Emblems");
                     }
 
                     if (hintObject.ContainsKey("settings"))
@@ -660,6 +662,8 @@ namespace KhTracker
 
                     if (hintObject.ContainsKey("ProgressionSettings"))
                     {
+                        displays.Add("Progression");
+
                         var progressionSettings = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["ProgressionSettings"].ToString());
 
                         if (data.progressionType == "Disabled")
@@ -976,6 +980,7 @@ namespace KhTracker
 
             //end of loading
             data.saveFileLoaded = true;
+            SetTimerStuff();
         }
 
         private string ScrambleText(string input, bool scramble)
@@ -1263,6 +1268,7 @@ namespace KhTracker
                     data.EmblemMode = true;
                     Dictionary<string, int> emblemValues = new Dictionary<string, int>(JsonSerializer.Deserialize<Dictionary<string, int>>(hintObject["emblems"].ToString()));
                     EmblemTotalValue.Text = emblemValues["num_emblems_needed"].ToString();
+                    displays.Add("Emblems");
                 }
 
                 if (hintObject.ContainsKey("settings"))
@@ -1563,6 +1569,8 @@ namespace KhTracker
 
                 if (hintObject.ContainsKey("ProgressionSettings"))
                 {
+                    displays.Add("Progression");
+
                     var progressionSettings = JsonSerializer.Deserialize<Dictionary<string, List<int>>>(hintObject["ProgressionSettings"].ToString());
 
                     if (data.progressionType == "Disabled")
@@ -1827,7 +1835,7 @@ namespace KhTracker
             //show icecream and sketches in 1hour mode
             if (data.oneHourMode)
             {
-                VisitLockToggle(false);
+                //VisitLockToggle(false);
                 //VisitLockToggle2(false);
 
                 Grid VisitRow2 = ItemPool.Children[5] as Grid;
@@ -1856,6 +1864,7 @@ namespace KhTracker
             {
                 InitTracker();
             }
+            SetTimerStuff();
         }
 
         //here to prevent a lot of redundancy
@@ -1921,13 +1930,19 @@ namespace KhTracker
                 ShowCheckCountToggle(null, null);
 
                 ModeDisplay.Header += " | HSM";
+
+                displays.Add("Score");
+
+                //CollectionGrid.Visibility = Visibility.Collapsed;
+                //ScoreGrid.Visibility = Visibility.Visible;
+                //ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
             }
 
             if (data.UsingProgressionHints)
             {
                 data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
                 data.WorldsData["GoA"].value.Text = "0";
-                if (data.progressionType == "Reports")
+                if (data.progressionType == "Reports" && !data.ScoreMode)
                 {
                     CollectionGrid.Visibility = Visibility.Collapsed;
                     ScoreGrid.Visibility = Visibility.Collapsed;
@@ -2641,6 +2656,9 @@ namespace KhTracker
 
             SetWorldImage();
 
+            //reset display stuff
+            displays.Clear();
+
             if (data.wasTracking && sender != null)
                 InitTracker();
         }
@@ -3286,5 +3304,65 @@ namespace KhTracker
             Properties.Settings.Default.OneHourModeToggle = OneHourOption.IsChecked;
         }
 
+        ///
+        /// Timed Prog/Chest/Emblems switcher
+        ///
+
+        private static DispatcherTimer dispTimer;
+        private List<String> displays = new List<String>();
+        private int currDisplay = 0;
+        //testing stuff for an alternator for text
+        private void SetTimerStuff()
+        {
+            dispTimer?.Stop();
+            dispTimer = new DispatcherTimer();
+            dispTimer.Tick += OnTimedEvent2;
+            dispTimer.Interval = new TimeSpan(0, 0, 0, 5, 0);
+            dispTimer.Start();
+        }
+
+        private void OnTimedEvent2(object sender, EventArgs e)
+        {
+            if (displays.Count == 0)
+                return;
+
+            Console.WriteLine(displays[currDisplay].ToString());
+            if (displays[currDisplay] == "Score")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Visible;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "Score");
+            }
+            else if (displays[currDisplay] == "Progression")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Visible;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
+            }
+            else if (displays[currDisplay] == "Emblems")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Visible;
+                ChestIcon.SetResourceReference(ContentProperty, "Emblem");
+            }
+            else
+            {
+                CollectionGrid.Visibility = Visibility.Visible;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "Chest");
+            }
+
+            currDisplay++;
+            if (currDisplay >= displays.Count)
+                currDisplay = 0;
+        }
     }
 }
