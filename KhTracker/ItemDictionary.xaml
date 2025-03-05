@@ -131,6 +131,7 @@
     <Image x:Key="Min-IceCream1"		Source="Images\Checks\Min\Lock_IceCream.png"                   x:Shared="false"/>
     <Image x:Key="Min-IceCream2"		Source="Images\Checks\Min\Lock_IceCream.png"                   x:Shared="false"/>
     <Image x:Key="Min-IceCream3"		Source="Images\Checks\Min\Lock_IceCream.png"                   x:Shared="false"/>
+    <Image x:Key="Min-MiningPermit"		Source="Images\Checks\Min\Lock_MiningPermit.png"               x:Shared="false"/>
 
     <!-- Extra -->
     <Image x:Key="Min-HadesCup"		    Source="Images\Checks\Min\Aux_hades_cup.png"                   x:Shared="false"/>
@@ -248,7 +249,8 @@
     <Image x:Key="Old-IceCream1"		Source="Images\Checks\Old\Lock_IceCream.png"                   x:Shared="false"/>
     <Image x:Key="Old-IceCream2"		Source="Images\Checks\Old\Lock_IceCream.png"                   x:Shared="false"/>
     <Image x:Key="Old-IceCream3"		Source="Images\Checks\Old\Lock_IceCream.png"                   x:Shared="false"/>
-    
+    <Image x:Key="Old-MiningPermit"		Source="Images\Checks\Old\Lock_MiningPermit.png"               x:Shared="false"/>
+
     <!-- Extra -->
     <Image x:Key="Old-HadesCup"		    Source="Images\Checks\Old\Aux_hades_cup.png"                   x:Shared="false"/>
     <Image x:Key="Old-OlympusStone"		Source="Images\Checks\Old\Aux_olympus_stone.png"               x:Shared="false"/>
@@ -384,7 +386,8 @@
     <Image x:Key="Cus-MembershipCard2"    Source="pack://application:,,,/CustomImages/Checks/Lock_membershipcard.png"                         x:Shared="false"/>
     <Image x:Key="Cus-IceCream1"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"                               x:Shared="false"/>
     <Image x:Key="Cus-IceCream2"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"                               x:Shared="false"/>
-    <Image x:Key="Cus-IceCream3"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"                               x:Shared="false"/>    
+    <Image x:Key="Cus-IceCream3"		    Source="pack://application:,,,/CustomImages/Checks/Lock_IceCream.png"                               x:Shared="false"/>
+    <Image x:Key="Cus-MiningPermit"		Source="pack://application:,,,/CustomImages/Checks/Lock_MiningPermit.png"               x:Shared="false"/>
     <!-- Extra -->
     <Image x:Key="Cus-HadesCup"		    Source="pack://application:,,,/CustomImages/Checks/Aux_hades_cup.png"                               x:Shared="false"/>
     <Image x:Key="Cus-OlympusStone"		Source="pack://application:,,,/CustomImages/Checks/Aux_olympus_stone.png"                           x:Shared="false"/>
@@ -501,6 +504,8 @@
     <Image x:Key="Cus-G_IceCream1"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"                               x:Shared="false"/>
     <Image x:Key="Cus-G_IceCream2"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"                               x:Shared="false"/>
     <Image x:Key="Cus-G_IceCream3"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_IceCream.png"                               x:Shared="false"/>
+    <Image x:Key="Cus-G_MiningPermit"		Source="pack://application:,,,/CustomImages/GhostChecks/Lock_MiningPermit.png"               x:Shared="false"/>
+
 
     <!-- Extra -->
     <Image x:Key="Cus-G_HadesCup"		    Source="pack://application:,,,/CustomImages/GhostChecks/Aux_hades_cup.png"                               x:Shared="false"/>

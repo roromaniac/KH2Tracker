@@ -3563,9 +3563,10 @@
                     <local:Item x:Name="IceCream2"          Content="{DynamicResource Min-IceCream2}"       Grid.Column="11" ToolTip="Ice Cream"/>
                     <local:Item x:Name="IceCream3"          Content="{DynamicResource Min-IceCream3}"       Grid.Column="11" ToolTip="Ice Cream"/>
                     <local:Item x:Name="Sketches"           Content="{DynamicResource Min-Sketches}"        Grid.Column="14" ToolTip="Namine's Sketches"/>
-                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="17" ToolTip="Hades Cup Trophy"/>
-                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="20" ToolTip="Olympus Stone"/>
-                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="23" ToolTip="Unknown Disk"/>
+                    <local:Item x:Name="MiningPermit"       Content="{DynamicResource Min-MiningPermit}"    Grid.Column="17" ToolTip="Namine's Sketches"/>
+                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="20" ToolTip="Hades Cup Trophy"/>
+                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="23" ToolTip="Olympus Stone"/>
+                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="26" ToolTip="Unknown Disk"/>
 
 
                     <!-- silhouettes -->
