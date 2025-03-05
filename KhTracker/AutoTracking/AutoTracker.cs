@@ -2396,7 +2396,7 @@ namespace KhTracker
                                 newProg = 3;
                             break;
                         case 8:
-                            if (wID1 == 4) // Sonic's Cutscene Skipper: Windows popup (Audience Chamber has no Evt 0x06)
+                            if (wID3 == 4) // Sonic's Cutscene Skipper: Windows popup (Audience Chamber has no Evt 0x06)
                                 newProg = 4;
                             break;
                         case 2:
