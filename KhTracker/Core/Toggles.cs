@@ -215,6 +215,27 @@ namespace KhTracker
             HandleItemToggle(toggle, PromiseCharm, false);
         }
 
+        private void MiningPermitToggle(object sender, RoutedEventArgs e)
+        {
+            MiningPermitToggle(MiningPermitOption.IsChecked);
+        }
+
+        private void MiningPermitToggle(bool toggle)
+        {
+            Properties.Settings.Default.MiningPermit = toggle;
+            MiningPermitOption.IsChecked = toggle;
+            if (toggle)
+            {
+                MiningPermitCol.Width = new GridLength(1.0, GridUnitType.Star);
+            }
+            else
+            {
+                MiningPermitCol.Width = new GridLength(0, GridUnitType.Star);
+            }
+
+            HandleItemToggle(toggle, MiningPermit, false);
+        }
+
         private void AbilitiesToggle(object sender, RoutedEventArgs e)
         {
             AbilitiesToggle(AbilitiesOption.IsChecked);

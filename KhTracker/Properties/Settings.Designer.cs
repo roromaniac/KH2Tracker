@@ -37,6 +37,18 @@ namespace KhTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MiningPermit {
+            get {
+                return ((bool)(this["MiningPermit"]));
+            }
+            set {
+                this["MiningPermit"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AnsemReports {
             get {
@@ -866,6 +878,18 @@ namespace KhTracker.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AutoSaveProgress3 {
+            get {
+                return ((bool)(this["AutoSaveProgress3"]));
+            }
+            set {
+                this["AutoSaveProgress3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool AutoLoadHints {
             get {
                 return ((bool)(this["AutoLoadHints"]));
@@ -1663,18 +1687,6 @@ namespace KhTracker.Properties {
             }
             set {
                 this["GridColoredHintsDistance"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AutoSaveProgress3 {
-            get {
-                return ((bool)(this["AutoSaveProgress3"]));
-            }
-            set {
-                this["AutoSaveProgress3"] = value;
             }
         }
     }

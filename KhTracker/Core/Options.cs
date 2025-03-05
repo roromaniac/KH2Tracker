@@ -1365,6 +1365,9 @@ namespace KhTracker
                             case "PromiseCharm":
                                 PromiseCharmToggle(true);
                                 break;
+                            case "MiningPermit":
+                                MiningPermitToggle(true);
+                                break;
                             case "Anti-Form":
                                 AntiFormToggle(true);
                                 break;
@@ -2737,6 +2740,7 @@ namespace KhTracker
             ReportsOption.IsEnabled = clickable;
             TornPagesOption.IsEnabled = clickable;
             PromiseCharmOption.IsEnabled = clickable;
+            MiningPermitOption.IsEnabled = clickable;
             AbilitiesOption.IsEnabled = clickable;
             AntiFormOption.IsEnabled = clickable;
             VisitLockOption.IsEnabled = clickable;

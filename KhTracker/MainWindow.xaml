@@ -66,6 +66,7 @@
                 <MenuItem Header="Ansem Reports" 			 Click="ReportsToggle"		x:Name="ReportsOption"      IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Torn Pages" 			     Click="TornPagesToggle"	x:Name="TornPagesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Promise Charm"			 Click="PromiseCharmToggle" x:Name="PromiseCharmOption" IsCheckable="True" IsChecked="True"/>
+                <MenuItem Header="Mining Permit"			 Click="MiningPermitToggle" x:Name="MiningPermitOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Once More / Second Chance" Click="AbilitiesToggle" 	x:Name="AbilitiesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Anti Form" 				 Click="AntiFormToggle"		x:Name="AntiFormOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="World Visit Locks"       Click="VisitLockToggle"	x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
@@ -3496,15 +3497,19 @@
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition x:Name="SketchesCol" Width="0*"/>
 
+                        <!--<ColumnDefinition Width="0.0*"/>-->
+                        <ColumnDefinition Width="0.0*"/>
+                        <ColumnDefinition x:Name="MiningPermitCol" Width="0*"/>
+
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition x:Name="HadesCupCol" Width="1.0*"/>
 
-                        <ColumnDefinition Width="0.0*"/>
+                        <!--<ColumnDefinition Width="0.0*"/>-->
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition x:Name="OlympusStoneCol" Width="1.0*"/>
 
-                        <ColumnDefinition Width="0.0*"/>
+                        <!--<ColumnDefinition Width="0.0*"/>-->
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition x:Name="UnknownDiskCol" Width="1.0*"/>
                         <ColumnDefinition x:Name="VisitSpacerR" Width="03.*"/>
@@ -3563,10 +3568,10 @@
                     <local:Item x:Name="IceCream2"          Content="{DynamicResource Min-IceCream2}"       Grid.Column="11" ToolTip="Ice Cream"/>
                     <local:Item x:Name="IceCream3"          Content="{DynamicResource Min-IceCream3}"       Grid.Column="11" ToolTip="Ice Cream"/>
                     <local:Item x:Name="Sketches"           Content="{DynamicResource Min-Sketches}"        Grid.Column="14" ToolTip="Namine's Sketches"/>
-                    <local:Item x:Name="MiningPermit"       Content="{DynamicResource Min-MiningPermit}"    Grid.Column="17" ToolTip="Namine's Sketches"/>
-                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="20" ToolTip="Hades Cup Trophy"/>
-                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="23" ToolTip="Olympus Stone"/>
-                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="26" ToolTip="Unknown Disk"/>
+                    <local:Item x:Name="MiningPermit"       Content="{DynamicResource Min-MiningPermit}"    Grid.Column="16" ToolTip="Mining Permit"/>
+                    <local:Item x:Name="HadesCup"           Content="{DynamicResource Min-HadesCup}"        Grid.Column="19" ToolTip="Hades Cup Trophy"/>
+                    <local:Item x:Name="OlympusStone"       Content="{DynamicResource Min-OlympusStone}"    Grid.Column="21" ToolTip="Olympus Stone"/>
+                    <local:Item x:Name="UnknownDisk"        Content="{DynamicResource Min-UnknownDisk}"     Grid.Column="23" ToolTip="Unknown Disk"/>
 
 
                     <!-- silhouettes -->
@@ -3595,12 +3600,17 @@
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"               Grid.Column="17" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_MiningPermit" Content="{DynamicResource Min-MiningPermit}"             Grid.Column="16" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
                     </ContentControl>
-                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"           Grid.Column="20" Panel.ZIndex="-2" Opacity="1">
+                    <ContentControl x:Name="S_HadesCup" Content="{DynamicResource Min-HadesCup}"               Grid.Column="19" Panel.ZIndex="-2" Opacity="1">
+                        <ContentControl.Effect>
+                            <Custom1:BrightnessContrastEffect Brightness="-1"/>
+                        </ContentControl.Effect>
+                    </ContentControl>
+                    <ContentControl x:Name="S_OlympusStone" Content="{DynamicResource Min-OlympusStone}"           Grid.Column="21" Panel.ZIndex="-2" Opacity="1">
                         <ContentControl.Effect>
                             <Custom1:BrightnessContrastEffect Brightness="-1"/>
                         </ContentControl.Effect>
@@ -3756,6 +3766,7 @@
                     <local:Item x:Name="Ghost_IceCream2"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_IceCream3"            Content="{DynamicResource Min-IceCream}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_Sketches"             Content="{DynamicResource Min-Sketches}"        Opacity="0.5"/>
+                    <local:Item x:Name="Ghost_MiningPermit"         Content="{DynamicResource Min-MiningPermit}"    Opacity="0.5"/>
                     <local:Item x:Name="Ghost_BeastWep1"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_BeastWep2"            Content="{DynamicResource Min-BeastWep}"        Opacity="0.5"/>
                     <local:Item x:Name="Ghost_JackWep1"             Content="{DynamicResource Min-JackWep}"         Opacity="0.5"/>
