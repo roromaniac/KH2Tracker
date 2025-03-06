@@ -64,35 +64,35 @@ namespace KhTracker
             settingInfo[0] = ReportsOption.IsChecked;
             settingInfo[1] = TornPagesOption.IsChecked;
             settingInfo[2] = PromiseCharmOption.IsChecked;
-            settingInfo[3] = AbilitiesOption.IsChecked;
-            settingInfo[4] = AntiFormOption.IsChecked;
-            settingInfo[5] = VisitLockOption.IsChecked;
-            settingInfo[6] = ExtraChecksOption.IsChecked;
-            settingInfo[7] = SoraLevel01Option.IsChecked;
-            settingInfo[8] = SoraLevel50Option.IsChecked;
-            settingInfo[9] = SoraLevel99Option.IsChecked;
+            settingInfo[3] = MiningPermitOption.IsChecked;
+            settingInfo[4] = AbilitiesOption.IsChecked;
+            settingInfo[5] = AntiFormOption.IsChecked;
+            settingInfo[6] = VisitLockOption.IsChecked;
+            settingInfo[7] = ExtraChecksOption.IsChecked;
+            settingInfo[8] = SoraLevel01Option.IsChecked;
+            settingInfo[9] = SoraLevel50Option.IsChecked;
+            settingInfo[10] = SoraLevel99Option.IsChecked;
             //World toggles
-            settingInfo[10] = SoraHeartOption.IsChecked;
-            settingInfo[11] = DrivesOption.IsChecked;
-            settingInfo[12] = SimulatedOption.IsChecked;
-            settingInfo[13] = TwilightTownOption.IsChecked;
-            settingInfo[14] = HollowBastionOption.IsChecked;
-            settingInfo[15] = BeastCastleOption.IsChecked;
-            settingInfo[16] = OlympusOption.IsChecked;
-            settingInfo[17] = AgrabahOption.IsChecked;
-            settingInfo[18] = LandofDragonsOption.IsChecked;
-            settingInfo[19] = DisneyCastleOption.IsChecked;
-            settingInfo[20] = PrideLandsOption.IsChecked;
-            settingInfo[21] = PortRoyalOption.IsChecked;
-            settingInfo[22] = HalloweenTownOption.IsChecked;
-            settingInfo[23] = SpaceParanoidsOption.IsChecked;
-            settingInfo[24] = TWTNWOption.IsChecked;
-            settingInfo[25] = HundredAcreWoodOption.IsChecked;
-            settingInfo[26] = AtlanticaOption.IsChecked;
-            settingInfo[27] = SynthOption.IsChecked;
-            settingInfo[28] = PuzzleOption.IsChecked;
-            //new
-            settingInfo[29] = ChestLockOption.IsChecked;
+            settingInfo[11] = SoraHeartOption.IsChecked;
+            settingInfo[12] = DrivesOption.IsChecked;
+            settingInfo[13] = SimulatedOption.IsChecked;
+            settingInfo[14] = TwilightTownOption.IsChecked;
+            settingInfo[15] = HollowBastionOption.IsChecked;
+            settingInfo[16] = BeastCastleOption.IsChecked;
+            settingInfo[17] = OlympusOption.IsChecked;
+            settingInfo[18] = AgrabahOption.IsChecked;
+            settingInfo[19] = LandofDragonsOption.IsChecked;
+            settingInfo[20] = DisneyCastleOption.IsChecked;
+            settingInfo[21] = PrideLandsOption.IsChecked;
+            settingInfo[22] = PortRoyalOption.IsChecked;
+            settingInfo[23] = HalloweenTownOption.IsChecked;
+            settingInfo[24] = SpaceParanoidsOption.IsChecked;
+            settingInfo[25] = TWTNWOption.IsChecked;
+            settingInfo[26] = HundredAcreWoodOption.IsChecked;
+            settingInfo[27] = AtlanticaOption.IsChecked;
+            settingInfo[28] = SynthOption.IsChecked;
+            settingInfo[29] = PuzzleOption.IsChecked;
+            settingInfo[30] = ChestLockOption.IsChecked;
 
             #endregion
 
@@ -245,41 +245,42 @@ namespace KhTracker
             if (Savefile.ContainsKey("Settings"))
             {
                 var setting = JsonSerializer.Deserialize<bool[]>(Savefile["Settings"].ToString());
-                //Display toggles
+                // Display toggles
                 ReportsToggle(setting[0]);
                 TornPagesToggle(setting[1]);
                 PromiseCharmToggle(setting[2]);
-                AbilitiesToggle(setting[3]);
-                AntiFormToggle(setting[4]);
-                VisitLockToggle(setting[5]);
-                ChestLockToggle(setting[29]);
-                ExtraChecksToggle(setting[6]);
-                if (setting[7])
+                MiningPermitToggle(setting[3]); // New toggle at index 3
+                AbilitiesToggle(setting[4]);
+                AntiFormToggle(setting[5]);
+                VisitLockToggle(setting[6]);
+                ChestLockToggle(setting[30]);
+                ExtraChecksToggle(setting[7]);
+                if (setting[8])
                     SoraLevel01Toggle(true);
-                else if (setting[8])
-                    SoraLevel50Toggle(true);
                 else if (setting[9])
+                    SoraLevel50Toggle(true);
+                else if (setting[10])
                     SoraLevel99Toggle(true);
-                //World toggles
-                SoraHeartToggle(setting[10]);
-                DrivesToggle(setting[11]);
-                SimulatedToggle(setting[12]);
-                TwilightTownToggle(setting[13]);
-                HollowBastionToggle(setting[14]);
-                BeastCastleToggle(setting[15]);
-                OlympusToggle(setting[16]);
-                AgrabahToggle(setting[17]);
-                LandofDragonsToggle(setting[18]);
-                DisneyCastleToggle(setting[19]);
-                PrideLandsToggle(setting[20]);
-                PortRoyalToggle(setting[21]);
-                HalloweenTownToggle(setting[22]);
-                SpaceParanoidsToggle(setting[23]);
-                TWTNWToggle(setting[24]);
-                HundredAcreWoodToggle(setting[25]);
-                AtlanticaToggle(setting[26]);
-                SynthToggle(setting[27]);
-                PuzzleToggle(setting[28]);
+                // World toggles
+                SoraHeartToggle(setting[11]);
+                DrivesToggle(setting[12]);
+                SimulatedToggle(setting[13]);
+                TwilightTownToggle(setting[14]);
+                HollowBastionToggle(setting[15]);
+                BeastCastleToggle(setting[16]);
+                OlympusToggle(setting[17]);
+                AgrabahToggle(setting[18]);
+                LandofDragonsToggle(setting[19]);
+                DisneyCastleToggle(setting[20]);
+                PrideLandsToggle(setting[21]);
+                PortRoyalToggle(setting[22]);
+                HalloweenTownToggle(setting[23]);
+                SpaceParanoidsToggle(setting[24]);
+                TWTNWToggle(setting[25]);
+                HundredAcreWoodToggle(setting[26]);
+                AtlanticaToggle(setting[27]);
+                SynthToggle(setting[28]);
+                PuzzleToggle(setting[29]);
             }
 
             //check if enemy rando data exists

@@ -151,6 +151,7 @@ namespace KhTracker
             data.VisitLocks.Add(IceCream3);
             data.VisitLocks.Add(Sketches);
             //data.VisitLocks.Add(Picture);
+            data.VisitLocks.Add(MiningPermit);
 
             data.ChestLocks.Add(ChestTT);
             data.ChestLocks.Add(ChestHB);

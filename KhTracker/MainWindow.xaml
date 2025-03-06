@@ -57,7 +57,7 @@
                 <MenuItem Header="Open Grid Tracker on Startup" 	    Click="GTStartupToggle"  x:Name="GTStartupOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Open Objective Tracker on Startup" 	Click="OTStartupToggle"  x:Name="OTStartupOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Enable 1Hour Mode Changes" 	        Click="OneHourToggle"  x:Name="OneHourOption"     IsCheckable="True" IsChecked="False"
-                          ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>       
+                          ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>
@@ -100,7 +100,7 @@
                 <Separator/-->
                 <MenuItem Header="New World Layout"     Click="NewWorldLayoutToggle" x:Name="NewWorldLayoutOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Classic World Layout" Click="OldWorldLayoutToggle" x:Name="OldWorldLayoutOption" IsCheckable="True" IsChecked="False"/>
-				<MenuItem Header="GOA World Layout"     Click="GOAWorldLayoutToggle" x:Name="GOAWorldLayoutOption" IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="GOA World Layout"     Click="GOAWorldLayoutToggle" x:Name="GOAWorldLayoutOption" IsCheckable="True" IsChecked="False"/>
                 <Separator/>
                 <MenuItem Header="Colorful Hint Text" Click="ColorHintToggle" x:Name="ColorHintOption" IsCheckable="True" IsChecked="True"/>
                 <Separator/>
@@ -1851,7 +1851,7 @@
                     </Grid>
 
                 </Grid>
-                
+
             </Grid>
 
             <!-- Info/Stats -->

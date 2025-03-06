@@ -58,6 +58,7 @@ namespace KhTracker
         private Summon charmItem;
         private ImportantCheck proofItem;
         private ImportantCheck visitItem;
+        private ImportantCheck miningPermit;
         private ImportantCheck extraItem;
 
         private VisitNew AuronWep;
@@ -726,7 +727,8 @@ namespace KhTracker
                 (IceCream = new VisitNew(memory, Save + 0x3649, ADDRESS_OFFSET, "IceCream")),
                 (RikuWep = new VisitNew(memory, Save + 0x35C1, ADDRESS_OFFSET, "RikuWep")),
                 (KingsLetter = new VisitNew(memory, Save + 0x365D, ADDRESS_OFFSET, "KingsLetter")),
-                (visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches"))
+                (visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches")),
+                (miningPermit = new Visit(memory, Save + 0x368C, ADDRESS_OFFSET, "MiningPermit"))
                 //importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
             };
 
