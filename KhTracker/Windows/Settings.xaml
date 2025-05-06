@@ -1,0 +1,517 @@
+﻿<Window x:Class="KhTracker.Windows.Settings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KhTracker"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Settings" Height="800" Width="1000" Background="#303030">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Image}">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!--Menu DockPanel.Dock="Top" Background="White">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="Settings Window" Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
+        </Menu-->
+
+        <TabControl Background="Black">
+            <TabItem Header="Item/World Toggles">
+                <Grid Background="#303030">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.9*"/>
+                        <RowDefinition Height="0.*"/>
+                    </Grid.RowDefinitions>
+
+                    <!--  -->
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.01*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Rectangle Grid.Column="1" Fill="Black" Width="2pt"/>
+
+                        <!-- Left Side -->
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.1*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" MaxHeight="25pt">
+                                    <local:OutlinedTextBlock FontFamily="{StaticResource Gummi}" FontSize="25pt" 
+                                                     StrokeThickness="7" Fill="#FFEFECE9" Text="Items"/>
+                                </Viewbox>
+
+                                <Rectangle Grid.Row="1" Fill="#D81E1E1E" Width="350pt"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.2*"/>
+                                    <ColumnDefinition Width="0.01*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="2"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="4"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="6"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="8"/>
+                                <!--Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="10"/-->
+
+                                <ContentControl Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-Report}"/>
+                                <ContentControl Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-TornPage1}"/>
+                                <ContentControl Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-PromiseCharm}"/>
+                                <ContentControl Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-SecondChance}"/>
+                                <ContentControl Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-DriveFormsImage}"/>
+                                <ContentControl Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-Chests}"/>
+                                <ContentControl Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-MunnyPouch1}"/>
+                                <ContentControl Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-HollowBastionImage}"/>
+
+
+                                <!-- Reports -->
+                                <Grid Grid.Column="2" Grid.Row="1">
+                                    <ComboBox FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="20pt" Width="200pt" FontSize="14pt" HorizontalAlignment="Left">
+                                        <ComboBoxItem Content="No Reports"/>
+                                        <ComboBoxItem Content="1 Report"/>
+                                        <ComboBoxItem Content="2 Reports"/>
+                                        <ComboBoxItem Content="3 Reports"/>
+                                        <ComboBoxItem Content="4 Reports"/>
+                                        <ComboBoxItem Content="5 Reports"/>
+                                        <ComboBoxItem Content="6 Reports"/>
+                                        <ComboBoxItem Content="7 Reports"/>
+                                        <ComboBoxItem Content="8 Reports"/>
+                                        <ComboBoxItem Content="9 Reports"/>
+                                        <ComboBoxItem Content="10 Reports"/>
+                                        <ComboBoxItem Content="11 Reports"/>
+                                        <ComboBoxItem Content="12 Reports"/>
+                                        <ComboBoxItem Content="13 Reports"/>
+                                    </ComboBox>
+                                </Grid>
+                                <!-- Pages -->
+                                <Grid Grid.Column="2" Grid.Row="2">
+                                    <ComboBox FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="20pt" Width="200pt" FontSize="14pt" HorizontalAlignment="Left">
+                                        <ComboBoxItem Content="No Torn Pages"/>
+                                        <ComboBoxItem Content="1 Torn Pages"/>
+                                        <ComboBoxItem Content="2 Torn Pages"/>
+                                        <ComboBoxItem Content="3 Torn Pages"/>
+                                        <ComboBoxItem Content="4 Torn Pages"/>
+                                        <ComboBoxItem Content="5 Torn Pages"/>
+                                    </ComboBox>
+                                </Grid>
+                                <!-- Proofs -->
+                                <Grid Grid.Column="2" Grid.Row="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Margin="10,0" Content="Proof of Peace" HorizontalAlignment="left" Grid.Row="0" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Proof of Connection" HorizontalAlignment="left" Grid.Row="1" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Proof of Nonexistence" HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Promise Charm" HorizontalAlignment="left" Grid.Row="1" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Abilities -->
+                                <Grid Grid.Column="2" Grid.Row="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Margin="10,0" Content="Second Chance" HorizontalAlignment="left" 
+                                      Grid.Column="0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                    <CheckBox Margin="10,0" Content="Once More" HorizontalAlignment="left" 
+                                      Grid.Column="1" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Drives -->
+                                <Grid Grid.Column="2" Grid.Row="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Margin="10,0" Content="Valor Form" HorizontalAlignment="left" Grid.Row="0" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Wisdom Form" HorizontalAlignment="left" Grid.Row="1" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Master Form" HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Limit Form" HorizontalAlignment="left" Grid.Row="1" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Final Form" HorizontalAlignment="left" Grid.Row="0" Grid.Column="2" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Anti Form" HorizontalAlignment="left" Grid.Row="1" Grid.Column="2" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Chests -->
+                                <Grid Grid.Column="2" Grid.Row="6">
+                                    <CheckBox Margin="10,0" Content="Chest Locks" HorizontalAlignment="left" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Aux -->
+                                <Grid Grid.Column="2" Grid.Row="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Margin="10,0" Content="Munny Pouches" HorizontalAlignment="left" Grid.Row="0" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Unknown Disk" HorizontalAlignment="left" Grid.Row="1" Grid.Column="0" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Olympus Stone" HorizontalAlignment="left" Grid.Row="0" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+
+                                    <CheckBox Margin="10,0" Content="Hades Cup" HorizontalAlignment="left" Grid.Row="1" Grid.Column="1" 
+                                      VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Visits -->
+                                <Grid Grid.Column="2" Grid.Row="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <CheckBox Margin="10,0" Content="Visit Locks" HorizontalAlignment="left" 
+                                      Grid.Column="0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                    <CheckBox Margin="10,0" Content="Custom (Advanced)" HorizontalAlignment="left" 
+                                      Grid.Column="1" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White"/>
+                                </Grid>
+                                <!-- Visits (Custom)-->
+                                <Grid Grid.Column="0" Grid.Row="9" Grid.RowSpan="3" Grid.ColumnSpan="3">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="0.5*"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+
+                                    <ContentControl Grid.Column="0" Grid.Row="0" Content="{DynamicResource Min-BeastWep}"/>
+                                    <ComboBox Grid.Column="1" Grid.Row="0" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="2" Grid.Row="0" Content="{DynamicResource Min-JackWep}"/>
+                                    <ComboBox Grid.Column="3" Grid.Row="0" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="4" Grid.Row="0" Content="{DynamicResource Min-SimbaWep}"/>
+                                    <ComboBox Grid.Column="5" Grid.Row="0" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="0" Grid.Row="1" Content="{DynamicResource Min-AuronWep}"/>
+                                    <ComboBox Grid.Column="1" Grid.Row="1" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="2" Grid.Row="1" Content="{DynamicResource Min-MulanWep}"/>
+                                    <ComboBox Grid.Column="3" Grid.Row="1" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="4" Grid.Row="1" Content="{DynamicResource Min-SparrowWep}"/>
+                                    <ComboBox Grid.Column="5" Grid.Row="1" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="0" Grid.Row="2" Content="{DynamicResource Min-AladdinWep}"/>
+                                    <ComboBox Grid.Column="1" Grid.Row="2" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="2" Grid.Row="2" Content="{DynamicResource Min-TronWep}"/>
+                                    <ComboBox Grid.Column="3" Grid.Row="2" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="4" Grid.Row="2" Content="{DynamicResource Min-RikuWep}"/>
+                                    <ComboBox Grid.Column="5" Grid.Row="2" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="0" Grid.Row="3" Content="{DynamicResource Min-MembershipCard}"/>
+                                    <ComboBox Grid.Column="1" Grid.Row="3" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="2" Grid.Row="3" Content="{DynamicResource Min-KingsLetter}"/>
+                                    <ComboBox Grid.Column="3" Grid.Row="3" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="4" Grid.Row="3" Content="{DynamicResource Min-IceCream}"/>
+                                    <ComboBox Grid.Column="5" Grid.Row="3" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Locks"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                        <ComboBoxItem Content="2 Locks"/>
+                                        <ComboBoxItem Content="3 Locks"/>
+                                    </ComboBox>
+
+                                    <ContentControl Grid.Column="0" Grid.Row="4" Content="{DynamicResource Min-Sketches}"/>
+                                    <ComboBox Grid.Column="1" Grid.Row="4" FontFamily="{StaticResource Menu}" SelectedIndex="0" Height="15pt" Width="70pt" FontSize="8pt">
+                                        <ComboBoxItem Content="No Lock"/>
+                                        <ComboBoxItem Content="1 Lock"/>
+                                    </ComboBox>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+
+                        <!-- Right Side -->
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="0.1*"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Viewbox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" MaxHeight="25pt">
+                                    <local:OutlinedTextBlock FontFamily="{StaticResource Gummi}" FontSize="25pt" 
+                                                     StrokeThickness="7" Fill="#FFEFECE9" Text="Locations"/>
+                                </Viewbox>
+
+                                <Rectangle Grid.Row="1" Fill="#D81E1E1E" Width="350pt"/>
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.025*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="2"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="4"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="6"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="8"/>
+
+                                <ContentControl Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-SoraHeartImage}"/>
+                                <ContentControl Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-SimulatedImage}"/>
+                                <ContentControl Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-TwilightTownImage}"/>
+                                <ContentControl Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-HollowBastionImage}"/>
+                                <ContentControl Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-LandofDragonsImage}"/>
+                                <ContentControl Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-BeastCastleImage}"/>
+                                <ContentControl Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-OlympusImage}"/>
+                                <ContentControl Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-DisneyCastleImage}"/>
+                                <ContentControl Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-AtlanticaImage}"/>
+
+                                <CheckBox Grid.Column="2" Grid.Row="1" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Sora Levels"/>
+                                <CheckBox Grid.Column="2" Grid.Row="2" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White">
+                                    <TextBlock Text="   Simulated 
+                                       Twilight Town" TextWrapping="Wrap"/>
+                                </CheckBox>
+                                <CheckBox Grid.Column="2" Grid.Row="3" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Twilight Town"/>
+                                <CheckBox Grid.Column="2" Grid.Row="4" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Hollow Bastion"/>
+                                <CheckBox Grid.Column="2" Grid.Row="5" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Land of Dragons"/>
+                                <CheckBox Grid.Column="2" Grid.Row="6" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Beast's Castle"/>
+                                <CheckBox Grid.Column="2" Grid.Row="7" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Olympus Coliseum"/>
+                                <CheckBox Grid.Column="2" Grid.Row="8" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Disney Castle"/>
+                                <CheckBox Grid.Column="2" Grid.Row="9" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Atlantica"/>
+
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.1*"/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="0.1*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="0.025*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="1"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="3"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="5"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="7"/>
+                                <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.ColumnSpan="3" Grid.Row="9"/>
+
+                                <ContentControl Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-DriveFormsImage}"/>
+                                <ContentControl Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-PortRoyalImage}"/>
+                                <ContentControl Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-AgrabahImage}"/>
+                                <ContentControl Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-HalloweenTownImage}"/>
+                                <ContentControl Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-PrideLandsImage}"/>
+                                <ContentControl Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-SpaceParanoidsImage}"/>
+                                <ContentControl Grid.Row="7" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-TWTNWImage}"/>
+                                <ContentControl Grid.Row="8" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-HundredAcreImage}"/>
+                                <ContentControl Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40pt" Content="{DynamicResource Min-PuzzSynth}"/>
+
+                                <CheckBox Grid.Column="2" Grid.Row="1" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Drive Form Levels"/>
+                                <CheckBox Grid.Column="2" Grid.Row="2" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Port Royal"/>
+                                <CheckBox Grid.Column="2" Grid.Row="3" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Agrabah"/>
+                                <CheckBox Grid.Column="2" Grid.Row="4" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Halloween Town"/>
+                                <CheckBox Grid.Column="2" Grid.Row="5" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Pride Lands"/>
+                                <CheckBox Grid.Column="2" Grid.Row="6" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Space Paranoids"/>
+                                <CheckBox Grid.Column="2" Grid.Row="7" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White">
+                                    <TextBlock Text="The World That Never Was" TextWrapping="Wrap" TextAlignment="Center"/>
+                                </CheckBox>
+                                <CheckBox Grid.Column="2" Grid.Row="8" Margin="10,0" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Disney Castle"/>
+
+                                <Grid Grid.Column="2" Grid.Row="9">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Grid.Row="0" Margin="10,0,0,-10" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Puzzles"/>
+                                    <CheckBox Grid.Row="1" Margin="10,0,0,10" VerticalAlignment="Center" FontFamily="{StaticResource Menu}" Foreground="White" Content="Item Synthesis"/>
+
+                                </Grid>
+
+                            </Grid>
+
+                        </Grid>
+
+                    </Grid>
+
+
+                </Grid>
+
+
+
+
+
+
+
+            </TabItem>
+            <TabItem Header="Visual/Other">
+                <Grid Background="#303030"/>
+            </TabItem>
+        </TabControl>
+
+
+
+    </DockPanel>
+</Window>
