@@ -2866,6 +2866,7 @@ namespace KhTracker
         {
             foreach (ImportantCheck check in importantChecks)
             {
+                Console.WriteLine(check);
                 // handle these separately due to the way they are stored in memory
                 if (check.GetType() == typeof(Magic) || check.GetType() == typeof(TornPageNew) || check.GetType() == typeof(VisitNew))
                     continue;

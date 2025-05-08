@@ -413,6 +413,7 @@ namespace KhTracker
 
                         //item settings
                         PromiseCharmToggle(false);
+                        MiningPermitToggle(false);
                         AntiFormToggle(false);
 
                         //world settings
@@ -466,6 +467,9 @@ namespace KhTracker
                                 //items
                                 case "PromiseCharm":
                                     PromiseCharmToggle(true);
+                                    break;
+                                case "MiningPermit":
+                                    MiningPermitToggle(true);
                                     break;
                                 case "Anti-Form":
                                     AntiFormToggle(true);
@@ -1312,6 +1316,7 @@ namespace KhTracker
 
                     //item settings
                     PromiseCharmToggle(false);
+                    MiningPermitToggle(false);
                     AntiFormToggle(false);
 
                     //world settings
