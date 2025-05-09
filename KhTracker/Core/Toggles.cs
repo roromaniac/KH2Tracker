@@ -168,6 +168,26 @@ namespace KhTracker
         /// Toggles
         ///
 
+
+        //
+        private void ItemToggle(object sender, RoutedEventArgs e)
+        {
+            MenuItem toggle = (MenuItem)sender;
+            ItemToggle(toggle.IsChecked);
+        }
+
+        private void ItemToggle(bool toggle)
+        {
+
+
+
+        }
+
+
+
+
+        //
+
         private void ReportsToggle(object sender, RoutedEventArgs e)
         {
             ReportsToggle(ReportsOption.IsChecked);
