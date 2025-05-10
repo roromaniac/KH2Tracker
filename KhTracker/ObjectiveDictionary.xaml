@@ -590,7 +590,7 @@
     <Image x:Key="Obj_Cus-Barbossa"             Source="pack://application:,,,/CustomImages/Grid/Bosses/barbossa.png"                                        x:Shared="false" ToolTip="Defeat Barbossa"/>
     <Image x:Key="Obj_Cus-GrimReaper1"          Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper1.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper I"/>
     <Image x:Key="Obj_Cus-GrimReaper"           Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper2.png"                                     x:Shared="false" ToolTip="Defeat Grim Reaper II"/>
-    <Image x:Key="Obj_Cus-DataLuxord" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxenedata.png"								 x:Shared="false" ToolTip="Defeat Data Luxord"/>
+    <Image x:Key="Obj_Cus-DataLuxord" 		Source="pack://application:,,,/CustomImages/Grid/Bosses/org_luxorddata.png"								 x:Shared="false" ToolTip="Defeat Data Luxord"/>
     <!--Agrabah-->
     <Image x:Key="Obj_Cus-Abu"                  Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/abu_escort.png"                         x:Shared="false" ToolTip="Escort Abu"/>
     <Image x:Key="Obj_Cus-TreasureRoom"         Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/treasure_room.png"                      x:Shared="false" ToolTip="Survive the Treasure Room Ambush"/>
