@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace KhTracker
@@ -457,7 +458,7 @@ namespace KhTracker
                     int current_j = j;
                     button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
                     button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
-		    button.MouseWheel += (sender, e) => Button_Scroll(sender, e, current_i, current_j);
+		            button.MouseWheel += (sender, e) => Button_Scroll(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
@@ -745,7 +746,7 @@ namespace KhTracker
                     int current_j = j;
                     button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
                     button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
-		    button.MouseWheel += (sender, e) => Button_Scroll(sender, e, current_i, current_j);
+		            button.MouseWheel += (sender, e) => Button_Scroll(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
                     Grid.SetColumn(button, j);
                     buttons[i, j] = button;
@@ -830,8 +831,8 @@ namespace KhTracker
             }
         }
 	
-	public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
-	{
+	    public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
+	    {
     		var button = (ToggleButton)sender;
     		int buttonState = 0;
     		//get button status - checked, annotated, or none
@@ -888,7 +889,7 @@ namespace KhTracker
         		Button_RightClick(sender, e, i, j);
         		Button_Click(sender, e, i, j);
     		}
-	}
+	    }
 
         public void checkNeeded()
         {

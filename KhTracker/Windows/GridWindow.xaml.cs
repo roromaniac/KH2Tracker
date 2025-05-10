@@ -701,7 +701,7 @@ namespace KhTracker
             }
         }
 
-        public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
+        public void Button_Scroll(object sender, System.Windows.Input.MouseWheelEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
             int buttonState = 0;
