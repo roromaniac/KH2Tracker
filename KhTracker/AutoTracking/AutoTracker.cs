@@ -728,7 +728,7 @@ namespace KhTracker
                 (RikuWep = new VisitNew(memory, Save + 0x35C1, ADDRESS_OFFSET, "RikuWep")),
                 (KingsLetter = new VisitNew(memory, Save + 0x365D, ADDRESS_OFFSET, "KingsLetter")),
                 (visitItem = new Visit(memory, Save + 0x3642, ADDRESS_OFFSET, "Sketches")),
-                (miningPermit = new Visit(memory, Save + 0x368C, ADDRESS_OFFSET, "MiningPermit"))
+                (miningPermit = new Visit(memory, Save + 0x365C, ADDRESS_OFFSET, "MiningPermit"))
                 //importantChecks.Add(visitItem = new Visit(memory, Save + 0x364A, ADDRESS_OFFSET, "Picture"));
             };
 

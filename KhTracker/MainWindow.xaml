@@ -66,7 +66,6 @@
                 <MenuItem Header="Ansem Reports" 			 Click="ReportsToggle"		x:Name="ReportsOption"      IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Torn Pages" 			     Click="TornPagesToggle"	x:Name="TornPagesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Promise Charm"			 Click="PromiseCharmToggle" x:Name="PromiseCharmOption" IsCheckable="True" IsChecked="True"/>
-                <MenuItem Header="Mining Permit"			 Click="MiningPermitToggle" x:Name="MiningPermitOption" IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Once More / Second Chance" Click="AbilitiesToggle" 	x:Name="AbilitiesOption"    IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Anti Form" 				 Click="AntiFormToggle"		x:Name="AntiFormOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="World Visit Locks"       Click="VisitLockToggle"	x:Name="VisitLockOption"    IsCheckable="True" IsChecked="True"/>
@@ -3499,7 +3498,7 @@
 
                         <!--<ColumnDefinition Width="0.0*"/>-->
                         <ColumnDefinition Width="0.0*"/>
-                        <ColumnDefinition x:Name="MiningPermitCol" Width="0*"/>
+                        <ColumnDefinition x:Name="MiningPermitCol" Width="1.0*"/>
 
                         <ColumnDefinition Width="0.0*"/>
                         <ColumnDefinition Width="0.0*"/>

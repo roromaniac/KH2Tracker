@@ -5,9 +5,6 @@
     <Setting Name="PromiseCharm" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-	  <Setting Name="MiningPermit" Type="System.Boolean" Scope="User">
-		  <Value Profile="(Default)">False</Value>
-	  </Setting>
     <Setting Name="AnsemReports" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -215,9 +212,9 @@
     <Setting Name="AutoSaveProgress2" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-	<Setting Name="AutoSaveProgress3" Type="System.Boolean" Scope="User">
-		<Value Profile="(Default)">False</Value>
-	</Setting>
+    <Setting Name="AutoSaveProgress3" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
     <Setting Name="AutoLoadHints" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

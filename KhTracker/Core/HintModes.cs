@@ -316,6 +316,7 @@ namespace KhTracker
                         WorldGrid grid = data.WorldsData[worldname].worldGrid;
 
                         //update counts for multi type items
+                        Console.WriteLine(checkname);
                         if (counts.Keys.ToList().Contains(checkname))
                         {
                             grid.Add_Ghost(data.GhostItems["Ghost_" + checkname + counts[checkname]]);

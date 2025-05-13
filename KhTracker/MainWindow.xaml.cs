@@ -274,9 +274,6 @@ namespace KhTracker
             PromiseCharmOption.IsChecked = Properties.Settings.Default.PromiseCharm;
             PromiseCharmToggle(PromiseCharmOption.IsChecked);
 
-            MiningPermitOption.IsChecked = Properties.Settings.Default.MiningPermit;
-            MiningPermitToggle(MiningPermitOption.IsChecked);
-
             AbilitiesOption.IsChecked = Properties.Settings.Default.Abilities;
             AbilitiesToggle(AbilitiesOption.IsChecked);
 

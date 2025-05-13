@@ -1268,7 +1268,7 @@ namespace KhTracker
             //check if we even want to track a ghost item.
             if (window.GhostItemOption.IsChecked || data.mode == Mode.SpoilerHints)
             {
-                //check item parent and track only if the parent is the itempool grid
+                //check item parent and track only if the parent is in the itempool grid
                 if (VisualTreeHelper.GetParent(item) is Grid ItemRow && ItemRow.Parent == window.ItemPool)
                 {
                     ItemRow.Children.Remove(item);
@@ -1810,7 +1810,7 @@ namespace KhTracker
             //simplier icon opacity change for non pages/magic
             if (type != "magic" && type != "page" && !item.Contains("Munny"))
             {
-                if(type == "visit" && !item.Contains("Sketches"))
+                if(type == "visit" && !item.Contains("Sketches") && !item.Contains("MiningPermit"))
                 {
                     //do nothing
                 }
