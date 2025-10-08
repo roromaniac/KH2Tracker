@@ -3292,5 +3292,65 @@ namespace KhTracker
             Properties.Settings.Default.OneHourModeToggle = OneHourOption.IsChecked;
         }
 
+        ///
+        /// Timed Prog/Chest/Emblems switcher
+        ///
+
+        private static DispatcherTimer dispTimer;
+        private List<String> displays = new List<String>();
+        private int currDisplay = 0;
+        //testing stuff for an alternator for text
+        private void SetTimerStuff()
+        {
+            dispTimer?.Stop();
+            dispTimer = new DispatcherTimer();
+            dispTimer.Tick += OnTimedEvent2;
+            dispTimer.Interval = new TimeSpan(0, 0, 0, 3, 0);
+            dispTimer.Start();
+        }
+
+        private void OnTimedEvent2(object sender, EventArgs e)
+        {
+            if (displays.Count == 0)
+                return;
+
+            Console.WriteLine(displays[currDisplay].ToString());
+            if (displays[currDisplay] == "Score")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Visible;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "Score");
+            }
+            else if (displays[currDisplay] == "Progression")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Visible;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "ProgPoints");
+            }
+            else if (displays[currDisplay] == "Emblems")
+            {
+                CollectionGrid.Visibility = Visibility.Collapsed;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Visible;
+                ChestIcon.SetResourceReference(ContentProperty, "Emblem");
+            }
+            else
+            {
+                CollectionGrid.Visibility = Visibility.Visible;
+                ScoreGrid.Visibility = Visibility.Collapsed;
+                ProgressionCollectionGrid.Visibility = Visibility.Collapsed;
+                EmblemGrid.Visibility = Visibility.Collapsed;
+                ChestIcon.SetResourceReference(ContentProperty, "Chest");
+            }
+
+            currDisplay++;
+            if (currDisplay >= displays.Count)
+                currDisplay = 0;
+        }
     }
 }
