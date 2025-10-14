@@ -1983,6 +1983,12 @@ namespace KhTracker
                 pcFilesLoaded = false;
             }
 
+            if (autosaveTimer != null)
+            {
+                autosaveTimer.Stop();
+                autosaveTimer = null;
+            }
+
             if (sender != null && !AutoConnectOption.IsChecked)
                 data.wasTracking = false;
 

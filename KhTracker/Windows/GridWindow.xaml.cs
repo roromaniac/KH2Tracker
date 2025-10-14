@@ -701,6 +701,66 @@ namespace KhTracker
             }
         }
 
+        public void Button_Scroll(object sender, System.Windows.Input.MouseWheelEventArgs e, int i, int j)
+        {
+            var button = (ToggleButton)sender;
+            int buttonState = 0;
+            //get button status - checked, annotated, or none
+            if (annotationStatus[i, j])
+            {
+                annotationStatus[i, j] = true;
+                buttonState = -1;
+            }
+            else if (button.IsChecked ?? true)
+            {
+                annotationStatus[i, j] = false;
+                buttonState = 1;
+            }
+            else
+            {
+                annotationStatus[i, j] = false;
+                buttonState = 0;
+            }
+
+            Console.WriteLine(buttonState);
+            if (e.Delta < 0) //mouse scroll up
+            {
+                buttonState += 1;
+                if (buttonState > 1)
+                    buttonState = -1;
+            }
+            else if (e.Delta > 0) //mouse scroll down
+            {
+                buttonState -= 1;
+                if (buttonState < -1)
+                    buttonState = 1;
+            }
+            Console.WriteLine(buttonState);
+            Console.WriteLine(button.IsChecked ?? true);
+
+            if (buttonState == 1)
+            {
+                button.IsChecked = true;
+                annotationStatus[i, j] = false;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
+            else if (buttonState == -1)
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = true;
+                Button_Click(sender, e, i, j);
+                Button_RightClick(sender, e, i, j);
+            }
+            else
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = false;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
+        }
+
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
@@ -853,6 +913,7 @@ namespace KhTracker
                     int current_j = j;
                     button.Click += (sender, e) => Button_Click(sender, e, current_i, current_j);
                     button.MouseRightButtonUp += (sender, e) => Button_RightClick(sender, e, current_i, current_j);
+                    button.MouseWheel += (sender, e) => Button_Scroll(sender, e, current_i, current_j);
                     button.MouseEnter += (sender, e) => Button_Hover(sender, e, current_i, current_j);
                     button.MouseLeave += (sender, e) => Button_ExitHover(sender, e, current_i, current_j);
                     Grid.SetRow(button, i);
