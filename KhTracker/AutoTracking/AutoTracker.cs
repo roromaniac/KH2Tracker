@@ -1815,7 +1815,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default: //if not in any of the above rooms then just leave
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -1853,7 +1856,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -1991,7 +1997,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2036,7 +2045,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2121,7 +2133,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2171,7 +2186,10 @@ namespace KhTracker
                             //}
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2277,7 +2295,10 @@ namespace KhTracker
                                 newProg = 8;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2309,7 +2330,10 @@ namespace KhTracker
                                 newProg = 6;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2346,7 +2370,10 @@ namespace KhTracker
                                 newProg = 6;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2374,7 +2401,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2492,7 +2522,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2546,7 +2579,10 @@ namespace KhTracker
                                 newProg = 9;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2601,7 +2637,10 @@ namespace KhTracker
                                 newProg = 9;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2642,7 +2681,10 @@ namespace KhTracker
                             //}
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2738,7 +2780,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2753,6 +2798,14 @@ namespace KhTracker
                     return;
                 default: //return if any other world
                     return;
+            }
+
+            // update shotgun icons when cutscene skipper is being used
+            if (curProg == 0)
+            {
+                newProg = 1;
+                data.WorldsData[wName].progress = newProg;
+                data.WorldsData[wName].progression.ToolTip = data.ProgressKeys[wName + "Desc"][newProg];
             }
 
             // mark progression icon on grid tracker if it exists
