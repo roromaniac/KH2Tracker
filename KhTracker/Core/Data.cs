@@ -36,6 +36,7 @@ namespace KhTracker
         public bool seedLoaded = false;
         public int lastVersion = 0;
         public bool wasTracking = false;
+        public bool fromAutoLoadHints = false;
         public bool firstGridOnSeedLoad = true;
         public Codes codes = new Codes();
 

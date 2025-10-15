@@ -231,8 +231,12 @@ namespace KhTracker
         private void InitTracker()
         {
             //connection trying visual
-            Connect.Visibility = Visibility.Visible;
-            Connect2.Visibility = Visibility.Collapsed;
+            if (!data.fromAutoLoadHints)
+            {
+                Connect.Visibility = Visibility.Visible;
+                Connect2.Visibility = Visibility.Collapsed;
+            }
+            data.fromAutoLoadHints = false;
 
             //check timer already running!
             if (checkTimer != null && checkTimer.IsEnabled)
@@ -641,10 +645,6 @@ namespace KhTracker
 
         private void FinishSetup(bool PCSX2, Int32 Now, Int32 Save, Int32 Sys3, Int32 Bt10, Int32 BtlEnd, Int32 Slot1, Int32 NextSlot)
         {
-            //Done here cause Valor and Final get detected otherwise
-            //only run if true
-            if (AutoLoadHintsOption.IsChecked)
-                AutoLoadHints();
 
             #region Add ICs
             importantChecks = new List<ImportantCheck>
@@ -803,6 +803,10 @@ namespace KhTracker
             DeathCounterDisplay();
             SetBindings();
             SetTimer();
+
+            //Done in FinishSetup cause Valor and Final get detected otherwise
+            if (AutoLoadHintsOption.IsChecked)
+                AutoLoadHints();
         }
 
         ///
