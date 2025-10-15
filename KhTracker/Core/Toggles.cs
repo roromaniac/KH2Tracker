@@ -755,15 +755,15 @@ namespace KhTracker
                 FormRow.Height = new GridLength(0, GridUnitType.Star);
         }
 
-        private void GhostItemToggle(object sender, RoutedEventArgs e)
-        {
-            GhostItemToggle(GhostItemOption.IsChecked);
-        }
+        //private void GhostItemToggle(object sender, RoutedEventArgs e)
+        //{
+        //    GhostItemToggle(GhostItemOption.IsChecked);
+        //}
 
         private void GhostItemToggle(bool toggle)
         {
             Properties.Settings.Default.GhostItem = toggle;
-            GhostItemOption.IsChecked = toggle;
+            // GhostItemOption.IsChecked = toggle;
 
             foreach (var item in data.GhostItems.Values)
             {
@@ -816,7 +816,7 @@ namespace KhTracker
         {
             Properties.Settings.Default.GhostMath = GhostMathOption.IsChecked;
 
-            if (GhostItemOption.IsChecked && (data.mode == Mode.PointsHints || data.ScoreMode))
+            if (data.mode == Mode.PointsHints || data.ScoreMode)
             {
                 int add = -1;
 

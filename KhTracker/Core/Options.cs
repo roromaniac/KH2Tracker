@@ -2752,7 +2752,6 @@ namespace KhTracker
             SoraLevel01Option.IsEnabled = clickable;
             SoraLevel50Option.IsEnabled = clickable;
             SoraLevel99Option.IsEnabled = clickable;
-
             WorldToggleMenuItem.IsEnabled = clickable;
         }
 
