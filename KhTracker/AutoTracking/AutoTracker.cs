@@ -827,7 +827,18 @@ namespace KhTracker
             autosaveTimer?.Stop();
             autosaveTimer = new DispatcherTimer();
             autosaveTimer.Tick += AutoSave;
-            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+
+            //create an txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+                {
+                    Byte[] content = new UTF8Encoding(true).GetBytes("1");
+                    fs.Write(content, 0, content.Length);
+                }
+            }
+            int inSeconds = int.Parse(File.ReadAllText("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"));
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, inSeconds);
             autosaveTimer.Start();
         }
         private void OnTimedEvent(object sender, EventArgs e)

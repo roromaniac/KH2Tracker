@@ -2,16 +2,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.IO;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Diagnostics.Eventing.Reader;
-using System.Data.Common;
 
 namespace KhTracker
 {
@@ -23,6 +25,20 @@ namespace KhTracker
     public interface IColorableWindow
     {
         void HandleClosing(ColorPickerWindow sender);
+    }
+
+    public static class DeepCopyHelper
+    {
+        public static T DeepCopy<T>(T obj)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(memoryStream, obj);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(memoryStream);
+            }
+        }
     }
 
     public partial class GridWindow : Window, IColorableWindow
@@ -1361,9 +1377,10 @@ namespace KhTracker
                 }
             }
         }
-        
+
         public void bunterCheck(List<Dictionary<string, object>> bosses)
         {
+            Dictionary<string, bool> originalGridSettings = DeepCopyHelper.DeepCopy(gridSettings);
             string properHadesReplacement = "";
             //don't bother performing the check if bosses is null
             if (bosses == null)
@@ -1425,8 +1442,8 @@ namespace KhTracker
                         bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
                         bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
                         bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
-                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
-                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        bool valueBossesNotEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesNotEqual)
                         {
                             if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
                                 gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
@@ -1454,6 +1471,12 @@ namespace KhTracker
                         }
                     }
                 }
+                //else if (bossOrig == "Seifer (3)")
+                //{
+                //    // checks if "Seifer" is in the values of data.BossList
+                //    var convertedBossName = data.codes.bossNameConversion[bossOrig];
+                //    gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(convertedBossName);
+                //}
                 // disable bosses in data arenas
                 else if (bossOrig.Contains("(Data)"))
                 {
@@ -1586,6 +1609,25 @@ namespace KhTracker
                         gridSettings[data.codes.bossNameConversion[removedPeteArena]] = false;
                     else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[removedPeteArena]))
                         gridSettings["Grid" + data.codes.bossNameConversion[removedPeteArena]] = false;
+                }
+            }
+
+            // finally, remove any bosses the user originally did not want to include on the card
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                // string bossRepl = bosspair["new"].ToString();
+
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridSettings[data.codes.bossNameConversion[bossOrig]] =
+                            gridSettings[data.codes.bossNameConversion[bossOrig]] &&
+                            originalGridSettings[data.codes.bossNameConversion[bossOrig]];
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] =
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] &&
+                                originalGridSettings["Grid" + data.codes.bossNameConversion[bossOrig]];
                 }
             }
         }
