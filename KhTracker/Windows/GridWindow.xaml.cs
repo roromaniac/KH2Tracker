@@ -9,6 +9,8 @@ using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -388,6 +390,18 @@ namespace KhTracker
                 seedName = inputDialog.InputText;
             }
             GenerateGrid(numRows, numColumns, seedName);
+        }
+
+        public static int GetDeterministicHashCode(string input)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                // Compute the hash as a byte array
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                // Convert the first 4 bytes of the hash to an integer
+                return BitConverter.ToInt32(hashBytes, 0);
+            }
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
@@ -842,7 +856,7 @@ namespace KhTracker
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
                 string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
-                seed = settingsString.GetHashCode();
+                int seed = GetDeterministicHashCode(settingsString);
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
@@ -850,7 +864,7 @@ namespace KhTracker
             {
                 if (seedName == null)
                     seedName = RandomSeedName(8);
-                seed = seedName.GetHashCode();
+                seed = GetDeterministicHashCode(seedName);
             }
             Seedname.Header = "Seed: " + seedName;
             Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
