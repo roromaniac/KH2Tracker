@@ -826,7 +826,7 @@ namespace KhTracker
 
                     if (data.objectiveMode)
                         objWindow.GenerateObjGrid(hintObject);
-                    else if (data.oneHourMode)
+                    else if (data.oneHourMode || data.dartsMode)
                         objWindow.GenerateOneHourObjGrid();
                     else
                         objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
