@@ -81,6 +81,8 @@ namespace KhTracker
 
             //one hour mode toggle
             OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
+            //darts mode toggle
+            DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
 
             //set grid size for worlds 
             ClassicRowSizeOption.IsChecked = Properties.Settings.Default.ClassicRowSize;

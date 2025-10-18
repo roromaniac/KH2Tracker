@@ -167,6 +167,7 @@ namespace KhTracker
                 BoardSettings = gridWindow.DownloadCardSetting(),
                 BunterBosses = gridWindow.bunterBosses,
                 OneHourMode = data.oneHourMode,
+                DartsMode = data.dartsMode,
             };
 
             var saveFinal = JsonSerializer.Serialize(saveInfo);
@@ -338,12 +339,36 @@ namespace KhTracker
                     data.oneHourMode = true;
                     OneHourOption.IsChecked = true;
                     data.BossHomeHinting = true;
+
+                    // turn off other game modes
+                    data.dartsMode = false;
+                    DartsOption.IsChecked = false;
                 }
                 else
                 {
                     data.oneHourMode = false;
                     OneHourOption.IsChecked = false;
                     data.BossHomeHinting = false;
+                }
+            }
+
+            //check darts toggle
+            if (Savefile.ContainsKey("DartsMode"))
+            {
+                if (Savefile["DartsMode"].ToString().ToLower() == "true")
+                {
+                    data.dartsMode = true;
+                    DartsOption.IsChecked = true;
+
+                    // turn off other game modes
+                    data.oneHourMode = false;
+                    OneHourOption.IsChecked = false;
+                    data.BossHomeHinting = false;
+                }
+                else
+                {
+                    data.dartsMode = false;
+                    DartsOption.IsChecked = false;
                 }
             }
 
@@ -796,6 +821,8 @@ namespace KhTracker
 
                     if (OneHourOption.IsChecked)
                         data.oneHourMode = true;
+                    if (DartsOption.IsChecked)
+                        data.dartsMode = true;
 
                     if (data.objectiveMode)
                         objWindow.GenerateObjGrid(hintObject);
@@ -3302,6 +3329,14 @@ namespace KhTracker
         private void OneHourToggle(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.OneHourModeToggle = OneHourOption.IsChecked;
+            DartsOption.IsChecked = false;
+
+        }
+
+        private void DartsToggle(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.DartsModeToggle = DartsOption.IsChecked;
+            OneHourOption.IsChecked = false;
         }
 
         ///

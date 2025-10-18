@@ -12,7 +12,7 @@
         LocationChanged="Window_LocationChanged"
         SizeChanged="Window_SizeChanged"
         AllowDrop="True" Drop="DropFile"
-        Title="KH2 Tracker 2.6.6 - KotC Edit" Height="1000" Width="600" Background="#303030"
+        Title="KH2 Tracker 2.6.8" Height="1000" Width="600" Background="#303030"
         MinHeight="440" MinWidth="300">
 
     <Window.Resources>
@@ -56,8 +56,6 @@
                 <MenuItem Header="Objective Tracker"   Click="objWindow_Open"/>
                 <MenuItem Header="Open Grid Tracker on Startup" 	    Click="GTStartupToggle"  x:Name="GTStartupOption"     IsCheckable="True" IsChecked="False"/>
                 <MenuItem Header="Open Objective Tracker on Startup" 	Click="OTStartupToggle"  x:Name="OTStartupOption"     IsCheckable="True" IsChecked="False"/>
-                <MenuItem Header="Enable 1Hour Mode Changes" 	        Click="OneHourToggle"  x:Name="OneHourOption"     IsCheckable="True" IsChecked="False"
-                          ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>       
                 <Separator/>
                 <MenuItem Header="Reset Window Size" Click="ResetSize"/>
                 <MenuItem Header="Show Disconnect Message" Click="DisconnectToggle" x:Name="Disconnect" IsCheckable="True" IsChecked="True"/>
@@ -141,6 +139,12 @@
                 <MenuItem Header="Atlantica" 					Click="AtlanticaToggle" 		x:Name="AtlanticaOption"		IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Synthesis" 					Click="SynthToggle" 			x:Name="SynthOption"			IsCheckable="True" IsChecked="True"/>
                 <MenuItem Header="Puzzles" 						Click="PuzzleToggle" 			x:Name="PuzzleOption"			IsCheckable="True" IsChecked="True"/>
+            </MenuItem>
+            <MenuItem Header="Custom Game Mode" Focusable="False" x:Name="GameModeMenuItem">
+                <MenuItem Header="1Hour Mode" 	        Click="OneHourToggle"  x:Name="OneHourOption"     IsCheckable="True" IsChecked="False"
+                          ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>
+                <MenuItem Header="Darts Mode" 	        Click="DartsToggle"  x:Name="DartsOption"     IsCheckable="True" IsChecked="False"
+                          ToolTip="Enable changes for use in Geek's Darts Seed Settings."/>
             </MenuItem>
             <MenuItem x:Name="ModeDisplay" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
             <!--MenuItem Header="-DA 1.6.8-" IsHitTestVisible="False" Focusable="False" HorizontalAlignment="Right"/-->

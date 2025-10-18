@@ -41,6 +41,7 @@ namespace KhTracker
 
         public bool objectiveMode = false;
         public bool oneHourMode = false;
+        public bool dartsMode = false;
         public int earlyThroneRoom = 0; // 0 = not entered (skip) | 1 = not entered (normal) | 2 entered
 
         //new cross visial data
