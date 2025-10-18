@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -470,6 +471,26 @@ namespace KhTracker
             }
             // Add grid to the window or other container
             DynamicGrid.Children.Add(objGrid);
+        }
+
+        public void GetCustomGameModeAssets()
+        {
+            if (data.oneHourMode)
+            {
+                string oneHourAssetPath = "KhTrackerSettings/OneHourModeAssets.json";
+                if (!File.Exists(oneHourAssetPath))
+                {
+                    string jsonString = JsonSerializer.Serialize(oneHourAssets, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(oneHourAssetPath, jsonString);
+                }
+
+                string oneHourAssetPathContents = File.ReadAllText(oneHourAssetPath);
+                oneHourAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(oneHourAssetPathContents);
+            }
+            else if (data.dartsMode)
+            {
+
+            }
         }
 
         public void GenerateOneHourObjGrid()
