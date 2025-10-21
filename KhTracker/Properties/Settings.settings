@@ -404,5 +404,17 @@
     <Setting Name="AutoSaveProgress3" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="OneHourModeAssetsFilepath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">KhTrackerSettings/GameModes/OneHourModeAssets.json</Value>
+    </Setting>
+    <Setting Name="DartsModeAssetsFilepath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">KhTrackerSettings/GameModes/DartsModeAssets.json</Value>
+    </Setting>
+    <Setting Name="Custom1HRAssets" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CustomDartsAssets" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -819,15 +819,27 @@ namespace KhTracker
                     if (objWindow.objGrid != null)
                         objWindow.objGrid.Children.Clear();
 
+
                     if (OneHourOption.IsChecked)
+                    {
                         data.oneHourMode = true;
+                        data.BossHomeHinting = true;
+
+                        // turn off other game modes
+                        data.dartsMode = false;
+                    }
                     if (DartsOption.IsChecked)
+                    {
                         data.dartsMode = true;
+
+                        // turn off other game modes
+                        data.oneHourMode = false;
+                    }
 
                     if (data.objectiveMode)
                         objWindow.GenerateObjGrid(hintObject);
                     else if (data.oneHourMode || data.dartsMode)
-                        objWindow.GenerateOneHourObjGrid();
+                        objWindow.GenerateCustomObjGrid();
                     else
                         objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 
@@ -1799,12 +1811,22 @@ namespace KhTracker
                 {
                     data.oneHourMode = true;
                     data.BossHomeHinting = true;
+
+                    // turn off other game modes
+                    data.dartsMode = false;
+                }
+                if (DartsOption.IsChecked)
+                {
+                    data.dartsMode = true;
+
+                    // turn off other game modes
+                    data.oneHourMode = false;
                 }
 
                 if (data.objectiveMode)
                     objWindow.GenerateObjGrid(hintObject);
-                else if (data.oneHourMode)
-                    objWindow.GenerateOneHourObjGrid();
+                else if (data.oneHourMode || data.dartsMode)
+                    objWindow.GenerateCustomObjGrid();
                 else
                     objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
 
@@ -3324,19 +3346,6 @@ namespace KhTracker
         private void OTStartupToggle(object sender, RoutedEventArgs e)
         {
             Properties.Settings.Default.ObjTrackerStartup = OTStartupOption.IsChecked;
-        }
-
-        private void OneHourToggle(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.OneHourModeToggle = OneHourOption.IsChecked;
-            DartsOption.IsChecked = false;
-
-        }
-
-        private void DartsToggle(object sender, RoutedEventArgs e)
-        {
-            Properties.Settings.Default.DartsModeToggle = DartsOption.IsChecked;
-            OneHourOption.IsChecked = false;
         }
 
         ///

@@ -1689,5 +1689,53 @@ namespace KhTracker.Properties {
                 this["AutoSaveProgress3"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("KhTrackerSettings/GameModes/OneHourModeAssets.json")]
+        public string OneHourModeAssetsFilepath {
+            get {
+                return ((string)(this["OneHourModeAssetsFilepath"]));
+            }
+            set {
+                this["OneHourModeAssetsFilepath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("KhTrackerSettings/GameModes/DartsModeAssets.json")]
+        public string DartsModeAssetsFilepath {
+            get {
+                return ((string)(this["DartsModeAssetsFilepath"]));
+            }
+            set {
+                this["DartsModeAssetsFilepath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Custom1HRAssets {
+            get {
+                return ((bool)(this["Custom1HRAssets"]));
+            }
+            set {
+                this["Custom1HRAssets"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CustomDartsAssets {
+            get {
+                return ((bool)(this["CustomDartsAssets"]));
+            }
+            set {
+                this["CustomDartsAssets"] = value;
+            }
+        }
     }
 }

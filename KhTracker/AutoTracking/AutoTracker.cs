@@ -2190,13 +2190,11 @@ namespace KhTracker
                                 newProg = 2;
 
                                 //no longer should give points
-                                //if (data.oneHourMode)
-                                //{
-                                //    if (objWindow.oneHourCustom)
-                                //        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
-                                //    else
-                                //        UpdatePointScore(15);
-                                //}
+                                if (data.oneHourMode)
+                                {
+                                    if (data.oneHourMode)
+                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                }
                             }
                             break;
                         case 3:
@@ -2213,10 +2211,8 @@ namespace KhTracker
                                 newProg = 5;
                                 if (data.oneHourMode)
                                 {
-                                    if (objWindow.oneHourCustom)
+                                    if (data.oneHourMode)
                                         UpdatePointScore(objWindow.oneHourOverrideBonus["summitBonus"]);
-                                    else
-                                        UpdatePointScore(10);
                                 }
                             }
                             if (wID1 == 76 && wCom == 1) // Riku
@@ -2250,10 +2246,8 @@ namespace KhTracker
                                 if (data.earlyThroneRoom == 1)
                                 {
                                     //throne room normally
-                                    if (objWindow.oneHourCustom)
+                                    if (data.oneHourMode)
                                         UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
-                                    else
-                                        UpdatePointScore(30);
 
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
@@ -2262,10 +2256,8 @@ namespace KhTracker
                                 else if (data.earlyThroneRoom == 0)
                                 {
                                     //did early throne room skip
-                                    if (objWindow.oneHourCustom)
+                                    if (data.oneHourMode)
                                         UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
-                                    else
-                                        UpdatePointScore(15);
 
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
@@ -2561,12 +2553,7 @@ namespace KhTracker
                             {
                                 newProg = 3;
                                 if (data.oneHourMode)
-                                {
-                                    if (objWindow.oneHourCustom)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["pirateMinuteFightBonus"]);
-                                    else
-                                        UpdatePointScore(10);
-                                }
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["pirateMinuteFightBonus"]);
                             }                        
                             break;
                         case 7:
@@ -3449,13 +3436,67 @@ namespace KhTracker
 
                     points += data.PointsDatanew[replacementType];
 
-                    //bonus points here should be sum of both boss types / 2
+                    //bonus points here should be sum of both boss types multipled by the lords arena multiplier
                     if (points > 1)
-                        points += points / 2;
+                        points += points * objWindow.oneHourOverrideAssets["lordsArenaMultiplier"];
                 }
                 else
                 {
                     points = data.PointsDatanew["boss_other"] * 2;
+                }
+            }
+            else if (boss == "Dark Thorn")
+            {
+                if (data.BossRandoFound)
+                {
+                    //Dark Thorn
+                    replacementType = Codes.FindBossType(data.BossList["Dark Thorn"]);
+                    if (replacementType == "Unknown")
+                    {
+                        Console.WriteLine("Unknown Replacement Boss: " + data.BossList["Dark Thorn"] + ". Using default points.");
+
+                        if (App.logger != null)
+                            App.logger.Record("Unknown Replacement Boss: " + data.BossList["Dark Thorn"] + ". Using default points.");
+
+                        replacementType = "boss_other";
+                    }
+                    else
+                    {
+                        if (App.logger != null)
+                            App.logger.Record("Dark Thorn Replacement: " + data.BossList["Dark Thorn"]);
+                    }
+
+                    points = data.PointsDatanew[replacementType];
+
+                    //Shadow Stalker/Tifa (in 1 Hour Mode)
+                    string bossKey = data.BossList.ContainsKey("Shadow Stalker") ? "Shadow Stalker" : "Tifa";
+                    string bossName = data.BossList[bossKey];
+
+                    replacementType = Codes.FindBossType(bossName);
+                    if (replacementType == "Unknown")
+                    {
+                        Console.WriteLine("Unknown Replacement Boss: " + bossName + ". Using default points.");
+
+                        if (App.logger != null)
+                            App.logger.Record("Unknown Replacement Boss: " + bossName + ". Using default points.");
+
+                        replacementType = "boss_other";
+                    }
+                    else
+                    {
+                        if (App.logger != null)
+                            App.logger.Record("Shadow Stalker/Tifa Replacement: " + bossName);
+                    }
+
+                    points += data.PointsDatanew[replacementType];
+
+                    //bonus points here should be sum of both boss types multipled by the BC double arena multiplier
+                    if (points > 1)
+                        points += points * objWindow.oneHourOverrideAssets["bcDoubleArenaMultiplier"];
+                }
+                else
+                {
+                    points = data.PointsDatanew["boss_other"];
                 }
             }
             else if (boss.StartsWith("FF Team"))
@@ -3569,7 +3610,7 @@ namespace KhTracker
 
                         points += data.PointsDatanew[replacementType];
 
-                        //bonus points here should be sum of both boss types / 2
+                        //bonus points here should be sum of both boss types divided by 2
                         if (points > 1)
                             points += points / 2;
                     }
@@ -3641,25 +3682,23 @@ namespace KhTracker
                         switch (bossType)
                         {
                             case "boss_as":
-                                bonuspoints = 10; // objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
                                 break;
                             case "boss_datas":
                                 if (boss.Contains("Final Xemnas"))
                                 {
-                                    bonuspoints = 40; // objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
                                 }
                                 else if (boss != "Xemnas (Data)")
                                 {
-                                    bonuspoints = 20;
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
                                 }
-                                //else
-                                //    bonuspoints = 20; // objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
                                 break;
                             case "boss_sephi":
-                                bonuspoints = 30; // objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
                                 break;
                             case "boss_terra":
-                                bonuspoints = 50; // objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
                                 break;
                             case "boss_other":
                                 if (boss == "Final Xemnas")
@@ -3667,7 +3706,6 @@ namespace KhTracker
                                 break;
                         }
                     }
-
 
                     points += bonuspoints;
                 }

@@ -79,11 +79,6 @@ namespace KhTracker
             if (OTStartupOption.IsChecked)
                 objWindow.Show();
 
-            //one hour mode toggle
-            OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
-            //darts mode toggle
-            DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
-
             //set grid size for worlds 
             ClassicRowSizeOption.IsChecked = Properties.Settings.Default.ClassicRowSize;
         }
@@ -489,6 +484,19 @@ namespace KhTracker
 
             #endregion
 
+            #region Custom Game Modes
+
+            OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
+            OneHourToggle(OneHourOption.IsChecked);
+            DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
+            DartsToggle(DartsOption.IsChecked);
+            Custom1HRAssetsOption.IsChecked = Properties.Settings.Default.Custom1HRAssets;
+            Custom1HRAssetsToggle(Custom1HRAssetsOption.IsChecked);
+            CustomDartsAssetsOption.IsChecked = Properties.Settings.Default.CustomDartsAssets;
+            CustomDartsAssetsToggle(CustomDartsAssetsOption.IsChecked);
+
+            #endregion
+
             ///TODO: repurpose for legacy layout mode later
             //LegacyOption.IsChecked = Properties.Settings.Default.Legacy;
             //if (LegacyOption.IsChecked)
@@ -791,6 +799,47 @@ namespace KhTracker
             else
                 System.Windows.Forms.MessageBox.Show("No path set. To set a path, go to\nOptions > Load Hints > Set OpenKH Path.");
 
+        }
+
+        // custom game mode path set
+        public void Set1HRAssetFilepath()
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                DefaultExt = ".json",
+                Filter = "json files (*.json)|*.json"
+            };
+            System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.OneHourModeAssetsFilepath = openFileDialog.FileName;
+            }
+            else
+            {
+                Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
+                Properties.Settings.Default.Custom1HRAssets = false;
+                Custom1HRAssetsOption.IsChecked = false;
+            }
+        }
+
+        public void SetDartsAssetFilepath()
+        {
+            System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog
+            {
+                DefaultExt = ".json",
+                Filter = "json files (*.json)|*.json"
+            };
+            System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Properties.Settings.Default.DartsModeAssetsFilepath = openFileDialog.FileName;
+            }
+            else
+            {
+                Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
+                Properties.Settings.Default.CustomDartsAssets = false;
+                CustomDartsAssetsOption.IsChecked = false;
+            }
         }
 
         /// 

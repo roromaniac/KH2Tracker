@@ -16,6 +16,27 @@ namespace KhTracker
     /// <summary>
     /// Interaction logic for ObjectivesWindow.xaml
     /// </summary>
+    /// 
+    public class CustomObjectiveSettings
+    {
+        // darts mode is default since 1 hour has more points customization involved
+        public Dictionary<string, int> objectivePointList { get; set; }
+        public int objectiveCount { get; set; } = 25;
+        public int gridHeight { get; set; } = 5;
+        public int gridWidth { get; set; } = 5;
+        public int asArenaBonusPoints { get; set; } = 0;
+        public int dataArenaBonusPoints { get; set; } = 0;
+        public int sephiArenaBonusPoints { get; set; } = 0;
+        public int terraArenaBonusPoints { get; set; } = 0;
+        public int dataXemnasArenaBonusPoints { get; set; } = 0;
+        public int pirateMinuteFightBonus { get; set; } = 0;
+        public int missionsBonus { get; set; } = 0;
+        public int summitBonus { get; set; } = 0;
+        public int throneRoomBonus { get; set; } = 0;
+        public int throneRoomBonusEarly { get; set; } = 0;
+        public double bcDoubleFightMultiplier { get; set; } = 0.0;
+        public double lordsArenaMultiplier { get; set; } = 0.0;
+    }
 
     public partial class ObjectivesWindow : Window, IColorableWindow
     {
@@ -222,9 +243,12 @@ namespace KhTracker
             {"PuzzDaylight", new Tuple<string, int>("Creation", 4)},
             {"PuzzSunset", new Tuple<string, int>("Creation", 5)},
         };
-        //1hour objectives
-        public Dictionary<string, int> oneHourAssets = new Dictionary<string, int>()
+
+        //1hour objectives and settings
+        public CustomObjectiveSettings oneHourAssets = new CustomObjectiveSettings()
         {
+            objectivePointList = new Dictionary<string, int>
+            {
                 {"Bailey", 10},
                 {"Corridor", 15},
                 {"1000Heartless", 30},
@@ -314,13 +338,150 @@ namespace KhTracker
                 {"Larxene", 30},
                 {"LarxeneData", 40},
                 {"Sephiroth", 40},
-                {"LingeringWill", 40},
+                {"LingeringWill", 40}
+            },
+            objectiveCount = 7,
+            gridHeight = 2,
+            gridWidth = 4,
+            asArenaBonusPoints = 10,
+            dataArenaBonusPoints = 20,
+            sephiArenaBonusPoints = 30,
+            terraArenaBonusPoints = 50,
+            dataXemnasArenaBonusPoints = 40,
+            pirateMinuteFightBonus = 10,
+            missionsBonus = 0,
+            summitBonus = 10,
+            throneRoomBonus = 30,
+            throneRoomBonusEarly = 15,
+            bcDoubleFightMultiplier = 1.5,
+            lordsArenaMultiplier = 1.5
         };
-        //override 1hour objectives
-        public bool oneHourCustom = false;
+
+        //darts objectives and settings
+        public CustomObjectiveSettings dartsAssets = new CustomObjectiveSettings()
+        {
+            objectivePointList = new Dictionary<string, int>
+            {
+                {"Minigame", 2},
+                {"TwilightThorn", 3},
+                {"Axel1", 2},
+                {"Struggle", 2},
+                {"Axel", 5},
+                {"DataRoxas", 10},
+                {"Station", 2},
+                {"MysteriousTower", 2},
+                {"Sandlot", 3},
+                {"Mansion", 4},
+                {"BetwixtAndBetween", 4},
+                {"DataAxel", 11},
+                {"Bailey", 2},
+                {"Corridor", 3},
+                {"HBDemyx", 4},
+                {"FinalFantasy", 4},
+                {"1000Heartless", 4},
+                {"Sephiroth", 10},
+                {"DataDemyx", 11},
+                {"Fight1", 5},
+                {"Fight2", 5},
+                {"Transport", 11},
+                {"Thresholder", 2},
+                {"Beast", 2},
+                {"DarkThorn", 3},
+                {"Xaldin", 5},
+                {"DataXaldin", 12},
+                {"Cerberus", 3},
+                {"Urns", 2},
+                {"OCDemyx", 3},
+                {"Hydra", 4},
+                {"Hades", 5},
+                {"Zexion", 5},
+                {"ZexionData", 10},
+                {"Abu", 2},
+                {"TreasureRoom", 3},
+                {"Lords", 4},
+                {"GenieJafar", 5},
+                {"Lexaeus", 5},
+                {"LexaeusData", 10},
+                {"Missions", 2},
+                {"Mountain", 2},
+                {"Cave", 3},
+                {"Summit", 3},
+                {"ShanYu", 4},
+                {"Riku", 4},
+                {"Snipers", 5},
+                {"StormRider", 5},
+                {"DataXigbar", 12},
+                {"Kanga", 3},
+                {"SpookyCave", 5},
+                {"StarryHill", 9},
+                {"Simba", 2},
+                {"Hyenas1", 2},
+                {"Scar", 4},
+                {"Hyenas2", 3},
+                {"GroundShaker", 5},
+                {"DataSaix", 11},
+                {"Minnie", 2},
+                {"OldPete", 2},
+                {"Windows", 3},
+                {"BoatPete", 2},
+                {"DCPete", 4},
+                {"Marluxia", 9},
+                {"MarluxiaData", 11},
+                {"LingeringWill", 15},
+                {"CandyCaneLane", 2},
+                {"PrisonKeeper", 4},
+                {"OogieBoogie", 4},
+                {"ObjectivePresents2", 3},
+                {"Experiment", 5},
+                {"Vexen", 5},
+                {"VexenData", 11},
+                {"Town", 2},
+                {"1Minute", 2},
+                {"Barbossa", 4},
+                {"GrimReaper1", 4},
+                {"Gambler", 2},
+                {"GrimReaper", 5},
+                {"DataLuxord", 10},
+                {"Screens", 2},
+                {"HostileProgram", 3},
+                {"SolarSailer", 4},
+                {"MCP", 5},
+                {"Larxene", 5},
+                {"LarxeneData", 11},
+                {"Roxas", 4},
+                {"Xigbar", 4},
+                {"Luxord", 3},
+                {"Saix", 3},
+                {"Xemnas1", 5},
+                {"DataFinalXemnas", 12},
+                {"Valor5", 3},
+                {"Valor6", 5},
+                {"Valor7", 9},
+                {"Wisdom5", 3},
+                {"Wisdom6", 5},
+                {"Wisdom7", 9},
+                {"Limit5", 3},
+                {"Limit6", 5},
+                {"Limit7", 9},
+                {"Master5", 3},
+                {"Master6", 5},
+                {"Master7", 9},
+                {"Final5", 3},
+                {"Final6", 5},
+                {"Final7", 9}
+            },
+            objectiveCount = 25,
+            gridHeight = 5,
+            gridWidth = 5,
+        };
+
+        //overrides for custom game modes
         public Dictionary<string, int> oneHourOverrideAssets = new Dictionary<string, int>();
         public Dictionary<string, int> oneHourOverrideBonus = new Dictionary<string, int>();
-        public Dictionary<string, double> oneHourOverrideMulti = new Dictionary<string, double>();
+        public Dictionary<string, double> oneHourMultiplicativeBonus = new Dictionary<string, double>();
+        public Dictionary<string, int> oneHourObjGridSettings = new Dictionary<string, int>();
+        public Dictionary<string, int> dartsOverrideAssets = new Dictionary<string, int>();
+        public Dictionary<string, int> dartsObjGridSettings = new Dictionary<string, int>();
 
 
         public ObjectivesWindow(Data dataIn)
@@ -473,81 +634,178 @@ namespace KhTracker
             DynamicGrid.Children.Add(objGrid);
         }
 
-        public void GetCustomGameModeAssets()
+        public CustomObjectiveSettings GetCustomGameModeAssets()
         {
             if (data.oneHourMode)
             {
-                string oneHourAssetPath = "KhTrackerSettings/OneHourModeAssets.json";
+                string oneHourAssetPath = Properties.Settings.Default.OneHourModeAssetsFilepath;
+                string directoryPath = Path.GetDirectoryName(oneHourAssetPath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
                 if (!File.Exists(oneHourAssetPath))
                 {
+                    // Display an alert box with the error message
+                    System.Windows.MessageBox.Show(
+                        $"WARNING: Your one hour asset file is no longer existent. Reverting to default one hour assets.",
+                        "Warning",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
                     string jsonString = JsonSerializer.Serialize(oneHourAssets, new JsonSerializerOptions { WriteIndented = true });
                     File.WriteAllText(oneHourAssetPath, jsonString);
                 }
 
                 string oneHourAssetPathContents = File.ReadAllText(oneHourAssetPath);
-                oneHourAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(oneHourAssetPathContents);
+                try
+                {
+                    string json = File.ReadAllText(Properties.Settings.Default.OneHourModeAssetsFilepath);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
+
+                    return customObjectiveSettings;
+                }
+                catch (JsonException ex)
+                {
+                    // Display an alert box with the error message
+                    System.Windows.MessageBox.Show(
+                        $"ERROR: One hour JSON deserialization failed. Please ensure the one hour mode assets file is valid JSON.",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+
+                    // Halt execution by throwing an exception or returning
+                    throw new InvalidOperationException($"Failed to deserialize JSON: {ex.Message}");
+                }
             }
             else if (data.dartsMode)
             {
+                string dartsAssetPath = Properties.Settings.Default.DartsModeAssetsFilepath;
+                string directoryPath = Path.GetDirectoryName(dartsAssetPath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+                if (!File.Exists(dartsAssetPath))
+                {
+                    // Display an alert box with the error message
+                    System.Windows.MessageBox.Show(
+                        $"WARNING: Your darts asset file is no longer existent. Reverting to default darts assets.",
+                        "Warning",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    string jsonString = JsonSerializer.Serialize(dartsAssets, new JsonSerializerOptions { WriteIndented = true });
+                    File.WriteAllText(dartsAssetPath, jsonString);
+                }
 
+                string dartsAssetPathContents = File.ReadAllText(dartsAssetPath);
+                try
+                {
+                    string json = File.ReadAllText(Properties.Settings.Default.DartsModeAssetsFilepath);
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
+
+                    return customObjectiveSettings;
+                }
+                catch (JsonException ex)
+                {
+                    // Display an alert box with the error message
+                    System.Windows.MessageBox.Show(
+                        $"ERROR: Darts JSON deserialization failed. Please ensure the darts mode assets file is valid JSON.",
+                        "Error",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
+
+                    // Halt execution by throwing an exception or returning
+                    throw new InvalidOperationException($"Failed to deserialize JSON: {ex.Message}");
+                }
+            }
+            else
+            {
+                return new CustomObjectiveSettings();
             }
         }
 
-        public void GenerateOneHourObjGrid()
+        public void GenerateCustomObjGrid()
         {
-            //reset banner visibility
-            UpdateGridBanner(true, "DARTS OBJECTIVES", "1HROVERRIDE");
+            CustomObjectiveSettings overrideObject = GetCustomGameModeAssets();
 
-            //override setup
-            oneHourOverrideAssets.Clear();
-            oneHourOverrideBonus.Clear();
-            oneHourOverrideMulti.Clear();
-            if (File.Exists("KhTrackerSettings/OneHourSettingsOverride.json"))
-            {
-                using (var overrideFile = new StreamReader("KhTrackerSettings/OneHourSettingsOverride.json"))
-                {
-                    var overrideObject = JsonSerializer.Deserialize<Dictionary<string, object>>(overrideFile.ReadToEnd());
+            DynamicGrid.Children.Clear();   // removes any previous grid
+            UpdateGridBanner(false);        // hides the banner
 
-                    oneHourOverrideAssets = JsonSerializer.Deserialize<Dictionary<string, int>>(overrideObject["objectivePointList"].ToString());
+            if (data.dartsMode) {
 
-                    oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject["asArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject["dataArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject["sephiArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject["terraArenaBonusPoints"].ToString()));
-                    oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject["dataXemnasArenaBonusPoints"].ToString()));
+                //reset banner visibility
+                UpdateGridBanner(true, "DARTS OBJECTIVES", "DARTSOVERRIDE");
 
-                    oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject["pirateMinuteFightBonus"].ToString()));
-                    oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject["missionsBonus"].ToString()));
-                    oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject["summitBonus"].ToString()));
-                    oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject["throneRoomBonus"].ToString()));
-                    oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject["throneRoomBonusEarly"].ToString()));
+                //override setup
+                dartsOverrideAssets.Clear();
+                dartsObjGridSettings.Clear();
 
-                    oneHourOverrideBonus.Add("gridHeight", Int32.Parse(overrideObject["gridHeight"].ToString()));
-                    oneHourOverrideBonus.Add("gridWidth", Int32.Parse(overrideObject["gridWidth"].ToString()));
-                    oneHourOverrideBonus.Add("objectiveCount", Int32.Parse(overrideObject["objectiveCount"].ToString()));
+                dartsOverrideAssets = overrideObject.objectivePointList;
 
-                    oneHourOverrideMulti.Add("bossMultiplierAfterFullClear", Double.Parse(overrideObject["bossMultiplierAfterFullClear"].ToString()));
-                    oneHourOverrideMulti.Add("lordsArenaMultiplier", Double.Parse(overrideObject["lordsArenaMultiplier"].ToString()));
+                dartsObjGridSettings.Add("gridHeight", Int32.Parse(overrideObject.gridHeight.ToString()));
+                dartsObjGridSettings.Add("gridWidth", Int32.Parse(overrideObject.gridWidth.ToString()));
+                dartsObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
 
-                    //if(overrideObject.ContainsKey("bossHintingHome"))
-                    //{
-                    //    data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
-                    //}
-
-                    overrideFile.Close();
-                }
-
-                oneHourCustom = true;
             }
+            else if (data.oneHourMode)
+            {
+                //reset banner visibility
+                UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
 
+                //override setup
+                oneHourOverrideAssets.Clear();
+                oneHourOverrideBonus.Clear();
+                oneHourMultiplicativeBonus.Clear();
+                oneHourObjGridSettings.Clear();
+
+                oneHourOverrideAssets = overrideObject.objectivePointList;
+
+                oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject.asArenaBonusPoints.ToString()));
+                oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject.dataArenaBonusPoints.ToString()));
+                oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject.sephiArenaBonusPoints.ToString()));
+                oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject.terraArenaBonusPoints.ToString()));
+                oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject.dataXemnasArenaBonusPoints.ToString()));
+
+                oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject.pirateMinuteFightBonus.ToString()));
+                oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject.missionsBonus.ToString()));
+                oneHourOverrideBonus.Add("summitBonus", Int32.Parse(overrideObject.summitBonus.ToString()));
+                oneHourOverrideBonus.Add("throneRoomBonus", Int32.Parse(overrideObject.throneRoomBonus.ToString()));
+                oneHourOverrideBonus.Add("throneRoomBonusEarly", Int32.Parse(overrideObject.throneRoomBonusEarly.ToString()));
+
+                oneHourMultiplicativeBonus.Add("bcDoubleFightMultiplier", Double.Parse(overrideObject.bcDoubleFightMultiplier.ToString()));
+                oneHourMultiplicativeBonus.Add("lordsArenaMultiplier", Double.Parse(overrideObject.lordsArenaMultiplier.ToString()));
+
+                oneHourObjGridSettings.Add("gridHeight", Int32.Parse(overrideObject.gridHeight.ToString()));
+                oneHourObjGridSettings.Add("gridWidth", Int32.Parse(overrideObject.gridWidth.ToString()));
+                oneHourObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
+
+                //if(overrideObject.ContainsKey("bossHintingHome"))
+                //{
+                //    data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
+                //}
+            }
 
             //build asset list
             assets.Clear();
             Random rng = new Random(data.convertedSeedHash);
-            if (oneHourCustom)
+            if (data.dartsMode)
+                assets = dartsOverrideAssets.Keys.ToList();
+            else if (data.oneHourMode)
                 assets = oneHourOverrideAssets.Keys.ToList();
-            else
-                assets = oneHourAssets.Keys.ToList();
 
             #region Random Coices
 
@@ -605,12 +863,12 @@ namespace KhTracker
             }
             else if (valor == 1)
             {
-                assets.Remove("Valor6");
+                assets.Remove("Valor3");
                 assets.Remove("Valor7");
             }
             else
             {
-                assets.Remove("Valor6");
+                assets.Remove("Valor3");
                 assets.Remove("Valor5");
             }
             if (wisdom == 0)
@@ -620,12 +878,12 @@ namespace KhTracker
             }
             else if (wisdom == 1)
             {
-                assets.Remove("Wisdom6");
+                assets.Remove("Wisdom3");
                 assets.Remove("Wisdom7");
             }
             else
             {
-                assets.Remove("Wisdom6");
+                assets.Remove("Wisdom3");
                 assets.Remove("Wisdom5");
             }
             if (limit == 0)
@@ -635,12 +893,12 @@ namespace KhTracker
             }
             else if (limit == 1)
             {
-                assets.Remove("Limit6");
+                assets.Remove("Limit3");
                 assets.Remove("Limit7");
             }
             else
             {
-                assets.Remove("Limit6");
+                assets.Remove("Limit3");
                 assets.Remove("Limit5");
             }
             if (master == 0)
@@ -650,12 +908,12 @@ namespace KhTracker
             }
             else if (master == 1)
             {
-                assets.Remove("Master6");
+                assets.Remove("Master3");
                 assets.Remove("Master7");
             }
             else
             {
-                assets.Remove("Master6");
+                assets.Remove("Master3");
                 assets.Remove("Master5");
             }
             if (final == 0)
@@ -665,35 +923,54 @@ namespace KhTracker
             }
             else if (final == 1)
             {
-                assets.Remove("Final6");
+                assets.Remove("Final3");
                 assets.Remove("Final7");
             }
             else
             {
-                assets.Remove("Final6");
+                assets.Remove("Final3");
                 assets.Remove("Final5");
             }
 
             #endregion
 
             // number of objectives to use (7 is defaut)
-            if (oneHourCustom)
-                assets = assets.OrderBy(x => rng.Next()).Take(oneHourOverrideBonus["objectiveCount"]).ToList();
-            else
-                assets = assets.OrderBy(x => rng.Next()).Take(7).ToList();
+            if (data.dartsMode)
+                assets = assets.OrderBy(x => rng.Next()).Take(dartsObjGridSettings["objectiveCount"]).ToList();
+            else if (data.oneHourMode)
+                assets = assets.OrderBy(x => rng.Next()).Take(oneHourObjGridSettings["objectiveCount"]).ToList();
 
             //fix icon prefix for assets
             getAssetPrefixOneHour();
 
             //get grid size
-            if (oneHourCustom)
+            if (data.dartsMode)
             {
-                numRows = oneHourOverrideBonus["gridHeight"];
-                numColumns = oneHourOverrideBonus["gridWidth"];
+                numRows = dartsObjGridSettings["gridHeight"];
+                numColumns = dartsObjGridSettings["gridWidth"];
 
                 //if these values are not set up properly for number of objectives then default to 
                 //looking for grid size in size lookup table
-                if (numRows * numColumns >= oneHourOverrideBonus["objectiveCount"])
+                if (numRows * numColumns >= dartsObjGridSettings["objectiveCount"])
+                {
+                    int objectiveCount = assets.Count;
+                    int blankSquares = 0;
+                    while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
+                    {
+                        blankSquares++;
+                    }
+                    numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
+                    numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+                }
+            }
+            else if (data.oneHourMode)
+            {
+                numRows = oneHourObjGridSettings["gridHeight"];
+                numColumns = oneHourObjGridSettings["gridWidth"];
+
+                //if these values are not set up properly for number of objectives then default to 
+                //looking for grid size in size lookup table
+                if (numRows * numColumns >= oneHourObjGridSettings["objectiveCount"])
                 {
                     int objectiveCount = assets.Count;
                     int blankSquares = 0;
@@ -744,15 +1021,15 @@ namespace KhTracker
                     Grid squareContent = (Grid)FindResource(assets[buttonDone]);
 
                     //fix point value display for squares when using override
-                    if (oneHourCustom)
+                    foreach (var item in squareContent.Children)
                     {
-                        foreach (var item in squareContent.Children)
+                        if (item is Viewbox box)
                         {
-                            if (item is Viewbox box)
-                            {
-                                OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                            OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                            if (data.dartsMode)
+                                textbox.Text = dartsOverrideAssets[assets[buttonDone].Remove(0, 8)].ToString() + " Points";
+                            else if (data.oneHourMode)
                                 textbox.Text = oneHourOverrideAssets[assets[buttonDone].Remove(0, 8)].ToString() + " Points";
-                            }
                         }
                     }
 
@@ -794,7 +1071,7 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                if (textIcon == "1HROVERRIDE")
+                if (new[] { "1HROVERRIDE", "DARTSOVERRIDE"}.Contains(textIcon))
                 {
                     GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
                     objBannerIconL.Width = new GridLength(0.5, GridUnitType.Star);
@@ -954,8 +1231,8 @@ namespace KhTracker
                 {
                     if (square is ToggleButton button && button.IsChecked == true)
                     {
-                        if (!oneHourCustom)
-                            testPoints += oneHourAssets[button.Tag.ToString().Remove(0, 8)];
+                        if (data.dartsMode)
+                            testPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
                         else
                             testPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
 
@@ -1184,15 +1461,15 @@ namespace KhTracker
                     string squareTag = square.Tag.ToString().Remove(0, 8);
                     Grid squareContent = (Grid)FindResource(prefix + squareTag);
 
-                    if (oneHourCustom)
+                    foreach (var item in squareContent.Children)
                     {
-                        foreach (var item in squareContent.Children)
+                        if (item is Viewbox box)
                         {
-                            if (item is Viewbox box)
-                            {
-                                OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                            OutlinedTextBlock textbox = (OutlinedTextBlock)box.Child;
+                            if (data.dartsMode)
+                                textbox.Text = dartsOverrideAssets[squareTag].ToString() + " Points";
+                            else if (data.oneHourMode)
                                 textbox.Text = oneHourOverrideAssets[squareTag].ToString() + " Points";
-                            }
                         }
                     }
 

@@ -141,10 +141,13 @@
                 <MenuItem Header="Puzzles" 						Click="PuzzleToggle" 			x:Name="PuzzleOption"			IsCheckable="True" IsChecked="True"/>
             </MenuItem>
             <MenuItem Header="Custom Game Mode" Focusable="False" x:Name="GameModeMenuItem">
-                <MenuItem Header="1Hour Mode" 	        Click="OneHourToggle"  x:Name="OneHourOption"     IsCheckable="True" IsChecked="False"
+                <MenuItem Header="1Hour Mode" 	                Click="OneHourToggle"           x:Name="OneHourOption"          IsCheckable="True" IsChecked="False"
                           ToolTip="Enable changes for use in Zed's 1 Hour Challenge Seed Settings."/>
-                <MenuItem Header="Darts Mode" 	        Click="DartsToggle"  x:Name="DartsOption"     IsCheckable="True" IsChecked="False"
+                <MenuItem Header="Darts Mode" 	                Click="DartsToggle"             x:Name="DartsOption"            IsCheckable="True" IsChecked="False"
                           ToolTip="Enable changes for use in Geek's Darts Seed Settings."/>
+                <Separator/>
+                <MenuItem Header="Customize 1Hour Assets"       Click="Custom1HRAssetsToggle"   x:Name="Custom1HRAssetsOption"    IsCheckable="True" IsChecked="False"/>
+                <MenuItem Header="Customize Darts Assets"       Click="CustomDartsAssetsToggle" x:Name="CustomDartsAssetsOption"  IsCheckable="True" IsChecked="False"/>
             </MenuItem>
             <MenuItem x:Name="ModeDisplay" Header=" " Focusable="False" IsHitTestVisible="False" HorizontalAlignment="Right"/>
             <!--MenuItem Header="-DA 1.6.8-" IsHitTestVisible="False" Focusable="False" HorizontalAlignment="Right"/-->

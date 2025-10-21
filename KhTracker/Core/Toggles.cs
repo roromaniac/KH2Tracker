@@ -1860,9 +1860,6 @@ namespace KhTracker
             //logic
         }
 
-
-
-
         //AutoLoadHints
         private void AutoLoadHintsToggle(object sender, RoutedEventArgs e)
         {
@@ -1927,6 +1924,94 @@ namespace KhTracker
                     //handled in MainWindow.xaml.cs
                     SetOpenKHPath();
                 }
+            }
+        }
+
+        // custom game mode toggles
+        private void OneHourToggle(object sender, RoutedEventArgs e)
+        {
+            OneHourToggle(OneHourOption.IsChecked);
+        }
+
+        private void OneHourToggle(bool toggle)
+        {
+            Properties.Settings.Default.OneHourModeToggle = toggle;
+            OneHourOption.IsChecked = toggle;
+            Properties.Settings.Default.DartsModeToggle = Properties.Settings.Default.DartsModeToggle && !toggle ? true : false;
+            DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
+        }
+        private void DartsToggle(object sender, RoutedEventArgs e)
+        {
+            DartsToggle(DartsOption.IsChecked);
+        }
+
+        private void DartsToggle(bool toggle)
+        {
+            Properties.Settings.Default.DartsModeToggle = toggle;
+            DartsOption.IsChecked = toggle;
+            Properties.Settings.Default.OneHourModeToggle = Properties.Settings.Default.OneHourModeToggle && !toggle ? true : false;
+            OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
+        }
+
+        private void Custom1HRAssetsToggle(object sender, RoutedEventArgs e)
+        {
+            Custom1HRAssetsToggle(Custom1HRAssetsOption.IsChecked);
+        }
+
+        private void Custom1HRAssetsToggle(bool toggle)
+        {
+            Properties.Settings.Default.Custom1HRAssets = toggle;
+            Custom1HRAssetsOption.IsChecked = toggle;
+
+            //this is ran whenever the tracker is open(ed) and sees the toggle is set
+            if (toggle)
+            {
+                if (MessageBox.Show("You are about to customize the 1 Hour assets. Click OK to select a VALID 1 Hour asset json file.") == MessageBoxResult.OK)
+                {
+                    //handled in MainWindow.xaml.cs
+                    Set1HRAssetFilepath();
+                }
+                else
+                {
+                    Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
+                    Properties.Settings.Default.Custom1HRAssets = false;
+                    Custom1HRAssetsOption.IsChecked = false;
+                }
+            }
+            else
+            {
+                Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
+            }
+        }
+
+        private void CustomDartsAssetsToggle(object sender, RoutedEventArgs e)
+        {
+            CustomDartsAssetsToggle(CustomDartsAssetsOption.IsChecked);
+        }
+
+        private void CustomDartsAssetsToggle(bool toggle)
+        {
+            Properties.Settings.Default.CustomDartsAssets = toggle;
+            CustomDartsAssetsOption.IsChecked = toggle;
+
+            //this is ran whenever the tracker is open(ed) and sees the toggle is set
+            if (toggle)
+            {
+                if (MessageBox.Show("You are about to customize the Darts assets. Click OK to select a VALID Darts asset json file.") == MessageBoxResult.OK)
+                {
+                    //handled in MainWindow.xaml.cs
+                    SetDartsAssetFilepath();
+                }
+                else
+                {
+                    Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
+                    Properties.Settings.Default.CustomDartsAssets = false;
+                    CustomDartsAssetsOption.IsChecked = false;
+                }
+            }
+            else
+            {
+                Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
             }
         }
     }
