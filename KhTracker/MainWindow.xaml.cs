@@ -1,16 +1,17 @@
-﻿using System;
+﻿using KhTracker.Hotkeys;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Linq;
-using System.IO;
-using System.ComponentModel;
 using Button = System.Windows.Controls.Button;
-using KhTracker.Hotkeys;
-using System.Text;
 
 namespace KhTracker
 {
@@ -810,13 +811,24 @@ namespace KhTracker
                 Filter = "json files (*.json)|*.json"
             };
             System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
             {
                 Properties.Settings.Default.OneHourModeAssetsFilepath = openFileDialog.FileName;
+                // Get the last directory in the path
+                string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.OneHourModeAssetsFilepath));
+                string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.OneHourModeAssetsFilepath);
+                Custom1HRAssetsOption.Header = $"Custom 1Hour Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
             }
             else
             {
-                Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
+                // Display an alert box with the error message
+                System.Windows.MessageBox.Show(
+                    $"WARNING: You are abandoning custom 1 hour asset setup. Reverting to default 1 hour assets.",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                Properties.Settings.Default.OneHourModeAssetsFilepath = "";
                 Properties.Settings.Default.Custom1HRAssets = false;
                 Custom1HRAssetsOption.IsChecked = false;
             }
@@ -830,13 +842,24 @@ namespace KhTracker
                 Filter = "json files (*.json)|*.json"
             };
             System.Windows.Forms.DialogResult result = openFileDialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
+            if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(openFileDialog.FileName))
+            { 
                 Properties.Settings.Default.DartsModeAssetsFilepath = openFileDialog.FileName;
+                // Get the last directory in the path
+                string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.DartsModeAssetsFilepath));
+                string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.DartsModeAssetsFilepath);
+                CustomDartsAssetsOption.Header = $"Custom Darts Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
             }
             else
             {
-                Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
+                // Display an alert box with the error message
+                System.Windows.MessageBox.Show(
+                    $"WARNING: You are abandoning custom darts asset setup. Reverting to default darts assets.",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                Properties.Settings.Default.DartsModeAssetsFilepath = "";
                 Properties.Settings.Default.CustomDartsAssets = false;
                 CustomDartsAssetsOption.IsChecked = false;
             }

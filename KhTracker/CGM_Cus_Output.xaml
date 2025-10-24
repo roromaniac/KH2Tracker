@@ -1,0 +1,1325 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:KhTracker">
+
+    <Grid x:Key="CGM_Cus-TwilightThorn" x:Shared="false" ToolTip="Defeat Twilight Thorn">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/twilightthorn.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Axel1" x:Shared="false" ToolTip="Defeat Axel I">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axelstruggle.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Struggle" x:Shared="false" ToolTip="Fight Setzer">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/simulated_twilight_town/struggle_finish.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Axel" x:Shared="false" ToolTip="Defeat Axel II">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axel.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataRoxas" x:Shared="false" ToolTip="Defeat Data Roxas">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_roxasdata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-MysteriousTower" x:Shared="false" ToolTip="Talk to the 3 Fairies">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/mysterious_tower.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Sandlot" x:Shared="false" ToolTip="Defeat Sandlot Berserkers">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/sandlot_fight_berserkers.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-BetwixtAndBetween" x:Shared="false" ToolTip="Fight alongside Axel">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/twilight_town/betwixt_and_between.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataAxel" x:Shared="false" ToolTip="Defeat Data Axel">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_axeldata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Bailey" x:Shared="false" ToolTip="Defend the Bailey">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/bailey_fight.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-HBDemyx" x:Shared="false" ToolTip="Defeat Demyx">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_demyx.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-1000Heartless" x:Shared="false" ToolTip="Stop the 1000 Heartless">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/1000_heartless.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Sephiroth" x:Shared="false" ToolTip="Defeat Sephiroth">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/super_sephiroth.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataDemyx" x:Shared="false" ToolTip="Defeat Data Demyx">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_demyxdata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-EndOfCoR" x:Shared="false" ToolTip="Reach the end of Cavern of Remembrance">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/EndOfCoR.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Transport" x:Shared="false" ToolTip="Reach the end of Transport of Remembrance">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/hollow_bastion/transport_to_rememberance.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Mountain" x:Shared="false" ToolTip="Climb the Mountain Trail">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/mountain_climb.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Cave" x:Shared="false" ToolTip="Fight the Enemies in Village Cave">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/land_of_dragons/village_cave.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-ShanYu" x:Shared="false" ToolTip="Defeat Shan Yu">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/shanyu.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-StormRider" x:Shared="false" ToolTip="Defeat Stormrider">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/stormrider.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataXigbar" x:Shared="false" ToolTip="Defeat Data Xigbar">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xigbardata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Thresholder" x:Shared="false" ToolTip="Defeat Thresholder">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/thresholder.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Beast" x:Shared="false" ToolTip="Help Beast">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/beast.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DarkThorn" x:Shared="false" ToolTip="Defeat Dark Thorn">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/darkthorn.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Xaldin" x:Shared="false" ToolTip="Defeat Xaldin">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xaldin.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataXaldin" x:Shared="false" ToolTip="Defeat Data Xaldin">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xaldindata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Cerberus" x:Shared="false" ToolTip="Defeat Cerberus">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/cerberus.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Urns" x:Shared="false" ToolTip="Train with Phil">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/phils_training.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-OCPete" x:Shared="false" ToolTip="Defeat Pete at The Lock">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/the_lock_fight.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Hydra" x:Shared="false" ToolTip="Defeat Hydra">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/hydra.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-AuronStatue" x:Shared="false" ToolTip="Defeat the Ambush in Hades Chamber">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/olympus_coliseum/hades_chamber_dusks.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Hades" x:Shared="false" ToolTip="Defeat Hades">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/hades.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-CupPP" x:Shared="false" ToolTip="Win the Pain and Panic Cup">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/PainandPanicCup.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-CupC" x:Shared="false" ToolTip="Win the Cerberus Cup">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/CerberusCup.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-CupT" x:Shared="false" ToolTip="Win the Titan Cup">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/TitanCup.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-CupGoF" x:Shared="false" ToolTip="Win the Goddess of Fate Cup">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/GoddessCup.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Zexion" x:Shared="false" ToolTip="Defeat AS Zexion">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_zexion.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-ZexionData" x:Shared="false" ToolTip="Defeat Data Zexion">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_zexiondata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Minnie" x:Shared="false" ToolTip="Escort Queen Minnie">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/minnie_escort.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Windows" x:Shared="false" ToolTip="Fight through Windows of Time">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/windows_of_time.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-BoatPete" x:Shared="false" ToolTip="Stop Pete from Escaping">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/disney_castle/steamboat_pete.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DCPete" x:Shared="false" ToolTip="Defeat Future Pete">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/PeteTR.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Marluxia" x:Shared="false" ToolTip="Defeat AS Marluxia">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_marluxia.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-MarluxiaData" x:Shared="false" ToolTip="Defeat Data Marluxia">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_marluxiadata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-LingeringWill" x:Shared="false" ToolTip="Defeat Lingering Will">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/super_terra.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-1Minute" x:Shared="false" ToolTip="Stall for time on Isla de Muerta">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/isla_de_muerta.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Medallions" x:Shared="false" ToolTip="Defend the Interceptor from pirates">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/medallion_defence.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Barrels" x:Shared="false" ToolTip="Stop the explosive barrels">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/port_royal/explosive_barrels.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Barbossa" x:Shared="false" ToolTip="Defeat Barbossa">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/barbossa.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-GrimReaper1" x:Shared="false" ToolTip="Defeat Grim Reaper I">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper1.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-GrimReaper" x:Shared="false" ToolTip="Defeat Grim Reaper II">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/grimreaper2.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataLuxord" x:Shared="false" ToolTip="Defeat Data Luxord">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxenedata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Abu" x:Shared="false" ToolTip="Escort Abu">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/abu_escort.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-TreasureRoom" x:Shared="false" ToolTip="Survive the Treasure Room Ambush">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/treasure_room.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Lords" x:Shared="false" ToolTip="Defeat the Elemental Lords">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/agrabah/elemental_lords.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-GenieJafar" x:Shared="false" ToolTip="Defeat Genie Jafar">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/jafar.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Lexaeus" x:Shared="false" ToolTip="Defeat AS Lexaeus">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_lexaeus.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-LexaeusData" x:Shared="false" ToolTip="Defeat Data Lexaeus">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_lexaeusdata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PrisonKeeper" x:Shared="false" ToolTip="Defeat Prison Keeper">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/prisonkeeper.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-OogieBoogie" x:Shared="false" ToolTip="Defeat Oogie Boogie">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/oogieboogie.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Children" x:Shared="false" ToolTip="Capture Lock Shock and Barrel">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/halloween_town/children.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-ObjectivePresents1" x:Shared="false" ToolTip="Find the stolen presents">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Presents.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-ObjectivePresents2" x:Shared="false" ToolTip="Create decoy presents">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/DecoyPresents.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Experiment" x:Shared="false" ToolTip="Defeat the Experiment">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/experiment.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Vexen" x:Shared="false" ToolTip="Defeat AS Vexen">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_vexen.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-VexenData" x:Shared="false" ToolTip="Defeat Data Vexen">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_vexendata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Simba" x:Shared="false" ToolTip="Reunite with Simba">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/oasis.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Hyenas1" x:Shared="false" ToolTip="Rescue Timon and Pumbaa">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/hyenas_fight1.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Scar" x:Shared="false" ToolTip="Defeat Scar">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/scar.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Hyenas2" x:Shared="false" ToolTip="Get info about the ghost of Scar from Hyenas">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/pride_lands/hyenas_fight2.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-GroundShaker" x:Shared="false" ToolTip="Defeat Groundshaker">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/groundshaker.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataSaix" x:Shared="false" ToolTip="Defeat Data Saix">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_saixdata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Screens" x:Shared="false" ToolTip="Survive the Dataspace Attack">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/dataspace_fight.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-HostileProgram" x:Shared="false" ToolTip="Defeat Hostile Program">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/hostileprogram.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-SolarSailer" x:Shared="false" ToolTip="Ride the Solar Sailor">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/solar_sailer.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-MCP" x:Shared="false" ToolTip="Defeat MCP">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/space_paranoids/mcp.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Larxene" x:Shared="false" ToolTip="Defeat AS Larxene">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxene.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-LarxeneData" x:Shared="false" ToolTip="Defeat Data Larxene">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_larxenedata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Roxas" x:Shared="false" ToolTip="Defeat Roxas">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_roxas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Xigbar" x:Shared="false" ToolTip="Defeat Xigbar">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_xigbar.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Luxord" x:Shared="false" ToolTip="Defeat Luxord">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_luxord.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Saix" x:Shared="false" ToolTip="Defeat Saix">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/Org_saix.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Xemnas1" x:Shared="false" ToolTip="Defeat Xemnas">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnas.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-DataXemnas" x:Shared="false" ToolTip="Defeat Data Xemnas">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Bosses/org_xemnasfinaldata.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-SpookyCave" x:Shared="false" ToolTip="Rescue Pooh from the Spooky Cave">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/expotition.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-StarryHill" x:Shared="false" ToolTip="Help Pooh out of the pot of hunny">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/hunny_pot.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Tutorial" x:Shared="false" ToolTip="Relearn to swim">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/tutorial.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Ursula" x:Shared="false" ToolTip="Defeat Ursula">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/ursula.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-ObjectiveNewDay" x:Shared="false" ToolTip="Participate the New Day Musical">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Progression/atlantica/concert.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Valor3" x:Shared="false" ToolTip="Reach Valor Form Level 3">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor3.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Valor5" x:Shared="false" ToolTip="Reach Valor Form Level 5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor5.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Valor7" x:Shared="false" ToolTip="Reach Valor Form Level 7">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Valor7.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Wisdom3" x:Shared="false" ToolTip="Reach Wisdom Form Level 3">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom3.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Wisdom5" x:Shared="false" ToolTip="Reach Wisdom Form Level 5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom5.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Wisdom7" x:Shared="false" ToolTip="Reach Wisdom Form Level 7">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Wisdom7.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Limit3" x:Shared="false" ToolTip="Reach Limit Form Level 3">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit3.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Limit5" x:Shared="false" ToolTip="Reach Limit Form Level 5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit5.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Limit7" x:Shared="false" ToolTip="Reach Limit Form Level 7">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Limit7.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Master3" x:Shared="false" ToolTip="Reach Master Form Level 3">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master3.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Master5" x:Shared="false" ToolTip="Reach Master Form Level 5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master5.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Master7" x:Shared="false" ToolTip="Reach Master Form Level 7">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Master7.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Final3" x:Shared="false" ToolTip="Reach Final Form Level 3">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final3.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Final5" x:Shared="false" ToolTip="Reach Final Form Level 5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final5.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-Final7" x:Shared="false" ToolTip="Reach Final Form Level 7">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Checks/Drives_Final7.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzAwakening" x:Shared="false" ToolTip="Complete the Awakening Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Awakening.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzHeart" x:Shared="false" ToolTip="Complete the Heart Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Heart.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzDuality" x:Shared="false" ToolTip="Complete the Duality Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Duality.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzFrontier" x:Shared="false" ToolTip="Complete the Frontier Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Frontier.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzDaylight" x:Shared="false" ToolTip="Complete the Daylight Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Daylight.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+    <Grid x:Key="CGM_Cus-PuzzSunset" x:Shared="false" ToolTip="Complete the Sunset Puzzle">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0.3*"/>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="pack://application:,,,/CustomImages/Grid/Objectives/Puzzle_Sunset.png"/>
+        <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
+        <Viewbox Grid.Row="1" Margin="10,0,10,0">
+            <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
+        </Viewbox>
+    </Grid>
+
+</ResourceDictionary>

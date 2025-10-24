@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Linq;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace KhTracker
 {
@@ -1958,30 +1959,33 @@ namespace KhTracker
             Custom1HRAssetsToggle(Custom1HRAssetsOption.IsChecked);
         }
 
-        private void Custom1HRAssetsToggle(bool toggle)
+        public void Custom1HRAssetsToggle(bool toggle)
         {
             Properties.Settings.Default.Custom1HRAssets = toggle;
             Custom1HRAssetsOption.IsChecked = toggle;
 
-            //this is ran whenever the tracker is open(ed) and sees the toggle is set
-            if (toggle)
+            //this is ran whenever the tracker is open(ed) and sees the toggle is set IF we don't already have a custom one loaded in
+            if (toggle && Properties.Settings.Default.OneHourModeAssetsFilepath == "")
             {
-                if (MessageBox.Show("You are about to customize the 1 Hour assets. Click OK to select a VALID 1 Hour asset json file.") == MessageBoxResult.OK)
+                MessageBoxResult result = MessageBox.Show("You are about to customize the 1 hour assets. Click OK to select a VALID 1 hour asset json file.");
+                if (result == MessageBoxResult.OK)
                 {
                     //handled in MainWindow.xaml.cs
                     Set1HRAssetFilepath();
+                    return;
                 }
-                else
-                {
-                    Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
-                    Properties.Settings.Default.Custom1HRAssets = false;
-                    Custom1HRAssetsOption.IsChecked = false;
-                }
+            }
+            if (!toggle)
+            {
+                Properties.Settings.Default.OneHourModeAssetsFilepath = "";
+                Custom1HRAssetsOption.Header = $"Customize 1Hour Assets";
             }
             else
             {
-                Properties.Settings.Default.OneHourModeAssetsFilepath = "./KhTrackerSettings/GameModes/OneHourModeAssets.json";
-            }
+                string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.OneHourModeAssetsFilepath));
+                string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.OneHourModeAssetsFilepath);
+                Custom1HRAssetsOption.Header = $"Custom 1Hour Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
+            }  
         }
 
         private void CustomDartsAssetsToggle(object sender, RoutedEventArgs e)
@@ -1989,30 +1993,33 @@ namespace KhTracker
             CustomDartsAssetsToggle(CustomDartsAssetsOption.IsChecked);
         }
 
-        private void CustomDartsAssetsToggle(bool toggle)
+        public void CustomDartsAssetsToggle(bool toggle)
         {
             Properties.Settings.Default.CustomDartsAssets = toggle;
             CustomDartsAssetsOption.IsChecked = toggle;
 
-            //this is ran whenever the tracker is open(ed) and sees the toggle is set
-            if (toggle)
+            //this is ran whenever the tracker is open(ed) and sees the toggle is set IF we don't already have a custom one loaded in
+            if (toggle && Properties.Settings.Default.DartsModeAssetsFilepath == "")
             {
-                if (MessageBox.Show("You are about to customize the Darts assets. Click OK to select a VALID Darts asset json file.") == MessageBoxResult.OK)
+                MessageBoxResult result = MessageBox.Show("You are about to customize the Darts assets. Click OK to select a VALID Darts asset json file.");
+                if (result == MessageBoxResult.OK)
                 {
                     //handled in MainWindow.xaml.cs
                     SetDartsAssetFilepath();
+                    return;
                 }
-                else
-                {
-                    Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
-                    Properties.Settings.Default.CustomDartsAssets = false;
-                    CustomDartsAssetsOption.IsChecked = false;
-                }
+            }
+            if (!toggle)
+            {
+                Properties.Settings.Default.DartsModeAssetsFilepath = "";
+                CustomDartsAssetsOption.Header = $"Customize Darts Assets";
             }
             else
             {
-                Properties.Settings.Default.DartsModeAssetsFilepath = "./KhTrackerSettings/GameModes/DartsModeAssets.json";
-            }
+                string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.DartsModeAssetsFilepath));
+                string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.DartsModeAssetsFilepath);
+                CustomDartsAssetsOption.Header = $"Custom Darts Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
+            }     
         }
     }
 

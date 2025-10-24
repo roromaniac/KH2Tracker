@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace KhTracker
 {
@@ -36,6 +38,8 @@ namespace KhTracker
         public int throneRoomBonusEarly { get; set; } = 0;
         public double bcDoubleFightMultiplier { get; set; } = 0.0;
         public double lordsArenaMultiplier { get; set; } = 0.0;
+        public int maxFormObjectivesPerForm { get; set; } = 1;
+        public int dataAndASCanBeObjectives { get; set; } = 0;
     }
 
     public partial class ObjectivesWindow : Window, IColorableWindow
@@ -53,7 +57,7 @@ namespace KhTracker
         public int numRows;
         public int numColumns;
         public ColorPickerWindow colorPickerWindow;
-        private int objectivesNeed = 0;
+        public int objectivesNeed = 0;
         public int oneHourPoints = 0;
         public bool endCorChest = false;
 
@@ -354,7 +358,9 @@ namespace KhTracker
             throneRoomBonus = 30,
             throneRoomBonusEarly = 15,
             bcDoubleFightMultiplier = 1.5,
-            lordsArenaMultiplier = 1.5
+            lordsArenaMultiplier = 1.5,
+            maxFormObjectivesPerForm = 2,
+            dataAndASCanBeObjectives = 0,
         };
 
         //darts objectives and settings
@@ -473,6 +479,8 @@ namespace KhTracker
             objectiveCount = 25,
             gridHeight = 5,
             gridWidth = 5,
+            maxFormObjectivesPerForm = 2,
+            dataAndASCanBeObjectives = 0,
         };
 
         //overrides for custom game modes
@@ -482,7 +490,6 @@ namespace KhTracker
         public Dictionary<string, int> oneHourObjGridSettings = new Dictionary<string, int>();
         public Dictionary<string, int> dartsOverrideAssets = new Dictionary<string, int>();
         public Dictionary<string, int> dartsObjGridSettings = new Dictionary<string, int>();
-
 
         public ObjectivesWindow(Data dataIn)
         {
@@ -636,101 +643,102 @@ namespace KhTracker
 
         public CustomObjectiveSettings GetCustomGameModeAssets()
         {
+            string gameMode;
             if (data.oneHourMode)
             {
-                string oneHourAssetPath = Properties.Settings.Default.OneHourModeAssetsFilepath;
-                string directoryPath = Path.GetDirectoryName(oneHourAssetPath);
-                if (!Directory.Exists(directoryPath))
+                CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(
+                    JsonSerializer.Serialize(oneHourAssets)
+                );
+                if (Properties.Settings.Default.Custom1HRAssets)
                 {
-                    Directory.CreateDirectory(directoryPath);
-                }
-                if (!File.Exists(oneHourAssetPath))
-                {
-                    // Display an alert box with the error message
-                    System.Windows.MessageBox.Show(
-                        $"WARNING: Your one hour asset file is no longer existent. Reverting to default one hour assets.",
-                        "Warning",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    string jsonString = JsonSerializer.Serialize(oneHourAssets, new JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText(oneHourAssetPath, jsonString);
-                }
-
-                string oneHourAssetPathContents = File.ReadAllText(oneHourAssetPath);
-                try
-                {
-                    string json = File.ReadAllText(Properties.Settings.Default.OneHourModeAssetsFilepath);
-                    var options = new JsonSerializerOptions
+                    string oneHourAssetPath = Properties.Settings.Default.OneHourModeAssetsFilepath;
+                    string directoryPath = Path.GetDirectoryName(oneHourAssetPath);
+                    if (!Directory.Exists(directoryPath) || !File.Exists(oneHourAssetPath))
                     {
-                        PropertyNameCaseInsensitive = true
-                    };
+                        // Display an alert box with the error message
+                        System.Windows.MessageBox.Show(
+                            $"WARNING: Your one hour asset file is no longer existent. Reverting to default one hour assets.",
+                            "Warning",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        window.Custom1HRAssetsToggle(false);
+                    }
+                    else
+                    {
+                        string oneHourAssetPathContents = File.ReadAllText(oneHourAssetPath);
+                        try
+                        {
+                            string json = File.ReadAllText(Properties.Settings.Default.OneHourModeAssetsFilepath);
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };
 
-                    CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
-
-                    return customObjectiveSettings;
+                            customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
+                        }
+                        catch (JsonException ex)
+                        {
+                            // Display an alert box with the error message
+                            System.Windows.MessageBox.Show(
+                                $"ERROR: One hour JSON deserialization failed. Please ensure the one hour mode assets file is valid JSON. Reverting to base one hour assets.",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error
+                            );
+                            window.Custom1HRAssetsToggle(false);
+                        }
+                    }
                 }
-                catch (JsonException ex)
-                {
-                    // Display an alert box with the error message
-                    System.Windows.MessageBox.Show(
-                        $"ERROR: One hour JSON deserialization failed. Please ensure the one hour mode assets file is valid JSON.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-
-                    // Halt execution by throwing an exception or returning
-                    throw new InvalidOperationException($"Failed to deserialize JSON: {ex.Message}");
-                }
+                return customObjectiveSettings;
             }
             else if (data.dartsMode)
             {
-                string dartsAssetPath = Properties.Settings.Default.DartsModeAssetsFilepath;
-                string directoryPath = Path.GetDirectoryName(dartsAssetPath);
-                if (!Directory.Exists(directoryPath))
+                CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(
+                    JsonSerializer.Serialize(dartsAssets)
+                );
+                if (Properties.Settings.Default.CustomDartsAssets)
                 {
-                    Directory.CreateDirectory(directoryPath);
-                }
-                if (!File.Exists(dartsAssetPath))
-                {
-                    // Display an alert box with the error message
-                    System.Windows.MessageBox.Show(
-                        $"WARNING: Your darts asset file is no longer existent. Reverting to default darts assets.",
-                        "Warning",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
-                    string jsonString = JsonSerializer.Serialize(dartsAssets, new JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText(dartsAssetPath, jsonString);
-                }
-
-                string dartsAssetPathContents = File.ReadAllText(dartsAssetPath);
-                try
-                {
-                    string json = File.ReadAllText(Properties.Settings.Default.DartsModeAssetsFilepath);
-                    var options = new JsonSerializerOptions
+                    string dartsAssetPath = Properties.Settings.Default.DartsModeAssetsFilepath;
+                    string directoryPath = Path.GetDirectoryName(dartsAssetPath);
+                    if (!Directory.Exists(directoryPath) || !File.Exists(dartsAssetPath))
                     {
-                        PropertyNameCaseInsensitive = true
-                    };
+                        // Display an alert box with the error message
+                        System.Windows.MessageBox.Show(
+                            $"WARNING: Your darts asset file is no longer existent. Reverting to default darts assets.",
+                            "Warning",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Warning
+                        );
+                        window.CustomDartsAssetsToggle(false);
+                    }
+                    else
+                    {
+                        string dartsAssetPathContents = File.ReadAllText(dartsAssetPath);
+                        try
+                        {
+                            string json = File.ReadAllText(Properties.Settings.Default.DartsModeAssetsFilepath);
+                            var options = new JsonSerializerOptions
+                            {
+                                PropertyNameCaseInsensitive = true
+                            };
 
-                    CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
-
-                    return customObjectiveSettings;
+                            customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
+                        }
+                        catch (JsonException ex)
+                        {
+                            // Display an alert box with the error message
+                            System.Windows.MessageBox.Show(
+                                $"ERROR: Darts JSON deserialization failed. Please ensure the darts mode assets file is valid JSON. Reverting to base darts assets.",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error
+                            );
+                            window.CustomDartsAssetsToggle(false);
+                        }
+                    }
                 }
-                catch (JsonException ex)
-                {
-                    // Display an alert box with the error message
-                    System.Windows.MessageBox.Show(
-                        $"ERROR: Darts JSON deserialization failed. Please ensure the darts mode assets file is valid JSON.",
-                        "Error",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
-                    );
-
-                    // Halt execution by throwing an exception or returning
-                    throw new InvalidOperationException($"Failed to deserialize JSON: {ex.Message}");
-                }
+                return customObjectiveSettings;
             }
             else
             {
@@ -759,6 +767,8 @@ namespace KhTracker
                 dartsObjGridSettings.Add("gridHeight", Int32.Parse(overrideObject.gridHeight.ToString()));
                 dartsObjGridSettings.Add("gridWidth", Int32.Parse(overrideObject.gridWidth.ToString()));
                 dartsObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
+                dartsObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
+                dartsObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
 
             }
             else if (data.oneHourMode)
@@ -792,6 +802,8 @@ namespace KhTracker
                 oneHourObjGridSettings.Add("gridHeight", Int32.Parse(overrideObject.gridHeight.ToString()));
                 oneHourObjGridSettings.Add("gridWidth", Int32.Parse(overrideObject.gridWidth.ToString()));
                 oneHourObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
+                oneHourObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
+                oneHourObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
 
                 //if(overrideObject.ContainsKey("bossHintingHome"))
                 //{
@@ -807,132 +819,110 @@ namespace KhTracker
             else if (data.oneHourMode)
                 assets = oneHourOverrideAssets.Keys.ToList();
 
+            string style = ObjTelevoIconsOption.IsChecked ? "CGM_Min-" : "CGM_Old-";
+
+            // only populate custom assets if they are valid
+            // if they are invalid, revert to default settings
+            bool invalidAssetFound = false;
+            foreach (var asset in assets)
+            {
+                try
+                {
+                    Grid squareContent = (Grid)FindResource(style + asset);
+                }
+                catch (ResourceReferenceKeyNotFoundException ex)
+                {
+                    string gameMode = data.oneHourMode ? "one hour" : "darts";
+                    System.Windows.MessageBox.Show(
+                        $"WARNING: You have asset errors in your custom {gameMode} asset setup. Please correct them before loading a custom asset file. Reverting to default {gameMode} assets.",
+                        "Warning",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning
+                    );
+                    if (data.oneHourMode)
+                    {
+                        window.Custom1HRAssetsToggle(false);
+                    }
+                    else if (data.dartsMode)
+                    {
+                        window.CustomDartsAssetsToggle(false);
+                    }
+
+                    invalidAssetFound = true;
+                    break;
+                }
+            }
+
+            if (invalidAssetFound)
+            {
+                GenerateCustomObjGrid();
+                return;
+            }
+
             #region Random Coices
 
-            //decide which of the CO org members fights to keep (AS vs Data)
-            if (rng.Next(2) == 0)
+            int allowDataAndAS =
+                (data.dartsMode && dartsObjGridSettings.TryGetValue("dataAndASCanBeObjectives", out int d) && d == 0) ||
+                (data.oneHourMode && oneHourObjGridSettings.TryGetValue("dataAndASCanBeObjectives", out int o) && o == 0)
+                ? 0 : 1;
+
+            if (allowDataAndAS == 0)
             {
-                assets.Remove("Zexion");
-            }
-            else
-            {
-                assets.Remove("ZexionData");
-            }
-            if (rng.Next(2) == 0)
-            {
-                assets.Remove("Marluxia");
-            }
-            else
-            {
-                assets.Remove("MarluxiaData");
-            }
-            if (rng.Next(2) == 0)
-            {
-                assets.Remove("Lexaeus");
-            }
-            else
-            {
-                assets.Remove("LexaeusData");
-            }
-            if (rng.Next(2) == 0)
-            {
-                assets.Remove("Vexen");
-            }
-            else
-            {
-                assets.Remove("VexenData");
-            }
-            if (rng.Next(2) == 0)
-            {
-                assets.Remove("Larxene");
-            }
-            else
-            {
-                assets.Remove("LarxeneData");
-            }
-            //for each form, remove two of the 3 objectives
-            int valor = rng.Next(3);
-            int wisdom = rng.Next(3);
-            int limit = rng.Next(3);
-            int master = rng.Next(3);
-            int final = rng.Next(3);
-            if (valor == 0)
-            {
-                assets.Remove("Valor5");
-                assets.Remove("Valor7");
-            }
-            else if (valor == 1)
-            {
-                assets.Remove("Valor3");
-                assets.Remove("Valor7");
-            }
-            else
-            {
-                assets.Remove("Valor3");
-                assets.Remove("Valor5");
-            }
-            if (wisdom == 0)
-            {
-                assets.Remove("Wisdom5");
-                assets.Remove("Wisdom7");
-            }
-            else if (wisdom == 1)
-            {
-                assets.Remove("Wisdom3");
-                assets.Remove("Wisdom7");
-            }
-            else
-            {
-                assets.Remove("Wisdom3");
-                assets.Remove("Wisdom5");
-            }
-            if (limit == 0)
-            {
-                assets.Remove("Limit5");
-                assets.Remove("Limit7");
-            }
-            else if (limit == 1)
-            {
-                assets.Remove("Limit3");
-                assets.Remove("Limit7");
-            }
-            else
-            {
-                assets.Remove("Limit3");
-                assets.Remove("Limit5");
-            }
-            if (master == 0)
-            {
-                assets.Remove("Master5");
-                assets.Remove("Master7");
-            }
-            else if (master == 1)
-            {
-                assets.Remove("Master3");
-                assets.Remove("Master7");
-            }
-            else
-            {
-                assets.Remove("Master3");
-                assets.Remove("Master5");
-            }
-            if (final == 0)
-            {
-                assets.Remove("Final5");
-                assets.Remove("Final7");
-            }
-            else if (final == 1)
-            {
-                assets.Remove("Final3");
-                assets.Remove("Final7");
-            }
-            else
-            {
-                assets.Remove("Final3");
-                assets.Remove("Final5");
+                string[] members = { "Zexion", "Marluxia", "Lexaeus", "Vexen", "Larxene" };
+                foreach (var member in members)
+                {
+                    string toRemove = rng.Next(2) == 0 ? member : member + "Data";
+                    assets.Remove(toRemove);
+                }
             }
 
+
+            //for each form, only keep maxFormObjectivesPerForm form objectives
+            var formObjectivesMap = new Dictionary<string, List<string>>()
+            {
+                { "Valor", new List<string>() },
+                { "Wisdom", new List<string>() },
+                { "Limit", new List<string>() },
+                { "Master", new List<string>() },
+                { "Final", new List<string>() }
+            };
+
+            foreach (var asset in assets)
+            {
+                foreach (var form in formObjectivesMap.Keys)
+                {
+                    if (asset.StartsWith(form))
+                    {
+                        formObjectivesMap[form].Add(asset);
+                        break; // only matches one form prefix
+                    }
+                }
+            }
+            foreach (var form in new[] { "Valor", "Wisdom", "Limit", "Master", "Final"})
+            {
+                int maxFormObjectivesAllowed = data.oneHourMode
+                    ? oneHourObjGridSettings["maxFormObjectivesPerForm"]
+                    : (data.dartsMode ? 
+                    dartsObjGridSettings["maxFormObjectivesPerForm"]
+                    : int.MaxValue);
+
+                var formObjectives = formObjectivesMap[form];
+                int formObjectivesToRemove = Math.Max(0, formObjectives.Count - maxFormObjectivesAllowed);
+
+                if (formObjectivesToRemove > 0)
+                {
+                    var shuffledFormObjectives = formObjectives.OrderBy(x => rng.Next()).ToList();
+                    for (int i = 0; i < formObjectivesToRemove; i++)
+                    {
+                        assets.Remove(shuffledFormObjectives[i]);
+                    }
+                }
+            }
+            
             #endregion
+
+            //fix icon prefix for assets
+            getAssetPrefixCustomGameMode();
 
             // number of objectives to use (7 is defaut)
             if (data.dartsMode)
@@ -940,51 +930,17 @@ namespace KhTracker
             else if (data.oneHourMode)
                 assets = assets.OrderBy(x => rng.Next()).Take(oneHourObjGridSettings["objectiveCount"]).ToList();
 
-            //fix icon prefix for assets
-            getAssetPrefixOneHour();
-
             //get grid size
-            if (data.dartsMode)
-            {
-                numRows = dartsObjGridSettings["gridHeight"];
-                numColumns = dartsObjGridSettings["gridWidth"];
+            int objectiveCount = data.dartsMode ? dartsObjGridSettings["objectiveCount"] 
+                : (data.oneHourMode ? oneHourObjGridSettings["objectiveCount"] : 0);
 
-                //if these values are not set up properly for number of objectives then default to 
-                //looking for grid size in size lookup table
-                if (numRows * numColumns >= dartsObjGridSettings["objectiveCount"])
-                {
-                    int objectiveCount = assets.Count;
-                    int blankSquares = 0;
-                    while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
-                    {
-                        blankSquares++;
-                    }
-                    numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
-                    numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
-                }
-            }
-            else if (data.oneHourMode)
-            {
-                numRows = oneHourObjGridSettings["gridHeight"];
-                numColumns = oneHourObjGridSettings["gridWidth"];
+            numRows = dartsObjGridSettings["gridHeight"];
+            numColumns = dartsObjGridSettings["gridWidth"];
 
-                //if these values are not set up properly for number of objectives then default to 
-                //looking for grid size in size lookup table
-                if (numRows * numColumns >= oneHourObjGridSettings["objectiveCount"])
-                {
-                    int objectiveCount = assets.Count;
-                    int blankSquares = 0;
-                    while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
-                    {
-                        blankSquares++;
-                    }
-                    numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
-                    numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
-                }
-            }
-            else
+            //if these values are not set up properly for number of objectives then default to 
+            //looking for grid size in size lookup table
+            if (numRows * numColumns >= dartsObjGridSettings["objectiveCount"])
             {
-                int objectiveCount = assets.Count;
                 int blankSquares = 0;
                 while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
                 {
@@ -992,6 +948,16 @@ namespace KhTracker
                 }
                 numRows = objSizeLookup[objectiveCount + blankSquares].Item1;
                 numColumns = objSizeLookup[objectiveCount + blankSquares].Item2;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show(
+                    $"WARNING: Your number of rows and columns cannot fully contain the number of objectives. Reducing objective count to fit the grid size.",
+                    "Warning",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Warning
+                );
+                assets = assets.Take(numRows * numColumns).ToList();
             }
 
             objGrid = new Grid();
@@ -1388,15 +1354,15 @@ namespace KhTracker
             }
         }
 
-        private void getAssetPrefixOneHour()
+        private void getAssetPrefixCustomGameMode()
         {
-            string style = ObjTelevoIconsOption.IsChecked ? "1HR_Min-" : "1HR_Old-";
+            string style = ObjTelevoIconsOption.IsChecked ? "CGM_Min-" : "CGM_Old-";
 
             for (int i = 0; i < assets.Count; i++)
             {
-                //if (ObjCustomIconsOption.IsChecked && MainWindow.CusObjImagesList.Contains("1HR_Cus-" + assets[i]))
+                //if (ObjCustomIconsOption.IsChecked && MainWindow.CusObjImagesList.Contains("CGM_Cus-" + assets[i]))
                 //{
-                //    assets[i] = "1HR_Cus-" + assets[i];
+                //    assets[i] = "CGM_Cus-" + assets[i];
                 //    continue;
                 //}
 
@@ -1404,30 +1370,30 @@ namespace KhTracker
             }
         }
 
-        private void updateAssetPrefixOneHour(bool usedCustomToggle = false)
+        private void updateAssetPrefixCustomGameMode(bool usedCustomToggle = false)
         {
             bool useCustom = ObjCustomIconsOption.IsChecked;
 
-            string prefix1 = "1HR_Old-";
-            string prefix2 = "1HR_Min-";
+            string prefix1 = "CGM_Old-";
+            string prefix2 = "CGM_Min-";
             if (ObjSonicIconsOption.IsChecked)
             {
-                prefix1 = "1HR_Min-";
-                prefix2 = "1HR_Old-";
+                prefix1 = "CGM_Min-";
+                prefix2 = "CGM_Old-";
             }
 
             for (int i = 0; i < assets.Count; i++)
             {
                 ////if already a custom prefix then skip
-                //if (useCustom && assets[i].StartsWith("1HR_Cus-"))
+                //if (useCustom && assets[i].StartsWith("CGM_Cus-"))
                 //    continue;
                 //
                 ////if custom toggle on then check for and replace normal prefix with custom one
                 //if (useCustom)
                 //{
-                //    string cusCheck = assets[i].Replace(prefix1, "1HR_Cus-");
+                //    string cusCheck = assets[i].Replace(prefix1, "CGM_Cus-");
                 //    if (usedCustomToggle)
-                //        cusCheck = assets[i].Replace(prefix2, "1HR_Cus-");
+                //        cusCheck = assets[i].Replace(prefix2, "CGM_Cus-");
                 //    if (MainWindow.CusObjImagesList.Contains(cusCheck))
                 //    {
                 //        assets[i] = cusCheck;
@@ -1436,22 +1402,22 @@ namespace KhTracker
                 //}
                 //
                 ////if custom toggle is off check if prefix was custom and fix it else replace as normal
-                //if (assets[i].StartsWith("1HR_Cus-"))
-                //    assets[i] = assets[i].Replace("1HR_Cus-", prefix2);
+                //if (assets[i].StartsWith("CGM_Cus-"))
+                //    assets[i] = assets[i].Replace("CGM_Cus-", prefix2);
                 //else
                 //assets[i] = assets[i].Replace(prefix1, prefix2);
             }
-            Change_IconsOneHour();
+            Change_IconsCustomGameMode();
         }
 
-        private void Change_IconsOneHour()
+        private void Change_IconsCustomGameMode()
         {
             if (objGrid == null)
                 return;
 
-            string prefix = "1HR_Min-";
+            string prefix = "CGM_Min-";
             if (ObjSonicIconsOption.IsChecked)
-                prefix = "1HR_Old-";
+                prefix = "CGM_Old-";
 
             foreach (var child in objGrid.Children)
             {
@@ -1474,9 +1440,9 @@ namespace KhTracker
                     }
 
                     //check 
-                    //if (ObjCustomIconsOption.IsChecked && assets.Contains("1HR_Cus-" + squareTag))
+                    //if (ObjCustomIconsOption.IsChecked && assets.Contains("CGM_Cus-" + squareTag))
                     //{
-                    //    square.SetResourceReference(ContentProperty, "1HR_Cus-" + squareTag);
+                    //    square.SetResourceReference(ContentProperty, "CGM_Cus-" + squareTag);
                     //    continue;
                     //}
                     //
@@ -1496,8 +1462,8 @@ namespace KhTracker
             ObjTelevoIconsOption.IsChecked = toggle;
             ObjSonicIconsOption.IsChecked = !toggle;
 
-            if (data.oneHourMode)
-                updateAssetPrefixOneHour();
+            if (data.oneHourMode || data.dartsMode)
+                updateAssetPrefixCustomGameMode();
             else
                 updateAssetPrefix();
         }
@@ -1512,8 +1478,8 @@ namespace KhTracker
             ObjSonicIconsOption.IsChecked = toggle;
             ObjTelevoIconsOption.IsChecked = !toggle;
 
-            if (data.oneHourMode)
-                updateAssetPrefixOneHour();
+            if (data.oneHourMode || data.dartsMode)
+                updateAssetPrefixCustomGameMode();
             else
                 updateAssetPrefix();
         }
@@ -1528,7 +1494,7 @@ namespace KhTracker
             Properties.Settings.Default.ObjectiveCustom = toggle;
 
             if (data.oneHourMode)
-                updateAssetPrefixOneHour(true);
+                updateAssetPrefixCustomGameMode(true);
             else
                 updateAssetPrefix(true);
         }
