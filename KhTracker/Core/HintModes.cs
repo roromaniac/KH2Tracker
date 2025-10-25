@@ -742,7 +742,7 @@ namespace KhTracker
             
             if (data.oneHourMode || data.dartsMode)
             {
-                num += objWindow.oneHourPoints;
+                num += objWindow.cgmPoints;
                 ScoreValue.Text = num.ToString();
                 return;
             }
@@ -848,7 +848,7 @@ namespace KhTracker
             }
 
             if (data.oneHourMode)
-                num += objWindow.oneHourPoints;
+                num += objWindow.cgmPoints;
 
             ScoreValue.Text = num.ToString();
         }

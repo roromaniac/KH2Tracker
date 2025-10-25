@@ -58,7 +58,7 @@ namespace KhTracker
         public int numColumns;
         public ColorPickerWindow colorPickerWindow;
         public int objectivesNeed = 0;
-        public int oneHourPoints = 0;
+        public int cgmPoints = 0;
         public bool endCorChest = false;
 
         //lookup table for what size the grid should be for certain objective counts
@@ -1290,7 +1290,7 @@ namespace KhTracker
                     }
                 }
 
-                oneHourPoints = testPoints;
+                cgmPoints = testPoints;
                 window.UpdatePointScore(0);
                 Console.WriteLine("writing marks to game | " + marksTotal);
                 //window.SetOneHourMarks(marksTotal);

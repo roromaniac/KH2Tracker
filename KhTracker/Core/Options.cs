@@ -2170,7 +2170,7 @@ namespace KhTracker
             //objective widow stuff
             data.objectiveMode = false;
             data.oneHourMode = false;
-            objWindow.oneHourPoints = 0;
+            objWindow.cgmPoints = 0;
             data.earlyThroneRoom = 0;
             objWindow.endCorChest = false;
             objWindow.objectivesNeed = 0;
