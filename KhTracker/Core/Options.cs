@@ -240,6 +240,35 @@ namespace KhTracker
                 InitTracker();
             }
         }
+        private void ApplySettingsFromList(List<string> settings, List<string> hintableItems)
+        {
+            // Apply settings from the list
+        }
+
+        private void ApplyProgressionSettings(Dictionary<string, List<int>> progressionSettings)
+        {
+            // Apply progression settings
+        }
+
+        private void ApplyHintObject(Dictionary<string, object> hintObject)
+        {
+            // Apply hint object
+        }
+
+        private void ApplyBossRandomization(string bossText)
+        {
+            // Apply boss randomization
+        }
+
+        private void ApplySeedHash(string[] hash)
+        {
+            // Apply seed hash
+        }
+
+        private void SetupObjectiveGrid(Dictionary<string, object> hintObject)
+        {
+            // Setup objective grid
+        }
 
         private void LoadNormal(Dictionary<string, object> Savefile)
         {
@@ -878,6 +907,7 @@ namespace KhTracker
                         default:
                             break;
                     }
+                    data.hintsLoaded = true;
                 }
             }
 
@@ -2047,15 +2077,24 @@ namespace KhTracker
                 pcFilesLoaded = false;
             }
 
+            if (autosaveTimer != null)
+            {
+                autosaveTimer.Stop();
+                autosaveTimer = null;
+            }
+
             if (sender != null && !AutoConnectOption.IsChecked)
                 data.wasTracking = false;
 
-            //chnage visuals based on if autotracking was done before
+            //change visuals based on if autotracking was done before
             if (data.wasTracking)
             {
                 //connection trying visual
-                Connect.Visibility = Visibility.Visible;
-                Connect2.Visibility = Visibility.Collapsed;
+                if (!AutoLoadHintsOption.IsChecked)
+                {
+                    Connect.Visibility = Visibility.Visible;
+                    Connect2.Visibility = Visibility.Collapsed;
+                }
             }
             else
             {
@@ -2814,7 +2853,6 @@ namespace KhTracker
             SoraLevel01Option.IsEnabled = clickable;
             SoraLevel50Option.IsEnabled = clickable;
             SoraLevel99Option.IsEnabled = clickable;
-
             WorldToggleMenuItem.IsEnabled = clickable;
         }
 
@@ -3320,7 +3358,11 @@ namespace KhTracker
 
             //if exactly 1 hint file is found, we're good to load it
             if (hintFiles.Length == 1)
+            {
+                data.fromAutoLoadHints = true;
                 OpenKHSeed(System.IO.Directory.GetParent(hintFiles[0]).ToString(), true);
+            }
+
             //if more than 1 hint file is found, don't load anything
             else if (hintFiles.Length > 1)
                 MessageBox.Show("Multiple hint files detected. Aborting Auto-Loading Hints.\nManually load your seed and/or re-check your Mod Manager.");

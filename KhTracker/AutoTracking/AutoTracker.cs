@@ -231,8 +231,12 @@ namespace KhTracker
         private void InitTracker()
         {
             //connection trying visual
-            Connect.Visibility = Visibility.Visible;
-            Connect2.Visibility = Visibility.Collapsed;
+            if (!data.fromAutoLoadHints)
+            {
+                Connect.Visibility = Visibility.Visible;
+                Connect2.Visibility = Visibility.Collapsed;
+            }
+            data.fromAutoLoadHints = false;
 
             //check timer already running!
             if (checkTimer != null && checkTimer.IsEnabled)
@@ -643,10 +647,6 @@ namespace KhTracker
 
         private void FinishSetup(bool PCSX2, Int32 Now, Int32 Save, Int32 Sys3, Int32 Bt10, Int32 BtlEnd, Int32 Slot1, Int32 NextSlot)
         {
-            //Done here cause Valor and Final get detected otherwise
-            //only run if true
-            if (AutoLoadHintsOption.IsChecked)
-                AutoLoadHints();
 
             #region Add ICs
             importantChecks = new List<ImportantCheck>
@@ -806,6 +806,10 @@ namespace KhTracker
             SetBindings();
             SetTimer();
             SetTimerStuff();
+
+            //Done in FinishSetup cause Valor and Final get detected otherwise
+            if (AutoLoadHintsOption.IsChecked)
+                AutoLoadHints();
         }
 
         ///
@@ -826,7 +830,18 @@ namespace KhTracker
             autosaveTimer?.Stop();
             autosaveTimer = new DispatcherTimer();
             autosaveTimer.Tick += AutoSave;
-            autosaveTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+
+            //create an txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+                {
+                    Byte[] content = new UTF8Encoding(true).GetBytes("1");
+                    fs.Write(content, 0, content.Length);
+                }
+            }
+            int inSeconds = int.Parse(File.ReadAllText("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"));
+            autosaveTimer.Interval = new TimeSpan(0, 0, 0, inSeconds);
             autosaveTimer.Start();
         }
         private void OnTimedEvent(object sender, EventArgs e)
@@ -1818,7 +1833,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default: //if not in any of the above rooms then just leave
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -1828,6 +1846,8 @@ namespace KhTracker
                         case 9:
                             if (wID3 == 117 && curProg == 0) // Roxas' Room (Day 1)
                                 newProg = 1;
+                            if (wID3 == 118) // Sonic's Cutscene Skipper: Station Nobodies
+                                newProg = 2;
                             break;
                         case 8:
                             if (wID3 == 108 && wCom == 1) // Station Nobodies
@@ -1854,7 +1874,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -1992,7 +2015,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2037,7 +2063,10 @@ namespace KhTracker
                                 newProg = 7;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2122,7 +2151,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2172,7 +2204,10 @@ namespace KhTracker
                             //}
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2270,7 +2305,10 @@ namespace KhTracker
                                 newProg = 8;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2302,7 +2340,10 @@ namespace KhTracker
                                 newProg = 6;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2313,6 +2354,10 @@ namespace KhTracker
                         case 16:
                             if ((wID3 == 1 || wID3 == 10) && curProg == 0) // Wildebeest Valley (PL1)
                                 newProg = 1;
+                            break;
+                        case 9:
+                            if (wID3 == 4) // Sonic's Cutscene Skipper: Oasis after talking to Simba
+                                newProg = 2;
                             break;
                         case 12:
                             if (wID3 == 1) // Oasis after talking to Simba
@@ -2335,7 +2380,10 @@ namespace KhTracker
                                 newProg = 6;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2347,7 +2395,11 @@ namespace KhTracker
                                 newProg = 1;
                             break;
                         case 7:
-                            if (wID3 == 4) // Ursula's Revenge (
+                            if (wID3 == 4) // Ursula's Revenge 
+                                newProg = 2;
+                            break;
+                        case 9:
+                            if (wID3 == 65) // Sonic's Cutscene Skipper: Ursula's Revenge 
                                 newProg = 2;
                             break;
                         case 4:
@@ -2359,7 +2411,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2379,6 +2434,10 @@ namespace KhTracker
                                 newProg = 1;
                             else if (wID1 == 58 && wCom == 1) // Old Pete finish
                                 newProg = 3;
+                            break;
+                        case 8:
+                            if (wID3 == 4) // Sonic's Cutscene Skipper: Windows popup (Audience Chamber has no Evt 0x06)
+                                newProg = 4;
                             break;
                         case 2:
                             if (wID1 == 52 && wCom == 1) // Boat Pete finish
@@ -2473,7 +2532,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2527,7 +2589,10 @@ namespace KhTracker
                                 newProg = 9;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2577,7 +2642,10 @@ namespace KhTracker
                                 newProg = 9;
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2618,7 +2686,10 @@ namespace KhTracker
                             //}
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2714,7 +2785,10 @@ namespace KhTracker
                             }
                             break;
                         default:
-                            updateProgression = false;
+                            if (curProg == 0)
+                                newProg = 1;
+                            else
+                                updateProgression = false;
                             break;
                     }
                     break;
@@ -2729,6 +2803,14 @@ namespace KhTracker
                     return;
                 default: //return if any other world
                     return;
+            }
+
+            // update shotgun icons when cutscene skipper is being used
+            if (curProg == 0)
+            {
+                newProg = 1;
+                data.WorldsData[wName].progress = newProg;
+                data.WorldsData[wName].progression.ToolTip = data.ProgressKeys[wName + "Desc"][newProg];
             }
 
             // mark progression icon on grid tracker if it exists

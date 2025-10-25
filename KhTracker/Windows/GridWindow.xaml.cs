@@ -2,7 +2,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,7 +20,6 @@ using System.IO;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Diagnostics.Eventing.Reader;
 using System.Data.Common;
-using System.Windows.Input;
 
 namespace KhTracker
 {
@@ -24,6 +31,20 @@ namespace KhTracker
     public interface IColorableWindow
     {
         void HandleClosing(ColorPickerWindow sender);
+    }
+
+    public static class DeepCopyHelper
+    {
+        public static T DeepCopy<T>(T obj)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                IFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(memoryStream, obj);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(memoryStream);
+            }
+        }
     }
 
     public partial class GridWindow : Window, IColorableWindow
@@ -373,6 +394,18 @@ namespace KhTracker
                 seedName = inputDialog.InputText;
             }
             GenerateGrid(numRows, numColumns, seedName);
+        }
+
+        public static int GetDeterministicHashCode(string input)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                // Compute the hash as a byte array
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                // Convert the first 4 bytes of the hash to an integer
+                return BitConverter.ToInt32(hashBytes, 0);
+            }
         }
 
         private void Grid_Options(object sender, RoutedEventArgs e)
@@ -739,29 +772,6 @@ namespace KhTracker
             Console.WriteLine(buttonState);
             Console.WriteLine(button.IsChecked ?? true);
 
-            if (buttonState == 1)
-            {
-                button.IsChecked = true;
-                annotationStatus[i, j] = false;
-                Button_RightClick(sender, e, i, j);
-                Button_Click(sender, e, i, j);
-            }
-            else if (buttonState == -1)
-            {
-                button.IsChecked = false;
-                annotationStatus[i, j] = true;
-                Button_Click(sender, e, i, j);
-                Button_RightClick(sender, e, i, j);
-            }
-            else
-            {
-                button.IsChecked = false;
-                annotationStatus[i, j] = false;
-                Button_RightClick(sender, e, i, j);
-                Button_Click(sender, e, i, j);
-            }
-        }
-
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
@@ -827,7 +837,7 @@ namespace KhTracker
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
                 string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
-                seed = settingsString.GetHashCode();
+                int seed = GetDeterministicHashCode(settingsString);
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
@@ -835,7 +845,7 @@ namespace KhTracker
             {
                 if (seedName == null)
                     seedName = RandomSeedName(8);
-                seed = seedName.GetHashCode();
+                seed = GetDeterministicHashCode(seedName);
             }
             Seedname.Header = "Seed: " + seedName;
             Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
@@ -1365,6 +1375,7 @@ namespace KhTracker
 
         public void bunterCheck(List<Dictionary<string, object>> bosses)
         {
+            Dictionary<string, bool> originalGridSettings = DeepCopyHelper.DeepCopy(gridSettings);
             string properHadesReplacement = "";
             //don't bother performing the check if bosses is null
             if (bosses == null)
@@ -1426,8 +1437,8 @@ namespace KhTracker
                         bool dataAxelKeyExists = data.BossList.ContainsKey(bossOrig.Replace("II", "(Data)"));
                         bool axelTwoReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig]);
                         bool dataAxelReplacementKeyExists = data.codes.bossNameConversion.ContainsKey(data.BossList[bossOrig.Replace("II", "(Data)")]);
-                        bool valueBossesEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
-                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesEqual)
+                        bool valueBossesNotEqual = (data.codes.bossNameConversion[data.BossList[bossOrig]] != data.codes.bossNameConversion[data.BossList[bossOrig.Replace("II", "(Data)")]]);
+                        if (axelTwoKeyExists && dataAxelKeyExists && axelTwoReplacementKeyExists && dataAxelReplacementKeyExists && valueBossesNotEqual)
                         {
                             if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossRepl]))
                                 gridSettings[data.codes.bossNameConversion[bossRepl]] = false;
@@ -1455,6 +1466,12 @@ namespace KhTracker
                         }
                     }
                 }
+                //else if (bossOrig == "Seifer (3)")
+                //{
+                //    // checks if "Seifer" is in the values of data.BossList
+                //    var convertedBossName = data.codes.bossNameConversion[bossOrig];
+                //    gridSettings[convertedBossName] = gridSettings[convertedBossName] ? true : data.BossList.ContainsValue(convertedBossName);
+                //}
                 // disable bosses in data arenas
                 else if (bossOrig.Contains("(Data)"))
                 {
@@ -1587,6 +1604,25 @@ namespace KhTracker
                         gridSettings[data.codes.bossNameConversion[removedPeteArena]] = false;
                     else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[removedPeteArena]))
                         gridSettings["Grid" + data.codes.bossNameConversion[removedPeteArena]] = false;
+                }
+            }
+
+            // finally, remove any bosses the user originally did not want to include on the card
+            foreach (var bosspair in bosses)
+            {
+                string bossOrig = bosspair["original"].ToString();
+                // string bossRepl = bosspair["new"].ToString();
+
+                if (data.codes.bossNameConversion.ContainsKey(bossOrig))
+                {
+                    if (gridSettings.ContainsKey(data.codes.bossNameConversion[bossOrig]))
+                        gridSettings[data.codes.bossNameConversion[bossOrig]] =
+                            gridSettings[data.codes.bossNameConversion[bossOrig]] &&
+                            originalGridSettings[data.codes.bossNameConversion[bossOrig]];
+                    else if (gridSettings.ContainsKey("Grid" + data.codes.bossNameConversion[bossOrig]))
+                        gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] =
+                                gridSettings["Grid" + data.codes.bossNameConversion[bossOrig]] &&
+                                originalGridSettings["Grid" + data.codes.bossNameConversion[bossOrig]];
                 }
             }
         }

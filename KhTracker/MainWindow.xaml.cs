@@ -303,8 +303,8 @@ namespace KhTracker
             FormsGrowthToggle(null, null);
 
             //points related
-            GhostItemOption.IsChecked = Properties.Settings.Default.GhostItem;
-            GhostItemToggle(GhostItemOption.IsChecked);
+            //GhostItemOption.IsChecked = Properties.Settings.Default.GhostItem;
+            //GhostItemToggle(GhostItemOption.IsChecked);
 
             GhostMathOption.IsChecked = Properties.Settings.Default.GhostMath;
             GhostMathToggle(null, null);

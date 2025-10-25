@@ -1266,7 +1266,7 @@ namespace KhTracker
         {
             Data data = MainWindow.data;
             //check if we even want to track a ghost item.
-            if (window.GhostItemOption.IsChecked || data.mode == Mode.SpoilerHints)
+            if (data.mode == Mode.SpoilerHints)
             {
                 //check item parent and track only if the parent is the itempool grid
                 if (VisualTreeHelper.GetParent(item) is Grid ItemRow && ItemRow.Parent == window.ItemPool)
@@ -1347,8 +1347,8 @@ namespace KhTracker
         {
             Data data = MainWindow.data;
             //don't bother checking if ghost tracking is off
-            if (window.GhostItemOption.IsChecked == false)
-                return;
+            //if (window.GhostItemOption.IsChecked == false)
+            //    return;
 
             //check if report was tracked before in this session to avoid tracking multiple ghosts for removing and placing the same report back
             if (data.TrackedReports.Contains(report))
