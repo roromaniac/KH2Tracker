@@ -740,7 +740,7 @@ namespace KhTracker
             int num = PointTotal + points; //get new point total
             PointTotal = num; //set new point total
             
-            if (data.oneHourMode)
+            if (data.oneHourMode || data.dartsMode)
             {
                 num += objWindow.oneHourPoints;
                 ScoreValue.Text = num.ToString();

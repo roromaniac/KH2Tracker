@@ -878,47 +878,129 @@ namespace KhTracker
 
 
             //for each form, only keep maxFormObjectivesPerForm form objectives
-            var formObjectivesMap = new Dictionary<string, List<string>>()
-            {
-                { "Valor", new List<string>() },
-                { "Wisdom", new List<string>() },
-                { "Limit", new List<string>() },
-                { "Master", new List<string>() },
-                { "Final", new List<string>() }
-            };
+            //var formObjectivesMap = new Dictionary<string, List<string>>()
+            //{
+            //    { "Valor", new List<string>() },
+            //    { "Wisdom", new List<string>() },
+            //    { "Limit", new List<string>() },
+            //    { "Master", new List<string>() },
+            //    { "Final", new List<string>() }
+            //};
 
-            foreach (var asset in assets)
+            //foreach (var asset in assets)
+            //{
+            //    foreach (var form in formObjectivesMap.Keys)
+            //    {
+            //        if (asset.StartsWith(form))
+            //        {
+            //            formObjectivesMap[form].Add(asset);
+            //            break; // only matches one form prefix
+            //        }
+            //    }
+            //}
+            //foreach (var form in new[] { "Valor", "Wisdom", "Limit", "Master", "Final"})
+            //{
+            //    int maxFormObjectivesAllowed = data.oneHourMode
+            //        ? oneHourObjGridSettings["maxFormObjectivesPerForm"]
+            //        : (data.dartsMode ? 
+            //        dartsObjGridSettings["maxFormObjectivesPerForm"]
+            //        : int.MaxValue);
+
+            //    var formObjectives = formObjectivesMap[form];
+            //    int formObjectivesToRemove = Math.Max(0, formObjectives.Count - maxFormObjectivesAllowed);
+
+            //    if (formObjectivesToRemove > 0)
+            //    {
+            //        var shuffledFormObjectives = formObjectives.OrderBy(x => rng.Next()).ToList();
+            //        for (int i = 0; i < formObjectivesToRemove; i++)
+            //        {
+            //            assets.Remove(shuffledFormObjectives[i]);
+            //        }
+            //    }
+            //}
+
+            //for each form, remove two of the 3 objectives
+            int valor = rng.Next(3);
+            int wisdom = rng.Next(3);
+            int limit = rng.Next(3);
+            int master = rng.Next(3);
+            int final = rng.Next(3);
+            if (valor == 0)
             {
-                foreach (var form in formObjectivesMap.Keys)
-                {
-                    if (asset.StartsWith(form))
-                    {
-                        formObjectivesMap[form].Add(asset);
-                        break; // only matches one form prefix
-                    }
-                }
+                assets.Remove("Valor5");
+                assets.Remove("Valor7");
             }
-            foreach (var form in new[] { "Valor", "Wisdom", "Limit", "Master", "Final"})
+            else if (valor == 1)
             {
-                int maxFormObjectivesAllowed = data.oneHourMode
-                    ? oneHourObjGridSettings["maxFormObjectivesPerForm"]
-                    : (data.dartsMode ? 
-                    dartsObjGridSettings["maxFormObjectivesPerForm"]
-                    : int.MaxValue);
-
-                var formObjectives = formObjectivesMap[form];
-                int formObjectivesToRemove = Math.Max(0, formObjectives.Count - maxFormObjectivesAllowed);
-
-                if (formObjectivesToRemove > 0)
-                {
-                    var shuffledFormObjectives = formObjectives.OrderBy(x => rng.Next()).ToList();
-                    for (int i = 0; i < formObjectivesToRemove; i++)
-                    {
-                        assets.Remove(shuffledFormObjectives[i]);
-                    }
-                }
+                assets.Remove("Valor6");
+                assets.Remove("Valor7");
             }
-            
+            else
+            {
+                assets.Remove("Valor6");
+                assets.Remove("Valor5");
+            }
+            if (wisdom == 0)
+            {
+                assets.Remove("Wisdom5");
+                assets.Remove("Wisdom7");
+            }
+            else if (wisdom == 1)
+            {
+                assets.Remove("Wisdom6");
+                assets.Remove("Wisdom7");
+            }
+            else
+            {
+                assets.Remove("Wisdom6");
+                assets.Remove("Wisdom5");
+            }
+            if (limit == 0)
+            {
+                assets.Remove("Limit5");
+                assets.Remove("Limit7");
+            }
+            else if (limit == 1)
+            {
+                assets.Remove("Limit6");
+                assets.Remove("Limit7");
+            }
+            else
+            {
+                assets.Remove("Limit6");
+                assets.Remove("Limit5");
+            }
+            if (master == 0)
+            {
+                assets.Remove("Master5");
+                assets.Remove("Master7");
+            }
+            else if (master == 1)
+            {
+                assets.Remove("Master6");
+                assets.Remove("Master7");
+            }
+            else
+            {
+                assets.Remove("Master6");
+                assets.Remove("Master5");
+            }
+            if (final == 0)
+            {
+                assets.Remove("Final5");
+                assets.Remove("Final7");
+            }
+            else if (final == 1)
+            {
+                assets.Remove("Final6");
+                assets.Remove("Final7");
+            }
+            else
+            {
+                assets.Remove("Final6");
+                assets.Remove("Final5");
+            }
+
             #endregion
 
             //fix icon prefix for assets
@@ -934,12 +1016,14 @@ namespace KhTracker
             int objectiveCount = data.dartsMode ? dartsObjGridSettings["objectiveCount"] 
                 : (data.oneHourMode ? oneHourObjGridSettings["objectiveCount"] : 0);
 
-            numRows = dartsObjGridSettings["gridHeight"];
-            numColumns = dartsObjGridSettings["gridWidth"];
+            numRows = data.dartsMode ? dartsObjGridSettings["gridHeight"]
+                : (data.oneHourMode ? oneHourObjGridSettings["gridHeight"] : 0);
+            numColumns = data.dartsMode ? dartsObjGridSettings["gridWidth"]
+                : (data.oneHourMode ? oneHourObjGridSettings["gridWidth"] : 0);
 
             //if these values are not set up properly for number of objectives then default to 
             //looking for grid size in size lookup table
-            if (numRows * numColumns >= dartsObjGridSettings["objectiveCount"])
+            if (numRows * numColumns >= objectiveCount)
             {
                 int blankSquares = 0;
                 while (!objSizeLookup.ContainsKey(objectiveCount + blankSquares))
