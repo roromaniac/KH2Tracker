@@ -1986,6 +1986,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("CavernofRemembrance", 2);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("Fight1");
+                                UpdateObjectiveTracker("Fight1");
                                 return;
                             }
                             if (wID3 == 2 && wCom == 1) //second fight
@@ -1997,6 +1998,7 @@ namespace KhTracker
                                     UpdateProgressionPoints("CavernofRemembrance", 4);
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("Fight2");
+                                UpdateObjectiveTracker("Fight2");
                                 return;
                             }
                             break;
@@ -2224,7 +2226,6 @@ namespace KhTracker
                             {
                                 newProg = 2;
 
-                                //no longer should give points
                                 if (data.oneHourMode)
                                 {
                                     if (data.oneHourMode)
@@ -2252,7 +2253,7 @@ namespace KhTracker
                             }
                             if (wID1 == 76 && wCom == 1) // Riku
                             {
-                                if (data.oneHourMode)
+                                if (data.oneHourMode || data.dartsMode)
                                 {
                                     UpdateSupportingTrackers("Riku");
                                     UpdateObjectiveTracker("Riku");
@@ -2280,10 +2281,27 @@ namespace KhTracker
                             {
                                 if (data.earlyThroneRoom == 1)
                                 {
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    data.earlyThroneRoom = 2;
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                                else if (data.earlyThroneRoom == 0)
+                                {
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                    data.earlyThroneRoom = 2;
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                            }
+                            if (data.dartsMode)
+                            {
+                                if (data.earlyThroneRoom == 1)
+                                {
                                     //throne room normally
-                                    if (data.oneHourMode)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
-
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    UpdateObjectiveTracker("Snipers");
+                                    UpdateSupportingTrackers("Snipers");
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
@@ -2291,9 +2309,7 @@ namespace KhTracker
                                 else if (data.earlyThroneRoom == 0)
                                 {
                                     //did early throne room skip
-                                    if (data.oneHourMode)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
-
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
@@ -2772,8 +2788,10 @@ namespace KhTracker
                             if (wID1 == 98 && wCom == 1) // Data Xemnas finish
                             {
                                 newProg = 7;
+                                data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("Final Xemnas (Data)");
                                 UpdateObjectiveTracker("DataXemnas");
+                                return;
                             }
                             else if (wID1 == 74 && wCom == 1) // Regular Final Xemnas finish
                             {
