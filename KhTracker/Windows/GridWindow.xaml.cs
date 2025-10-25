@@ -16,11 +16,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using System.IO;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Diagnostics.Eventing.Reader;
-using System.Data.Common;
-
+using System.Windows.Input;
 namespace KhTracker
 {
     /// <summary>
@@ -771,6 +767,7 @@ namespace KhTracker
             }
             Console.WriteLine(buttonState);
             Console.WriteLine(button.IsChecked ?? true);
+        }
 
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
         {
