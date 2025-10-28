@@ -2299,17 +2299,17 @@ namespace KhTracker
                                 if (data.earlyThroneRoom == 1)
                                 {
                                     //throne room normally
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
-                                    UpdateObjectiveTracker("Snipers");
-                                    UpdateSupportingTrackers("Snipers");
+                                    //UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
+                                    UpdateObjectiveTracker("Snipers");
+                                    UpdateSupportingTrackers("Snipers");
                                     return;
                                 }
                                 else if (data.earlyThroneRoom == 0)
                                 {
                                     //did early throne room skip
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                    //UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
@@ -2790,8 +2790,8 @@ namespace KhTracker
                                 newProg = 7;
                                 data.eventLog.Add(eventTuple);
                                 UpdateSupportingTrackers("Final Xemnas (Data)");
-                                UpdateObjectiveTracker("DataXemnas");
-                                return;
+                                UpdateObjectiveTracker("Final Xemnas (Data)");
+                                // return;
                             }
                             else if (wID1 == 74 && wCom == 1) // Regular Final Xemnas finish
                             {
