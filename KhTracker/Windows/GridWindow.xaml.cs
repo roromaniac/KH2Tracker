@@ -834,7 +834,8 @@ namespace KhTracker
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
                 string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
-                int seed = GetDeterministicHashCode(settingsString);
+                seed = settingsString.GetHashCode();
+                // seed = GetDeterministicHashCode(settingsString);
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }
@@ -842,7 +843,8 @@ namespace KhTracker
             {
                 if (seedName == null)
                     seedName = RandomSeedName(8);
-                seed = GetDeterministicHashCode(seedName);
+                seed = seedName.GetHashCode();
+                // seed = GetDeterministicHashCode(seedName);
             }
             Seedname.Header = "Seed: " + seedName;
             Seedname.Header = (fogOfWar ? "Fog of War ON    " : "    ") + Seedname.Header;
