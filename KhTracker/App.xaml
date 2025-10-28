@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="ProgressionDictionary.xaml" />
                 <ResourceDictionary Source="GridDictionary.xaml" />
                 <ResourceDictionary Source="ObjectiveDictionary.xaml" />
-                <ResourceDictionary Source="OneHourDictionary - Copy.xaml" />
+                <ResourceDictionary Source="OneHourDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
