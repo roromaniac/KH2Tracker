@@ -677,7 +677,7 @@ namespace KhTracker
 
                             customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
                         }
-                        catch (JsonException ex)
+                        catch (JsonException)
                         {
                             // Display an alert box with the error message
                             System.Windows.MessageBox.Show(
@@ -725,7 +725,7 @@ namespace KhTracker
 
                             customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(json, options);
                         }
-                        catch (JsonException ex)
+                        catch (JsonException)
                         {
                             // Display an alert box with the error message
                             System.Windows.MessageBox.Show(
@@ -830,7 +830,7 @@ namespace KhTracker
                 {
                     Grid squareContent = (Grid)FindResource(style + asset);
                 }
-                catch (ResourceReferenceKeyNotFoundException ex)
+                catch (ResourceReferenceKeyNotFoundException)
                 {
                     string gameMode = data.oneHourMode ? "one hour" : "darts";
                     System.Windows.MessageBox.Show(
@@ -1454,46 +1454,6 @@ namespace KhTracker
             }
         }
 
-        private void updateAssetPrefixCustomGameMode(bool usedCustomToggle = false)
-        {
-            bool useCustom = ObjCustomIconsOption.IsChecked;
-
-            string prefix1 = "CGM_Old-";
-            string prefix2 = "CGM_Min-";
-            if (ObjSonicIconsOption.IsChecked)
-            {
-                prefix1 = "CGM_Min-";
-                prefix2 = "CGM_Old-";
-            }
-
-            for (int i = 0; i < assets.Count; i++)
-            {
-                ////if already a custom prefix then skip
-                //if (useCustom && assets[i].StartsWith("CGM_Cus-"))
-                //    continue;
-                //
-                ////if custom toggle on then check for and replace normal prefix with custom one
-                //if (useCustom)
-                //{
-                //    string cusCheck = assets[i].Replace(prefix1, "CGM_Cus-");
-                //    if (usedCustomToggle)
-                //        cusCheck = assets[i].Replace(prefix2, "CGM_Cus-");
-                //    if (MainWindow.CusObjImagesList.Contains(cusCheck))
-                //    {
-                //        assets[i] = cusCheck;
-                //        continue;
-                //    }
-                //}
-                //
-                ////if custom toggle is off check if prefix was custom and fix it else replace as normal
-                //if (assets[i].StartsWith("CGM_Cus-"))
-                //    assets[i] = assets[i].Replace("CGM_Cus-", prefix2);
-                //else
-                //assets[i] = assets[i].Replace(prefix1, prefix2);
-            }
-            Change_IconsCustomGameMode();
-        }
-
         private void Change_IconsCustomGameMode()
         {
             if (objGrid == null)
@@ -1547,7 +1507,7 @@ namespace KhTracker
             ObjSonicIconsOption.IsChecked = !toggle;
 
             if (data.oneHourMode || data.dartsMode)
-                updateAssetPrefixCustomGameMode();
+                Change_IconsCustomGameMode();
             else
                 updateAssetPrefix();
         }
@@ -1563,7 +1523,7 @@ namespace KhTracker
             ObjTelevoIconsOption.IsChecked = !toggle;
 
             if (data.oneHourMode || data.dartsMode)
-                updateAssetPrefixCustomGameMode();
+                Change_IconsCustomGameMode();
             else
                 updateAssetPrefix();
         }
@@ -1577,8 +1537,8 @@ namespace KhTracker
         {
             Properties.Settings.Default.ObjectiveCustom = toggle;
 
-            if (data.oneHourMode)
-                updateAssetPrefixCustomGameMode(true);
+            if (data.oneHourMode || data.dartsMode)
+                Change_IconsCustomGameMode();
             else
                 updateAssetPrefix(true);
         }

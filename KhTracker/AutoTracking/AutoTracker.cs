@@ -4023,15 +4023,15 @@ namespace KhTracker
             return (int)result;
         }
 
-        public void SetOneHourMarks(int marks)
-        {
-            return;
-            if (!data.oneHourMode || memory == null)
-                return;
+        //public void SetOneHourMarks(int marks)
+        //{
+        //    return;
+        //    if (!data.oneHourMode || memory == null)
+        //        return;
 
-            int address = (save + 0x363D) + ADDRESS_OFFSET;
-            memory.WriteMem(address, marks);
-        }
+        //    int address = (save + 0x363D) + ADDRESS_OFFSET;
+        //    memory.WriteMem(address, marks);
+        //}
 
         //progression hints - compare last saved progression point
         //must be checked this way cause of OnTimedEvent
