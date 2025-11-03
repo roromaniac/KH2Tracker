@@ -204,7 +204,7 @@ namespace KhTracker
                         Remove_Ghost(worldName, button);
                     }
 
-                    //window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
 
@@ -408,7 +408,9 @@ namespace KhTracker
             if (!add)
                 addRemove = -1;
 
-            if (Codes.FindItemType(item.Name) != "magic" && Codes.FindItemType(item.Name) != "page" && !item.Name.Contains("Munny") && Codes.FindItemType(item.Name) != "visit")    //Codes.FindItemType(item.Name) != "other")
+            string itemTypeCode = Codes.FindItemType(item.Name);
+
+            if (itemTypeCode != "magic" && itemTypeCode != "page" && !item.Name.Contains("Munny") && itemTypeCode != "visit")    //Codes.FindItemType(item.Name) != "other")
             {
                 //yeah just gonna do things here..
                 //track collection for things that aren't multi's
@@ -425,9 +427,6 @@ namespace KhTracker
                         return;
                     case "summon":
                         Summon_Count += addRemove;
-                        return;
-                    case "visit":
-                        Visit_Count += addRemove;
                         return;
                     case "report":
                         Report_Count += addRemove;
@@ -560,6 +559,7 @@ namespace KhTracker
                     return;
                 case "BeastWep":
                     Real_BeastWep += addRemove;
+                    Visit_Count += addRemove;
                     window.BCCount.Text = (2 - Real_BeastWep).ToString();
                     if (Real_BeastWep == 2)
                     {
@@ -574,6 +574,7 @@ namespace KhTracker
                     return;
                 case "JackWep":
                     Real_JackWep += addRemove;
+                    Visit_Count += addRemove;
                     window.HTCount.Text = (2 - Real_JackWep).ToString();
                     if (Real_JackWep == 2)
                     {
@@ -588,6 +589,7 @@ namespace KhTracker
                     return;
                 case "SimbaWep":
                     Real_SimbaWep += addRemove;
+                    Visit_Count += addRemove;
                     window.PLCount.Text = (2 - Real_SimbaWep).ToString();
                     if (Real_SimbaWep == 2)
                     {
@@ -602,6 +604,7 @@ namespace KhTracker
                     return;
                 case "AuronWep":
                     Real_AuronWep += addRemove;
+                    Visit_Count += addRemove;
                     window.OCCount.Text = (2 - Real_AuronWep).ToString();
                     if (Real_AuronWep == 2)
                     {
@@ -616,6 +619,7 @@ namespace KhTracker
                     return;
                 case "MulanWep":
                     Real_MulanWep += addRemove;
+                    Visit_Count += addRemove;
                     window.LoDCount.Text = (2 - Real_MulanWep).ToString();
                     if (Real_MulanWep == 2)
                     {
@@ -630,6 +634,7 @@ namespace KhTracker
                     return;
                 case "SparrowWep":
                     Real_SparrowWep += addRemove;
+                    Visit_Count += addRemove;
                     window.PRCount.Text = (2 - Real_SparrowWep).ToString();
                     if (Real_SparrowWep == 2)
                     {
@@ -644,6 +649,7 @@ namespace KhTracker
                     return;
                 case "AladdinWep":
                     Real_AladdinWep += addRemove;
+                    Visit_Count += addRemove;
                     window.AGCount.Text = (2 - Real_AladdinWep).ToString();
                     if (Real_AladdinWep == 2)
                     {
@@ -658,6 +664,7 @@ namespace KhTracker
                     return;
                 case "TronWep":
                     Real_TronWep += addRemove;
+                    Visit_Count += addRemove;
                     window.SPCount.Text = (2 - Real_TronWep).ToString();
                     if (Real_TronWep == 2)
                     {
@@ -672,6 +679,7 @@ namespace KhTracker
                     return;
                 case "RikuWep":
                     Real_RikuWep += addRemove;
+                    Visit_Count += addRemove;
                     window.TWTNWCount.Text = (2 - Real_RikuWep).ToString();
                     if (Real_RikuWep == 2)
                     {
@@ -686,6 +694,7 @@ namespace KhTracker
                     return;
                 case "MembershipCard":
                     Real_MembershipCard += addRemove;
+                    Visit_Count += addRemove;
                     window.HBCount.Text = (2 - Real_MembershipCard).ToString();
                     if (Real_MembershipCard == 2)
                     {
@@ -700,6 +709,7 @@ namespace KhTracker
                     return;
                 case "KingsLetter":
                     Real_KingsLetter += addRemove;
+                    Visit_Count += addRemove;
                     window.DCCount.Text = (2 - Real_KingsLetter).ToString();
                     if (Real_KingsLetter == 2)
                     {
@@ -714,6 +724,7 @@ namespace KhTracker
                     return;
                 case "IceCream":
                     Real_IceCream += addRemove;
+                    Visit_Count += addRemove;
                     window.TTCount.Text = (3 - Real_IceCream).ToString();
                     if (Real_IceCream == 3)
                     {
@@ -725,6 +736,9 @@ namespace KhTracker
                         window.TTCount.Fill = (LinearGradientBrush)FindResource("Color_TT");
                         window.TTCount.Stroke = (SolidColorBrush)FindResource("Color_Black");
                     }
+                    return;
+                case "Sketches":
+                    Visit_Count += addRemove;
                     return;
                 default:
                     return;
@@ -1266,14 +1280,11 @@ namespace KhTracker
         {
             Data data = MainWindow.data;
             //check if we even want to track a ghost item.
-            if (data.mode == Mode.SpoilerHints)
+            //check item parent and track only if the parent is the itempool grid
+            if (VisualTreeHelper.GetParent(item) is Grid ItemRow && ItemRow.Parent == window.ItemPool)
             {
-                //check item parent and track only if the parent is the itempool grid
-                if (VisualTreeHelper.GetParent(item) is Grid ItemRow && ItemRow.Parent == window.ItemPool)
-                {
-                    ItemRow.Children.Remove(item);
-                    Handle_WorldGrid(item, true);
-                }
+                ItemRow.Children.Remove(item);
+                Handle_WorldGrid(item, true);
             }
         }
 

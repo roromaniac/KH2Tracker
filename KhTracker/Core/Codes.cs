@@ -6,6 +6,8 @@ namespace KhTracker
 {
     public class Codes
     {
+        public int maxVisitUnlocks = 26; 
+
         //Convert tracker world internal names to readable names
         public static string GetHintTextName(string worldName)
         {

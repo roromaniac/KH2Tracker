@@ -739,13 +739,6 @@ namespace KhTracker
             int WorldBlue = 0;
             int num = PointTotal + points; //get new point total
             PointTotal = num; //set new point total
-            
-            if (data.oneHourMode || data.dartsMode)
-            {
-                num += objWindow.cgmPoints;
-                ScoreValue.Text = num.ToString();
-                return;
-            }
 
             //adjust point score based on bonus and form levels
             //do this after setting new PointTotal value to avoid score
@@ -838,7 +831,7 @@ namespace KhTracker
             }
             if (data.PointsDatanew["collection_visit"] > 0)
             {
-                if (WorldGrid.Visit_Count == 11)
+                if (WorldGrid.Visit_Count == data.codes.maxVisitUnlocks)
                     num += data.PointsDatanew["collection_visit"];
             }
             if (data.PointsDatanew["collection_report"] > 0)
@@ -847,7 +840,7 @@ namespace KhTracker
                     num += data.PointsDatanew["collection_report"];
             }
 
-            if (data.oneHourMode)
+            if (data.oneHourMode || data.dartsMode)
                 num += objWindow.cgmPoints;
 
             ScoreValue.Text = num.ToString();
