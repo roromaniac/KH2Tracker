@@ -3811,7 +3811,10 @@ namespace KhTracker
                 }
                 else
                 {
-                    points = data.PointsDatanew[bossType];
+                    if (boss == "Final Xemnas")
+                        points = data.PointsDatanew["boss_final"];
+                    else
+                        points = data.PointsDatanew[bossType];
 
                     //logging
                     if (data.BossRandoFound)

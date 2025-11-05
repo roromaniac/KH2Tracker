@@ -346,31 +346,34 @@ namespace KhTracker
 
                 foreach (int report in reportKeys)
                 {
-                    string worldstring = reports[report.ToString()]["World"].ToString();
-                    string location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
-                    int dummyvalue = 0;
+                    // may be fewer worlds than reports for hinting
+                    if (reports[report.ToString()].ContainsKey("World")) {
+                        string worldstring = reports[report.ToString()]["World"].ToString();
+                        string location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                        int dummyvalue = 0;
 
-                    if (worldstring.StartsWith("Nothing_"))
-                    {
-                        worldstring = worldstring.Remove(0, 8);
-                        dummyvalue = -1;
+                        if (worldstring.StartsWith("Nothing_"))
+                        {
+                            worldstring = worldstring.Remove(0, 8);
+                            dummyvalue = -1;
+                        }
+
+                        //creations will be hinted again now
+                        //prog specific
+                        //if (data.UsingProgressionHints && report <= 13)
+                        //{
+                        //    if (worldstring.Contains("Creations"))
+                        //    {
+                        //        //still need to get and add location for report to track to correct world
+                        //        //we can't just skip everything if creations was set to be hinted
+                        //        data.reportLocations.Add(location);
+                        //        continue;
+                        //    }
+                        //}
+
+                        data.reportInformation.Add(new Tuple<string, string, int>(Codes.ConvertSeedGenName(worldstring), null, dummyvalue));
+                        data.reportLocations.Add(location);
                     }
-
-                    //creations will be hinted again now
-                    //prog specific
-                    //if (data.UsingProgressionHints && report <= 13)
-                    //{
-                    //    if (worldstring.Contains("Creations"))
-                    //    {
-                    //        //still need to get and add location for report to track to correct world
-                    //        //we can't just skip everything if creations was set to be hinted
-                    //        data.reportLocations.Add(location);
-                    //        continue;
-                    //    }
-                    //}
-
-                    data.reportInformation.Add(new Tuple<string, string, int>(Codes.ConvertSeedGenName(worldstring), null, dummyvalue));
-                    data.reportLocations.Add(location);
                 }
             }
             // reports hints reveal bosses
