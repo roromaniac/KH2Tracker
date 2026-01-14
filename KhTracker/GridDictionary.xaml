@@ -512,7 +512,7 @@
     <!--100 Acre Wood-->
     <Image x:Key="Grid_Min-Piglet"              Source="Images\Grid\Progression\Min\100_acre_wood\blustery_rescue.png"              x:Shared="false" ToolTip="Blustery Rescue (Piglet's Howse)"/>
     <Image x:Key="Grid_Min-Rabbit"              Source="Images\Grid\Progression\Min\100_acre_wood\hunny_slider.png"                 x:Shared="false" ToolTip="Hunny Slider (Rabbit's Howse)"/>
-    <Image x:Key="Grid_Min-Kanga"               Source="Images\Grid\Progression\Min\100_acre_wood\balloon_bounce.png"               x:Shared="false" ToolTip="Baloon Bounce (Kanga's Howse)"/>
+    <Image x:Key="Grid_Min-Kanga"               Source="Images\Grid\Progression\Min\100_acre_wood\balloon_bounce.png"               x:Shared="false" ToolTip="Balloon Bounce (Kanga's Howse)"/>
     <Image x:Key="Grid_Min-SpookyCave"          Source="Images\Grid\Progression\Min\100_acre_wood\expotition.png"                   x:Shared="false" ToolTip="The Expedition (Spooky Cave)"/>
     <Image x:Key="Grid_Min-StarryHill"          Source="Images\Grid\Progression\Min\100_acre_wood\hunny_pot.png"                    x:Shared="false" ToolTip="The Hunny Pot (Starry Hill)"/>
     <!--Agrabah-->
@@ -1257,7 +1257,7 @@
     <!--100 Acre Wood-->
     <Image x:Key="Grid_Old-Piglet"              Source="Images\Grid\Progression\Old\100_acre_wood\blustery_rescue.png"              x:Shared="false" ToolTip="Blustery Rescue (Piglet's Howse)"/>
     <Image x:Key="Grid_Old-Rabbit"              Source="Images\Grid\Progression\Old\100_acre_wood\hunny_slider.png"                 x:Shared="false" ToolTip="Hunny Slider (Rabbit's Howse)"/>
-    <Image x:Key="Grid_Old-Kanga"               Source="Images\Grid\Progression\Old\100_acre_wood\balloon_bounce.png"               x:Shared="false" ToolTip="Baloon Bounce (Kanga's Howse)"/>
+    <Image x:Key="Grid_Old-Kanga"               Source="Images\Grid\Progression\Old\100_acre_wood\balloon_bounce.png"               x:Shared="false" ToolTip="Balloon Bounce (Kanga's Howse)"/>
     <Image x:Key="Grid_Old-SpookyCave"          Source="Images\Grid\Progression\Old\100_acre_wood\expotition.png"                   x:Shared="false" ToolTip="The Expedition (Spooky Cave)"/>
     <Image x:Key="Grid_Old-StarryHill"          Source="Images\Grid\Progression\Old\100_acre_wood\hunny_pot.png"                    x:Shared="false" ToolTip="The Hunny Pot (Starry Hill)"/>
     <!--Agrabah-->
@@ -1680,7 +1680,7 @@
     <!--100 Acre Wood-->
     <Image x:Key="Grid_Cus-Piglet"               Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/blustery_rescue.png"              x:Shared="false" ToolTip="Blustery Rescue (Piglet's Howse)"/>
     <Image x:Key="Grid_Cus-Rabbit"               Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/hunny_slider.png"                 x:Shared="false" ToolTip="Hunny Slider (Rabbit's Howse)"/>
-    <Image x:Key="Grid_Cus-Kanga"                Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/balloon_bounce.png"               x:Shared="false" ToolTip="Baloon Bounce (Kanga's Howse)"/>
+    <Image x:Key="Grid_Cus-Kanga"                Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/balloon_bounce.png"               x:Shared="false" ToolTip="Balloon Bounce (Kanga's Howse)"/>
     <Image x:Key="Grid_Cus-SpookyCave"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/expotition.png"                   x:Shared="false" ToolTip="The Expedition (Spooky Cave)"/>
     <Image x:Key="Grid_Cus-StarryHill"           Source="pack://application:,,,/CustomImages/Grid/Progression/100_acre_wood/hunny_pot.png"                    x:Shared="false" ToolTip="The Hunny Pot (Starry Hill)"/>
     <!--Agrabah-->

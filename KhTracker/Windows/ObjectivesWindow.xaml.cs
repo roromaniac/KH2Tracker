@@ -40,6 +40,7 @@ namespace KhTracker
         public double lordsArenaMultiplier { get; set; } = 0.0;
         public int maxFormObjectivesPerForm { get; set; } = 1;
         public int dataAndASCanBeObjectives { get; set; } = 0;
+        public int pointsToWin { get; set; } = Int32.MaxValue;
     }
 
     public partial class ObjectivesWindow : Window, IColorableWindow
@@ -481,6 +482,7 @@ namespace KhTracker
             gridWidth = 5,
             maxFormObjectivesPerForm = 2,
             dataAndASCanBeObjectives = 0,
+            pointsToWin = 66,
         };
 
         //overrides for custom game modes
@@ -769,6 +771,11 @@ namespace KhTracker
                 dartsObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
                 dartsObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 dartsObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
+                dartsObjGridSettings.Add("pointsToWin", Int32.Parse(overrideObject.pointsToWin.ToString()));
+
+                // handle darts title
+                TotalValue.Text = dartsObjGridSettings["pointsToWin"].ToString();
+                CollectedValue.Text = "0";
 
             }
             else if (data.oneHourMode)
@@ -877,140 +884,149 @@ namespace KhTracker
             }
 
 
-            //for each form, only keep maxFormObjectivesPerForm form objectives
-            //var formObjectivesMap = new Dictionary<string, List<string>>()
-            //{
-            //    { "Valor", new List<string>() },
-            //    { "Wisdom", new List<string>() },
-            //    { "Limit", new List<string>() },
-            //    { "Master", new List<string>() },
-            //    { "Final", new List<string>() }
-            //};
+            // for each form, only keep maxFormObjectivesPerForm form objectives
+            var formObjectivesMap = new Dictionary<string, List<string>>()
+            {
+                { "Valor", new List<string>() },
+                { "Wisdom", new List<string>() },
+                { "Limit", new List<string>() },
+                { "Master", new List<string>() },
+                { "Final", new List<string>() }
+            };
 
-            //foreach (var asset in assets)
-            //{
-            //    foreach (var form in formObjectivesMap.Keys)
-            //    {
-            //        if (asset.StartsWith(form))
-            //        {
-            //            formObjectivesMap[form].Add(asset);
-            //            break; // only matches one form prefix
-            //        }
-            //    }
-            //}
-            //foreach (var form in new[] { "Valor", "Wisdom", "Limit", "Master", "Final"})
-            //{
-            //    int maxFormObjectivesAllowed = data.oneHourMode
-            //        ? oneHourObjGridSettings["maxFormObjectivesPerForm"]
-            //        : (data.dartsMode ? 
-            //        dartsObjGridSettings["maxFormObjectivesPerForm"]
-            //        : int.MaxValue);
+            foreach (var asset in assets)
+            {
+                foreach (var form in formObjectivesMap.Keys)
+                {
+                    if (asset.StartsWith(form))
+                    {
+                        formObjectivesMap[form].Add(asset);
+                        break; // only matches one form prefix
+                    }
+                }
+            }
+            foreach (var form in new[] { "Valor", "Wisdom", "Limit", "Master", "Final" })
+            {
+                int maxFormObjectivesAllowed = data.oneHourMode
+                    ? oneHourObjGridSettings["maxFormObjectivesPerForm"]
+                    : (data.dartsMode ?
+                    dartsObjGridSettings["maxFormObjectivesPerForm"]
+                    : int.MaxValue);
 
-            //    var formObjectives = formObjectivesMap[form];
-            //    int formObjectivesToRemove = Math.Max(0, formObjectives.Count - maxFormObjectivesAllowed);
+                var formObjectives = formObjectivesMap[form];
+                int formObjectivesToRemove = Math.Max(0, formObjectives.Count - maxFormObjectivesAllowed);
 
-            //    if (formObjectivesToRemove > 0)
-            //    {
-            //        var shuffledFormObjectives = formObjectives.OrderBy(x => rng.Next()).ToList();
-            //        for (int i = 0; i < formObjectivesToRemove; i++)
-            //        {
-            //            assets.Remove(shuffledFormObjectives[i]);
-            //        }
-            //    }
-            //}
+                if (formObjectivesToRemove > 0)
+                {
+                    var shuffledFormObjectives = formObjectives.OrderBy(x => rng.Next()).ToList();
+                    for (int i = 0; i < formObjectivesToRemove; i++)
+                    {
+                        assets.Remove(shuffledFormObjectives[i]);
+                    }
+                }
+            }
 
             //for each form, remove two of the 3 objectives
-            int valor = rng.Next(3);
-            int wisdom = rng.Next(3);
-            int limit = rng.Next(3);
-            int master = rng.Next(3);
-            int final = rng.Next(3);
-            if (valor == 0)
-            {
-                assets.Remove("Valor5");
-                assets.Remove("Valor7");
-            }
-            else if (valor == 1)
-            {
-                assets.Remove("Valor6");
-                assets.Remove("Valor7");
-            }
-            else
-            {
-                assets.Remove("Valor6");
-                assets.Remove("Valor5");
-            }
-            if (wisdom == 0)
-            {
-                assets.Remove("Wisdom5");
-                assets.Remove("Wisdom7");
-            }
-            else if (wisdom == 1)
-            {
-                assets.Remove("Wisdom6");
-                assets.Remove("Wisdom7");
-            }
-            else
-            {
-                assets.Remove("Wisdom6");
-                assets.Remove("Wisdom5");
-            }
-            if (limit == 0)
-            {
-                assets.Remove("Limit5");
-                assets.Remove("Limit7");
-            }
-            else if (limit == 1)
-            {
-                assets.Remove("Limit6");
-                assets.Remove("Limit7");
-            }
-            else
-            {
-                assets.Remove("Limit6");
-                assets.Remove("Limit5");
-            }
-            if (master == 0)
-            {
-                assets.Remove("Master5");
-                assets.Remove("Master7");
-            }
-            else if (master == 1)
-            {
-                assets.Remove("Master6");
-                assets.Remove("Master7");
-            }
-            else
-            {
-                assets.Remove("Master6");
-                assets.Remove("Master5");
-            }
-            if (final == 0)
-            {
-                assets.Remove("Final5");
-                assets.Remove("Final7");
-            }
-            else if (final == 1)
-            {
-                assets.Remove("Final6");
-                assets.Remove("Final7");
-            }
-            else
-            {
-                assets.Remove("Final6");
-                assets.Remove("Final5");
-            }
+            //int valor = rng.Next(3);
+            //int wisdom = rng.Next(3);
+            //int limit = rng.Next(3);
+            //int master = rng.Next(3);
+            //int final = rng.Next(3);
+            //if (valor == 0)
+            //{
+            //    assets.Remove("Valor5");
+            //    assets.Remove("Valor7");
+            //}
+            //else if (valor == 1)
+            //{
+            //    assets.Remove("Valor6");
+            //    assets.Remove("Valor7");
+            //}
+            //else
+            //{
+            //    assets.Remove("Valor6");
+            //    assets.Remove("Valor5");
+            //}
+            //if (wisdom == 0)
+            //{
+            //    assets.Remove("Wisdom5");
+            //    assets.Remove("Wisdom7");
+            //}
+            //else if (wisdom == 1)
+            //{
+            //    assets.Remove("Wisdom6");
+            //    assets.Remove("Wisdom7");
+            //}
+            //else
+            //{
+            //    assets.Remove("Wisdom6");
+            //    assets.Remove("Wisdom5");
+            //}
+            //if (limit == 0)
+            //{
+            //    assets.Remove("Limit5");
+            //    assets.Remove("Limit7");
+            //}
+            //else if (limit == 1)
+            //{
+            //    assets.Remove("Limit6");
+            //    assets.Remove("Limit7");
+            //}
+            //else
+            //{
+            //    assets.Remove("Limit6");
+            //    assets.Remove("Limit5");
+            //}
+            //if (master == 0)
+            //{
+            //    assets.Remove("Master5");
+            //    assets.Remove("Master7");
+            //}
+            //else if (master == 1)
+            //{
+            //    assets.Remove("Master6");
+            //    assets.Remove("Master7");
+            //}
+            //else
+            //{
+            //    assets.Remove("Master6");
+            //    assets.Remove("Master5");
+            //}
+            //if (final == 0)
+            //{
+            //    assets.Remove("Final5");
+            //    assets.Remove("Final7");
+            //}
+            //else if (final == 1)
+            //{
+            //    assets.Remove("Final6");
+            //    assets.Remove("Final7");
+            //}
+            //else
+            //{
+            //    assets.Remove("Final6");
+            //    assets.Remove("Final5");
+            //}
 
             #endregion
-
-            //fix icon prefix for assets
-            getAssetPrefixCustomGameMode();
 
             // number of objectives to use (7 is defaut)
             if (data.dartsMode)
                 assets = assets.OrderBy(x => rng.Next()).Take(dartsObjGridSettings["objectiveCount"]).ToList();
             else if (data.oneHourMode)
                 assets = assets.OrderBy(x => rng.Next()).Take(oneHourObjGridSettings["objectiveCount"]).ToList();
+
+            //fix icon prefix for assets
+            getAssetPrefixCustomGameMode();
+
+            bool orderByPoints = false;
+            
+            if (orderByPoints)
+                // order by points
+                assets = assets.OrderBy(a => dartsOverrideAssets[a.Remove(0, 8)]).ToList();
+            else
+                // order by "world"
+                assets = assets.OrderBy(a => assetLookup.Keys.ToList().IndexOf(a.Remove(0, 8))).ToList();
 
             //get grid size
             int objectiveCount = data.dartsMode ? dartsObjGridSettings["objectiveCount"] 
@@ -1121,7 +1137,7 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                if (new[] { "1HROVERRIDE", "DARTSOVERRIDE"}.Contains(textIcon))
+                if (new[] { "1HROVERRIDE", }.Contains(textIcon))
                 {
                     GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
                     objBannerIconL.Width = new GridLength(0.5, GridUnitType.Star);
@@ -1136,6 +1152,8 @@ namespace KhTracker
                     objBannerIconL.Width = new GridLength(0.2, GridUnitType.Star);
                     objBannerIconR.Width = new GridLength(2.3, GridUnitType.Star);
                     CollectionGrid.Visibility = Visibility.Visible;
+                    OBannerIconL.Text = "";
+                    OBannerIconR.Text = "";
                 }
             }
             else
@@ -1270,27 +1288,49 @@ namespace KhTracker
 
                 CollectedValue.Text = completeSquares.Count.ToString();
             }
+            // if objectives aren't measured by count, they are measured by points in a custom game mode
             else
             {
                 if (objGrid == null)
                     return;
 
-                int testPoints = 0;
+                int collectedPoints = 0;
                 int marksTotal = 0;
                 foreach (var square in objGrid.Children)
                 {
                     if (square is ToggleButton button && button.IsChecked == true)
                     {
                         if (data.dartsMode)
-                            testPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+                            collectedPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
                         else
-                            testPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+                            collectedPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
 
                         marksTotal++;
                     }
                 }
+                if (collectedPoints >= dartsObjGridSettings["pointsToWin"])
+                {
+                    foreach (ToggleButton square in objGrid.Children)
+                    {
+                        if (square is ToggleButton button)
+                        {
+                            if (button.IsChecked == true)
+                                SetColorForButton(square.Background, currentColors["Win Condition Met Color"]);
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (ToggleButton square in objGrid.Children)
+                        if (square is ToggleButton button)
+                        {
+                            if (button.IsChecked == true)
+                                SetColorForButton(square.Background, currentColors["Collected Color"]);
+                        }
+                }
 
-                cgmPoints = testPoints;
+                cgmPoints = collectedPoints;
+                CollectedValue.Text = cgmPoints.ToString();
                 window.UpdatePointScore(0);
                 Console.WriteLine("writing marks to game | " + marksTotal);
                 //window.SetOneHourMarks(marksTotal);
