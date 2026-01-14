@@ -767,6 +767,28 @@ namespace KhTracker
             }
             Console.WriteLine(buttonState);
             Console.WriteLine(button.IsChecked ?? true);
+
+                        if (buttonState == 1)
+            {
+                button.IsChecked = true;
+                annotationStatus[i, j] = false;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
+            else if (buttonState == -1)
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = true;
+                Button_Click(sender, e, i, j);
+                Button_RightClick(sender, e, i, j);
+            }
+            else
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = false;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
         }
 
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
