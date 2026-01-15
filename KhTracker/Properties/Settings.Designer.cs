@@ -971,7 +971,7 @@ namespace KhTracker.Properties {
             "les\":true,\"Fight2\":true,\"OldPete\":true,\"Cerberus\":true,\"Drive6\":true,\"Fight1\":tr" +
             "ue,\"SolarSailer\":true,\"GridArmoredXemnas1\":true,\"Barrels\":true,\"AuronStatue\":tru" +
             "e,\"Hades\":true,\"Mountain\":true,\"Screens\":true,\"ThroneRoom\":true,\"OCDemyx\":true,\"" +
-            "Luxord\":true,\"GridRiku\":true,\"Drive7\":true,\"Lords\":true,\"GridShad" +
+            "Luxord\":true,\"Drive2\":false,\"GridRiku\":true,\"Drive7\":true,\"Lords\":true,\"GridShad" +
             "owStalker\":true,\"HostileProgram\":true,\"PrisonKeeper\":true,\"BoatPete\":true,\"Drago" +
             "ons\":true,\"GridSeifer\":true,\"Town\":true,\"GridArmoredXemnas2\":true,\"Beast\":true,\"" +
             "GridDataLuxord\":true,\"MCP\":true,\"Cave\":true,\"GridMarluxiaData\":true,\"Axel1\":true" +
@@ -1735,6 +1735,18 @@ namespace KhTracker.Properties {
             }
             set {
                 this["CustomDartsAssets"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ObjectivePointsOrder {
+            get {
+                return ((bool)(this["ObjectivePointsOrder"]));
+            }
+            set {
+                this["ObjectivePointsOrder"] = value;
             }
         }
     }

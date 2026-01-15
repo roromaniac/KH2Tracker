@@ -40,7 +40,7 @@ namespace KhTracker
         public double lordsArenaMultiplier { get; set; } = 0.0;
         public int maxFormObjectivesPerForm { get; set; } = 1;
         public int dataAndASCanBeObjectives { get; set; } = 0;
-        public int pointsToWin { get; set; } = Int32.MaxValue;
+        public int pointsToWin { get; set; } = 66;
     }
 
     public partial class ObjectivesWindow : Window, IColorableWindow
@@ -545,6 +545,9 @@ namespace KhTracker
             //enable custom icons
             ObjCustomIconsOption.IsChecked = Properties.Settings.Default.ObjectiveCustom;
             ObjCustomIconsToggle(ObjCustomIconsOption.IsChecked);
+
+            ObjPointsOrderOption.IsChecked = Properties.Settings.Default.ObjectivePointsOrder;
+            ObjPointsOrderToggle(ObjPointsOrderOption.IsChecked);
         }
 
         public void GenerateObjGrid(Dictionary<string, object> hintObject)
@@ -748,9 +751,34 @@ namespace KhTracker
             }
         }
 
-        public void GenerateCustomObjGrid()
+        public void GenerateCustomObjGrid(bool keepMarkings = false)
         {
             CustomObjectiveSettings overrideObject = GetCustomGameModeAssets();
+
+            // keeps track of previous button states if we're just sorting them
+            Dictionary<string, (bool IsChecked, Color Background, bool IsAnnotated)> previousStates = null;
+
+            if (keepMarkings && buttons != null)
+            {
+                previousStates = new Dictionary<string, (bool, Color, bool)>();
+
+                for (int i = 0; i < buttons.GetLength(0); i++)
+                {
+                    for (int j = 0; j < buttons.GetLength(1); j++)
+                    {
+                        var btn = buttons[i, j];
+                        if (btn?.Tag is string tag)
+                        {
+                            previousStates[tag] = (
+                                btn.IsChecked ?? false,
+                                (btn.Background as SolidColorBrush)?.Color
+                                    ?? currentColors["Uncollected Color"],
+                                annotationStatus[i, j]
+                            );
+                        }
+                    }
+                }
+            }
 
             DynamicGrid.Children.Clear();   // removes any previous grid
             UpdateGridBanner(false);        // hides the banner
@@ -765,6 +793,12 @@ namespace KhTracker
                 dartsObjGridSettings.Clear();
 
                 dartsOverrideAssets = overrideObject.objectivePointList;
+
+                // only show positive point objectives
+                foreach (var item in dartsOverrideAssets.Where(kvp => kvp.Value <= 0).ToList())
+                {
+                    dartsOverrideAssets.Remove(item.Key);
+                }
 
                 dartsObjGridSettings.Add("gridHeight", Int32.Parse(overrideObject.gridHeight.ToString()));
                 dartsObjGridSettings.Add("gridWidth", Int32.Parse(overrideObject.gridWidth.ToString()));
@@ -790,6 +824,12 @@ namespace KhTracker
                 oneHourObjGridSettings.Clear();
 
                 oneHourOverrideAssets = overrideObject.objectivePointList;
+
+                // only show positive point objectives
+                foreach (var item in oneHourOverrideAssets.Where(kvp => kvp.Value <= 0).ToList())
+                {
+                    oneHourOverrideAssets.Remove(item.Key);
+                }
 
                 oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject.asArenaBonusPoints.ToString()));
                 oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject.dataArenaBonusPoints.ToString()));
@@ -862,7 +902,7 @@ namespace KhTracker
 
             if (invalidAssetFound)
             {
-                GenerateCustomObjGrid();
+                GenerateCustomObjGrid(keepMarkings);
                 return;
             }
 
@@ -925,89 +965,6 @@ namespace KhTracker
                     }
                 }
             }
-
-            //for each form, remove two of the 3 objectives
-            //int valor = rng.Next(3);
-            //int wisdom = rng.Next(3);
-            //int limit = rng.Next(3);
-            //int master = rng.Next(3);
-            //int final = rng.Next(3);
-            //if (valor == 0)
-            //{
-            //    assets.Remove("Valor5");
-            //    assets.Remove("Valor7");
-            //}
-            //else if (valor == 1)
-            //{
-            //    assets.Remove("Valor6");
-            //    assets.Remove("Valor7");
-            //}
-            //else
-            //{
-            //    assets.Remove("Valor6");
-            //    assets.Remove("Valor5");
-            //}
-            //if (wisdom == 0)
-            //{
-            //    assets.Remove("Wisdom5");
-            //    assets.Remove("Wisdom7");
-            //}
-            //else if (wisdom == 1)
-            //{
-            //    assets.Remove("Wisdom6");
-            //    assets.Remove("Wisdom7");
-            //}
-            //else
-            //{
-            //    assets.Remove("Wisdom6");
-            //    assets.Remove("Wisdom5");
-            //}
-            //if (limit == 0)
-            //{
-            //    assets.Remove("Limit5");
-            //    assets.Remove("Limit7");
-            //}
-            //else if (limit == 1)
-            //{
-            //    assets.Remove("Limit6");
-            //    assets.Remove("Limit7");
-            //}
-            //else
-            //{
-            //    assets.Remove("Limit6");
-            //    assets.Remove("Limit5");
-            //}
-            //if (master == 0)
-            //{
-            //    assets.Remove("Master5");
-            //    assets.Remove("Master7");
-            //}
-            //else if (master == 1)
-            //{
-            //    assets.Remove("Master6");
-            //    assets.Remove("Master7");
-            //}
-            //else
-            //{
-            //    assets.Remove("Master6");
-            //    assets.Remove("Master5");
-            //}
-            //if (final == 0)
-            //{
-            //    assets.Remove("Final5");
-            //    assets.Remove("Final7");
-            //}
-            //else if (final == 1)
-            //{
-            //    assets.Remove("Final6");
-            //    assets.Remove("Final7");
-            //}
-            //else
-            //{
-            //    assets.Remove("Final6");
-            //    assets.Remove("Final5");
-            //}
-
             #endregion
 
             // number of objectives to use (7 is defaut)
@@ -1019,14 +976,22 @@ namespace KhTracker
             //fix icon prefix for assets
             getAssetPrefixCustomGameMode();
 
-            bool orderByPoints = false;
-            
-            if (orderByPoints)
+            if (Properties.Settings.Default.ObjectivePointsOrder)
+            {
                 // order by points
-                assets = assets.OrderBy(a => dartsOverrideAssets[a.Remove(0, 8)]).ToList();
+                if (data.dartsMode)
+                    assets = assets.OrderBy(a => dartsOverrideAssets[a.Remove(0, 8)]).ToList();
+                else if (data.oneHourMode)
+                    assets = assets.OrderBy(a => oneHourOverrideAssets[a.Remove(0, 8)]).ToList();
+            }
             else
+            {
                 // order by "world"
-                assets = assets.OrderBy(a => assetLookup.Keys.ToList().IndexOf(a.Remove(0, 8))).ToList();
+                if (data.dartsMode)
+                    assets = assets.OrderBy(a => dartsOverrideAssets.Keys.ToList().IndexOf(a.Remove(0, 8))).ToList();
+                else if (data.oneHourMode)
+                    assets = assets.OrderBy(a => oneHourOverrideAssets.Keys.ToList().IndexOf(a.Remove(0, 8))).ToList();
+            }
 
             //get grid size
             int objectiveCount = data.dartsMode ? dartsObjGridSettings["objectiveCount"] 
@@ -1106,6 +1071,13 @@ namespace KhTracker
                     button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
+                    if (keepMarkings && previousStates != null && previousStates.TryGetValue((string)button.Tag, out var state))
+                    {
+                        button.IsChecked = state.IsChecked;
+                        button.Background = new SolidColorBrush(state.Background);
+
+                        annotationStatus[i, j] = state.IsAnnotated;
+                    }
                     // keep i and j static for the button
                     int current_i = i;
                     int current_j = j;
@@ -1581,6 +1553,17 @@ namespace KhTracker
                 Change_IconsCustomGameMode();
             else
                 updateAssetPrefix(true);
+        }
+
+        private void ObjPointsOrderToggle(object sender, RoutedEventArgs e)
+        {
+            ObjPointsOrderToggle(ObjPointsOrderOption.IsChecked);
+        }
+
+        private void ObjPointsOrderToggle(bool toggle)
+        {
+            Properties.Settings.Default.ObjectivePointsOrder = toggle;
+            GenerateCustomObjGrid(true);
         }
     }
 }

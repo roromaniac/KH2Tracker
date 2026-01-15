@@ -43,6 +43,25 @@ namespace KhTracker
         }
     }
 
+    public sealed class GridSeedSettings
+    {
+        public int NumRows { get; set; }
+        public int NumColumns { get; set; }
+        public bool BingoLogic { get; set; }
+        public bool BattleshipLogic { get; set; }
+        public bool BunterLogic { get; set; }
+        public bool FogOfWar { get; set; }
+        public Dictionary<string, int> FogOfWarSpan { get; set; }
+        public List<int> ShipSizes { get; set; }
+        public bool BattleshipRandomCount { get; set; }
+        public int MinShipCount { get; set; }
+        public int MaxShipCount { get; set; }
+        public Dictionary<string, bool> GridSettings { get; set; }
+        public bool ColoredHints { get; set; }
+        public int ColoredHintsDistance { get; set; }
+        public int SeedHash { get; set; }
+    }
+
     public partial class GridWindow : Window, IColorableWindow
     {
         public bool canClose = false;
@@ -157,6 +176,7 @@ namespace KhTracker
 
             Width = Properties.Settings.Default.GridWindowWidth;
             Height = Properties.Settings.Default.GridWindowHeight;
+
         }
 
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -853,10 +873,37 @@ namespace KhTracker
 
             seedName = seedString;
 
+            GridSeedSettings seedSettings = new GridSeedSettings
+            {
+                NumRows = numRows,
+                NumColumns = numColumns,
+                BingoLogic = bingoLogic,
+                BattleshipLogic = battleshipLogic,
+                BunterLogic = bunterLogic,
+                FogOfWar = fogOfWar,
+                FogOfWarSpan = fogOfWarSpan,
+                ShipSizes = shipSizes,
+                BattleshipRandomCount = battleshipRandomCount,
+                MinShipCount = minShipCount,
+                MaxShipCount = maxShipCount,
+                GridSettings = gridSettings,
+                ColoredHints = coloredHints,
+                ColoredHintsDistance = coloredHintsDistance,
+                SeedHash = data.convertedSeedHash
+            };
+
+            var seedNamingJSON = JsonSerializer.Serialize(
+                seedSettings,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = false,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+
             if (seedName == null && (data?.convertedSeedHash ?? -1) > 0 && (data.firstGridOnSeedLoad || presetUpload))
             {
-                string settingsString = $"{numRows}{numColumns}{bingoLogic}{battleshipLogic}{bunterLogic}{fogOfWar}{fogOfWarSpan}{shipSizes}{battleshipRandomCount}{minShipCount}{maxShipCount}{gridSettings}{coloredHints}{coloredHintsColors}{data.convertedSeedHash}";
-                seed = GetDeterministicHashCode(settingsString);
+                seed = GetDeterministicHashCode(seedNamingJSON);
                 seedName = $"[TIED TO SEED] {RandomSeedName(8, seed)}";
                 data.firstGridOnSeedLoad = false;
             }

@@ -2372,11 +2372,11 @@ namespace KhTracker
                                 newProg = 1;
                             break;
                         case 9:
-                            if (wID3 == 21) // Sonic's Cutscene Skipper: Oasis after talking to Simba
+                            if (wID3 == 21 && curProg == 1) // Sonic's Cutscene Skipper: Oasis after talking to Simba
                                 newProg = 2;
                             break;
                         case 12:
-                            if (wID3 == 1 && newProg != 2) // Oasis after talking to Simba
+                            if (wID3 == 1 && curProg == 1) // Oasis after talking to Simba
                                 newProg = 2;
                             break;
                         case 2:

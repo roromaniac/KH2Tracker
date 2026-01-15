@@ -1947,7 +1947,7 @@ namespace KhTracker
         }
 
         //here to prevent a lot of redundancy
-        private void levelListHelper (Dictionary<string, object> seedList, List<Tuple<int, string>> dataList)
+        private void levelListHelper(Dictionary<string, object> seedList, List<Tuple<int, string>> dataList)
         {
             foreach (var entry in seedList)
             {
