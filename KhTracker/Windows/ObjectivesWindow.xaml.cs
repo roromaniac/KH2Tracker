@@ -1280,7 +1280,7 @@ namespace KhTracker
                         marksTotal++;
                     }
                 }
-                if (collectedPoints >= dartsObjGridSettings["pointsToWin"])
+                if (dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"])
                 {
                     foreach (ToggleButton square in objGrid.Children)
                     {
