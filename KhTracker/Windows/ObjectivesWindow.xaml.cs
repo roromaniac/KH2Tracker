@@ -1150,85 +1150,116 @@ namespace KhTracker
             {
                 SetColorForButton(button.Background, currentColors["Uncollected Color"]);
             }
+            button.Opacity = 1.0;
 
             checkNeeded();
         }
 
+
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (annotationStatus[i, j])
+            //annotated to hidden
+            if (annotationStatus[i, j] && button.Opacity == 1.0)
             {
                 annotationStatus[i, j] = false;
                 SetColorForButton(button.Background, originalColors[i, j]);
+                button.Opacity = 0.2;
+                //Console.WriteLine("1");
             }
+            //hidden to neutral
+            else if (button.Opacity == 0.2)
+            {
+                annotationStatus[i, j] = false;
+                SetColorForButton(button.Background, originalColors[i, j]);
+                button.Opacity = 1.0;
+                //Console.WriteLine("2");
+            }
+            //neutral to annotated
             else
             {
                 originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
                 SetColorForButton(button.Background, currentColors["Marked Color"]);
+                //Console.WriteLine("3");
             }
         }
-	
-	    public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
-	    {
-    		var button = (ToggleButton)sender;
-    		int buttonState = 0;
-    		//get button status - checked, annotated, or none
-    		if (annotationStatus[i, j])
-    		{
-        		annotationStatus[i, j] = true;
-        		buttonState = -1;
-    		}
-    		else if (button.IsChecked ?? true)
-    		{
-        		annotationStatus[i, j] = false;
-        		buttonState = 1;
-    		}
-    		else
-    		{
-        		annotationStatus[i, j] = false;
-        		buttonState = 0;
-    		}
 
-    		//Console.WriteLine(buttonState);
-    		if (e.Delta < 0) //mouse scroll up
-    		{
-        		buttonState += 1;
-        		if (buttonState > 1)
-            		buttonState = -1;
-    		}
-    		else if (e.Delta > 0) //mouse scroll down
-    		{
-        		buttonState -= 1;
-        		if (buttonState < -1)
-            		buttonState = 1;
-    		}
-    		//Console.WriteLine(buttonState);
-    		//Console.WriteLine(button.IsChecked ?? true);
+        public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
+        {
+            var button = (ToggleButton)sender;
+            int buttonState = 0;
+            int prevState;
+            //get button status - checked, annotated, or none
+            if (button.Opacity < 1.0) //if hidden
+            {
+                buttonState = 2;
+            }
+            else if (annotationStatus[i, j]) //if annotated
+            {
+                buttonState = 3;
+            }
+            else if (button.IsChecked ?? true) //if clicked
+            {
+                buttonState = 1;
+            }
+            else //if neutral
+            {
+                buttonState = 0;
+            }
 
-    		if (buttonState == 1)
-    		{
-        		button.IsChecked = true;
-        		annotationStatus[i, j] = false;
-        		Button_RightClick(sender, e, i, j);
-        		Button_Click(sender, e, i, j);
-    		}
-    		else if (buttonState == -1)
-    		{
-        		button.IsChecked = false;
-        		annotationStatus[i, j] = true;
-        		Button_Click(sender, e, i, j);
-        		Button_RightClick(sender, e, i, j);
-    		}
-    		else
-    		{
-        		button.IsChecked = false;
-        		annotationStatus[i, j] = false;
-        		Button_RightClick(sender, e, i, j);
-        		Button_Click(sender, e, i, j);
-    		}
-	    }
+            prevState = buttonState;
+            //Console.WriteLine(buttonState);
+            if (e.Delta > 0) //mouse scroll up
+            {
+                buttonState += 1;
+                if (buttonState > 3)
+                    buttonState = 0;
+                //Console.WriteLine("down");
+            }
+            else if (e.Delta < 0) //mouse scroll down
+            {
+                buttonState -= 1;
+                if (buttonState < 0)
+                    buttonState = 3;
+                //Console.WriteLine("up");
+            }
+            //Console.WriteLine(buttonState);
+            //Console.WriteLine(button.IsChecked ?? true);
+
+            if (buttonState == 1) //1 = clicked
+            {
+                button.IsChecked = true;
+                annotationStatus[i, j] = false;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
+            else if (buttonState == 2) //2 = hidden
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = false;
+                button.Opacity = 0.2;
+                SetColorForButton(button.Background, originalColors[i, j]);
+                if (prevState == 1)
+                    checkNeeded();
+            }
+            else if (buttonState == 3) //3 = annotated
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = true;
+                Button_Click(sender, e, i, j);
+                Button_RightClick(sender, e, i, j);
+            }
+            else //0 = neutral
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = false;
+                button.Opacity = 1.0;
+                Button_RightClick(sender, e, i, j);
+                Button_Click(sender, e, i, j);
+            }
+        }
+
 
         public void checkNeeded()
         {

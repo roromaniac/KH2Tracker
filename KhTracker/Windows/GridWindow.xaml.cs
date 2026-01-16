@@ -599,16 +599,20 @@ namespace KhTracker
             if (lastTrackedButton != null)
             {
                 lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Gray);
-                lastTrackedButton.BorderThickness = new Thickness(0.1);  // Adjust thickness as needed
+                lastTrackedButton.BorderThickness = new Thickness(0.1);
             }
 
             lastTrackedButton = button;
-            // is this null check even needed?
-            if (lastTrackedButton != null)
-            {
-                lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Yellow);
-                lastTrackedButton.BorderThickness = new Thickness(5.5);  // Adjust thickness as needed
-            }
+            lastTrackedButton.BorderBrush = new SolidColorBrush(Colors.Yellow);
+            lastTrackedButton.BorderThickness = new Thickness(5.5);
+
+            Button_Click_Logic(sender, i, j);
+        }
+
+        public void Button_Click_Logic(object sender, int i, int j)
+        {
+            var button = (ToggleButton)sender;
+
             annotationStatus[i, j] = false;
             if (battleshipLogic)
             {
@@ -634,6 +638,8 @@ namespace KhTracker
                 {
                     originalColors[i, j] = currentColors["Marked Color"];
                     SetColorForButton(button.Background, currentColors["Marked Color"]);
+                    // remove hidden status
+                    button.Opacity = 1.0;
                 }
                 else
                 {
@@ -739,77 +745,106 @@ namespace KhTracker
         public void Button_RightClick(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            if (annotationStatus[i, j])
+            //annotated to hidden
+            if (annotationStatus[i, j] && button.Opacity == 1.0)
             {
                 annotationStatus[i, j] = false;
                 SetColorForButton(button.Background, originalColors[i, j]);
+                button.Opacity = 0.2;
             }
+            //hidden to neutral
+            else if (button.Opacity == 0.2)
+            {
+                annotationStatus[i, j] = false;
+                SetColorForButton(button.Background, originalColors[i, j]);
+                button.Opacity = 1.0;
+            }
+            //neutral to annotated
             else
             {
+                originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
                 SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
         }
 
+
+
         public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
             int buttonState = 0;
+            int prevState;
             //get button status - checked, annotated, or none
-            if (annotationStatus[i, j])
+            if (button.Opacity < 1.0) //if hidden
             {
-                annotationStatus[i, j] = true;
-                buttonState = -1;
+                buttonState = 2;
             }
-            else if (button.IsChecked ?? true)
+            else if (annotationStatus[i, j] || GetColorFromButton(button.Background) == currentColors["Annotated Color"]) //if annotated
             {
-                annotationStatus[i, j] = false;
+                buttonState = 3;
+            }
+            else if (button.IsChecked ?? false) //if clicked
+            {
                 buttonState = 1;
             }
-            else
+            else //if neutral
             {
-                annotationStatus[i, j] = false;
                 buttonState = 0;
             }
 
+            prevState = buttonState;
             Console.WriteLine(buttonState);
-            if (e.Delta < 0) //mouse scroll up
+            if (e.Delta > 0) //mouse scroll up
             {
                 buttonState += 1;
-                if (buttonState > 1)
-                    buttonState = -1;
+                if (buttonState > 3)
+                    buttonState = 0;
             }
-            else if (e.Delta > 0) //mouse scroll down
+            else if (e.Delta < 0) //mouse scroll down
             {
                 buttonState -= 1;
-                if (buttonState < -1)
-                    buttonState = 1;
+                if (buttonState < 0)
+                    buttonState = 3;
             }
             Console.WriteLine(buttonState);
-            Console.WriteLine(button.IsChecked ?? true);
+            Console.WriteLine("---");
+            //Console.WriteLine(button.IsChecked ?? true);
 
-                        if (buttonState == 1)
+            if (buttonState == 1) //clicked
             {
                 button.IsChecked = true;
                 annotationStatus[i, j] = false;
                 Button_RightClick(sender, e, i, j);
                 Button_Click(sender, e, i, j);
             }
-            else if (buttonState == -1)
+            else if (buttonState == 2) //hidden
+            {
+                button.IsChecked = false;
+                annotationStatus[i, j] = false;
+                button.Opacity = 0.2;
+                SetColorForButton(button.Background, originalColors[i, j]);
+                if (prevState == 1)
+                    Button_Click_Logic(sender, i, j);
+            }
+            else if (buttonState == 3) //annotated
             {
                 button.IsChecked = false;
                 annotationStatus[i, j] = true;
                 Button_Click(sender, e, i, j);
                 Button_RightClick(sender, e, i, j);
+                SetColorForButton(button.Background, currentColors["Annotated Color"]);
             }
-            else
+            else //neutral
             {
                 button.IsChecked = false;
                 annotationStatus[i, j] = false;
+                button.Opacity = 1.0;
                 Button_RightClick(sender, e, i, j);
                 Button_Click(sender, e, i, j);
             }
         }
+
 
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
         {
