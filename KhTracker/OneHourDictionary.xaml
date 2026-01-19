@@ -957,6 +957,7 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
@@ -969,6 +970,7 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="Images\Grid\Progression\Min\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
@@ -2759,6 +2761,7 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="Images\Grid\Progression\Old\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\1.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>
@@ -2771,6 +2774,7 @@
             <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Image Grid.Row="0" Source="Images\Grid\Progression\Old\halloween_town\presents.png"/>
+        <Image Source="Images\Grid\Overlays\Numbers\2.png"/>
         <Rectangle Fill="#D81E1E1E" Panel.ZIndex="-1" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Stretch="UniformToFill"/>
         <Viewbox Grid.Row="1" Margin="10,0,10,0">
             <local:OutlinedTextBlock FontFamily="pack://application:,,,/Fonts/#KHMenu" FontSize="15" StrokeThickness="3" Text="10 Points" Fill="{StaticResource Banner_Gold}"/>

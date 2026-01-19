@@ -648,7 +648,6 @@ namespace KhTracker
 
         public CustomObjectiveSettings GetCustomGameModeAssets()
         {
-            string gameMode;
             if (data.oneHourMode)
             {
                 CustomObjectiveSettings customObjectiveSettings = JsonSerializer.Deserialize<CustomObjectiveSettings>(
@@ -756,11 +755,11 @@ namespace KhTracker
             CustomObjectiveSettings overrideObject = GetCustomGameModeAssets();
 
             // keeps track of previous button states if we're just sorting them
-            Dictionary<string, (bool IsChecked, Color Background, bool IsAnnotated)> previousStates = null;
+            Dictionary<string, (bool IsChecked, Color Background, bool IsAnnotated, double Opacity)> previousStates = null;
 
             if (keepMarkings && buttons != null)
             {
-                previousStates = new Dictionary<string, (bool, Color, bool)>();
+                previousStates = new Dictionary<string, (bool IsChecked, Color Background, bool IsAnnotated, double Opacity)>();
 
                 for (int i = 0; i < buttons.GetLength(0); i++)
                 {
@@ -773,7 +772,8 @@ namespace KhTracker
                                 btn.IsChecked ?? false,
                                 (btn.Background as SolidColorBrush)?.Color
                                     ?? currentColors["Uncollected Color"],
-                                annotationStatus[i, j]
+                                annotationStatus[i, j],
+                                btn.Opacity
                             );
                         }
                     }
@@ -1075,7 +1075,7 @@ namespace KhTracker
                     {
                         button.IsChecked = state.IsChecked;
                         button.Background = new SolidColorBrush(state.Background);
-
+                        button.Opacity = state.Opacity;
                         annotationStatus[i, j] = state.IsAnnotated;
                     }
                     // keep i and j static for the button
@@ -1162,6 +1162,7 @@ namespace KhTracker
             //annotated to hidden
             if (annotationStatus[i, j] && button.Opacity == 1.0)
             {
+
                 annotationStatus[i, j] = false;
                 SetColorForButton(button.Background, originalColors[i, j]);
                 button.Opacity = 0.2;
@@ -1265,27 +1266,35 @@ namespace KhTracker
         {
             if (objectivesNeed != 0)
             {
-                List<ToggleButton> completeSquares = new List<ToggleButton>();
-                foreach (var square in objGrid.Children)
+                List<Tuple<int, int>> completeSquares = new List<Tuple<int, int>>();
+                for (int i = 0; i < numRows; i++)
                 {
-                    if (square is ToggleButton button)
+                    for (int j = 0; j < numColumns; j++)
                     {
-                        if (button.IsChecked == true)
-                            completeSquares.Add(button);
+                        if (buttons[i, j] != null && buttons[i, j].IsChecked == true)
+                        {
+                            completeSquares.Add(Tuple.Create(i, j));
+                        }
                     }
                 }
+
                 if (completeSquares.Count >= objectivesNeed)
                 {
-                    foreach (ToggleButton square in completeSquares)
+                    foreach (var coord in completeSquares)
                     {
-                        SetColorForButton(square.Background, currentColors["Win Condition Met Color"]);
+                        var button = buttons[coord.Item1, coord.Item2];
+                        SetColorForButton(button.Background, currentColors["Win Condition Met Color"]);
                     }
                 }
                 else
                 {
-                    foreach (ToggleButton square in completeSquares)
+                    foreach (var coord in completeSquares)
                     {
-                        SetColorForButton(square.Background, currentColors["Collected Color"]);
+                        var button = buttons[coord.Item1, coord.Item2];
+                        if (annotationStatus[coord.Item1, coord.Item2])
+                            SetColorForButton(button.Background, currentColors["Marked Color"]);
+                        else
+                            SetColorForButton(button.Background, currentColors["Collected Color"]);
                     }
                 }
 
@@ -1299,37 +1308,43 @@ namespace KhTracker
 
                 int collectedPoints = 0;
                 int marksTotal = 0;
-                foreach (var square in objGrid.Children)
+                for (int i = 0; i < numRows; i++)
                 {
-                    if (square is ToggleButton button && button.IsChecked == true)
+                    for (int j = 0; j < numColumns; j++)
                     {
-                        if (data.dartsMode)
-                            collectedPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
-                        else
-                            collectedPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+                        var button = buttons[i, j];
+                        if (button != null && button.IsChecked == true)
+                        {
+                            if (data.dartsMode)
+                                collectedPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
+                            else
+                                collectedPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
 
-                        marksTotal++;
+                            marksTotal++;
+                        }
                     }
                 }
-                if (dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"])
+                bool winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
+                for (int i = 0; i < numRows; i++)
                 {
-                    foreach (ToggleButton square in objGrid.Children)
+                    for (int j = 0; j < numColumns; j++)
                     {
-                        if (square is ToggleButton button)
+                        var button = buttons[i, j];
+                        if (button != null && button.IsChecked == true)
                         {
-                            if (button.IsChecked == true)
-                                SetColorForButton(square.Background, currentColors["Win Condition Met Color"]);
+                            if (winCondition)
+                            {
+                                SetColorForButton(button.Background, currentColors["Win Condition Met Color"]);
+                            }
+                            else
+                            {
+                                if (annotationStatus[i, j])
+                                    SetColorForButton(button.Background, currentColors["Marked Color"]);
+                                else
+                                    SetColorForButton(button.Background, currentColors["Collected Color"]);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    foreach (ToggleButton square in objGrid.Children)
-                        if (square is ToggleButton button)
-                        {
-                            if (button.IsChecked == true)
-                                SetColorForButton(square.Background, currentColors["Collected Color"]);
-                        }
                 }
 
                 cgmPoints = collectedPoints;

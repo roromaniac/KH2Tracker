@@ -2422,13 +2422,14 @@ namespace KhTracker
                                 }
                                 else
                                 {
-                                    // Read 2 bytes from cutscene length address
                                     byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
                                     cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
                                 }
                                 if (cutsceneLength == 262)
                                     newProg = 1;
                             }
+                            else
+                                updateProgression = false;
                             break;
                         case 7:
                             if (wID3 == 4) // Ursula's Revenge 
@@ -2445,13 +2446,14 @@ namespace KhTracker
                                 }
                                 else
                                 {
-                                    // Read 2 bytes from cutscene length address
                                     byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
                                     cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
                                 }
                                 if (cutsceneLength == 1505)
                                     newProg = 2;
                             }
+                            else
+                                updateProgression = false;
                             break;
                         case 4:
                             if (wID3 == 55) // A New Day is Dawning
@@ -2464,7 +2466,6 @@ namespace KhTracker
                                 }
                                 else
                                 {
-                                    // Read 2 bytes from cutscene length address
                                     byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
                                     cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
                                 }
@@ -2475,12 +2476,11 @@ namespace KhTracker
                                     updategrid = false;
                                 }
                             }
-                            break;
-                        default:
-                            if (curProg == 0)
-                                newProg = 1;
                             else
                                 updateProgression = false;
+                            break;
+                        default:
+                            updateProgression = false;
                             break;
                     }
                     break;
