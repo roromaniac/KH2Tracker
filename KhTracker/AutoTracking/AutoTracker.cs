@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Collections;
 using System.IO;
 using System.Xml.Linq;
+using System.ComponentModel.Composition;
 
 namespace KhTracker
 {
@@ -145,6 +146,7 @@ namespace KhTracker
             0x0741230, //Menu | Journal = Menu - 0xf0
             0x0AB9078, //Death
             0x29F0998, //file Pointer
+            0x0B627B4, //Cutscene Length (EGS 1.0.0.8)
         };
 
         private List<int> EpicOffUp1 = new List<int>()
@@ -158,6 +160,7 @@ namespace KhTracker
             0x0743350, //Menu | Journal = Menu - 0xf0
             0x0ABB2B8, //Death
             0x29F2CD8, //file Pointer
+            0x0B649F4, //Cutscene Length (EGS 1.0.0.9)
         };
 
         private List<int> EpicOffUp2 = new List<int>()
@@ -171,6 +174,7 @@ namespace KhTracker
             0x0743350, //Menu | Journal = Menu - 0xf0
             0x0ABB2F8, //Death
             0x29F2D18, //file Pointer
+            0x0B64A34, //Cutscene Length (EGS 1.0.0.10)
         };
 
         private List<int> SteamOff = new List<int>()
@@ -184,6 +188,7 @@ namespace KhTracker
             0x07435D0, //Menu | Journal = Menu - 0xf0
             0x0ABB7F8, //Death
             0x29F33D8, //file Pointer
+            0x0B64F34, //Cutscene Length (Steam 1.0.0.1)
         };
 
         private List<int> SteamOffUp1 = new List<int>()
@@ -197,6 +202,7 @@ namespace KhTracker
             0x07435D0, //Menu | Journal = Menu - 0xf0
             0x0ABB878, //Death
             0x29F3458, //file Pointer
+            0x0B64FB4, //Cutscene Length (Steam 1.0.0.2)
         };
 
         //use this when referenceing a pc offset from above
@@ -2041,15 +2047,12 @@ namespace KhTracker
                                 newProg = 3;
                             break;
                         case 5:
-                            if (wID1 == 78 && wCom == 1) // Dark Thorn finish
+                            if (wID1 == 78 && wCom == 1) // Shadow Stalker finish
                             {
-                                if (data.oneHourMode)
-                                {
-                                    UpdateSupportingTrackers("ShadowStalker");
-                                    UpdateObjectiveTracker("ShadowStalker");
-                                    data.eventLog.Add(eventTuple);
-                                    return;
-                                }
+                                UpdateSupportingTrackers("ShadowStalker");
+                                UpdateObjectiveTracker("ShadowStalker");
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
                             if (wID1 == 79 && wCom == 1) // Dark Thorn finish
                                 newProg = 4;
@@ -2186,6 +2189,8 @@ namespace KhTracker
                             break;
                         case 14:
                             if (wID1 == 101 && wCom == 1) // Carpet finish
+                                newProg = 6;
+                            else if (wID1 == 100 && wCom == 1) // Carpet finish Sonic cutscene skipper
                                 newProg = 6;
                             break;
                         case 5:
@@ -2408,7 +2413,22 @@ namespace KhTracker
                     {
                         case 2:
                             if (wID1 == 63) // Tutorial
-                                newProg = 1;
+                            {
+                                int cutsceneLength = 0;
+                                if (pcsx2tracking)
+                                {
+                                    // For PCSX2, you'd need to find the PCSX2 address if needed
+                                    // For now, assuming PC only
+                                }
+                                else
+                                {
+                                    // Read 2 bytes from cutscene length address
+                                    byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
+                                    cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
+                                }
+                                if (cutsceneLength == 262)
+                                    newProg = 1;
+                            }
                             break;
                         case 7:
                             if (wID3 == 4) // Ursula's Revenge 
@@ -2416,14 +2436,44 @@ namespace KhTracker
                             break;
                         case 9:
                             if (wID3 == 65) // Sonic's Cutscene Skipper: Ursula's Revenge 
-                                newProg = 2;
+                            {
+                                int cutsceneLength = 0;
+                                if (pcsx2tracking)
+                                {
+                                    // For PCSX2, you'd need to find the PCSX2 address if needed
+                                    // For now, assuming PC only
+                                }
+                                else
+                                {
+                                    // Read 2 bytes from cutscene length address
+                                    byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
+                                    cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
+                                }
+                                if (cutsceneLength == 1505)
+                                    newProg = 2;
+                            }
                             break;
                         case 4:
                             if (wID3 == 55) // A New Day is Dawning
                             {
-                                newProg = 3;
-                                UpdateSupportingTrackers("NewDay");
-                                updategrid = false;
+                                int cutsceneLength = 0;
+                                if (pcsx2tracking)
+                                {
+                                    // For PCSX2, you'd need to find the PCSX2 address if needed
+                                    // For now, assuming PC only
+                                }
+                                else
+                                {
+                                    // Read 2 bytes from cutscene length address
+                                    byte[] cutsceneData = memory.ReadMemory(PcOffsets[9], 2);
+                                    cutsceneLength = BitConverter.ToInt16(cutsceneData, 0);
+                                }
+                                if (cutsceneLength == 2630)
+                                {
+                                    newProg = 3;
+                                    UpdateSupportingTrackers("NewDay");
+                                    updategrid = false;
+                                }
                             }
                             break;
                         default:
