@@ -629,7 +629,7 @@ namespace KhTracker
                 else
                 {
                     originalColors[i, j] = currentColors["Unmarked Color"];
-                    SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                    SetColorForButton(button, currentColors["Unmarked Color"]);
                 }
             }
             else
@@ -637,14 +637,14 @@ namespace KhTracker
                 if (button.IsChecked ?? false || annotationStatus[i, j])
                 {
                     originalColors[i, j] = currentColors["Marked Color"];
-                    SetColorForButton(button.Background, currentColors["Marked Color"]);
+                    SetColorForButton(button, currentColors["Marked Color"]);
                     // remove hidden status
                     button.Opacity = 1.0;
                 }
                 else
                 {
                     originalColors[i, j] = currentColors["Unmarked Color"];
-                    SetColorForButton(button.Background, currentColors["Unmarked Color"]);
+                    SetColorForButton(button, currentColors["Unmarked Color"]);
                 }
                 if (bingoLogic)
                 {
@@ -749,26 +749,23 @@ namespace KhTracker
             if (annotationStatus[i, j] && button.Opacity == 1.0)
             {
                 annotationStatus[i, j] = false;
-                SetColorForButton(button.Background, originalColors[i, j]);
+                SetColorForButton(button, originalColors[i, j]);
                 button.Opacity = 0.2;
             }
             //hidden to neutral
             else if (button.Opacity == 0.2)
             {
                 annotationStatus[i, j] = false;
-                SetColorForButton(button.Background, originalColors[i, j]);
+                SetColorForButton(button, originalColors[i, j]);
                 button.Opacity = 1.0;
             }
             //neutral to annotated
             else
             {
-                originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
-                SetColorForButton(button.Background, currentColors["Annotated Color"]);
+                SetColorForButton(button, currentColors["Annotated Color"]);
             }
         }
-
-
 
         public void Button_Scroll(object sender, MouseWheelEventArgs e, int i, int j)
         {
@@ -780,7 +777,7 @@ namespace KhTracker
             {
                 buttonState = 2;
             }
-            else if (annotationStatus[i, j] || GetColorFromButton(button.Background) == currentColors["Annotated Color"]) //if annotated
+            else if (annotationStatus[i, j] || GetColorFromButton(button) == currentColors["Annotated Color"]) //if annotated
             {
                 buttonState = 3;
             }
@@ -823,7 +820,7 @@ namespace KhTracker
                 button.IsChecked = false;
                 annotationStatus[i, j] = false;
                 button.Opacity = 0.2;
-                SetColorForButton(button.Background, originalColors[i, j]);
+                SetColorForButton(button, originalColors[i, j]);
                 if (prevState == 1)
                     Button_Click_Logic(sender, i, j);
             }
@@ -833,7 +830,7 @@ namespace KhTracker
                 annotationStatus[i, j] = true;
                 Button_Click(sender, e, i, j);
                 Button_RightClick(sender, e, i, j);
-                SetColorForButton(button.Background, currentColors["Annotated Color"]);
+                SetColorForButton(button, currentColors["Annotated Color"]);
             }
             else //neutral
             {
@@ -849,13 +846,13 @@ namespace KhTracker
         public void Button_Hover(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            SetColorForButton(button.Background, Colors.Silver);
+            SetColorForButton(button, Colors.Silver);
         }
 
         public void Button_ExitHover(object sender, RoutedEventArgs e, int i, int j)
         {
             var button = (ToggleButton)sender;
-            SetColorForButton(button.Background, annotationStatus[i, j] ? currentColors["Annotated Color"] : originalColors[i, j]);
+            SetColorForButton(button, annotationStatus[i, j] ? currentColors["Annotated Color"] : originalColors[i, j]);
         }
 
         public void GenerateGrid(object sender, RoutedEventArgs e)
@@ -1135,14 +1132,17 @@ namespace KhTracker
             DynamicGrid.Children.Add(grid);
         }
 
-        public void SetColorForButton(Brush buttonBackground, Color newColor)
+        public void SetColorForButton(ToggleButton button, Color newColor)
         {
-            ((SolidColorBrush)buttonBackground).Color = newColor;
+            button.Background = new SolidColorBrush(newColor);
         }
 
-        public Color GetColorFromButton(Brush buttonBackground)
+        public Color GetColorFromButton(ToggleButton button)
         {
-            return ((SolidColorBrush)buttonBackground).Color;
+            if (button.Background is SolidColorBrush brush)
+                return brush.Color;
+
+            return Colors.Transparent; // or throw if you prefer
         }
 
         public void BingoCheck(int i, int j)
@@ -1451,24 +1451,26 @@ namespace KhTracker
                 {
                     if (bingoStatus[row, column])
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Bingo Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        SetColorForButton(buttons[row, column], currentColors["Bingo Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column]);
                         annotationStatus[row, column] = false;
                     }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
                         originalColors[row, column] = (buttons[row, column].IsChecked ?? false) ? currentColors["Marked Color"] : currentColors["Unmarked Color"];
                         if (annotationStatus[row, column])
-                            SetColorForButton(buttons[row, column].Background, currentColors["Marked Color"]);
+                            SetColorForButton(buttons[row, column], currentColors["Marked Color"]);
+                        else
+                            SetColorForButton(buttons[row, column], originalColors[row, column]);
                     }
                     else
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        SetColorForButton(buttons[row, column], currentColors["Unmarked Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column]);
                     }
                     if (annotationStatus[row, column])
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
+                        SetColorForButton(buttons[row, column], currentColors["Annotated Color"]);
                     }
                 }
             }
@@ -1913,24 +1915,24 @@ namespace KhTracker
                     Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"];
                     if (battleshipSunkStatus[row, column] && placedShips.Cast<int>().Max() > 0)
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Battleship Sunk Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        SetColorForButton(buttons[row, column], currentColors["Battleship Sunk Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column]);
                         annotationStatus[row, column] = false;
                     }
                     else if (buttons[row, column].IsChecked ?? false)
                     {
                         originalColors[row, column] = (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor;
                         if (!annotationStatus[row, column])
-                            SetColorForButton(buttons[row, column].Background, (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor);
+                            SetColorForButton(buttons[row, column], (placedShips[row, column] != 0) ? currentColors["Battleship Hit Color"] : missColor);
                     }
                     else
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Unmarked Color"]);
-                        originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                        SetColorForButton(buttons[row, column], currentColors["Unmarked Color"]);
+                        originalColors[row, column] = GetColorFromButton(buttons[row, column]);
                     }
                     if (annotationStatus[row, column])
                     {
-                        SetColorForButton(buttons[row, column].Background, currentColors["Annotated Color"]);
+                        SetColorForButton(buttons[row, column], currentColors["Annotated Color"]);
                     }
                 }
             }
@@ -1962,8 +1964,8 @@ namespace KhTracker
                         if (!buttons[row, column].IsChecked ?? false)
                         {
                             buttons[row, column].SetResourceReference(ContentProperty, assets[(row * numColumns) + column]);
-                            SetColorForButton(buttons[row, column].Background, coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"]);
-                            originalColors[row, column] = GetColorFromButton(buttons[row, column].Background);
+                            SetColorForButton(buttons[row, column], coloredHints ? coloredHintsColors[DistanceToNearestShip(row, column)] : currentColors["Battleship Miss Color"]);
+                            originalColors[row, column] = GetColorFromButton(buttons[row, column]);
                         }
                     }
                 }
@@ -2028,22 +2030,22 @@ namespace KhTracker
                 {
                     Color missColor = coloredHints ? coloredHintsColors[DistanceToNearestShip(i, j)] : currentColors["Battleship Miss Color"];
                     if (annotationStatus[i, j])
-                        SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
+                        SetColorForButton(buttons[i, j], currentColors["Annotated Color"]);
                     if (battleshipLogic)
                     {
                         if (battleshipSunkStatus[i, j])
                         {
-                            SetColorForButton(buttons[i, j].Background, currentColors["Battleship Sunk Color"]);
+                            SetColorForButton(buttons[i, j], currentColors["Battleship Sunk Color"]);
                         }
                         else
                         {
                             bool squareIsShip = placedShips[i, j] != 0;
-                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : missColor) : currentColors["Unmarked Color"]);
+                            SetColorForButton(buttons[i, j], (bool)buttons[i, j].IsChecked ? (squareIsShip ? currentColors["Battleship Hit Color"] : missColor) : currentColors["Unmarked Color"]);
                         }
                     }
                     else
                     {
-                        SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
+                        SetColorForButton(buttons[i, j], (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
                         if (bingoLogic)
                         {
                             BingoCheck(i, j);
@@ -2060,7 +2062,7 @@ namespace KhTracker
             {
                 if (bossHintBorders[key].Background != null)
                 {
-                    SetColorForButton(bossHintBorders[key].Background, currentColors["Hint Color"]);
+                    bossHintBorders[key].Background = new SolidColorBrush(currentColors["Hint Color"]);
                 }
             }
             sender.Hide();

@@ -77,13 +77,13 @@
 
             <!-- First row of buttons -->
             <Button Grid.Row="2" Grid.Column="0" x:Name="ObjUnmarkedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
-                <TextBlock Text="Uncollected Color" Margin="20,10"/>
+                <TextBlock Text="Unmarked Color" Margin="20,10"/>
             </Button>
             <Button Grid.Row="2" Grid.Column="1" x:Name="ObjCollectedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
-                <TextBlock Text="Collected Color" Margin="20,10"/>
+                <TextBlock Text="Marked Color" Margin="20,10"/>
             </Button>
             <Button Grid.Row="2" Grid.Column="2" x:Name="ObjAnnotatedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
-                <TextBlock Text="Marked Color" Margin="20,10"/>
+                <TextBlock Text="Annotated Color" Margin="20,10"/>
             </Button>
             <Button Grid.Row="2" Grid.Column="3" x:Name="ObjCompletedColorButton" Click="ColorButton_Click" Visibility="Collapsed">
                 <TextBlock Text="Win Condition Met Color" Margin="20,10"/>

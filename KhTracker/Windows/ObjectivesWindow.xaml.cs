@@ -625,7 +625,7 @@ namespace KhTracker
                     ToggleButton button = new ToggleButton();
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
                     button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
-                    button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     // keep i and j static for the button
@@ -771,7 +771,7 @@ namespace KhTracker
                             previousStates[tag] = (
                                 btn.IsChecked ?? false,
                                 (btn.Background as SolidColorBrush)?.Color
-                                    ?? currentColors["Uncollected Color"],
+                                    ?? currentColors["Unmarked Color"],
                                 annotationStatus[i, j],
                                 btn.Opacity
                             );
@@ -1068,7 +1068,7 @@ namespace KhTracker
                     bool buttonContentRevealed = buttons[i, j] != null && ((buttons[i, j].IsChecked ?? false) || buttons[i, j].Content != null);
                     //button.SetResourceReference(ContentProperty, assets[(i * numColumns) + j]);
                     button.Content = squareContent;
-                    button.Background = new SolidColorBrush(currentColors["Uncollected Color"]);
+                    button.Background = new SolidColorBrush(currentColors["Unmarked Color"]);
                     button.Tag = assets[(i * numColumns) + j].ToString();
                     button.Style = (Style)FindResource("ColorToggleButton");
                     if (keepMarkings && previousStates != null && previousStates.TryGetValue((string)button.Tag, out var state))
@@ -1144,11 +1144,11 @@ namespace KhTracker
 
             if (button.IsChecked ?? false || annotationStatus[i, j])
             {
-                SetColorForButton(button.Background, currentColors["Collected Color"]);
+                SetColorForButton(button.Background, currentColors["Marked Color"]);
             }
             else
             {
-                SetColorForButton(button.Background, currentColors["Uncollected Color"]);
+                SetColorForButton(button.Background, currentColors["Unmarked Color"]);
             }
             button.Opacity = 1.0;
 
@@ -1181,7 +1181,7 @@ namespace KhTracker
             {
                 originalColors[i, j] = GetColorFromButton(button.Background);
                 annotationStatus[i, j] = true;
-                SetColorForButton(button.Background, currentColors["Marked Color"]);
+                SetColorForButton(button.Background, currentColors["Annotated Color"]);
                 //Console.WriteLine("3");
             }
         }
@@ -1292,9 +1292,9 @@ namespace KhTracker
                     {
                         var button = buttons[coord.Item1, coord.Item2];
                         if (annotationStatus[coord.Item1, coord.Item2])
-                            SetColorForButton(button.Background, currentColors["Marked Color"]);
+                            SetColorForButton(button.Background, currentColors["Annotated Color"]);
                         else
-                            SetColorForButton(button.Background, currentColors["Collected Color"]);
+                            SetColorForButton(button.Background, currentColors["Marked Color"]);
                     }
                 }
 
@@ -1339,9 +1339,9 @@ namespace KhTracker
                             else
                             {
                                 if (annotationStatus[i, j])
-                                    SetColorForButton(button.Background, currentColors["Marked Color"]);
+                                    SetColorForButton(button.Background, currentColors["Annotated Color"]);
                                 else
-                                    SetColorForButton(button.Background, currentColors["Collected Color"]);
+                                    SetColorForButton(button.Background, currentColors["Marked Color"]);
                             }
                         }
                     }
@@ -1382,9 +1382,9 @@ namespace KhTracker
 
             return new Dictionary<string, Color>()
             {
-                { "Uncollected Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
-                { "Collected Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
-                { "Marked Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
+                { "Unmarked Color", Color.FromArgb(unmarkedColor.A, unmarkedColor.R, unmarkedColor.G, unmarkedColor.B) },
+                { "Marked Color", Color.FromArgb(markedColor.A, markedColor.R, markedColor.G, markedColor.B) },
+                { "Annotated Color", Color.FromArgb(annotatedColor.A, annotatedColor.R, annotatedColor.G, annotatedColor.B) },
                 { "Win Condition Met Color", Color.FromArgb(bingoColor.A, bingoColor.R, bingoColor.G, bingoColor.B) },
             };
         }
@@ -1400,10 +1400,10 @@ namespace KhTracker
                     if (i * numColumns + j < assets.Count())
                     {
                         if (annotationStatus[i, j])
-                            SetColorForButton(buttons[i, j].Background, currentColors["Marked Color"]);
+                            SetColorForButton(buttons[i, j].Background, currentColors["Annotated Color"]);
                         else
                         {
-                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Collected Color"] : currentColors["Uncollected Color"]);
+                            SetColorForButton(buttons[i, j].Background, (bool)buttons[i, j].IsChecked ? currentColors["Marked Color"] : currentColors["Unmarked Color"]);
                         }
                     }
                 }

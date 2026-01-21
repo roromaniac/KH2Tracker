@@ -72,21 +72,21 @@ namespace KhTracker
                 // Initialize the button colors
                 ObjButtonColors = currentColors ?? new Dictionary<string, Color>
                 {
-                    { "Uncollected Color", Colors.DimGray },
-                    { "Collected Color", Colors.Green },
-                    { "Marked Color", Colors.Orange },
+                    { "Unmarked Color", Colors.DimGray },
+                    { "Marked Color", Colors.Green },
+                    { "Annotated Color", Colors.Orange },
                     { "Win Condition Met Color", Colors.Purple },
                 };
 
                 // Set button colors and foreground text colors initially
-                ObjUnmarkedColorButton.Background = new SolidColorBrush(ObjButtonColors["Uncollected Color"]);
-                SetForegroundColor(ObjButtonColors["Uncollected Color"], UnmarkedColorButton);
+                ObjUnmarkedColorButton.Background = new SolidColorBrush(ObjButtonColors["Unmarked Color"]);
+                SetForegroundColor(ObjButtonColors["Unmarked Color"], UnmarkedColorButton);
 
-                ObjCollectedColorButton.Background = new SolidColorBrush(ObjButtonColors["Collected Color"]);
-                SetForegroundColor(ObjButtonColors["Collected Color"], MarkedColorButton);
+                ObjCollectedColorButton.Background = new SolidColorBrush(ObjButtonColors["Marked Color"]);
+                SetForegroundColor(ObjButtonColors["Marked Color"], MarkedColorButton);
 
-                ObjAnnotatedColorButton.Background = new SolidColorBrush(ObjButtonColors["Marked Color"]);
-                SetForegroundColor(ObjButtonColors["Marked Color"], AnnotatedColorButton);
+                ObjAnnotatedColorButton.Background = new SolidColorBrush(ObjButtonColors["Annotated Color"]);
+                SetForegroundColor(ObjButtonColors["Annotated Color"], AnnotatedColorButton);
 
                 ObjCompletedColorButton.Background = new SolidColorBrush(ObjButtonColors["Win Condition Met Color"]);
                 SetForegroundColor(ObjButtonColors["Win Condition Met Color"], AnnotatedColorButton);
@@ -235,13 +235,13 @@ namespace KhTracker
         {
             switch (colorType)
             {
-                case "Uncollected Color":
+                case "Unmarked Color":
                     Properties.Settings.Default.ObjUnmarkedColorButton = newColor;
                     break;
-                case "Collected Color":
+                case "Marked Color":
                     Properties.Settings.Default.ObjCollectedColorButton = newColor;
                     break;
-                case "Marked Color":
+                case "Annotated Color":
                     Properties.Settings.Default.ObjAnnotatedColorButton = newColor;
                     break;
                 case "Win Condition Met Color":
