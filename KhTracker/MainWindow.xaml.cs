@@ -58,6 +58,9 @@ namespace KhTracker
 
             OnReset(null, null);
 
+            // initialize supporting settings files
+            PrepareMiscellanousSettings();
+
             //hotkey stuff
             HotkeysManager.SetupSystemHook();
             LoadHotkeyBind();

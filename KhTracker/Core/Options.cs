@@ -2506,6 +2506,40 @@ namespace KhTracker
             }
         }
 
+        private void PrepareMiscellanousSettings()
+        {
+            //create an txt file for the perpetual autosave setting
+            if (!File.Exists("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
+                {
+                    Byte[] content = new UTF8Encoding(true).GetBytes("1");
+                    fs.Write(content, 0, content.Length);
+                }
+            }
+
+            //create a txt file for the openkh location
+            if (!File.Exists("./KhTrackerSettings/OpenKHPath.txt"))
+            {
+                //Console.WriteLine("File not found, making");
+                using (FileStream fs = File.Create("./KhTrackerSettings/OpenKHPath.txt"))
+                {
+                    // Add some text to file    
+                    Byte[] title = new UTF8Encoding(true).GetBytes("C:\\Replace this path with the location of your\\openkh mod manager");
+                    fs.Write(title, 0, title.Length);
+                }
+            }
+
+            if (!File.Exists("./KhTrackerSettings/DisplayRotatorInSeconds.txt"))
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/DisplayRotatorInSeconds.txt"))
+                {
+                    Byte[] content = new UTF8Encoding(true).GetBytes("3");
+                    fs.Write(content, 0, content.Length);
+                }
+            }
+        }
+
         /// 
         /// Hotkey logic
         ///
@@ -2930,7 +2964,21 @@ namespace KhTracker
             dispTimer?.Stop();
             dispTimer = new DispatcherTimer();
             dispTimer.Tick += OnTimedEvent2;
-            dispTimer.Interval = new TimeSpan(0, 0, 0, 5, 0);
+            if (!File.Exists("./KhTrackerSettings/DisplayRotatorInSeconds.txt"))
+            {
+                using (FileStream fs = File.Create("./KhTrackerSettings/DisplayRotatorInSeconds.txt"))
+                {
+                    Byte[] content = new UTF8Encoding(true).GetBytes("3");
+                    fs.Write(content, 0, content.Length);
+                }
+            }
+            int inSeconds;
+            if (!int.TryParse(File.ReadAllText("./KhTrackerSettings/DisplayRotatorInSeconds.txt"), out inSeconds) || inSeconds <= 0)
+            {
+                inSeconds = 3; // fallback
+                File.WriteAllText("./KhTrackerSettings/DisplayRotatorInSeconds.txt", "3"); // self-heal the file
+            }
+            dispTimer.Interval = new TimeSpan(0, 0, 0, inSeconds);
             dispTimer.Start();
         }
 

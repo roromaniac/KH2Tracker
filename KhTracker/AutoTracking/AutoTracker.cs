@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +14,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.ComponentModel;
-using System.Collections;
-using System.IO;
 using System.Xml.Linq;
-using System.ComponentModel.Composition;
 
 namespace KhTracker
 {
@@ -837,7 +837,7 @@ namespace KhTracker
             autosaveTimer = new DispatcherTimer();
             autosaveTimer.Tick += AutoSave;
 
-            //create an txt file for the openkh location
+            //create an txt file for the perpetual autosave setting
             if (!File.Exists("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
             {
                 using (FileStream fs = File.Create("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"))
@@ -846,7 +846,13 @@ namespace KhTracker
                     fs.Write(content, 0, content.Length);
                 }
             }
-            int inSeconds = int.Parse(File.ReadAllText("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"));
+
+            int inSeconds;
+            if (!int.TryParse(File.ReadAllText("./KhTrackerSettings/AutoSaveTimingInSeconds.txt"), out inSeconds) || inSeconds <= 0)
+            {
+                inSeconds = 1; // fallback
+                File.WriteAllText("./KhTrackerSettings/AutoSaveTimingInSeconds.txt", "1"); // self-heal the file
+            }
             autosaveTimer.Interval = new TimeSpan(0, 0, 0, inSeconds);
             autosaveTimer.Start();
         }
