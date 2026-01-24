@@ -1564,7 +1564,7 @@ namespace KhTracker
             { "Jafar", "Cloud" },
             { "Shadow Stalker", "Tifa" },
             { "Storm Rider", "Yuffie" },
-            { "Twilight Thorn", "Leon" }
+            { "Grim Reaper II", "Leon" }
         };
     }
 }

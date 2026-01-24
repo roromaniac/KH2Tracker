@@ -922,53 +922,16 @@ namespace KhTracker
                         string text2 = temp.Item2;
                         string text3 = temp.Item3;
 
-                        //change names for these bosses only for 1hr mode
-                        if (data.oneHourMode)
+                        //use oneHourReplacements dictionary for boss name replacements in 1hr mode
+                        if (data.oneHourMode && data.codes.oneHourReplacements != null && data.codes.oneHourReplacements.Count > 0)
                         {
-                            if (text1.Contains("Cloud"))
+                            foreach (var replacement in data.codes.oneHourReplacements)
                             {
-                                text1 = "Jafar (Cloud)";
-                                //if (text2 == "is unchanged")
-                                //{
-                                //    text2 = "became";
-                                //    text3 = "Cloud";
-                                //}
-                            }
-                            if (text1.Contains("Tifa"))
-                            {
-                                text1 = "Shadow Stalker (Tifa)";
-                                //if (text2 == "is unchanged")
-                                //{
-                                //    text2 = "became";
-                                //    text3 = "Tifa";
-                                //}
-                            }
-                            if (text1.Contains("Hercules"))
-                            {
-                                text1 = "Hydra (Hercules)";
-                                //if (text2 == "is unchanged")
-                                //{
-                                //    text2 = "became";
-                                //    text3 = "Hercules";
-                                //}
-                            }
-                            if (text1.Contains("Leon"))
-                            {
-                                text1 = "Twilight Thorn (Leon)";
-                                //if (text2 == "is unchanged")
-                                //{
-                                //    text2 = "became";
-                                //    text3 = "Leon";
-                                //}
-                            }
-                            if (text1.Contains("Yuffie"))
-                            {
-                                text1 = "Storm Rider (Yuffie)";
-                                //if (text2 == "is unchanged")
-                                //{
-                                //    text2 = "became";
-                                //    text3 = "Yuffie";
-                                //}
+                                if (text1.Contains(replacement.Value))
+                                {
+                                    text1 = replacement.Key + " (" + replacement.Value + ")";
+                                    break;
+                                }
                             }
                         }
 

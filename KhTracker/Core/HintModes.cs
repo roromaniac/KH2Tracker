@@ -1884,29 +1884,10 @@ namespace KhTracker
             else
             {
                 //one hour mode specific swaps
-                if (data.oneHourMode)
-                {
-                    if (boss == "Jafar")
-                    {
-                        boss = "Cloud";
-                    }
-                    if (boss == "Shadow Stalker")
-                    {
-                        boss = "Tifa";
-                    }
-                    if (boss == "Hydra")
-                    {
-                        boss = "Hercules";
-                    }
-                    if ( boss == "Twilight Thorn")
-                    {
-                        boss = "Leon";
-                    }
-                    if (boss == "Storm Rider")
-                    {
-                        boss = "Yuffie";
-                    }
-                }
+                if (data.oneHourMode &&
+                    data.codes.oneHourReplacements != null &&
+                    data.codes.oneHourReplacements.TryGetValue(boss, out string newBossName))
+                    boss = newBossName;
 
 
                 if (!data.BossList.ContainsKey(boss))

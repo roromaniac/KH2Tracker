@@ -1148,53 +1148,16 @@ namespace KhTracker
                 middle = data.HintRevealsStored[index].Item2;
                 newBoss = data.HintRevealsStored[index].Item3;
 
-                //change names for these bosses only for 1hr mode
-                if (data.oneHourMode)
+                //use oneHourReplacements dictionary for boss name replacements in 1hr mode
+                if (data.oneHourMode && data.codes.oneHourReplacements != null && data.codes.oneHourReplacements.Count > 0)
                 {
-                    if (originalBoss.Contains("Cloud"))
+                    foreach (var replacement in data.codes.oneHourReplacements)
                     {
-                        originalBoss = "Jafar (Cloud)";
-                        //if (text2 == "is unchanged")
-                        //{
-                        //    text2 = "became";
-                        //    text3 = "Cloud";
-                        //}
-                    }
-                    if (originalBoss.Contains("Tifa"))
-                    {
-                        originalBoss = "Shadow Stalker (Tifa)";
-                        //if (text2 == "is unchanged")
-                        //{
-                        //    text2 = "became";
-                        //    text3 = "Tifa";
-                        //}
-                    }
-                    if (originalBoss.Contains("Hercules"))
-                    {
-                        originalBoss = "Hydra (Hercules)";
-                        //if (text2 == "is unchanged")
-                        //{
-                        //    text2 = "became";
-                        //    text3 = "Hercules";
-                        //}
-                    }
-                    if (originalBoss.Contains("Leon"))
-                    {
-                        originalBoss = "Twilight Thorn (Leon)";
-                        //if (text2 == "is unchanged")
-                        //{
-                        //    text2 = "became";
-                        //    text3 = "Leon";
-                        //}
-                    }
-                    if (originalBoss.Contains("Yuffie"))
-                    {
-                        originalBoss = "Storm Rider (Yuffie)";
-                        //if (text2 == "is unchanged")
-                        //{
-                        //    text2 = "became";
-                        //    text3 = "Yuffie";
-                        //}
+                        if (originalBoss.Contains(replacement.Value))
+                        {
+                            originalBoss = replacement.Key + " (" + replacement.Value + ")";
+                            break;
+                        }
                     }
                 }
                 window.SetHintTextRow2(originalBoss, middle, newBoss);

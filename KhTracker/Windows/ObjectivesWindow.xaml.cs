@@ -41,6 +41,7 @@ namespace KhTracker
         public int maxFormObjectivesPerForm { get; set; } = 1;
         public int dataAndASCanBeObjectives { get; set; } = 0;
         public int pointsToWin { get; set; } = 66;
+        public Dictionary<string, string> oneHourReplacements { get; set; } = new Dictionary<string, string>();
     }
 
     public partial class ObjectivesWindow : Window, IColorableWindow
@@ -822,6 +823,12 @@ namespace KhTracker
                 oneHourOverrideBonus.Clear();
                 oneHourMultiplicativeBonus.Clear();
                 oneHourObjGridSettings.Clear();
+
+                //handle 1 hour replacements
+                if (overrideObject.oneHourReplacements != null && overrideObject.oneHourReplacements.Count != 0)
+                {
+                    data.codes.oneHourReplacements = overrideObject.oneHourReplacements;
+                }
 
                 oneHourOverrideAssets = overrideObject.objectivePointList;
 
