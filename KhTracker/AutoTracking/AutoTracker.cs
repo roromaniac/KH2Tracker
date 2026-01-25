@@ -3648,7 +3648,7 @@ namespace KhTracker
 
                     //bonus points here should be sum of both boss types multipled by the BC double arena multiplier
                     if (points > 1)
-                        points += points * objWindow.oneHourOverrideAssets["bcDoubleArenaMultiplier"];
+                        points += points * objWindow.oneHourOverrideAssets["bcDoubleFightMultiplier"];
                 }
                 else
                 {
