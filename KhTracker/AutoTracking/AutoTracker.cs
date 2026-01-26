@@ -3594,7 +3594,7 @@ namespace KhTracker
 
                     //bonus points here should be sum of both boss types multipled by the lords arena multiplier
                     if (points > 1)
-                        points += points * objWindow.oneHourOverrideAssets["lordsArenaMultiplier"];
+                        points += (int)(points * objWindow.oneHourMultiplicativeBonus["lordsArenaMultiplier"]);
                 }
                 else
                 {
@@ -3648,7 +3648,7 @@ namespace KhTracker
 
                     //bonus points here should be sum of both boss types multipled by the BC double arena multiplier
                     if (points > 1)
-                        points += points * objWindow.oneHourOverrideAssets["bcDoubleFightMultiplier"];
+                        points += (int)(points * objWindow.oneHourMultiplicativeBonus["bcDoubleFightMultiplier"]);
                 }
                 else
                 {
@@ -3838,23 +3838,23 @@ namespace KhTracker
                         switch (bossType)
                         {
                             case "boss_as":
-                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["asArenaBonus"];
                                 break;
                             case "boss_datas":
                                 if (boss.Contains("Final Xemnas"))
                                 {
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonusPoints"];
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataXemnasArenaBonus"];
                                 }
                                 else if (boss != "Xemnas (Data)")
                                 {
-                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonusPoints"];
+                                    bonuspoints = objWindow.oneHourOverrideBonus["dataArenaBonus"];
                                 }
                                 break;
                             case "boss_sephi":
-                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["sephiArenaBonus"];
                                 break;
                             case "boss_terra":
-                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonusPoints"];
+                                bonuspoints = objWindow.oneHourOverrideBonus["terraArenaBonus"];
                                 break;
                             case "boss_other":
                                 if (boss == "Final Xemnas")

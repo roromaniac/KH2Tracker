@@ -26,11 +26,11 @@ namespace KhTracker
         public int objectiveCount { get; set; } = 25;
         public int gridHeight { get; set; } = 5;
         public int gridWidth { get; set; } = 5;
-        public int asArenaBonusPoints { get; set; } = 0;
-        public int dataArenaBonusPoints { get; set; } = 0;
-        public int sephiArenaBonusPoints { get; set; } = 0;
-        public int terraArenaBonusPoints { get; set; } = 0;
-        public int dataXemnasArenaBonusPoints { get; set; } = 0;
+        public int asArenaBonus { get; set; } = 0;
+        public int dataArenaBonus { get; set; } = 0;
+        public int sephiArenaBonus { get; set; } = 0;
+        public int terraArenaBonus { get; set; } = 0;
+        public int dataXemnasArenaBonus { get; set; } = 0;
         public int pirateMinuteFightBonus { get; set; } = 0;
         public int missionsBonus { get; set; } = 0;
         public int summitBonus { get; set; } = 0;
@@ -349,11 +349,11 @@ namespace KhTracker
             objectiveCount = 7,
             gridHeight = 2,
             gridWidth = 4,
-            asArenaBonusPoints = 10,
-            dataArenaBonusPoints = 20,
-            sephiArenaBonusPoints = 30,
-            terraArenaBonusPoints = 50,
-            dataXemnasArenaBonusPoints = 40,
+            asArenaBonus = 10,
+            dataArenaBonus = 20,
+            sephiArenaBonus = 30,
+            terraArenaBonus = 50,
+            dataXemnasArenaBonus = 40,
             pirateMinuteFightBonus = 10,
             missionsBonus = 0,
             summitBonus = 10,
@@ -838,11 +838,11 @@ namespace KhTracker
                     oneHourOverrideAssets.Remove(item.Key);
                 }
 
-                oneHourOverrideBonus.Add("asArenaBonusPoints", Int32.Parse(overrideObject.asArenaBonusPoints.ToString()));
-                oneHourOverrideBonus.Add("dataArenaBonusPoints", Int32.Parse(overrideObject.dataArenaBonusPoints.ToString()));
-                oneHourOverrideBonus.Add("sephiArenaBonusPoints", Int32.Parse(overrideObject.sephiArenaBonusPoints.ToString()));
-                oneHourOverrideBonus.Add("terraArenaBonusPoints", Int32.Parse(overrideObject.terraArenaBonusPoints.ToString()));
-                oneHourOverrideBonus.Add("dataXemnasArenaBonusPoints", Int32.Parse(overrideObject.dataXemnasArenaBonusPoints.ToString()));
+                oneHourOverrideBonus.Add("asArenaBonus", Int32.Parse(overrideObject.asArenaBonus.ToString()));
+                oneHourOverrideBonus.Add("dataArenaBonus", Int32.Parse(overrideObject.dataArenaBonus.ToString()));
+                oneHourOverrideBonus.Add("sephiArenaBonus", Int32.Parse(overrideObject.sephiArenaBonus.ToString()));
+                oneHourOverrideBonus.Add("terraArenaBonus", Int32.Parse(overrideObject.terraArenaBonus.ToString()));
+                oneHourOverrideBonus.Add("dataXemnasArenaBonus", Int32.Parse(overrideObject.dataXemnasArenaBonus.ToString()));
 
                 oneHourOverrideBonus.Add("pirateMinuteFightBonus", Int32.Parse(overrideObject.pirateMinuteFightBonus.ToString()));
                 oneHourOverrideBonus.Add("missionsBonus", Int32.Parse(overrideObject.missionsBonus.ToString()));
