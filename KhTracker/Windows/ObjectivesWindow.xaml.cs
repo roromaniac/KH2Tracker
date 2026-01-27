@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
@@ -1331,7 +1332,11 @@ namespace KhTracker
                         }
                     }
                 }
-                bool winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
+                bool winCondition = false;
+                if (data.oneHourMode)
+                    winCondition = oneHourObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= oneHourObjGridSettings["pointsToWin"];
+                else if (data.dartsMode)
+                    winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
                 for (int i = 0; i < numRows; i++)
                 {
                     for (int j = 0; j < numColumns; j++)

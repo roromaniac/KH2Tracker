@@ -1963,7 +1963,8 @@ namespace KhTracker
             // manual data change needed to regenerate the card
             data.dartsMode = DartsOption.IsChecked;
             data.oneHourMode = OneHourOption.IsChecked;
-            objWindow.GenerateCustomObjGrid();
+            if (data.seedLoaded)
+                objWindow.GenerateCustomObjGrid();
         }
         private void DartsToggle(object sender, RoutedEventArgs e)
         {
@@ -1979,7 +1980,8 @@ namespace KhTracker
             // manual data change needed to regenerate the card
             data.dartsMode = DartsOption.IsChecked;
             data.oneHourMode = OneHourOption.IsChecked;
-            objWindow.GenerateCustomObjGrid();
+            if (data.seedLoaded)
+                objWindow.GenerateCustomObjGrid();
         }
 
         private void Custom1HRAssetsToggle(object sender, RoutedEventArgs e)
