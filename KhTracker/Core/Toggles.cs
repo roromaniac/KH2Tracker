@@ -1960,6 +1960,10 @@ namespace KhTracker
             OneHourOption.IsChecked = toggle;
             Properties.Settings.Default.DartsModeToggle = Properties.Settings.Default.DartsModeToggle && !toggle ? true : false;
             DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
+            // manual data change needed to regenerate the card
+            data.dartsMode = DartsOption.IsChecked;
+            data.oneHourMode = OneHourOption.IsChecked;
+            objWindow.GenerateCustomObjGrid();
         }
         private void DartsToggle(object sender, RoutedEventArgs e)
         {
@@ -1972,6 +1976,10 @@ namespace KhTracker
             DartsOption.IsChecked = toggle;
             Properties.Settings.Default.OneHourModeToggle = Properties.Settings.Default.OneHourModeToggle && !toggle ? true : false;
             OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
+            // manual data change needed to regenerate the card
+            data.dartsMode = DartsOption.IsChecked;
+            data.oneHourMode = OneHourOption.IsChecked;
+            objWindow.GenerateCustomObjGrid();
         }
 
         private void Custom1HRAssetsToggle(object sender, RoutedEventArgs e)
@@ -1992,6 +2000,7 @@ namespace KhTracker
                 {
                     //handled in MainWindow.xaml.cs
                     Set1HRAssetFilepath();
+                    objWindow.GenerateCustomObjGrid();
                     return;
                 }
             }
@@ -2005,7 +2014,8 @@ namespace KhTracker
                 string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.OneHourModeAssetsFilepath));
                 string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.OneHourModeAssetsFilepath);
                 Custom1HRAssetsOption.Header = $"Custom 1Hour Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
-            }  
+            }
+            objWindow.GenerateCustomObjGrid();
         }
 
         private void CustomDartsAssetsToggle(object sender, RoutedEventArgs e)
@@ -2026,6 +2036,7 @@ namespace KhTracker
                 {
                     //handled in MainWindow.xaml.cs
                     SetDartsAssetFilepath();
+                    objWindow.GenerateCustomObjGrid();
                     return;
                 }
             }
@@ -2039,7 +2050,8 @@ namespace KhTracker
                 string lastDirectory = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(Properties.Settings.Default.DartsModeAssetsFilepath));
                 string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.DartsModeAssetsFilepath);
                 CustomDartsAssetsOption.Header = $"Custom Darts Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
-            }     
+            }
+            objWindow.GenerateCustomObjGrid();
         }
     }
 
