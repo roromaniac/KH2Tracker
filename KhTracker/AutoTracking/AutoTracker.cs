@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -4082,15 +4082,31 @@ namespace KhTracker
             return (int)result;
         }
 
-        //public void SetOneHourMarks(int marks)
-        //{
-        //    return;
-        //    if (!data.oneHourMode || memory == null)
-        //        return;
+        public void SetCompletionMarks(int marks)
+        {
+            if (!data.oneHourMode || memory == null)
+                return;
 
-        //    int address = (save + 0x363D) + ADDRESS_OFFSET;
-        //    memory.WriteMem(address, marks);
-        //}
+            int address = (save + 0x363D) + ADDRESS_OFFSET;
+            memory.WriteMem(address, marks);
+
+            int customObjectiveCountAddress = (save + 0x365B) + ADDRESS_OFFSET;
+            memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
+        }
+
+        /// <summary>
+        /// Writes objectivesNeed to Save+0x365B (CustomObjectiveCount) for Lua.
+        /// Only runs in 1hr mode when hooked to the game. Value is clamped to 0–255.
+        /// </summary>
+        public void SetCustomObjectiveCount(int count)
+        {
+            if (!data.oneHourMode || memory == null)
+                return;
+
+            int clamped = Math.Min(255, Math.Max(0, count));
+            int address = (save + 0x365B) + ADDRESS_OFFSET;
+            memory.WriteMem(address, clamped);
+        }
 
         //progression hints - compare last saved progression point
         //must be checked this way cause of OnTimedEvent

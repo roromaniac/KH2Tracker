@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -1181,10 +1181,10 @@ namespace KhTracker
             }
 
             //visualize hint in gridtracker
-            if (data.codes.bossNameConversion.Keys.Contains(newBoss) && data.codes.bossNameConversion.Keys.Contains(originalBoss))
+            if (data.codes.BossNameConversionContainsKey(newBoss) && data.codes.BossNameConversionContainsKey(originalBoss))
             {
 
-                string gridNewBoss = data.codes.bossNameConversion[newBoss];
+                string gridNewBoss = data.codes.GetBossNameConversion(newBoss);
 
                 // handle Pete since he has 2 versions
                 if (newBoss == "Pete")
@@ -1192,7 +1192,7 @@ namespace KhTracker
                     gridNewBoss = data.BossList.ContainsValue("Pete OC II") ? "OCPete" : "DCPete";
                 }
 
-                string gridOriginalBoss = data.codes.bossNameConversion[originalBoss];
+                string gridOriginalBoss = data.codes.GetBossNameConversion(originalBoss);
 
                 // handle boss hint on grid tracker
                 Handle_GridTrackerHints_BE(gridOriginalBoss, gridNewBoss, window.gridWindow.TelevoIconsOption.IsChecked ? "Min" : "Old");

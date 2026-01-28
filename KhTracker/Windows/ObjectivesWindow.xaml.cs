@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -41,6 +41,7 @@ namespace KhTracker
         public double lordsArenaMultiplier { get; set; } = 0.0;
         public int maxFormObjectivesPerForm { get; set; } = 1;
         public int dataAndASCanBeObjectives { get; set; } = 0;
+        public int objectivesToWin { get; set; } = 0;
         public int pointsToWin { get; set; } = 66;
         public Dictionary<string, string> oneHourReplacements { get; set; } = new Dictionary<string, string>();
     }
@@ -859,6 +860,7 @@ namespace KhTracker
                 oneHourObjGridSettings.Add("objectiveCount", Int32.Parse(overrideObject.objectiveCount.ToString()));
                 oneHourObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 oneHourObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
+                objectivesNeed = Int32.Parse(overrideObject.objectivesToWin.ToString());
 
                 //if(overrideObject.ContainsKey("bossHintingHome"))
                 //{
@@ -1363,7 +1365,7 @@ namespace KhTracker
                 CollectedValue.Text = cgmPoints.ToString();
                 window.UpdatePointScore(0);
                 Console.WriteLine("writing marks to game | " + marksTotal);
-                //window.SetOneHourMarks(marksTotal);
+                window.SetCompletionMarks(marksTotal);
             }
         }
 

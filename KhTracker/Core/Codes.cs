@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -1460,7 +1460,6 @@ namespace KhTracker
             {"Cloud", "Cloud"},
             {"Cloud (1)", "Cloud"},
             {"Cloud (2)", "Cloud"},
-            {"Jafar (Cloud)", "Cloud"},
             {"Dark Thorn", "DarkThorn"},
             {"Demyx", "HBDemyx"},
             {"Demyx (Data)", "DataDemyx"},
@@ -1479,7 +1478,6 @@ namespace KhTracker
             {"Hercules", "Hercules"},
             {"Hostile Program", "HostileProgram"},
             {"Hydra", "Hydra"},
-            {"Hydra (Hercules)", "Hercules"},
             {"Jafar", "GenieJafar"},
             {"Larxene", "Larxene"},
             {"Larxene (Data)", "LarxeneData"},
@@ -1517,10 +1515,8 @@ namespace KhTracker
             {"Sephiroth", "Sephiroth"},
             {"Setzer", "Setzer"},
             {"Shadow Stalker", "ShadowStalker"},
-            {"Shadow Stalker (Tifa)", "Tifa"},
             {"Shan-Yu", "ShanYu"},
             {"Storm Rider", "StormRider"},
-            {"Storm Rider (Yuffie)", "Yuffie"},
             {"Terra", "LingeringWill"},
             {"The Beast", "Beast"},
             {"The Experiment", "Experiment"},
@@ -1529,7 +1525,6 @@ namespace KhTracker
             {"Tifa (1)", "Tifa"},
             {"Tifa (2)", "Tifa"},
             {"Twilight Thorn", "TwilightThorn"},
-            {"Twilight Thorn (Leon)", "Leon"},
             {"Vexen", "Vexen"},
             {"Vexen (Data)", "VexenData"},
             {"Vivi", "Vivi"},
@@ -1566,5 +1561,54 @@ namespace KhTracker
             { "Storm Rider", "Yuffie" },
             { "Grim Reaper II", "Leon" }
         };
+
+        public string GetBossNameConversion(string bossName)
+        {
+            // Check if bossName matches pattern "X (Y)" where X is in oneHourReplacements
+            if (oneHourReplacements != null && oneHourReplacements.Count > 0)
+            {
+                foreach (var replacement in oneHourReplacements)
+                {
+                    string pattern = replacement.Key + " (" + replacement.Value + ")";
+                    if (bossName == pattern)
+                    {
+                        // If pattern matches, return the conversion for the replacement value (Y)
+                        if (bossNameConversion.ContainsKey(replacement.Value))
+                        {
+                            return bossNameConversion[replacement.Value];
+                        }
+                        return null;
+                    }
+                }
+            }
+
+            // Fall back to normal dictionary lookup
+            if (bossNameConversion.ContainsKey(bossName))
+            {
+                return bossNameConversion[bossName];
+            }
+
+            return null;
+        }
+
+        public bool BossNameConversionContainsKey(string bossName)
+        {
+            // Check if bossName matches pattern "X (Y)" where X is in oneHourReplacements
+            if (oneHourReplacements != null && oneHourReplacements.Count > 0)
+            {
+                foreach (var replacement in oneHourReplacements)
+                {
+                    string pattern = replacement.Key + " (" + replacement.Value + ")";
+                    if (bossName == pattern)
+                    {
+                        // If pattern matches, check if the replacement value exists in bossNameConversion
+                        return bossNameConversion.ContainsKey(replacement.Value);
+                    }
+                }
+            }
+
+            // Fall back to normal dictionary check
+            return bossNameConversion.ContainsKey(bossName);
+        }
     }
 }
