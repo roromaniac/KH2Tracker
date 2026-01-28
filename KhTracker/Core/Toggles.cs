@@ -2002,7 +2002,8 @@ namespace KhTracker
                 {
                     //handled in MainWindow.xaml.cs
                     Set1HRAssetFilepath();
-                    objWindow.GenerateCustomObjGrid();
+                    if (data.seedLoaded)
+                        objWindow.GenerateCustomObjGrid();
                     return;
                 }
             }
@@ -2017,7 +2018,8 @@ namespace KhTracker
                 string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.OneHourModeAssetsFilepath);
                 Custom1HRAssetsOption.Header = $"Custom 1Hour Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
             }
-            objWindow.GenerateCustomObjGrid();
+            if (data.seedLoaded)
+                objWindow.GenerateCustomObjGrid();
         }
 
         private void CustomDartsAssetsToggle(object sender, RoutedEventArgs e)
@@ -2038,7 +2040,8 @@ namespace KhTracker
                 {
                     //handled in MainWindow.xaml.cs
                     SetDartsAssetFilepath();
-                    objWindow.GenerateCustomObjGrid();
+                    if (data.seedLoaded)
+                        objWindow.GenerateCustomObjGrid();
                     return;
                 }
             }
@@ -2053,7 +2056,8 @@ namespace KhTracker
                 string fileName = System.IO.Path.GetFileName(Properties.Settings.Default.DartsModeAssetsFilepath);
                 CustomDartsAssetsOption.Header = $"Custom Darts Assets:  {System.IO.Path.Combine(lastDirectory, fileName)}";
             }
-            objWindow.GenerateCustomObjGrid();
+            if (data.seedLoaded)
+                objWindow.GenerateCustomObjGrid();
         }
     }
 

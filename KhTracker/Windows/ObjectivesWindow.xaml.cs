@@ -795,7 +795,7 @@ namespace KhTracker
                 dartsOverrideAssets.Clear();
                 dartsObjGridSettings.Clear();
 
-                dartsOverrideAssets = overrideObject.objectivePointList;
+                dartsOverrideAssets = overrideObject.objectivePointList ?? dartsAssets.objectivePointList;
 
                 // only show positive point objectives
                 foreach (var item in dartsOverrideAssets.Where(kvp => kvp.Value <= 0).ToList())
@@ -832,7 +832,7 @@ namespace KhTracker
                     data.codes.oneHourReplacements = overrideObject.oneHourReplacements;
                 }
 
-                oneHourOverrideAssets = overrideObject.objectivePointList;
+                oneHourOverrideAssets = overrideObject.objectivePointList ?? oneHourAssets.objectivePointList;
 
                 // only show positive point objectives
                 foreach (var item in oneHourOverrideAssets.Where(kvp => kvp.Value <= 0).ToList())
