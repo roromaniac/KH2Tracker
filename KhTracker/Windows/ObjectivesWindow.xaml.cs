@@ -1623,7 +1623,8 @@ namespace KhTracker
         private void ObjPointsOrderToggle(bool toggle)
         {
             Properties.Settings.Default.ObjectivePointsOrder = toggle;
-            GenerateCustomObjGrid(true);
+            if (data.seedLoaded && !data.objectiveMode)
+                GenerateCustomObjGrid(true);
         }
     }
 }
