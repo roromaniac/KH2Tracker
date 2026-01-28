@@ -2239,8 +2239,7 @@ namespace KhTracker
 
                                 if (data.oneHourMode)
                                 {
-                                    if (data.oneHourMode)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
                                 }
                             }
                             break;
@@ -4092,20 +4091,6 @@ namespace KhTracker
 
             int customObjectiveCountAddress = (save + 0x365B) + ADDRESS_OFFSET;
             memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
-        }
-
-        /// <summary>
-        /// Writes objectivesNeed to Save+0x365B (CustomObjectiveCount) for Lua.
-        /// Only runs in 1hr mode when hooked to the game. Value is clamped to 0–255.
-        /// </summary>
-        public void SetCustomObjectiveCount(int count)
-        {
-            if (!data.oneHourMode || memory == null)
-                return;
-
-            int clamped = Math.Min(255, Math.Max(0, count));
-            int address = (save + 0x365B) + ADDRESS_OFFSET;
-            memory.WriteMem(address, clamped);
         }
 
         //progression hints - compare last saved progression point

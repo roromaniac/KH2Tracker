@@ -1958,7 +1958,7 @@ namespace KhTracker
         {
             Properties.Settings.Default.OneHourModeToggle = toggle;
             OneHourOption.IsChecked = toggle;
-            Properties.Settings.Default.DartsModeToggle = Properties.Settings.Default.DartsModeToggle && !toggle ? true : false;
+            Properties.Settings.Default.DartsModeToggle = Properties.Settings.Default.DartsModeToggle && !toggle;
             DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
             // manual data change needed to regenerate the card
             data.dartsMode = DartsOption.IsChecked;
@@ -1975,7 +1975,7 @@ namespace KhTracker
         {
             Properties.Settings.Default.DartsModeToggle = toggle;
             DartsOption.IsChecked = toggle;
-            Properties.Settings.Default.OneHourModeToggle = Properties.Settings.Default.OneHourModeToggle && !toggle ? true : false;
+            Properties.Settings.Default.OneHourModeToggle = Properties.Settings.Default.OneHourModeToggle && !toggle;
             OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
             // manual data change needed to regenerate the card
             data.dartsMode = DartsOption.IsChecked;

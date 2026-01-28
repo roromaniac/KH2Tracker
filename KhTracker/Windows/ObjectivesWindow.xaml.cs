@@ -563,6 +563,14 @@ namespace KhTracker
             TotalValue.Text = objectivesNeed.ToString();
             CollectedValue.Text = "0";
 
+            //disable custom game modes because we have an objectives seed
+            window.OneHourOption.IsEnabled = false;
+            window.DartsOption.IsEnabled = false;
+            window.OneHourOption.IsChecked = false;
+            window.DartsOption.IsChecked = false;
+            data.oneHourMode = false;
+            data.dartsMode = false;
+
             //build asset list
             assets.Clear();
             List<Dictionary<string, object>> objectives = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(hintObject["objective_locations"].ToString());
@@ -866,6 +874,12 @@ namespace KhTracker
                 //{
                 //    data.BossHomeHinting = overrideObject["bossHintingHome"].ToString().ToLower() == "true";
                 //}
+            }
+            else
+            {
+                //no custom game mode enabled, so reset
+                UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
+                return;
             }
 
             //build asset list

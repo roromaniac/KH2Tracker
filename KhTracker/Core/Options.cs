@@ -1,25 +1,25 @@
-﻿using System;
+﻿using KhTracker.Hotkeys;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.IO;
-using System.IO.Compression;
-using Microsoft.Win32;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using Path = System.IO.Path;
-using KhTracker.Hotkeys;
-using System.Windows.Input;
-using MessageForm = System.Windows.Forms;
-using System.Xml.Linq;
-using System.Windows.Documents;
-using System.Text.Json.Serialization;
-using System.Security.Policy;
 using System.Windows.Threading;
+using System.Xml.Linq;
+using MessageForm = System.Windows.Forms;
+using Path = System.IO.Path;
 
 namespace KhTracker
 {
@@ -1701,6 +1701,8 @@ namespace KhTracker
             objWindow.endCorChest = false;
             objWindow.objectivesNeed = 0;
             objWindow.UpdateGridBanner(false, "NO OBJECTIVES TO LOAD", "/", "Banner_Red");
+            OneHourOption.IsEnabled = true;
+            DartsOption.IsEnabled = true;
 
             //prog boss hint stuff
             BossHintTextMiddle.Text = "";
