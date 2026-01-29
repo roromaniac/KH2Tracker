@@ -2289,17 +2289,25 @@ namespace KhTracker
                         case 11:
                             if (data.oneHourMode)
                             {
-                                if (data.earlyThroneRoom == 1)
+                                if (data.earlyThroneRoom == 0)
                                 {
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
                                     data.earlyThroneRoom = 2;
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
-                                else if (data.earlyThroneRoom == 0)
+                                else if (data.earlyThroneRoom == 1)
                                 {
-                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
-                                    data.earlyThroneRoom = 2;
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"]);
+                                    data.earlyThroneRoom = 3;
+                                    data.eventLog.Add(eventTuple);
+                                    return;
+                                }
+                                else if (data.earlyThroneRoom == 2)
+                                {
+                                    //throne room normally after the early bonus
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["throneRoomBonus"] - objWindow.oneHourOverrideBonus["throneRoomBonusEarly"]);
+                                    data.earlyThroneRoom = 3;
                                     data.eventLog.Add(eventTuple);
                                     return;
                                 }
@@ -4089,7 +4097,7 @@ namespace KhTracker
             int address = (save + 0x363D) + ADDRESS_OFFSET;
             memory.WriteMem(address, marks);
 
-            int customObjectiveCountAddress = (save + 0x365B) + ADDRESS_OFFSET;
+            int customObjectiveCountAddress = 0x801000;
             memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
         }
 
