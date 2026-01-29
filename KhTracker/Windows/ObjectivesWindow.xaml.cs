@@ -1290,6 +1290,7 @@ namespace KhTracker
         {
             if (objectivesNeed != 0)
             {
+                int marksTotal = 0;
                 List<Tuple<int, int>> completeSquares = new List<Tuple<int, int>>();
                 for (int i = 0; i < numRows; i++)
                 {
@@ -1298,6 +1299,7 @@ namespace KhTracker
                         if (buttons[i, j] != null && buttons[i, j].IsChecked == true)
                         {
                             completeSquares.Add(Tuple.Create(i, j));
+                            marksTotal++;
                         }
                     }
                 }
@@ -1323,15 +1325,16 @@ namespace KhTracker
                 }
 
                 CollectedValue.Text = completeSquares.Count.ToString();
+                Console.WriteLine("writing marks to game | " + marksTotal);
+                window.SetCompletionMarks(marksTotal);
             }
-            // if objectives aren't measured by count, they are measured by points in a custom game mode
+            // handle custom game stuff (one hour objs wincon handled by the if statement before this)
             else
             {
                 if (objGrid == null)
                     return;
 
                 int collectedPoints = 0;
-                int marksTotal = 0;
                 for (int i = 0; i < numRows; i++)
                 {
                     for (int j = 0; j < numColumns; j++)
@@ -1343,15 +1346,11 @@ namespace KhTracker
                                 collectedPoints += dartsOverrideAssets[button.Tag.ToString().Remove(0, 8)];
                             else
                                 collectedPoints += oneHourOverrideAssets[button.Tag.ToString().Remove(0, 8)];
-
-                            marksTotal++;
                         }
                     }
                 }
                 bool winCondition = false;
-                if (data.oneHourMode)
-                    winCondition = oneHourObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= oneHourObjGridSettings["pointsToWin"];
-                else if (data.dartsMode)
+                if (data.dartsMode)
                     winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
                 for (int i = 0; i < numRows; i++)
                 {
@@ -1377,10 +1376,8 @@ namespace KhTracker
 
                 cgmPoints = collectedPoints;
                 CollectedValue.Text = cgmPoints.ToString();
-                window.UpdatePointScore(0);
-                Console.WriteLine("writing marks to game | " + marksTotal);
-                window.SetCompletionMarks(marksTotal);
             }
+            window.UpdatePointScore(0);
         }
 
         public void SetColorForButton(Brush buttonBackground, Color newColor)
