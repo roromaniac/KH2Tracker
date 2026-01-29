@@ -817,17 +817,19 @@ namespace KhTracker
                 dartsObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 dartsObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
                 dartsObjGridSettings.Add("pointsToWin", Int32.Parse(overrideObject.pointsToWin.ToString()));
+                // remove raw objective counts
+                objectivesNeed = 0;
 
                 // handle darts title
-                TotalValue.Text = dartsObjGridSettings["pointsToWin"].ToString();
-                CollectedValue.Text = "0";
+                if (dartsObjGridSettings["pointsToWin"] > 0)
+                {
+                    TotalValue.Text = dartsObjGridSettings["pointsToWin"].ToString();
+                    CollectedValue.Text = "0";
+                }
 
             }
             else if (data.oneHourMode)
             {
-                //reset banner visibility
-                UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
-
                 //override setup
                 oneHourOverrideAssets.Clear();
                 oneHourOverrideBonus.Clear();
@@ -869,6 +871,16 @@ namespace KhTracker
                 oneHourObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 oneHourObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
                 objectivesNeed = Int32.Parse(overrideObject.objectivesToWin.ToString());
+
+                //handle 1 hour title
+                if (objectivesNeed > 0)
+                {
+                    TotalValue.Text = objectivesNeed.ToString();
+                    CollectedValue.Text = "0";
+                }
+
+                //reset banner visibility
+                UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
 
                 //if(overrideObject.ContainsKey("bossHintingHome"))
                 //{
@@ -1133,7 +1145,7 @@ namespace KhTracker
             //Banner Visibility
             if (showBanner)
             {
-                if (new[] { "1HROVERRIDE", }.Contains(textIcon))
+                if (new[] { "1HROVERRIDE", }.Contains(textIcon) && objectivesNeed == 0)
                 {
                     GridTextHeader.Height = new GridLength(0.15, GridUnitType.Star);
                     objBannerIconL.Width = new GridLength(0.5, GridUnitType.Star);

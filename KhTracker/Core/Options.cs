@@ -1362,6 +1362,12 @@ namespace KhTracker
                 if (objWindow.objGrid != null)
                     objWindow.objGrid.Children.Clear();
 
+                // restore the custom game mode checkmarks that might have been removed upon loading objectives seed prior
+                // when an objectives seed is loaded we disable the custom game modes and checkmarks, but keep the custom game
+                // mode settings in properties so that we can restore them AFTER playing an objectives seed
+                OneHourOption.IsChecked = Properties.Settings.Default.OneHourModeToggle;
+                DartsOption.IsChecked = Properties.Settings.Default.DartsModeToggle;
+
                 if (OneHourOption.IsChecked)
                 {
                     data.oneHourMode = true;
