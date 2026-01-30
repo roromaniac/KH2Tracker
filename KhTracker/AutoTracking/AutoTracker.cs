@@ -2238,9 +2238,7 @@ namespace KhTracker
                                 newProg = 2;
 
                                 if (data.oneHourMode)
-                                {
                                     UpdatePointScore(objWindow.oneHourOverrideBonus["missionsBonus"]);
-                                }
                             }
                             break;
                         case 3:
@@ -2256,20 +2254,14 @@ namespace KhTracker
                             {
                                 newProg = 5;
                                 if (data.oneHourMode)
-                                {
-                                    if (data.oneHourMode)
-                                        UpdatePointScore(objWindow.oneHourOverrideBonus["summitBonus"]);
-                                }
+                                    UpdatePointScore(objWindow.oneHourOverrideBonus["summitBonus"]);
                             }
                             if (wID1 == 76 && wCom == 1) // Riku
                             {
-                                if (data.oneHourMode || data.dartsMode)
-                                {
-                                    UpdateSupportingTrackers("Riku");
-                                    UpdateObjectiveTracker("Riku");
-                                    data.eventLog.Add(eventTuple);
-                                    return;
-                                }
+                                UpdateSupportingTrackers("Riku");
+                                UpdateObjectiveTracker("Riku");
+                                data.eventLog.Add(eventTuple);
+                                return;
                             }
                             break;
                         case 9:

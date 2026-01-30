@@ -1300,9 +1300,9 @@ namespace KhTracker
 
         public void checkNeeded()
         {
+            int marksTotal = 0;
             if (objectivesNeed != 0)
             {
-                int marksTotal = 0;
                 List<Tuple<int, int>> completeSquares = new List<Tuple<int, int>>();
                 for (int i = 0; i < numRows; i++)
                 {
@@ -1341,7 +1341,7 @@ namespace KhTracker
                 window.SetCompletionMarks(marksTotal);
             }
             // handle custom game stuff (one hour objs wincon handled by the if statement before this)
-            else
+            if (data.oneHourMode || data.dartsMode)
             {
                 if (objGrid == null)
                     return;
@@ -1364,6 +1364,8 @@ namespace KhTracker
                 bool winCondition = false;
                 if (data.dartsMode)
                     winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
+                else if (data.oneHourMode)
+                    winCondition = marksTotal >= objectivesNeed;
                 for (int i = 0; i < numRows; i++)
                 {
                     for (int j = 0; j < numColumns; j++)
@@ -1387,7 +1389,8 @@ namespace KhTracker
                 }
 
                 cgmPoints = collectedPoints;
-                CollectedValue.Text = cgmPoints.ToString();
+                if (data.dartsMode)
+                    CollectedValue.Text = cgmPoints.ToString();
             }
             window.UpdatePointScore(0);
         }
