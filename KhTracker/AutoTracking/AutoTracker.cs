@@ -3101,8 +3101,6 @@ namespace KhTracker
                         case 34:
                             if (wID1 == 157) // Twilight Thorn finish
                                 boss = "Twilight Thorn";
-                            if (data.oneHourMode)
-                                oneHourBoss = "Leon";
                             break;
                         case 3:
                             if (wID1 == 180) // Seifer Battle (Day 4)
@@ -3187,8 +3185,6 @@ namespace KhTracker
                             if (wID1 == 78) // Shadow Stalker
                             {
                                 boss = "Shadow Stalker";
-                                if (data.oneHourMode)
-                                    oneHourBoss = "Tifa";
                                 break;
                             }
                             if (wID1 == 79) // Dark Thorn finish
@@ -3217,11 +3213,7 @@ namespace KhTracker
                             break;
                         case 18:
                             if (wID1 == 171) // Hydra finish
-                            {
                                 boss = "Hydra";
-                                if (data.oneHourMode)
-                                    oneHourBoss = "Hercules";
-                            }
                             break;
                         case 19:
                             if (wID1 == 202) // Hades finish
@@ -3284,11 +3276,7 @@ namespace KhTracker
                             break;
                         case 5:
                             if (wID1 == 62) // Genie Jafar finish
-                            {
                                 boss = "Jafar";
-                                if (data.oneHourMode)
-                                    oneHourBoss = "Cloud";
-                            }
                             break;
                         case 33:
                             if (wID1 == 142) // Lexaeus finish
@@ -3313,11 +3301,7 @@ namespace KhTracker
                             break;
                         case 8:
                             if (wID1 == 79) // Storm Rider finish
-                            {
                                 boss = "Storm Rider";
-                                if (data.oneHourMode)
-                                    oneHourBoss = "Yuffie";
-                            }
                             break;
                         default:
                             break;
@@ -3405,11 +3389,7 @@ namespace KhTracker
                             break;
                         case 1:
                             if (wID1 == 54) // Grim Reaper 2 finish
-                            {
                                 boss = "Grim Reaper II";
-                                //if (data.oneHourMode)
-                                //    oneHourBoss = "Leon";
-                            }
                             break;
                         default:
                             break;
@@ -3491,6 +3471,15 @@ namespace KhTracker
                     break;
                 default:
                     break;
+            }
+
+            //handle one hour bosses
+            if (data.oneHourMode && boss != "None" && data.codes.oneHourReplacements != null)
+            {
+                if (data.codes.oneHourReplacements.TryGetValue(boss, out string replacement))
+                {
+                    oneHourBoss = replacement;
+                }
             }
 
             if (!usingSave)
