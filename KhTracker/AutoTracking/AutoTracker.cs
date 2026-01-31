@@ -90,6 +90,8 @@ namespace KhTracker
 
         private int objMarkLevel;
 
+        private int MessagePtr;
+
         private TornPageNew pages;
         public GridWindow gridWindow;
         public ObjectivesWindow objWindow;
@@ -147,6 +149,7 @@ namespace KhTracker
             0x0AB9078, //Death
             0x29F0998, //file Pointer
             0x0B627B4, //Cutscene Length (EGS 1.0.0.8)
+            0x2A0ED80, //HB Message Pointer (Hopefully)
         };
 
         private List<int> EpicOffUp1 = new List<int>()
@@ -161,6 +164,7 @@ namespace KhTracker
             0x0ABB2B8, //Death
             0x29F2CD8, //file Pointer
             0x0B649F4, //Cutscene Length (EGS 1.0.0.9)
+            0x2A110C0, //HB Message Pointer (Hopefully)
         };
 
         private List<int> EpicOffUp2 = new List<int>()
@@ -175,6 +179,7 @@ namespace KhTracker
             0x0ABB2F8, //Death
             0x29F2D18, //file Pointer
             0x0B64A34, //Cutscene Length (EGS 1.0.0.10)
+            0x2A11100, //HB Message Pointer 
         };
 
         private List<int> SteamOff = new List<int>()
@@ -189,6 +194,7 @@ namespace KhTracker
             0x0ABB7F8, //Death
             0x29F33D8, //file Pointer
             0x0B64F34, //Cutscene Length (Steam 1.0.0.1)
+            0x2A11600, //HB Message Pointer (Hopefully)
         };
 
         private List<int> SteamOffUp1 = new List<int>()
@@ -203,6 +209,7 @@ namespace KhTracker
             0x0ABB878, //Death
             0x29F3458, //file Pointer
             0x0B64FB4, //Cutscene Length (Steam 1.0.0.2)
+            0x2A11680, //HB Message Pointer
         };
 
         //use this when referenceing a pc offset from above
@@ -434,6 +441,8 @@ namespace KhTracker
                 PcOffsets[6] = PcOffsets[6] - 0x1000;
                 PcOffsets[7] = PcOffsets[7] - 0x1000;
                 PcOffsets[8] = PcOffsets[8] - 0x1000;
+                PcOffsets[9] = PcOffsets[9] - 0x1000;
+                PcOffsets[10] = PcOffsets[10] - 0x1000;
 
                 return;
             }
@@ -454,6 +463,7 @@ namespace KhTracker
                 PcOffsets[6] = PcOffsets[6] - 0x1000;
                 PcOffsets[7] = PcOffsets[7] - 0x1000;
                 PcOffsets[8] = PcOffsets[8] - 0x1000;
+                PcOffsets[10] = PcOffsets[10] - 0x1000;
 
                 return;
             }
@@ -999,6 +1009,39 @@ namespace KhTracker
 
             UpdateCollectedItems();
             DetermineItemLocations();
+
+            var _fetchPointer = BitConverter.ToInt64(memory.ReadMemory(PcOffsets[10], 0x08), 0x00);
+
+            if (_fetchPointer != 0x00)
+            {
+                var _calcOffset = (int)(_fetchPointer - memory.GetBaseAddress());
+                var _readIdentifier = Encoding.Default.GetString(memory.ReadMemory(_calcOffset + 0x14, 0x02));
+
+                if (_readIdentifier == "hb")
+                {
+                    if (MessagePtr == 0x00)
+                    {
+                        var _messageEntryCount = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x34, 0x04), 0x00);
+
+                        for (int i = 0; i < _messageEntryCount; i++)
+                        {
+                            var _fetchMessageID = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x38 + (0x08 * i), 0x04), 0x00);
+
+                            if (_fetchMessageID == 0x4F0F)
+                            {
+                                var _fetchMessagePtr = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x3C + (0x08 * i), 0x04), 0x00);
+                                MessagePtr = _calcOffset + _fetchMessagePtr + 0x30;
+                            }
+                        }
+                    }
+                }
+
+                else
+                    MessagePtr = 0x00;
+            }
+
+            else
+                MessagePtr = 0x00;
         }
 
         private void AutoSave(object sender, EventArgs e)
