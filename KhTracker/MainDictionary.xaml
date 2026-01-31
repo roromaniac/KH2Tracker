@@ -213,7 +213,8 @@
     <Image x:Key="Limit" 		        Source="Images\System\drive_growth\Limit.png"        x:Shared="false"/>
     <Image x:Key="Master" 		        Source="Images\System\drive_growth\Master.png"       x:Shared="false"/>
     <Image x:Key="Final" 			    Source="Images\System\drive_growth\Final.png"        x:Shared="false"/>
-    <Image x:Key="OneHour" 			    Source="Images\System\clock.png"        x:Shared="false"/>
+    <Image x:Key="OneHour" 			    Source="Images\System\clock.png"                     x:Shared="false"/>
+    <Image x:Key="Darts" 			    Source="Images\System\darts.png"                     x:Shared="false"/>
     
     <!--Image x:Key="Over_None" 			Source="Images\System\clock.png"        x:Shared="false"/-->
     <Image x:Key="Over_Cross" 			Source="Images\System\crossworld.png"           x:Shared="false"/>
