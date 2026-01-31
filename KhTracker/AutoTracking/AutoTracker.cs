@@ -463,6 +463,7 @@ namespace KhTracker
                 PcOffsets[6] = PcOffsets[6] - 0x1000;
                 PcOffsets[7] = PcOffsets[7] - 0x1000;
                 PcOffsets[8] = PcOffsets[8] - 0x1000;
+                PcOffsets[9] = PcOffsets[9] - 0x1000;
                 PcOffsets[10] = PcOffsets[10] - 0x1000;
 
                 return;
