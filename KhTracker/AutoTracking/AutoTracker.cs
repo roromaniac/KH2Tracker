@@ -1252,7 +1252,7 @@ namespace KhTracker
             UpdateCollectedItems();
             DetermineItemLocations();
 
-            var _fetchPointer = BitConverter.ToInt64(memory.ReadMemory(PcOffsets[10], 0x08), 0x00);
+            var _fetchPointer = BitConverter.ToInt64(memory.ReadMemory(PcOffsets[10], 0x08), 0x00) - 0x30;
 
             if (_fetchPointer != 0x00)
             {
@@ -4356,20 +4356,28 @@ namespace KhTracker
 
         public void SetCompletionMarks(int marks)
         {
-            if (!data.oneHourMode || memory == null)
+            if (memory == null)
                 return;
 
-            int address = (save + 0x363D) + ADDRESS_OFFSET;
-            memory.WriteMem(address, marks);
-
-            int customObjectiveCountAddress = 0x801000;
-            memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
-
-            if (MessagePtr != 0x00)
+            if (data.oneHourMode)
             {
-                var _fetchMessage = String.Format("{0} out of {1} collected.", marks, objWindow.objectivesNeed);
+                int address = (save + 0x363D) + ADDRESS_OFFSET;
+                memory.WriteMem(address, marks);
+
+                int customObjectiveCountAddress = 0x801000;
+                memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
+            }
+
+            if (MessagePtr != 0x00 && marks < objWindow.objectivesNeed)
+            {
+                var _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
                 memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
-            }    
+            }
+            else if (MessagePtr != 0x00 && marks >= objWindow.objectivesNeed)
+            {
+                var _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
+                memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
+            }
         }
 
         //progression hints - compare last saved progression point
