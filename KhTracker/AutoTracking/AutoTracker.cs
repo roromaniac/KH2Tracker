@@ -332,7 +332,7 @@ namespace KhTracker
 
         private int objMarkLevel;
 
-        private int MessagePtr;
+        private long MessagePtr;
 
         private TornPageNew pages;
         public GridWindow gridWindow;
@@ -1256,23 +1256,22 @@ namespace KhTracker
 
             if (_fetchPointer != 0x00)
             {
-                var _calcOffset = (int)(_fetchPointer - memory.GetBaseAddress());
-                var _readIdentifier = Encoding.Default.GetString(memory.ReadMemory(_calcOffset + 0x14, 0x02));
+                var _readIdentifier = Encoding.Default.GetString(memory.ReadMemory(_fetchPointer + 0x14, 0x02, true));
 
                 if (_readIdentifier == "hb")
                 {
                     if (MessagePtr == 0x00)
                     {
-                        var _messageEntryCount = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x34, 0x04), 0x00);
+                        var _messageEntryCount = BitConverter.ToInt32(memory.ReadMemory(_fetchPointer + 0x34, 0x04, true), 0x00);
 
                         for (int i = 0; i < _messageEntryCount; i++)
                         {
-                            var _fetchMessageID = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x38 + (0x08 * i), 0x04), 0x00);
+                            var _fetchMessageID = BitConverter.ToInt32(memory.ReadMemory(_fetchPointer + 0x38 + (0x08 * i), 0x04, true), 0x00);
 
                             if (_fetchMessageID == 0x4F0F)
                             {
-                                var _fetchMessagePtr = BitConverter.ToInt32(memory.ReadMemory(_calcOffset + 0x3C + (0x08 * i), 0x04), 0x00);
-                                MessagePtr = _calcOffset + _fetchMessagePtr + 0x30;
+                                var _fetchMessagePtr = BitConverter.ToInt32(memory.ReadMemory(_fetchPointer + 0x3C + (0x08 * i), 0x04, true), 0x00);
+                                MessagePtr = _fetchPointer + _fetchMessagePtr + 0x30;
                             }
                         }
                     }
@@ -4348,7 +4347,7 @@ namespace KhTracker
         }
 
         private int ReadPcPointer(int address)
-        {
+        { 
             long origAddress = BitConverter.ToInt64(memory.ReadMemory(address, 8), 0);
             long baseAddress = memory.GetBaseAddress();
             long result = origAddress - baseAddress;
@@ -4369,7 +4368,7 @@ namespace KhTracker
             if (MessagePtr != 0x00)
             {
                 var _fetchMessage = String.Format("{0} out of {1} collected.", marks, objWindow.objectivesNeed);
-                memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII());
+                memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
             }    
         }
 
