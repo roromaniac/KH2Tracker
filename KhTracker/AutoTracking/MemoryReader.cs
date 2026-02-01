@@ -44,7 +44,7 @@ namespace KhTracker
             Hooked = true;
         }
 
-        public byte[] ReadMemory(Int32 address, int bytesToRead, bool absolute = false)
+        public byte[] ReadMemory(Int64 address, int bytesToRead, bool absolute = false)
         {
             if (process.HasExited)
             {
@@ -63,7 +63,7 @@ namespace KhTracker
             return buffer;
         }
 
-        public void WriteMemory(Int32 address, byte[] valueToWrite, bool absolute = false)
+        public void WriteMemory(Int64 address, byte[] valueToWrite, bool absolute = false)
         {
             if (process.HasExited)
             {
