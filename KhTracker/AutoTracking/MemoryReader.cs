@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -44,7 +44,7 @@ namespace KhTracker
             Hooked = true;
         }
 
-        public byte[] ReadMemory(Int32 address, int bytesToRead)
+        public byte[] ReadMemory(Int64 address, int bytesToRead, bool absolute = false)
         {
             if (process.HasExited)
             {
@@ -58,9 +58,24 @@ namespace KhTracker
             if (PCSX2)
                 ReadProcessMemory((int)processHandle, address, buffer, buffer.Length, ref bytesRead);
             else
-                ReadProcessMemory((int)processHandle, processModule.BaseAddress.ToInt64() + address, buffer, buffer.Length, ref bytesRead);
+                ReadProcessMemory((int)processHandle, !absolute ? (processModule.BaseAddress.ToInt64() + address) : address, buffer, buffer.Length, ref bytesRead);
 
             return buffer;
+        }
+
+        public void WriteMemory(Int64 address, byte[] valueToWrite, bool absolute = false)
+        {
+            if (process.HasExited)
+            {
+                throw new Exception();
+            }
+            int bytesWritten = 0;
+            ProcessModule processModule = process.MainModule;
+
+            if (PCSX2)
+                WriteProcessMemory((int)processHandle, address, valueToWrite, valueToWrite.Length, ref bytesWritten);
+            else
+                WriteProcessMemory((int)processHandle, !absolute ? (processModule.BaseAddress.ToInt64() + address) : address, valueToWrite, valueToWrite.Length, ref bytesWritten);
         }
 
         public void WriteMem(Int32 address, int valueToWrite)
