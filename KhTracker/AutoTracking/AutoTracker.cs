@@ -391,7 +391,7 @@ namespace KhTracker
             0x0AB9078, //Death
             0x29F0998, //file Pointer
             0x0B627B4, //Cutscene Length (EGS 1.0.0.8)
-            0x2A0ED80, //HB Message Pointer (Hopefully)
+            0x2A0ED78, //HB Message Pointer (Hopefully)
         };
 
         private List<int> EpicOffUp1 = new List<int>()
@@ -406,7 +406,7 @@ namespace KhTracker
             0x0ABB2B8, //Death
             0x29F2CD8, //file Pointer
             0x0B649F4, //Cutscene Length (EGS 1.0.0.9)
-            0x2A110C0, //HB Message Pointer (Hopefully)
+            0x2A110B8, //HB Message Pointer (Hopefully)
         };
 
         private List<int> EpicOffUp2 = new List<int>()
@@ -421,7 +421,7 @@ namespace KhTracker
             0x0ABB2F8, //Death
             0x29F2D18, //file Pointer
             0x0B64A34, //Cutscene Length (EGS 1.0.0.10)
-            0x2A11100, //HB Message Pointer 
+            0x2A110F8, //HB Message Pointer 
         };
 
         private List<int> SteamOff = new List<int>()
@@ -436,7 +436,7 @@ namespace KhTracker
             0x0ABB7F8, //Death
             0x29F33D8, //file Pointer
             0x0B64F34, //Cutscene Length (Steam 1.0.0.1)
-            0x2A11600, //HB Message Pointer (Hopefully)
+            0x2A115F8, //HB Message Pointer (Hopefully)
         };
 
         private List<int> SteamOffUp1 = new List<int>()
@@ -451,7 +451,7 @@ namespace KhTracker
             0x0ABB878, //Death
             0x29F3458, //file Pointer
             0x0B64FB4, //Cutscene Length (Steam 1.0.0.2)
-            0x2A11680, //HB Message Pointer
+            0x2A11678, //HB Message Pointer
         };
 
         //use this when referenceing a pc offset from above
@@ -1256,9 +1256,9 @@ namespace KhTracker
 
             if (_fetchPointer != 0x00)
             {
-                var _readIdentifier = Encoding.Default.GetString(memory.ReadMemory(_fetchPointer + 0x14, 0x02, true));
+                var _readIdentifier = Encoding.Default.GetString(memory.ReadMemory(_fetchPointer + 0x14, 0x03, true));
 
-                if (_readIdentifier == "hb")
+                if (_readIdentifier == "sys")
                 {
                     if (MessagePtr == 0x00)
                     {
