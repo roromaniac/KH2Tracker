@@ -20,13 +20,22 @@ namespace KhTracker
             List<int> reportKeys = reports.Keys.Select(int.Parse).ToList();
             reportKeys.Sort();
 
+            // May be fewer worlds than reports for hinting; do not assume 1:1
             foreach (int report in reportKeys)
             {
-                var location = Codes.ConvertSeedGenName(reports[report.ToString()]["FoundIn"].ToString());
-                data.reportInformation.Add(new Tuple<string, string, int>("", "", -99));
-                data.reportLocations.Add(location);
+                if (reports[report.ToString()].ContainsKey("FoundIn"))
+                {
+                    var location = Codes.ConvertSeedGenName(reports[report.ToString()]["FoundIn"].ToString());
+                    data.reportInformation.Add(new Tuple<string, string, int>("", "", -99));
+                    data.reportLocations.Add(location);
+                }
+                else
+                {
+                    // fill with blank or fallback location if not present
+                    data.reportInformation.Add(new Tuple<string, string, int>("", "", -99));
+                    data.reportLocations.Add(""); 
+                }
             }
-
 
             //Joke JsmarteeHints test
             bool debug = false;
@@ -34,9 +43,10 @@ namespace KhTracker
             {
                 var random = new Random();
                 List<int> usedvalues = new List<int>();
-                for (int i = 1; i <= 13; i++) //do this for each of the 13 reports
+                // Use however many reports there actually are
+                int reportCount = reportKeys.Count;
+                for (int i = 1; i <= reportCount; i++)
                 {
-                    //get random number
                     int index = random.Next(JokeHints.Count);
 
                     //should never happen, but might as well make a failsafe
@@ -49,8 +59,8 @@ namespace KhTracker
 
                     //add joke hint to report
                     string joke = JokeHints[index];
-                    data.reportInformation.Add(new Tuple<string, string, int>(joke, joke, -99)); //-99 is used to define the report as a joke
-                    data.reportLocations.Add("Joke"); //location "Joke" used so that the tracker doesn't actually care where the hint is placed (doesn't matter for shan hints)
+                    data.reportInformation.Add(new Tuple<string, string, int>(joke, joke, -99));
+                    data.reportLocations.Add("Joke");
 
                     usedvalues.Add(index);
                 }
@@ -115,16 +125,35 @@ namespace KhTracker
             int synthCount = 0;
             foreach (var report in reportKeys)
             {
-                var world = Codes.ConvertSeedGenName(reports[report.ToString()]["World"].ToString());
-                if (data.UsingProgressionHints && !data.puzzlesOn && world.ToString().Contains("PuzzSynth"))
+                // may be fewer worlds than reports for hinting
+                if (reports[report.ToString()].ContainsKey("World"))
                 {
-                    synthCount++;
-                    continue;
+                    var world = Codes.ConvertSeedGenName(reports[report.ToString()]["World"].ToString());
+                    if (data.UsingProgressionHints && !data.puzzlesOn && world.ToString().Contains("PuzzSynth"))
+                    {
+                        synthCount++;
+                        continue;
+                    }
+                    var count = reports[report.ToString()]["Count"].ToString();
+
+                    // Defensive: use try/catch to avoid out-of-bounds/etc
+                    string location = "";
+                    try
+                    {
+                        if (reports[(report - synthCount).ToString()].ContainsKey("Location"))
+                            location = Codes.ConvertSeedGenName(reports[(report - synthCount).ToString()]["Location"].ToString());
+                    }
+                    catch { }
+
+                    data.reportInformation.Add(new Tuple<string, string, int>(null, world, int.Parse(count)));
+                    data.reportLocations.Add(location);
                 }
-                var count = reports[report.ToString()]["Count"].ToString();
-                var location = Codes.ConvertSeedGenName(reports[(report - synthCount).ToString()]["Location"].ToString());
-                data.reportInformation.Add(new Tuple<string, string, int>(null, world, int.Parse(count)));
-                data.reportLocations.Add(location);
+                else
+                {
+                    // fallback: just blank/filler for locationless reports
+                    data.reportInformation.Add(new Tuple<string, string, int>(null, "", 0));
+                    data.reportLocations.Add("");
+                }
             }
 
             //start adding score data
@@ -188,26 +217,34 @@ namespace KhTracker
             List<string> tempReportLocations = new List<string>();
             foreach (int report in reportKeys)
             {
-                string hinttext = reports[report.ToString()]["Text"].ToString();
+                string hinttext = "";
+                string hintworld = "";
+                string location = "";
                 int hintproofs = 0;
-                string hintworld = Codes.ConvertSeedGenName(reports[report.ToString()]["HintedWorld"].ToString());
-                string location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                if (reports[report.ToString()].ContainsKey("Text"))
+                    hinttext = reports[report.ToString()]["Text"].ToString();
+                if (reports[report.ToString()].ContainsKey("HintedWorld"))
+                    hintworld = Codes.ConvertSeedGenName(reports[report.ToString()]["HintedWorld"].ToString());
+                if (reports[report.ToString()].ContainsKey("Location"))
+                    location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
 
-                //turn proof names to value. con = 1 | non = 10 | peace = 100
-                List<string> hintprooflist = new List<string>(JsonSerializer.Deserialize<List<string>>(reports[report.ToString()]["ProofPath"].ToString()));
-                foreach (string proof in hintprooflist)
+                if (reports[report.ToString()].ContainsKey("ProofPath"))
                 {
-                    switch (proof)
+                    List<string> hintprooflist = new List<string>(JsonSerializer.Deserialize<List<string>>(reports[report.ToString()]["ProofPath"].ToString()));
+                    foreach (string proof in hintprooflist)
                     {
-                        case "Connection":
-                            hintproofs += 1;
-                            break;
-                        case "Nonexistence":
-                            hintproofs += 10;
-                            break;
-                        case "Peace":
-                            hintproofs += 100;
-                            break;
+                        switch (proof)
+                        {
+                            case "Connection":
+                                hintproofs += 1;
+                                break;
+                            case "Nonexistence":
+                                hintproofs += 10;
+                                break;
+                            case "Peace":
+                                hintproofs += 100;
+                                break;
+                        }
                     }
                 }
 
@@ -349,7 +386,9 @@ namespace KhTracker
                     // may be fewer worlds than reports for hinting
                     if (reports[report.ToString()].ContainsKey("World")) {
                         string worldstring = reports[report.ToString()]["World"].ToString();
-                        string location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                        string location = "";
+                        if (reports[report.ToString()].ContainsKey("Location"))
+                            location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
                         int dummyvalue = 0;
 
                         if (worldstring.StartsWith("Nothing_"))
@@ -373,6 +412,12 @@ namespace KhTracker
 
                         data.reportInformation.Add(new Tuple<string, string, int>(Codes.ConvertSeedGenName(worldstring), null, dummyvalue));
                         data.reportLocations.Add(location);
+                    }
+                    else
+                    {
+                        // fallback: empty slot for missing world
+                        data.reportInformation.Add(new Tuple<string, string, int>("", null, 0));
+                        data.reportLocations.Add("");
                     }
                 }
             }
@@ -436,9 +481,15 @@ namespace KhTracker
                 //get report info
                 foreach (var report in reportKeys)
                 {
-                    //get a boss
+                    if (keyList.Count == 0)
+                    {
+                        // fallback to blank
+                        data.reportInformation.Add(new Tuple<string, string, int>("", "", 0));
+                        data.reportLocations.Add("");
+                        continue;
+                    }
+
                     string boss = keyList[rand.Next(0, keyList.Count)];
-                    //get boss types
                     string origType = Codes.FindBossType(boss);
                     string replaceType = Codes.FindBossType(data.BossList[boss]);
 
@@ -486,9 +537,10 @@ namespace KhTracker
                         //for when boss is unchanged
                         bossHintType = -12346;
                     }
-                        
-                    //write info
-                    var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+
+                    string location = "";
+                    if (reports[report.ToString()].ContainsKey("Location"))
+                        location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
                     data.reportInformation.Add(new Tuple<string, string, int>(tmp_origBoss, tmp_replBoss, bossHintType));
                     data.reportLocations.Add(location);
 
@@ -502,9 +554,13 @@ namespace KhTracker
                 //dummy blank text for reports
                 foreach (var report in reportKeys)
                 {
-                    string worldstring = reports[report.ToString()]["World"].ToString();
+                    string worldstring = "";
+                    if (reports[report.ToString()].ContainsKey("World"))
+                        worldstring = reports[report.ToString()]["World"].ToString();
                     var worldhint = Codes.ConvertSeedGenName(worldstring);
-                    var location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
+                    string location = "";
+                    if (reports[report.ToString()].ContainsKey("Location"))
+                        location = Codes.ConvertSeedGenName(reports[report.ToString()]["Location"].ToString());
 
                     data.reportInformation.Add(new Tuple<string, string, int>(worldhint, "", -999));
                     data.reportLocations.Add(location);

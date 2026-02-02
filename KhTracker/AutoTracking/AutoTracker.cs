@@ -333,6 +333,7 @@ namespace KhTracker
         private int objMarkLevel;
 
         private long MessagePtr;
+        private bool firstGOAWriteMade = false;
 
         private TornPageNew pages;
         public GridWindow gridWindow;
@@ -1283,6 +1284,10 @@ namespace KhTracker
 
             else
                 MessagePtr = 0x00;
+
+            //update GoA text
+            if ((data.objectiveMode || data.oneHourMode) && !firstGOAWriteMade)
+                SetCompletionMarks(0);
         }
 
         private void AutoSave(object sender, EventArgs e)
@@ -4354,10 +4359,16 @@ namespace KhTracker
             return (int)result;
         }
 
+        private string originalMessageText = null;
+        private int lastMarksValue = 0;
+
         public void SetCompletionMarks(int marks)
         {
             if (memory == null)
                 return;
+
+            if (marks > 0)
+                firstGOAWriteMade = true;
 
             if (data.oneHourMode)
             {
@@ -4368,15 +4379,50 @@ namespace KhTracker
                 memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
             }
 
-            if (MessagePtr != 0x00 && marks < objWindow.objectivesNeed)
+            bool promiseCharmMissing = !HasPromiseCharm();
+
+            string _fetchMessage = "";
+            int currentCompletionMarks = 0;
+
+            try
             {
-                var _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
-                memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
+                int address = (save + 0x363D) + ADDRESS_OFFSET;
+                byte[] memData = memory.ReadMemory(address, 1);
+                if (memData != null && memData.Length > 0)
+                    currentCompletionMarks = memData[0];
             }
-            else if (MessagePtr != 0x00 && marks >= objWindow.objectivesNeed)
+            catch
             {
-                var _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
+                currentCompletionMarks = marks;
+            }
+
+            bool shouldHaveEnough = (marks >= objWindow.objectivesNeed) && data.objectiveMode;
+
+            if (marks < objWindow.objectivesNeed)
+                _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
+            else if (shouldHaveEnough && currentCompletionMarks < objWindow.objectivesNeed)
+                _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
+            if (promiseCharmMissing)
+            {
+                if (marks >= objWindow.objectivesNeed)
+                    _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
+                _fetchMessage += "\nPromise Charm MISSING.";
+            }
+
+            if (MessagePtr != 0x00 && _fetchMessage != "")
                 memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
+        }
+
+        private bool HasPromiseCharm()
+        {
+            try
+            {
+                byte[] data = memory.ReadMemory((save + 0x3694) + ADDRESS_OFFSET, 1);
+                return new BitArray(data)[0];
+            }
+            catch
+            {
+                return false;
             }
         }
 

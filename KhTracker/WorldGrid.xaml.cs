@@ -197,7 +197,7 @@ namespace KhTracker
                 window.SetWorldValue(MainWindow.data.WorldsData[worldName].value, window.GetPoints(worldName));
 
                 //remove ghost items as needed then update points score
-                if (worldName != "GoA" && !button.Name.StartsWith("Ghost_"))
+                if (!button.Name.StartsWith("Ghost_"))
                 {
                     if (add)
                     {

@@ -1949,6 +1949,17 @@ namespace KhTracker
         }
 
         // custom game mode toggles
+
+        private void RestoreGOAView()
+        {
+            string type = "Min-";
+            if (OldWorldOption.IsChecked)
+                type = "Old-";
+            else if (CustomFolderOption.IsChecked && File.Exists("CustomImages/Worlds/replica_data.png"))
+                type = "Cus-";
+            GoA.SetResourceReference(ContentProperty, type + "GardenofAssemblageImage");
+            data.WorldsData["GoA"].value.Text = "";
+        }
         private void OneHourToggle(object sender, RoutedEventArgs e)
         {
             OneHourToggle(OneHourOption.IsChecked);
@@ -1964,7 +1975,15 @@ namespace KhTracker
             data.dartsMode = DartsOption.IsChecked;
             data.oneHourMode = OneHourOption.IsChecked;
             if ((data.seedLoaded || data.saveFileLoaded) && !data.objectiveMode)
+            {
+                GoA.SetResourceReference(ContentProperty, "OneHour");
+                GoA.SetResourceReference(ContentProperty, "OneHour");
+                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
+                data.WorldsData["GoA"].value.Text = "0";
                 objWindow.GenerateCustomObjGrid();
+                if (!toggle)
+                    RestoreGOAView();
+            }
         }
         private void DartsToggle(object sender, RoutedEventArgs e)
         {
@@ -1981,7 +2000,13 @@ namespace KhTracker
             data.dartsMode = DartsOption.IsChecked;
             data.oneHourMode = OneHourOption.IsChecked;
             if ((data.seedLoaded || data.saveFileLoaded) && !data.objectiveMode)
+            {
+                GoA.SetResourceReference(ContentProperty, "Darts");
                 objWindow.GenerateCustomObjGrid();
+                data.WorldsData["GoA"].value.Text = "";
+                if (!toggle)
+                    RestoreGOAView();
+            }
         }
 
         private void Custom1HRAssetsToggle(object sender, RoutedEventArgs e)

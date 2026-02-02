@@ -344,6 +344,7 @@ namespace KhTracker
                         AntiFormToggle(true);
                         break;
                     //worlds
+                    case "Level1Mode":
                     case "Level":
                         SoraHeartToggle(false);
                         SoraLevel01Toggle(true);
@@ -904,7 +905,10 @@ namespace KhTracker
                     }
 
                     if (data.objectiveMode)
+                    {
                         objWindow.GenerateObjGrid(hintObject);
+                        GoA.SetResourceReference(ContentProperty, "Min-GardenofAssemblageImage");
+                    }
                     else if (data.oneHourMode || data.dartsMode)
                         objWindow.GenerateCustomObjGrid();
                     else
@@ -1385,7 +1389,10 @@ namespace KhTracker
                 }
 
                 if (data.objectiveMode)
+                {
                     objWindow.GenerateObjGrid(hintObject);
+                    GoA.SetResourceReference(ContentProperty, "Min-GardenofAssemblageImage");
+                }
                 else if (data.oneHourMode || data.dartsMode)
                     objWindow.GenerateCustomObjGrid();
                 else
@@ -1570,17 +1577,16 @@ namespace KhTracker
                 }
             }
 
-            if (data.oneHourMode)
+            if (data.oneHourMode) {
                 GoA.SetResourceReference(ContentProperty, "OneHour");
+                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
+                data.WorldsData["GoA"].value.Text = "0";
+            }
             if (data.dartsMode)
                 GoA.SetResourceReference(ContentProperty, "Darts");
 
             if (data.BossHomeHinting)
-            {
                 ModeDisplay.Header += " | Bosses Hint Home";
-                data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
-                data.WorldsData["GoA"].value.Text = "0";
-            }
 
             if (data.EmblemMode)
             {
