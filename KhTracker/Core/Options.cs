@@ -168,6 +168,7 @@ namespace KhTracker
                 BunterBosses = gridWindow.bunterBosses,
                 OneHourMode = data.oneHourMode,
                 DartsMode = data.dartsMode,
+                StartingInventoryPoints = startingInventoryPoints,
             };
 
             var saveFinal = JsonSerializer.Serialize(saveInfo);
@@ -1010,6 +1011,12 @@ namespace KhTracker
                     }
                     DeathCounter = counters[5];
                     data.usedPages = counters[6];
+                }
+
+                if (Savefile.ContainsKey("StartingInventoryPoints"))
+                {
+                    startingInventoryPoints = JsonSerializer.Deserialize<int>(Savefile["StartingInventoryPoints"].ToString());
+                    UpdatePointScore(0);
                 }
 
                 //check hash
@@ -2257,6 +2264,7 @@ namespace KhTracker
                 }
             }
 
+            startingInventoryPoints = 0;
             UpdatePointScore(0);
             ReportsToggle(ReportsOption.IsChecked);
             TornPagesToggle(TornPagesOption.IsChecked);
