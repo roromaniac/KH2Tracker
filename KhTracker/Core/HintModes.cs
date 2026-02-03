@@ -902,6 +902,11 @@ namespace KhTracker
             if (data.oneHourMode || data.dartsMode)
                 num += objWindow.cgmPoints;
 
+            // ALSO ONLY PERFORM THIS CALCULATION IF AUTOTRACKING
+            if (!writePoints)
+                startingInventoryPoints = num;
+
+            num -= startingInventoryPoints;
             ScoreValue.Text = num.ToString();
         }
 

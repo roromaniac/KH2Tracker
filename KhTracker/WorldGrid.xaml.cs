@@ -205,8 +205,7 @@ namespace KhTracker
                     }
 
                     //only update points if we are out of the starting room
-                    if (window.writePoints)
-                        window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
 
@@ -243,9 +242,7 @@ namespace KhTracker
             {
                 if (!button.Name.StartsWith("Ghost_"))
                 {
-                    //only update points if we are out of the starting room
-                    if (window.writePoints)
-                        window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
         }

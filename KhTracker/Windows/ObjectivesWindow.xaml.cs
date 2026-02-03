@@ -1392,8 +1392,7 @@ namespace KhTracker
                 if (data.dartsMode)
                     CollectedValue.Text = cgmPoints.ToString();
             }
-            if (window.writePoints)
-                window.UpdatePointScore(0);
+             window.UpdatePointScore(0);
         }
 
         public void SetColorForButton(Brush buttonBackground, Color newColor)

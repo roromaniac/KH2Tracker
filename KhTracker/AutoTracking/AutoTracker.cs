@@ -335,6 +335,7 @@ namespace KhTracker
         private long MessagePtr;
         private bool firstGOAWriteMade = false;
         public bool writePoints = true;
+        public int startingInventoryPoints = 0;
 
         private TornPageNew pages;
         public GridWindow gridWindow;
@@ -1145,8 +1146,7 @@ namespace KhTracker
 
                 if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting || data.BossList.Count() > 0)
                 {
-                    if (writePoints)
-                        UpdatePointScore(0); //update score
+                    UpdatePointScore(0); //update score
                 }
                 GetBoss(world, false, null);
 
@@ -4164,8 +4164,7 @@ namespace KhTracker
                 }
             }
             //only update points if we are out of the starting room
-            if (writePoints)
-                UpdatePointScore(points);
+            UpdatePointScore(points);
         }
 
         private void HighlightWorld(World world)
