@@ -4374,50 +4374,57 @@ namespace KhTracker
             if (memory == null)
                 return;
 
-            if (marks > 0)
-                firstGOAWriteMade = true;
-
-            if (data.oneHourMode)
-            {
-                int address = (save + 0x363D) + ADDRESS_OFFSET;
-                memory.WriteMem(address, marks);
-
-                int customObjectiveCountAddress = 0x801000;
-                memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
-            }
-
-            bool promiseCharmMissing = !HasPromiseCharm();
-
-            string _fetchMessage = "";
-            int currentCompletionMarks = 0;
-
             try
             {
-                int address = (save + 0x363D) + ADDRESS_OFFSET;
-                byte[] memData = memory.ReadMemory(address, 1);
-                if (memData != null && memData.Length > 0)
-                    currentCompletionMarks = memData[0];
+                if (marks > 0)
+                    firstGOAWriteMade = true;
+
+                if (data.oneHourMode)
+                {
+                    int address = (save + 0x363D) + ADDRESS_OFFSET;
+                    memory.WriteMem(address, marks);
+
+                    int customObjectiveCountAddress = 0x801000;
+                    memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
+                }
+
+                bool promiseCharmMissing = !HasPromiseCharm();
+
+                string _fetchMessage = "";
+                int currentCompletionMarks = 0;
+
+                try
+                {
+                    int address = (save + 0x363D) + ADDRESS_OFFSET;
+                    byte[] memData = memory.ReadMemory(address, 1);
+                    if (memData != null && memData.Length > 0)
+                        currentCompletionMarks = memData[0];
+                }
+                catch
+                {
+                    currentCompletionMarks = marks;
+                }
+
+                bool shouldHaveEnough = (marks >= objWindow.objectivesNeed) && data.objectiveMode;
+
+                if (marks < objWindow.objectivesNeed)
+                    _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
+                else if (shouldHaveEnough && currentCompletionMarks < objWindow.objectivesNeed)
+                    _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
+                if (promiseCharmMissing)
+                {
+                    if (marks >= objWindow.objectivesNeed)
+                        _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
+                    _fetchMessage += "\nPromise Charm MISSING.";
+                }
+
+                if (MessagePtr != 0x00 && _fetchMessage != "")
+                    memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
             }
             catch
             {
-                currentCompletionMarks = marks;
+                // Process may have exited or we lost access; exit without crashing
             }
-
-            bool shouldHaveEnough = (marks >= objWindow.objectivesNeed) && data.objectiveMode;
-
-            if (marks < objWindow.objectivesNeed)
-                _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
-            else if (shouldHaveEnough && currentCompletionMarks < objWindow.objectivesNeed)
-                _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
-            if (promiseCharmMissing)
-            {
-                if (marks >= objWindow.objectivesNeed)
-                    _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
-                _fetchMessage += "\nPromise Charm MISSING.";
-            }
-
-            if (MessagePtr != 0x00 && _fetchMessage != "")
-                memory.WriteMemory(MessagePtr, _fetchMessage.ToKHSCII(), true);
         }
 
         private bool HasPromiseCharm()
