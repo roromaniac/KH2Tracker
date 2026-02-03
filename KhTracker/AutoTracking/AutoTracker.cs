@@ -334,6 +334,7 @@ namespace KhTracker
 
         private long MessagePtr;
         private bool firstGOAWriteMade = false;
+        public bool writePoints = true;
 
         private TornPageNew pages;
         public GridWindow gridWindow;
@@ -1115,6 +1116,7 @@ namespace KhTracker
             previousChecks.AddRange(newChecks);
             newChecks.Clear();
             int correctSlot = 0;
+            writePoints = true;
 
             try
             {
@@ -1124,6 +1126,10 @@ namespace KhTracker
                 //test displaying sora's correct stats for PR 1st forsed fight
                 if (world.worldNum == 16 && world.roomNumber == 1 && (world.eventID1 == 0x33 || world.eventID1 == 0x34))
                     correctSlot = 2; //move forward this number of slots
+
+                //don't allow points in GoA
+                if (world.worldNum == 2 && world.roomNumber == 32 && world.eventID1 == 1 && world.eventID2 == 0 && world.eventID3 == 1)
+                    writePoints = false;
 
                 //updates
                 stats.UpdateMemory(correctSlot);
@@ -1139,7 +1145,8 @@ namespace KhTracker
 
                 if (data.mode == Mode.PointsHints || data.ScoreMode || data.BossHomeHinting || data.BossList.Count() > 0)
                 {
-                    UpdatePointScore(0); //update score
+                    if (writePoints)
+                        UpdatePointScore(0); //update score
                 }
                 GetBoss(world, false, null);
 
@@ -4156,8 +4163,9 @@ namespace KhTracker
                     }
                 }
             }
-
-            UpdatePointScore(points);
+            //only update points if we are out of the starting room
+            if (writePoints)
+                UpdatePointScore(points);
         }
 
         private void HighlightWorld(World world)

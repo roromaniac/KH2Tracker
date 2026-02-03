@@ -204,7 +204,9 @@ namespace KhTracker
                         Remove_Ghost(worldName, button);
                     }
 
-                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    //only update points if we are out of the starting room
+                    if (window.writePoints)
+                        window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
 
@@ -239,9 +241,11 @@ namespace KhTracker
 
             if (data.ScoreMode)
             {
-                if (worldName != "GoA" && !button.Name.StartsWith("Ghost_"))
+                if (!button.Name.StartsWith("Ghost_"))
                 {
-                    window.UpdatePointScore(TableReturn(button.Name) * addRemove);
+                    //only update points if we are out of the starting room
+                    if (window.writePoints)
+                        window.UpdatePointScore(TableReturn(button.Name) * addRemove);
                 }
             }
         }
