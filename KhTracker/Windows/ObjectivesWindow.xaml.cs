@@ -43,6 +43,8 @@ namespace KhTracker
         public int dataAndASCanBeObjectives { get; set; } = 0;
         public int objectivesToWin { get; set; } = 0;
         public int pointsToWin { get; set; } = 66;
+
+        public int pointsToWinUnlocksGOAPortal { get; set; } = 0;
         public Dictionary<string, string> oneHourReplacements { get; set; } = new Dictionary<string, string>();
     }
 
@@ -486,6 +488,7 @@ namespace KhTracker
             maxFormObjectivesPerForm = 2,
             dataAndASCanBeObjectives = 0,
             pointsToWin = 66,
+            pointsToWinUnlocksGOAPortal = 0,
         };
 
         //overrides for custom game modes
@@ -817,6 +820,8 @@ namespace KhTracker
                 dartsObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 dartsObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
                 dartsObjGridSettings.Add("pointsToWin", Int32.Parse(overrideObject.pointsToWin.ToString()));
+                dartsObjGridSettings.Add("pointsToWinUnlocksGOAPortal", Int32.Parse(overrideObject.pointsToWinUnlocksGOAPortal.ToString()));
+
                 // remove raw objective counts
                 objectivesNeed = 0;
 
@@ -1363,7 +1368,16 @@ namespace KhTracker
                 }
                 bool winCondition = false;
                 if (data.dartsMode)
+                {
                     winCondition = dartsObjGridSettings.ContainsKey("pointsToWin") && collectedPoints >= dartsObjGridSettings["pointsToWin"];
+                    if (dartsObjGridSettings.ContainsKey("pointsToWinUnlocksGOAPortal") && dartsObjGridSettings["pointsToWinUnlocksGOAPortal"] == 1)
+                    {
+                        if (winCondition)
+                            window.SetCompletionMarks(1);
+                        else
+                            window.SetCompletionMarks(0);
+                    }
+                }
                 else if (data.oneHourMode)
                     winCondition = marksTotal >= objectivesNeed;
                 for (int i = 0; i < numRows; i++)
@@ -1392,7 +1406,7 @@ namespace KhTracker
                 if (data.dartsMode)
                     CollectedValue.Text = cgmPoints.ToString();
             }
-             window.UpdatePointScore(0);
+            window.UpdatePointScore(0);
         }
 
         public void SetColorForButton(Brush buttonBackground, Color newColor)

@@ -1293,7 +1293,8 @@ namespace KhTracker
                 MessagePtr = 0x00;
 
             //update GoA text
-            if ((data.objectiveMode || data.oneHourMode) && !firstGOAWriteMade)
+            bool dartsAllowsFinalFights = data.dartsMode && objWindow.dartsObjGridSettings.ContainsKey("pointsToWinUnlocksGOAPortal") && objWindow.dartsObjGridSettings["pointsToWinUnlocksGOAPortal"] == 1;
+            if ((data.objectiveMode || data.oneHourMode || dartsAllowsFinalFights) && !firstGOAWriteMade)
                 SetCompletionMarks(0);
         }
 
@@ -4387,6 +4388,15 @@ namespace KhTracker
                     int customObjectiveCountAddress = 0x801000;
                     memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
                 }
+                // write the one completion mark for darts mode if we let darts unlock final fights
+                else if (data.dartsMode)
+                {
+                    int address = (save + 0x363D) + ADDRESS_OFFSET;
+                    memory.WriteMem(address, marks);
+
+                    int customObjectiveCountAddress = 0x801000;
+                    memory.WriteMem(customObjectiveCountAddress, 1);
+                }
 
                 bool promiseCharmMissing = !HasPromiseCharm();
 
@@ -4407,13 +4417,20 @@ namespace KhTracker
 
                 bool shouldHaveEnough = (marks >= objWindow.objectivesNeed) && data.objectiveMode;
 
-                if (marks < objWindow.objectivesNeed)
+                if (data.dartsMode)
+                {
+                    if (marks < 1)
+                        _fetchMessage = "{0x04}{0x01}" + objWindow.dartsObjGridSettings["pointsToWin"] + "{0x03} points needed to win.";
+                }
+                else if (marks < objWindow.objectivesNeed)
                     _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
                 else if (shouldHaveEnough && currentCompletionMarks < objWindow.objectivesNeed)
                     _fetchMessage = "You are missing completion\nmarks in your inventory.\nPlease ensure you actually\ncompleted all the objectives.";
                 if (promiseCharmMissing)
                 {
-                    if (marks >= objWindow.objectivesNeed)
+                    if (data.dartsMode)
+                        _fetchMessage = "At least {0x04}{0x01}" + objWindow.dartsObjGridSettings["pointsToWin"] + "{0x03} points collected.";
+                    else if (marks >= objWindow.objectivesNeed)
                         _fetchMessage = "{0x04}{0x01}" + marks + "{0x03} out of {0x04}{0x01}" + objWindow.objectivesNeed + "{0x03} objectives collected.";
                     _fetchMessage += "\nPromise Charm MISSING.";
                 }
