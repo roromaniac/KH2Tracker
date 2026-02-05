@@ -971,44 +971,44 @@ namespace KhTracker.Properties {
             "les\":true,\"Fight2\":true,\"OldPete\":true,\"Cerberus\":true,\"Drive6\":true,\"Fight1\":tr" +
             "ue,\"SolarSailer\":true,\"GridArmoredXemnas1\":true,\"Barrels\":true,\"AuronStatue\":tru" +
             "e,\"Hades\":true,\"Mountain\":true,\"Screens\":true,\"ThroneRoom\":true,\"OCDemyx\":true,\"" +
-            "Luxord\":true,\"Drive2\":false,\"GridRiku\":true,\"Drive7\":true,\"Lords\":true,\"GridShad" +
-            "owStalker\":true,\"HostileProgram\":true,\"PrisonKeeper\":true,\"BoatPete\":true,\"Drago" +
-            "ons\":true,\"GridSeifer\":true,\"Town\":true,\"GridArmoredXemnas2\":true,\"Beast\":true,\"" +
-            "GridDataLuxord\":true,\"MCP\":true,\"Cave\":true,\"GridMarluxiaData\":true,\"Axel1\":true" +
-            ",\"DCPete\":true,\"StormRider\":true,\"Drive3\":true,\"CandyCaneLane\":true,\"Drive4\":tru" +
-            "e,\"Xaldin\":true,\"GridDataRoxas\":true,\"GridLexaeusData\":true,\"StarryHill\":true,\"S" +
-            "tation\":true,\"Grid7Drives\":true,\"GridVivi\":true,\"GridDataXemnas\":true,\"GridVexen" +
-            "\":true,\"Saix\":true,\"Corridor\":true,\"Bailey\":true,\"Ursula\":true,\"Piglet\":true,\"Gr" +
-            "idZexion\":true,\"GridLarxeneData\":true,\"Hyenas1\":true,\"GridSetzer\":true,\"GridClou" +
-            "d\":true,\"Missions\":true,\"GridDataXigbar\":true,\"MysteriousTower\":true,\"Sark\":true" +
-            ",\"Transport\":true,\"GridTifa\":true,\"Simba\":true,\"Chasm\":true,\"Tutorial\":true,\"Fin" +
-            "alFantasy\":true,\"Rabbit\":true,\"GridHayner\":true,\"ShanYu\":true,\"Experiment\":true," +
-            "\"GrimReaper\":true,\"SpookyCave\":true,\"OogieBoogie\":true,\"1Minute\":true,\"HBDemyx\":" +
-            "true,\"Urns\":true,\"ComputerRoom\":true,\"Summit\":true,\"Minnie\":true,\"GridDataDemyx\"" +
-            ":true,\"Thresholder\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"Grid" +
-            "Yuffie\":true,\"GrimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizz" +
-            "ardLord\":true,\"GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"Gri" +
-            "dZexionData\":true,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"" +
-            "GridDataFinalXemnas\":true,\"ChestTT\":true,\"ChestSP\":true,\"KingsLetter1\":true,\"Che" +
-            "stHB\":true,\"ChestHT\":true,\"RikuWep2\":true,\"AuronWep1\":true,\"AuronWep2\":true,\"Jac" +
-            "kWep2\":true,\"ChestAG\":true,\"BeastWep1\":true,\"RikuWep1\":true,\"ChestOC\":true,\"Mula" +
-            "nWep2\":true,\"MembershipCard2\":true,\"ChestDC\":true,\"SimbaWep2\":true,\"SimbaWep1\":t" +
-            "rue,\"ChestHAW\":true,\"SparrowWep2\":true,\"SparrowWep1\":true,\"Sketches\":true,\"Membe" +
-            "rshipCard1\":true,\"MulanWep1\":true,\"ChestBC\":true,\"AladdinWep2\":true,\"AladdinWep1" +
-            "\":true,\"TronWep2\":true,\"BeastWep2\":true,\"ChestCoR\":true,\"KingsLetter2\":true,\"Che" +
-            "stLoD\":true,\"ChestPL\":true,\"TronWep1\":true,\"IceCream2\":true,\"IceCream3\":true,\"Ch" +
-            "estPR\":true,\"IceCream1\":true,\"JackWep1\":true,\"ChestSTT\":true,\"ChestTWTNW\":true,\"" +
-            "ForcingFinalCounts\":false,\"Glide4\":false,\"Glide3\":false,\"Glide2\":false,\"Glide1\":" +
-            "false,\"AerialDodge4\":false,\"AerialDodge3\":false,\"AerialDodge2\":false,\"AerialDodg" +
-            "e1\":false,\"DodgeRoll4\":false,\"DodgeRoll3\":false,\"DodgeRoll2\":false,\"DodgeRoll1\":" +
-            "false,\"QuickRun4\":false,\"QuickRun3\":false,\"QuickRun2\":false,\"QuickRun1\":false,\"H" +
-            "ighJump4\":false,\"HighJump3\":false,\"HighJump2\":false,\"HighJump1\":false,\"Anti\":fal" +
-            "se,\"Final7\":false,\"Final6\":false,\"Final5\":false,\"Final4\":false,\"Final3\":false,\"F" +
-            "inal2\":false,\"Master7\":false,\"Master6\":false,\"Master5\":false,\"Master4\":false,\"Ma" +
-            "ster3\":false,\"Master2\":false,\"Limit7\":false,\"Limit6\":false,\"Limit5\":false,\"Limit" +
-            "4\":false,\"Limit3\":false,\"Limit2\":false,\"Wisdom7\":false,\"Wisdom6\":false,\"Wisdom5\"" +
-            ":false,\"Wisdom4\":false,\"Wisdom3\":false,\"Wisdom2\":false,\"Valor7\":false,\"Valor6\":f" +
-            "alse,\"Valor5\":false,\"Valor4\":false,\"Valor3\":false,\"Valor2\":false}")]
+            "Luxord\":true,\"GridRiku\":true,\"Drive7\":true,\"Lords\":true,\"GridShadowStalker\":true" +
+            ",\"HostileProgram\":true,\"PrisonKeeper\":true,\"BoatPete\":true,\"Dragoons\":true,\"Grid" +
+            "Seifer\":true,\"Town\":true,\"GridArmoredXemnas2\":true,\"Beast\":true,\"GridDataLuxord\"" +
+            ":true,\"MCP\":true,\"Cave\":true,\"GridMarluxiaData\":true,\"Axel1\":true,\"DCPete\":true," +
+            "\"StormRider\":true,\"Drive3\":true,\"CandyCaneLane\":true,\"Drive4\":true,\"Xaldin\":true" +
+            ",\"GridDataRoxas\":true,\"GridLexaeusData\":true,\"StarryHill\":true,\"Station\":true,\"G" +
+            "rid7Drives\":true,\"GridVivi\":true,\"GridDataXemnas\":true,\"GridVexen\":true,\"Saix\":t" +
+            "rue,\"Corridor\":true,\"Bailey\":true,\"Ursula\":true,\"Piglet\":true,\"GridZexion\":true," +
+            "\"GridLarxeneData\":true,\"Hyenas1\":true,\"GridSetzer\":true,\"GridCloud\":true,\"Missio" +
+            "ns\":true,\"GridDataXigbar\":true,\"MysteriousTower\":true,\"Sark\":true,\"Transport\":tr" +
+            "ue,\"GridTifa\":true,\"Simba\":true,\"Chasm\":true,\"Tutorial\":true,\"FinalFantasy\":true" +
+            ",\"Rabbit\":true,\"GridHayner\":true,\"ShanYu\":true,\"Experiment\":true,\"GrimReaper\":tr" +
+            "ue,\"SpookyCave\":true,\"OogieBoogie\":true,\"1Minute\":true,\"HBDemyx\":true,\"Urns\":tru" +
+            "e,\"ComputerRoom\":true,\"Summit\":true,\"Minnie\":true,\"GridDataDemyx\":true,\"Threshol" +
+            "der\":true,\"Dancers\":true,\"TreasureRoom\":true,\"Xemnas1\":true,\"GridYuffie\":true,\"G" +
+            "rimReaper1\":true,\"Medallions\":true,\"GridMarluxia\":true,\"GridBlizzardLord\":true,\"" +
+            "GridLeon\":true,\"Drive5\":true,\"Minigame\":true,\"Children\":true,\"GridZexionData\":tr" +
+            "ue,\"1000Heartless\":true,\"GridVexenData\":true,\"GridLarxene\":true,\"GridDataFinalXe" +
+            "mnas\":true,\"ChestTT\":true,\"ChestSP\":true,\"KingsLetter1\":true,\"ChestHB\":true,\"Che" +
+            "stHT\":true,\"RikuWep2\":true,\"AuronWep1\":true,\"AuronWep2\":true,\"JackWep2\":true,\"Ch" +
+            "estAG\":true,\"BeastWep1\":true,\"RikuWep1\":true,\"ChestOC\":true,\"MulanWep2\":true,\"Me" +
+            "mbershipCard2\":true,\"ChestDC\":true,\"SimbaWep2\":true,\"SimbaWep1\":true,\"ChestHAW\":" +
+            "true,\"SparrowWep2\":true,\"SparrowWep1\":true,\"Sketches\":true,\"MembershipCard1\":tru" +
+            "e,\"MulanWep1\":true,\"ChestBC\":true,\"AladdinWep2\":true,\"AladdinWep1\":true,\"TronWep" +
+            "2\":true,\"BeastWep2\":true,\"ChestCoR\":true,\"KingsLetter2\":true,\"ChestLoD\":true,\"Ch" +
+            "estPL\":true,\"TronWep1\":true,\"IceCream2\":true,\"IceCream3\":true,\"ChestPR\":true,\"Ic" +
+            "eCream1\":true,\"JackWep1\":true,\"ChestSTT\":true,\"ChestTWTNW\":true,\"ForcingFinalCou" +
+            "nts\":false,\"Glide4\":false,\"Glide3\":false,\"Glide2\":false,\"Glide1\":false,\"AerialDo" +
+            "dge4\":false,\"AerialDodge3\":false,\"AerialDodge2\":false,\"AerialDodge1\":false,\"Dodg" +
+            "eRoll4\":false,\"DodgeRoll3\":false,\"DodgeRoll2\":false,\"DodgeRoll1\":false,\"QuickRun" +
+            "4\":false,\"QuickRun3\":false,\"QuickRun2\":false,\"QuickRun1\":false,\"HighJump4\":false" +
+            ",\"HighJump3\":false,\"HighJump2\":false,\"HighJump1\":false,\"Anti\":false,\"Final7\":fal" +
+            "se,\"Final6\":false,\"Final5\":false,\"Final4\":false,\"Final3\":false,\"Final2\":false,\"M" +
+            "aster7\":false,\"Master6\":false,\"Master5\":false,\"Master4\":false,\"Master3\":false,\"M" +
+            "aster2\":false,\"Limit7\":false,\"Limit6\":false,\"Limit5\":false,\"Limit4\":false,\"Limit" +
+            "3\":false,\"Limit2\":false,\"Wisdom7\":false,\"Wisdom6\":false,\"Wisdom5\":false,\"Wisdom4" +
+            "\":false,\"Wisdom3\":false,\"Wisdom2\":false,\"Valor7\":false,\"Valor6\":false,\"Valor5\":f" +
+            "alse,\"Valor4\":false,\"Valor3\":false,\"Valor2\":false}")]
         public string GridSettings {
             get {
                 return ((string)(this["GridSettings"]));
