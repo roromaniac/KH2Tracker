@@ -719,6 +719,8 @@ namespace KhTracker
 
                     data.BossList.Add(bossOrig, bossRepl);
                 }
+
+                bunterCheck(bosses);
             }
             catch
             {
