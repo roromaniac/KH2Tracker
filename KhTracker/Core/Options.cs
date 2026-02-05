@@ -720,6 +720,7 @@ namespace KhTracker
                     data.BossList.Add(bossOrig, bossRepl);
                 }
 
+                gridWindow.bunterBosses = bosses;
                 bunterCheck(bosses);
             }
             catch
