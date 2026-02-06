@@ -1128,7 +1128,7 @@ namespace KhTracker
                 if (world.worldNum == 16 && world.roomNumber == 1 && (world.eventID1 == 0x33 || world.eventID1 == 0x34))
                     correctSlot = 2; //move forward this number of slots
 
-                //don't allow points in GoA
+                //don't allow points in GoA for starting inventory
                 if (world.worldNum == 2 && world.roomNumber == 32 && world.eventID1 == 1 && world.eventID2 == 0 && world.eventID3 == 1)
                     writePoints = false;
 
@@ -1593,6 +1593,7 @@ namespace KhTracker
                 if (data.codes.bossNameConversion.ContainsKey(checkName))
                 {
                     tempName = data.codes.bossNameConversion[checkName];
+                    Console.WriteLine(tempName);
                 }
 
                 for (int row = 0; row < objWindow.numRows; row++)
@@ -3176,7 +3177,7 @@ namespace KhTracker
             }
 
             // update shotgun icons when cutscene skipper is being used
-            if (curProg == 0)
+            if (curProg == 0 && newProg == 99)
             {
                 newProg = 1;
                 data.WorldsData[wName].progress = newProg;
