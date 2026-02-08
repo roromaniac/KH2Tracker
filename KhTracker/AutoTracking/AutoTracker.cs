@@ -4378,6 +4378,8 @@ namespace KhTracker
             if (memory == null)
                 return;
 
+            Int32 COMPLETION_MARKS_INVENTORY_ADDRESS = (save + 0x363D) + ADDRESS_OFFSET;
+            Int32 COMPLETION_MARKS_NEEDED_ADDRESS = (save + 0x06B3) + ADDRESS_OFFSET;
             try
             {
                 if (marks > 0)
@@ -4385,20 +4387,14 @@ namespace KhTracker
 
                 if (data.oneHourMode)
                 {
-                    int address = (save + 0x363D) + ADDRESS_OFFSET;
-                    memory.WriteMem(address, marks);
-
-                    int customObjectiveCountAddress = 0x801000;
-                    memory.WriteMem(customObjectiveCountAddress, objWindow.objectivesNeed);
+                    memory.WriteMem(COMPLETION_MARKS_INVENTORY_ADDRESS, marks);
+                    memory.WriteMem(COMPLETION_MARKS_NEEDED_ADDRESS, objWindow.objectivesNeed);
                 }
                 // write the one completion mark for darts mode if we let darts unlock final fights
                 else if (data.dartsMode)
                 {
-                    int address = (save + 0x363D) + ADDRESS_OFFSET;
-                    memory.WriteMem(address, marks);
-
-                    int customObjectiveCountAddress = 0x801000;
-                    memory.WriteMem(customObjectiveCountAddress, 1);
+                    memory.WriteMem(COMPLETION_MARKS_INVENTORY_ADDRESS, marks);
+                    memory.WriteMem(COMPLETION_MARKS_NEEDED_ADDRESS, 1);
                 }
 
                 bool promiseCharmMissing = !HasPromiseCharm();
