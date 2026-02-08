@@ -1260,7 +1260,9 @@ namespace KhTracker
             UpdateCollectedItems();
             DetermineItemLocations();
 
-            var _fetchPointer = BitConverter.ToInt64(memory.ReadMemory(PcOffsets[10], 0x08), 0x00) - 0x30;
+            long _fetchPointer = 0x00;
+            if (!pcsx2tracking)
+                _fetchPointer = BitConverter.ToInt64(memory.ReadMemory(PcOffsets[10], 0x08), 0x00) - 0x30;
 
             if (_fetchPointer != 0x00)
             {
@@ -4404,8 +4406,7 @@ namespace KhTracker
 
                 try
                 {
-                    int address = (save + 0x363D) + ADDRESS_OFFSET;
-                    byte[] memData = memory.ReadMemory(address, 1);
+                    byte[] memData = memory.ReadMemory(COMPLETION_MARKS_INVENTORY_ADDRESS, 1);
                     if (memData != null && memData.Length > 0)
                         currentCompletionMarks = memData[0];
                 }
