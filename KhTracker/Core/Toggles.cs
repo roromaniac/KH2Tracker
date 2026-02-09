@@ -1977,12 +1977,18 @@ namespace KhTracker
             if ((data.seedLoaded || data.saveFileLoaded) && !data.objectiveMode)
             {
                 GoA.SetResourceReference(ContentProperty, "OneHour");
-                GoA.SetResourceReference(ContentProperty, "OneHour");
                 data.WorldsData["GoA"].value.Visibility = Visibility.Visible;
                 data.WorldsData["GoA"].value.Text = "0";
                 objWindow.GenerateCustomObjGrid();
                 if (!toggle)
                     RestoreGOAView();
+                // TO DO: REMOVE THIS HARD FIXING OF BOSSES HINT HOME
+                else if (toggle && (data.seedLoaded || data.saveFileLoaded) && data.BossRandoFound)
+                {
+                    data.BossHomeHinting = true;
+                    ModeDisplay.Header += " | Bosses Hint Home";
+                    BossHomeHintingSetup();
+                }
             }
         }
         private void DartsToggle(object sender, RoutedEventArgs e)

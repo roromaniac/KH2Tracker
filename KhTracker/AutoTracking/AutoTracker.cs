@@ -3181,7 +3181,7 @@ namespace KhTracker
             }
 
             // update shotgun icons when cutscene skipper is being used
-            if (curProg == 0 && newProg == 99)
+            if (curProg == 0 && newProg == 99 && wName != "Atlantica")
             {
                 newProg = 1;
                 data.WorldsData[wName].progress = newProg;
