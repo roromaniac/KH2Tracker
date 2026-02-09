@@ -2160,11 +2160,11 @@ namespace KhTracker
                         case 9:
                             if (wID3 == 117 && curProg == 0) // Roxas' Room (Day 1)
                                 newProg = 1;
-                            if (wID3 == 118) // Sonic's Cutscene Skipper: Station Nobodies
+                            if (wID3 == 118 && curProg == 1) // Sonic's Cutscene Skipper: Station Nobodies
                                 newProg = 2;
                             break;
                         case 8:
-                            if (wID3 == 108 && wCom == 1) // Station Nobodies
+                            if (wID3 == 108 && wCom == 1 && curProg == 1) // Station Nobodies
                                 newProg = 2;
                             break;
                         case 28:

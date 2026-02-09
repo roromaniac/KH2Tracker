@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -1981,7 +1981,13 @@ namespace KhTracker
                 data.WorldsData["GoA"].value.Text = "0";
                 objWindow.GenerateCustomObjGrid();
                 if (!toggle)
+                {
                     RestoreGOAView();
+                    data.BossHomeHinting = false;
+                    const string suffix = " | Bosses Hint Home";
+                    if (ModeDisplay.Header is string h && h.EndsWith(suffix))
+                        ModeDisplay.Header = h.Substring(0, h.Length - suffix.Length);
+                }
                 // TO DO: REMOVE THIS HARD FIXING OF BOSSES HINT HOME
                 else if (toggle && (data.seedLoaded || data.saveFileLoaded) && data.BossRandoFound)
                 {
@@ -2012,6 +2018,13 @@ namespace KhTracker
                 data.WorldsData["GoA"].value.Text = "";
                 if (!toggle)
                     RestoreGOAView();
+                else
+                {
+                    data.BossHomeHinting = false;
+                    const string suffix = " | Bosses Hint Home";
+                    if (ModeDisplay.Header is string h && h.EndsWith(suffix))
+                        ModeDisplay.Header = h.Substring(0, h.Length - suffix.Length);
+                }
             }
         }
 

@@ -573,6 +573,7 @@ namespace KhTracker
             window.DartsOption.IsChecked = false;
             data.oneHourMode = false;
             data.dartsMode = false;
+            data.BossHomeHinting = false;
 
             //build asset list
             assets.Clear();
