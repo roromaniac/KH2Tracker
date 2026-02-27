@@ -3180,8 +3180,10 @@ namespace KhTracker
                     return;
             }
 
+            bool oneHourWarping = (wName == "TwilightTown" && wID1 == 213);
+
             // update shotgun icons when cutscene skipper is being used
-            if (curProg == 0 && newProg == 99 && wName != "Atlantica")
+            if (curProg == 0 && newProg == 99 && wName != "Atlantica" & !oneHourWarping)
             {
                 newProg = 1;
                 data.WorldsData[wName].progress = newProg;
