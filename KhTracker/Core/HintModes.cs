@@ -1963,14 +1963,12 @@ namespace KhTracker
                 {
                     string bossReplacement = data.BossList[boss];
 
-                    //handle cups boss variants for hinting purposes
-                    Console.WriteLine(boss, bossReplacement);
-                    if (new[] { "Cloud", "Leon", "Tifa", "Yuffie" }.Any(p => bossReplacement.Contains(p)))
+                    //handle cups boss variants for hinting purposes in one hour mode
+                    if (new[] { "Cloud", "Leon", "Tifa", "Yuffie" }.Any(p => bossReplacement.Contains(p)) && data.oneHourMode)
                         {
                             var parts = bossReplacement.Split(' ');
                             bossReplacement = string.Join(" ", parts.Take(Math.Max(1, parts.Length - 1)));
                         }
-                    Console.WriteLine(boss, bossReplacement);
 
                     if (!data.BossList.ContainsKey(bossReplacement))
                         return;
