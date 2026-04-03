@@ -877,13 +877,12 @@ namespace KhTracker
                 oneHourObjGridSettings.Add("maxFormObjectivesPerForm", Int32.Parse(overrideObject.maxFormObjectivesPerForm.ToString()));
                 oneHourObjGridSettings.Add("dataAndASCanBeObjectives", Int32.Parse(overrideObject.dataAndASCanBeObjectives.ToString()));
                 objectivesNeed = Int32.Parse(overrideObject.objectivesToWin.ToString());
+                if (objectivesNeed < 1)
+                    objectivesNeed = 1;
 
                 //handle 1 hour title
-                if (objectivesNeed > 0)
-                {
-                    TotalValue.Text = objectivesNeed.ToString();
-                    CollectedValue.Text = "0";
-                }
+                TotalValue.Text = objectivesNeed.ToString();
+                CollectedValue.Text = "0";
 
                 //reset banner visibility
                 UpdateGridBanner(true, "1HR OBJECTIVES", "1HROVERRIDE");
