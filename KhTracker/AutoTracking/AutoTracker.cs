@@ -3888,7 +3888,7 @@ namespace KhTracker
                     points += data.PointsDatanew[replacementType];
 
                     //bonus points here should be sum of both boss types multipled by the lords arena multiplier
-                    if (points > 1)
+                    if (data.oneHourMode && points > 1)
                         points += (int)(points * objWindow.oneHourMultiplicativeBonus["lordsArenaMultiplier"]);
                 }
                 else
@@ -3942,7 +3942,7 @@ namespace KhTracker
                     points += data.PointsDatanew[replacementType];
 
                     //bonus points here should be sum of both boss types multipled by the BC double arena multiplier
-                    if (points > 1)
+                    if (data.oneHourMode && points > 1)
                         points += (int)(points * objWindow.oneHourMultiplicativeBonus["bcDoubleFightMultiplier"]);
                 }
                 else

@@ -116,6 +116,7 @@ namespace KhTracker
         public bool coloredHints = false;
         public int coloredHintsDistance = 1;
         public List<Color> coloredHintsColors;
+        public string gridSettingsRaw;
 
         public GridWindow(Data dataIn)
         {
@@ -256,6 +257,7 @@ namespace KhTracker
                 try
                 {
                     string jsonString = System.IO.File.ReadAllText(openFileDialog.FileName);
+                    gridSettingsRaw = jsonString;
                     UploadCardSetting(jsonString);
                 }
                 catch (JsonException)
@@ -266,7 +268,7 @@ namespace KhTracker
             }
         }
 
-        public void UploadCardSetting(string jsonString)
+        public void UploadCardSetting(string jsonString, bool userTrigger = true)
         {
             using (JsonDocument doc = JsonDocument.Parse(jsonString))
             {
@@ -396,10 +398,13 @@ namespace KhTracker
                 Properties.Settings.Default.GridWindowNumUnlocks = numUnlocks;
                 Properties.Settings.Default.GridWindowNumChestLocks = numChestLocks;
             }
-            grid.Children.Clear();
-            GenerateGrid(numRows, numColumns, null, true, true);
-            gridOptionsWindow.InitializeData(this, data);
-            gridOptionsWindow.UpdateGridOptionsUI();
+            if (userTrigger)
+            {
+                grid.Children.Clear();
+                GenerateGrid(numRows, numColumns, null, true, true);
+                gridOptionsWindow.InitializeData(this, data);
+                gridOptionsWindow.UpdateGridOptionsUI();
+            }
         }
 
         private void SetSeedname(object sender, RoutedEventArgs e)
@@ -871,6 +876,7 @@ namespace KhTracker
 
         public void GenerateGrid(int rows = 5, int columns = 5, string seedString = null, bool userTrigger = true, bool presetUpload = false)
         {
+
             //reset banner visibility
             UpdateGridBanner(false);
 
@@ -888,8 +894,13 @@ namespace KhTracker
                 gridOptionsWindow.InitializeData(this, data);
                 gridOptionsWindow.UpdateGridOptionsUI();
             }
+            else
+            {
+                if (gridSettingsRaw != null)
+                    UploadCardSetting(gridSettingsRaw, false);
+            }
 
-            buttons = new ToggleButton[rows, columns];
+                buttons = new ToggleButton[rows, columns];
             // ensure that the cells all start with the unmarked color as their original colors
             originalColors = new Color[rows, columns];
             for (int i = 0; i < rows; i++)
