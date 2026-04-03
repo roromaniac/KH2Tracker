@@ -2664,7 +2664,10 @@ namespace KhTracker
                                 newProg = 5;
                             break;
                         case 1:
-                            if (wID1 == 52 && wCom == 1) //The Hunny Pot Complete
+                            // Starry Hill Orichalcum+ save flag (CheckEveryCheck Sys3 popup); avoids counting a failed Hunny Pot.
+                            // Allow when replaying tracker Events (usingSave) so load still restores progression.
+                            if (wID1 == 52 && wCom == 1
+                                && (usingSave || (memory != null && new BitArray(memory.ReadMemory((save + 0x1DB5) + ADDRESS_OFFSET, 1))[5])))
                                 newProg = 6;
                             break;
                         default:

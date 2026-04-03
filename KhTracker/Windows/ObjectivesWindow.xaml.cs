@@ -41,7 +41,7 @@ namespace KhTracker
         public double lordsArenaMultiplier { get; set; } = 0.0;
         public int maxFormObjectivesPerForm { get; set; } = 1;
         public int dataAndASCanBeObjectives { get; set; } = 0;
-        public int objectivesToWin { get; set; } = 0;
+        public int objectivesToWin { get; set; } = 5;
         public int pointsToWin { get; set; } = 66;
 
         public int pointsToWinUnlocksGOAPortal { get; set; } = 0;
