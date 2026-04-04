@@ -273,6 +273,15 @@ namespace KhTracker
                         VisitLockToggle(true);
                         break;
                     case "keyblade":
+                        if (hintObject.TryGetValue("enabledKeybladeLockingWorlds", out var value) && value != null)
+                        {
+                            var list = JsonSerializer.Deserialize<List<string>>(value.ToString());
+                            data.enabledKeybladeLockingWorlds = new HashSet<string>(list ?? new List<string>());
+                        }
+                        else
+                        {
+                            data.enabledKeybladeLockingWorlds = new HashSet<string>();
+                        }
                         ChestLockToggle(true);
                         break;
                     case "proof":
@@ -283,7 +292,6 @@ namespace KhTracker
                         break;
                 }
             }
-
 
             //item settings
             PromiseCharmToggle(false);
@@ -1698,6 +1706,7 @@ namespace KhTracker
             data.firstGridOnSeedLoad = true;
             data.BossHomeHinting = false;
             data.bossHomeHintInformation.Clear();
+            // data.enabledKeybladeLockingWorlds = new HashSet<string>();
 
             data.WorldOverlay.Clear();
 

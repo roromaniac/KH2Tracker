@@ -444,8 +444,27 @@ namespace KhTracker
             {"Atlantica", "AT" }
         };
 
-        //Find the item type an Important Check belongs to
-        public static string FindItemType(string name)
+        public static Dictionary<string, string> chestLocksToWorldNames = new Dictionary<string, string>()
+        {
+            { "ChestCoR", "Cavern of Remembrance" },
+            { "ChestSTT", "Simulated Twilight Town" },
+            { "ChestTT", "Twilight Town" },
+            { "ChestHB", "Hollow Bastion" },
+            { "ChestBC", "Beast's Castle" },
+            { "ChestOC", "Olympus Coliseum" },
+            { "ChestAG", "Agrabah" },
+            { "ChestLoD", "Land of Dragons" },
+            { "ChestHAW", "Hundred Acre Wood" },
+            { "ChestPL", "Pride Lands" },
+            { "ChestDC", "Disney Castle / Timeless River" },
+            { "ChestHT", "Halloween Town" },
+            { "ChestPR", "Port Royal" },
+            { "ChestSP", "Space Paranoids" },
+            { "ChestTWTNW", "The World That Never Was" }
+        };
+
+    //Find the item type an Important Check belongs to
+    public static string FindItemType(string name)
         {
             if (itemTypes.Keys.Contains(name))
                 return itemTypes[name];

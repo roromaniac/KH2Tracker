@@ -574,10 +574,16 @@ namespace KhTracker
             else
                 ChestRow.Height = new GridLength(0, GridUnitType.Star);
 
-
             for (int i = 0; i < data.ChestLocks.Count; ++i)
             {
-                HandleItemToggle(toggle, data.ChestLocks[i], false);
+                string currentChest = data.ChestLocks[i].Name;
+                if (
+                    Codes.chestLocksToWorldNames.ContainsKey(currentChest) &&
+                    data.enabledKeybladeLockingWorlds.Contains(Codes.chestLocksToWorldNames[currentChest])
+                )
+                    HandleItemToggle(toggle, data.ChestLocks[i], false);
+                else
+                    HandleItemToggle(!toggle, data.ChestLocks[i], false);
             }
 
         }
