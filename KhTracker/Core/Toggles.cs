@@ -569,21 +569,27 @@ namespace KhTracker
             Properties.Settings.Default.WorldChestLock = toggle;
             ChestLockOption.IsChecked = toggle;
 
-            if (toggle)
+            if (toggle) {
                 ChestRow.Height = new GridLength(1, GridUnitType.Star);
-            else
+                for (int i = 0; i < data.ChestLocks.Count; ++i)
+                {
+                    string currentChest = data.ChestLocks[i].Name;
+                    // if the chest is enabled, turn it on
+                    if (
+                        Codes.chestLocksToWorldNames.ContainsKey(currentChest) &&
+                        data.enabledKeybladeLockingWorlds.Contains(Codes.chestLocksToWorldNames[currentChest])
+                    )
+                        HandleItemToggle(toggle, data.ChestLocks[i], false);
+                    // otherwise turn it off
+                    else
+                        HandleItemToggle(!toggle, data.ChestLocks[i], false);
+                }
+            }
+            else {
                 ChestRow.Height = new GridLength(0, GridUnitType.Star);
-
-            for (int i = 0; i < data.ChestLocks.Count; ++i)
-            {
-                string currentChest = data.ChestLocks[i].Name;
-                if (
-                    Codes.chestLocksToWorldNames.ContainsKey(currentChest) &&
-                    data.enabledKeybladeLockingWorlds.Contains(Codes.chestLocksToWorldNames[currentChest])
-                )
+                // turn off all chest locking
+                for (int i = 0; i < data.ChestLocks.Count; ++i)
                     HandleItemToggle(toggle, data.ChestLocks[i], false);
-                else
-                    HandleItemToggle(!toggle, data.ChestLocks[i], false);
             }
 
         }
