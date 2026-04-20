@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
@@ -556,6 +558,18 @@ namespace KhTracker
             ObjPointsOrderToggle(ObjPointsOrderOption.IsChecked);
         }
 
+        public static int GetDeterministicHashCode(string input)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                // Compute the hash as a byte array
+                byte[] hashBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+                // Convert the first 4 bytes of the hash to an integer
+                return BitConverter.ToInt32(hashBytes, 0);
+            }
+        }
+
         public void GenerateObjGrid(Dictionary<string, object> hintObject)
         {
             //reset banner visibility
@@ -901,7 +915,7 @@ namespace KhTracker
 
             //build asset list
             assets.Clear();
-            Random rng = new Random(data.convertedSeedHash);
+            Random rng = new Random(GetDeterministicHashCode(data.convertedSeedHash.ToString()));
             if (data.dartsMode)
                 assets = dartsOverrideAssets.Keys.ToList();
             else if (data.oneHourMode)
